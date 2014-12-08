@@ -10,9 +10,6 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Created by rob on 8-12-14.
- */
 public class GetJson extends AsyncTask<String, String, String> {
 
     @Override
