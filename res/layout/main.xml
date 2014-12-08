@@ -26,6 +26,12 @@
                 android:text="@string/test_button"
                 android:id="@+id/test_button"
                 android:layout_gravity="bottom"/>
+        <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="12.70"/>
     </LinearLayout>
 
     <!-- The navigation drawer -->

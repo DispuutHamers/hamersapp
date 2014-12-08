@@ -23,4 +23,12 @@
 
     <string name="test_button">Test Button</string>
     <item name="test_button" type="id"/>
+
+    <string-array name="drawer_array">
+        <item>Quotes</item>
+        <item>Activities</item>
+        <item>Earth</item>
+        <item>Settings</item>
+    </string-array>
+
 </resources>
