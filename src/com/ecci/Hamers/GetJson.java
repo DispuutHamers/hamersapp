@@ -1,6 +1,7 @@
 package com.ecci.Hamers;
 
 import android.os.AsyncTask;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,6 +15,7 @@ public class GetJson extends AsyncTask<String, String, String> {
 
     @Override
     protected String doInBackground(String... params) {
+        System.out.println("Getting JSON");
         BufferedReader reader = null;
         StringBuffer buffer = new StringBuffer();
         try {
@@ -36,10 +38,14 @@ public class GetJson extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String result) {
         try {
-            JSONObject json = new JSONObject(result);
+            JSONArray json = new JSONArray(result);
             System.out.println(json);
+            for(int i = 0; i< json.length(); i++){
+                JSONObject temp = json.getJSONObject(i);
+                System.out.println(temp.getString("text"));
+            }
         } catch (JSONException e) {
-            e.printStackTrace();
+            System.out.println("error parsing json");
         }
 
     }

@@ -89,14 +89,6 @@ public class MainActivity extends Activity {
             selectItem(0);
         }
 
-        // Test button
-        final Button button = (Button) findViewById(R.id.test_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on click
-            }
-        });
-
     }
 
     @Override
@@ -162,6 +154,8 @@ public class MainActivity extends Activity {
         mDrawerList.setItemChecked(position, true);
         setTitle(mPlanetTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
+
+
     }
 
     @Override
