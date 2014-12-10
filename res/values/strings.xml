@@ -27,7 +27,6 @@
     <string-array name="drawer_array">
         <item>Quotes</item>
         <item>Activities</item>
-        <item>Earth</item>
         <item>Settings</item>
     </string-array>
 
