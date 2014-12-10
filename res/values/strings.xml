@@ -21,7 +21,7 @@
     <string name="action_websearch">Web search</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
 
-    <string name="refresh_button">Refresh</string>
+    <string name="refresh_button">Refresh Quotes</string>
     <item name="refresh_button" type="id"/>
 
     <string-array name="drawer_array">
