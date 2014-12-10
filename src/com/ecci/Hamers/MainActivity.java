@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.main);
 
         // Test Button
-        Button button = (Button) findViewById(R.id.test_button);
+        Button button = (Button) findViewById(R.id.refresh_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Do something in response to button click
