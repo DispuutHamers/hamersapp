@@ -22,7 +22,6 @@
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
 
     <string name="refresh_button">Refresh Quotes</string>
-    <item name="refresh_button" type="id"/>
 
     <string-array name="drawer_array">
         <item>Quotes</item>
@@ -30,6 +29,17 @@
         <item>Settings</item>
     </string-array>
 
+    <string-array name="users_array">
+        <item>Jacko Zuidema</item>
+        <item>Dex Bleeker</item>
+        <item>Rob Stortelder</item>
+    </string-array>
+
+    <!-- Quotes -->
     <string name="action_new">New quote</string>
+    <string name="quote">Wat zei die lul?</string>
+    <string name="send_quote">Send quote</string>
+    <string name="cancel_quote">Cancel</string>
+    <string name="quote_hint">Type your quote..</string>
 
 </resources>

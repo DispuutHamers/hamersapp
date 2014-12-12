@@ -1,7 +1,9 @@
 package com.ecci.Hamers;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -112,8 +114,17 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_actions, menu);
+        inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+    /** New quote */
+    public void newQuote(MenuItem item) {
+        Intent intent = new Intent(this, NewQuoteFragment.class);
+
+        DialogFragment newFragment = new NewQuoteFragment();
+        newFragment.show(getSupportFragmentManager(), "quotes");
+    }
+
 
 }
