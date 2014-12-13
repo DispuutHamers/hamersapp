@@ -7,23 +7,20 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 
 public class MainActivity extends ActionBarActivity {
+    private Spinner spinner1;
     // Drawer list
     private String[] mDrawerItems;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
 
     /**
      * Called when the activity is first created.
@@ -82,7 +79,8 @@ public class MainActivity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-    }
+
+     }
 
 
     @Override
@@ -125,6 +123,5 @@ public class MainActivity extends ActionBarActivity {
         DialogFragment newFragment = new NewQuoteFragment();
         newFragment.show(getSupportFragmentManager(), "quotes");
     }
-
 
 }
