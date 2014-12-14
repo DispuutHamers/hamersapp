@@ -1,13 +1,14 @@
 package com.ecci.Hamers.Fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.ecci.Hamers.R;
 
-public class QuoteListFragment extends android.support.v4.app.Fragment {
+public class QuoteListFragment extends Fragment {
 
     public QuoteListFragment() {
         // Empty constructor required for fragment subclasses

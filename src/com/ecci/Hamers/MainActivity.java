@@ -4,7 +4,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,6 +17,7 @@ import android.widget.ListView;
 import com.ecci.Hamers.Fragments.EventsFragment;
 import com.ecci.Hamers.Fragments.NewQuoteFragment;
 import com.ecci.Hamers.Fragments.QuoteListFragment;
+import com.ecci.Hamers.Fragments.SettingsFragment;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -40,10 +40,6 @@ public class MainActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             selectItem(0);
         }
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
      }
 
         @Override
@@ -64,7 +60,6 @@ public class MainActivity extends ActionBarActivity {
         // Pass the event to ActionBarDrawerToggle, if it returns
         // true, then it has handled the app icon touch event
         if (mDrawerToggle.onOptionsItemSelected(item)) {
-            NavUtils.navigateUpFromSameTask(this);
             return true;
         }
         // Handle your other action bar items...
@@ -119,6 +114,9 @@ public class MainActivity extends ActionBarActivity {
 
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     /* The click listner for ListView in the navigation drawer */
@@ -151,7 +149,7 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case 2:
                 transaction
-                        .replace(R.id.content_frame, new EventsFragment())
+                        .replace(R.id.content_frame, new SettingsFragment())
                         .addToBackStack(null)
                         .commit();
                 setTitle("Settings");
