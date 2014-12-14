@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/content_frame"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/quotes_swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
             android:orientation="vertical"
@@ -11,14 +12,8 @@
         <ListView
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:id="@+id/listView"
+                android:id="@+id/quotes_listView"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"/>
-        <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/refresh_button"
-                android:id="@+id/refresh_button"
-                android:layout_weight="0"/>
     </LinearLayout>
-</RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

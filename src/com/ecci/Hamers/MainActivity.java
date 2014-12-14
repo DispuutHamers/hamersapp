@@ -145,7 +145,7 @@ public class MainActivity extends ActionBarActivity {
                         .replace(R.id.content_frame, new EventsFragment())
                         .addToBackStack(null)
                         .commit();
-                setTitle("Meuk2");
+                setTitle("Events");
                 break;
             case 2:
                 transaction
@@ -163,8 +163,8 @@ public class MainActivity extends ActionBarActivity {
 
     /** New quote */
     public void newQuote(MenuItem item) {
-        DialogFragment newFragment = new NewQuoteFragment();
-        newFragment.show(getSupportFragmentManager(), "quotes");
+        DialogFragment newQuoteFragment = new NewQuoteFragment();
+        newQuoteFragment.show(getSupportFragmentManager(), "quotes");
     }
 
 }
