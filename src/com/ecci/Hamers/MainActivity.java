@@ -1,21 +1,26 @@
 package com.ecci.Hamers;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
+import com.ecci.Hamers.Fragments.EventsFragment;
+import com.ecci.Hamers.Fragments.NewQuoteFragment;
+import com.ecci.Hamers.Fragments.QuoteListFragment;
 
 
 public class MainActivity extends ActionBarActivity {
-    private Spinner spinner1;
     // Drawer list
     private String[] mDrawerItems;
     private ListView mDrawerList;
@@ -30,14 +35,52 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        // Test Button
-        Button button = (Button) findViewById(R.id.refresh_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Do something in response to button click
-            }
-        });
+        initDrawer();
 
+        if (savedInstanceState == null) {
+            selectItem(0);
+        }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+     }
+
+        @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        }
+        // Handle your other action bar items...
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public void initDrawer() {
         // Drawer list
         mDrawerItems = getResources().getStringArray(R.array.drawer_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -76,50 +119,52 @@ public class MainActivity extends ActionBarActivity {
 
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-     }
-
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
+    /* The click listner for ListView in the navigation drawer */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
         }
-        // Handle your other action bar items...
-
-        return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
+    /** Swaps fragments in the main content view */
+    private void selectItem(int position) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        switch (position) {
+            case 0:
+                transaction
+                        .replace(R.id.content_frame, new QuoteListFragment())
+                        .addToBackStack(null)
+                        .commit();
+                setTitle("Quote list");
+                break;
+
+            case 1:
+                transaction
+                        .replace(R.id.content_frame, new EventsFragment())
+                        .addToBackStack(null)
+                        .commit();
+                setTitle("Meuk2");
+                break;
+            case 2:
+                transaction
+                        .replace(R.id.content_frame, new EventsFragment())
+                        .addToBackStack(null)
+                        .commit();
+                setTitle("Settings");
+                break;
+        }
+
+        // Highlight the selected item and close the drawer
+        mDrawerList.setItemChecked(position, true);
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     /** New quote */
     public void newQuote(MenuItem item) {
-        Intent intent = new Intent(this, NewQuoteFragment.class);
-
         DialogFragment newFragment = new NewQuoteFragment();
         newFragment.show(getSupportFragmentManager(), "quotes");
     }

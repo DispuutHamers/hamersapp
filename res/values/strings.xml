@@ -52,4 +52,21 @@
     <string name="cancel_quote">Cancel</string>
     <string name="quote_hint">Type your quote..</string>
 
+    <!-- Settings -->
+    <string name="pref_language">Language</string>
+    <string name="pref_language_default">English</string>
+
+    <string-array name="pref_language">
+        <item>English</item>
+        <item>Dutch</item>
+    </string-array>
+    <string-array name="pref_language_entries">
+        <item>English</item>
+        <item>Dutch</item>
+    </string-array>
+    <string-array name="pref_language_values">
+        <item>EN</item>
+        <item>NL</item>
+    </string-array>
+
 </resources>

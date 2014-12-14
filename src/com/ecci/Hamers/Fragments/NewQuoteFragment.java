@@ -1,4 +1,4 @@
-package com.ecci.Hamers;
+package com.ecci.Hamers.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import com.ecci.Hamers.R;
 
 public class NewQuoteFragment extends DialogFragment {
 
