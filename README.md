@@ -7,3 +7,7 @@ http://stackoverflow.com/questions/18025942/how-do-i-add-a-library-android-suppo
 * v7-appcompat (support) libraries (as module)
 * Preference fragment (v4-support) ( https://github.com/kolavar/android-support-v4-preferencefragment )
 
+### Signing ###
+http://developer.android.com/tools/publishing/app-signing.html
+Passwords are on the wiki.
+Signing was automated by Intellij (rather than command-line tools)
