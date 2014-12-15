@@ -69,6 +69,11 @@
 
     <!-- Settings -->
     <string name="pushnotifications">Push notificaties</string>
+    <string name="push_title">Push notificaties</string>
+    <string name="pref_summaryOn">Push notifications enabled</string>
+    <string name="pref_summaryOff">Push notifications disabled</string>
+
+    <string name="apikey_category">API Key</string>
     <string name="apikey_summary">You can get your key on the website.</string>
     <string name="apikey_hint">Copy+paste your key here..</string>
 

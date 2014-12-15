@@ -1,7 +1,6 @@
 package com.ecci.Hamers.Fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import com.ecci.Hamers.GetJson;
 import com.ecci.Hamers.R;
 import org.json.JSONArray;
@@ -54,8 +52,6 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
                     swipeView.setEnabled(false);
             }
         });
-
-        // Dummy list
 
         adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
         quote_list.setAdapter(adapter); //Set adapter and that's it.
