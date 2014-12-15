@@ -3,6 +3,6 @@
     <item android:id="@+id/action_new_quote"
           android:icon="@drawable/ic_action_new"
           android:title="@string/action_new"
-          android:showAsAction="always"
+          hamers:showAsAction="ifRoom|withText"
           android:onClick="newQuote"/>
 </menu>
