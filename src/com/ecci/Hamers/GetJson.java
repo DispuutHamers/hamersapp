@@ -34,7 +34,6 @@ public class GetJson extends AsyncTask<String, String, String> {
         BufferedReader reader;
         StringBuffer buffer = new StringBuffer();
         try {
-            System.out.println("-----------------------------------------------------------" + s.getString("apikey", "a"));
             URL url = new URL(baseURL + s.getString("apikey", "a") + type);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
             int read;
