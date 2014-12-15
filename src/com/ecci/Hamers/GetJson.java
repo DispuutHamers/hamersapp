@@ -1,6 +1,8 @@
 package com.ecci.Hamers;
 
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import com.ecci.Hamers.Fragments.QuoteListFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,14 +14,22 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class GetJson extends AsyncTask<String, String, String> {
+    public static final String baseURL = "http://zondersikkel.nl/api/v1/";
+    public static final String apikey = "";
+    public static final String QUOTE = "/quote.json";
+    public Fragment f;
+    public String type;
 
-    @Override
+    public GetJson(Fragment f, String type){
+        this.f = f;
+        this.type = type;
+    }
+
     protected String doInBackground(String... params) {
-        System.out.println("Getting JSON");
-        BufferedReader reader = null;
+        BufferedReader reader;
         StringBuffer buffer = new StringBuffer();
         try {
-            URL url = new URL(params[0]);
+            URL url = new URL(baseURL + apikey + type);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
             int read;
             char[] chars = new char[1024];
@@ -39,10 +49,8 @@ public class GetJson extends AsyncTask<String, String, String> {
     protected void onPostExecute(String result) {
         try {
             JSONArray json = new JSONArray(result);
-            System.out.println(json);
-            for(int i = 0; i< json.length(); i++){
-                JSONObject temp = json.getJSONObject(i);
-                System.out.println(temp.getString("text"));
+            if(f instanceof QuoteListFragment) {
+                ((QuoteListFragment) f).populateList(json);
             }
         } catch (JSONException e) {
             System.out.println("error parsing json");

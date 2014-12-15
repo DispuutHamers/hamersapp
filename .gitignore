@@ -53,6 +53,7 @@ IOS/www/
 .idea
 .gradle
 build/
+*.iml
 
 # TEMPFILES
 *~*
