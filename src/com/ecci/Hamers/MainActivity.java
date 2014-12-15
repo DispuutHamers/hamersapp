@@ -134,7 +134,7 @@ public class MainActivity extends ActionBarActivity {
                         .replace(R.id.content_frame, new QuoteListFragment())
                         .addToBackStack(null)
                         .commit();
-                setTitle("Quote list");
+                setTitle(getResources().getStringArray(R.array.drawer_array)[0]);
                 break;
 
             case 1:
@@ -142,7 +142,7 @@ public class MainActivity extends ActionBarActivity {
                         .replace(R.id.content_frame, new UserFragment())
                         .addToBackStack(null)
                         .commit();
-                setTitle("Users");
+                setTitle(getResources().getStringArray(R.array.drawer_array)[1]);
                 break;
 
             case 2:
@@ -150,7 +150,7 @@ public class MainActivity extends ActionBarActivity {
                         .replace(R.id.content_frame, new EventFragment())
                         .addToBackStack(null)
                         .commit();
-                setTitle("Events");
+                setTitle(getResources().getStringArray(R.array.drawer_array)[2]);
                 break;
 
             case 3:
@@ -158,7 +158,7 @@ public class MainActivity extends ActionBarActivity {
                         .replace(R.id.content_frame, new BeerFragment())
                         .addToBackStack(null)
                         .commit();
-                setTitle("Reviews");
+                setTitle(getResources().getStringArray(R.array.drawer_array)[3]);
                 break;
 
             case 4:
@@ -166,7 +166,7 @@ public class MainActivity extends ActionBarActivity {
                         .replace(R.id.content_frame, new MotionFragment())
                         .addToBackStack(null)
                         .commit();
-                setTitle("Motions");
+                setTitle(getResources().getStringArray(R.array.drawer_array)[4]);
                 break;
 
             case 5:
@@ -174,7 +174,7 @@ public class MainActivity extends ActionBarActivity {
                         .replace(R.id.content_frame, new SettingsFragment())
                         .addToBackStack(null)
                         .commit();
-                setTitle("Settings");
+                setTitle(getResources().getStringArray(R.array.drawer_array)[5]);
                 break;
         }
 
@@ -188,5 +188,4 @@ public class MainActivity extends ActionBarActivity {
         DialogFragment newQuoteFragment = new NewQuoteFragment();
         newQuoteFragment.show(getSupportFragmentManager(), "quotes");
     }
-
 }

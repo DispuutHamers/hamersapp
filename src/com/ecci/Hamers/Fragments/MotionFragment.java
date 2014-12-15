@@ -26,4 +26,5 @@ public class MotionFragment extends Fragment {
 
         return view;
     }
+
 }

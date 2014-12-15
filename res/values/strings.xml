@@ -18,18 +18,16 @@
     <string name="app_name">Hamers</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="action_websearch">Web search</string>
-    <string name="app_not_available">Sorry, there\'s no web browser available</string>
 
     <string name="refresh_button">Refresh Quotes</string>
 
     <string-array name="drawer_array">
         <item>Quotes</item>
-        <item>Users</item>
-        <item>Events</item>
-        <item>Beers</item>
-        <item>Motions</item>
-        <item>Settings</item>
+        <item>Leden</item>
+        <item>Activiteiten</item>
+        <item>Bieren</item>
+        <item>Moties</item>
+        <item>Instellingen</item>
     </string-array>
 
     <string-array name="users_array">
@@ -49,16 +47,16 @@
     </string-array>
 
     <!-- Quotes -->
-    <string name="action_new">New quote</string>
+    <string name="action_new">Nieuwe quote</string>
     <string name="quote">Wat zei die lul?</string>
-    <string name="send_quote">Send quote</string>
+    <string name="send_quote">Post</string>
     <string name="cancel_quote">Cancel</string>
-    <string name="quote_hint">Type your quote..</string>
+    <string name="quote_hint">Typ dan heumeu!</string>
 
     <!-- Beers -->
 
     <!-- Motions -->
-    <string name="motiontypetext">Motion type:</string>
+    <string name="motiontypetext">Motietype:</string>
     <string-array name="motion_array">
         <item>Motie van niet chill</item>
         <item>Motie van vet arelaxed</item>
@@ -67,9 +65,9 @@
 
     <string name="motion_hint">Wat is er stuk?</string>
     <string name="motion_body">Huilie huilie in dit veld.</string>
-    <string name="create_motion">Create motion</string>
+    <string name="create_motion">Dien motie in</string>
 
     <!-- Settings -->
-    <string name="pushnotifications">Push notifications</string>
+    <string name="pushnotifications">Push notificaties</string>
 
 </resources>
