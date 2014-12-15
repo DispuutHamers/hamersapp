@@ -1,8 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:hamers="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/action_search"
+    <item android:id="@+id/action_new_quote"
           android:icon="@drawable/ic_action_new"
           android:title="@string/action_new"
-          hamers:showAsAction="ifRoom|withText"
+          android:showAsAction="always"
           android:onClick="newQuote"/>
 </menu>
