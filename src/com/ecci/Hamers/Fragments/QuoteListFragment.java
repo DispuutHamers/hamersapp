@@ -26,10 +26,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         // Init swiper
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) view.findViewById(R.id.quotes_swipe_container);
         swipeView.setOnRefreshListener(this);
-        swipeView.setColorScheme(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+        swipeView.setColorSchemeResources(android.R.color.holo_red_light);
 
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
