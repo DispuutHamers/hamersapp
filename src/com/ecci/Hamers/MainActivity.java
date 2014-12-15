@@ -30,6 +30,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("Hoi Dex!");
         setContentView(R.layout.main);
 
         initDrawer();

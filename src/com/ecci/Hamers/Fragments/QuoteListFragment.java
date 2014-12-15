@@ -10,42 +10,40 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+import com.ecci.Hamers.GetJson;
 import com.ecci.Hamers.R;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public QuoteListFragment() {
         // Empty constructor required for fragment subclasses
     }
+    ArrayList<String> listItems =new ArrayList<String>();
+    ArrayAdapter<String> adapter;
+    SwipeRefreshLayout swipeView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.quote_list_fragment, container, false);
-        ListView events_list = (ListView) view.findViewById(R.id.quotes_listView);
+        ListView quote_list = (ListView) view.findViewById(R.id.quotes_listView);
 
         // Init swiper
-        final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) view.findViewById(R.id.quotes_swipe_container);
+        swipeView = (SwipeRefreshLayout) view.findViewById(R.id.quotes_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorScheme(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeView.setRefreshing(true);
-                ( new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeView.setRefreshing(false);
+        swipeView.setOnRefreshListener(this);
 
-                    }
-                }, 3000);
-            }
-        });
-
-        events_list.setOnScrollListener(new AbsListView.OnScrollListener() {
+        quote_list.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
 
@@ -61,18 +59,33 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         });
 
         // Dummy list
-        final String[] values = new String[]{"Android", "iPhone", "WindowsMobile",
-                "Blackberry", "Symbian", "Bada", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2", "OpenBSD", "FreeBSD", "NetBSD", "Solaris", "HP/UX"};
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, values);
-        events_list.setAdapter(adapter); //Set adapter and that's it.
+
+        adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
+        quote_list.setAdapter(adapter); //Set adapter and that's it.
 
         return view;
     }
 
     @Override
     public void onRefresh() {
-        // Refresh quotes
+        GetJson g = new GetJson(this, GetJson.QUOTE);
+        g.execute();
+    }
+
+    public void populateList(JSONArray json){
+        System.out.println(json);
+
+        listItems.clear();
+        for(int i = 0; i< json.length(); i++){
+            JSONObject temp;
+            try {
+                temp = json.getJSONObject(i);
+                listItems.add(temp.getString("text"));
+                adapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        swipeView.setRefreshing(false);
     }
 }
