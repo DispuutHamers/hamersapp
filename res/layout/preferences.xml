@@ -12,10 +12,10 @@
                 android:summaryOn="Push notifications enabled"
                 android:summaryOff="Push notifications disabled"/>
         <EditTextPreference
-                android:id="@+id/apikey_editText"
+                android:id="@+id/apikey"
                 android:title="API Key"
                 android:summary="@string/apikey_summary"
-                android:key="apiKeyPref"
+                android:key="apikey"
                 android:inputType="textMultiLine"
                 android:hint="@string/apikey_hint"/>
     </PreferenceCategory>

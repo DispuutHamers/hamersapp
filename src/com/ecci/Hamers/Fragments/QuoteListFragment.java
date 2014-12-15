@@ -2,6 +2,7 @@ package com.ecci.Hamers.Fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -65,7 +66,8 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-        GetJson g = new GetJson(this, GetJson.QUOTE);
+        System.out.println("--------------------------------------------------------------" + PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString("apikey", ""));
+        GetJson g = new GetJson(this, GetJson.QUOTE, PreferenceManager.getDefaultSharedPreferences(this.getActivity()));
         g.execute();
     }
 
