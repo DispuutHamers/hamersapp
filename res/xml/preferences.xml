@@ -16,10 +16,10 @@
     <PreferenceCategory
         android:title="@string/apikey_category">
         <EditTextPreference
-                android:id="@+id/apikey_editText"
+                android:id="@+id/apikey"
                 android:title="API Key"
                 android:summary="@string/apikey_summary"
-                android:key="apiKeyPref"
+                android:key="apikey"
                 android:inputType="textMultiLine"
                 android:hint="@string/apikey_hint"/>
     </PreferenceCategory>
