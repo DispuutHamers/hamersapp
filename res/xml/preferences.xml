@@ -6,11 +6,15 @@
     <PreferenceCategory
             android:title="@string/pushnotifications">
         <CheckBoxPreference
-                android:title="Push notifications"
+                android:id="@+id/pushnotification"
+                android:title="@string/push_title"
                 android:defaultValue="true"
                 android:key="pushPref"
-                android:summaryOn="Push notifications enabled"
-                android:summaryOff="Push notifications disabled"/>
+                android:summaryOn="@string/pref_summaryOn"
+                android:summaryOff="@string/pref_summaryOff"/>
+        </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/apikey_category">
         <EditTextPreference
                 android:id="@+id/apikey"
                 android:title="API Key"

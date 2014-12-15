@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import com.ecci.Hamers.Fragments.QuoteListFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
