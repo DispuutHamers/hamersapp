@@ -9,8 +9,7 @@
             android:layout_height="match_parent"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:ellipsize="marquee"
-            />
+            android:ellipsize="marquee"/>
     <EditText
             android:id="@+id/quote_body"
             android:layout_width="match_parent"

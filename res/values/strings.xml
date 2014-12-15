@@ -25,7 +25,10 @@
 
     <string-array name="drawer_array">
         <item>Quotes</item>
+        <item>Users</item>
         <item>Events</item>
+        <item>Beers</item>
+        <item>Motions</item>
         <item>Settings</item>
     </string-array>
 
@@ -51,6 +54,20 @@
     <string name="send_quote">Send quote</string>
     <string name="cancel_quote">Cancel</string>
     <string name="quote_hint">Type your quote..</string>
+
+    <!-- Beers -->
+
+    <!-- Motions -->
+    <string name="motiontypetext">Motion type:</string>
+    <string-array name="motion_array">
+        <item>Motie van niet chill</item>
+        <item>Motie van vet arelaxed</item>
+        <item>Motie van duurt lang</item>
+    </string-array>
+
+    <string name="motion_hint">Wat is er stuk?</string>
+    <string name="motion_body">Huilie huilie in dit veld.</string>
+    <string name="create_motion">Create motion</string>
 
     <!-- Settings -->
     <string name="pushnotifications">Push notifications</string>

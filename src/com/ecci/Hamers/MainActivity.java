@@ -14,10 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.ecci.Hamers.Fragments.EventsFragment;
-import com.ecci.Hamers.Fragments.NewQuoteFragment;
-import com.ecci.Hamers.Fragments.QuoteListFragment;
-import com.ecci.Hamers.Fragments.SettingsFragment;
+import com.ecci.Hamers.Fragments.*;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -142,12 +139,37 @@ public class MainActivity extends ActionBarActivity {
 
             case 1:
                 transaction
-                        .replace(R.id.content_frame, new EventsFragment())
+                        .replace(R.id.content_frame, new UserFragment())
+                        .addToBackStack(null)
+                        .commit();
+                setTitle("Users");
+                break;
+
+            case 2:
+                transaction
+                        .replace(R.id.content_frame, new EventFragment())
                         .addToBackStack(null)
                         .commit();
                 setTitle("Events");
                 break;
-            case 2:
+
+            case 3:
+                transaction
+                        .replace(R.id.content_frame, new BeerFragment())
+                        .addToBackStack(null)
+                        .commit();
+                setTitle("Reviews");
+                break;
+
+            case 4:
+                transaction
+                        .replace(R.id.content_frame, new MotionFragment())
+                        .addToBackStack(null)
+                        .commit();
+                setTitle("Motions");
+                break;
+
+            case 5:
                 transaction
                         .replace(R.id.content_frame, new SettingsFragment())
                         .addToBackStack(null)

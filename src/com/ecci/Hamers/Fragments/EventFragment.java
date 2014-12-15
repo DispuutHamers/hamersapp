@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.ecci.Hamers.R;
 
-public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.events_fragment, container, false);

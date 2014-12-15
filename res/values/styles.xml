@@ -2,4 +2,6 @@
 <resources>
     <item name="refresh_button" type="id"/>
     <item name="new_quote" type="id"/>
+    <color name="actionbarcolor">#CC0000</color>
+
 </resources>
