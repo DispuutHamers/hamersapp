@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="?android:attr/listPreferredItemHeight"
-                android:padding="6dip" >
+                android:padding="6dip">
 
     <ImageView
             android:id="@+id/icon"
@@ -11,10 +11,23 @@
             android:layout_alignParentTop="true"
             android:layout_marginRight="6dip"
             android:contentDescription="TODO"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_launcher"/>
 
     <TextView
-            android:id="@+id/secondLine"
+            android:id="@+id/quote_body"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/quote_date"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_toRightOf="@id/icon"
+            android:gravity="center_vertical"
+            android:text="Example application"
+            android:textSize="16sp"/>
+
+    <TextView
+            android:id="@+id/quote_date"
             android:layout_width="fill_parent"
             android:layout_height="26dip"
             android:layout_alignParentBottom="true"
@@ -23,19 +36,7 @@
             android:ellipsize="marquee"
             android:singleLine="true"
             android:text="Description"
-            android:textSize="12sp" />
+            android:textSize="12sp"/>
 
-    <TextView
-            android:id="@+id/firstLine"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/secondLine"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignWithParentIfMissing="true"
-            android:layout_toRightOf="@id/icon"
-            android:gravity="center_vertical"
-            android:text="Example application"
-            android:textSize="16sp" />
 
 </RelativeLayout> 

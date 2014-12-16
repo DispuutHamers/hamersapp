@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import com.ecci.Hamers.CustomAdapter;
 import com.ecci.Hamers.GetJson;
+import com.ecci.Hamers.Quote;
 import com.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,8 +26,8 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         // Empty constructor required for fragment subclasses
     }
 
-    ArrayList<String> listItems =new ArrayList<String>();
-    ArrayAdapter<String> adapter;
+    ArrayList<Quote> listItems = new ArrayList<Quote>();
+    ArrayAdapter<Quote> adapter;
     SwipeRefreshLayout swipeView;
 
     @Override
@@ -55,7 +57,10 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
             }
         });
 
-        adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
+        // 1. pass context and data to the custom adapter
+        adapter = new CustomAdapter(this.getActivity(), listItems);
+
+        //adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1, listItems);
         quote_list.setAdapter(adapter); //Set adapter and that's it.
 
         return view;
@@ -75,7 +80,8 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
             JSONObject temp;
             try {
                 temp = json.getJSONObject(i);
-                listItems.add(temp.getString("text"));
+                Quote tempquote = new Quote(temp.getString("text").toString(), temp.getString("created_at").toString(), temp.getInt("user_id"));
+                listItems.add(tempquote);
                 adapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();

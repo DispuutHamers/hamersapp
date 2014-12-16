@@ -2,6 +2,7 @@
 <resources>
     <item name="refresh_button" type="id"/>
     <item name="new_quote" type="id"/>
+    <item name="quote_date" type="id"/>
     <item name="pushnotification" type="id"/>
 
 </resources>
