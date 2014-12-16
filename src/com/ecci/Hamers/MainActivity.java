@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import com.ecci.Hamers.Fragments.*;
 
 
@@ -192,5 +193,26 @@ public class MainActivity extends ActionBarActivity {
     public void newQuote(MenuItem item) {
         DialogFragment newQuoteFragment = new NewQuoteFragment();
         newQuoteFragment.show(getSupportFragmentManager(), "quotes");
+    }
+
+    public void onMotionRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_nietchill:
+                if (checked)
+                    // Doe meuk
+                    break;
+            case R.id.radio_arelaxed:
+                if (checked)
+                    // Doe meuk
+                    break;
+            case R.id.radio_duurtlang:
+                if (checked)
+                    // Doe meuk
+                    break;
+        }
     }
 }

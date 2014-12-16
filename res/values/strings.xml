@@ -57,11 +57,9 @@
 
     <!-- Motions -->
     <string name="motiontypetext">Motietype:</string>
-    <string-array name="motion_array">
-        <item>Motie van niet chill</item>
-        <item>Motie van vet arelaxed</item>
-        <item>Motie van duurt lang</item>
-    </string-array>
+    <string name="motie_nietchill">Motie van niet chill</string>
+    <string name="motie_arelaxed">Motie van vet arelaxed</string>
+    <string name="motie_duurtlang">Motie van duurt lang</string>
 
     <string name="motion_hint">Wat is er stuk?</string>
     <string name="motion_body">Huilie huilie in dit veld.</string>

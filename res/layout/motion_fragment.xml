@@ -6,41 +6,63 @@
 
     <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/motiontypetext"/>
-        <Spinner
-                android:id="@+id/motion_spinner"
-                style="?android:attr/spinnerStyle"
-                android:layout_width="match_parent"
+                android:text="@string/motiontypetext"
+                android:textStyle="bold"
+                android:textSize="22dp"
+                android:padding="20dp"/>
+
+        <RadioGroup
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:dropDownWidth="wrap_content"/>
+                android:orientation="vertical"
+                android:paddingLeft="20dp">
+            <RadioButton android:id="@+id/radio_duurtlang"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="@string/motie_duurtlang"
+                         android:onClick="onMotionRadioButtonClicked"/>
+            <RadioButton android:id="@+id/radio_arelaxed"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="@string/motie_arelaxed"
+                         android:onClick="onMotionRadioButtonClicked"/>
+            <RadioButton android:id="@+id/radio_nietchill"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="@string/motie_nietchill"
+                         android:onClick="onMotionRadioButtonClicked"/>
+        </RadioGroup>
+
         <EditText
                 android:id="@+id/motion_subject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginBottom="4dp"
                 android:inputType="textMultiLine"
-                android:hint="@string/motion_hint"/>
+                android:hint="@string/motion_hint"
+                android:padding="20dp"/>
         <EditText
                 android:id="@+id/quote_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginBottom="4dp"
                 android:inputType="textMultiLine"
-                android:hint="@string/motion_body"/>
+                android:hint="@string/motion_body"
+                android:padding="20dp"/>
     </LinearLayout>
+
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
