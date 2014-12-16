@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    private int mCurCheckPosition;
+
     public QuoteListFragment() {
         // Empty constructor required for fragment subclasses
     }

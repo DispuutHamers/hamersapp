@@ -3,6 +3,7 @@ package com.ecci.Hamers;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -23,6 +24,13 @@ public class MainActivity extends ActionBarActivity {
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+    private String backStack;
+    Fragment quoteListFragment = new QuoteListFragment();
+    Fragment userFragment = new UserFragment();
+    Fragment eventFragment = new EventFragment();
+    Fragment beerFragment = new BeerFragment();
+    Fragment motionFragment = new MotionFragment();
+    Fragment settingsFragment = new SettingsFragment();
 
     /**
      * Called when the activity is first created.
@@ -30,7 +38,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("Hoi Dex!");
         setContentView(R.layout.main);
 
         initDrawer();
@@ -38,6 +45,7 @@ public class MainActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             selectItem(0);
         }
+
      }
 
         @Override
@@ -117,7 +125,7 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 
-    /* The click listner for ListView in the navigation drawer */
+    /* The click listener for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -127,53 +135,49 @@ public class MainActivity extends ActionBarActivity {
 
     /** Swaps fragments in the main content view */
     private void selectItem(int position) {
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
         switch (position) {
             case 0:
                 transaction
-                        .replace(R.id.content_frame, new QuoteListFragment())
-                        .addToBackStack(null)
-                        .commit();
+                    .replace(R.id.content_frame, quoteListFragment)
+                    .commit();
                 setTitle(getResources().getStringArray(R.array.drawer_array)[0]);
                 break;
 
             case 1:
                 transaction
-                        .replace(R.id.content_frame, new UserFragment())
-                        .addToBackStack(null)
+                        .replace(R.id.content_frame, userFragment)
                         .commit();
                 setTitle(getResources().getStringArray(R.array.drawer_array)[1]);
                 break;
 
             case 2:
                 transaction
-                        .replace(R.id.content_frame, new EventFragment())
-                        .addToBackStack(null)
+                        .replace(R.id.content_frame, eventFragment)
                         .commit();
                 setTitle(getResources().getStringArray(R.array.drawer_array)[2]);
                 break;
 
             case 3:
                 transaction
-                        .replace(R.id.content_frame, new BeerFragment())
-                        .addToBackStack(null)
+                        .replace(R.id.content_frame, beerFragment)
                         .commit();
                 setTitle(getResources().getStringArray(R.array.drawer_array)[3]);
                 break;
 
             case 4:
                 transaction
-                        .replace(R.id.content_frame, new MotionFragment())
-                        .addToBackStack(null)
+                        .replace(R.id.content_frame, motionFragment)
                         .commit();
                 setTitle(getResources().getStringArray(R.array.drawer_array)[4]);
                 break;
 
             case 5:
                 transaction
-                        .replace(R.id.content_frame, new SettingsFragment())
-                        .addToBackStack(null)
+                        .replace(R.id.content_frame, settingsFragment)
                         .commit();
                 setTitle(getResources().getStringArray(R.array.drawer_array)[5]);
                 break;

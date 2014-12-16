@@ -13,6 +13,7 @@
                 android:summaryOn="@string/pref_summaryOn"
                 android:summaryOff="@string/pref_summaryOff"/>
         </PreferenceCategory>
+
     <PreferenceCategory
         android:title="@string/apikey_category">
         <EditTextPreference
@@ -23,5 +24,4 @@
                 android:inputType="textMultiLine"
                 android:hint="@string/apikey_hint"/>
     </PreferenceCategory>
-
 </PreferenceScreen>
