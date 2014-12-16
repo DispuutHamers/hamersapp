@@ -68,7 +68,6 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-        System.out.println("--------------------------------------------------------------" + PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString("apikey", ""));
         GetJson g = new GetJson(this, GetJson.QUOTE, PreferenceManager.getDefaultSharedPreferences(this.getActivity()));
         g.execute();
     }
