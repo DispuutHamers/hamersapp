@@ -1,11 +1,12 @@
 package com.ecci.Hamers;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import com.ecci.Hamers.Fragments.BeerFragment;
+import com.ecci.Hamers.Fragments.EventFragment;
 import com.ecci.Hamers.Fragments.QuoteListFragment;
+import com.ecci.Hamers.Fragments.UserFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -18,6 +19,9 @@ import java.net.URL;
 public class GetJson extends AsyncTask<String, String, String> {
     public static final String baseURL = "http://zondersikkel.nl/api/v1/";
     public static final String QUOTE = "/quote.json";
+    public static final String USER = "/user.json";
+    public static final String EVENT = "/event.json";
+    public static final String BEER = "/beer.json";
 
     private Fragment f;
     private String type;
@@ -53,9 +57,21 @@ public class GetJson extends AsyncTask<String, String, String> {
     protected void onPostExecute(String result) {
         try {
             JSONArray json = new JSONArray(result);
+            // Quotelist fragment
             if(f instanceof QuoteListFragment) {
                 ((QuoteListFragment) f).populateList(json);
             }
+            // User fragment
+            else if (f instanceof UserFragment) {
+                ((UserFragment) f).populateList(json);
+            }
+            // Event fragment
+            else if (f instanceof EventFragment) {
+                ((EventFragment) f).populateList(json);
+            }
+            // Beer fragment
+            else if (f instanceof BeerFragment)
+                ((BeerFragment) f).populateList(json);
         } catch (JSONException e) {
             System.out.println("error parsing json");
         }
