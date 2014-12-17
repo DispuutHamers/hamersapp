@@ -12,12 +12,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.ecci.Hamers.*;
 import com.ecci.Hamers.Adapters.EventsAdapter;
-import com.ecci.Hamers.Adapters.QuotesAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 
 public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -82,13 +86,24 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             JSONObject temp;
             try {
                 temp = json.getJSONObject(i);
-                Event tempEvent = new Event(temp.getString("title").toString(), temp.getString("beschrijving").toString(), temp.getString("date"), temp.getString("end_time"));
+
+                String finalDate = parseDate(temp.getString("date").substring(0, 10));
+
+                Event tempEvent = new Event(temp.getString("title").toString(), temp.getString("beschrijving").toString(), finalDate, temp.getString("end_time"));
                 listItems.add(tempEvent);
                 adapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
         swipeView.setRefreshing(false);
+    }
+    
+    public String parseDate(String dateTemp) throws ParseException {
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+        return outputFormat.format(inputFormat.parse(dateTemp));
     }
 }
