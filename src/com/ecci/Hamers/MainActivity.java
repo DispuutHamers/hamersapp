@@ -24,7 +24,8 @@ public class MainActivity extends ActionBarActivity {
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private String backStack;
+
+    // Fragments
     Fragment quoteListFragment = new QuoteListFragment();
     Fragment userFragment = new UserFragment();
     Fragment eventFragment = new EventFragment();

@@ -19,5 +19,6 @@
     <orderEntry type="library" name="android-support-v4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="android-support-v7-appcompat" level="project" />
     <orderEntry type="module" module-name="android-support-v4-preferencefragment" />
+    <orderEntry type="library" name="android-support-v7-recyclerview" level="project" />
   </component>
 </module>

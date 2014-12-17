@@ -15,10 +15,7 @@ public class MotionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.motion_fragment, container, false);
 
-
-        motionRadioGroup = (RadioGroup) getActivity().findViewById(R.id.motionradiogroup);
-        // get selected radio button from radioGroup
-        int selectedId = motionRadioGroup.getCheckedRadioButtonId();
+        // TODO: Get radiobutton value
 
         return view;
     }

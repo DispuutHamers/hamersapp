@@ -26,18 +26,15 @@
             <RadioButton android:id="@+id/radio_duurtlang"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
-                         android:text="@string/motie_duurtlang"
-                         android:onClick="onMotionRadioButtonClicked"/>
+                         android:text="@string/motie_duurtlang"/>
             <RadioButton android:id="@+id/radio_arelaxed"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
-                         android:text="@string/motie_arelaxed"
-                         android:onClick="onMotionRadioButtonClicked"/>
+                         android:text="@string/motie_arelaxed"/>
             <RadioButton android:id="@+id/radio_nietchill"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
-                         android:text="@string/motie_nietchill"
-                         android:onClick="onMotionRadioButtonClicked"/>
+                         android:text="@string/motie_nietchill"/>
         </RadioGroup>
 
         <EditText
