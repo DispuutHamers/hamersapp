@@ -10,8 +10,9 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.ecci.Hamers.GetJson;
-import com.ecci.Hamers.R;
+import com.ecci.Hamers.*;
+import com.ecci.Hamers.Adapters.EventsAdapter;
+import com.ecci.Hamers.Adapters.QuotesAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,8 +25,8 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         // Empty constructor required for fragment subclasses
     }
 
-    ArrayList<String> listItems =new ArrayList<String>();
-    ArrayAdapter<String> adapter;
+    ArrayList<Event> listItems = new ArrayList<Event>();
+    ArrayAdapter<Event> adapter;
     SwipeRefreshLayout swipeView;
 
     @Override
@@ -35,8 +36,11 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         initSwiper(view, event_list);
 
-        adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
-        event_list.setAdapter(adapter); //Set adapter and that's it.
+        // 1. pass context and data to the custom adapter
+        adapter = new EventsAdapter(this.getActivity(), listItems);
+
+        //Set adapter and that's it.
+        event_list.setAdapter(adapter);
 
         return view;
     }
@@ -63,6 +67,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             }
         });
     }
+
     @Override
     public void onRefresh() {
         GetJson g = new GetJson(this, GetJson.EVENT, PreferenceManager.getDefaultSharedPreferences(this.getActivity()));
@@ -77,7 +82,8 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             JSONObject temp;
             try {
                 temp = json.getJSONObject(i);
-                listItems.add(temp.getString("title"));
+                Event tempEvent = new Event(temp.getString("title").toString(), temp.getString("beschrijving").toString(), temp.getString("date"), temp.getString("end_time"));
+                listItems.add(tempEvent);
                 adapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -85,5 +91,4 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         }
         swipeView.setRefreshing(false);
     }
-
 }

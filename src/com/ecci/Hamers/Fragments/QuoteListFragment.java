@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.ecci.Hamers.CustomAdapter;
+import com.ecci.Hamers.Adapters.QuotesAdapter;
 import com.ecci.Hamers.GetJson;
 import com.ecci.Hamers.Quote;
 import com.ecci.Hamers.R;
@@ -38,7 +38,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         initSwiper(view, quote_list);
 
         // 1. pass context and data to the custom adapter
-        adapter = new CustomAdapter(this.getActivity(), listItems);
+        adapter = new QuotesAdapter(this.getActivity(), listItems);
 
         //Set adapter and that's it.
         quote_list.setAdapter(adapter);

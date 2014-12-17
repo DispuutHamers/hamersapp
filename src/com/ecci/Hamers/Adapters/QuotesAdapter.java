@@ -1,4 +1,4 @@
-package com.ecci.Hamers;
+package com.ecci.Hamers.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,15 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import com.ecci.Hamers.Quote;
+import com.ecci.Hamers.R;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends ArrayAdapter<Quote> {
+public class QuotesAdapter extends ArrayAdapter<Quote> {
 
     private final Context context;
     private final ArrayList<Quote> itemsArrayList;
 
-    public CustomAdapter(Context context, ArrayList<Quote> itemsArrayList) {
+    public QuotesAdapter(Context context, ArrayList<Quote> itemsArrayList) {
 
         super(context, R.layout.quote_row, itemsArrayList);
 

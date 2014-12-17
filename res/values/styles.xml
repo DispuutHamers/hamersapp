@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="refresh_button" type="id"/>
+
+    <!-- Quotes -->
     <item name="new_quote" type="id"/>
     <item name="quote_date" type="id"/>
+
+    <!-- Events -->
+    <item name="event_title" type="id"/>
+    <item name="event_beschrijving" type="id"/>
+    <item name="event_date" type="id"/>
+    <item name="event_end_time" type="id"/>
+
     <item name="pushnotification" type="id"/>
 
 </resources>
