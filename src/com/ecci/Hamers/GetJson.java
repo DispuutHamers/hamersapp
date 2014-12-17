@@ -1,7 +1,9 @@
 package com.ecci.Hamers;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import com.ecci.Hamers.Fragments.BeerFragment;
 import com.ecci.Hamers.Fragments.EventFragment;
@@ -25,19 +27,20 @@ public class GetJson extends AsyncTask<String, String, String> {
 
     private Fragment f;
     private String type;
-    private SharedPreferences s;
+    private SharedPreferences prefs;
 
     public GetJson(Fragment f, String type, SharedPreferences s){
         this.f = f;
         this.type = type;
-        this.s = s;
+        this.prefs = s;
     }
 
     protected String doInBackground(String... params) {
         BufferedReader reader;
         StringBuffer buffer = new StringBuffer();
         try {
-            URL url = new URL(baseURL + s.getString("apikey", "a") + type);
+            URL url = new URL(baseURL + prefs.getString("apikey", "a") + type);
+            System.out.println(url);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
             int read;
             char[] chars = new char[1024];
@@ -49,6 +52,7 @@ public class GetJson extends AsyncTask<String, String, String> {
             System.out.println("Unable to retreive data - Url not correctly formulated");
         } catch(IOException e){
             System.out.println("Unable to retreive data - input/output error");
+            e.printStackTrace();
         }
         return buffer.toString();
     }
@@ -58,7 +62,10 @@ public class GetJson extends AsyncTask<String, String, String> {
         try {
             JSONArray json = new JSONArray(result);
             // Quotelist fragment
-            if(f instanceof QuoteListFragment) {
+            if(f instanceof QuoteListFragment && type == USER) {
+                prefs.edit().putString("userData", result).apply();
+                ((QuoteListFragment) f).getQuotes();
+            }else if (f instanceof QuoteListFragment){
                 ((QuoteListFragment) f).populateList(json);
             }
             // User fragment

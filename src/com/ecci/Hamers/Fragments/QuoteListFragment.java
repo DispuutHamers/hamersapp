@@ -1,5 +1,7 @@
 package com.ecci.Hamers.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -19,16 +21,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public QuoteListFragment() {
-        // Empty constructor required for fragment subclasses
     }
 
     ArrayList<Quote> listItems = new ArrayList<Quote>();
     ArrayAdapter<Quote> adapter;
     SwipeRefreshLayout swipeView;
+
+    SharedPreferences prefs;
+
+    JSONArray users;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,25 +77,57 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-        GetJson g = new GetJson(this, GetJson.QUOTE, PreferenceManager.getDefaultSharedPreferences(this.getActivity()));
+        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        if (prefs.getString("users", "") == "") {
+            GetJson g = new GetJson(this, GetJson.USER, prefs);
+            g.execute();
+        }
+    }
+
+    public void getQuotes() {
+        GetJson g = new GetJson(this, GetJson.QUOTE, prefs);
         g.execute();
     }
 
-    public void populateList(JSONArray json){
-        System.out.println(json);
+    private JSONObject getUser(int id) {
+        for (int i = 0; i < users.length(); i++) {
+            try {
+                JSONObject temp = users.getJSONObject(i);
+                if (temp.getInt("id") == id) {
+                    return temp;
+                }
+            } catch (JSONException e) {
+                return (null);
+            }
+        }
+        return null;
+    }
+
+    public void populateList(JSONArray json) {
 
         listItems.clear();
-        for(int i = 0; i< json.length(); i++){
-            JSONObject temp;
-            try {
-                temp = json.getJSONObject(i);
-                Quote tempQuote = new Quote(temp.getString("text").toString(), temp.getString("created_at").toString(), temp.getInt("user_id"));
+        try {
+            users = new JSONArray(prefs.getString("userData", ""));
+            for (int i = 0; i < json.length(); i++) {
+                JSONObject quote = json.getJSONObject(i);
+                JSONObject user;
+
+                String username;
+                if ((user = getUser(quote.getInt("user_id"))) != null) {
+                    username = user.getString("name");
+                } else {
+                    username = "unknown user";
+                }
+
+                Quote tempQuote = new Quote(username + ": " + quote.getString("text").toString(), quote.getString("created_at").toString(), quote.getInt("user_id"));
                 listItems.add(tempQuote);
                 adapter.notifyDataSetChanged();
-            } catch (JSONException e) {
-                e.printStackTrace();
+
             }
+        } catch (JSONException e) {
+            System.out.println("JSON Exception");
         }
         swipeView.setRefreshing(false);
     }
+
 }
