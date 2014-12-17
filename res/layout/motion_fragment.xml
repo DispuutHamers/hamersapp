@@ -21,7 +21,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="20dp">
+                android:paddingLeft="20dp"
+                android:id="@+id/motionradiogroup">
             <RadioButton android:id="@+id/radio_duurtlang"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"

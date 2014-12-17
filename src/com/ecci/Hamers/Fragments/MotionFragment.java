@@ -5,12 +5,20 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 import com.ecci.Hamers.R;
 
 public class MotionFragment extends Fragment {
+    private RadioGroup motionRadioGroup;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.motion_fragment, container, false);
+
+
+        motionRadioGroup = (RadioGroup) getActivity().findViewById(R.id.motionradiogroup);
+        // get selected radio button from radioGroup
+        int selectedId = motionRadioGroup.getCheckedRadioButtonId();
 
         return view;
     }
