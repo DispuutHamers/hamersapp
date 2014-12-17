@@ -33,14 +33,14 @@
     <TextView
             android:id="@+id/event_date"
             android:layout_width="fill_parent"
-            android:layout_height="14dip"
+            android:layout_height="16dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="0dp"
             android:ellipsize="marquee"
             android:singleLine="true"
             android:text="Dit is de datum (testing purposes)"
             android:textSize="12sp"
             android:gravity="right"/>
-        
+
 </RelativeLayout>

@@ -20,8 +20,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
+
+import static com.ecci.Hamers.MainActivity.parseDate;
 
 public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -119,15 +124,21 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
                     username = "unknown user";
                 }
 
-                Quote tempQuote = new Quote(username + ": " + quote.getString("text").toString(), quote.getString("created_at").toString(), quote.getInt("user_id"));
+                String tempDate = quote.getString("created_at").substring(0, 10);
+                String tempTijd = quote.getString("created_at").substring(11, 16);
+
+                String date = tempTijd + " - " + parseDate(tempDate);
+
+                Quote tempQuote = new Quote(username, quote.getString("text").toString(), date);
                 listItems.add(tempQuote);
                 adapter.notifyDataSetChanged();
 
             }
         } catch (JSONException e) {
             System.out.println("JSON Exception");
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         swipeView.setRefreshing(false);
     }
-
 }

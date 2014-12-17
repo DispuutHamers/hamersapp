@@ -30,11 +30,22 @@
             android:gravity="left"
             android:text="Dit is een keigoeie quote (testing purposes)"
             android:textSize="16sp"/>
+    <TextView
+            android:id="@+id/quote_user"
+            android:layout_width="fill_parent"
+            android:layout_height="14dp"
+            android:singleLine="true"
+            android:text="Dit is de user (testing purposes)"
+            android:textSize="12sp"
+            android:gravity="right"
+            android:layout_above="@+id/quote_date"
+            android:layout_alignRight="@+id/quote_date"
+            android:layout_alignEnd="@+id/quote_date"/>
 
     <TextView
             android:id="@+id/quote_date"
             android:layout_width="fill_parent"
-            android:layout_height="14dip"
+            android:layout_height="14dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@id/icon"
