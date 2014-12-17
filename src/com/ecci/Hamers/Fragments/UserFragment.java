@@ -33,7 +33,15 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         View view = inflater.inflate(R.layout.user_fragment, container, false);
         ListView user_list = (ListView) view.findViewById(R.id.users_listView);
 
-        // Init swiper
+        initSwiper(view, user_list);
+
+        adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
+        user_list.setAdapter(adapter); //Set adapter and that's it.
+
+        return view;
+    }
+
+    public void initSwiper(View view, ListView user_list) {
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.users_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
@@ -54,11 +62,6 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     swipeView.setEnabled(false);
             }
         });
-
-        adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
-        user_list.setAdapter(adapter); //Set adapter and that's it.
-
-        return view;
     }
 
     @Override

@@ -30,16 +30,24 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.beer_fragment, container, false);
-        ListView quote_list = (ListView) view.findViewById(R.id.beer_listView);
+        ListView beer_list = (ListView) view.findViewById(R.id.beer_listView);
 
-        // Init swiper
+        initSwiper(view, beer_list);
+
+        adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
+        beer_list.setAdapter(adapter); //Set adapter and that's it.
+
+        return view;
+    }
+
+    public void initSwiper(View view, ListView beer_list) {
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
 
         swipeView.setOnRefreshListener(this);
 
-        quote_list.setOnScrollListener(new AbsListView.OnScrollListener() {
+        beer_list.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
 
@@ -53,11 +61,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     swipeView.setEnabled(false);
             }
         });
-
-        adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
-        quote_list.setAdapter(adapter); //Set adapter and that's it.
-
-        return view;
     }
 
     @Override

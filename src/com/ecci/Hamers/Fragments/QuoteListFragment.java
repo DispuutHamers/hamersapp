@@ -35,7 +35,18 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         View view = inflater.inflate(R.layout.quote_list_fragment, container, false);
         ListView quote_list = (ListView) view.findViewById(R.id.quotes_listView);
 
-        // Init swiper
+        initSwiper(view, quote_list);
+
+        // 1. pass context and data to the custom adapter
+        adapter = new CustomAdapter(this.getActivity(), listItems);
+
+        //Set adapter and that's it.
+        quote_list.setAdapter(adapter);
+
+        return view;
+    }
+
+    public void initSwiper(View view, ListView quote_list) {
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.quotes_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
@@ -56,14 +67,6 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
                     swipeView.setEnabled(false);
             }
         });
-
-        // 1. pass context and data to the custom adapter
-        adapter = new CustomAdapter(this.getActivity(), listItems);
-
-        //adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1, listItems);
-        quote_list.setAdapter(adapter); //Set adapter and that's it.
-
-        return view;
     }
 
     @Override
@@ -80,8 +83,8 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
             JSONObject temp;
             try {
                 temp = json.getJSONObject(i);
-                Quote tempquote = new Quote(temp.getString("text").toString(), temp.getString("created_at").toString(), temp.getInt("user_id"));
-                listItems.add(tempquote);
+                Quote tempQuote = new Quote(temp.getString("text").toString(), temp.getString("created_at").toString(), temp.getInt("user_id"));
+                listItems.add(tempQuote);
                 adapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();

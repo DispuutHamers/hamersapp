@@ -33,12 +33,12 @@ public class CustomAdapter extends ArrayAdapter<Quote> {
         View rowView = inflater.inflate(R.layout.quote_row, parent, false);
 
         // 3. Get the two text view from the rowView
-        TextView bodyView = (TextView) rowView.findViewById(R.id.quote_body);
-        TextView dateView = (TextView) rowView.findViewById(R.id.quote_date);
+        TextView body = (TextView) rowView.findViewById(R.id.quote_body);
+        TextView date = (TextView) rowView.findViewById(R.id.quote_date);
 
         // 4. Set the text for textView
-        bodyView.setText(itemsArrayList.get(position).getBody());
-        dateView.setText(itemsArrayList.get(position).getDate());
+        body.setText(itemsArrayList.get(position).getBody());
+        date.setText(itemsArrayList.get(position).getDate());
 
         // 5. return rowView
         return rowView;

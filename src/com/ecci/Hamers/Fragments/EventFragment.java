@@ -33,7 +33,15 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         View view = inflater.inflate(R.layout.events_fragment, container, false);
         ListView event_list = (ListView) view.findViewById(R.id.events_listView);
 
-        // Init swiper
+        initSwiper(view, event_list);
+
+        adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
+        event_list.setAdapter(adapter); //Set adapter and that's it.
+
+        return view;
+    }
+
+    public void initSwiper(View view, ListView event_list) {
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.events_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
@@ -54,28 +62,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     swipeView.setEnabled(false);
             }
         });
-
-        event_list.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0)
-                    swipeView.setEnabled(true);
-                else
-                    swipeView.setEnabled(false);
-            }
-        });
-
-        adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
-        event_list.setAdapter(adapter); //Set adapter and that's it.
-
-        return view;
     }
-
     @Override
     public void onRefresh() {
         GetJson g = new GetJson(this, GetJson.EVENT, PreferenceManager.getDefaultSharedPreferences(this.getActivity()));
