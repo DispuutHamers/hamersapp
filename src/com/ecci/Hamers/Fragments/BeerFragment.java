@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import com.ecci.Hamers.Adapters.BeersAdapter;
+import com.ecci.Hamers.Adapters.QuotesAdapter;
+import com.ecci.Hamers.Beer;
 import com.ecci.Hamers.GetJson;
 import com.ecci.Hamers.R;
 import org.json.JSONArray;
@@ -24,8 +27,8 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         // Empty constructor required for fragment subclasses
     }
 
-    ArrayList<String> listItems =new ArrayList<String>();
-    ArrayAdapter<String> adapter;
+    ArrayList<Beer> listItems =new ArrayList<Beer>();
+    ArrayAdapter<Beer> adapter;
     SwipeRefreshLayout swipeView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,9 +37,11 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         initSwiper(view, beer_list);
 
-        adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
-        beer_list.setAdapter(adapter); //Set adapter and that's it.
+        // 1. pass context and data to the custom adapter
+        adapter = new BeersAdapter(this.getActivity(), listItems);
 
+        //Set adapter and that's it.
+        beer_list.setAdapter(adapter);
         return view;
     }
 
@@ -77,7 +82,9 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             JSONObject temp;
             try {
                 temp = json.getJSONObject(i);
-                listItems.add(temp.getString("name"));
+                Beer tempBeer = new Beer(temp.getString("name").toString(), temp.getString("soort").toString(),
+                        temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"));
+                listItems.add(tempBeer);
                 adapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();

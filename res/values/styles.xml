@@ -12,6 +12,14 @@
     <item name="event_date" type="id"/>
     <item name="event_end_time" type="id"/>
 
+    <!-- Beers -->
+    <item name="beer_name" type="id"/>
+    <item name="beer_soort" type="id"/>
+    <item name="beer_picture" type="id"/>
+    <item name="beer_percentage" type="id"/>
+    <item name="beer_brewer" type="id"/>
+    <item name="beer_country" type="id"/>
+
     <item name="pushnotification" type="id"/>
 
 </resources>

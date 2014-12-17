@@ -39,13 +39,11 @@ public class EventsAdapter extends ArrayAdapter<Event> {
         TextView title = (TextView) rowView.findViewById(R.id.event_title);
         TextView beschrijving = (TextView) rowView.findViewById(R.id.event_beschrijving);
         TextView date = (TextView) rowView.findViewById(R.id.event_date);
-        //TextView end_time = (TextView) rowView.findViewById(R.id.event_end_time);
 
         // 4. Set the text for textView
         title.setText(itemsArrayList.get(position).getTitle());
         beschrijving.setText(itemsArrayList.get(position).getBeschrijving());
         date.setText(itemsArrayList.get(position).getDate());
-        //end_time.setText(itemsArrayList.get(position).getEnd_time());
 
         // 5. return rowView
         return rowView;
