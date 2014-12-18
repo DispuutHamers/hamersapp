@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import com.ecci.Hamers.Adapters.UsersAdapter;
 import com.ecci.Hamers.GetJson;
 import com.ecci.Hamers.R;
+import com.ecci.Hamers.User;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,8 +26,8 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         // Empty constructor required for fragment subclasses
     }
 
-    ArrayList<String> listItems = new ArrayList<String>();
-    ArrayAdapter<String> adapter;
+    ArrayList<User> listItems = new ArrayList<User>();
+    ArrayAdapter<User> adapter;
     SwipeRefreshLayout swipeView;
 
     @Override
@@ -35,8 +37,11 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         initSwiper(view, user_list);
 
-        adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, listItems);
-        user_list.setAdapter(adapter); //Set adapter and that's it.
+        // 1. pass context and data to the custom adapter
+        adapter = new UsersAdapter(this.getActivity(), listItems);
+
+        // 2. Set adapter and that's it.
+        user_list.setAdapter(adapter);
 
         return view;
     }
@@ -78,7 +83,8 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             JSONObject temp;
             try {
                 temp = json.getJSONObject(i);
-                listItems.add(temp.getString("name"));
+                User tempUser = new User(temp.getString("name"), temp.getInt("id"), 0, 0);
+                listItems.add(tempUser);
                 adapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();

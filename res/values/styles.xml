@@ -6,6 +6,13 @@
     <item name="new_quote" type="id"/>
     <item name="quote_date" type="id"/>
 
+    <!-- Users -->
+    <item name="username" type="id"/>
+    <item name="user_id" type="id"/>
+    <item name="user_image" type="id"/>
+    <item name="user_quotecount" type="id"/>
+    <item name="user_reviewcount" type="id"/>
+
     <!-- Events -->
     <item name="event_title" type="id"/>
     <item name="event_beschrijving" type="id"/>

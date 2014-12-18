@@ -10,17 +10,16 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.ecci.Hamers.*;
 import com.ecci.Hamers.Adapters.EventsAdapter;
+import com.ecci.Hamers.Event;
+import com.ecci.Hamers.GetJson;
+import com.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import static com.ecci.Hamers.MainActivity.parseDate;
 

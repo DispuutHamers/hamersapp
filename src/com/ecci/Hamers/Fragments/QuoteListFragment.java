@@ -1,6 +1,5 @@
 package com.ecci.Hamers.Fragments;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -20,11 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import static com.ecci.Hamers.MainActivity.parseDate;
 
@@ -50,7 +46,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         // 1. pass context and data to the custom adapter
         adapter = new QuotesAdapter(this.getActivity(), listItems);
 
-        //Set adapter and that's it.
+        // 2. Set adapter and that's it.
         quote_list.setAdapter(adapter);
 
         return view;

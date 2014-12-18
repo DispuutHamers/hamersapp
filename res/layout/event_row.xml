@@ -7,6 +7,7 @@
             android:id="@+id/event_title"
             android:layout_width="fill_parent"
             android:layout_height="20dp"
+            android:layout_marginBottom="-6dp"
             android:layout_alignWithParentIfMissing="true"
             android:gravity="left"
             android:text="Dit is een keileuke activiteit (testing purposes)"

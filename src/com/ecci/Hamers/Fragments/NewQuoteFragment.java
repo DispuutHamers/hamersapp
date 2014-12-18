@@ -16,8 +16,6 @@ import android.widget.Spinner;
 import com.ecci.Hamers.R;
 import com.ecci.Hamers.SendPostRequest;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class NewQuoteFragment extends DialogFragment {
 

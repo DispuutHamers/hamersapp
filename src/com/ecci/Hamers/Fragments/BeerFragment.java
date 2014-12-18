@@ -11,7 +11,6 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.ecci.Hamers.Adapters.BeersAdapter;
-import com.ecci.Hamers.Adapters.QuotesAdapter;
 import com.ecci.Hamers.Beer;
 import com.ecci.Hamers.GetJson;
 import com.ecci.Hamers.R;
