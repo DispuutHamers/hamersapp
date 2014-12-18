@@ -46,11 +46,11 @@ public class NewQuoteFragment extends DialogFragment {
 
                         // Get userID from spinner
                         Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
-                        String userID = userSpinner.getSelectedItem().toString();
+                        String userID = nameToID(userSpinner.getSelectedItem().toString());
                         System.out.println("USERID: " + userID);
 
                         // Post quote
-                        postQuote(quote, "2");
+                        postQuote(quote, userID);
 
                     }
                 })
@@ -83,6 +83,23 @@ public class NewQuoteFragment extends DialogFragment {
             e.printStackTrace();
         }
 
+    }
+
+    private String nameToID(String name){
+        JSONArray userJSON;
+        String returnv = "-1";
+        try {
+            if ((userJSON = new JSONArray(prefs.getString("userData", null))) != null) {
+                for (int i = 0; i < userJSON.length(); i++) {
+                    if(userJSON.getJSONObject(i).getString("name").equals(name)){
+                        returnv = userJSON.getJSONObject(i).getString("id");
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnv;
     }
 
     private void postQuote(String quote, String userid) {
