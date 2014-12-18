@@ -3,6 +3,7 @@ package com.ecci.Hamers;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
+import com.ecci.Hamers.Fragments.NewQuoteFragment;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -20,15 +21,18 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
     private SharedPreferences prefs;
     private String type;
     private String urlParams;
+    private Fragment f;
 
 
     public SendPostRequest(Fragment f, String type, SharedPreferences s, String urlParams){
         prefs = s;
+        this.f = f;
         this.type = type;
         this.urlParams = urlParams;
     }
 
     protected String doInBackground(String... params) {
+        int response = -1;
         try {
             URL url = new URL(baseurl + prefs.getString("apikey", "a") + type);
             System.out.println(url);
@@ -46,15 +50,22 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
             wr.flush();
             wr.close();
 
-            int responseCode = con.getResponseCode();
+            response = con.getResponseCode();
             con.disconnect();
-            System.out.println("Response Code : " + responseCode);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return String.valueOf(response);
+    }
+
+    protected void onPostExecute(String result) {
+        if(f instanceof NewQuoteFragment) {
+            ((NewQuoteFragment) f).postReturnValue(result);
+        }
+
+
     }
 }

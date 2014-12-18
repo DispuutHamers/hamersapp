@@ -13,12 +13,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import com.ecci.Hamers.MainActivity;
 import com.ecci.Hamers.R;
 import com.ecci.Hamers.SendPostRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -107,6 +105,14 @@ public class NewQuoteFragment extends DialogFragment {
         SendPostRequest req = new SendPostRequest(this, SendPostRequest.QUOTE, prefs, "quote[text]=" + quote + " &quote[user_id]=" + userid);
         req.execute();
 
+    }
+
+    public void postReturnValue(String value){
+        if(value.equals("201")) {
+            //todo Toast
+        }else{
+            //todo Toast
+        }
     }
 
     @Override
