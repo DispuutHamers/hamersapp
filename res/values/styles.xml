@@ -23,9 +23,8 @@
     <item name="beer_name" type="id"/>
     <item name="beer_soort" type="id"/>
     <item name="beer_picture" type="id"/>
-    <item name="beer_percentage" type="id"/>
     <item name="beer_brewer" type="id"/>
-    <item name="beer_country" type="id"/>
+    <item name="beer_info" type="id"/>
 
     <item name="pushnotification" type="id"/>
 

@@ -8,9 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.ecci.Hamers.Beer;
-import com.ecci.Hamers.Event;
 import com.ecci.Hamers.R;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -41,17 +39,15 @@ public class BeersAdapter extends ArrayAdapter<Beer> {
         TextView name = (TextView) rowView.findViewById(R.id.beer_name);
         TextView soort = (TextView) rowView.findViewById(R.id.beer_soort);
         ImageView picture = (ImageView) rowView.findViewById(R.id.beer_picture);
-        TextView percentage = (TextView) rowView.findViewById(R.id.beer_percentage);
         TextView brewer = (TextView) rowView.findViewById(R.id.beer_brewer);
-        TextView country = (TextView) rowView.findViewById(R.id.beer_country);
+        TextView info = (TextView) rowView.findViewById(R.id.beer_info);
 
         // 4. Set the text for textView
         name.setText(itemsArrayList.get(position).getName());
-        soort.setText(itemsArrayList.get(position).getSoort());
+        soort.setText("Soort: " + itemsArrayList.get(position).getSoort());
         // TODO: Picture
-        percentage.setText(itemsArrayList.get(position).getPercentage());
-        brewer.setText(itemsArrayList.get(position).getBrewer());
-        country.setText(itemsArrayList.get(position).getCountry());
+        brewer.setText("Brouwer: " + itemsArrayList.get(position).getBrewer());
+        info.setText(itemsArrayList.get(position).getCountry() + " - " + itemsArrayList.get(position).getPercentage() + "%");
         
         return rowView;
     }
