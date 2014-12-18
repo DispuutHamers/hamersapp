@@ -1,46 +1,44 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="?android:attr/listPreferredItemHeight"
-                android:padding="10dp">
+                android:padding="5dp">
 
     <TextView
             android:id="@+id/event_title"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_above="@id/event_date"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
+            android:layout_height="20dp"
             android:layout_alignWithParentIfMissing="true"
             android:gravity="left"
             android:text="Dit is een keileuke activiteit (testing purposes)"
-            android:textSize="16sp"/>
+            android:textSize="16dp"
+            android:layout_alignBottom="@+id/event_date"/>
 
     <TextView
             android:id="@+id/event_beschrijving"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="2dp"
+            android:layout_height="16dp"
             android:ellipsize="marquee"
-            android:layout_below="@id/event_title"
             android:layout_alignWithParentIfMissing="true"
             android:text="Dit is een keigoeie beschrijving (testing purposes)"
             android:textSize="12sp"
-            android:gravity="left"/>
+            android:gravity="left"
+            android:layout_below="@+id/event_title"
+            android:layout_alignLeft="@+id/event_title"
+            android:layout_alignStart="@+id/event_title"
+            android:layout_alignParentBottom="true"
+            android:padding="0dp"/>
 
     <TextView
             android:id="@+id/event_date"
             android:layout_width="fill_parent"
             android:layout_height="16dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="0dp"
             android:ellipsize="marquee"
             android:singleLine="true"
             android:text="Dit is de datum (testing purposes)"
             android:textSize="12sp"
-            android:gravity="right"/>
+            android:gravity="right"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
 
 </RelativeLayout>

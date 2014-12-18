@@ -38,7 +38,6 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
     SwipeRefreshLayout swipeView;
 
     SharedPreferences prefs;
-
     JSONArray users;
 
     @Override
@@ -129,7 +128,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
                 String date = tempTijd + " - " + parseDate(tempDate);
 
-                Quote tempQuote = new Quote(username, quote.getString("text").toString(), date);
+                Quote tempQuote = new Quote(username, quote.getString("text").toString(), date, user.getInt("id"));
                 listItems.add(tempQuote);
                 adapter.notifyDataSetChanged();
 

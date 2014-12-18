@@ -1,10 +1,18 @@
 package com.ecci.Hamers.Adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
+import android.support.v4.preference.PreferenceFragment;
+import android.support.v4.preference.PreferenceManagerCompat;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.ecci.Hamers.Quote;
 import com.ecci.Hamers.R;
@@ -15,6 +23,7 @@ public class QuotesAdapter extends ArrayAdapter<Quote> {
 
     private final Context context;
     private final ArrayList<Quote> itemsArrayList;
+    SharedPreferences prefs;
 
     public QuotesAdapter(Context context, ArrayList<Quote> itemsArrayList) {
 
@@ -38,11 +47,24 @@ public class QuotesAdapter extends ArrayAdapter<Quote> {
         TextView body = (TextView) rowView.findViewById(R.id.quote_body);
         TextView date = (TextView) rowView.findViewById(R.id.quote_date);
         TextView user = (TextView) rowView.findViewById(R.id.quote_user);
+        //ImageView userImage = (ImageView) rowView.findViewById(R.id.quote_image);
 
         // 4. Set the text for textView
         body.setText(itemsArrayList.get(position).getBody());
         date.setText(itemsArrayList.get(position).getDate());
         user.setText(itemsArrayList.get(position).getUser());
+
+        // Image
+        prefs =  PreferenceManager.getDefaultSharedPreferences(context);
+        System.out.println("PREFS: " + prefs);
+        byte[] array = Base64.decode(prefs.getString("userpic-" + itemsArrayList.get(position).getUserID(), ""), Base64.DEFAULT);
+        System.out.println("UNIT: " + (prefs.getString("userpic-" + itemsArrayList.get(position).getUserID(), "")));
+        System.out.println("userpic-" + itemsArrayList.get(position).getUserID());
+        System.out.println("ARRAY" + array);
+        Bitmap bmp = BitmapFactory.decodeByteArray(array, 0 , array.length);
+        System.out.println("BMP: " + bmp);
+        ImageView userImage = (ImageView) rowView.findViewById(R.id.quote_image);
+        userImage.setImageBitmap(bmp);
 
         // 5. return rowView
         return rowView;

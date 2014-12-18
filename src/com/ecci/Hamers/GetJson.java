@@ -55,7 +55,7 @@ public class GetJson extends AsyncTask<String, String, String> {
             System.out.println("Unable to retreive data - input/output error");
             e.printStackTrace();
         }
-        if (f instanceof UserFragment) {
+        if (type == USER) {
             try {
                 downloadProfilepictures(new JSONArray(buffer.toString()));
             } catch (JSONException e) {
@@ -105,6 +105,7 @@ public class GetJson extends AsyncTask<String, String, String> {
                 while (-1!=(n=in.read(buf))){out.write(buf, 0, n);}
                 out.close(); in.close();
                 prefs.edit().putString("userpic-" + users.getJSONObject(i).getString("id"), Base64.encodeToString(out.toByteArray(), Base64.DEFAULT)).apply();
+                System.out.println("STORED USERPICS");
                 //For restoring byte[] array = Base64.decode(stringFromSharedPrefs, Base64.DEFAULT);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
