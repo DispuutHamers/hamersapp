@@ -2,15 +2,15 @@ package com.ecci.Hamers;
 
 public class Quote {
 
+    private String user;
     private String body;
     private String date;
-    private int userID;
 
-    public Quote(String body, String date, int userID) {
+    public Quote(String user, String body, String date) {
         super();
+        this.user = user;
         this.body = body;
         this.date = date;
-        this.userID = userID;
     }
 
     public String getBody() {
@@ -21,7 +21,7 @@ public class Quote {
         return date;
     }
 
-    public int getUserID() {
-        return userID;
+    public String getUser() {
+        return user;
     }
 }

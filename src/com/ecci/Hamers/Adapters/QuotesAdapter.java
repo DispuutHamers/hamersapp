@@ -37,10 +37,12 @@ public class QuotesAdapter extends ArrayAdapter<Quote> {
         // 3. Get the two text view from the rowView
         TextView body = (TextView) rowView.findViewById(R.id.quote_body);
         TextView date = (TextView) rowView.findViewById(R.id.quote_date);
+        TextView user = (TextView) rowView.findViewById(R.id.quote_user);
 
         // 4. Set the text for textView
         body.setText(itemsArrayList.get(position).getBody());
         date.setText(itemsArrayList.get(position).getDate());
+        user.setText(itemsArrayList.get(position).getUser());
 
         // 5. return rowView
         return rowView;

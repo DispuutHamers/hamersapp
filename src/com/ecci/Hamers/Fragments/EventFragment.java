@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.ecci.Hamers.MainActivity.parseDate;
 
 public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -99,11 +100,5 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             }
         }
         swipeView.setRefreshing(false);
-    }
-    
-    public String parseDate(String dateTemp) throws ParseException {
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
-        return outputFormat.format(inputFormat.parse(dateTemp));
     }
 }

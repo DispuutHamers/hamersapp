@@ -17,6 +17,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.ecci.Hamers.Fragments.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 
 public class MainActivity extends ActionBarActivity {
     // Drawer list
@@ -193,5 +197,11 @@ public class MainActivity extends ActionBarActivity {
     public void newQuote(MenuItem item) {
         DialogFragment newQuoteFragment = new NewQuoteFragment();
         newQuoteFragment.show(getSupportFragmentManager(), "quotes");
+    }
+
+    public static String parseDate(String dateTemp) throws ParseException {
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+        return outputFormat.format(inputFormat.parse(dateTemp));
     }
 }
