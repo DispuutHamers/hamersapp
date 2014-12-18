@@ -42,7 +42,7 @@ public class QuotesAdapter extends ArrayAdapter<Quote> {
         View rowView = inflater.inflate(R.layout.quote_row, parent, false);
 
         // 3. Get the two text view from the rowView
-        TextView body = (TextView) rowView.findViewById(R.id.quote_input);
+        TextView body = (TextView) rowView.findViewById(R.id.quote_body);
         TextView date = (TextView) rowView.findViewById(R.id.quote_date);
         TextView user = (TextView) rowView.findViewById(R.id.quote_user);
         //ImageView userImage = (ImageView) rowView.findViewById(R.id.quote_image);
