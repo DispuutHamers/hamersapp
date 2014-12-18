@@ -13,16 +13,19 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import com.ecci.Hamers.MainActivity;
 import com.ecci.Hamers.R;
 import com.ecci.Hamers.SendPostRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class NewQuoteFragment extends DialogFragment {
 
     private SharedPreferences prefs;
-    JSONArray users;
+    ArrayList<String> users = new ArrayList<String>();
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -59,27 +62,38 @@ public class NewQuoteFragment extends DialogFragment {
 
         // Initialize spinner
         Spinner spinner = (Spinner) view.findViewById(R.id.user_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
-                R.array.users_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        createUserList();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, users);
+        System.out.println(adapter.toString());
+        System.out.println(spinner.toString());
 
-        // Create the AlertDialog object and return it
+        spinner.setAdapter(adapter);
         return builder.create();
     }
 
-    private void postQuote(String quote, String userid){
+    private void createUserList() {
+        JSONArray userJSON;
+        try {
+            if ((userJSON = new JSONArray(prefs.getString("userData", null))) != null) {
+                for (int i = 0; i < userJSON.length(); i++) {
+                    users.add(userJSON.getJSONObject(i).getString("name"));
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void postQuote(String quote, String userid) {
         System.out.println("posting quote");
-        SendPostRequest req = new SendPostRequest(this, SendPostRequest.QUOTE, prefs, "quote[text]="+ quote + " &quote[user_id]=" + userid);
+        SendPostRequest req = new SendPostRequest(this, SendPostRequest.QUOTE, prefs, "quote[text]=" + quote + " &quote[user_id]=" + userid);
         req.execute();
 
     }
 
     @Override
-    public void onAttach(Activity activity){
+    public void onAttach(Activity activity) {
         super.onAttach(activity);
         prefs = PreferenceManager.getDefaultSharedPreferences(activity);
     }

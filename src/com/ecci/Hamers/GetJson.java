@@ -56,6 +56,7 @@ public class GetJson extends AsyncTask<String, String, String> {
         }
         if (type == USER) {
             try {
+
                 downloadProfilepictures(new JSONArray(buffer.toString()));
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -68,16 +69,16 @@ public class GetJson extends AsyncTask<String, String, String> {
     protected void onPostExecute(String result) {
         try {
             JSONArray json = new JSONArray(result);
-            // Quotelist fragment
-            if(f instanceof QuoteListFragment && type == USER) {
+
+            if(type == USER){
                 prefs.edit().putString("userData", result).apply();
-                ((QuoteListFragment) f).getQuotes();
-            }else if (f instanceof QuoteListFragment){
+            }
+            // Quotelist fragment
+            if(f instanceof QuoteListFragment) {
                 ((QuoteListFragment) f).populateList(json);
             }
             // User fragment
             else if (f instanceof UserFragment) {
-                prefs.edit().putString("userData", result).apply();
                 ((UserFragment) f).populateList(json);
             }
             // Event fragment
@@ -104,7 +105,6 @@ public class GetJson extends AsyncTask<String, String, String> {
                 while (-1!=(n=in.read(buf))){out.write(buf, 0, n);}
                 out.close(); in.close();
                 prefs.edit().putString("userpic-" + users.getJSONObject(i).getString("id"), Base64.encodeToString(out.toByteArray(), Base64.DEFAULT)).apply();
-                System.out.println("STORED USERPICS");
                 //For restoring byte[] array = Base64.decode(stringFromSharedPrefs, Base64.DEFAULT);
             } catch (MalformedURLException e) {
                 e.printStackTrace();

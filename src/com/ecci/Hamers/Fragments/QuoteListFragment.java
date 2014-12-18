@@ -38,7 +38,6 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
     SwipeRefreshLayout swipeView;
 
     SharedPreferences prefs;
-    JSONArray users;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,38 +81,35 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onRefresh() {
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        if (prefs.getString("userData", null) == null) {
-            GetJson g = new GetJson(this, GetJson.USER, prefs);
+        if(prefs.getString("userData", null) != null) {
+            GetJson g = new GetJson(this, GetJson.QUOTE, prefs);
             g.execute();
-        }else{
-            getQuotes();
         }
     }
 
-    public void getQuotes() {
-        GetJson g = new GetJson(this, GetJson.QUOTE, prefs);
-        g.execute();
-    }
-
     private JSONObject getUser(int id) {
-        for (int i = 0; i < users.length(); i++) {
-            try {
-                JSONObject temp = users.getJSONObject(i);
-                if (temp.getInt("id") == id) {
-                    return temp;
+        JSONArray users;
+        try {
+            users = new JSONArray(prefs.getString("userData", null));
+            for (int i = 0; i < users.length(); i++) {
+                try {
+                    JSONObject temp = users.getJSONObject(i);
+                    if (temp.getInt("id") == id) {
+                        return temp;
+                    }
+                } catch (JSONException e) {
+                    return (null);
                 }
-            } catch (JSONException e) {
-                return (null);
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
     public void populateList(JSONArray json) {
-
         listItems.clear();
         try {
-            users = new JSONArray(prefs.getString("userData", ""));
             for (int i = 0; i < json.length(); i++) {
                 JSONObject quote = json.getJSONObject(i);
                 JSONObject user;
@@ -136,7 +132,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
             }
         } catch (JSONException e) {
-            System.out.println("JSON Exception");
+            e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
         }

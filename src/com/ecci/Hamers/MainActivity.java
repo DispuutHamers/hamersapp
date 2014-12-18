@@ -1,7 +1,9 @@
 package com.ecci.Hamers;
 
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -44,6 +46,7 @@ public class MainActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        downloadUsers();
 
         initDrawer();
 
@@ -52,6 +55,16 @@ public class MainActivity extends ActionBarActivity {
         }
 
      }
+
+    private void downloadUsers(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        System.out.println("Checking available user data");
+        if (prefs.getString("userData", null) == null) {
+            System.out.println("downloading json");
+            GetJson g = new GetJson(null, GetJson.USER, prefs);
+            g.execute();
+        }
+    }
 
         @Override
     protected void onPostCreate(Bundle savedInstanceState) {
