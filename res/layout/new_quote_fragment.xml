@@ -10,7 +10,7 @@
             android:padding="10dp"
             android:ellipsize="marquee"/>
     <EditText
-            android:id="@+id/quote_body"
+            android:id="@+id/quote_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

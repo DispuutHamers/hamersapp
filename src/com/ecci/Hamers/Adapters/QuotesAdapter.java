@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
-import android.support.v4.preference.PreferenceFragment;
-import android.support.v4.preference.PreferenceManagerCompat;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +42,7 @@ public class QuotesAdapter extends ArrayAdapter<Quote> {
         View rowView = inflater.inflate(R.layout.quote_row, parent, false);
 
         // 3. Get the two text view from the rowView
-        TextView body = (TextView) rowView.findViewById(R.id.quote_body);
+        TextView body = (TextView) rowView.findViewById(R.id.quote_input);
         TextView date = (TextView) rowView.findViewById(R.id.quote_date);
         TextView user = (TextView) rowView.findViewById(R.id.quote_user);
         //ImageView userImage = (ImageView) rowView.findViewById(R.id.quote_image);
@@ -57,7 +55,7 @@ public class QuotesAdapter extends ArrayAdapter<Quote> {
         // Image
         prefs =  PreferenceManager.getDefaultSharedPreferences(context);
         byte[] array = Base64.decode(prefs.getString("userpic-" + itemsArrayList.get(position).getUserID(), ""), Base64.DEFAULT);
-        Bitmap bmp = BitmapFactory.decodeByteArray(array, 0 , array.length);
+        Bitmap bmp = BitmapFactory.decodeByteArray(array, 0, array.length);
         ImageView userImage = (ImageView) rowView.findViewById(R.id.quote_image);
         userImage.setImageBitmap(bmp);
 
