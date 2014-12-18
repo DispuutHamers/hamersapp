@@ -82,9 +82,11 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onRefresh() {
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        if (prefs.getString("users", "") == "") {
+        if (prefs.getString("userData", null) == null) {
             GetJson g = new GetJson(this, GetJson.USER, prefs);
             g.execute();
+        }else{
+            getQuotes();
         }
     }
 

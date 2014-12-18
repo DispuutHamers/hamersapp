@@ -1,17 +1,23 @@
 package com.ecci.Hamers.Fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import com.ecci.Hamers.R;
+import com.ecci.Hamers.SendPostRequest;
 
 public class NewQuoteFragment extends DialogFragment {
+
+    private SharedPreferences prefs;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -25,7 +31,8 @@ public class NewQuoteFragment extends DialogFragment {
                 .setTitle(R.string.quote)
                 .setPositiveButton(R.string.send_quote, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Send quote
+                        postQuote("henkjansmits is moeilijk gay", "2");
+
                     }
                 })
                 .setNegativeButton(R.string.cancel_quote, new DialogInterface.OnClickListener() {
@@ -46,6 +53,19 @@ public class NewQuoteFragment extends DialogFragment {
 
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    private void postQuote(String quote, String userid){
+        System.out.println("posting quote");
+        SendPostRequest req = new SendPostRequest(this, SendPostRequest.QUOTE, prefs, "quote[text]=sampletekst&quote[user_id]=2");
+        req.execute();
+
+    }
+
+    @Override
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+        prefs = PreferenceManager.getDefaultSharedPreferences(activity);
     }
 
 }

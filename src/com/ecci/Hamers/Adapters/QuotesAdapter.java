@@ -56,13 +56,8 @@ public class QuotesAdapter extends ArrayAdapter<Quote> {
 
         // Image
         prefs =  PreferenceManager.getDefaultSharedPreferences(context);
-        System.out.println("PREFS: " + prefs);
         byte[] array = Base64.decode(prefs.getString("userpic-" + itemsArrayList.get(position).getUserID(), ""), Base64.DEFAULT);
-        System.out.println("UNIT: " + (prefs.getString("userpic-" + itemsArrayList.get(position).getUserID(), "")));
-        System.out.println("userpic-" + itemsArrayList.get(position).getUserID());
-        System.out.println("ARRAY" + array);
         Bitmap bmp = BitmapFactory.decodeByteArray(array, 0 , array.length);
-        System.out.println("BMP: " + bmp);
         ImageView userImage = (ImageView) rowView.findViewById(R.id.quote_image);
         userImage.setImageBitmap(bmp);
 
