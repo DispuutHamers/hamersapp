@@ -2,19 +2,20 @@ package com.ecci.Hamers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import com.ecci.Hamers.Fragments.BeerFragment;
 import com.ecci.Hamers.Fragments.EventFragment;
 import com.ecci.Hamers.Fragments.QuoteListFragment;
 import com.ecci.Hamers.Fragments.UserFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -54,6 +55,13 @@ public class GetJson extends AsyncTask<String, String, String> {
             System.out.println("Unable to retreive data - input/output error");
             e.printStackTrace();
         }
+        if (f instanceof UserFragment) {
+            try {
+                downloadProfilepictures(new JSONArray(buffer.toString()));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            };
+        }
         return buffer.toString();
     }
 
@@ -70,6 +78,7 @@ public class GetJson extends AsyncTask<String, String, String> {
             }
             // User fragment
             else if (f instanceof UserFragment) {
+                prefs.edit().putString("userData", result).apply();
                 ((UserFragment) f).populateList(json);
             }
             // Event fragment
@@ -84,4 +93,27 @@ public class GetJson extends AsyncTask<String, String, String> {
         }
 
     }
+
+    private void downloadProfilepictures(JSONArray users){
+        for (int i = 0; i < users.length(); i++) {
+            try {
+                URL url = new URL("http://gravatar.com/avatar/" + MD5Util.md5Hex( users.getJSONObject(i).getString("email")));
+                InputStream in = new BufferedInputStream(url.openStream());
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                byte[] buf = new byte[1024];
+                int n = 0;
+                while (-1!=(n=in.read(buf))){out.write(buf, 0, n);}
+                out.close(); in.close();
+                prefs.edit().putString("userpic-" + users.getJSONObject(i).getString("id"), Base64.encodeToString(out.toByteArray(), Base64.DEFAULT)).apply();
+                //For restoring byte[] array = Base64.decode(stringFromSharedPrefs, Base64.DEFAULT);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
