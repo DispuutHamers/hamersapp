@@ -33,8 +33,6 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
     ArrayAdapter<Quote> adapter;
     SwipeRefreshLayout swipeView;
 
-    SharedPreferences prefs;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.quote_list_fragment, container, false);
@@ -76,25 +74,27 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        if(prefs.getString("userData", null) != null) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        if (prefs.getString("userData", null) != null) {
             GetJson g = new GetJson(this, GetJson.QUOTE, prefs);
             g.execute();
         }
     }
 
     private JSONObject getUser(int id) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         JSONArray users;
         try {
-            users = new JSONArray(prefs.getString("userData", null));
-            for (int i = 0; i < users.length(); i++) {
-                try {
-                    JSONObject temp = users.getJSONObject(i);
-                    if (temp.getInt("id") == id) {
-                        return temp;
+            if ((users = new JSONArray(prefs.getString("userData", null))) != null) {
+                for (int i = 0; i < users.length(); i++) {
+                    try {
+                        JSONObject temp = users.getJSONObject(i);
+                        if (temp.getInt("id") == id) {
+                            return temp;
+                        }
+                    } catch (JSONException e) {
+                        return (null);
                     }
-                } catch (JSONException e) {
-                    return (null);
                 }
             }
         } catch (JSONException e) {
@@ -103,29 +103,36 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         return null;
     }
 
-    public void populateList(JSONArray json) {
+    public void populateList() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         listItems.clear();
+        JSONArray json;
         try {
-            for (int i = 0; i < json.length(); i++) {
-                JSONObject quote = json.getJSONObject(i);
-                JSONObject user;
+            if ((json = new JSONArray(prefs.getString("quoteData", null))) != null) {
+                for (int i = 0; i < json.length(); i++) {
+                    JSONObject quote = json.getJSONObject(i);
+                    JSONObject user;
 
-                String username;
-                if ((user = getUser(quote.getInt("user_id"))) != null) {
-                    username = user.getString("name");
-                } else {
-                    username = "unknown user";
+                    String username;
+                    int id;
+                    if ((user = getUser(quote.getInt("user_id"))) != null) {
+                        username = user.getString("name");
+                        id = user.getInt("id");
+                    } else {
+                        username = "unknown user";
+                        id = -1;
+                    }
+
+                    String tempDate = quote.getString("created_at").substring(0, 10);
+                    String tempTijd = quote.getString("created_at").substring(11, 16);
+
+                    String date = tempTijd + " - " + parseDate(tempDate);
+
+                    Quote tempQuote = new Quote(username, quote.getString("text").toString(), date, id);
+                    listItems.add(tempQuote);
+                    adapter.notifyDataSetChanged();
+
                 }
-
-                String tempDate = quote.getString("created_at").substring(0, 10);
-                String tempTijd = quote.getString("created_at").substring(11, 16);
-
-                String date = tempTijd + " - " + parseDate(tempDate);
-
-                Quote tempQuote = new Quote(username, quote.getString("text").toString(), date, user.getInt("id"));
-                listItems.add(tempQuote);
-                adapter.notifyDataSetChanged();
-
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -23,6 +22,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+
 public class MainActivity extends ActionBarActivity {
     // Drawer list
     private String[] mDrawerItems;
@@ -31,12 +31,12 @@ public class MainActivity extends ActionBarActivity {
     private ActionBarDrawerToggle mDrawerToggle;
 
     // Fragments
-    Fragment quoteListFragment = new QuoteListFragment();
-    Fragment userFragment = new UserFragment();
-    Fragment eventFragment = new EventFragment();
-    Fragment beerFragment = new BeerFragment();
-    Fragment motionFragment = new MotionFragment();
-    Fragment settingsFragment = new SettingsFragment();
+    QuoteListFragment quoteListFragment = new QuoteListFragment();
+    UserFragment userFragment = new UserFragment();
+    EventFragment eventFragment = new EventFragment();
+    BeerFragment beerFragment = new BeerFragment();
+    MotionFragment motionFragment = new MotionFragment();
+    SettingsFragment settingsFragment = new SettingsFragment();
 
     /**
      * Called when the activity is first created.
@@ -46,27 +46,14 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        downloadUsers();
-
         initDrawer();
 
-        // If no fragment is saved, load quote fragment
         if (savedInstanceState == null) {
             selectItem(0);
         }
-     }
-
-    private void downloadUsers(){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        System.out.println("Checking available user data");
-        if (prefs.getString("userData", null) == null) {
-            System.out.println("downloading json");
-            GetJson g = new GetJson(null, GetJson.USER, prefs);
-            g.execute();
-        }
     }
 
-        @Override
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
@@ -131,6 +118,38 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectItem(position);
+        }
+    }
+
+    private void loadData() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //reload users
+        if (prefs.getString("userData", null) != null) {
+            userFragment.populateList();
+        } else {
+            GetJson g = new GetJson(userFragment, GetJson.USER, prefs);
+            g.execute();
+        }
+        //reload quotes
+        if (prefs.getString("quoteData", null) != null) {
+            quoteListFragment.populateList();
+        } else {
+            GetJson g = new GetJson(quoteListFragment, GetJson.QUOTE, prefs);
+            g.execute();
+        }
+        //reload Events
+        if (prefs.getString("eventData", null) != null) {
+            eventFragment.populateList();
+        } else {
+            GetJson g = new GetJson(eventFragment, GetJson.EVENT, prefs);
+            g.execute();
+        }
+        //reload Beers
+        if (prefs.getString("beerData", null) != null) {
+            beerFragment.populateList();
+        } else {
+            GetJson g = new GetJson(beerFragment, GetJson.BEER, prefs);
+            g.execute();
         }
     }
 

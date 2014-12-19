@@ -1,5 +1,6 @@
 package com.ecci.Hamers.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -26,9 +27,10 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         // Empty constructor required for fragment subclasses
     }
 
-    ArrayList<Beer> listItems =new ArrayList<Beer>();
+    ArrayList<Beer> listItems = new ArrayList<Beer>();
     ArrayAdapter<Beer> adapter;
     SwipeRefreshLayout swipeView;
+    SharedPreferences prefs;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.beer_fragment, container, false);
@@ -73,21 +75,27 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         g.execute();
     }
 
-    public void populateList(JSONArray json){
-        System.out.println(json);
-
+    public void populateList() {
         listItems.clear();
-        for(int i = 0; i< json.length(); i++){
-            JSONObject temp;
-            try {
-                temp = json.getJSONObject(i);
-                Beer tempBeer = new Beer(temp.getString("name").toString(), temp.getString("soort").toString(),
-                        temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"));
-                listItems.add(tempBeer);
-                adapter.notifyDataSetChanged();
-            } catch (JSONException e) {
-                e.printStackTrace();
+        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        JSONArray json;
+        try {
+            if ((json = new JSONArray(prefs.getString("beerData", null))) != null) {
+                for (int i = 0; i < json.length(); i++) {
+                    JSONObject temp;
+                    try {
+                        temp = json.getJSONObject(i);
+                        Beer tempBeer = new Beer(temp.getString("name").toString(), temp.getString("soort").toString(),
+                                temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"));
+                        listItems.add(tempBeer);
+                        adapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         swipeView.setRefreshing(false);
     }

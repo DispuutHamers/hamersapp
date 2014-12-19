@@ -1,5 +1,6 @@
 package com.ecci.Hamers.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -29,6 +30,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     ArrayList<User> listItems = new ArrayList<User>();
     ArrayAdapter<User> adapter;
     SwipeRefreshLayout swipeView;
+    SharedPreferences prefs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,20 +77,23 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         g.execute();
     }
 
-    public void populateList(JSONArray json){
-        System.out.println(json);
+    public void populateList(){
+        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        JSONArray json;
+        try {
+        if ((json = new JSONArray(prefs.getString("userData", null))) != null) {
+            listItems.clear();
+            for (int i = 0; i < json.length(); i++) {
+                JSONObject temp;
 
-        listItems.clear();
-        for(int i = 0; i< json.length(); i++){
-            JSONObject temp;
-            try {
-                temp = json.getJSONObject(i);
-                User tempUser = new User(temp.getString("name"), temp.getInt("id"), 0, 0);
-                listItems.add(tempUser);
-                adapter.notifyDataSetChanged();
-            } catch (JSONException e) {
-                e.printStackTrace();
+                    temp = json.getJSONObject(i);
+                    User tempUser = new User(temp.getString("name"), temp.getInt("id"), 0, 0);
+                    listItems.add(tempUser);
+                    adapter.notifyDataSetChanged();
+
             }
+        }} catch (JSONException e) {
+            e.printStackTrace();
         }
         swipeView.setRefreshing(false);
     }
