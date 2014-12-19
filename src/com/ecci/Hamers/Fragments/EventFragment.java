@@ -1,5 +1,6 @@
 package com.ecci.Hamers.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     ArrayList<Event> listItems = new ArrayList<Event>();
     ArrayAdapter<Event> adapter;
     SwipeRefreshLayout swipeView;
+    SharedPreferences prefs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,25 +80,29 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         g.execute();
     }
 
-    public void populateList(JSONArray json){
-        System.out.println(json);
-
+    public void populateList() {
         listItems.clear();
-        for(int i = 0; i< json.length(); i++){
-            JSONObject temp;
-            try {
-                temp = json.getJSONObject(i);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        JSONArray json;
+        try {
+            if ((json = new JSONArray(prefs.getString("eventData", null))) != null) {
+                for (int i = 0; i < json.length(); i++) {
+                    JSONObject temp;
+                    try {
+                        temp = json.getJSONObject(i);
 
-                String finalDate = parseDate(temp.getString("date").substring(0, 10));
+                        String finalDate = parseDate(temp.getString("date").substring(0, 10));
 
-                Event tempEvent = new Event(temp.getString("title").toString(), temp.getString("beschrijving").toString(), finalDate, temp.getString("end_time"));
-                listItems.add(tempEvent);
-                adapter.notifyDataSetChanged();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
-                e.printStackTrace();
+                        Event tempEvent = new Event(temp.getString("title").toString(), temp.getString("beschrijving").toString(), finalDate, temp.getString("end_time"));
+                        listItems.add(tempEvent);
+                        adapter.notifyDataSetChanged();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         swipeView.setRefreshing(false);
     }
