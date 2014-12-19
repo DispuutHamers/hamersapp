@@ -28,8 +28,9 @@
             android:layout_alignWithParentIfMissing="true"
             android:layout_toRightOf="@id/user_image"
             android:gravity="left"
-            android:text="Dit is een keigoeie quote (testing purposes)"
-            android:textSize="18sp"/>
+            android:text="User (testing purposes)"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
     <TextView
             android:id="@+id/user_quotecount"

@@ -1,10 +1,7 @@
 package com.ecci.Hamers;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 import com.ecci.Hamers.Fragments.BeerFragment;
@@ -13,7 +10,6 @@ import com.ecci.Hamers.Fragments.QuoteListFragment;
 import com.ecci.Hamers.Fragments.UserFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.*;
 import java.net.MalformedURLException;

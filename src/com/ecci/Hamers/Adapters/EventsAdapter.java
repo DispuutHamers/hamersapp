@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.ecci.Hamers.Event;
-import com.ecci.Hamers.Quote;
 import com.ecci.Hamers.R;
 
 import java.util.ArrayList;

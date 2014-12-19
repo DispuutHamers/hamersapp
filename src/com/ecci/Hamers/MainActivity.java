@@ -23,7 +23,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-
 public class MainActivity extends ActionBarActivity {
     // Drawer list
     private String[] mDrawerItems;
@@ -46,14 +45,15 @@ public class MainActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
         downloadUsers();
 
         initDrawer();
 
+        // If no fragment is saved, load quote fragment
         if (savedInstanceState == null) {
             selectItem(0);
         }
-
      }
 
     private void downloadUsers(){

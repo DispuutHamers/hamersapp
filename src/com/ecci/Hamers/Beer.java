@@ -1,7 +1,5 @@
 package com.ecci.Hamers;
 
-import java.net.URL;
-
 public class Beer {
 
     private String name;
