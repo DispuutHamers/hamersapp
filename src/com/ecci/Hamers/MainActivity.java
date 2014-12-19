@@ -117,24 +117,7 @@ public class MainActivity extends ActionBarActivity {
 
                 R.string.drawer_open,  /* "open drawer" description */
                 R.string.drawer_close  /* "close drawer" description */
-        ) {
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                // Disabled want wordt anders leeg (nu we er nog niets anders
-                // hebben staan dan 'Hamers'..
-                //getActionBar().setTitle(mTitle);
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                // Disabled want wordt anders leeg (nu we er nog niets anders
-                // hebben staan dan 'Hamers'..
-                //getActionBar().setTitle(mDrawerTitle);
-            }
-        };
+        );
 
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -151,7 +134,10 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    /** Swaps fragments in the main content view */
+    /**
+     * Swaps fragments in the main content view
+     * @param position
+     */
     private void selectItem(int position) {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -206,12 +192,21 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
-    /** New quote */
+    /**
+     * When user presses "+", start new dialog with NewQuoteFragment
+     * @param item
+     */
     public void newQuote(MenuItem item) {
         DialogFragment newQuoteFragment = new NewQuoteFragment();
         newQuoteFragment.show(getSupportFragmentManager(), "quotes");
     }
 
+    /**
+     * Parse date
+     * @param dateTemp
+     * @return String with parsed date
+     * @throws ParseException
+     */
     public static String parseDate(String dateTemp) throws ParseException {
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");

@@ -28,7 +28,6 @@ public class NewQuoteFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -104,17 +103,8 @@ public class NewQuoteFragment extends DialogFragment {
 
     private void postQuote(String quote, String userid) {
         System.out.println("posting quote");
-        SendPostRequest req = new SendPostRequest(this, SendPostRequest.QUOTE, prefs, "quote[text]=" + quote + " &quote[user_id]=" + userid);
+        SendPostRequest req = new SendPostRequest(this.getActivity(), this, SendPostRequest.QUOTE, prefs, "quote[text]=" + quote + " &quote[user_id]=" + userid);
         req.execute();
-
-    }
-
-    public void postReturnValue(String value){
-        if(value.equals("201")) {
-            //todo Toast
-        }else{
-            //todo Toast
-        }
     }
 
     @Override

@@ -1,9 +1,10 @@
 package com.ecci.Hamers;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
-import com.ecci.Hamers.Fragments.NewQuoteFragment;
+import android.widget.Toast;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -11,9 +12,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Created by rob on 18-12-14.
- */
 public class SendPostRequest extends AsyncTask<String, String, String> {
 
     private static final String baseurl =  "http://zondersikkel.nl/api/v1/";
@@ -22,13 +20,14 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
     private String type;
     private String urlParams;
     private Fragment f;
+    private Context mContext;
 
-
-    public SendPostRequest(Fragment f, String type, SharedPreferences s, String urlParams){
+    public SendPostRequest(Context context, Fragment f, String type, SharedPreferences s, String urlParams){
         prefs = s;
         this.f = f;
         this.type = type;
         this.urlParams = urlParams;
+        mContext = context;
     }
 
     protected String doInBackground(String... params) {
@@ -62,10 +61,10 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
     }
 
     protected void onPostExecute(String result) {
-        if(f instanceof NewQuoteFragment) {
-            ((NewQuoteFragment) f).postReturnValue(result);
+        if(result.equals("201")) {
+            Toast.makeText(mContext, "Quote posted!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mContext, "Quote not posted, try again later...", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 }
