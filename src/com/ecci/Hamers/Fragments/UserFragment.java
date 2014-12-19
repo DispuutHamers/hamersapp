@@ -77,8 +77,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         g.execute();
     }
 
-    public void populateList(){
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+    public void populateList(SharedPreferences prefs){
         JSONArray json;
         try {
         if ((json = new JSONArray(prefs.getString("userData", null))) != null) {
@@ -89,12 +88,11 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     temp = json.getJSONObject(i);
                     User tempUser = new User(temp.getString("name"), temp.getInt("id"), 0, 0);
                     listItems.add(tempUser);
-                    adapter.notifyDataSetChanged();
-
+                if(adapter != null){adapter.notifyDataSetChanged();};
             }
         }} catch (JSONException e) {
             e.printStackTrace();
         }
-        swipeView.setRefreshing(false);
+        if(swipeView != null) {swipeView.setRefreshing(false);}
     }
 }

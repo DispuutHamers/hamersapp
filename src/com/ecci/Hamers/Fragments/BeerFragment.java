@@ -75,9 +75,8 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         g.execute();
     }
 
-    public void populateList() {
+    public void populateList(SharedPreferences prefs) {
         listItems.clear();
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         JSONArray json;
         try {
             if ((json = new JSONArray(prefs.getString("beerData", null))) != null) {
@@ -88,7 +87,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         Beer tempBeer = new Beer(temp.getString("name").toString(), temp.getString("soort").toString(),
                                 temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"));
                         listItems.add(tempBeer);
-                        adapter.notifyDataSetChanged();
+                        if(adapter != null){adapter.notifyDataSetChanged();};
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -97,6 +96,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        swipeView.setRefreshing(false);
+        if(swipeView != null) {swipeView.setRefreshing(false);}
     }
 }

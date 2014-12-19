@@ -31,7 +31,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
     ArrayList<Quote> listItems = new ArrayList<Quote>();
     ArrayAdapter<Quote> adapter;
-    SwipeRefreshLayout swipeView;
+    public SwipeRefreshLayout swipeView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -81,8 +81,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         }
     }
 
-    private JSONObject getUser(int id) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+    private JSONObject getUser(int id, SharedPreferences prefs) {
         JSONArray users;
         try {
             if ((users = new JSONArray(prefs.getString("userData", null))) != null) {
@@ -103,8 +102,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         return null;
     }
 
-    public void populateList() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+    public void populateList(SharedPreferences prefs) {
         listItems.clear();
         JSONArray json;
         try {
@@ -115,7 +113,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
                     String username;
                     int id;
-                    if ((user = getUser(quote.getInt("user_id"))) != null) {
+                    if ((user = getUser(quote.getInt("user_id"), prefs)) != null) {
                         username = user.getString("name");
                         id = user.getInt("id");
                     } else {
@@ -130,7 +128,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
                     Quote tempQuote = new Quote(username, quote.getString("text").toString(), date, id);
                     listItems.add(tempQuote);
-                    adapter.notifyDataSetChanged();
+                    if(adapter != null){adapter.notifyDataSetChanged();};
 
                 }
             }
@@ -139,6 +137,6 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        swipeView.setRefreshing(false);
+        if(swipeView != null) {swipeView.setRefreshing(false);}
     }
 }

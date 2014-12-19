@@ -80,13 +80,12 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         g.execute();
     }
 
-    public void populateList() {
+    public void populateList(SharedPreferences prefs) {
         listItems.clear();
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         JSONArray json;
         try {
             if ((json = new JSONArray(prefs.getString("eventData", null))) != null) {
-                for (int i = 0; i < json.length(); i++) {
+                for (int i = json.length()-1; i >= 0; i--) {
                     JSONObject temp;
                     try {
                         temp = json.getJSONObject(i);
@@ -95,7 +94,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
                         Event tempEvent = new Event(temp.getString("title").toString(), temp.getString("beschrijving").toString(), finalDate, temp.getString("end_time"));
                         listItems.add(tempEvent);
-                        adapter.notifyDataSetChanged();
+                        if(adapter != null){adapter.notifyDataSetChanged();};
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -104,6 +103,6 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        swipeView.setRefreshing(false);
+        if(swipeView != null) {swipeView.setRefreshing(false);}
     }
 }

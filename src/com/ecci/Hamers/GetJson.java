@@ -71,21 +71,21 @@ public class GetJson extends AsyncTask<String, String, String> {
         // Quotelist fragment
         if (f instanceof QuoteListFragment) {
             prefs.edit().putString("quoteData", result).apply();
-            ((QuoteListFragment) f).populateList();
+            ((QuoteListFragment) f).populateList(prefs);
         }
         // User fragment
         else if (f instanceof UserFragment) {
-            ((UserFragment) f).populateList();
+            ((UserFragment) f).populateList(prefs);
         }
         // Event fragment
         else if (f instanceof EventFragment) {
             prefs.edit().putString("eventData", result).apply();
-            ((EventFragment) f).populateList();
+            ((EventFragment) f).populateList(prefs);
         }
         // Beer fragment
         else if (f instanceof BeerFragment) {
             prefs.edit().putString("beerData", result).apply();
-            ((BeerFragment) f).populateList();
+            ((BeerFragment) f).populateList(prefs);
         }
 
     }

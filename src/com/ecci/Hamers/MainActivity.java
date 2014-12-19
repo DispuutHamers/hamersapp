@@ -51,6 +51,7 @@ public class MainActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             selectItem(0);
         }
+        loadData();
     }
 
     @Override
@@ -125,36 +126,40 @@ public class MainActivity extends ActionBarActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //reload users
         if (prefs.getString("userData", null) != null) {
-            userFragment.populateList();
+            userFragment.populateList(prefs);
         } else {
             GetJson g = new GetJson(userFragment, GetJson.USER, prefs);
             g.execute();
         }
-        //reload quotes
+
+         //reload quotes
         if (prefs.getString("quoteData", null) != null) {
-            quoteListFragment.populateList();
+            quoteListFragment.populateList(prefs);
         } else {
             GetJson g = new GetJson(quoteListFragment, GetJson.QUOTE, prefs);
             g.execute();
         }
         //reload Events
         if (prefs.getString("eventData", null) != null) {
-            eventFragment.populateList();
+            eventFragment.populateList(prefs);
         } else {
             GetJson g = new GetJson(eventFragment, GetJson.EVENT, prefs);
             g.execute();
         }
+
         //reload Beers
         if (prefs.getString("beerData", null) != null) {
-            beerFragment.populateList();
+            beerFragment.populateList(prefs);
         } else {
             GetJson g = new GetJson(beerFragment, GetJson.BEER, prefs);
             g.execute();
         }
+
     }
 
     /**
      * Swaps fragments in the main content view
+     *
      * @param position
      */
     private void selectItem(int position) {
@@ -165,8 +170,8 @@ public class MainActivity extends ActionBarActivity {
         switch (position) {
             case 0:
                 transaction
-                    .replace(R.id.content_frame, quoteListFragment)
-                    .commit();
+                        .replace(R.id.content_frame, quoteListFragment)
+                        .commit();
                 setTitle(getResources().getStringArray(R.array.drawer_array)[0]);
                 break;
 
@@ -213,6 +218,7 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * When user presses "+", start new dialog with NewQuoteFragment
+     *
      * @param item
      */
     public void newQuote(MenuItem item) {
@@ -222,6 +228,7 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * Parse date
+     *
      * @param dateTemp
      * @return String with parsed date
      * @throws ParseException
