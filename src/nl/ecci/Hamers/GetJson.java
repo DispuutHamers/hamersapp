@@ -1,4 +1,4 @@
-package com.ecci.Hamers;
+package nl.ecci.Hamers;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,10 +7,10 @@ import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.widget.Toast;
-import com.ecci.Hamers.Fragments.BeerFragment;
-import com.ecci.Hamers.Fragments.EventFragment;
-import com.ecci.Hamers.Fragments.QuoteListFragment;
-import com.ecci.Hamers.Fragments.UserFragment;
+import nl.ecci.Hamers.Fragments.BeerFragment;
+import nl.ecci.Hamers.Fragments.EventFragment;
+import nl.ecci.Hamers.Fragments.QuoteListFragment;
+import nl.ecci.Hamers.Fragments.UserFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 

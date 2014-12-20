@@ -1,4 +1,4 @@
-package com.ecci.Hamers.Fragments;
+package nl.ecci.Hamers.Fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.ecci.Hamers.Adapters.QuotesAdapter;
-import com.ecci.Hamers.GetJson;
-import com.ecci.Hamers.Quote;
-import com.ecci.Hamers.R;
+import nl.ecci.Hamers.Adapters.QuotesAdapter;
+import nl.ecci.Hamers.GetJson;
+import nl.ecci.Hamers.Quote;
+import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import static com.ecci.Hamers.MainActivity.parseDate;
+import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 

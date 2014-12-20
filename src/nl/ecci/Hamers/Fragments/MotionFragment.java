@@ -1,4 +1,4 @@
-package com.ecci.Hamers.Fragments;
+package nl.ecci.Hamers.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-import com.ecci.Hamers.R;
+import nl.ecci.Hamers.R;
 
 public class MotionFragment extends Fragment {
     private RadioGroup motionRadioGroup;

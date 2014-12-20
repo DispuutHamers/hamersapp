@@ -1,4 +1,4 @@
-package com.ecci.Hamers.Adapters;
+package nl.ecci.Hamers.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import com.ecci.Hamers.Event;
-import com.ecci.Hamers.R;
+import nl.ecci.Hamers.Event;
+import nl.ecci.Hamers.R;
 
 import java.util.ArrayList;
 

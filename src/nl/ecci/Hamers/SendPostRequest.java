@@ -1,4 +1,4 @@
-package com.ecci.Hamers;
+package nl.ecci.Hamers;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -1,10 +1,10 @@
-package com.ecci.Hamers.Fragments;
+package nl.ecci.Hamers.Fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.preference.PreferenceFragment;
-import com.ecci.Hamers.MainActivity;
-import com.ecci.Hamers.R;
+import nl.ecci.Hamers.MainActivity;
+import nl.ecci.Hamers.R;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override

@@ -1,4 +1,4 @@
-package com.ecci.Hamers.Fragments;
+package nl.ecci.Hamers.Fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.ecci.Hamers.Adapters.BeersAdapter;
-import com.ecci.Hamers.Beer;
-import com.ecci.Hamers.GetJson;
-import com.ecci.Hamers.R;
+import nl.ecci.Hamers.Adapters.BeersAdapter;
+import nl.ecci.Hamers.Beer;
+import nl.ecci.Hamers.GetJson;
+import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

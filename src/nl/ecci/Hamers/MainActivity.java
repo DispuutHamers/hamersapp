@@ -1,4 +1,4 @@
-package com.ecci.Hamers;
+package nl.ecci.Hamers;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.ecci.Hamers.Fragments.*;
+import nl.ecci.Hamers.Fragments.*;
 
 import java.text.DateFormat;
 import java.text.ParseException;
