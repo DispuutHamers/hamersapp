@@ -1,6 +1,11 @@
 package com.ecci.Hamers.Adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +21,7 @@ public class BeersAdapter extends ArrayAdapter<Beer> {
 
     private final Context context;
     private final ArrayList<Beer> itemsArrayList;
+    SharedPreferences prefs;
 
     public BeersAdapter(Context context, ArrayList<Beer> itemsArrayList) {
 
@@ -45,9 +51,15 @@ public class BeersAdapter extends ArrayAdapter<Beer> {
         // 4. Set the text for textView
         name.setText(itemsArrayList.get(position).getName());
         soort.setText("Soort: " + itemsArrayList.get(position).getSoort());
-        // TODO: Picture
         brewer.setText("Brouwer: " + itemsArrayList.get(position).getBrewer());
         info.setText(itemsArrayList.get(position).getCountry() + " - " + itemsArrayList.get(position).getPercentage() + "%");
+
+        // 5. set image
+        prefs =  PreferenceManager.getDefaultSharedPreferences(context);
+        byte[] array = Base64.decode(prefs.getString("beerpic-" + itemsArrayList.get(position).getName(), ""), Base64.DEFAULT);
+        Bitmap bmp = BitmapFactory.decodeByteArray(array, 0, array.length);
+        ImageView userImage = (ImageView) rowView.findViewById(R.id.quote_image);
+        picture.setImageBitmap(bmp);
         
         return rowView;
     }
