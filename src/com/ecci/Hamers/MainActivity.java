@@ -122,28 +122,32 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    private void loadData() {
+    public void loadData() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //reload users
         if (prefs.getString("userData", null) != null) {
             userFragment.populateList(prefs);
+            loadData2(prefs);
         } else {
-            GetJson g = new GetJson(this, userFragment, GetJson.USER, prefs);
+            GetJson g = new GetJson(this, userFragment, GetJson.USER, prefs, true);
             g.execute();
         }
+    }
 
-         //reload quotes
+    public void loadData2(SharedPreferences prefs){
+        System.out.println("loaddata2 called");
+        //reload quotes
         if (prefs.getString("quoteData", null) != null) {
             quoteListFragment.populateList(prefs);
         } else {
-            GetJson g = new GetJson(this, quoteListFragment, GetJson.QUOTE, prefs);
+            GetJson g = new GetJson(this, quoteListFragment, GetJson.QUOTE, prefs, false);
             g.execute();
         }
         //reload Events
         if (prefs.getString("eventData", null) != null) {
             eventFragment.populateList(prefs);
         } else {
-            GetJson g = new GetJson(this, eventFragment, GetJson.EVENT, prefs);
+            GetJson g = new GetJson(this, eventFragment, GetJson.EVENT, prefs, false);
             g.execute();
         }
 
@@ -151,10 +155,9 @@ public class MainActivity extends ActionBarActivity {
         if (prefs.getString("beerData", null) != null) {
             beerFragment.populateList(prefs);
         } else {
-            GetJson g = new GetJson(this, beerFragment, GetJson.BEER, prefs);
+            GetJson g = new GetJson(this, beerFragment, GetJson.BEER, prefs, false);
             g.execute();
         }
-
     }
 
     /**

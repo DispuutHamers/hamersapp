@@ -1,5 +1,6 @@
 package com.ecci.Hamers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -28,13 +29,15 @@ public class GetJson extends AsyncTask<String, String, String> {
     private Fragment f;
     private String type;
     private SharedPreferences prefs;
-    private Context c;
+    private Activity a;
+    private boolean firstload;
 
-    public GetJson(Context c, Fragment f, String type, SharedPreferences s) {
+    public GetJson(Activity a, Fragment f, String type, SharedPreferences s, Boolean firstload) {
         this.f = f;
         this.type = type;
         this.prefs = s;
-        this.c = c;
+        this.a = a;
+        this.firstload = firstload;
     }
 
     protected String doInBackground(String... params) {
@@ -90,9 +93,11 @@ public class GetJson extends AsyncTask<String, String, String> {
 
     @Override
     protected void onPostExecute(String result) {
-
+        if (firstload && a instanceof MainActivity) {
+            ((MainActivity) a).loadData2(prefs);
+        }
         if (result == null || result.equals("{}")) {
-            Toast.makeText(c, c.getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
+            Toast.makeText(a, a.getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
         } else {
             if (type == USER) {
                 prefs.edit().putString("userData", result).apply();
@@ -120,6 +125,7 @@ public class GetJson extends AsyncTask<String, String, String> {
 
     }
 
+
     private void downloadProfilepictures(JSONArray users) {
         for (int i = 0; i < users.length(); i++) {
             try {
@@ -138,10 +144,16 @@ public class GetJson extends AsyncTask<String, String, String> {
                 in.close();
                 prefs.edit().putString("userpic-" + users.getJSONObject(i).getString("id"), Base64.encodeToString(out.toByteArray(), Base64.DEFAULT)).apply();
                 //For restoring byte[] array = Base64.decode(stringFromSharedPrefs, Base64.DEFAULT);
-            }catch (IOException e) {
-                if(DEBUG){System.out.println("--------------------------IOException!: "); e.printStackTrace();}
+            } catch (IOException e) {
+                if (DEBUG) {
+                    System.out.println("--------------------------IOException!: ");
+                    e.printStackTrace();
+                }
             } catch (JSONException e) {
-                if(DEBUG){System.out.println("--------------------------JSONException!: "); e.printStackTrace();}
+                if (DEBUG) {
+                    System.out.println("--------------------------JSONException!: ");
+                    e.printStackTrace();
+                }
             }
         }
     }
