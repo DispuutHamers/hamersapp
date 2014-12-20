@@ -38,10 +38,12 @@
             android:singleLine="true"
             android:text="Dit is de user (testing purposes)"
             android:textSize="12sp"
-            android:gravity="right"
-            android:layout_above="@+id/quote_date"
-            android:layout_alignRight="@+id/quote_date"
-            android:layout_alignEnd="@+id/quote_date"/>
+            android:layout_toRightOf="@id/quote_image"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="left"
+            android:layout_marginBottom="2dp"
+            android:layout_above="@+id/quote_date"/>
 
     <TextView
             android:id="@+id/quote_date"
@@ -49,7 +51,7 @@
             android:layout_height="14dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_toRightOf="@id/icon"
+            android:layout_toRightOf="@id/quote_image"
             android:layout_marginEnd="2dp"
             android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"

@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
-                android:layout_height="?android:attr/listPreferredItemHeight"
+                android:layout_height="70dp"
                 android:padding="0dp">
 
     <TextView
@@ -22,12 +22,13 @@
             android:layout_marginLeft="4dp"
             android:paddingTop="-2dp"
             android:ellipsize="end"
-            android:singleLine="true"
+            android:singleLine="false"
             android:text="Dit is de beschrijving (testing purposes)"
             android:textSize="12sp"
             android:gravity="left"
             android:layout_below="@+id/event_title"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            android:layout_alignParentBottom="true"/>
 
     <TextView
             android:id="@+id/event_date"
