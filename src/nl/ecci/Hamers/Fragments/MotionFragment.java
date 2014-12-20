@@ -15,6 +15,7 @@ public class MotionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.motion_fragment, container, false);
 
+
         // TODO: Get radiobutton value
 
         return view;

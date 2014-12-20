@@ -125,16 +125,18 @@ public class MainActivity extends ActionBarActivity {
     public void loadData() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //reload users
-        if (prefs.getString("userData", null) != null) {
-            userFragment.populateList(prefs);
-            loadData2(prefs);
-        } else {
-            GetJson g = new GetJson(this, userFragment, GetJson.USER, prefs, true);
-            g.execute();
+        if (prefs.getString("apikey", null) != null) {
+            if (prefs.getString("userData", null) != null) {
+                userFragment.populateList(prefs);
+                loadData2(prefs);
+            } else {
+                GetJson g = new GetJson(this, userFragment, GetJson.USER, prefs, true);
+                g.execute();
+            }
         }
     }
 
-    public void loadData2(SharedPreferences prefs){
+    public void loadData2(SharedPreferences prefs) {
         System.out.println("loaddata2 called");
         //reload quotes
         if (prefs.getString("quoteData", null) != null) {
