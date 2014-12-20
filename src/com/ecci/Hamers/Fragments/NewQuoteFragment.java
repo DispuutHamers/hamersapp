@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 import com.ecci.Hamers.R;
 import com.ecci.Hamers.SendPostRequest;
 import org.json.JSONArray;
@@ -44,7 +45,6 @@ public class NewQuoteFragment extends DialogFragment {
                         // Get userID from spinner
                         Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
                         String userID = nameToID(userSpinner.getSelectedItem().toString());
-                        System.out.println("USERID: " + userID);
 
                         // Post quote
                         postQuote(quote, userID);
@@ -79,7 +79,7 @@ public class NewQuoteFragment extends DialogFragment {
                 }
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Toast.makeText(getActivity(), getString(R.string.toast_userloaderror), Toast.LENGTH_SHORT).show();e.printStackTrace();
         }
 
     }
@@ -96,7 +96,7 @@ public class NewQuoteFragment extends DialogFragment {
                 }
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Toast.makeText(getActivity(), getString(R.string.toast_userloaderror), Toast.LENGTH_SHORT).show();e.printStackTrace();
         }
         return returnv;
     }

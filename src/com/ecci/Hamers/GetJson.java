@@ -18,7 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class GetJson extends AsyncTask<String, String, String> {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     public static final String baseURL = "http://zondersikkel.nl/api/v1/";
     public static final String QUOTE = "/quote.json";
     public static final String USER = "/user.json";
@@ -92,9 +92,8 @@ public class GetJson extends AsyncTask<String, String, String> {
     protected void onPostExecute(String result) {
 
         if (result == null || result.equals("{}")) {
-            Toast.makeText(c, "@strings/toast_downloaderror", Toast.LENGTH_SHORT).show();
+            Toast.makeText(c, c.getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(c, "@strings/toast_downloaderror", Toast.LENGTH_SHORT).show();
             if (type == USER) {
                 prefs.edit().putString("userData", result).apply();
             }

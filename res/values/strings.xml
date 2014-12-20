@@ -51,6 +51,7 @@
 
     <!-- toasts -->
     <string name="toast_downloaderror">Fout bij het downloaden</string>
+    <string name="toast_userloaderror">Fout bij het laden van de leden</string>
 
     <!-- Settings -->
     <string name="pushnotifications">Push notificaties</string>

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.ecci.Hamers.Adapters.UsersAdapter;
 import com.ecci.Hamers.GetJson;
 import com.ecci.Hamers.R;
@@ -91,7 +92,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 if(adapter != null){adapter.notifyDataSetChanged();};
             }
         }} catch (JSONException e) {
-            e.printStackTrace();
+            Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
         }
         if(swipeView != null) {swipeView.setRefreshing(false);}
     }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.ecci.Hamers.Adapters.QuotesAdapter;
 import com.ecci.Hamers.GetJson;
 import com.ecci.Hamers.Quote;
@@ -97,7 +98,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
                 }
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Toast.makeText(getActivity(), getString(R.string.toast_userloaderror), Toast.LENGTH_SHORT).show();
         }
         return null;
     }
@@ -133,9 +134,9 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
                 }
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
         } catch (ParseException e) {
-            e.printStackTrace();
+            Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
         }
         if(swipeView != null) {swipeView.setRefreshing(false);}
     }
