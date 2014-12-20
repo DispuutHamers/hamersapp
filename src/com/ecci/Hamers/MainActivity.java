@@ -128,7 +128,7 @@ public class MainActivity extends ActionBarActivity {
         if (prefs.getString("userData", null) != null) {
             userFragment.populateList(prefs);
         } else {
-            GetJson g = new GetJson(userFragment, GetJson.USER, prefs);
+            GetJson g = new GetJson(this, userFragment, GetJson.USER, prefs);
             g.execute();
         }
 
@@ -136,14 +136,14 @@ public class MainActivity extends ActionBarActivity {
         if (prefs.getString("quoteData", null) != null) {
             quoteListFragment.populateList(prefs);
         } else {
-            GetJson g = new GetJson(quoteListFragment, GetJson.QUOTE, prefs);
+            GetJson g = new GetJson(this, quoteListFragment, GetJson.QUOTE, prefs);
             g.execute();
         }
         //reload Events
         if (prefs.getString("eventData", null) != null) {
             eventFragment.populateList(prefs);
         } else {
-            GetJson g = new GetJson(eventFragment, GetJson.EVENT, prefs);
+            GetJson g = new GetJson(this, eventFragment, GetJson.EVENT, prefs);
             g.execute();
         }
 
@@ -151,7 +151,7 @@ public class MainActivity extends ActionBarActivity {
         if (prefs.getString("beerData", null) != null) {
             beerFragment.populateList(prefs);
         } else {
-            GetJson g = new GetJson(beerFragment, GetJson.BEER, prefs);
+            GetJson g = new GetJson(this, beerFragment, GetJson.BEER, prefs);
             g.execute();
         }
 

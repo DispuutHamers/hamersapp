@@ -49,6 +49,9 @@
     <string name="motion_body">Huilie huilie in dit veld.</string>
     <string name="create_motion">Dien motie in</string>
 
+    <!-- toasts -->
+    <string name="toast_downloaderror">Fout bij het downloaden</string>
+
     <!-- Settings -->
     <string name="pushnotifications">Push notificaties</string>
     <string name="push_title">Push notificaties</string>

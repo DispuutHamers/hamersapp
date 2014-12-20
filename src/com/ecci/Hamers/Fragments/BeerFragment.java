@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.ecci.Hamers.Adapters.BeersAdapter;
 import com.ecci.Hamers.Beer;
 import com.ecci.Hamers.GetJson;
@@ -71,7 +72,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
-        GetJson g = new GetJson(this, GetJson.BEER, PreferenceManager.getDefaultSharedPreferences(this.getActivity()));
+        GetJson g = new GetJson(this.getActivity(), this, GetJson.BEER, PreferenceManager.getDefaultSharedPreferences(this.getActivity()));
         g.execute();
     }
 
@@ -82,20 +83,24 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             if ((json = new JSONArray(prefs.getString("beerData", null))) != null) {
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject temp;
-                    try {
-                        temp = json.getJSONObject(i);
-                        Beer tempBeer = new Beer(temp.getString("name").toString(), temp.getString("soort").toString(),
-                                temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"));
-                        listItems.add(tempBeer);
-                        if(adapter != null){adapter.notifyDataSetChanged();};
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+
+                    temp = json.getJSONObject(i);
+                    Beer tempBeer = new Beer(temp.getString("name").toString(), temp.getString("soort").toString(),
+                            temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"));
+                    listItems.add(tempBeer);
+                    if (adapter != null) {
+                        adapter.notifyDataSetChanged();
                     }
+                    ;
                 }
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            if(this.getActivity() != null) {
+                Toast.makeText(getActivity(), "Error downloading data", Toast.LENGTH_SHORT);
+            }
         }
-        if(swipeView != null) {swipeView.setRefreshing(false);}
+        if (swipeView != null) {
+            swipeView.setRefreshing(false);
+        }
     }
 }

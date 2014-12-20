@@ -73,7 +73,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
-        GetJson g = new GetJson(this, GetJson.USER, PreferenceManager.getDefaultSharedPreferences(this.getActivity()));
+        GetJson g = new GetJson(this.getActivity(), this, GetJson.USER, PreferenceManager.getDefaultSharedPreferences(this.getActivity()));
         g.execute();
     }
 
