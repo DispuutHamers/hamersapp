@@ -16,10 +16,11 @@
 
 <resources>
     <string name="app_name">Hamers</string>
+
+    <!-- Drawer -->
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
-    <string name="refresh_button">Refresh Quotes</string>
 
     <string-array name="drawer_array">
         <item>Quotes</item>
@@ -32,13 +33,9 @@
 
     <!-- Mainactivity -->
 
-
-    <!-- Quotes -->
+    <!-- Action bar -->
     <string name="action_new">Nieuwe quote</string>
-    <string name="quote">Wat zei die lul?</string>
-    <string name="send_quote">Post</string>
-    <string name="cancel_quote">Cancel</string>
-    <string name="quote_hint">Typ dan heumeu!</string>
+    <string name="action_search">Zoek quote</string>
 
     <!-- Beers -->
 
@@ -52,7 +49,7 @@
     <string name="motion_body">Huilie huilie in dit veld.</string>
     <string name="create_motion">Dien motie in</string>
 
-    <!-- toasts -->
+    <!-- Toasts -->
     <string name="toast_downloaderror">Fout bij het downloaden</string>
     <string name="toast_downloading">De gegevens worden gedownload</string>
     <string name="toast_userloaderror">Fout bij het laden van de leden</string>
@@ -67,5 +64,19 @@
     <string name="apikey_category">API Key</string>
     <string name="apikey_summary">You can get your key on the website.</string>
     <string name="apikey_hint">Copy+paste your key here..</string>
+
+    <!-- New quote dialog -->
+    <string name="quote">Wat zei die lul?</string>
+    <string name="send_quote">Post</string>
+    <string name="cancel_quote">Cancel</string>
+    <string name="quote_hint">Typ dan heumeu!</string>
+
+    <!-- Api key dialog -->
+    <string name="apikeydialogtitle">Voer je API-key in!</string>
+    <string name="apikeydialogmessage">Voor deze app is een apikey nodig. Deze kan bemachtigd worden op www.zondersikkel.nl</string>
+
+    <!-- Dialog buttons -->
+    <string name="dialog_positive">Ok</string>
+    <string name="dialog_negative">Cancel</string>
 
 </resources>

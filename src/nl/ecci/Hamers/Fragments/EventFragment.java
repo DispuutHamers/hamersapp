@@ -1,11 +1,13 @@
 package nl.ecci.Hamers.Fragments;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import nl.ecci.Hamers.Adapters.EventsAdapter;
 import nl.ecci.Hamers.Event;
 import nl.ecci.Hamers.GetJson;
+import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +26,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import static android.support.v4.app.ActivityCompat.invalidateOptionsMenu;
 import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -43,10 +47,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         initSwiper(view, event_list);
 
-        // 1. pass context and data to the custom adapter
         adapter = new EventsAdapter(this.getActivity(), listItems);
-
-        //Set adapter and that's it.
         event_list.setAdapter(adapter);
 
         return view;

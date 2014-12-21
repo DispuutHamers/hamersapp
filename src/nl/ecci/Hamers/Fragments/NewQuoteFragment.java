@@ -61,8 +61,6 @@ public class NewQuoteFragment extends DialogFragment {
         Spinner spinner = (Spinner) view.findViewById(R.id.user_spinner);
         createUserList();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, users);
-        System.out.println(adapter.toString());
-        System.out.println(spinner.toString());
 
         spinner.setAdapter(adapter);
 
@@ -102,7 +100,6 @@ public class NewQuoteFragment extends DialogFragment {
     }
 
     private void postQuote(String quote, String userid) {
-        System.out.println("posting quote");
         SendPostRequest req = new SendPostRequest(this.getActivity(), this, SendPostRequest.QUOTE, prefs, "quote[text]=" + quote + " &quote[user_id]=" + userid);
         req.execute();
     }

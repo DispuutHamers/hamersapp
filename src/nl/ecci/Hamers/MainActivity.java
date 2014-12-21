@@ -2,6 +2,8 @@ package nl.ecci.Hamers;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -138,29 +140,28 @@ public class MainActivity extends ActionBarActivity {
         }else{
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             Activity a = this;
-            alert.setTitle("Apikey");
-            alert.setMessage("Voor deze app is een apikey nodig. Deze kan bemachtigd worden op www.zondersikkel.nl");
-            final EditText apikey = new EditText(this);
-            alert.setView(apikey);
-            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            alert.setTitle(getString(R.string.apikeydialogtitle));
+            alert.setMessage(getString(R.string.apikeydialogmessage));
+            final EditText apiKey = new EditText(this);
+            apiKey.setHint(getString(R.string.apikey_hint));
+            alert.setView(apiKey);
+            alert.setPositiveButton(getString(R.string.dialog_positive), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
-                    Editable key = apikey.getText();
-                    if(!key.toString().equals("")){
+                    Editable key = apiKey.getText();
+                    if (!key.toString().equals("")) {
                         storeInMemory("apikey", key.toString());
                         showToast(getResources().getString(R.string.toast_downloading), Toast.LENGTH_LONG);
                         loadData();
-                    }else{
+                    } else {
                         showToast(getResources().getString(R.string.toast_storekeymemory), Toast.LENGTH_LONG);
                     }
                 }
             });
-
-            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            alert.setNegativeButton(getString(R.string.dialog_negative), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                     showToast(getResources().getString(R.string.toast_storekeymemory), Toast.LENGTH_LONG);
                 }
             });
-
             alert.show();
         }
     }
@@ -202,7 +203,6 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * Swaps fragments in the main content view
-     *
      * @param position
      */
     private void selectItem(int position) {
@@ -261,7 +261,6 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * When user presses "+", start new dialog with NewQuoteFragment
-     *
      * @param item
      */
     public void newQuote(MenuItem item) {
@@ -271,7 +270,6 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * Parse date
-     *
      * @param dateTemp
      * @return String with parsed date
      * @throws ParseException
