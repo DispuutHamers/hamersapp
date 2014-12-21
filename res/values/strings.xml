@@ -79,4 +79,11 @@
     <string name="dialog_positive">Ok</string>
     <string name="dialog_negative">Cancel</string>
 
+    <!-- New review -->
+    <string name="new_review">Nieuwe review</string>
+    <string name="review_hint">Wat vonden we er van?</string>
+    <string name="create_review">Blabla</string>
+    <string name="rating">Cijfer: </string>
+    <string name="pick_time">Proefdatum</string>
+
 </resources>

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -278,5 +279,11 @@ public class MainActivity extends ActionBarActivity {
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
         return outputFormat.format(inputFormat.parse(dateTemp));
+    }
+
+    // TEMP
+    public void createReview(View view) {
+        Intent intent = new Intent(this, NewBeerActivity.class);
+        startActivity(intent);
     }
 }
