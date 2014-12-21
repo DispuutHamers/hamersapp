@@ -1,5 +1,8 @@
 package nl.ecci.Hamers;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -9,13 +12,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.*;
 import nl.ecci.Hamers.Fragments.*;
 
 import java.text.DateFormat;
@@ -133,8 +135,44 @@ public class MainActivity extends ActionBarActivity {
                 GetJson g = new GetJson(this, userFragment, GetJson.USER, prefs, true);
                 g.execute();
             }
+        }else{
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            Activity a = this;
+            alert.setTitle("Apikey");
+            alert.setMessage("Voor deze app is een apikey nodig. Deze kan bemachtigd worden op www.zondersikkel.nl");
+            final EditText apikey = new EditText(this);
+            alert.setView(apikey);
+            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    Editable key = apikey.getText();
+                    if(!key.toString().equals("")){
+                        storeInMemory("apikey", key.toString());
+                        showToast(getResources().getString(R.string.toast_downloading), Toast.LENGTH_LONG);
+                        loadData();
+                    }else{
+                        showToast(getResources().getString(R.string.toast_storekeymemory), Toast.LENGTH_LONG);
+                    }
+                }
+            });
+
+            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    showToast(getResources().getString(R.string.toast_storekeymemory), Toast.LENGTH_LONG);
+                }
+            });
+
+            alert.show();
         }
     }
+
+    private void showToast(String text, int length){
+        Toast.makeText(this, text, length).show();
+    }
+
+    private void storeInMemory(String key, String value){
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString(key, value).apply();
+    }
+
 
     public void loadData2(SharedPreferences prefs) {
         System.out.println("loaddata2 called");

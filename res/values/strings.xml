@@ -30,6 +30,9 @@
         <item>Instellingen</item>
     </string-array>
 
+    <!-- Mainactivity -->
+
+
     <!-- Quotes -->
     <string name="action_new">Nieuwe quote</string>
     <string name="quote">Wat zei die lul?</string>
@@ -51,7 +54,9 @@
 
     <!-- toasts -->
     <string name="toast_downloaderror">Fout bij het downloaden</string>
+    <string name="toast_downloading">De gegevens worden gedownload</string>
     <string name="toast_userloaderror">Fout bij het laden van de leden</string>
+    <string name="toast_storekeymemory">"Een apikey kan ingevuld worden in het instellingen scherm"</string>
 
     <!-- Settings -->
     <string name="pushnotifications">Push notificaties</string>
