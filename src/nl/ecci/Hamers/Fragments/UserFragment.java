@@ -49,7 +49,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return view;
     }
 
-    public void initSwiper(View view, ListView user_list) {
+    public void initSwiper(View view, final ListView user_list) {
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.users_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
@@ -59,15 +59,20 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         user_list.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
-
             }
 
             @Override
-            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0)
-                    swipeView.setEnabled(true);
-                else
-                    swipeView.setEnabled(false);
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                boolean enable = false;
+                if(user_list != null && user_list.getChildCount() > 0){
+                    // check if the first item of the list is visible
+                    boolean firstItemVisible = user_list.getFirstVisiblePosition() == 0;
+                    // check if the top of the first item is visible
+                    boolean topOfFirstItemVisible = user_list.getChildAt(0).getTop() == 0;
+                    // enabling or disabling the refresh layout
+                    enable = firstItemVisible && topOfFirstItemVisible;
+                }
+                swipeView.setEnabled(enable);
             }
         });
     }

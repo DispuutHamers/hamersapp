@@ -50,7 +50,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         return view;
     }
 
-    public void initSwiper(View view, ListView quote_list) {
+    public void initSwiper(View view, final ListView quote_list) {
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.quotes_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
@@ -60,15 +60,20 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         quote_list.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
-
             }
 
             @Override
-            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0)
-                    swipeView.setEnabled(true);
-                else
-                    swipeView.setEnabled(false);
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                boolean enable = false;
+                if(quote_list != null && quote_list.getChildCount() > 0){
+                    // check if the first item of the list is visible
+                    boolean firstItemVisible = quote_list.getFirstVisiblePosition() == 0;
+                    // check if the top of the first item is visible
+                    boolean topOfFirstItemVisible = quote_list.getChildAt(0).getTop() == 0;
+                    // enabling or disabling the refresh layout
+                    enable = firstItemVisible && topOfFirstItemVisible;
+                }
+                swipeView.setEnabled(enable);
             }
         });
     }
