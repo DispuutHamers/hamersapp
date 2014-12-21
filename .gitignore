@@ -54,6 +54,7 @@ IOS/www/
 .gradle
 build/
 *.iml
+proguard_logs
 
 # TEMPFILES
 *~*
