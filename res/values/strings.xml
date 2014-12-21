@@ -73,7 +73,7 @@
 
     <!-- Api key dialog -->
     <string name="apikeydialogtitle">Voer je API-key in!</string>
-    <string name="apikeydialogmessage">Voor deze app is een apikey nodig. Deze kan bemachtigd worden op www.zondersikkel.nl</string>
+    <string name="apikeydialogmessage">Deze kan bemachtigd worden op www.zondersikkel.nl</string>
 
     <!-- Dialog buttons -->
     <string name="dialog_positive">Ok</string>
@@ -82,7 +82,7 @@
     <!-- New review -->
     <string name="new_review">Nieuwe review</string>
     <string name="review_hint">Wat vonden we er van?</string>
-    <string name="create_review">Blabla</string>
+    <string name="create_review">Create review</string>
     <string name="rating">Cijfer: </string>
     <string name="pick_time">Proefdatum</string>
 

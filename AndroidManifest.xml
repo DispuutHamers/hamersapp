@@ -21,11 +21,12 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="nl.ecci.Hamers.MainActivity"/>
         </activity>
-        <activity android:name=".NewBeerActivity"
-                android:parentActivityName="nl.ecci.Hamers.MainActivity" >
+        <activity android:name=".NewBeerReviewActivity"
+                android:parentActivityName="nl.ecci.Hamers.MainActivity"
+                android:label="Nieuwe review">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="nl.ecci.Hamers.MainActivity" />
+                    android:value="nl.ecci.Hamers.MainActivity"/>
         </activity>
 
     </application>

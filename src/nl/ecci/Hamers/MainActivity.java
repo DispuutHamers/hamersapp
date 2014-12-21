@@ -283,7 +283,7 @@ public class MainActivity extends ActionBarActivity {
 
     // TEMP
     public void createReview(View view) {
-        Intent intent = new Intent(this, NewBeerActivity.class);
+        Intent intent = new Intent(this, NewBeerReviewActivity.class);
         startActivity(intent);
     }
 }
