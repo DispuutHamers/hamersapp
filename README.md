@@ -16,3 +16,10 @@ http://stackoverflow.com/questions/18025942/how-do-i-add-a-library-android-suppo
 http://developer.android.com/tools/publishing/app-signing.html
 Passwords are on the wiki.
 Signing was automated by Intellij (rather than command-line tools)
+
+You have to download the new ProGuard (the version shipped with the SDK is from 2011..,
+http://sourceforge.net/projects/proguard/files/proguard/ ) and replace [SDK]/tools/proguard with the new version.
+Copy the following items from the old ProGuard dir to the new one:
+* proguard-android.txt
+* proguard-android-optimize.txt
+* proguard-project.txt
