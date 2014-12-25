@@ -37,7 +37,8 @@
                   android:layout_alignParentLeft="true"
                   android:layout_marginTop="16dp"
                   android:layout_marginLeft="15dp"
-                  android:layout_marginRight="15dp"/>
+                  android:layout_marginRight="15dp"
+                  android:textSize="18dp"/>
         <SeekBar android:id="@+id/ratingseekbar"
                  android:max="10"
                  android:layout_width="match_parent"
@@ -46,11 +47,31 @@
                  android:layout_marginLeft="15dp"
                  android:layout_marginRight="15dp"
                  android:layout_alignParentLeft="true"/>
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                    android:text="@string/pick_time"
-                android:onClick="showTimePickerDialog" />
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+            <TextView android:text="@string/pick_date"
+                      android:id="@+id/pick_date_textview"
+                      android:layout_height="fill_parent"
+                      android:layout_width="0dp"
+                      android:layout_alignParentTop="true"
+                      android:layout_alignParentLeft="true"
+                      android:layout_weight="1"
+                      android:textSize="18dp"
+                      android:ellipsize="end"
+                      android:singleLine="true"
+                      android:gravity="left|center_vertical"
+                      android:layout_marginTop="16dp"
+                      android:layout_marginLeft="15dp"
+                      android:layout_marginRight="15dp"/>
+            <Button
+                    android:id="@id/pick_date_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pick_date_button"
+                    android:onClick="showDatePickerDialog"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

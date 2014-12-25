@@ -2,13 +2,11 @@ package nl.ecci.Hamers.Fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.text.format.DateFormat;
-import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.TimePicker;
+import nl.ecci.Hamers.R;
 
 import java.util.Calendar;
 
@@ -28,6 +26,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
+        if (view.isShown()) {
+            Button dateButton = (Button) getActivity().findViewById(R.id.pick_date_button);
+            dateButton.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
+        }
     }
 }

@@ -84,6 +84,7 @@
     <string name="review_hint">Wat vonden we er van?</string>
     <string name="create_review">Create review</string>
     <string name="rating">Cijfer: </string>
-    <string name="pick_time">Proefdatum</string>
+    <string name="pick_date">Proefdatum :</string>
+    <string name="pick_date_button">Datum</string>
 
 </resources>

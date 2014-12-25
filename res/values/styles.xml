@@ -28,4 +28,6 @@
 
     <item name="pushnotification" type="id"/>
 
+    <item name="pick_date_button" type="id"/>
+
 </resources>

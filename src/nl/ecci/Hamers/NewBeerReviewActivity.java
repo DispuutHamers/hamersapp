@@ -1,10 +1,13 @@
 package nl.ecci.Hamers;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import nl.ecci.Hamers.Fragments.DatePickerFragment;
@@ -19,12 +22,12 @@ public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.
         setContentView(R.layout.new_beer_review_activity);
 
         // Seekbar
-        sb = (SeekBar)findViewById(R.id.ratingseekbar);
+        sb = (SeekBar) findViewById(R.id.ratingseekbar);
         sb.setOnSeekBarChangeListener(this);
-        progress = (TextView)findViewById(R.id.rating);
+        progress = (TextView) findViewById(R.id.rating);
     }
 
-    public void showTimePickerDialog(View v) {
+    public void showDatePickerDialog(View v) {
         DialogFragment datePicker = new DatePickerFragment();
         datePicker.show(getSupportFragmentManager(), "datePicker");
     }
