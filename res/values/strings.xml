@@ -17,6 +17,12 @@
 <resources>
     <string name="app_name">Hamers</string>
 
+    <!-- General -->
+    <string name="yes">Ja</string>
+    <string name="no">Nee</string>
+    <string name="ok">Oké</string>
+    <string name="send">Verstuur</string>
+
     <!-- Drawer -->
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
@@ -82,15 +88,10 @@
     <!-- New review -->
     <string name="new_review">Nieuwe review</string>
     <string name="review_hint">Wat vonden we er van?</string>
-    <string name="create_review">Create review</string>
     <string name="rating">Cijfer: </string>
     <string name="pick_date">Proefdatum :</string>
     <string name="pick_date_button">Datum</string>
 
     <!-- Event details -->
     <string name="event_switch">Ik kom: </string>
-    <string name="yes">Ja</string>
-    <string name="no">Nee</string>
-
-    <string name="ok">Oké</string>
 </resources>

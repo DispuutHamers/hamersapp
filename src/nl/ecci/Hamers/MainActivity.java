@@ -280,10 +280,4 @@ public class MainActivity extends ActionBarActivity {
         DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
         return outputFormat.format(inputFormat.parse(dateTemp));
     }
-
-    // TEMP
-    public void createReview(View view) {
-        Intent intent = new Intent(this, NewBeerReviewActivity.class);
-        startActivity(intent);
-    }
 }

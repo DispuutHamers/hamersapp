@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
 import android.widget.TextView;
 
 public class SingleBeerActivity extends ActionBarActivity {
@@ -18,5 +19,15 @@ public class SingleBeerActivity extends ActionBarActivity {
         TextView country = (TextView) findViewById(R.id.beer_country);
 
         Bundle extras = getIntent().getExtras();
+    }
+
+    /**
+     * Called when the user clicks the button to create a new beerreview,
+     * starts NewBeerActivity.
+     * @param view
+     */
+    public void createReview(View view) {
+        Intent intent = new Intent(this, NewBeerReviewActivity.class);
+        startActivity(intent);
     }
 }
