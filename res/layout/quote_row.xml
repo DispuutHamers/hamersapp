@@ -60,6 +60,4 @@
             android:text="Dit is de datum (testing purposes)"
             android:textSize="12sp"
             android:gravity="right"/>
-
-
 </RelativeLayout> 

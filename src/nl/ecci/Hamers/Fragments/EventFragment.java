@@ -1,5 +1,6 @@
 package nl.ecci.Hamers.Fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -8,14 +9,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
+import nl.ecci.Hamers.*;
 import nl.ecci.Hamers.Adapters.EventsAdapter;
-import nl.ecci.Hamers.Event;
-import nl.ecci.Hamers.GetJson;
-import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,6 +40,15 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         adapter = new EventsAdapter(this.getActivity(), listItems);
         event_list.setAdapter(adapter);
+        event_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                System.out.println("Item: " + id + " at position:" + position);
+                Intent intent = new Intent(getActivity(), SingleEventActivity.class);
+                intent.putExtra("position", position);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

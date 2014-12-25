@@ -23,13 +23,25 @@
         </activity>
         <activity android:name=".NewBeerReviewActivity"
                 android:parentActivityName="nl.ecci.Hamers.MainActivity"
+                android:screenOrientation="portrait"
                 android:label="Nieuwe review">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="nl.ecci.Hamers.MainActivity"/>
         </activity>
         <activity android:name=".SingleBeerActivity"
+                  android:parentActivityName="nl.ecci.Hamers.MainActivity"
+                  android:screenOrientation="portrait"
                 android:label="Details">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="nl.ecci.Hamers.MainActivity">
+            </meta-data>
+        </activity>
+        <activity android:name=".SingleEventActivity"
+                  android:parentActivityName="nl.ecci.Hamers.MainActivity"
+                  android:screenOrientation="portrait"
+                  android:label="Activiteit">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="nl.ecci.Hamers.MainActivity">

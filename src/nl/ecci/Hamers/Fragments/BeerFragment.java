@@ -37,9 +37,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         initSwiper(view, beer_list);
 
         adapter = new BeersAdapter(this.getActivity(), listItems);
-
         beer_list.setAdapter(adapter);
-
         beer_list.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 System.out.println("Item: " + id + " at position:" + position);

@@ -1,21 +1,21 @@
 package nl.ecci.Hamers.Fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
 import nl.ecci.Hamers.Adapters.QuotesAdapter;
 import nl.ecci.Hamers.GetJson;
 import nl.ecci.Hamers.Quote;
 import nl.ecci.Hamers.R;
+import nl.ecci.Hamers.SingleEventActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +45,13 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
         // 2. Set adapter and that's it.
         quote_list.setAdapter(adapter);
+        quote_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                System.out.println("Item: " + id + " at position:" + position);
+                DialogFragment newQuoteFragment = new ViewQuoteFragment();
+                newQuoteFragment.show(getActivity().getSupportFragmentManager(), "quote");
+            }
+        });
 
         return view;
     }
