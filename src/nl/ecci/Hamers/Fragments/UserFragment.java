@@ -24,14 +24,13 @@ import java.util.ArrayList;
 
 public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public UserFragment() {
-        // Empty constructor required for fragment subclasses
-    }
-
     ArrayList<User> listItems = new ArrayList<User>();
     ArrayAdapter<User> adapter;
     SwipeRefreshLayout swipeView;
     SharedPreferences prefs;
+    public UserFragment() {
+        // Empty constructor required for fragment subclasses
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +63,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 boolean enable = false;
-                if(user_list != null && user_list.getChildCount() > 0){
+                if (user_list != null && user_list.getChildCount() > 0) {
                     // check if the first item of the list is visible
                     boolean firstItemVisible = user_list.getFirstVisiblePosition() == 0;
                     // check if the top of the first item is visible
@@ -83,22 +82,28 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         g.execute();
     }
 
-    public void populateList(SharedPreferences prefs){
+    public void populateList(SharedPreferences prefs) {
         JSONArray json;
         try {
-        if ((json = new JSONArray(prefs.getString("userData", null))) != null) {
-            listItems.clear();
-            for (int i = 0; i < json.length(); i++) {
-                JSONObject temp;
+            if ((json = new JSONArray(prefs.getString("userData", null))) != null) {
+                listItems.clear();
+                for (int i = 0; i < json.length(); i++) {
+                    JSONObject temp;
 
                     temp = json.getJSONObject(i);
                     User tempUser = new User(temp.getString("name"), temp.getInt("id"), 0, 0);
                     listItems.add(tempUser);
-                if(adapter != null){adapter.notifyDataSetChanged();};
+                    if (adapter != null) {
+                        adapter.notifyDataSetChanged();
+                    }
+                    ;
+                }
             }
-        }} catch (JSONException e) {
+        } catch (JSONException e) {
             Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
         }
-        if(swipeView != null) {swipeView.setRefreshing(false);}
+        if (swipeView != null) {
+            swipeView.setRefreshing(false);
+        }
     }
 }

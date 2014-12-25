@@ -27,14 +27,13 @@ import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public EventFragment() {
-        // Empty constructor required for fragment subclasses
-    }
-
     ArrayList<Event> listItems = new ArrayList<Event>();
     ArrayAdapter<Event> adapter;
     SwipeRefreshLayout swipeView;
     SharedPreferences prefs;
+    public EventFragment() {
+        // Empty constructor required for fragment subclasses
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,7 +64,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 boolean enable = false;
-                if(event_list != null && event_list.getChildCount() > 0){
+                if (event_list != null && event_list.getChildCount() > 0) {
                     // check if the first item of the list is visible
                     boolean firstItemVisible = event_list.getFirstVisiblePosition() == 0;
                     // check if the top of the first item is visible
@@ -89,7 +88,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         JSONArray json;
         try {
             if ((json = new JSONArray(prefs.getString("eventData", null))) != null) {
-                for (int i = json.length()-1; i >= 0; i--) {
+                for (int i = json.length() - 1; i >= 0; i--) {
                     JSONObject temp;
                     try {
                         temp = json.getJSONObject(i);
@@ -98,7 +97,10 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
                         Event tempEvent = new Event(temp.getString("title").toString(), temp.getString("beschrijving").toString(), finalDate, temp.getString("end_time"));
                         listItems.add(tempEvent);
-                        if(adapter != null){adapter.notifyDataSetChanged();};
+                        if (adapter != null) {
+                            adapter.notifyDataSetChanged();
+                        }
+                        ;
                     } catch (ParseException e) {
                         Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
                     }
@@ -107,6 +109,8 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         } catch (JSONException e) {
             Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
         }
-        if(swipeView != null) {swipeView.setRefreshing(false);}
+        if (swipeView != null) {
+            swipeView.setRefreshing(false);
+        }
     }
 }

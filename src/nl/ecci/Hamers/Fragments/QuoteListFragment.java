@@ -27,12 +27,11 @@ import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public QuoteListFragment() {
-    }
-
+    public SwipeRefreshLayout swipeView;
     ArrayList<Quote> listItems = new ArrayList<Quote>();
     ArrayAdapter<Quote> adapter;
-    public SwipeRefreshLayout swipeView;
+    public QuoteListFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,7 +64,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 boolean enable = false;
-                if(quote_list != null && quote_list.getChildCount() > 0){
+                if (quote_list != null && quote_list.getChildCount() > 0) {
                     // check if the first item of the list is visible
                     boolean firstItemVisible = quote_list.getFirstVisiblePosition() == 0;
                     // check if the top of the first item is visible
@@ -134,7 +133,10 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
                     Quote tempQuote = new Quote(username, quote.getString("text").toString(), date, id);
                     listItems.add(tempQuote);
-                    if(adapter != null){adapter.notifyDataSetChanged();};
+                    if (adapter != null) {
+                        adapter.notifyDataSetChanged();
+                    }
+                    ;
 
                 }
             }
@@ -143,6 +145,8 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         } catch (ParseException e) {
             Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
         }
-        if(swipeView != null) {swipeView.setRefreshing(false);}
+        if (swipeView != null) {
+            swipeView.setRefreshing(false);
+        }
     }
 }

@@ -28,6 +28,13 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="nl.ecci.Hamers.MainActivity"/>
         </activity>
+        <activity android:name=".SingleBeerActivity"
+                android:label="Details">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="nl.ecci.Hamers.MainActivity">
+            </meta-data>
+        </activity>
 
     </application>
 </manifest>

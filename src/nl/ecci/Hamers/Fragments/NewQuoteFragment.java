@@ -23,8 +23,8 @@ import java.util.ArrayList;
 
 public class NewQuoteFragment extends DialogFragment {
 
-    private SharedPreferences prefs;
     ArrayList<String> users = new ArrayList<String>();
+    private SharedPreferences prefs;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -77,24 +77,26 @@ public class NewQuoteFragment extends DialogFragment {
                 }
             }
         } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.toast_userloaderror), Toast.LENGTH_SHORT).show();e.printStackTrace();
+            Toast.makeText(getActivity(), getString(R.string.toast_userloaderror), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
 
     }
 
-    private String nameToID(String name){
+    private String nameToID(String name) {
         JSONArray userJSON;
         String returnv = "-1";
         try {
             if ((userJSON = new JSONArray(prefs.getString("userData", null))) != null) {
                 for (int i = 0; i < userJSON.length(); i++) {
-                    if(userJSON.getJSONObject(i).getString("name").equals(name)){
+                    if (userJSON.getJSONObject(i).getString("name").equals(name)) {
                         returnv = userJSON.getJSONObject(i).getString("id");
                     }
                 }
             }
         } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.toast_userloaderror), Toast.LENGTH_SHORT).show();e.printStackTrace();
+            Toast.makeText(getActivity(), getString(R.string.toast_userloaderror), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
         return returnv;
     }

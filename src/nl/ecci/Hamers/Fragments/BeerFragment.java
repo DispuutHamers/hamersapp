@@ -1,5 +1,6 @@
 package nl.ecci.Hamers.Fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -8,30 +9,26 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
+import nl.ecci.Hamers.*;
 import nl.ecci.Hamers.Adapters.BeersAdapter;
-import nl.ecci.Hamers.Beer;
-import nl.ecci.Hamers.GetJson;
-import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+import static android.widget.AdapterView.OnItemClickListener;
 
-    public BeerFragment() {
-        // Empty constructor required for fragment subclasses
-    }
+public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     ArrayList<Beer> listItems = new ArrayList<Beer>();
     ArrayAdapter<Beer> adapter;
     SwipeRefreshLayout swipeView;
     SharedPreferences prefs;
+    public BeerFragment() {
+        // Empty constructor required for fragment subclasses
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.beer_fragment, container, false);
@@ -39,11 +36,19 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         initSwiper(view, beer_list);
 
-        // 1. pass context and data to the custom adapter
         adapter = new BeersAdapter(this.getActivity(), listItems);
 
-        //Set adapter and that's it.
         beer_list.setAdapter(adapter);
+
+        beer_list.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                System.out.println("Item: " + id + " at position:" + position);
+                Intent intent = new Intent(getActivity(), SingleBeerActivity.class);
+                intent.putExtra("position", position);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -62,7 +67,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 boolean enable = false;
-                if(beer_list != null && beer_list.getChildCount() > 0){
+                if (beer_list != null && beer_list.getChildCount() > 0) {
                     // check if the first item of the list is visible
                     boolean firstItemVisible = beer_list.getFirstVisiblePosition() == 0;
                     // check if the top of the first item is visible
@@ -100,7 +105,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 }
             }
         } catch (JSONException e) {
-            if(this.getActivity() != null) {
+            if (this.getActivity() != null) {
                 Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
             }
         }
