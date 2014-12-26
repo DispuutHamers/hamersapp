@@ -25,10 +25,19 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="4dp"
-                android:inputType="textMultiLine"
-                android:hint="@string/event_hint"
+                android:hint="@string/event_title"
                 android:padding="20dp"/>
 
+        <EditText android:id="@+id/event_beschrijving"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="16dp"
+                  android:layout_marginLeft="15dp"
+                  android:layout_marginRight="15dp"
+                  android:layout_marginBottom="4dp"
+                  android:inputType="textMultiLine"
+                  android:hint="@string/event_description"
+                  android:padding="20dp"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
@@ -47,6 +56,12 @@
                       android:layout_marginTop="16dp"
                       android:layout_marginLeft="15dp"
                       android:layout_marginRight="15dp"/>
+            <Button
+                    android:id="@+id/event_time_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pick_time_button"
+                    android:onClick="showTimePickerDialog"/>
             <Button
                     android:id="@+id/event_date_button"
                     android:layout_width="wrap_content"
@@ -73,11 +88,17 @@
                       android:layout_marginLeft="15dp"
                       android:layout_marginRight="15dp"/>
             <Button
-                    android:id="@id/end_time_button"
+                    android:id="@+id/end_time_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pick_time_button"
+                    android:onClick="showEndTimePickerDialog"/>
+            <Button
+                    android:id="@+id/end_date_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pick_date_button"
-                    android:onClick="showEndTimePickerDialog"/>
+                    android:onClick="showEndDatePickerDialog"/>
         </LinearLayout>
     </LinearLayout>
 

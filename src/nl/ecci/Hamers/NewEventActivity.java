@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import nl.ecci.Hamers.Fragments.DatePickerFragment;
+import nl.ecci.Hamers.Fragments.TimePickerFragment;
 
 public class NewEventActivity extends ActionBarActivity {
     FragmentManager fragmanager = getSupportFragmentManager();
@@ -21,8 +22,18 @@ public class NewEventActivity extends ActionBarActivity {
         datePicker.show(fragmanager, "date");
     }
 
-    public void showEndTimePickerDialog(View v) {
+    public void showEndDatePickerDialog(View v) {
         DialogFragment datePicker = new DatePickerFragment();
+        datePicker.show(fragmanager, "end_date");
+    }
+
+    public void showTimePickerDialog(View v) {
+        DialogFragment datePicker = new TimePickerFragment();
+        datePicker.show(fragmanager, "time");
+    }
+
+    public void showEndTimePickerDialog(View v) {
+        DialogFragment datePicker = new TimePickerFragment();
         datePicker.show(fragmanager, "end_time");
     }
 }

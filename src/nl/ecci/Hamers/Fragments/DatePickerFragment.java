@@ -27,7 +27,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         Button eventDateButton = (Button) getActivity().findViewById(R.id.event_date_button);
-        Button eventEndTimeButton = (Button) getActivity().findViewById(R.id.end_time_button);
+        Button eventEndDateButton = (Button) getActivity().findViewById(R.id.end_date_button);
         Button beerDateButton = (Button) getActivity().findViewById(R.id.pick_date_button);
 
         StringBuilder builder = new StringBuilder();
@@ -40,8 +40,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             eventDateButton.setText(date);
         }
 
-        if(getActivity().getSupportFragmentManager().findFragmentByTag("end_time") != null) {
-            eventEndTimeButton.setText(date);
+        if(getActivity().getSupportFragmentManager().findFragmentByTag("end_date") != null) {
+            eventEndDateButton.setText(date);
         }
 
         if(getActivity().getSupportFragmentManager().findFragmentByTag("proefdatum") != null) {
