@@ -1,16 +1,21 @@
 package nl.ecci.Hamers;
 
 import android.app.ActionBar;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import nl.ecci.Hamers.Fragments.DatePickerFragment;
+
+import java.util.Calendar;
 
 public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.OnSeekBarChangeListener {
     private SeekBar sb;
@@ -29,7 +34,7 @@ public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.
 
     public void showDatePickerDialog(View v) {
         DialogFragment datePicker = new DatePickerFragment();
-        datePicker.show(getSupportFragmentManager(), "datePicker");
+        datePicker.show(getSupportFragmentManager(), "proefdatum");
     }
 
     @Override

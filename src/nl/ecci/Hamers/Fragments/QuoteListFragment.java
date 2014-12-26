@@ -1,21 +1,17 @@
 package nl.ecci.Hamers.Fragments;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
 import nl.ecci.Hamers.Adapters.QuotesAdapter;
 import nl.ecci.Hamers.GetJson;
 import nl.ecci.Hamers.Quote;
 import nl.ecci.Hamers.R;
-import nl.ecci.Hamers.SingleEventActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +33,8 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.quote_list_fragment, container, false);
         ListView quote_list = (ListView) view.findViewById(R.id.quotes_listView);
+
+        setHasOptionsMenu(true);
 
         initSwiper(view, quote_list);
 
@@ -155,5 +153,10 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         if (swipeView != null) {
             swipeView.setRefreshing(false);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.quote_list_menu, menu);
     }
 }

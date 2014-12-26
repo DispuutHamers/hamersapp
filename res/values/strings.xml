@@ -26,8 +26,6 @@
     <!-- Drawer -->
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-
-
     <string-array name="drawer_array">
         <item>Quotes</item>
         <item>Leden</item>
@@ -39,9 +37,15 @@
 
     <!-- Mainactivity -->
 
-    <!-- Action bar -->
-    <string name="action_new">Nieuwe quote</string>
-    <string name="action_search">Zoek quote</string>
+    <!-- Quote list -->
+        <!-- Action bar -->
+        <string name="action_new_quote">Nieuwe quote</string>
+        <string name="action_search_quote">Zoek quote</string>
+
+    <!-- Quote list -->
+        <!-- Action bar -->
+        <string name="action_new_event">Nieuwe activiteit</string>
+        <string name="action_search_event">Zoek activiteit</string>
 
     <!-- Beers -->
 
@@ -92,6 +96,12 @@
     <string name="pick_date">Proefdatum :</string>
     <string name="pick_date_button">Datum</string>
 
-    <!-- Event details -->
-    <string name="event_switch">Ik kom: </string>
+    <!-- Events -->
+        <!-- Event details -->
+        <string name="event_switch">Ik kom: </string>
+        <!-- New event -->
+        <string name="new_event">Nieuwe review</string>
+        <string name="event_hint">Naam</string>
+        <string name="date">Datum: </string>
+        <string name="end_time">End time: </string>
 </resources>

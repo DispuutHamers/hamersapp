@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import nl.ecci.Hamers.R;
@@ -25,10 +26,27 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        if (view.isShown()) {
-            Button dateButton = (Button) getActivity().findViewById(R.id.pick_date_button);
-            dateButton.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        Button eventDateButton = (Button) getActivity().findViewById(R.id.event_date_button);
+        Button eventEndTimeButton = (Button) getActivity().findViewById(R.id.end_time_button);
+        Button beerDateButton = (Button) getActivity().findViewById(R.id.pick_date_button);
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(day).append("-")
+                .append(month).append("-")
+                .append(year);
+        String date = builder.toString();
+
+        if(getActivity().getSupportFragmentManager().findFragmentByTag("date") != null) {
+            eventDateButton.setText(date);
+        }
+
+        if(getActivity().getSupportFragmentManager().findFragmentByTag("end_time") != null) {
+            eventEndTimeButton.setText(date);
+        }
+
+        if(getActivity().getSupportFragmentManager().findFragmentByTag("proefdatum") != null) {
+            beerDateButton.setText(date);
         }
     }
 }

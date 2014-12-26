@@ -29,5 +29,6 @@
     <item name="pushnotification" type="id"/>
 
     <item name="pick_date_button" type="id"/>
+    <item name="end_time_button" type="id"/>
 
 </resources>
