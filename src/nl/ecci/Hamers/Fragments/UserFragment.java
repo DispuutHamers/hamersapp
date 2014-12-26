@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import nl.ecci.Hamers.Adapters.UsersAdapter;
 import nl.ecci.Hamers.GetJson;
+import nl.ecci.Hamers.JSONHelper;
 import nl.ecci.Hamers.R;
 import nl.ecci.Hamers.User;
 import org.json.JSONArray;
@@ -79,14 +80,14 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
-        GetJson g = new GetJson(this.getActivity(), this, GetJson.USER, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), false);
+        GetJson g = new GetJson(this.getActivity(), this, GetJson.USERURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), false);
         g.execute();
     }
 
     public void populateList(SharedPreferences prefs){
         JSONArray json;
         try {
-        if ((json = new JSONArray(prefs.getString("userData", null))) != null) {
+        if ((json = JSONHelper.getJsonArray(prefs, JSONHelper.USERKEY)) != null) {
             listItems.clear();
             for (int i = 0; i < json.length(); i++) {
                 JSONObject temp;

@@ -14,11 +14,8 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import nl.ecci.Hamers.*;
 import nl.ecci.Hamers.Adapters.EventsAdapter;
-import nl.ecci.Hamers.Event;
-import nl.ecci.Hamers.GetJson;
-import nl.ecci.Hamers.MainActivity;
-import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,7 +81,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public void onRefresh() {
-        GetJson g = new GetJson(this.getActivity(), this, GetJson.EVENT, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), false);
+        GetJson g = new GetJson(this.getActivity(), this, GetJson.EVENTURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), false);
         g.execute();
     }
 
@@ -92,7 +89,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         listItems.clear();
         JSONArray json;
         try {
-            if ((json = new JSONArray(prefs.getString("eventData", null))) != null) {
+            if ((json = JSONHelper.getJsonArray(prefs, JSONHelper.EVENTKEY)) != null) {
                 for (int i = json.length()-1; i >= 0; i--) {
                     JSONObject temp;
                     try {

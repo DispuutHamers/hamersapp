@@ -126,50 +126,61 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * Loads all the data on startup.
+     * It starts with loading the users and afterwards it calls loaddata2, which downloads the other data.
+     */
     public void loadData() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //reload users
         if (prefs.getString("apikey", null) != null) {
-            if (prefs.getString("userData", null) != null) {
+            if (prefs.getString(JSONHelper.USERKEY, null) != null) {
                 userFragment.populateList(prefs);
                 loadData2(prefs);
             } else {
-                GetJson g = new GetJson(this, userFragment, GetJson.USER, prefs, true);
+                GetJson g = new GetJson(this, userFragment, GetJson.USERURL, prefs, true);
                 g.execute();
             }
         }else{
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            Activity a = this;
-            alert.setTitle(getString(R.string.apikeydialogtitle));
-            alert.setMessage(getString(R.string.apikeydialogmessage));
-            final EditText apiKey = new EditText(this);
-            apiKey.setHint(getString(R.string.apikey_hint));
-            alert.setView(apiKey);
-            alert.setPositiveButton(getString(R.string.dialog_positive), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    Editable key = apiKey.getText();
-                    if (!key.toString().equals("")) {
-                        storeInMemory("apikey", key.toString());
-                        showToast(getResources().getString(R.string.toast_downloading), Toast.LENGTH_LONG);
-                        loadData();
-                    } else {
-                        showToast(getResources().getString(R.string.toast_storekeymemory), Toast.LENGTH_LONG);
-                    }
-                }
-            });
-            alert.setNegativeButton(getString(R.string.dialog_negative), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    showToast(getResources().getString(R.string.toast_storekeymemory), Toast.LENGTH_LONG);
-                }
-            });
-            alert.show();
+            showApiKeyDialog();
         }
     }
 
+    //Show the dialog for entering the apikey on startup
+    private void showApiKeyDialog(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        Activity a = this;
+        alert.setTitle(getString(R.string.apikeydialogtitle));
+        alert.setMessage(getString(R.string.apikeydialogmessage));
+        final EditText apiKey = new EditText(this);
+        apiKey.setHint(getString(R.string.apikey_hint));
+        alert.setView(apiKey);
+        alert.setPositiveButton(getString(R.string.dialog_positive), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Editable key = apiKey.getText();
+                if (!key.toString().equals("")) {
+                    storeInMemory("apikey", key.toString());
+                    showToast(getResources().getString(R.string.toast_downloading), Toast.LENGTH_LONG);
+                    loadData();
+                } else {
+                    showToast(getResources().getString(R.string.toast_storekeymemory), Toast.LENGTH_LONG);
+                }
+            }
+        });
+        alert.setNegativeButton(getString(R.string.dialog_negative), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                showToast(getResources().getString(R.string.toast_storekeymemory), Toast.LENGTH_LONG);
+            }
+        });
+        alert.show();
+    }
+
+    //Show a toast with the supplied text and the supplied length
     private void showToast(String text, int length){
         Toast.makeText(this, text, length).show();
     }
 
+    //Stores this key value pair in memory
     private void storeInMemory(String key, String value){
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString(key, value).apply();
     }
@@ -178,25 +189,25 @@ public class MainActivity extends ActionBarActivity {
     public void loadData2(SharedPreferences prefs) {
         System.out.println("loaddata2 called");
         //reload quotes
-        if (prefs.getString("quoteData", null) != null) {
+        if (prefs.getString(JSONHelper.QUOTEKEY, null) != null) {
             quoteListFragment.populateList(prefs);
         } else {
-            GetJson g = new GetJson(this, quoteListFragment, GetJson.QUOTE, prefs, false);
+            GetJson g = new GetJson(this, quoteListFragment, GetJson.QUOTEURL, prefs, false);
             g.execute();
         }
         //reload Events
-        if (prefs.getString("eventData", null) != null) {
+        if (prefs.getString(JSONHelper.EVENTKEY, null) != null) {
             eventFragment.populateList(prefs);
         } else {
-            GetJson g = new GetJson(this, eventFragment, GetJson.EVENT, prefs, false);
+            GetJson g = new GetJson(this, eventFragment, GetJson.EVENTURL, prefs, false);
             g.execute();
         }
 
         //reload Beers
-        if (prefs.getString("beerData", null) != null) {
+        if (prefs.getString(JSONHelper.BEERKEY, null) != null) {
             beerFragment.populateList(prefs);
         } else {
-            GetJson g = new GetJson(this, beerFragment, GetJson.BEER, prefs, false);
+            GetJson g = new GetJson(this, beerFragment, GetJson.BEERURL, prefs, false);
             g.execute();
         }
     }

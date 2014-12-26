@@ -15,6 +15,7 @@ import android.widget.Toast;
 import nl.ecci.Hamers.Adapters.BeersAdapter;
 import nl.ecci.Hamers.Beer;
 import nl.ecci.Hamers.GetJson;
+import nl.ecci.Hamers.JSONHelper;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -77,7 +78,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
-        GetJson g = new GetJson(this.getActivity(), this, GetJson.BEER, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), false);
+        GetJson g = new GetJson(this.getActivity(), this, GetJson.BEERURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), false);
         g.execute();
     }
 
@@ -85,10 +86,9 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         listItems.clear();
         JSONArray json;
         try {
-            if ((json = new JSONArray(prefs.getString("beerData", null))) != null) {
+            if ((json = JSONHelper.getJsonArray(prefs, JSONHelper.BEERKEY)) != null) {
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject temp;
-
                     temp = json.getJSONObject(i);
                     Beer tempBeer = new Beer(temp.getString("name").toString(), temp.getString("soort").toString(),
                             temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"));
