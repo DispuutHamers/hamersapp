@@ -1,6 +1,5 @@
 package nl.ecci.Hamers.Fragments;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,8 +8,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.*;
 import android.widget.*;
-import nl.ecci.Hamers.*;
 import nl.ecci.Hamers.Adapters.EventsAdapter;
+import nl.ecci.Hamers.Event;
+import nl.ecci.Hamers.GetJson;
+import nl.ecci.Hamers.R;
+import nl.ecci.Hamers.SingleEventActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
