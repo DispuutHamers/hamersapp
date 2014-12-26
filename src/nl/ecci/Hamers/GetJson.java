@@ -99,11 +99,11 @@ public class GetJson extends AsyncTask<String, String, String> {
             Toast.makeText(a, a.getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
         } else {
             if (typeURL == USERURL) {
-                prefs.edit().putString("userData", result).apply();
+                prefs.edit().putString(JSONHelper.USERKEY, result).apply();
             }
             // Quotelist fragment
             if (f instanceof QuoteListFragment) {
-                prefs.edit().putString("quoteData", result).apply();
+                prefs.edit().putString(JSONHelper.QUOTEKEY, result).apply();
                 ((QuoteListFragment) f).populateList(prefs);
             }
             // User fragment
@@ -112,12 +112,12 @@ public class GetJson extends AsyncTask<String, String, String> {
             }
             // Event fragment
             else if (f instanceof EventFragment) {
-                prefs.edit().putString("eventData", result).apply();
+                prefs.edit().putString(JSONHelper.EVENTKEY, result).apply();
                 ((EventFragment) f).populateList(prefs);
             }
             // Beer fragment
             else if (f instanceof BeerFragment) {
-                prefs.edit().putString("beerData", result).apply();
+                prefs.edit().putString(JSONHelper.BEERKEY, result).apply();
                 ((BeerFragment) f).populateList(prefs);
             }
         }
