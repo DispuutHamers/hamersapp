@@ -23,10 +23,10 @@ public final class JSONHelper {
         try {
             if ((users = getJsonArray(prefs, USERKEY)) != null) {
                 for (int i = 0; i < users.length(); i++) {
-                        JSONObject temp = users.getJSONObject(i);
-                        if (temp.getInt("id") == id) {
-                            return temp;
-                        }
+                    JSONObject temp = users.getJSONObject(i);
+                    if (temp.getInt("id") == id) {
+                        return temp;
+                    }
                 }
             }
         } catch (JSONException e) {
@@ -40,12 +40,12 @@ public final class JSONHelper {
         try {
             if ((events = getJsonArray(prefs, EVENTKEY)) != null) {
                 for (int i = 0; i < events.length(); i++) {
-                        JSONObject temp = events.getJSONObject(i);
-                        if (parseDate(temp.getString("date").substring(0,10)).equals(date)) {
-                            if(temp.getString("title").equals(title)) {
-                                return temp;
-                            }
+                    JSONObject temp = events.getJSONObject(i);
+                    if (parseDate(temp.getString("date").substring(0, 10)).equals(date)) {
+                        if (temp.getString("title").equals(title)) {
+                            return temp;
                         }
+                    }
                 }
             }
         } catch (JSONException e) {
@@ -58,7 +58,25 @@ public final class JSONHelper {
         return null;
     }
 
-    public static JSONArray getJsonArray(SharedPreferences prefs, String key){
+    public static JSONObject getBeer(SharedPreferences prefs, String name) {
+        JSONArray beers;
+        try {
+            if ((beers = getJsonArray(prefs, BEERKEY)) != null) {
+                for (int i = 0; i < beers.length(); i++) {
+                    JSONObject temp = beers.getJSONObject(i);
+                    if (temp.getString("name").equals(name)) {
+                        return temp;
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+    }
+
+    public static JSONArray getJsonArray(SharedPreferences prefs, String key) {
         try {
             return new JSONArray(prefs.getString(key, null));
         } catch (JSONException e) {

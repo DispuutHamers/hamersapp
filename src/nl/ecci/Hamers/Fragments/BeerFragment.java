@@ -44,11 +44,18 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         beer_list.setAdapter(adapter);
         beer_list.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                System.out.println("Item: " + id + " at position:" + position);
-                Intent intent = new Intent(getActivity(), SingleBeerActivity.class);
-                intent.putExtra("position", position);
-                intent.putExtra("id", id);
-                startActivity(intent);
+                JSONObject b = JSONHelper.getBeer(prefs, adapter.getItem(position).getName());
+                if (b != null) {
+                    try {
+                        System.out.println(b.getString("name"));
+                        Intent intent = new Intent(getActivity(), SingleBeerActivity.class);
+                        intent.putExtra("position", position);
+                        intent.putExtra("id", id);
+                        startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
         return view;
@@ -89,6 +96,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     public void populateList(SharedPreferences prefs) {
+        this.prefs = prefs;
         listItems.clear();
         JSONArray json;
         try {
