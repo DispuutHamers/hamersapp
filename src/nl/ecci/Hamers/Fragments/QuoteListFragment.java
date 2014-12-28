@@ -10,6 +10,7 @@ import android.view.*;
 import android.widget.*;
 import nl.ecci.Hamers.Adapters.QuotesAdapter;
 import nl.ecci.Hamers.GetJson;
+import nl.ecci.Hamers.JSONHelper;
 import nl.ecci.Hamers.Quote;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
@@ -86,44 +87,23 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
     public void onRefresh() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         if (prefs.getString("userData", null) != null) {
-            GetJson g = new GetJson(this.getActivity(), this, GetJson.QUOTE, prefs, false);
+            GetJson g = new GetJson(this.getActivity(), this, GetJson.QUOTEURL, prefs, false);
             g.execute();
         }
-    }
-
-    private JSONObject getUser(int id, SharedPreferences prefs) {
-        JSONArray users;
-        try {
-            if ((users = new JSONArray(prefs.getString("userData", null))) != null) {
-                for (int i = 0; i < users.length(); i++) {
-                    try {
-                        JSONObject temp = users.getJSONObject(i);
-                        if (temp.getInt("id") == id) {
-                            return temp;
-                        }
-                    } catch (JSONException e) {
-                        return (null);
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.toast_userloaderror), Toast.LENGTH_SHORT).show();
-        }
-        return null;
     }
 
     public void populateList(SharedPreferences prefs) {
         listItems.clear();
         JSONArray json;
         try {
-            if ((json = new JSONArray(prefs.getString("quoteData", null))) != null) {
+            if ((json = JSONHelper.getJsonArray(prefs, JSONHelper.QUOTEKEY)) != null) {
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject quote = json.getJSONObject(i);
                     JSONObject user;
 
                     String username;
                     int id;
-                    if ((user = getUser(quote.getInt("user_id"), prefs)) != null) {
+                    if ((user = JSONHelper.getUser(prefs, quote.getInt("user_id"))) != null) {
                         username = user.getString("name");
                         id = user.getInt("id");
                     } else {

@@ -29,7 +29,9 @@
             android:layout_toRightOf="@id/quote_image"
             android:gravity="left"
             android:text="Dit is een keigoeie quote (testing purposes)"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:ellipsize="end"
+            android:maxLines="2"/>
 
     <TextView
             android:id="@+id/quote_user"

@@ -20,20 +20,20 @@ import java.net.URL;
 public class GetJson extends AsyncTask<String, String, String> {
     private static final boolean DEBUG = false;
     public static final String baseURL = "http://zondersikkel.nl/api/v1/";
-    public static final String QUOTE = "/quote.json";
-    public static final String USER = "/user.json";
-    public static final String EVENT = "/event.json";
-    public static final String BEER = "/beer.json";
+    public static final String QUOTEURL = "/quote.json";
+    public static final String USERURL = "/user.json";
+    public static final String EVENTURL = "/event.json";
+    public static final String BEERURL = "/beer.json";
 
     private Fragment f;
-    private String type;
+    private String typeURL;
     private SharedPreferences prefs;
     private Activity a;
     private boolean firstload;
 
-    public GetJson(Activity a, Fragment f, String type, SharedPreferences s, Boolean firstload) {
+    public GetJson(Activity a, Fragment f, String typeURL, SharedPreferences s, Boolean firstload) {
         this.f = f;
-        this.type = type;
+        this.typeURL = typeURL;
         this.prefs = s;
         this.a = a;
         this.firstload = firstload;
@@ -43,7 +43,7 @@ public class GetJson extends AsyncTask<String, String, String> {
         BufferedReader reader;
         StringBuffer buffer = new StringBuffer();
         try {
-            URL url = new URL(baseURL + prefs.getString("apikey", "a") + type);
+            URL url = new URL(baseURL + prefs.getString("apikey", "a") + typeURL);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
             int read;
             char[] chars = new char[1024];
@@ -64,7 +64,7 @@ public class GetJson extends AsyncTask<String, String, String> {
             }
             return null;
         }
-        if (type == USER) {
+        if (typeURL == USERURL) {
             try {
                 downloadProfilepictures(new JSONArray(buffer.toString()));
             } catch (JSONException e) {
@@ -76,7 +76,7 @@ public class GetJson extends AsyncTask<String, String, String> {
             }
             ;
         }
-        if (type == BEER) {
+        if (typeURL == BEERURL) {
             try {
                 downloadBeerpictures(new JSONArray(buffer.toString()));
             } catch (JSONException e) {
@@ -98,12 +98,12 @@ public class GetJson extends AsyncTask<String, String, String> {
         if (result == null || result.equals("{}")) {
             Toast.makeText(a, a.getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
         } else {
-            if (type == USER) {
-                prefs.edit().putString("userData", result).apply();
+            if (typeURL == USERURL) {
+                prefs.edit().putString(JSONHelper.USERKEY, result).apply();
             }
             // Quotelist fragment
             if (f instanceof QuoteListFragment) {
-                prefs.edit().putString("quoteData", result).apply();
+                prefs.edit().putString(JSONHelper.QUOTEKEY, result).apply();
                 ((QuoteListFragment) f).populateList(prefs);
             }
             // User fragment
@@ -112,12 +112,12 @@ public class GetJson extends AsyncTask<String, String, String> {
             }
             // Event fragment
             else if (f instanceof EventFragment) {
-                prefs.edit().putString("eventData", result).apply();
+                prefs.edit().putString(JSONHelper.EVENTKEY, result).apply();
                 ((EventFragment) f).populateList(prefs);
             }
             // Beer fragment
             else if (f instanceof BeerFragment) {
-                prefs.edit().putString("beerData", result).apply();
+                prefs.edit().putString(JSONHelper.BEERKEY, result).apply();
                 ((BeerFragment) f).populateList(prefs);
             }
         }
