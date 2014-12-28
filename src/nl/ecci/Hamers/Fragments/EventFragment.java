@@ -38,6 +38,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     ArrayAdapter<Event> adapter;
     SwipeRefreshLayout swipeView;
     SharedPreferences prefs;
+
     public EventFragment() {
         // Empty constructor required for fragment subclasses
     }
@@ -55,11 +56,21 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         event_list.setAdapter(adapter);
         event_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                System.out.println("Item: " + id + " at position:" + position);
-                Intent intent = new Intent(getActivity(), SingleEventActivity.class);
-                intent.putExtra("position", position);
-                intent.putExtra("id", id);
-                startActivity(intent);
+                JSONObject e = JSONHelper.getEvent(prefs, adapter.getItem(position).getTitle(), adapter.getItem(position).getDate());
+                if (e != null) {
+                    try {
+                        // voorbeeld: S
+                        System.out.println("-----------------------------------" + e.getString("beschrijving"));
+                        //
+                        Intent intent = new Intent(getActivity(), SingleEventActivity.class);
+                        intent.putExtra("position", position);
+                        intent.putExtra("id", id);
+                        startActivity(intent);
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+
             }
         });
 
@@ -102,11 +113,12 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     public void populateList(SharedPreferences prefs) {
+        this.prefs = prefs;
         listItems.clear();
         JSONArray json;
         try {
             if ((json = JSONHelper.getJsonArray(prefs, JSONHelper.EVENTKEY)) != null) {
-                for (int i = json.length()-1; i >= 0; i--) {
+                for (int i = json.length() - 1; i >= 0; i--) {
                     JSONObject temp;
                     try {
                         temp = json.getJSONObject(i);

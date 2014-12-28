@@ -5,6 +5,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+
+import static nl.ecci.Hamers.MainActivity.parseDate;
+
 /**
  * Created by rob on 26-12-14.
  */
@@ -17,19 +21,38 @@ public final class JSONHelper {
     public static JSONObject getUser(SharedPreferences prefs, int id) {
         JSONArray users;
         try {
-            if ((users = new JSONArray(prefs.getString("userData", null))) != null) {
+            if ((users = getJsonArray(prefs, USERKEY)) != null) {
                 for (int i = 0; i < users.length(); i++) {
-                    try {
                         JSONObject temp = users.getJSONObject(i);
                         if (temp.getInt("id") == id) {
                             return temp;
                         }
-                    } catch (JSONException e) {
-                        return null;
-                    }
                 }
             }
         } catch (JSONException e) {
+            return null;
+        }
+        return null;
+    }
+
+    public static JSONObject getEvent(SharedPreferences prefs, String title, String date) {
+        JSONArray events;
+        try {
+            if ((events = getJsonArray(prefs, EVENTKEY)) != null) {
+                for (int i = 0; i < events.length(); i++) {
+                        JSONObject temp = events.getJSONObject(i);
+                        if (parseDate(temp.getString("date").substring(0,10)).equals(date)) {
+                            if(temp.getString("title").equals(title)) {
+                                return temp;
+                            }
+                        }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ParseException e) {
+            e.printStackTrace();
             return null;
         }
         return null;
