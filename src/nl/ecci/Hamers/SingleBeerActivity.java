@@ -7,17 +7,37 @@ import android.view.View;
 import android.widget.TextView;
 
 public class SingleBeerActivity extends ActionBarActivity {
+    String name;
+    String soort;
+    String percentage;
+    String brewer;
+    String country;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.single_beer_item);
 
-        TextView soort = (TextView) findViewById(R.id.beer_soort);
-        TextView alc = (TextView) findViewById(R.id.beer_alc);
-        TextView brewer = (TextView) findViewById(R.id.beer_brewer);
-        TextView country = (TextView) findViewById(R.id.beer_country);
+        TextView nameTV = (TextView) findViewById(R.id.beer_name);
+        TextView soortTV = (TextView) findViewById(R.id.beer_soort);
+        TextView percentageTV = (TextView) findViewById(R.id.beer_alc);
+        TextView brewerTV = (TextView) findViewById(R.id.beer_brewer);
+        TextView countryTV = (TextView) findViewById(R.id.beer_country);
 
         Bundle extras = getIntent().getExtras();
+
+        name = extras.getString("name");
+        soort = extras.getString("soort");
+        percentage = extras.getString("percentage");
+        brewer = extras.getString("brewer");
+        country = extras.getString("country");
+
+
+        nameTV.setText(name);
+        soortTV.setText(soort);
+        percentageTV.setText(percentage);
+        brewerTV.setText(brewer);
+        countryTV.setText(country);
     }
 
     /**

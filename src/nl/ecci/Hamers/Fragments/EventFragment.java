@@ -59,9 +59,6 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 JSONObject e = JSONHelper.getEvent(prefs, adapter.getItem(position).getTitle(), adapter.getItem(position).getDate());
                 if (e != null) {
                     try {
-                        // voorbeeld: S
-                        System.out.println("-----------------------------------" + e.getString("beschrijving"));
-                        //
                         Intent intent = new Intent(getActivity(), SingleEventActivity.class);
                         intent.putExtra("beschrijving", e.getString("beschrijving"));
                         intent.putExtra("date", e.getString("date"));

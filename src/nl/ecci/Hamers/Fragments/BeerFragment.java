@@ -49,8 +49,11 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     try {
                         System.out.println(b.getString("name"));
                         Intent intent = new Intent(getActivity(), SingleBeerActivity.class);
-                        intent.putExtra("position", position);
-                        intent.putExtra("id", id);
+                        intent.putExtra("name", b.getString("name"));
+                        intent.putExtra("soort", b.getString("soort"));
+                        intent.putExtra("percentage", b.getString("percentage"));
+                        intent.putExtra("brewer", b.getString("brewer"));
+                        intent.putExtra("country", b.getString("country"));
                         startActivity(intent);
                     } catch (JSONException e) {
                         e.printStackTrace();
