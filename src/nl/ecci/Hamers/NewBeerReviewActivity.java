@@ -1,6 +1,8 @@
 package nl.ecci.Hamers;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -41,4 +43,12 @@ public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
     }
+/**
+    private void postReview(int user_id, int beer_id, String description, int rating, int proefdag, int proefmaand, int proefjaar) {
+        String arguments = "beer[user_id]=" +user_id + "&beer[beer_id]=" + beer_id + "&beer[description]=" + description + "&beer[rating]=" + rating
+                + "&beer[proefdatum(1i)]=" + proefjaar + "&beer[proefdatum(2i)]=" + proefmaand + "&beer[proefdatum(3i)]=" + proefdag + "&beer[proefdatum(4i)]=" + 20 + "&beer[proefdatum(5i)]=" + 00;
+        SendPostRequest req = new SendPostRequest(this, SendPostRequest.REVIEWURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
+        req.execute();
+    }
+*/
 }
