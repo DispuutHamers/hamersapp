@@ -282,11 +282,20 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
-     * When user presses "+" in EventFragment, start new dialog with NewQuoteFragment
+     * When user presses "+" in EventFragment, start new dialog with NewEventActivity
      * @param item
      */
     public void newEvent(MenuItem item) {
         Intent intent = new Intent(this, NewEventActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * When user presses "+" in BeerFragment, start new dialog with NewBeerActivity
+     * @param item
+     */
+    public void newBeer(MenuItem item) {
+        Intent intent = new Intent(this, NewBeerActivity.class);
         startActivity(intent);
     }
 

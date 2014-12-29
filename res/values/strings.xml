@@ -42,33 +42,6 @@
         <string name="action_new_quote">Nieuwe quote</string>
         <string name="action_search_quote">Zoek quote</string>
 
-    <!-- Event list -->
-        <!-- Action bar -->
-        <string name="action_new_event">Nieuwe activiteit</string>
-        <string name="action_search_event">Zoek activiteit</string>
-
-    <!-- Beers -->
-
-    <!-- Motions -->
-    <string name="motiontypetext">Motietype:</string>
-    <string name="motie_nietchill">Motie van niet chill</string>
-    <string name="motie_arelaxed">Motie van vet arelaxed</string>
-    <string name="motie_duurtlang">Motie van duurt lang</string>
-
-    <string name="motion_hint">Wat is er stuk?</string>
-    <string name="motion_body">Huilie huilie in dit veld.</string>
-    <string name="create_motion">Dien motie in</string>
-
-    <!-- Settings -->
-    <string name="pushnotifications">Push notificaties</string>
-    <string name="push_title">Push notificaties</string>
-    <string name="pref_summaryOn">Push notifications enabled</string>
-    <string name="pref_summaryOff">Push notifications disabled</string>
-
-    <string name="apikey_category">API Key</string>
-    <string name="apikey_summary">You can get your key on the website.</string>
-    <string name="apikey_hint">Copy+paste your key here..</string>
-
     <!-- Dialogs -->
         <!-- New quote dialog -->
         <string name="quote">Wat zei die lul?</string>
@@ -94,19 +67,57 @@
         <string name="pick_time_button">Tijd</string>
 
     <!-- Events -->
+        <!-- Action bar -->
+        <string name="action_new_event">Nieuwe activiteit</string>
+        <string name="action_search_event">Zoek activiteit</string>
         <!-- Event details -->
         <string name="event_switch">Ik kom: </string>
         <!-- New event -->
-        <string name="new_event">Nieuwe review</string>
+        <string name="new_event">Nieuwe activiteit</string>
         <string name="event_title">Naam</string>
         <string name="event_description">Wat gaan we doen?</string>
         <string name="date">Datum: </string>
         <string name="end_time">End time: </string>
 
+    <!-- Beers -->
+        <!-- Action bar -->
+        <string name="action_new_beer">Nieuw biertje</string>
+        <string name="action_search_beer">Zoek biertje</string>
+        <!-- New beer -->
+        <string name="new_beer">Nieuw biertje</string>
+        <string name="beer_name">Naam</string>
+        <string name="beer_picture">URL naar afbeelding</string>
+        <string name="beer_soort">Soort</string>
+        <string name="beer_percentage">Percentage</string>
+        <string name="beer_brewer">Brouwer</string>
+        <string name="beer_country">Land</string>
+
+    <!-- Motions -->
+        <string name="motiontypetext">Motietype:</string>
+        <string name="motie_nietchill">Motie van niet chill</string>
+        <string name="motie_arelaxed">Motie van vet arelaxed</string>
+        <string name="motie_duurtlang">Motie van duurt lang</string>
+
+        <string name="motion_hint">Wat is er stuk?</string>
+        <string name="motion_body">Huilie huilie in dit veld.</string>
+        <string name="create_motion">Dien motie in</string>
+
+    <!-- Settings -->
+        <!-- Notifications -->
+        <string name="pushnotifications">Push notificaties</string>
+        <string name="push_title">Push notificaties</string>
+        <string name="pref_summaryOn">Push notifications enabled</string>
+        <string name="pref_summaryOff">Push notifications disabled</string>
+
+        <!-- API key -->
+        <string name="apikey_category">API Key</string>
+        <string name="apikey_summary">You can get your key on the website.</string>
+        <string name="apikey_hint">Copy+paste your key here..</string>
+
     <!-- Toasts -->
-    <string name="toast_downloaderror">Fout bij het downloaden</string>
-    <string name="toast_downloading">De gegevens worden gedownload</string>
-    <string name="toast_userloaderror">Fout bij het laden van de leden</string>
-    <string name="toast_storekeymemory">"Een apikey kan ingevuld worden in het instellingen scherm"</string>
+        <string name="toast_downloaderror">Fout bij het downloaden</string>
+        <string name="toast_downloading">De gegevens worden gedownload</string>
+        <string name="toast_userloaderror">Fout bij het laden van de leden</string>
+        <string name="toast_storekeymemory">"Een apikey kan ingevuld worden in het instellingen scherm"</string>
 
 </resources>
