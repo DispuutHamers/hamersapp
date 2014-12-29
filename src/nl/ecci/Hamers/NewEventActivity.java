@@ -50,55 +50,6 @@ public class NewEventActivity extends ActionBarActivity {
         picker.show(fragmanager, "deadline_date");
     }
 
-    public void temp(View v) {
-        EditText event_title_temp = (EditText) findViewById(R.id.event_title);
-        EditText event_beschrijving_temp = (EditText) findViewById(R.id.event_beschrijving);
-        Button eventTimeButton = (Button) findViewById(R.id.event_time_button);
-        Button eventEndTimeButton = (Button) findViewById(R.id.end_time_button);
-        Button eventDateButton = (Button) findViewById(R.id.event_date_button);
-        Button eventEndDateButton = (Button) findViewById(R.id.end_date_button);
-        Button deadlineTimeButton = (Button) findViewById(R.id.deadline_time_button);
-        Button deadlineDateButton = (Button) findViewById(R.id.deadline_date_button);
-
-        String event_title = event_title_temp.getText().toString();
-        String event_beschrijving = event_beschrijving_temp.getText().toString();
-        String eventTime = eventTimeButton.getText().toString();
-        String eventEndTime = eventEndTimeButton.getText().toString();
-        String eventDate = eventDateButton.getText().toString();
-        String eventEndDate = eventEndDateButton.getText().toString();
-        String deadlineTime = deadlineTimeButton.getText().toString();
-        String deadlineDate = deadlineDateButton.getText().toString();
-
-        String[] dateParts = eventDate.split("-");
-        int dateDay = Integer.parseInt(dateParts[0]);
-        int dateMonth = Integer.parseInt(dateParts[1]);
-        int dateYear = Integer.parseInt(dateParts[2]);
-
-        String[] endDateParts = eventEndDate.split("-");
-        int endDateDay = Integer.parseInt(endDateParts[0]);
-        int endDateMonth = Integer.parseInt(endDateParts[1]);
-        int endDateYear = Integer.parseInt(endDateParts[2]);
-
-        String[] timeParts = eventTime.split(":");
-        int timeMinutes = Integer.parseInt(timeParts[0]);
-        int timeHours = Integer.parseInt(timeParts[1]);
-
-        String[] endTimeParts = eventEndTime.split(":");
-        int endTimeMinutes = Integer.parseInt(endTimeParts[0]);
-        int endTimeHours = Integer.parseInt(endTimeParts[1]);
-
-        String[] deadlineTimeParts = deadlineTime.split(":");
-        int deadlineMinutes = Integer.parseInt(deadlineTimeParts[0]);
-        int deadlineHours = Integer.parseInt(deadlineTimeParts[1]);
-
-        String[] deadlineDateParts = deadlineDate.split("-");
-        int deadlineDay = Integer.parseInt(deadlineDateParts[0]);
-        int deadlineMonth = Integer.parseInt(deadlineDateParts[1]);
-        int deadlineYear = Integer.parseInt(deadlineDateParts[2]);
-
-        //postEvent(1, event_title, event_beschrijving, timeMinutes, timeHours, dateDay, dateMonth, dateYear, endTimeMinutes, endTimeHours, endDateDay, endDateMonth, endDateYear, deadlineMinutes, deadlineHours, deadlineDay, deadlineMonth, deadlineYear);
-    }
-
     /**
      * Posts event
      * @param v
