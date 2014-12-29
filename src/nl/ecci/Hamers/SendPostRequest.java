@@ -15,7 +15,7 @@ import java.net.URL;
 public class SendPostRequest extends AsyncTask<String, String, String> {
 
     private static final String baseurl =  "http://zondersikkel.nl/api/v1/";
-    public static final String QUOTE = "/quote";
+    public static final String QUOTEURL = "/quote";
     private SharedPreferences prefs;
     private String type;
     private String urlParams;

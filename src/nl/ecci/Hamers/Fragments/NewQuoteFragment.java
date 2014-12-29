@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import nl.ecci.Hamers.JSONHelper;
 import nl.ecci.Hamers.R;
 import nl.ecci.Hamers.SendPostRequest;
 import org.json.JSONArray;
@@ -44,7 +45,7 @@ public class NewQuoteFragment extends DialogFragment {
 
                         // Get userID from spinner
                         Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
-                        String userID = nameToID(userSpinner.getSelectedItem().toString());
+                        int userID = JSONHelper.usernameToID(prefs, userSpinner.getSelectedItem().toString());
 
                         // Post quote
                         postQuote(quote, userID);
@@ -71,7 +72,7 @@ public class NewQuoteFragment extends DialogFragment {
     private void createUserList() {
         JSONArray userJSON;
         try {
-            if ((userJSON = new JSONArray(prefs.getString("userData", null))) != null) {
+            if ((userJSON = JSONHelper.getJsonArray(prefs, JSONHelper.USERKEY )) != null) {
                 for (int i = 0; i < userJSON.length(); i++) {
                     users.add(userJSON.getJSONObject(i).getString("name"));
                 }
@@ -82,25 +83,9 @@ public class NewQuoteFragment extends DialogFragment {
 
     }
 
-    private String nameToID(String name){
-        JSONArray userJSON;
-        String returnv = "-1";
-        try {
-            if ((userJSON = new JSONArray(prefs.getString("userData", null))) != null) {
-                for (int i = 0; i < userJSON.length(); i++) {
-                    if(userJSON.getJSONObject(i).getString("name").equals(name)){
-                        returnv = userJSON.getJSONObject(i).getString("id");
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.toast_userloaderror), Toast.LENGTH_SHORT).show();e.printStackTrace();
-        }
-        return returnv;
-    }
 
-    private void postQuote(String quote, String userid) {
-        SendPostRequest req = new SendPostRequest(this.getActivity(), this, SendPostRequest.QUOTE, prefs, "quote[text]=" + quote + " &quote[user_id]=" + userid);
+    private void postQuote(String quote, int userid) {
+        SendPostRequest req = new SendPostRequest(this.getActivity(), this, SendPostRequest.QUOTEURL, prefs, "quote[text]=" + quote + " &quote[user_id]=" + userid);
         req.execute();
     }
 

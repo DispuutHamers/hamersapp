@@ -42,4 +42,21 @@ public final class JSONHelper {
             return null;
         }
     }
+
+    public static int usernameToID(SharedPreferences prefs, String name){
+        JSONArray userJSON;
+        int returnv = -1;
+        try {
+            if ((userJSON = getJsonArray(prefs, USERKEY)) != null) {
+                for (int i = 0; i < userJSON.length(); i++) {
+                    if(userJSON.getJSONObject(i).getString("name").equals(name)){
+                        returnv = userJSON.getJSONObject(i).getInt("id");
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            return returnv;
+        }
+        return returnv;
+    }
 }
