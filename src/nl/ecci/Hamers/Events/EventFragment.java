@@ -53,7 +53,13 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 JSONObject e = JSONHelper.getEvent(prefs, adapter.getItem(position).getTitle(), adapter.getItem(position).getDate());
                 if (e != null) {
+
                     try {
+                        JSONArray signups = e.getJSONArray("signups");
+                        for(int i =0; i < signups.length(); i++){
+                            JSONObject signup = signups.getJSONObject(i);
+                            System.out.println(JSONHelper.getUser(prefs, signup.getInt("user_id")).getString("name") + " aanwezig: " + signup.getBoolean("status"));
+                        }
                         Intent intent = new Intent(getActivity(), SingleEventActivity.class);
                         intent.putExtra("beschrijving", e.getString("beschrijving"));
                         intent.putExtra("date", e.getString("date"));
