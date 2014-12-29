@@ -2,9 +2,8 @@ package nl.ecci.Hamers;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.text.Editable;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
@@ -85,9 +83,6 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -213,7 +208,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
-     * Swaps fragments in the main content view
+     * Swaps fragments in the quote_list_menu content view
      * @param position
      */
     private void selectItem(int position) {
@@ -271,12 +266,21 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
-     * When user presses "+", start new dialog with NewQuoteFragment
+     * When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment
      * @param item
      */
     public void newQuote(MenuItem item) {
         DialogFragment newQuoteFragment = new NewQuoteFragment();
         newQuoteFragment.show(getSupportFragmentManager(), "quotes");
+    }
+
+    /**
+     * When user presses "+" in EventFragment, start new dialog with NewQuoteFragment
+     * @param item
+     */
+    public void newEvent(MenuItem item) {
+        Intent intent = new Intent(this, NewEventActivity.class);
+        startActivity(intent);
     }
 
     /**

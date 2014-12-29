@@ -30,8 +30,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if(key.equals("apikey")){
-            if(this.getActivity() instanceof MainActivity){
+        if (key.equals("apikey")) {
+            if (this.getActivity() instanceof MainActivity) {
                 ((MainActivity) this.getActivity()).loadData();
             }
         }

@@ -3,15 +3,11 @@ package nl.ecci.Hamers.Fragments;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 import nl.ecci.Hamers.Adapters.QuotesAdapter;
 import nl.ecci.Hamers.GetJson;
 import nl.ecci.Hamers.JSONHelper;
@@ -28,17 +24,18 @@ import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public QuoteListFragment() {
-    }
-
+    public SwipeRefreshLayout swipeView;
     ArrayList<Quote> listItems = new ArrayList<Quote>();
     ArrayAdapter<Quote> adapter;
-    public SwipeRefreshLayout swipeView;
+    public QuoteListFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.quote_list_fragment, container, false);
         ListView quote_list = (ListView) view.findViewById(R.id.quotes_listView);
+
+        setHasOptionsMenu(true);
 
         initSwiper(view, quote_list);
 
@@ -47,6 +44,13 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
         // 2. Set adapter and that's it.
         quote_list.setAdapter(adapter);
+        quote_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                System.out.println("Item: " + id + " at position:" + position);
+                DialogFragment newQuoteFragment = new ViewQuoteFragment();
+                newQuoteFragment.show(getActivity().getSupportFragmentManager(), "quote");
+            }
+        });
 
         return view;
     }
@@ -66,7 +70,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 boolean enable = false;
-                if(quote_list != null && quote_list.getChildCount() > 0){
+                if (quote_list != null && quote_list.getChildCount() > 0) {
                     // check if the first item of the list is visible
                     boolean firstItemVisible = quote_list.getFirstVisiblePosition() == 0;
                     // check if the top of the first item is visible
@@ -114,7 +118,10 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
                     Quote tempQuote = new Quote(username, quote.getString("text").toString(), date, id);
                     listItems.add(tempQuote);
-                    if(adapter != null){adapter.notifyDataSetChanged();};
+                    if (adapter != null) {
+                        adapter.notifyDataSetChanged();
+                    }
+                    ;
 
                 }
             }
@@ -123,6 +130,13 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         } catch (ParseException e) {
             Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
         }
-        if(swipeView != null) {swipeView.setRefreshing(false);}
+        if (swipeView != null) {
+            swipeView.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.quote_list_menu, menu);
     }
 }

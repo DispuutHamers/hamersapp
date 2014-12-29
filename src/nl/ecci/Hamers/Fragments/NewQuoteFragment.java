@@ -24,8 +24,8 @@ import java.util.ArrayList;
 
 public class NewQuoteFragment extends DialogFragment {
 
-    private SharedPreferences prefs;
     ArrayList<String> users = new ArrayList<String>();
+    private SharedPreferences prefs;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -78,12 +78,12 @@ public class NewQuoteFragment extends DialogFragment {
                 }
             }
         } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.toast_userloaderror), Toast.LENGTH_SHORT).show();e.printStackTrace();
+            Toast.makeText(getActivity(), getString(R.string.toast_userloaderror), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
 
     }
-
-
+    
     private void postQuote(String quote, int userid) {
         SendPostRequest req = new SendPostRequest(this.getActivity(), this, SendPostRequest.QUOTEURL, prefs, "quote[text]=" + quote + " &quote[user_id]=" + userid);
         req.execute();

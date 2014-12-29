@@ -45,7 +45,6 @@ public class QuotesAdapter extends ArrayAdapter<Quote> {
         TextView body = (TextView) rowView.findViewById(R.id.quote_body);
         TextView date = (TextView) rowView.findViewById(R.id.quote_date);
         TextView user = (TextView) rowView.findViewById(R.id.quote_user);
-        //ImageView userImage = (ImageView) rowView.findViewById(R.id.quote_image);
 
         // 4. Set the text for textView
         body.setText(itemsArrayList.get(position).getBody());
