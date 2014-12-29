@@ -1,4 +1,4 @@
-package nl.ecci.Hamers;
+package nl.ecci.Hamers.Helpers;
 
 import android.content.SharedPreferences;
 import org.json.JSONArray;

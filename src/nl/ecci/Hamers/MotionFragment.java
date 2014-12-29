@@ -1,4 +1,4 @@
-package nl.ecci.Hamers.Fragments;
+package nl.ecci.Hamers;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

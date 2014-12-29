@@ -1,12 +1,13 @@
-package nl.ecci.Hamers;
+package nl.ecci.Hamers.Events;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import nl.ecci.Hamers.Fragments.DatePickerFragment;
-import nl.ecci.Hamers.Fragments.TimePickerFragment;
+import nl.ecci.Hamers.Helpers.Fragments.DatePickerFragment;
+import nl.ecci.Hamers.Helpers.Fragments.TimePickerFragment;
+import nl.ecci.Hamers.R;
 
 public class NewEventActivity extends ActionBarActivity {
     FragmentManager fragmanager = getSupportFragmentManager();

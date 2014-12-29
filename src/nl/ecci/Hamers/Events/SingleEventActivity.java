@@ -1,8 +1,9 @@
-package nl.ecci.Hamers;
+package nl.ecci.Hamers.Events;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.TextView;
+import nl.ecci.Hamers.R;
 
 import java.text.ParseException;
 

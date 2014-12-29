@@ -1,4 +1,4 @@
-package nl.ecci.Hamers;
+package nl.ecci.Hamers.Beers;
 
 public class Beer {
 

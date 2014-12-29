@@ -1,4 +1,4 @@
-package nl.ecci.Hamers.Fragments;
+package nl.ecci.Hamers.Quotes;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,10 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.*;
 import android.widget.*;
-import nl.ecci.Hamers.Adapters.QuotesAdapter;
-import nl.ecci.Hamers.GetJson;
-import nl.ecci.Hamers.JSONHelper;
-import nl.ecci.Hamers.Quote;
+import nl.ecci.Hamers.Helpers.GetJson;
+import nl.ecci.Hamers.Helpers.JSONHelper;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;

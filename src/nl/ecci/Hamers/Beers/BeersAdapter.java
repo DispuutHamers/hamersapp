@@ -1,4 +1,4 @@
-package nl.ecci.Hamers.Adapters;
+package nl.ecci.Hamers.Beers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import nl.ecci.Hamers.Beer;
 import nl.ecci.Hamers.R;
 
 import java.util.ArrayList;

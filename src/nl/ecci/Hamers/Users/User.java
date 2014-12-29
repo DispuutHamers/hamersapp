@@ -1,4 +1,4 @@
-package nl.ecci.Hamers;
+package nl.ecci.Hamers.Users;
 
 public class User {
 

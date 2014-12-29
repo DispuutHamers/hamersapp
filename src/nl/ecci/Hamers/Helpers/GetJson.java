@@ -1,4 +1,4 @@
-package nl.ecci.Hamers;
+package nl.ecci.Hamers.Helpers;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -6,10 +6,12 @@ import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.widget.Toast;
-import nl.ecci.Hamers.Fragments.BeerFragment;
-import nl.ecci.Hamers.Fragments.EventFragment;
-import nl.ecci.Hamers.Fragments.QuoteListFragment;
-import nl.ecci.Hamers.Fragments.UserFragment;
+import nl.ecci.Hamers.Beers.BeerFragment;
+import nl.ecci.Hamers.Events.EventFragment;
+import nl.ecci.Hamers.MainActivity;
+import nl.ecci.Hamers.Quotes.QuoteListFragment;
+import nl.ecci.Hamers.R;
+import nl.ecci.Hamers.Users.UserFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 

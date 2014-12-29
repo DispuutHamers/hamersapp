@@ -1,4 +1,4 @@
-package nl.ecci.Hamers.Fragments;
+package nl.ecci.Hamers.Quotes;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import nl.ecci.Hamers.R;
-import nl.ecci.Hamers.SendPostRequest;
+import nl.ecci.Hamers.Helpers.SendPostRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="nl.ecci.Hamers"
-          android:versionCode="1"
-          android:versionName="1.0">
+          android:versionCode="3"
+          android:versionName="1.0.2">
     <uses-sdk android:minSdkVersion="15"
               android:targetSdkVersion="21" />
 
@@ -22,7 +22,7 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="nl.ecci.Hamers.MainActivity"/>
         </activity>
-        <activity android:name=".NewBeerReviewActivity"
+        <activity android:name=".Beers.NewBeerReviewActivity"
                 android:parentActivityName="nl.ecci.Hamers.MainActivity"
                 android:screenOrientation="portrait"
                 android:label="Nieuwe review">
@@ -30,7 +30,7 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="nl.ecci.Hamers.MainActivity"/>
         </activity>
-        <activity android:name=".SingleBeerActivity"
+        <activity android:name=".Beers.SingleBeerActivity"
                   android:parentActivityName="nl.ecci.Hamers.MainActivity"
                   android:screenOrientation="portrait"
                 android:label="Details">
@@ -39,7 +39,7 @@
                     android:value="nl.ecci.Hamers.MainActivity">
             </meta-data>
         </activity>
-        <activity android:name=".SingleEventActivity"
+        <activity android:name=".Events.SingleEventActivity"
                   android:parentActivityName="nl.ecci.Hamers.MainActivity"
                   android:screenOrientation="portrait"
                   android:label="Activiteit">
@@ -48,7 +48,7 @@
                     android:value="nl.ecci.Hamers.MainActivity">
             </meta-data>
         </activity>
-        <activity android:name=".NewEventActivity"
+        <activity android:name=".Events.NewEventActivity"
                   android:parentActivityName="nl.ecci.Hamers.MainActivity"
                   android:screenOrientation="portrait"
                   android:label="Nieuwe activiteit">

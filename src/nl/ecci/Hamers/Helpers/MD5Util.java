@@ -1,4 +1,4 @@
-package nl.ecci.Hamers;
+package nl.ecci.Hamers.Helpers;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

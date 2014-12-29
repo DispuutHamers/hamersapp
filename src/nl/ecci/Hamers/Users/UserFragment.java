@@ -1,4 +1,4 @@
-package nl.ecci.Hamers.Fragments;
+package nl.ecci.Hamers.Users;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,11 +12,9 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import nl.ecci.Hamers.Adapters.UsersAdapter;
-import nl.ecci.Hamers.GetJson;
-import nl.ecci.Hamers.JSONHelper;
+import nl.ecci.Hamers.Helpers.GetJson;
+import nl.ecci.Hamers.Helpers.JSONHelper;
 import nl.ecci.Hamers.R;
-import nl.ecci.Hamers.User;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

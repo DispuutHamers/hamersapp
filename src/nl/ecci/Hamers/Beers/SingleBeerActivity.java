@@ -1,10 +1,11 @@
-package nl.ecci.Hamers;
+package nl.ecci.Hamers.Beers;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.TextView;
+import nl.ecci.Hamers.R;
 
 public class SingleBeerActivity extends ActionBarActivity {
     String name;

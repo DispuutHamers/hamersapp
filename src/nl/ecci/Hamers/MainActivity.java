@@ -18,7 +18,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-import nl.ecci.Hamers.Fragments.*;
+import nl.ecci.Hamers.Beers.*;
+import nl.ecci.Hamers.Events.EventFragment;
+import nl.ecci.Hamers.Events.NewEventActivity;
+import nl.ecci.Hamers.Helpers.GetJson;
+import nl.ecci.Hamers.Helpers.JSONHelper;
+import nl.ecci.Hamers.Quotes.NewQuoteFragment;
+import nl.ecci.Hamers.Quotes.QuoteListFragment;
+import nl.ecci.Hamers.Users.UserFragment;
 
 import java.text.DateFormat;
 import java.text.ParseException;

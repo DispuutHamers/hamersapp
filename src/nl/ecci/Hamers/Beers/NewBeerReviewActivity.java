@@ -1,4 +1,4 @@
-package nl.ecci.Hamers;
+package nl.ecci.Hamers.Beers;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -6,7 +6,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import nl.ecci.Hamers.Fragments.DatePickerFragment;
+import nl.ecci.Hamers.Helpers.Fragments.DatePickerFragment;
+import nl.ecci.Hamers.R;
 
 public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.OnSeekBarChangeListener {
     private SeekBar sb;

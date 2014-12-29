@@ -1,4 +1,4 @@
-package nl.ecci.Hamers.Fragments;
+package nl.ecci.Hamers;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

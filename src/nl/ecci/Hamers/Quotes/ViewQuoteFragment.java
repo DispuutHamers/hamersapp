@@ -1,4 +1,4 @@
-package nl.ecci.Hamers.Fragments;
+package nl.ecci.Hamers.Quotes;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
