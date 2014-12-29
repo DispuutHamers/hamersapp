@@ -9,9 +9,6 @@ import java.text.ParseException;
 
 import static nl.ecci.Hamers.MainActivity.parseDate;
 
-/**
- * Created by rob on 26-12-14.
- */
 public final class JSONHelper {
     public static final String QUOTEKEY = "quoteData";
     public static final String USERKEY = "userData";

@@ -72,6 +72,8 @@
         <string name="action_search_event">Zoek activiteit</string>
         <!-- Event details -->
         <string name="event_switch">Ik kom: </string>
+        <string name="event_aanwezig">Aanwezig: </string>
+        <string name="event_afwezig">Afwezig: </string>
         <!-- New event -->
         <string name="new_event">Nieuwe activiteit</string>
         <string name="event_title">Naam</string>

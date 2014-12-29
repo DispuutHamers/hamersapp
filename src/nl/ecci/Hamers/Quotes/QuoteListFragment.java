@@ -37,14 +37,10 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
         initSwiper(view, quote_list);
 
-        // 1. pass context and data to the custom adapter
         adapter = new QuotesAdapter(this.getActivity(), listItems);
-
-        // 2. Set adapter and that's it.
         quote_list.setAdapter(adapter);
         quote_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                System.out.println("Item: " + id + " at position:" + position);
                 DialogFragment newQuoteFragment = new ViewQuoteFragment();
                 newQuoteFragment.show(getActivity().getSupportFragmentManager(), "quote");
             }
