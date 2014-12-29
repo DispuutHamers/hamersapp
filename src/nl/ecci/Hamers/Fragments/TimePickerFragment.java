@@ -28,6 +28,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     public void onTimeSet(TimePicker view, int hour, int minute) {
         Button eventTimeButton = (Button) getActivity().findViewById(R.id.event_time_button);
         Button eventEndTimeButton = (Button) getActivity().findViewById(R.id.end_time_button);
+        Button deadlineTimeButton = (Button) getActivity().findViewById(R.id.deadline_time_button);
 
         StringBuilder builder = new StringBuilder();
         builder.append(hour).append(":")
@@ -40,6 +41,9 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
         if(getActivity().getSupportFragmentManager().findFragmentByTag("end_time") != null) {
             eventEndTimeButton.setText(time);
+        }
+        if(getActivity().getSupportFragmentManager().findFragmentByTag("deadline_time") != null) {
+            deadlineTimeButton.setText(time);
         }
     }
 }

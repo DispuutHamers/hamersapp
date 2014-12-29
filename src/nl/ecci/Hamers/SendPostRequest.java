@@ -61,6 +61,7 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
         if (result.equals("201")) {
             Toast.makeText(mContext, "Item posted!", Toast.LENGTH_SHORT).show();
         } else {
+            System.out.println("----------" + result);
             Toast.makeText(mContext, "Item not posted, try again later...", Toast.LENGTH_SHORT).show();
         }
 

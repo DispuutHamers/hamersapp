@@ -29,10 +29,11 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         Button eventDateButton = (Button) getActivity().findViewById(R.id.event_date_button);
         Button eventEndDateButton = (Button) getActivity().findViewById(R.id.end_date_button);
         Button beerDateButton = (Button) getActivity().findViewById(R.id.pick_date_button);
+        Button deadlineDateButton = (Button) getActivity().findViewById(R.id.deadline_date_button);
 
         StringBuilder builder = new StringBuilder();
         builder.append(day).append("-")
-                .append(month+1).append("-")
+                .append(month + 1).append("-")
                 .append(year);
         String date = builder.toString();
 
@@ -46,6 +47,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
         if(getActivity().getSupportFragmentManager().findFragmentByTag("proefdatum") != null) {
             beerDateButton.setText(date);
+        }
+        if(getActivity().getSupportFragmentManager().findFragmentByTag("deadline_date") != null) {
+            deadlineDateButton.setText(date);
         }
     }
 }

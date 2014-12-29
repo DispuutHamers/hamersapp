@@ -8,110 +8,143 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
-        <TextView
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/new_event"
+            android:textStyle="bold"
+            android:textSize="22dp"
+            android:padding="20dp"/>
+    <EditText
+            android:id="@id/event_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="4dp"
+            android:hint="@string/event_title"
+            android:padding="20dp"/>
+    <EditText android:id="@+id/event_beschrijving"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="16dp"
+              android:layout_marginLeft="15dp"
+              android:layout_marginRight="15dp"
+              android:layout_marginBottom="4dp"
+              android:inputType="textMultiLine"
+              android:hint="@string/event_description"
+              android:padding="20dp"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        <TextView android:text="@string/date"
+                  android:id="@+id/event_date"
+                  android:layout_height="fill_parent"
+                  android:layout_width="0dp"
+                  android:layout_alignParentTop="true"
+                  android:layout_alignParentLeft="true"
+                  android:layout_weight="1"
+                  android:textSize="18dp"
+                  android:ellipsize="end"
+                  android:singleLine="true"
+                  android:gravity="left|center_vertical"
+                  android:layout_marginTop="16dp"
+                  android:layout_marginLeft="15dp"
+                  android:layout_marginRight="15dp"/>
+        <Button
+                android:id="@+id/event_time_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/new_event"
-                android:textStyle="bold"
-                android:textSize="22dp"
-                android:padding="20dp"/>
-
-        <EditText
-                android:id="@+id/event_title"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="15dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/pick_time_button"
+                android:onClick="showTimePickerDialog"/>
+        <Button
+                android:id="@+id/event_date_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="4dp"
-                android:hint="@string/event_title"
-                android:padding="20dp"/>
-
-        <EditText android:id="@+id/event_beschrijving"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
+                android:text="@string/pick_date_button"
+                android:onClick="showDatePickerDialog"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        <TextView android:text="@string/end_time"
+                  android:id="@+id/event_end_time"
+                  android:layout_height="fill_parent"
+                  android:layout_width="0dp"
+                  android:layout_alignParentTop="true"
+                  android:layout_alignParentLeft="true"
+                  android:layout_weight="1"
+                  android:textSize="18dp"
+                  android:ellipsize="end"
+                  android:singleLine="true"
+                  android:gravity="left|center_vertical"
                   android:layout_marginTop="16dp"
                   android:layout_marginLeft="15dp"
-                  android:layout_marginRight="15dp"
-                  android:layout_marginBottom="4dp"
-                  android:inputType="textMultiLine"
-                  android:hint="@string/event_description"
-                  android:padding="20dp"/>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-            <TextView android:text="@string/date"
-                      android:id="@+id/event_date"
-                      android:layout_height="fill_parent"
-                      android:layout_width="0dp"
-                      android:layout_alignParentTop="true"
-                      android:layout_alignParentLeft="true"
-                      android:layout_weight="1"
-                      android:textSize="18dp"
-                      android:ellipsize="end"
-                      android:singleLine="true"
-                      android:gravity="left|center_vertical"
-                      android:layout_marginTop="16dp"
-                      android:layout_marginLeft="15dp"
-                      android:layout_marginRight="15dp"/>
-            <Button
-                    android:id="@+id/event_time_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="4dp"
-                    android:text="@string/pick_time_button"
-                    android:onClick="showTimePickerDialog"/>
-            <Button
-                    android:id="@+id/event_date_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="4dp"
-                    android:text="@string/pick_date_button"
-                    android:onClick="showDatePickerDialog"/>
+                  android:layout_marginRight="15dp"/>
+        <Button
+                android:id="@+id/end_time_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/pick_time_button"
+                android:onClick="showEndTimePickerDialog"/>
+        <Button
+                android:id="@+id/end_date_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/pick_date_button"
+                android:onClick="showEndDatePickerDialog"/>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
+        <TextView android:text="@string/deadline"
+                  android:id="@+id/textView"
+                  android:layout_height="fill_parent"
+                  android:layout_width="0dp"
+                  android:layout_alignParentTop="true"
+                  android:layout_alignParentLeft="true"
+                  android:layout_weight="1"
+                  android:textSize="18dp"
+                  android:ellipsize="end"
+                  android:singleLine="true"
+                  android:gravity="left|center_vertical"
+                  android:layout_marginTop="16dp"
+                  android:layout_marginLeft="15dp"
+                  android:layout_marginRight="15dp"/>
+        <Button android:id="@+id/deadline_time_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/pick_time_button"
+                android:onClick="showDeadlineTimePickerDialog"/>
+        <Button android:id="@+id/deadline_date_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/pick_date_button"
+                android:onClick="showDeadlineDatePickerDialog"/>
         </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-            <TextView android:text="@string/end_time"
-                      android:id="@+id/event_end_time"
-                      android:layout_height="fill_parent"
-                      android:layout_width="0dp"
-                      android:layout_alignParentTop="true"
-                      android:layout_alignParentLeft="true"
-                      android:layout_weight="1"
-                      android:textSize="18dp"
-                      android:ellipsize="end"
-                      android:singleLine="true"
-                      android:gravity="left|center_vertical"
-                      android:layout_marginTop="16dp"
-                      android:layout_marginLeft="15dp"
-                      android:layout_marginRight="15dp"/>
-            <Button
-                    android:id="@+id/end_time_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="4dp"
-                    android:text="@string/pick_time_button"
-                    android:onClick="showEndTimePickerDialog"/>
-            <Button
-                    android:id="@+id/end_date_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="4dp"
-                    android:text="@string/pick_date_button"
-                    android:onClick="showEndDatePickerDialog"/>
-        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -121,14 +154,15 @@
             android:layout_gravity="bottom"
             android:orientation="horizontal"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+        android:paddingRight="5dp">
 
         <Button
-                android:id="@+id/sendreview_button"
+                android:id="@+id/sendevent_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:text="@string/send"/>
+                android:text="@string/send"
+                android:onClick="postEvent"/>
     </LinearLayout>
 </RelativeLayout>

@@ -102,6 +102,7 @@
         <string name="event_description">Wat gaan we doen?</string>
         <string name="date">Datum: </string>
         <string name="end_time">End time: </string>
+        <string name="deadline">Deadline: </string>
 
     <!-- Toasts -->
     <string name="toast_downloaderror">Fout bij het downloaden</string>
