@@ -3,6 +3,7 @@ package nl.ecci.Hamers.Beers;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import nl.ecci.Hamers.R;
@@ -18,6 +19,8 @@ public class SingleBeerActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.single_beer_item);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         TextView nameTV = (TextView) findViewById(R.id.beer_name);
         TextView soortTV = (TextView) findViewById(R.id.beer_soort);
@@ -39,6 +42,16 @@ public class SingleBeerActivity extends ActionBarActivity {
         percentageTV.setText(percentage);
         brewerTV.setText(brewer);
         countryTV.setText(country);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**

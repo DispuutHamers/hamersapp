@@ -3,6 +3,7 @@ package nl.ecci.Hamers.Beers;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -22,6 +23,18 @@ public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.
         sb = (SeekBar) findViewById(R.id.ratingseekbar);
         sb.setOnSeekBarChangeListener(this);
         progress = (TextView) findViewById(R.id.rating);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void showDatePickerDialog(View v) {

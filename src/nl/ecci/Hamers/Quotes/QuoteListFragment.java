@@ -119,8 +119,6 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
                     }
-                    ;
-
                 }
             }
         } catch (JSONException e) {
