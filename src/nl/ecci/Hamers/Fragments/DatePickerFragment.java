@@ -32,7 +32,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
         StringBuilder builder = new StringBuilder();
         builder.append(day).append("-")
-                .append(month).append("-")
+                .append(month+1).append("-")
                 .append(year);
         String date = builder.toString();
 

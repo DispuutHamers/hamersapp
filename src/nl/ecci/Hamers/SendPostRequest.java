@@ -3,7 +3,6 @@ package nl.ecci.Hamers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import java.io.DataOutputStream;
@@ -14,17 +13,16 @@ import java.net.URL;
 
 public class SendPostRequest extends AsyncTask<String, String, String> {
 
-    private static final String baseurl =  "http://zondersikkel.nl/api/v1/";
+    private static final String baseurl = "http://zondersikkel.nl/api/v1/";
     public static final String QUOTEURL = "/quote";
+    public static final String EVENTUTL = "/event";
     private SharedPreferences prefs;
     private String type;
     private String urlParams;
-    private Fragment f;
     private Context mContext;
 
-    public SendPostRequest(Context context, Fragment f, String type, SharedPreferences s, String urlParams){
+    public SendPostRequest(Context context, String type, SharedPreferences s, String urlParams) {
         prefs = s;
-        this.f = f;
         this.type = type;
         this.urlParams = urlParams;
         mContext = context;
@@ -36,12 +34,11 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
             URL url = new URL(baseurl + prefs.getString("apikey", "a") + type);
             System.out.println(url);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             con.setRequestProperty("charset", "utf-8");
             con.setRequestProperty("Content-Length", "" + Integer.toString(urlParams.getBytes().length));
-            con.setUseCaches (false);
+            con.setUseCaches(false);
 
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
@@ -61,10 +58,11 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
     }
 
     protected void onPostExecute(String result) {
-        if(result.equals("201")) {
-            Toast.makeText(mContext, "Quote posted!", Toast.LENGTH_SHORT).show();
+        if (result.equals("201")) {
+            Toast.makeText(mContext, "Item posted!", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(mContext, "Quote not posted, try again later...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Item not posted, try again later...", Toast.LENGTH_SHORT).show();
         }
+
     }
 }
