@@ -11,13 +11,6 @@ import android.widget.*;
 import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.Helpers.JSONHelper;
 import nl.ecci.Hamers.R;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,17 +46,28 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 JSONObject e = JSONHelper.getEvent(prefs, adapter.getItem(position).getTitle(), adapter.getItem(position).getDate());
                 if (e != null) {
-
                     try {
-                        JSONArray signups = e.getJSONArray("signups");
-                        for(int i =0; i < signups.length(); i++){
-                            JSONObject signup = signups.getJSONObject(i);
-                            System.out.println(JSONHelper.getUser(prefs, signup.getInt("user_id")).getString("name") + " aanwezig: " + signup.getBoolean("status"));
-                        }
                         Intent intent = new Intent(getActivity(), SingleEventActivity.class);
                         intent.putExtra("beschrijving", e.getString("beschrijving"));
                         intent.putExtra("date", e.getString("date"));
+
+                        ArrayList<String> aanwezig = new ArrayList<String>();
+                        ArrayList<String> afwezig = new ArrayList<String>();
+
+                        JSONArray signups = e.getJSONArray("signups");
+
+                        for(int i = 0; i < signups.length(); i++){
+                            JSONObject signup = signups.getJSONObject(i);
+                            if(signup.getBoolean("status") == true) {
+                                aanwezig.add(JSONHelper.getUser(prefs, signup.getInt("user_id")).getString("name"));
+                            } else {
+                                afwezig.add(JSONHelper.getUser(prefs, signup.getInt("user_id")).getString("name"));
+                            }
+                        }
+                        intent.putStringArrayListExtra("aanwezig", aanwezig);
+                        intent.putStringArrayListExtra("afwezig", afwezig);
                         startActivity(intent);
+
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }

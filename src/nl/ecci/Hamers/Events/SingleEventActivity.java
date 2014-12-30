@@ -30,14 +30,17 @@ public class SingleEventActivity extends ActionBarActivity {
         ListView aanwezig_list = (ListView) findViewById(R.id.event_aanwezig);
         ListView afwezig_list = (ListView) findViewById(R.id.event_afwezig);
 
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        Bundle extras = getIntent().getExtras();
+
+        aanwezigItems = getIntent().getStringArrayListExtra("aanwezig");
+        afwezigItems = getIntent().getStringArrayListExtra("afwezig");
+
         aanwezigAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, aanwezigItems);
         afwezigAadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, afwezigItems);
         aanwezig_list.setAdapter(aanwezigAdapter);
         afwezig_list.setAdapter(afwezigAadapter);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        Bundle extras = getIntent().getExtras();
 
         beschrijving = extras.getString("beschrijving");
         try {

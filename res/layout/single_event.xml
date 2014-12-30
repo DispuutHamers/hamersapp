@@ -7,9 +7,9 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="fill_parent">
         <TextView android:id="@+id/event_title"
-                  android:layout_width="fill_parent"
+                  android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:textSize="25dip"
                   android:textAppearance="?android:attr/textAppearanceLarge"
@@ -55,13 +55,15 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingBottom="5dp"
                 android:text="@string/event_aanwezig"
                 android:id="@+id/event_aanwezig_tv"/>
-        <ListView
+        <nl.ecci.Hamers.Helpers.ExpandedListView
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:id="@+id/event_aanwezig"
+                android:drawSelectorOnTop="false"
+                android:listSelector="@android:color/transparent"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"/>
         <TextView
@@ -72,13 +74,15 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingBottom="5dp"
                 android:text="@string/event_afwezig"
                 android:id="@+id/event_afwezig_tv"/>
-        <ListView
+        <nl.ecci.Hamers.Helpers.ExpandedListView
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:id="@+id/event_afwezig"
+                android:drawSelectorOnTop="false"
+                android:listSelector="@android:color/transparent"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"/>
     </LinearLayout>
