@@ -48,6 +48,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 if (e != null) {
                     try {
                         Intent intent = new Intent(getActivity(), SingleEventActivity.class);
+                        intent.putExtra("title", e.getString("title"));
                         intent.putExtra("beschrijving", e.getString("beschrijving"));
                         intent.putExtra("date", e.getString("date"));
 

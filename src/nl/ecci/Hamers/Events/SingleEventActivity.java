@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class SingleEventActivity extends ActionBarActivity {
+    String title;
     String beschrijving;
     String date;
     ArrayList<String> aanwezigItems = new ArrayList<String>();
@@ -25,6 +26,8 @@ public class SingleEventActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.single_event);
+
+        TextView titleTV = (TextView) findViewById(R.id.event_title);
         TextView beschrijvingTV = (TextView) findViewById(R.id.event_beschrijving);
         TextView dateTV = (TextView) findViewById(R.id.event_date);
         ListView aanwezig_list = (ListView) findViewById(R.id.event_aanwezig);
@@ -42,6 +45,7 @@ public class SingleEventActivity extends ActionBarActivity {
         aanwezig_list.setAdapter(aanwezigAdapter);
         afwezig_list.setAdapter(afwezigAadapter);
 
+        title = extras.getString("title");
         beschrijving = extras.getString("beschrijving");
         try {
             date = parseDate(extras.getString("date"));
@@ -49,6 +53,7 @@ public class SingleEventActivity extends ActionBarActivity {
             e.printStackTrace();
         }
 
+        titleTV.setText(title);
         beschrijvingTV.setText(beschrijving);
         dateTV.setText(date);
     }
