@@ -1,11 +1,15 @@
 package nl.ecci.Hamers.Beers;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.R;
 
 public class SingleBeerActivity extends ActionBarActivity {
@@ -14,6 +18,7 @@ public class SingleBeerActivity extends ActionBarActivity {
     String percentage;
     String brewer;
     String country;
+    SharedPreferences prefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,7 @@ public class SingleBeerActivity extends ActionBarActivity {
         TextView percentageTV = (TextView) findViewById(R.id.beer_alc);
         TextView brewerTV = (TextView) findViewById(R.id.beer_brewer);
         TextView countryTV = (TextView) findViewById(R.id.beer_country);
+        ImageView beerImage = (ImageView) findViewById(R.id.beer_image);
 
         Bundle extras = getIntent().getExtras();
 
@@ -36,6 +42,8 @@ public class SingleBeerActivity extends ActionBarActivity {
         brewer = extras.getString("brewer");
         country = extras.getString("country");
 
+        prefs =  PreferenceManager.getDefaultSharedPreferences(this);
+        beerImage.setImageBitmap(DataManager.getBeerImage(prefs, name));
 
         nameTV.setText(name);
         soortTV.setText(soort);

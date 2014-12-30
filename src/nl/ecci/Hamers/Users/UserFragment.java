@@ -26,7 +26,6 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     ArrayList<User> listItems = new ArrayList<User>();
     ArrayAdapter<User> adapter;
     SwipeRefreshLayout swipeView;
-    SharedPreferences prefs;
     public UserFragment() {
         // Empty constructor required for fragment subclasses
     }
@@ -38,10 +37,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         initSwiper(view, user_list);
 
-        // 1. pass context and data to the custom adapter
         adapter = new UsersAdapter(this.getActivity(), listItems);
-
-        // 2. Set adapter and that's it.
         user_list.setAdapter(adapter);
 
         return view;
@@ -94,7 +90,6 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
                     }
-                    ;
                 }
             }
         } catch (JSONException e) {
