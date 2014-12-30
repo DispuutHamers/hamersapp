@@ -45,7 +45,7 @@ public class GetJson extends AsyncTask<String, String, String> {
         BufferedReader reader;
         StringBuffer buffer = new StringBuffer();
         try {
-            URL url = new URL(baseURL + prefs.getString("apikey", "a") + typeURL);
+            URL url = new URL(baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + typeURL);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
             int read;
             char[] chars = new char[1024];
@@ -101,11 +101,11 @@ public class GetJson extends AsyncTask<String, String, String> {
             Toast.makeText(a, a.getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
         } else {
             if (typeURL == USERURL) {
-                prefs.edit().putString(JSONHelper.USERKEY, result).apply();
+                prefs.edit().putString(DataManager.USERKEY, result).apply();
             }
             // Quotelist fragment
             if (f instanceof QuoteListFragment) {
-                prefs.edit().putString(JSONHelper.QUOTEKEY, result).apply();
+                prefs.edit().putString(DataManager.QUOTEKEY, result).apply();
                 ((QuoteListFragment) f).populateList(prefs);
             }
             // User fragment
@@ -114,12 +114,12 @@ public class GetJson extends AsyncTask<String, String, String> {
             }
             // Event fragment
             else if (f instanceof EventFragment) {
-                prefs.edit().putString(JSONHelper.EVENTKEY, result).apply();
+                prefs.edit().putString(DataManager.EVENTKEY, result).apply();
                 ((EventFragment) f).populateList(prefs);
             }
             // Beer fragment
             else if (f instanceof BeerFragment) {
-                prefs.edit().putString(JSONHelper.BEERKEY, result).apply();
+                prefs.edit().putString(DataManager.BEERKEY, result).apply();
                 ((BeerFragment) f).populateList(prefs);
             }
         }
@@ -143,7 +143,7 @@ public class GetJson extends AsyncTask<String, String, String> {
                 }
                 out.close();
                 in.close();
-                prefs.edit().putString("userpic-" + users.getJSONObject(i).getString("id"), Base64.encodeToString(out.toByteArray(), Base64.DEFAULT)).apply();
+                prefs.edit().putString(DataManager.USERIMAGEKEY + users.getJSONObject(i).getString("id"), Base64.encodeToString(out.toByteArray(), Base64.DEFAULT)).apply();
                 //For restoring byte[] array = Base64.decode(stringFromSharedPrefs, Base64.DEFAULT);
             } catch (IOException e) {
                 if (DEBUG) {
@@ -175,7 +175,7 @@ public class GetJson extends AsyncTask<String, String, String> {
                 }
                 out.close();
                 in.close();
-                prefs.edit().putString("beerpic-" + beers.getJSONObject(i).getString("name"), Base64.encodeToString(out.toByteArray(), Base64.DEFAULT)).apply();
+                prefs.edit().putString(DataManager.BEERIMAGEKEY + beers.getJSONObject(i).getString("name"), Base64.encodeToString(out.toByteArray(), Base64.DEFAULT)).apply();
             } catch (MalformedURLException e) {
                 if (DEBUG) {
                     System.out.println("--------------------------Malformed URL!: ");

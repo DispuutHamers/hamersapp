@@ -9,7 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.*;
 import android.widget.*;
 import nl.ecci.Hamers.Helpers.GetJson;
-import nl.ecci.Hamers.Helpers.JSONHelper;
+import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +44,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         event_list.setAdapter(adapter);
         event_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                JSONObject e = JSONHelper.getEvent(prefs, adapter.getItem(position).getTitle(), adapter.getItem(position).getDate());
+                JSONObject e = DataManager.getEvent(prefs, adapter.getItem(position).getTitle(), adapter.getItem(position).getDate());
                 if (e != null) {
                     try {
                         Intent intent = new Intent(getActivity(), SingleEventActivity.class);
@@ -60,9 +60,9 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                         for(int i = 0; i < signups.length(); i++){
                             JSONObject signup = signups.getJSONObject(i);
                             if(signup.getBoolean("status") == true) {
-                                aanwezig.add(JSONHelper.getUser(prefs, signup.getInt("user_id")).getString("name"));
+                                aanwezig.add(DataManager.getUser(prefs, signup.getInt("user_id")).getString("name"));
                             } else {
-                                afwezig.add(JSONHelper.getUser(prefs, signup.getInt("user_id")).getString("name"));
+                                afwezig.add(DataManager.getUser(prefs, signup.getInt("user_id")).getString("name"));
                             }
                         }
                         intent.putStringArrayListExtra("aanwezig", aanwezig);
@@ -120,7 +120,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         listItems.clear();
         JSONArray json;
         try {
-            if ((json = JSONHelper.getJsonArray(prefs, JSONHelper.EVENTKEY)) != null) {
+            if ((json = DataManager.getJsonArray(prefs, DataManager.EVENTKEY)) != null) {
                 for (int i = json.length() - 1; i >= 0; i--) {
                     JSONObject temp;
                     try {

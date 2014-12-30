@@ -1,6 +1,9 @@
 package nl.ecci.Hamers.Helpers;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,11 +12,14 @@ import java.text.ParseException;
 
 import static nl.ecci.Hamers.MainActivity.parseDate;
 
-public final class JSONHelper {
+public final class DataManager {
     public static final String QUOTEKEY = "quoteData";
     public static final String USERKEY = "userData";
     public static final String EVENTKEY = "eventData";
     public static final String BEERKEY = "beerData";
+    public static final String USERIMAGEKEY = "userpic-";
+    public static final String BEERIMAGEKEY = "beerpic-";
+    public static final String APIKEYKEY = "apikey";
 
     public static JSONObject getUser(SharedPreferences prefs, int id) {
         JSONArray users;
@@ -79,5 +85,15 @@ public final class JSONHelper {
         } catch (JSONException e) {
             return null;
         }
+    }
+
+    public static Bitmap getUserImage(SharedPreferences prefs, int id){
+        byte[] array = Base64.decode(prefs.getString(USERIMAGEKEY + id, ""), Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(array, 0, array.length);
+    }
+
+    public static Bitmap getBeerImage(SharedPreferences prefs, String name){
+        byte[] array = Base64.decode(prefs.getString(BEERIMAGEKEY + name, ""), Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(array, 0, array.length);
     }
 }

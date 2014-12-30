@@ -9,7 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.*;
 import android.widget.*;
 import nl.ecci.Hamers.Helpers.GetJson;
-import nl.ecci.Hamers.Helpers.JSONHelper;
+import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +42,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         beer_list.setAdapter(adapter);
         beer_list.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                JSONObject b = JSONHelper.getBeer(prefs, adapter.getItem(position).getName());
+                JSONObject b = DataManager.getBeer(prefs, adapter.getItem(position).getName());
                 if (b != null) {
                     try {
                         System.out.println(b.getString("name"));
@@ -101,7 +101,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         listItems.clear();
         JSONArray json;
         try {
-            if ((json = JSONHelper.getJsonArray(prefs, JSONHelper.BEERKEY)) != null) {
+            if ((json = DataManager.getJsonArray(prefs, DataManager.BEERKEY)) != null) {
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject temp;
                     temp = json.getJSONObject(i);
