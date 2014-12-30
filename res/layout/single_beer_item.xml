@@ -13,13 +13,6 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageView"
-                    android:padding="0dp"
-                    android:src="@drawable/hamer_1024"
-                    android:layout_gravity="center_horizontal"/>
             <TextView android:id="@+id/beer_name"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
@@ -28,17 +21,13 @@
                       android:padding="20dp"
                       android:text="Gordon Finest Scotch"
                       android:gravity="center_horizontal"/>
-            <TextView
+            <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Beer info"
-                    android:id="@+id/beer_info_title"
-                    android:textSize="22dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"/>
+                    android:id="@+id/beer_image"
+                    android:padding="0dp"
+                    android:src="@drawable/hamer_1024"
+                    android:layout_gravity="center_horizontal"/>
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
@@ -48,14 +37,16 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Soort: "
                         android:id="@+id/beer_soort_textview"
-                        android:textSize="16dp"/>
+                        android:textSize="18sp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"/>
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Scotch Ale"
                         android:id="@+id/beer_soort"
                         android:textSize="16dp"
@@ -70,14 +61,16 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="ALC: "
                         android:id="@+id/beer_alc_textview"
-                        android:textSize="16dp"/>
+                        android:textSize="18sp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"/>
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="8%"
                         android:id="@+id/beer_alc"
                         android:textSize="16dp"
@@ -92,14 +85,16 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Brouwer: "
                         android:id="@+id/beer_brouwer_textview"
-                        android:textSize="16dp"/>
+                        android:textSize="18sp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"/>
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="John Martin"
                         android:id="@+id/beer_brewer"
                         android:textSize="16dp"
@@ -114,14 +109,16 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Land: "
                         android:id="@+id/beer_country_textview"
-                        android:textSize="16dp"/>
+                        android:textSize="18sp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"/>
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="BE"
                         android:id="@+id/beer_country"
                         android:textSize="16dp"

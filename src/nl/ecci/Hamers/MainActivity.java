@@ -18,7 +18,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-import nl.ecci.Hamers.Fragments.*;
+import nl.ecci.Hamers.Beers.*;
+import nl.ecci.Hamers.Events.EventFragment;
+import nl.ecci.Hamers.Events.NewEventActivity;
+import nl.ecci.Hamers.Helpers.GetJson;
+import nl.ecci.Hamers.Helpers.DataManager;
+import nl.ecci.Hamers.Quotes.NewQuoteFragment;
+import nl.ecci.Hamers.Quotes.QuoteListFragment;
+import nl.ecci.Hamers.Users.UserFragment;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -129,7 +136,7 @@ public class MainActivity extends ActionBarActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //reload users
         if (prefs.getString("apikey", null) != null) {
-            if (prefs.getString(JSONHelper.USERKEY, null) != null) {
+            if (prefs.getString(DataManager.USERKEY, null) != null) {
                 userFragment.populateList(prefs);
                 loadData2(prefs);
             } else {
@@ -154,7 +161,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 Editable key = apiKey.getText();
                 if (!key.toString().equals("")) {
-                    storeInMemory("apikey", key.toString());
+                    storeInMemory(DataManager.APIKEYKEY, key.toString());
                     showToast(getResources().getString(R.string.toast_downloading), Toast.LENGTH_LONG);
                     loadData();
                 } else {
@@ -184,14 +191,14 @@ public class MainActivity extends ActionBarActivity {
     public void loadData2(SharedPreferences prefs) {
         System.out.println("loaddata2 called");
         //reload quotes
-        if (prefs.getString(JSONHelper.QUOTEKEY, null) != null) {
+        if (prefs.getString(DataManager.QUOTEKEY, null) != null) {
             quoteListFragment.populateList(prefs);
         } else {
             GetJson g = new GetJson(this, quoteListFragment, GetJson.QUOTEURL, prefs, false);
             g.execute();
         }
         //reload Events
-        if (prefs.getString(JSONHelper.EVENTKEY, null) != null) {
+        if (prefs.getString(DataManager.EVENTKEY, null) != null) {
             eventFragment.populateList(prefs);
         } else {
             GetJson g = new GetJson(this, eventFragment, GetJson.EVENTURL, prefs, false);
@@ -199,7 +206,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         //reload Beers
-        if (prefs.getString(JSONHelper.BEERKEY, null) != null) {
+        if (prefs.getString(DataManager.BEERKEY, null) != null) {
             beerFragment.populateList(prefs);
         } else {
             GetJson g = new GetJson(this, beerFragment, GetJson.BEERURL, prefs, false);
@@ -275,11 +282,20 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
-     * When user presses "+" in EventFragment, start new dialog with NewQuoteFragment
+     * When user presses "+" in EventFragment, start new dialog with NewEventActivity
      * @param item
      */
     public void newEvent(MenuItem item) {
         Intent intent = new Intent(this, NewEventActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * When user presses "+" in BeerFragment, start new dialog with NewBeerActivity
+     * @param item
+     */
+    public void newBeer(MenuItem item) {
+        Intent intent = new Intent(this, NewBeerActivity.class);
         startActivity(intent);
     }
 
