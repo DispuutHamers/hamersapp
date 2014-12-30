@@ -9,7 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.*;
 import android.widget.*;
 import nl.ecci.Hamers.Helpers.GetJson;
-import nl.ecci.Hamers.Helpers.JSONHelper;
+import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,14 +90,14 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         listItems.clear();
         JSONArray json;
         try {
-            if ((json = JSONHelper.getJsonArray(prefs, JSONHelper.QUOTEKEY)) != null) {
+            if ((json = DataManager.getJsonArray(prefs, DataManager.QUOTEKEY)) != null) {
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject quote = json.getJSONObject(i);
                     JSONObject user;
 
                     String username;
                     int id;
-                    if ((user = JSONHelper.getUser(prefs, quote.getInt("user_id"))) != null) {
+                    if ((user = DataManager.getUser(prefs, quote.getInt("user_id"))) != null) {
                         username = user.getString("name");
                         id = user.getInt("id");
                     } else {

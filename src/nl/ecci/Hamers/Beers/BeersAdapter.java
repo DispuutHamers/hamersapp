@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.R;
 
 import java.util.ArrayList;
@@ -55,10 +56,7 @@ public class BeersAdapter extends ArrayAdapter<Beer> {
 
         // 5. set image
         prefs =  PreferenceManager.getDefaultSharedPreferences(context);
-        byte[] array = Base64.decode(prefs.getString("beerpic-" + itemsArrayList.get(position).getName(), ""), Base64.DEFAULT);
-        Bitmap bmp = BitmapFactory.decodeByteArray(array, 0, array.length);
-        ImageView userImage = (ImageView) rowView.findViewById(R.id.quote_image);
-        picture.setImageBitmap(bmp);
+        picture.setImageBitmap(DataManager.getBeerImage(prefs, itemsArrayList.get(position).getName()));
         
         return rowView;
     }
