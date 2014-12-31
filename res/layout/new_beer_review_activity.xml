@@ -40,7 +40,7 @@
                   android:layout_marginRight="15dp"
                   android:textSize="18dp"/>
         <SeekBar android:id="@+id/ratingseekbar"
-                 android:max="10"
+                 android:max="9"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:layout_below="@+id/cijfer"

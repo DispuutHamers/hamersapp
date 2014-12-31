@@ -1,8 +1,6 @@
 package nl.ecci.Hamers.Beers;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
@@ -47,7 +45,7 @@ public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.
     @Override
     public void onProgressChanged(SeekBar seekBar, int rating, boolean fromUser) {
         // change progress text label with current seekbar value
-        progress.setText("Cijfer: " + rating);
+        progress.setText("Cijfer: " + (rating + 1));
     }
 
     @Override
