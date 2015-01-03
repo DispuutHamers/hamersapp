@@ -2,6 +2,7 @@ package nl.ecci.Hamers.Beers;
 
 public class Beer {
 
+    private int id;
     private String name;
     private String soort;
     private String pictureURL;
@@ -9,8 +10,9 @@ public class Beer {
     private String brewer;
     private String country;
 
-    public Beer(String name, String soort, String pictureURL, String percentage, String brewer, String country) {
+    public Beer(int id, String name, String soort, String pictureURL, String percentage, String brewer, String country) {
         super();
+        this.id = id;
         this.name = name;
         this.soort = soort;
         this.pictureURL = pictureURL;
@@ -18,6 +20,8 @@ public class Beer {
         this.brewer = brewer;
         this.country = country;
     }
+
+    public int getId() { return id; }
 
     public String getName() {
         return name;

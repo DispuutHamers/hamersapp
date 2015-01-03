@@ -45,8 +45,8 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 JSONObject b = DataManager.getBeer(prefs, adapter.getItem(position).getName());
                 if (b != null) {
                     try {
-                        System.out.println(b.getString("name"));
                         Intent intent = new Intent(getActivity(), SingleBeerActivity.class);
+                        intent.putExtra("id", b.getInt("id"));
                         intent.putExtra("name", b.getString("name"));
                         intent.putExtra("soort", b.getString("soort"));
                         intent.putExtra("percentage", b.getString("percentage"));
@@ -105,7 +105,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject temp;
                     temp = json.getJSONObject(i);
-                    Beer tempBeer = new Beer(temp.getString("name").toString(), temp.getString("soort").toString(),
+                    Beer tempBeer = new Beer(temp.getInt("id"), temp.getString("name").toString(), temp.getString("soort").toString(),
                             temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"));
                     listItems.add(tempBeer);
                     if (adapter != null) {

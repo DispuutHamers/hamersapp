@@ -27,13 +27,13 @@ public class SingleEventActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.single_event);
 
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         TextView titleTV = (TextView) findViewById(R.id.event_title);
         TextView beschrijvingTV = (TextView) findViewById(R.id.event_beschrijving);
         TextView dateTV = (TextView) findViewById(R.id.event_date);
         ListView aanwezig_list = (ListView) findViewById(R.id.event_aanwezig);
         ListView afwezig_list = (ListView) findViewById(R.id.event_afwezig);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         Bundle extras = getIntent().getExtras();
 
