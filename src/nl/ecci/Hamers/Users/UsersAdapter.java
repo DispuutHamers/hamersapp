@@ -44,7 +44,6 @@ public class UsersAdapter extends ArrayAdapter<User> {
         TextView username = (TextView) rowView.findViewById(R.id.username);
         TextView quotecount = (TextView) rowView.findViewById(R.id.user_quotecount);
         TextView reviewcount = (TextView) rowView.findViewById(R.id.user_reviewcount);
-        //ImageView userImage = (ImageView) rowView.findViewById(R.id.quote_image);
 
         // 4. Set the text for textView
         username.setText(itemsArrayList.get(position).getUsername());
