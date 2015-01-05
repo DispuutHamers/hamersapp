@@ -37,6 +37,7 @@
                 android:paddingRight="20dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"/>
+        <!--
         <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,7 +47,9 @@
                 android:focusable="false"
                 android:textOff="@string/no"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"/>
+                android:paddingRight="20dp"
+                android:onClick="onToggleClicked"/>
+                -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

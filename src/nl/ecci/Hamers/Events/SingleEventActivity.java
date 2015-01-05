@@ -3,9 +3,8 @@ package nl.ecci.Hamers.Events;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.*;
 import nl.ecci.Hamers.R;
 
 import java.text.ParseException;
@@ -66,5 +65,15 @@ public class SingleEventActivity extends ActionBarActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onToggleClicked(View view) {
+        boolean on = ((Switch) view).isChecked();
+
+        if (on) {
+            Toast.makeText(this, "ON JONGUH!",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "OFF JONGUH!",Toast.LENGTH_SHORT).show();
+        }
     }
 }
