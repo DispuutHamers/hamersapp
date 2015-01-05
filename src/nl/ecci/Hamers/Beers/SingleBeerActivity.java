@@ -7,10 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
@@ -87,6 +84,7 @@ public class SingleBeerActivity extends ActionBarActivity {
                 for (int i = 0; i < reviews.length(); i++) {
                     JSONObject review = reviews.getJSONObject(i);
                     if (review.getInt("beer_id") == id) {
+                        System.out.println("DESCRIPTION: " + review.getString("description"));
                         Review tempReview = new Review(review.getInt("beer_id"), review.getInt("user_id"), review.getString("description"), review.getInt("rating"), review.getString("created_at"), review.getString("proefdatum"));
                         reviewItems.add(tempReview);
                         if (adapter != null) {
@@ -96,7 +94,8 @@ public class SingleBeerActivity extends ActionBarActivity {
                 }
             }
         } catch (JSONException e) {
-            return null;
+            Toast.makeText(this, getString(R.string.toast_reviewloaderror), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
         return null;
     }
