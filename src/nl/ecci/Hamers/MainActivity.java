@@ -18,12 +18,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-import nl.ecci.Hamers.Beers.BeerFragment;
-import nl.ecci.Hamers.Beers.NewBeerActivity;
+import nl.ecci.Hamers.Beers.*;
 import nl.ecci.Hamers.Events.EventFragment;
 import nl.ecci.Hamers.Events.NewEventActivity;
-import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
+import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Quotes.NewQuoteFragment;
 import nl.ecci.Hamers.Quotes.QuoteListFragment;
 import nl.ecci.Hamers.Users.UserFragment;
@@ -34,6 +33,12 @@ import java.text.SimpleDateFormat;
 
 
 public class MainActivity extends ActionBarActivity {
+    // Drawer list
+    private String[] mDrawerItems;
+    private ListView mDrawerList;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+
     // Fragments
     QuoteListFragment quoteListFragment = new QuoteListFragment();
     UserFragment userFragment = new UserFragment();
@@ -41,24 +46,6 @@ public class MainActivity extends ActionBarActivity {
     BeerFragment beerFragment = new BeerFragment();
     MotionFragment motionFragment = new MotionFragment();
     SettingsFragment settingsFragment = new SettingsFragment();
-    // Drawer list
-    private String[] mDrawerItems;
-    private ListView mDrawerList;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-
-    /**
-     * Parse date
-     *
-     * @param dateTemp
-     * @return String with parsed date
-     * @throws ParseException
-     */
-    public static String parseDate(String dateTemp) throws ParseException {
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
-        return outputFormat.format(inputFormat.parse(dateTemp));
-    }
 
     /**
      * Called when the activity is first created.
@@ -133,6 +120,14 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 
+    /* The click listener for ListView in the navigation drawer */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
     /**
      * Loads all the data on startup.
      * It starts with loading the users and afterwards it calls loaddata2, which downloads the other data.
@@ -143,7 +138,7 @@ public class MainActivity extends ActionBarActivity {
         if (prefs.getString("apikey", null) != null) {
             if (prefs.getString(DataManager.USERKEY, null) != null) {
                 userFragment.populateList(prefs);
-                loadData2(prefs);
+                loadData2(prefs, true);
             } else {
                 GetJson g = new GetJson(this, userFragment, GetJson.USERURL, prefs, true);
                 g.execute();
@@ -193,29 +188,32 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    public void loadData2(SharedPreferences prefs) {
-        System.out.println("loaddata2 called");
-        //reload quotes
-        if (prefs.getString(DataManager.QUOTEKEY, null) != null) {
-            quoteListFragment.populateList(prefs);
-        } else {
-            GetJson g = new GetJson(this, quoteListFragment, GetJson.QUOTEURL, prefs, false);
-            g.execute();
-        }
-        //reload Events
-        if (prefs.getString(DataManager.EVENTKEY, null) != null) {
-            eventFragment.populateList(prefs);
-        } else {
-            GetJson g = new GetJson(this, eventFragment, GetJson.EVENTURL, prefs, false);
-            g.execute();
-        }
+    public void loadData2(SharedPreferences prefs, boolean auth) {
+        if (auth) {
+            //reload quotes
+            if (prefs.getString(DataManager.QUOTEKEY, null) != null) {
+                quoteListFragment.populateList(prefs);
+            } else {
+                GetJson g = new GetJson(this, quoteListFragment, GetJson.QUOTEURL, prefs, false);
+                g.execute();
+            }
+            //reload Events
+            if (prefs.getString(DataManager.EVENTKEY, null) != null) {
+                eventFragment.populateList(prefs);
+            } else {
+                GetJson g = new GetJson(this, eventFragment, GetJson.EVENTURL, prefs, false);
+                g.execute();
+            }
 
-        //reload Beers
-        if (prefs.getString(DataManager.BEERKEY, null) != null) {
-            beerFragment.populateList(prefs);
+            //reload Beers
+            if (prefs.getString(DataManager.BEERKEY, null) != null) {
+                beerFragment.populateList(prefs);
+            } else {
+                GetJson g = new GetJson(this, beerFragment, GetJson.BEERURL, prefs, false);
+                g.execute();
+            }
         } else {
-            GetJson g = new GetJson(this, beerFragment, GetJson.BEERURL, prefs, false);
-            g.execute();
+            showApiKeyDialog();
         }
     }
 
@@ -308,11 +306,16 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    /* The click listener for ListView in the navigation drawer */
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
+    /**
+     * Parse date
+     *
+     * @param dateTemp
+     * @return String with parsed date
+     * @throws ParseException
+     */
+    public static String parseDate(String dateTemp) throws ParseException {
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+        return outputFormat.format(inputFormat.parse(dateTemp));
     }
 }

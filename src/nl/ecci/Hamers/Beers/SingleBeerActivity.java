@@ -51,12 +51,11 @@ public class SingleBeerActivity extends ActionBarActivity {
         brewer = extras.getString("brewer");
         country = extras.getString("country");
 
-        //reviews =
-
-        // reviewadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, bla);
-        reviews_list.setAdapter(reviewadapter);
+        adapter = new ReviewAdapter(this, reviewItems);
+        reviews_list.setAdapter(adapter);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        getReviews();
         beerImage.setImageBitmap(DataManager.getBeerImage(prefs, name));
 
         nameTV.setText(name);
@@ -76,10 +75,30 @@ public class SingleBeerActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private JSONObject getReviews() {
+        JSONArray reviews;
+        try {
+            if ((reviews = getJsonArray(prefs, DataManager.REVIEWKEY)) != null) {
+                for (int i = 0; i < reviews.length(); i++) {
+                    JSONObject review = reviews.getJSONObject(i);
+                    if (review.getInt("beer_id") == id) {
+                        Review tempReview = new Review(review.getInt("beer_id"), review.getInt("user_id"), review.getString("description"), review.getInt("rating"), review.getString("created_at"), review.getString("proefdatum"));
+                        reviewItems.add(tempReview);
+                        if (adapter != null) {
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            return null;
+        }
+        return null;
+    }
+
     /**
      * Called when the user clicks the button to create a new beerreview,
      * starts NewBeerActivity.
-     *
      * @param view
      */
     public void createReview(View view) {

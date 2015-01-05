@@ -20,16 +20,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class GetJson extends AsyncTask<String, String, String> {
+    private static final boolean DEBUG = false;
     public static final String baseURL = "http://zondersikkel.nl/api/v1/";
     public static final String QUOTEURL = "/quote.json";
     public static final String USERURL = "/user.json";
     public static final String EVENTURL = "/event.json";
     public static final String BEERURL = "/beer.json";
-    private static final boolean DEBUG = false;
+    public static final String REVIEWURL = "/review.json";
+
     private Fragment f;
     private String typeURL;
     private SharedPreferences prefs;
     private Activity a;
+    private boolean downloadBeerPicturesBool = false;
+    private boolean downloadUserPicturesBool = false;
     private boolean firstload;
 
     public GetJson(Activity a, Fragment f, String typeURL, SharedPreferences s, Boolean firstload) {
@@ -40,86 +44,94 @@ public class GetJson extends AsyncTask<String, String, String> {
         this.firstload = firstload;
     }
 
+    public void setBeerPictureDownload(){
+        downloadBeerPicturesBool = true;
+    }
+
+    public void setUserPictureDownload(){
+        downloadUserPicturesBool = true;
+    }
+
     protected String doInBackground(String... params) {
         BufferedReader reader;
         StringBuffer buffer = new StringBuffer();
-        try {
-            URL url = new URL(baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + typeURL);
-            reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            int read;
-            char[] chars = new char[1024];
-            while ((read = reader.read(chars)) != -1) {
-                buffer.append(chars, 0, read);
-            }
-            reader.close();
-        } catch (MalformedURLException e) {
-            if (DEBUG) {
-                System.out.println("--------------------------Malformed URL!: ");
-                e.printStackTrace();
-            }
-            return null;
-        } catch (IOException e) {
-            if (DEBUG) {
-                System.out.println("--------------------------IOException!: ");
-                e.printStackTrace();
-            }
-            return null;
-        }
-        if (typeURL == USERURL) {
+        if(downloadBeerPicturesBool){
+            downloadBeerpictures(DataManager.getJsonArray(prefs, DataManager.BEERKEY));
+        } else if (downloadUserPicturesBool) {
+            downloadProfilepictures(DataManager.getJsonArray(prefs, DataManager.USERKEY));
+        } else {
             try {
-                downloadProfilepictures(new JSONArray(buffer.toString()));
-            } catch (JSONException e) {
+                URL url = new URL(baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + typeURL);
+                reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                int read;
+                char[] chars = new char[1024];
+                while ((read = reader.read(chars)) != -1) {
+                    buffer.append(chars, 0, read);
+                }
+                reader.close();
+            } catch (MalformedURLException e) {
                 if (DEBUG) {
-                    System.out.println("--------------------------JSONException!: ");
+                    System.out.println("--------------------------Malformed URL!: ");
                     e.printStackTrace();
                 }
-                //todo mogelijk deze exceptie handlen
-            }
-            ;
-        }
-        if (typeURL == BEERURL) {
-            try {
-                downloadBeerpictures(new JSONArray(buffer.toString()));
-            } catch (JSONException e) {
+                return null;
+            } catch (IOException e) {
                 if (DEBUG) {
-                    System.out.println("--------------------------JSONException!: ");
+                    System.out.println("--------------------------IOException!: ");
                     e.printStackTrace();
                 }
-                //todo mogelijk deze exceptie handlen
+                return null;
             }
+            return buffer.toString();
         }
-        return buffer.toString();
+        return null;
     }
 
     @Override
     protected void onPostExecute(String result) {
-        if (firstload && a instanceof MainActivity) {
-            ((MainActivity) a).loadData2(prefs);
-        }
-        if (result == null || result.equals("{}")) {
-            Toast.makeText(a, a.getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
+        if(firstload && result == null){
+            ((MainActivity) a).loadData2(prefs, false);
         } else {
-            if (typeURL == USERURL) {
-                prefs.edit().putString(DataManager.USERKEY, result).apply();
+            if (firstload && a instanceof MainActivity) {
+                ((MainActivity) a).loadData2(prefs, true);
             }
-            // Quotelist fragment
-            if (f instanceof QuoteListFragment) {
-                prefs.edit().putString(DataManager.QUOTEKEY, result).apply();
-                ((QuoteListFragment) f).populateList(prefs);
-            }
-            // User fragment
-            else if (f instanceof UserFragment) {
-                ((UserFragment) f).populateList(prefs);
-            }
-            // Event fragment
-            else if (f instanceof EventFragment) {
-                prefs.edit().putString(DataManager.EVENTKEY, result).apply();
-                ((EventFragment) f).populateList(prefs);
-            }
-            // Beer fragment
-            else if (f instanceof BeerFragment) {
-                prefs.edit().putString(DataManager.BEERKEY, result).apply();
-                ((BeerFragment) f).populateList(prefs);
+            if ((!downloadUserPicturesBool && !downloadBeerPicturesBool) && (result == null || result.equals("{}"))) {
+                Toast.makeText(a, a.getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
+            } else {
+                // Quotelist fragment
+                if (f instanceof QuoteListFragment) {
+                    prefs.edit().putString(DataManager.QUOTEKEY, result).apply();
+                    ((QuoteListFragment) f).populateList(prefs);
+                }
+                // User fragment
+                else if (f instanceof UserFragment) {
+                    if(!downloadUserPicturesBool) {
+                        prefs.edit().putString(DataManager.USERKEY, result).apply();
+                        GetJson g = new GetJson(a, f, USERURL, prefs, false);
+                        g.setUserPictureDownload();
+                        g.execute();
+                    }
+                    ((UserFragment) f).populateList(prefs);
+                }
+                // Event fragment
+                else if (f instanceof EventFragment) {
+                    prefs.edit().putString(DataManager.EVENTKEY, result).apply();
+                    ((EventFragment) f).populateList(prefs);
+                }
+                // Beer fragment
+                else if (f instanceof BeerFragment) {
+                    if(!downloadBeerPicturesBool) {
+                        prefs.edit().putString(DataManager.BEERKEY, result).apply();
+                        GetJson g = new GetJson(a, f, BEERURL, prefs, false);
+                        g.setBeerPictureDownload();
+                        g.execute();
+                        GetJson g2 = new GetJson(a, null, REVIEWURL, prefs, false);
+                        g2.execute();
+                    }
+                    ((BeerFragment) f).populateList(prefs);
+                } else if (typeURL.equals(REVIEWURL)) {
+                    prefs.edit().putString(DataManager.REVIEWKEY, result).apply();
+                }
             }
         }
 
