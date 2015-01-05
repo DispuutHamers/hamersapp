@@ -53,7 +53,7 @@ public class SingleBeerActivity extends ActionBarActivity {
 
         //reviews =
 
-        reviewadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, bla);
+        // reviewadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, bla);
         reviews_list.setAdapter(reviewadapter);
 
         prefs =  PreferenceManager.getDefaultSharedPreferences(this);
@@ -83,6 +83,7 @@ public class SingleBeerActivity extends ActionBarActivity {
      */
     public void createReview(View view) {
         Intent intent = new Intent(this, NewBeerReviewActivity.class);
+        intent.putExtra("id", id);
         startActivity(intent);
     }
 }
