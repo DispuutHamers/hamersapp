@@ -77,8 +77,8 @@ public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.
         int proefmaand = Integer.parseInt(dateParts[1]);
         int proefjaar = Integer.parseInt(dateParts[2]);
 
-        String arguments = "beer[user_id]=" + 2 + "&beer[beer_id]=" + id + "&beer[description]=" + review + "&beer[rating]=" + cijfer
-                + "&beer[proefdatum(1i)]=" + proefjaar + "&beer[proefdatum(2i)]=" + proefmaand + "&beer[proefdatum(3i)]=" + proefdag + "&beer[proefdatum(4i)]=" + 20 + "&beer[proefdatum(5i)]=" + 00;
+        String arguments = "&review[beer_id]=" + id + "&review[description]=" + review + "&review[rating]=" + cijfer
+                + "&review[proefdatum(1i)]=" + proefjaar + "&review[proefdatum(2i)]=" + proefmaand + "&review[proefdatum(3i)]=" + proefdag + "&review[proefdatum(4i)]=" + 20 + "&review[proefdatum(5i)]=" + 00;
         SendPostRequest req = new SendPostRequest(this, SendPostRequest.REVIEWURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
         req.execute();
     }
