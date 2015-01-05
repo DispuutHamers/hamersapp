@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +14,12 @@ import android.widget.TextView;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import static nl.ecci.Hamers.Helpers.DataManager.getJsonArray;
 
 public class SingleBeerActivity extends ActionBarActivity {
     int id;
@@ -26,8 +29,8 @@ public class SingleBeerActivity extends ActionBarActivity {
     String brewer;
     String country;
     SharedPreferences prefs;
-    ArrayList<String> reviews;
-    ArrayAdapter<String> reviewadapter;
+    ArrayList<Review> reviewItems = new ArrayList<Review>();
+    ArrayAdapter<Review> adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,13 +56,11 @@ public class SingleBeerActivity extends ActionBarActivity {
         brewer = extras.getString("brewer");
         country = extras.getString("country");
 
-        //reviews =
+        adapter = new ReviewAdapter(this, reviewItems);
+        reviews_list.setAdapter(adapter);
 
-        // reviewadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, bla);
-        reviews_list.setAdapter(reviewadapter);
-
-        prefs =  PreferenceManager.getDefaultSharedPreferences(this);
-        this.getReviews();
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        getReviews();
         beerImage.setImageBitmap(DataManager.getBeerImage(prefs, name));
 
         nameTV.setText(name);
@@ -79,9 +80,23 @@ public class SingleBeerActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private JSONArray getReviews(){
-        if(prefs != null) {
-            //System.out.println(DataManager.getJsonArray(prefs, DataManager.REVIEWKEY));
+    private JSONObject getReviews() {
+        JSONArray reviews;
+        try {
+            if ((reviews = getJsonArray(prefs, DataManager.REVIEWKEY)) != null) {
+                for (int i = 0; i < reviews.length(); i++) {
+                    JSONObject review = reviews.getJSONObject(i);
+                    if (review.getInt("beer_id") == id) {
+                        Review tempReview = new Review(review.getInt("beer_id"), review.getInt("user_id"), review.getString("description"), review.getInt("rating"), review.getString("created_at"), review.getString("proefdatum"));
+                        reviewItems.add(tempReview);
+                        if (adapter != null) {
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            return null;
         }
         return null;
     }
@@ -89,6 +104,7 @@ public class SingleBeerActivity extends ActionBarActivity {
     /**
      * Called when the user clicks the button to create a new beerreview,
      * starts NewBeerActivity.
+     *
      * @param view
      */
     public void createReview(View view) {

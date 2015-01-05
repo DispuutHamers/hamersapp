@@ -15,7 +15,6 @@ import nl.ecci.Hamers.Users.UserFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import javax.xml.transform.Result;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -27,7 +26,7 @@ public class GetJson extends AsyncTask<String, String, String> {
     public static final String USERURL = "/user.json";
     public static final String EVENTURL = "/event.json";
     public static final String BEERURL = "/beer.json";
-    public static final String REVIEWURL = "/review/json";
+    public static final String REVIEWURL = "/review.json";
 
     private Fragment f;
     private String typeURL;
@@ -58,9 +57,9 @@ public class GetJson extends AsyncTask<String, String, String> {
         StringBuffer buffer = new StringBuffer();
         if(downloadBeerPicturesBool){
             downloadBeerpictures(DataManager.getJsonArray(prefs, DataManager.BEERKEY));
-        }else if(downloadUserPicturesBool){
+        } else if (downloadUserPicturesBool) {
             downloadProfilepictures(DataManager.getJsonArray(prefs, DataManager.USERKEY));
-        }else {
+        } else {
             try {
                 URL url = new URL(baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + typeURL);
                 reader = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -92,7 +91,7 @@ public class GetJson extends AsyncTask<String, String, String> {
     protected void onPostExecute(String result) {
         if(firstload && result == null){
             ((MainActivity) a).loadData2(prefs, false);
-        }else {
+        } else {
             if (firstload && a instanceof MainActivity) {
                 ((MainActivity) a).loadData2(prefs, true);
             }
@@ -126,13 +125,11 @@ public class GetJson extends AsyncTask<String, String, String> {
                         GetJson g = new GetJson(a, f, BEERURL, prefs, false);
                         g.setBeerPictureDownload();
                         g.execute();
-                        GetJson g2 = new GetJson(a, null, REVIEWURL, prefs,false);
+                        GetJson g2 = new GetJson(a, null, REVIEWURL, prefs, false);
                         g2.execute();
                     }
                     ((BeerFragment) f).populateList(prefs);
-                }else if (typeURL.equals(REVIEWURL)){
-                    System.out.println("----------------------------------------------------");
-                    System.out.println(result);
+                } else if (typeURL.equals(REVIEWURL)) {
                     prefs.edit().putString(DataManager.REVIEWKEY, result).apply();
                 }
             }

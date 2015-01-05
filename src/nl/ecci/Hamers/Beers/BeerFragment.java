@@ -111,7 +111,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
                     }
-                    ;
                 }
             }
         } catch (JSONException e) {
