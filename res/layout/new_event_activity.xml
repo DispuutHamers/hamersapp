@@ -162,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:text="@string/send"/>
-        <!-- android:onClick="postEvent"-->
+                android:text="@string/send"
+                android:onClick="postEvent"/>
     </LinearLayout>
 </RelativeLayout>

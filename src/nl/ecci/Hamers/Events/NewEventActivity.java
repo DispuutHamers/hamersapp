@@ -115,8 +115,8 @@ public class NewEventActivity extends ActionBarActivity {
         int eventDeadlineMonth = Integer.parseInt(deadlineDateParts[1]);
         int eventDeadlineYear = Integer.parseInt(deadlineDateParts[2]);
 
-        String arguments = "event[user_id]=" + 1 + "&event[title]=" + title + "&event[beschrijving]=" + description
-                            + "&event[end_time(5i)]=" + eventEndMinutes + "&event[end_time(4i)]=" + eventEndHour + " &event[end_time(3i)]=" + eventEndDay + "&event[end_time(2i)]=" + eventEndMonth + "&event[end_time(1i)]=" + eventEndYear
+        String arguments = "&event[title]=" + title + "&event[beschrijving]=" + description
+                            + "&event[end_time(5i)]=" + eventEndMinutes + "&event[end_time(4i)]=" + eventEndHour + "&event[end_time(3i)]=" + eventEndDay + "&event[end_time(2i)]=" + eventEndMonth + "&event[end_time(1i)]=" + eventEndYear
                             + "&event[deadline(5i)]=" + eventDeadlineMinutes + "&event[deadline(4i)]=" + eventDeadlineHour + "&event[deadline(3i)]="  + eventDeadlineDay + "&event[deadline(2i)]=" + eventDeadlineMonth + "&event[deadline(1i)]=" + eventDeadlineYear
                             + "&event[date(5i)]=" + eventStartMinutes + "&event[date(4i)]="  + eventStartHour + "&event[date(3i)]=" + eventStartDay + "&event[date(2i)]="+ eventStartMonth + "&event[date(1i)]=" + eventStartYear;
 
