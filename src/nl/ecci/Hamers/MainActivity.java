@@ -138,18 +138,18 @@ public class MainActivity extends ActionBarActivity {
         if (prefs.getString("apikey", null) != null) {
             if (prefs.getString(DataManager.USERKEY, null) != null) {
                 userFragment.populateList(prefs);
-                loadData2(prefs);
+                loadData2(prefs, true);
             } else {
                 GetJson g = new GetJson(this, userFragment, GetJson.USERURL, prefs, true);
                 g.execute();
             }
-        }else{
+        } else {
             showApiKeyDialog();
         }
     }
 
     //Show the dialog for entering the apikey on startup
-    private void showApiKeyDialog(){
+    private void showApiKeyDialog() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         Activity a = this;
         alert.setTitle(getString(R.string.apikeydialogtitle));
@@ -178,44 +178,48 @@ public class MainActivity extends ActionBarActivity {
     }
 
     //Show a toast with the supplied text and the supplied length
-    private void showToast(String text, int length){
+    private void showToast(String text, int length) {
         Toast.makeText(this, text, length).show();
     }
 
     //Stores this key value pair in memory
-    private void storeInMemory(String key, String value){
+    private void storeInMemory(String key, String value) {
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString(key, value).apply();
     }
 
 
-    public void loadData2(SharedPreferences prefs) {
-        System.out.println("loaddata2 called");
-        //reload quotes
-        if (prefs.getString(DataManager.QUOTEKEY, null) != null) {
-            quoteListFragment.populateList(prefs);
-        } else {
-            GetJson g = new GetJson(this, quoteListFragment, GetJson.QUOTEURL, prefs, false);
-            g.execute();
-        }
-        //reload Events
-        if (prefs.getString(DataManager.EVENTKEY, null) != null) {
-            eventFragment.populateList(prefs);
-        } else {
-            GetJson g = new GetJson(this, eventFragment, GetJson.EVENTURL, prefs, false);
-            g.execute();
-        }
+    public void loadData2(SharedPreferences prefs, boolean auth) {
+        if (auth) {
+            //reload quotes
+            if (prefs.getString(DataManager.QUOTEKEY, null) != null) {
+                quoteListFragment.populateList(prefs);
+            } else {
+                GetJson g = new GetJson(this, quoteListFragment, GetJson.QUOTEURL, prefs, false);
+                g.execute();
+            }
+            //reload Events
+            if (prefs.getString(DataManager.EVENTKEY, null) != null) {
+                eventFragment.populateList(prefs);
+            } else {
+                GetJson g = new GetJson(this, eventFragment, GetJson.EVENTURL, prefs, false);
+                g.execute();
+            }
 
-        //reload Beers
-        if (prefs.getString(DataManager.BEERKEY, null) != null) {
-            beerFragment.populateList(prefs);
-        } else {
-            GetJson g = new GetJson(this, beerFragment, GetJson.BEERURL, prefs, false);
-            g.execute();
+            //reload Beers
+            if (prefs.getString(DataManager.BEERKEY, null) != null) {
+                beerFragment.populateList(prefs);
+            } else {
+                GetJson g = new GetJson(this, beerFragment, GetJson.BEERURL, prefs, false);
+                g.execute();
+            }
+        }else{
+            showApiKeyDialog();
         }
     }
 
     /**
      * Swaps fragments in the quote_list_menu content view
+     *
      * @param position
      */
     private void selectItem(int position) {
@@ -274,6 +278,7 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment
+     *
      * @param item
      */
     public void newQuote(MenuItem item) {
@@ -283,6 +288,7 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * When user presses "+" in EventFragment, start new dialog with NewEventActivity
+     *
      * @param item
      */
     public void newEvent(MenuItem item) {
@@ -292,6 +298,7 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * When user presses "+" in BeerFragment, start new dialog with NewBeerActivity
+     *
      * @param item
      */
     public void newBeer(MenuItem item) {
@@ -301,6 +308,7 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * Parse date
+     *
      * @param dateTemp
      * @return String with parsed date
      * @throws ParseException

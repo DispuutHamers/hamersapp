@@ -17,9 +17,11 @@ public final class DataManager {
     public static final String USERKEY = "userData";
     public static final String EVENTKEY = "eventData";
     public static final String BEERKEY = "beerData";
+    public static final String REVIEWKEY = "reviewdata";
     public static final String USERIMAGEKEY = "userpic-";
     public static final String BEERIMAGEKEY = "beerpic-";
     public static final String APIKEYKEY = "apikey";
+    public static final String AUTHENTICATED = "authenticated";
 
     public static JSONObject getUser(SharedPreferences prefs, int id) {
         JSONArray users;
@@ -59,6 +61,10 @@ public final class DataManager {
             return null;
         }
         return null;
+    }
+
+    public static boolean isAuthenticated(SharedPreferences prefs){
+        return prefs.getBoolean("Authenticated", false);
     }
 
     public static JSONObject getBeer(SharedPreferences prefs, String name) {

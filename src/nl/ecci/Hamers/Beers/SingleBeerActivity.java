@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.R;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -57,6 +59,7 @@ public class SingleBeerActivity extends ActionBarActivity {
         reviews_list.setAdapter(reviewadapter);
 
         prefs =  PreferenceManager.getDefaultSharedPreferences(this);
+        this.getReviews();
         beerImage.setImageBitmap(DataManager.getBeerImage(prefs, name));
 
         nameTV.setText(name);
@@ -74,6 +77,13 @@ public class SingleBeerActivity extends ActionBarActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private JSONArray getReviews(){
+        if(prefs != null) {
+            //System.out.println(DataManager.getJsonArray(prefs, DataManager.REVIEWKEY));
+        }
+        return null;
     }
 
     /**
