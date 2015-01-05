@@ -24,6 +24,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
     public SwipeRefreshLayout swipeView;
     ArrayList<Quote> listItems = new ArrayList<Quote>();
     ArrayAdapter<Quote> adapter;
+
     public QuoteListFragment() {
     }
 

@@ -37,18 +37,18 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
                 .append(year);
         String date = builder.toString();
 
-        if(getActivity().getSupportFragmentManager().findFragmentByTag("date") != null) {
+        if (getActivity().getSupportFragmentManager().findFragmentByTag("date") != null) {
             eventDateButton.setText(date);
         }
 
-        if(getActivity().getSupportFragmentManager().findFragmentByTag("end_date") != null) {
+        if (getActivity().getSupportFragmentManager().findFragmentByTag("end_date") != null) {
             eventEndDateButton.setText(date);
         }
 
-        if(getActivity().getSupportFragmentManager().findFragmentByTag("proefdatum") != null) {
+        if (getActivity().getSupportFragmentManager().findFragmentByTag("proefdatum") != null) {
             beerDateButton.setText(date);
         }
-        if(getActivity().getSupportFragmentManager().findFragmentByTag("deadline_date") != null) {
+        if (getActivity().getSupportFragmentManager().findFragmentByTag("deadline_date") != null) {
             deadlineDateButton.setText(date);
         }
     }

@@ -52,7 +52,7 @@
                     android:hint="@string/motion_hint"
                     android:padding="20dp"/>
             <EditText
-                    android:id="@+id/motion_input"
+                    android:id="@+id/motion_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"

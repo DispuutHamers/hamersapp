@@ -15,11 +15,11 @@ import nl.ecci.Hamers.Helpers.SendPostRequest;
 import nl.ecci.Hamers.R;
 
 public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.OnSeekBarChangeListener {
+    int id;
+    String review;
     private SeekBar sb;
     private TextView progress;
     private int cijfer;
-    int id;
-    String review;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.
 
         Bundle extras = getIntent().getExtras();
         id = extras.getInt("id");
-        
+
         sb = (SeekBar) findViewById(R.id.ratingseekbar);
         sb.setOnSeekBarChangeListener(this);
         progress = (TextView) findViewById(R.id.rating);

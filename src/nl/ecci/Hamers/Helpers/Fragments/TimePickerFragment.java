@@ -32,7 +32,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         StringBuilder builder = new StringBuilder();
         builder.append(hour).append(":");
 
-        if (minute < 10 ) {
+        if (minute < 10) {
             builder.append(0).append(minute);
         } else {
             builder.append(minute);
@@ -40,14 +40,14 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
         String time = builder.toString();
 
-        if(getActivity().getSupportFragmentManager().findFragmentByTag("time") != null) {
+        if (getActivity().getSupportFragmentManager().findFragmentByTag("time") != null) {
             eventTimeButton.setText(time);
         }
 
-        if(getActivity().getSupportFragmentManager().findFragmentByTag("end_time") != null) {
+        if (getActivity().getSupportFragmentManager().findFragmentByTag("end_time") != null) {
             eventEndTimeButton.setText(time);
         }
-        if(getActivity().getSupportFragmentManager().findFragmentByTag("deadline_time") != null) {
+        if (getActivity().getSupportFragmentManager().findFragmentByTag("deadline_time") != null) {
             deadlineTimeButton.setText(time);
         }
     }

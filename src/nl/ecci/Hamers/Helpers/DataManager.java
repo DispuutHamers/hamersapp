@@ -87,23 +87,23 @@ public final class DataManager {
         }
     }
 
-    public static Bitmap getUserImage(SharedPreferences prefs, int id){
+    public static Bitmap getUserImage(SharedPreferences prefs, int id) {
         byte[] array = Base64.decode(prefs.getString(USERIMAGEKEY + id, ""), Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(array, 0, array.length);
     }
 
-    public static Bitmap getBeerImage(SharedPreferences prefs, String name){
+    public static Bitmap getBeerImage(SharedPreferences prefs, String name) {
         byte[] array = Base64.decode(prefs.getString(BEERIMAGEKEY + name, ""), Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(array, 0, array.length);
     }
 
-    public static int usernameToID(SharedPreferences prefs, String name){
+    public static int usernameToID(SharedPreferences prefs, String name) {
         JSONArray userJSON;
         int returnv = -1;
         try {
             if ((userJSON = getJsonArray(prefs, USERKEY)) != null) {
                 for (int i = 0; i < userJSON.length(); i++) {
-                    if(userJSON.getJSONObject(i).getString("name").equals(name)){
+                    if (userJSON.getJSONObject(i).getString("name").equals(name)) {
                         returnv = userJSON.getJSONObject(i).getInt("id");
                     }
                 }

@@ -2,10 +2,7 @@ package nl.ecci.Hamers.Beers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,9 +52,9 @@ public class BeersAdapter extends ArrayAdapter<Beer> {
         info.setText(itemsArrayList.get(position).getCountry() + " - " + itemsArrayList.get(position).getPercentage() + "%");
 
         // 5. set image
-        prefs =  PreferenceManager.getDefaultSharedPreferences(context);
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
         picture.setImageBitmap(DataManager.getBeerImage(prefs, itemsArrayList.get(position).getName()));
-        
+
         return rowView;
     }
 }

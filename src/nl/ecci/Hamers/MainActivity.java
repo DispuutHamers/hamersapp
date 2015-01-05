@@ -18,11 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-import nl.ecci.Hamers.Beers.*;
+import nl.ecci.Hamers.Beers.BeerFragment;
+import nl.ecci.Hamers.Beers.NewBeerActivity;
 import nl.ecci.Hamers.Events.EventFragment;
 import nl.ecci.Hamers.Events.NewEventActivity;
-import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.Helpers.DataManager;
+import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.Quotes.NewQuoteFragment;
 import nl.ecci.Hamers.Quotes.QuoteListFragment;
 import nl.ecci.Hamers.Users.UserFragment;
@@ -33,12 +34,6 @@ import java.text.SimpleDateFormat;
 
 
 public class MainActivity extends ActionBarActivity {
-    // Drawer list
-    private String[] mDrawerItems;
-    private ListView mDrawerList;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-
     // Fragments
     QuoteListFragment quoteListFragment = new QuoteListFragment();
     UserFragment userFragment = new UserFragment();
@@ -46,6 +41,24 @@ public class MainActivity extends ActionBarActivity {
     BeerFragment beerFragment = new BeerFragment();
     MotionFragment motionFragment = new MotionFragment();
     SettingsFragment settingsFragment = new SettingsFragment();
+    // Drawer list
+    private String[] mDrawerItems;
+    private ListView mDrawerList;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    /**
+     * Parse date
+     *
+     * @param dateTemp
+     * @return String with parsed date
+     * @throws ParseException
+     */
+    public static String parseDate(String dateTemp) throws ParseException {
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+        return outputFormat.format(inputFormat.parse(dateTemp));
+    }
 
     /**
      * Called when the activity is first created.
@@ -120,14 +133,6 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 
-    /* The click listener for ListView in the navigation drawer */
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
-    }
-
     /**
      * Loads all the data on startup.
      * It starts with loading the users and afterwards it calls loaddata2, which downloads the other data.
@@ -143,13 +148,13 @@ public class MainActivity extends ActionBarActivity {
                 GetJson g = new GetJson(this, userFragment, GetJson.USERURL, prefs, true);
                 g.execute();
             }
-        }else{
+        } else {
             showApiKeyDialog();
         }
     }
 
     //Show the dialog for entering the apikey on startup
-    private void showApiKeyDialog(){
+    private void showApiKeyDialog() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         Activity a = this;
         alert.setTitle(getString(R.string.apikeydialogtitle));
@@ -178,12 +183,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
     //Show a toast with the supplied text and the supplied length
-    private void showToast(String text, int length){
+    private void showToast(String text, int length) {
         Toast.makeText(this, text, length).show();
     }
 
     //Stores this key value pair in memory
-    private void storeInMemory(String key, String value){
+    private void storeInMemory(String key, String value) {
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString(key, value).apply();
     }
 
@@ -216,6 +221,7 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * Swaps fragments in the quote_list_menu content view
+     *
      * @param position
      */
     private void selectItem(int position) {
@@ -274,6 +280,7 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment
+     *
      * @param item
      */
     public void newQuote(MenuItem item) {
@@ -283,6 +290,7 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * When user presses "+" in EventFragment, start new dialog with NewEventActivity
+     *
      * @param item
      */
     public void newEvent(MenuItem item) {
@@ -292,6 +300,7 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * When user presses "+" in BeerFragment, start new dialog with NewBeerActivity
+     *
      * @param item
      */
     public void newBeer(MenuItem item) {
@@ -299,15 +308,11 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    /**
-     * Parse date
-     * @param dateTemp
-     * @return String with parsed date
-     * @throws ParseException
-     */
-    public static String parseDate(String dateTemp) throws ParseException {
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
-        return outputFormat.format(inputFormat.parse(dateTemp));
+    /* The click listener for ListView in the navigation drawer */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
     }
 }

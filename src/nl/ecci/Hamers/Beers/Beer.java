@@ -21,7 +21,9 @@ public class Beer {
         this.country = country;
     }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -35,9 +37,15 @@ public class Beer {
         return pictureURL;
     }
 
-    public String getPercentage() { return percentage; }
+    public String getPercentage() {
+        return percentage;
+    }
 
-    public String getBrewer() { return brewer; }
+    public String getBrewer() {
+        return brewer;
+    }
 
-    public String getCountry() { return country; }
+    public String getCountry() {
+        return country;
+    }
 }

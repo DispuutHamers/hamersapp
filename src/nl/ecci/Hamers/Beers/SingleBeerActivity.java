@@ -56,7 +56,7 @@ public class SingleBeerActivity extends ActionBarActivity {
         // reviewadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, bla);
         reviews_list.setAdapter(reviewadapter);
 
-        prefs =  PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         beerImage.setImageBitmap(DataManager.getBeerImage(prefs, name));
 
         nameTV.setText(name);
@@ -79,6 +79,7 @@ public class SingleBeerActivity extends ActionBarActivity {
     /**
      * Called when the user clicks the button to create a new beerreview,
      * starts NewBeerActivity.
+     *
      * @param view
      */
     public void createReview(View view) {

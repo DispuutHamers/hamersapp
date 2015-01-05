@@ -15,8 +15,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import nl.ecci.Hamers.Helpers.DataManager;
-import nl.ecci.Hamers.R;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
+import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -72,7 +72,7 @@ public class NewQuoteFragment extends DialogFragment {
     private void createUserList() {
         JSONArray userJSON;
         try {
-            if ((userJSON = DataManager.getJsonArray(prefs, DataManager.USERKEY )) != null) {
+            if ((userJSON = DataManager.getJsonArray(prefs, DataManager.USERKEY)) != null) {
                 for (int i = 0; i < userJSON.length(); i++) {
                     users.add(userJSON.getJSONObject(i).getString("name"));
                 }

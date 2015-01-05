@@ -27,5 +27,7 @@ public class Quote {
         return user;
     }
 
-    public int getUserID() { return userID; }
+    public int getUserID() {
+        return userID;
+    }
 }

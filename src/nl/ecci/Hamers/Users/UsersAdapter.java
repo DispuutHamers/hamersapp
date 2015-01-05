@@ -51,7 +51,7 @@ public class UsersAdapter extends ArrayAdapter<User> {
         reviewcount.setText("Aantal reviews: " + itemsArrayList.get(position).getReviewcount());
 
         // Image
-        prefs =  PreferenceManager.getDefaultSharedPreferences(context);
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
         byte[] array = Base64.decode(prefs.getString("userpic-" + itemsArrayList.get(position).getUserID(), ""), Base64.DEFAULT);
         Bitmap bmp = BitmapFactory.decodeByteArray(array, 0, array.length);
         ImageView userImage = (ImageView) rowView.findViewById(R.id.user_image);

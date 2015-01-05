@@ -3,8 +3,6 @@ package nl.ecci.Hamers;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.preference.PreferenceFragment;
-import nl.ecci.Hamers.MainActivity;
-import nl.ecci.Hamers.R;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override

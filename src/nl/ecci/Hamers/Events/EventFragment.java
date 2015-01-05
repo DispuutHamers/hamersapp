@@ -8,8 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.*;
 import android.widget.*;
-import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.Helpers.DataManager;
+import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,9 +57,9 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
                         JSONArray signups = e.getJSONArray("signups");
 
-                        for(int i = 0; i < signups.length(); i++){
+                        for (int i = 0; i < signups.length(); i++) {
                             JSONObject signup = signups.getJSONObject(i);
-                            if(signup.getBoolean("status") == true) {
+                            if (signup.getBoolean("status") == true) {
                                 aanwezig.add(DataManager.getUser(prefs, signup.getInt("user_id")).getString("name"));
                             } else {
                                 afwezig.add(DataManager.getUser(prefs, signup.getInt("user_id")).getString("name"));

@@ -12,8 +12,8 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.Helpers.DataManager;
+import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +26,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     ArrayList<User> listItems = new ArrayList<User>();
     ArrayAdapter<User> adapter;
     SwipeRefreshLayout swipeView;
+
     public UserFragment() {
         // Empty constructor required for fragment subclasses
     }
@@ -80,10 +81,10 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void populateList(SharedPreferences prefs) {
         JSONArray json;
         try {
-        if ((json = DataManager.getJsonArray(prefs, DataManager.USERKEY)) != null) {
-            listItems.clear();
-            for (int i = 0; i < json.length(); i++) {
-                JSONObject temp;
+            if ((json = DataManager.getJsonArray(prefs, DataManager.USERKEY)) != null) {
+                listItems.clear();
+                for (int i = 0; i < json.length(); i++) {
+                    JSONObject temp;
                     temp = json.getJSONObject(i);
                     User tempUser = new User(temp.getString("name"), temp.getInt("id"), temp.getInt("quotes"), temp.getInt("reviews"));
                     listItems.add(tempUser);

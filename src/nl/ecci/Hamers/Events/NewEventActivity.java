@@ -67,6 +67,7 @@ public class NewEventActivity extends ActionBarActivity {
 
     /**
      * Posts event
+     *
      * @param v
      */
     public void postEvent(View v) {
@@ -116,9 +117,9 @@ public class NewEventActivity extends ActionBarActivity {
         int eventDeadlineYear = Integer.parseInt(deadlineDateParts[2]);
 
         String arguments = "&event[title]=" + title + "&event[beschrijving]=" + description
-                            + "&event[end_time(5i)]=" + eventEndMinutes + "&event[end_time(4i)]=" + eventEndHour + "&event[end_time(3i)]=" + eventEndDay + "&event[end_time(2i)]=" + eventEndMonth + "&event[end_time(1i)]=" + eventEndYear
-                            + "&event[deadline(5i)]=" + eventDeadlineMinutes + "&event[deadline(4i)]=" + eventDeadlineHour + "&event[deadline(3i)]="  + eventDeadlineDay + "&event[deadline(2i)]=" + eventDeadlineMonth + "&event[deadline(1i)]=" + eventDeadlineYear
-                            + "&event[date(5i)]=" + eventStartMinutes + "&event[date(4i)]="  + eventStartHour + "&event[date(3i)]=" + eventStartDay + "&event[date(2i)]="+ eventStartMonth + "&event[date(1i)]=" + eventStartYear;
+                + "&event[end_time(5i)]=" + eventEndMinutes + "&event[end_time(4i)]=" + eventEndHour + "&event[end_time(3i)]=" + eventEndDay + "&event[end_time(2i)]=" + eventEndMonth + "&event[end_time(1i)]=" + eventEndYear
+                + "&event[deadline(5i)]=" + eventDeadlineMinutes + "&event[deadline(4i)]=" + eventDeadlineHour + "&event[deadline(3i)]=" + eventDeadlineDay + "&event[deadline(2i)]=" + eventDeadlineMonth + "&event[deadline(1i)]=" + eventDeadlineYear
+                + "&event[date(5i)]=" + eventStartMinutes + "&event[date(4i)]=" + eventStartHour + "&event[date(3i)]=" + eventStartDay + "&event[date(2i)]=" + eventStartMonth + "&event[date(1i)]=" + eventStartYear;
 
         System.out.println("Arguments: " + arguments);
         SendPostRequest req = new SendPostRequest(this, SendPostRequest.EVENTUTL, PreferenceManager.getDefaultSharedPreferences(this), arguments);

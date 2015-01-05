@@ -49,7 +49,7 @@ public class QuotesAdapter extends ArrayAdapter<Quote> {
         user.setText(itemsArrayList.get(position).getUser());
 
         // Image
-        prefs =  PreferenceManager.getDefaultSharedPreferences(context);
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
         ImageView userImage = (ImageView) rowView.findViewById(R.id.quote_image);
         userImage.setImageBitmap(DataManager.getUserImage(prefs, itemsArrayList.get(position).getUserID()));
 

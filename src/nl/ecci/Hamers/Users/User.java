@@ -27,5 +27,7 @@ public class User {
         return quotecount;
     }
 
-    public int getReviewcount() { return reviewcount; }
+    public int getReviewcount() {
+        return reviewcount;
+    }
 }
