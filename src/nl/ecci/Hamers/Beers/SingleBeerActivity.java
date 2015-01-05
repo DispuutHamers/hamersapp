@@ -13,8 +13,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.R;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import static nl.ecci.Hamers.Helpers.DataManager.getJsonArray;
 
 public class SingleBeerActivity extends ActionBarActivity {
     int id;
@@ -24,8 +29,8 @@ public class SingleBeerActivity extends ActionBarActivity {
     String brewer;
     String country;
     SharedPreferences prefs;
-    ArrayList<String> reviews;
-    ArrayAdapter<String> reviewadapter;
+    ArrayList<Review> reviewItems = new ArrayList<Review>();
+    ArrayAdapter<Review> adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
