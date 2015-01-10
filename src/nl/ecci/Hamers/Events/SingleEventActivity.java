@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class SingleEventActivity extends ActionBarActivity {
+    int id;
     String title;
     String beschrijving;
     String date;
@@ -39,6 +40,8 @@ public class SingleEventActivity extends ActionBarActivity {
         ListView afwezig_list = (ListView) findViewById(R.id.event_afwezig);
 
         Bundle extras = getIntent().getExtras();
+
+        id = extras.getInt("id");
 
         aanwezigItems = getIntent().getStringArrayListExtra("aanwezig");
         afwezigItems = getIntent().getStringArrayListExtra("afwezig");
@@ -72,14 +75,14 @@ public class SingleEventActivity extends ActionBarActivity {
     }
 
     public void setAanwezig(View view) {
-        // Do something in response to button click
+        postSignup(id, "true");
     }
 
     public void setAfwezig(View view) {
-        // Do something in response to button click
+        postSignup(id, "false");
     }
 
-    private void postSignup( String eventid, String status) {
+    private void postSignup(int eventid, String status) {
         SendPostRequest req = new SendPostRequest(this, SendPostRequest.SIGNUPURL, PreferenceManager.getDefaultSharedPreferences(this), "signup[event_id]=" + eventid + "&signup[status]=" + status) ;
         req.execute();
     }

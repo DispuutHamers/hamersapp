@@ -48,6 +48,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 if (e != null) {
                     try {
                         Intent intent = new Intent(getActivity(), SingleEventActivity.class);
+                        intent.putExtra("id", e.getInt("id"));
                         intent.putExtra("title", e.getString("title"));
                         intent.putExtra("beschrijving", e.getString("beschrijving"));
                         intent.putExtra("date", e.getString("date"));
@@ -128,7 +129,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
                         String finalDate = parseDate(temp.getString("date").substring(0, 10));
 
-                        Event tempEvent = new Event(temp.getString("title").toString(), temp.getString("beschrijving").toString(), finalDate, temp.getString("end_time"));
+                        Event tempEvent = new Event(temp.getInt("id"), temp.getString("title").toString(), temp.getString("beschrijving").toString(), finalDate, temp.getString("end_time"));
                         listItems.add(tempEvent);
                         if (adapter != null) {
                             adapter.notifyDataSetChanged();
