@@ -172,11 +172,6 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
-        alert.setNegativeButton(getString(R.string.dialog_negative), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                showToast(getResources().getString(R.string.toast_storekeymemory), Toast.LENGTH_LONG);
-            }
-        });
         alert.show();
     }
 
