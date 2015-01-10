@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:hamers="http://schemas.android.com/apk/res-auto">
+      <item android:id="@+id/beer_search"
+            android:title="@string/action_search_beer"
+            android:icon="@drawable/ic_action_search"
+            hamers:showAsAction="ifRoom|withText"
+            android:visible="false"
+            android:actionViewClass="android.widget.SearchView"/>
+      <item android:id="@+id/action_new_beer"
+          android:icon="@drawable/ic_action_new"
+          android:title="@string/action_new_beer"
+          hamers:showAsAction="ifRoom|withText"
+          android:onClick="newBeer"/>
+</menu>

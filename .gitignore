@@ -54,6 +54,8 @@ IOS/www/
 .gradle
 build/
 *.iml
+proguard_logs
+atlassian-ide-plugin.xml
 
 # TEMPFILES
 *~*

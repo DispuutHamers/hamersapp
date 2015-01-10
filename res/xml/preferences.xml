@@ -3,7 +3,7 @@
                   android:orientation="vertical"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
-    <PreferenceCategory
+<!--    <PreferenceCategory
             android:title="@string/pushnotifications">
         <CheckBoxPreference
                 android:id="@+id/pushnotification"
@@ -13,7 +13,7 @@
                 android:summaryOn="@string/pref_summaryOn"
                 android:summaryOff="@string/pref_summaryOff"/>
         </PreferenceCategory>
-
+-->
     <PreferenceCategory
         android:title="@string/apikey_category">
         <EditTextPreference

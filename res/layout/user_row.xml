@@ -28,8 +28,9 @@
             android:layout_alignWithParentIfMissing="true"
             android:layout_toRightOf="@id/user_image"
             android:gravity="left"
-            android:text="Dit is een keigoeie quote (testing purposes)"
-            android:textSize="18sp"/>
+            android:text="User (testing purposes)"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
     <TextView
             android:id="@+id/user_quotecount"
@@ -37,8 +38,11 @@
             android:layout_height="16dp"
             android:singleLine="true"
             android:text="Quotes: 0"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="2dp"
             android:textSize="14sp"
             android:gravity="right"
+            android:layout_toRightOf="@+id/user_image"
             android:layout_above="@+id/user_reviewcount"
             android:layout_alignRight="@+id/user_reviewcount"
             android:layout_alignEnd="@+id/user_reviewcount"
@@ -48,17 +52,16 @@
             android:id="@+id/user_reviewcount"
             android:layout_width="fill_parent"
             android:layout_height="16dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@id/user_image"
-            android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginBottom="2dp"
             android:ellipsize="marquee"
             android:singleLine="true"
             android:text="Reviews: 0"
             android:textSize="14sp"
             android:gravity="right"
+            android:paddingRight="2dp"
+            android:layout_marginBottom="4dp"
+            android:layout_alignBottom="@+id/username"
+            android:layout_toRightOf="@+id/user_image"
+            android:layout_toEndOf="@+id/user_image"
             android:textStyle="italic"/>
 
 </RelativeLayout> 

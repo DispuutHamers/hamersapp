@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="refresh_button" type="id"/>
+    <item name="quote_search" type="id"/>
 
     <!-- Quotes -->
     <item name="new_quote" type="id"/>
@@ -27,5 +27,8 @@
     <item name="beer_info" type="id"/>
 
     <item name="pushnotification" type="id"/>
+
+    <item name="pick_date_button" type="id"/>
+    <item name="end_time_button" type="id"/>
 
 </resources>
