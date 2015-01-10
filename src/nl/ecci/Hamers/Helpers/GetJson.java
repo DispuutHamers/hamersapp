@@ -45,22 +45,22 @@ public class GetJson extends AsyncTask<String, String, String> {
         this.firstload = firstload;
     }
 
-    public void setBeerPictureDownload(){
+    public void setBeerPictureDownload() {
         downloadBeerPicturesBool = true;
     }
 
-    public void setUserPictureDownload(){
+    public void setUserPictureDownload() {
         downloadUserPicturesBool = true;
     }
 
     protected String doInBackground(String... params) {
         BufferedReader reader;
         StringBuffer buffer = new StringBuffer();
-        if(downloadBeerPicturesBool){
+        if (downloadBeerPicturesBool) {
             downloadBeerpictures(DataManager.getJsonArray(prefs, DataManager.BEERKEY));
-        }else if(downloadUserPicturesBool){
+        } else if (downloadUserPicturesBool) {
             downloadProfilepictures(DataManager.getJsonArray(prefs, DataManager.USERKEY));
-        }else {
+        } else {
             try {
                 URL url = new URL(baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + typeURL);
                 reader = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -90,50 +90,63 @@ public class GetJson extends AsyncTask<String, String, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        if(firstload && result == null){
-            ((MainActivity) a).loadData2(prefs, false);
-        }else {
-            if (firstload && a instanceof MainActivity) {
-                ((MainActivity) a).loadData2(prefs, true);
+        if (result == null) {
+            if (firstload) {
+                ((MainActivity) a).loadData2(prefs, false);
             }
-            if ((!downloadUserPicturesBool && !downloadBeerPicturesBool) && (result == null || result.equals("{}"))) {
-                Toast.makeText(a, a.getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
-            } else {
-                // Quotelist fragment
-                if (f instanceof QuoteListFragment) {
-                    prefs.edit().putString(DataManager.QUOTEKEY, result).apply();
-                    ((QuoteListFragment) f).populateList(prefs);
+        } else {
+            try {
+                JSONArray arr = new JSONArray(result);
+                if(arr.getJSONObject(0).has("error")){
+                    ((MainActivity) a).loadData2(prefs, false);
                 }
-                // User fragment
-                else if (f instanceof UserFragment) {
-                    if(!downloadUserPicturesBool) {
-                        prefs.edit().putString(DataManager.USERKEY, result).apply();
-                        GetJson g = new GetJson(a, f, USERURL, prefs, false);
-                        g.setUserPictureDownload();
-                        g.execute();
+                if (firstload && a instanceof MainActivity) {
+                    ((MainActivity) a).loadData2(prefs, true);
+                }
+                if ((!downloadUserPicturesBool && !downloadBeerPicturesBool) && (result == null || result.equals("{}"))) {
+                    Toast.makeText(a, a.getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
+                } else {
+                    // Quotelist fragment
+                    if (f instanceof QuoteListFragment) {
+                        prefs.edit().putString(DataManager.QUOTEKEY, result).apply();
+                        ((QuoteListFragment) f).populateList(prefs);
                     }
-                    ((UserFragment) f).populateList(prefs);
-                }
-                // Event fragment
-                else if (f instanceof EventFragment) {
-                    prefs.edit().putString(DataManager.EVENTKEY, result).apply();
-                    ((EventFragment) f).populateList(prefs);
-                }
-                // Beer fragment
-                else if (f instanceof BeerFragment) {
-                    if(!downloadBeerPicturesBool) {
-                        prefs.edit().putString(DataManager.BEERKEY, result).apply();
-                        GetJson g = new GetJson(a, f, BEERURL, prefs, false);
-                        g.setBeerPictureDownload();
-                        g.execute();
-                        GetJson g2 = new GetJson(a, null, REVIEWURL, prefs,false);
-                        g2.execute();
+                    // User fragment
+                    else if (f instanceof UserFragment) {
+                        if (!downloadUserPicturesBool) {
+                            prefs.edit().putString(DataManager.USERKEY, result).apply();
+                            GetJson g = new GetJson(a, f, USERURL, prefs, false);
+                            g.setUserPictureDownload();
+                            g.execute();
+                        }
+                        ((UserFragment) f).populateList(prefs);
                     }
-                    ((BeerFragment) f).populateList(prefs);
-                }else if (typeURL.equals(REVIEWURL)){
-                    System.out.println("----------------------------------------------------");
-                    System.out.println(result);
-                    prefs.edit().putString(DataManager.REVIEWKEY, result).apply();
+                    // Event fragment
+                    else if (f instanceof EventFragment) {
+                        prefs.edit().putString(DataManager.EVENTKEY, result).apply();
+                        ((EventFragment) f).populateList(prefs);
+                    }
+                    // Beer fragment
+                    else if (f instanceof BeerFragment) {
+                        if (!downloadBeerPicturesBool) {
+                            prefs.edit().putString(DataManager.BEERKEY, result).apply();
+                            GetJson g = new GetJson(a, f, BEERURL, prefs, false);
+                            g.setBeerPictureDownload();
+                            g.execute();
+                            GetJson g2 = new GetJson(a, null, REVIEWURL, prefs, false);
+                            g2.execute();
+                        }
+                        ((BeerFragment) f).populateList(prefs);
+                    } else if (typeURL.equals(REVIEWURL)) {
+                        System.out.println("----------------------------------------------------");
+                        System.out.println(result);
+                        prefs.edit().putString(DataManager.REVIEWKEY, result).apply();
+                    }
+                }
+
+            } catch (JSONException e) {
+                if(firstload){
+                   ((MainActivity) a).loadData2(prefs, false);
                 }
             }
         }
@@ -141,7 +154,7 @@ public class GetJson extends AsyncTask<String, String, String> {
 
 
     private void downloadProfilepictures(JSONArray users) {
-        for (int i = 0; i < users.length(); i++) {
+        for (int i = 0; users != null && i < users.length(); i++) {
             try {
                 if (DEBUG) {
                     System.out.println("downloading user picture " + i);
@@ -173,7 +186,7 @@ public class GetJson extends AsyncTask<String, String, String> {
     }
 
     private void downloadBeerpictures(JSONArray beers) {
-        for (int i = 0; i < beers.length(); i++) {
+        for (int i = 0; beers != null && i < beers.length(); i++) {
             try {
                 if (DEBUG) {
                     System.out.println("downloading beer picture " + i);
