@@ -7,7 +7,7 @@
             android:visible="false"
             android:actionViewClass="android.widget.SearchView"/>
       <item android:id="@+id/action_new_beer"
-          android:icon="@drawable/ic_action_new"
+          android:icon="@drawable/action_add"
           android:title="@string/action_new_beer"
           hamers:showAsAction="ifRoom|withText"
           android:onClick="newBeer"/>
