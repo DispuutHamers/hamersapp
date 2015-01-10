@@ -15,8 +15,12 @@ import nl.ecci.Hamers.Helpers.SendPostRequest;
 import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.R;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import static nl.ecci.Hamers.MainActivity.parseDate;
 
@@ -25,6 +29,7 @@ public class SingleEventActivity extends ActionBarActivity {
     String title;
     String beschrijving;
     String date;
+    Date datum;
     ArrayList<String> aanwezigItems = new ArrayList<String>();
     ArrayList<String> afwezigItems = new ArrayList<String>();
     ArrayAdapter<String> aanwezigAdapter;
@@ -38,6 +43,7 @@ public class SingleEventActivity extends ActionBarActivity {
 
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
         TextView titleTV = (TextView) findViewById(R.id.event_title);
         TextView beschrijvingTV = (TextView) findViewById(R.id.event_beschrijving);
         TextView dateTV = (TextView) findViewById(R.id.event_date);
@@ -58,15 +64,30 @@ public class SingleEventActivity extends ActionBarActivity {
 
         title = extras.getString("title");
         beschrijving = extras.getString("beschrijving");
+
+        String newDateString = null;
         try {
             date = parseDate(extras.getString("date"));
+            DateFormat df = new SimpleDateFormat("dd MMM yyyy");
+            datum = df.parse(date);
+            newDateString = df.format(datum);
+
+
+            DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+            Date today = new Date();
+            System.out.println(dateFormat.format(today));
+
+            if(today.after(datum)) {
+                buttonLayout.setVisibility(View.INVISIBLE);
+            }
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         titleTV.setText(title);
         beschrijvingTV.setText(beschrijving);
-        dateTV.setText(date);
+        dateTV.setText(newDateString);
     }
 
     @Override
