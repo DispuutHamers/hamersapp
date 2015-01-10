@@ -69,16 +69,6 @@ public class SingleEventActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onToggleClicked(View view) {
-        boolean on = ((Switch) view).isChecked();
-
-        if (on) {
-            Toast.makeText(this, "ON JONGUH!",Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "OFF JONGUH!",Toast.LENGTH_SHORT).show();
-        }
-    }
-
     public void setAanwezig(View view) {
         // Do something in response to button click
     }
