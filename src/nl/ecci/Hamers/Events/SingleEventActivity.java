@@ -1,11 +1,13 @@
 package nl.ecci.Hamers.Events;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import nl.ecci.Hamers.Helpers.SendPostRequest;
 import nl.ecci.Hamers.R;
 
 import java.text.ParseException;
@@ -87,5 +89,10 @@ public class SingleEventActivity extends ActionBarActivity {
         } else {
             Toast.makeText(this, "OFF JONGUH!",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void postSignup( String eventid, String status) {
+        SendPostRequest req = new SendPostRequest(this, SendPostRequest.SIGNUPURL, PreferenceManager.getDefaultSharedPreferences(this), "signup[event_id]=" + eventid + "&signup[status]=" + status) ;
+        req.execute();
     }
 }
