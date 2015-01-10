@@ -1,13 +1,18 @@
 package nl.ecci.Hamers.Events;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
+import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.R;
 
 import java.text.ParseException;
@@ -85,5 +90,7 @@ public class SingleEventActivity extends ActionBarActivity {
     private void postSignup(int eventid, String status) {
         SendPostRequest req = new SendPostRequest(this, SendPostRequest.SIGNUPURL, PreferenceManager.getDefaultSharedPreferences(this), "signup[event_id]=" + eventid + "&signup[status]=" + status) ;
         req.execute();
+        this.finish();
     }
+
 }

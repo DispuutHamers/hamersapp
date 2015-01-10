@@ -42,7 +42,7 @@ public class MainActivity extends ActionBarActivity {
     // Fragments
     QuoteListFragment quoteListFragment = new QuoteListFragment();
     UserFragment userFragment = new UserFragment();
-    EventFragment eventFragment = new EventFragment();
+    public EventFragment eventFragment = new EventFragment();
     BeerFragment beerFragment = new BeerFragment();
     MotionFragment motionFragment = new MotionFragment();
     SettingsFragment settingsFragment = new SettingsFragment();

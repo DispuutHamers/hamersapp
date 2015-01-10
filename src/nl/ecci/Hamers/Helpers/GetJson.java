@@ -8,6 +8,7 @@ import android.util.Base64;
 import android.widget.Toast;
 import nl.ecci.Hamers.Beers.BeerFragment;
 import nl.ecci.Hamers.Events.EventFragment;
+import nl.ecci.Hamers.Events.SingleEventActivity;
 import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.Quotes.QuoteListFragment;
 import nl.ecci.Hamers.R;
@@ -97,7 +98,7 @@ public class GetJson extends AsyncTask<String, String, String> {
         } else {
             try {
                 JSONArray arr = new JSONArray(result);
-                if(arr.getJSONObject(0).has("error")){
+                if (arr.getJSONObject(0).has("error")) {
                     ((MainActivity) a).loadData2(prefs, false);
                 }
                 if (firstload && a instanceof MainActivity) {
@@ -106,7 +107,6 @@ public class GetJson extends AsyncTask<String, String, String> {
                 if ((!downloadUserPicturesBool && !downloadBeerPicturesBool) && (result == null || result.equals("{}"))) {
                     Toast.makeText(a, a.getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
                 } else {
-                    // Quotelist fragment
                     if (f instanceof QuoteListFragment) {
                         prefs.edit().putString(DataManager.QUOTEKEY, result).apply();
                         ((QuoteListFragment) f).populateList(prefs);
@@ -145,8 +145,8 @@ public class GetJson extends AsyncTask<String, String, String> {
                 }
 
             } catch (JSONException e) {
-                if(firstload){
-                   ((MainActivity) a).loadData2(prefs, false);
+                if (firstload) {
+                    ((MainActivity) a).loadData2(prefs, false);
                 }
             }
         }
