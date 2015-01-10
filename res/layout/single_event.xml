@@ -17,14 +17,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:text="@string/event_aanwezig_button"/>
+                android:text="@string/event_aanwezig_button"
+                android:onClick="setAanwezig"/>
         <Button
                 android:id="@+id/afwezig_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:text="@string/event_afwezig_button"/>
+                android:text="@string/event_afwezig_button"
+                android:onClick="setAfwezig"/>
     </LinearLayout>
     <ScrollView
             android:id="@+id/single_event_scrollview"

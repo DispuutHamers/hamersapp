@@ -36,16 +36,6 @@ public class SingleEventActivity extends ActionBarActivity {
         ListView aanwezig_list = (ListView) findViewById(R.id.event_aanwezig);
         ListView afwezig_list = (ListView) findViewById(R.id.event_afwezig);
 
-        // Swiper
-        final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) findViewById(R.id.single_event_swipe_container);
-        swipeView.setColorSchemeResources(android.R.color.holo_red_light);
-        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Doe meuk
-            }
-        });
-
         Bundle extras = getIntent().getExtras();
 
         aanwezigItems = getIntent().getStringArrayListExtra("aanwezig");
@@ -87,5 +77,13 @@ public class SingleEventActivity extends ActionBarActivity {
         } else {
             Toast.makeText(this, "OFF JONGUH!",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void setAanwezig(View view) {
+        // Do something in response to button click
+    }
+
+    public void setAfwezig(View view) {
+        // Do something in response to button click
     }
 }
