@@ -18,7 +18,7 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
     public static final String BEERURL = "/beer";
     public static final String MOTIEURL = "/motions";
     public static final String REVIEWURL = "/review";
-    private static final String baseurl = "http://zondersikkel.nl/api/v1/";
+    private static final String baseurl = "https://zondersikkel.nl/api/v1/";
     private SharedPreferences prefs;
     private String type;
     private String urlParams;

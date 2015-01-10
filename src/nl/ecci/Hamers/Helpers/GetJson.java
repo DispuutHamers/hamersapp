@@ -21,7 +21,7 @@ import java.net.URL;
 
 public class GetJson extends AsyncTask<String, String, String> {
     private static final boolean DEBUG = false;
-    public static final String baseURL = "http://zondersikkel.nl/api/v1/";
+    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
     public static final String QUOTEURL = "/quote.json";
     public static final String USERURL = "/user.json";
     public static final String EVENTURL = "/event.json";
