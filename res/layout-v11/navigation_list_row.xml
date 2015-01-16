@@ -4,6 +4,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:padding="5dip"
+                android:minHeight="@dimen/abc_action_bar_default_height_material"
                 android:background="?android:attr/activatedBackgroundIndicator">
         <ImageView
                 android:id="@+id/imageImageView"
@@ -24,8 +25,7 @@
                         android:id="@+id/titleTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
-                        android:text="aa"
+                        android:textColor="@android:color/white"
                         android:textAppearance="?android:attr/textAppearanceMedium"/>
         </LinearLayout>
 </RelativeLayout>

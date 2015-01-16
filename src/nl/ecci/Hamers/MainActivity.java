@@ -17,12 +17,16 @@ import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
-import nl.ecci.Hamers.Beers.*;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+import nl.ecci.Hamers.Beers.BeerFragment;
+import nl.ecci.Hamers.Beers.NewBeerActivity;
 import nl.ecci.Hamers.Events.EventFragment;
 import nl.ecci.Hamers.Events.NewEventActivity;
-import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.Helpers.DataManager;
+import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.Quotes.NewQuoteFragment;
 import nl.ecci.Hamers.Quotes.QuoteListFragment;
 import nl.ecci.Hamers.Users.UserFragment;
@@ -99,8 +103,9 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
+        System.out.println("BLA");
+
         // Set the adapter for the list view
-        //mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerItems));
         mDrawerList.setAdapter(new NavigationDrawerAdapter(this, mDrawerItems));
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
