@@ -84,13 +84,16 @@ public class SingleBeerActivity extends ActionBarActivity {
                 for (int i = 0; i < reviews.length(); i++) {
                     JSONObject review = reviews.getJSONObject(i);
                     if (review.getInt("beer_id") == id) {
-                        System.out.println("DESCRIPTION: " + review.getString("description"));
-                        Review tempReview = new Review(review.getInt("beer_id"), review.getInt("user_id"), review.getString("description"), review.getInt("rating"), review.getString("created_at"), review.getString("proefdatum"));
+                        System.out.println("DESCRIPTION: " + review.getString("description").replace("\n", "").replace("\r", ""));
+
+                        // Remove endlines from description
+                        String description = review.getString("description").replace("\n", "").replace("\r", "");
+                        Review tempReview = new Review(review.getInt("beer_id"), review.getInt("user_id"), description, review.getInt("rating"), review.getString("created_at"), review.getString("proefdatum"));
                         reviewItems.add(tempReview);
-                        if (adapter != null) {
-                            adapter.notifyDataSetChanged();
-                        }
                     }
+                }
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
                 }
             }
         } catch (JSONException e) {

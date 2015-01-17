@@ -60,6 +60,7 @@
                     android:id="@+id/event_aanwezig"
                     android:drawSelectorOnTop="false"
                     android:listSelector="@android:color/transparent"
+                    android:scrollbars="none"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"/>
             <TextView
@@ -79,6 +80,7 @@
                     android:id="@+id/event_afwezig"
                     android:drawSelectorOnTop="false"
                     android:listSelector="@android:color/transparent"
+                    android:scrollbars="none"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"/>
         </LinearLayout>
