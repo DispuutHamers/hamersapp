@@ -1,18 +1,13 @@
 package nl.ecci.Hamers.Events;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
-import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.R;
 
 import java.text.DateFormat;
@@ -20,16 +15,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
-
-import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class SingleEventActivity extends ActionBarActivity {
     int id;
     String title;
     String beschrijving;
     String date;
-    Date datum;
+    Date dbDatum;
     ArrayList<String> aanwezigItems = new ArrayList<String>();
     ArrayList<String> afwezigItems = new ArrayList<String>();
     ArrayAdapter<String> aanwezigAdapter;
@@ -43,7 +35,11 @@ public class SingleEventActivity extends ActionBarActivity {
 
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        RelativeLayout rootLayout = (RelativeLayout) findViewById(R.id.single_event_root);
         LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
+        Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
+        Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
+
         TextView titleTV = (TextView) findViewById(R.id.event_title);
         TextView beschrijvingTV = (TextView) findViewById(R.id.event_beschrijving);
         TextView dateTV = (TextView) findViewById(R.id.event_date);
@@ -65,29 +61,31 @@ public class SingleEventActivity extends ActionBarActivity {
         title = extras.getString("title");
         beschrijving = extras.getString("beschrijving");
 
-        String newDateString = null;
+        String appDatum = null;
         try {
-            date = parseDate(extras.getString("date"));
-            DateFormat df = new SimpleDateFormat("dd MMM yyyy");
-            datum = df.parse(date);
-            newDateString = df.format(datum);
-
-
-            DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+            // Current date
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
             Date today = new Date();
-            System.out.println(dateFormat.format(today));
 
-            if(today.after(datum)) {
-                buttonLayout.setVisibility(View.INVISIBLE);
+            // Event date
+            date = extras.getString("date");
+            DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+            DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss");
+            dbDatum = dbDF.parse(date);
+            appDatum = appDF.format(dbDatum);
+
+            if(today.after(dbDatum)) {
+                aanwezigButton.setVisibility(View.INVISIBLE);
+                afwezigButton.setVisibility(View.INVISIBLE);
+                rootLayout.removeView(buttonLayout);
             }
-
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         titleTV.setText(title);
         beschrijvingTV.setText(beschrijving);
-        dateTV.setText(newDateString);
+        dateTV.setText(appDatum);
     }
 
     @Override

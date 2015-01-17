@@ -103,8 +103,6 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        System.out.println("BLA");
-
         // Set the adapter for the list view
         mDrawerList.setAdapter(new NavigationDrawerAdapter(this, mDrawerItems));
         // Set the list's click listener
