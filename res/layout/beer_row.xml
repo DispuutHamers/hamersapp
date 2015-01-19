@@ -25,7 +25,8 @@
             android:layout_toRightOf="@id/beer_picture"
             android:gravity="left"
             android:text="Dit is een duizendlekker bier (testing purposes)"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="@android:color/primary_text_light"/>
 
     <TextView
             android:id="@+id/beer_soort"
@@ -38,7 +39,8 @@
             android:gravity="left"
             android:layout_below="@+id/beer_name"
             android:layout_toRightOf="@+id/beer_picture"
-            android:layout_toEndOf="@+id/beer_picture"/>
+            android:layout_toEndOf="@+id/beer_picture"
+            android:textColor="@android:color/secondary_text_light"/>
 
     <TextView
             android:id="@+id/beer_brewer"
@@ -51,7 +53,8 @@
             android:gravity="left"
             android:layout_below="@+id/beer_soort"
             android:layout_toRightOf="@+id/beer_picture"
-            android:layout_toEndOf="@+id/beer_picture"/>
+            android:layout_toEndOf="@+id/beer_picture"
+            android:textColor="@android:color/secondary_text_light"/>
 
     <TextView
             android:id="@+id/beer_info"
@@ -68,6 +71,7 @@
             android:text="INFO"
             android:textSize="14sp"
             android:gravity="right"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            android:textColor="@android:color/tertiary_text_light"/>
 
 </RelativeLayout>
