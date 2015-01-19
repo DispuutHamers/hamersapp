@@ -194,7 +194,11 @@ public class MainActivity extends ActionBarActivity {
                 GetJson g = new GetJson(this, eventFragment, GetJson.EVENTURL, prefs, false);
                 g.execute();
             }
-
+            //reload Reviews
+            if (prefs.getString(DataManager.REVIEWKEY, null) == null) {
+                GetJson g = new GetJson(this, null, GetJson.REVIEWURL, prefs, false);
+                g.execute();
+            }
             //reload Beers
             if (prefs.getString(DataManager.BEERKEY, null) != null) {
                 beerFragment.populateList(prefs);
