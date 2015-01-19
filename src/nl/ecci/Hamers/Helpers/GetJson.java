@@ -136,8 +136,6 @@ public class GetJson extends AsyncTask<String, String, String> {
                         }
                         ((BeerFragment) f).populateList(prefs);
                     } else if (typeURL.equals(REVIEWURL)) {
-                        System.out.println("----------------------------------------------------");
-                        System.out.println(result);
                         prefs.edit().putString(DataManager.REVIEWKEY, result).apply();
                     }
                 }

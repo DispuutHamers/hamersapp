@@ -106,8 +106,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:paddingBottom="20dp">
+                        android:paddingRight="20dp">
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -123,6 +122,31 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="BE"
                             android:id="@+id/beer_country"
+                            android:textSize="16dp"
+                            android:gravity="right"/>
+                </LinearLayout>
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="20dp">
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Gemiddelde cijfer: "
+                            android:id="@+id/beer_rating_textview"
+                            android:textSize="18sp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"/>
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="8"
+                            android:id="@+id/beer_rating"
                             android:textSize="16dp"
                             android:gravity="right"/>
                 </LinearLayout>

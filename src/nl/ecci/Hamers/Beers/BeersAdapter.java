@@ -49,7 +49,7 @@ public class BeersAdapter extends ArrayAdapter<Beer> {
         name.setText(itemsArrayList.get(position).getName());
         soort.setText("Soort: " + itemsArrayList.get(position).getSoort());
         brewer.setText("Brouwer: " + itemsArrayList.get(position).getBrewer());
-        info.setText(itemsArrayList.get(position).getCountry() + " - " + itemsArrayList.get(position).getPercentage() + "%");
+        info.setText(itemsArrayList.get(position).getRating() + " - " + itemsArrayList.get(position).getCountry() + " - " + itemsArrayList.get(position).getPercentage());
 
         // 5. set image
         prefs = PreferenceManager.getDefaultSharedPreferences(context);

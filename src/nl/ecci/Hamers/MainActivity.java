@@ -1,6 +1,5 @@
 package nl.ecci.Hamers;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -160,7 +159,6 @@ public class MainActivity extends ActionBarActivity {
     //Show the dialog for entering the apikey on startup
     private void showApiKeyDialog() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        Activity a = this;
         alert.setTitle(getString(R.string.apikeydialogtitle));
         alert.setMessage(getString(R.string.apikeydialogmessage));
         final EditText apiKey = new EditText(this);

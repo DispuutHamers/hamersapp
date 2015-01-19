@@ -9,8 +9,9 @@ public class Beer {
     private String percentage;
     private String brewer;
     private String country;
+    private String rating;
 
-    public Beer(int id, String name, String soort, String pictureURL, String percentage, String brewer, String country) {
+    public Beer(int id, String name, String soort, String pictureURL, String percentage, String brewer, String country, String rating) {
         super();
         this.id = id;
         this.name = name;
@@ -19,6 +20,7 @@ public class Beer {
         this.percentage = percentage;
         this.brewer = brewer;
         this.country = country;
+        this.rating = rating;
     }
 
     public int getId() {
@@ -48,4 +50,6 @@ public class Beer {
     public String getCountry() {
         return country;
     }
+
+    public String getRating() { return rating; }
 }

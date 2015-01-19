@@ -32,6 +32,7 @@ public class SingleBeerActivity extends ActionBarActivity {
     String percentage;
     String brewer;
     String country;
+    String cijfer;
     SharedPreferences prefs;
 
     @Override
@@ -46,6 +47,7 @@ public class SingleBeerActivity extends ActionBarActivity {
         TextView percentageTV = (TextView) findViewById(R.id.beer_alc);
         TextView brewerTV = (TextView) findViewById(R.id.beer_brewer);
         TextView countryTV = (TextView) findViewById(R.id.beer_country);
+        TextView cijferTV = (TextView) findViewById(R.id.beer_rating);
         ImageView beerImage = (ImageView) findViewById(R.id.beer_image);
 
         Bundle extras = getIntent().getExtras();
@@ -56,6 +58,7 @@ public class SingleBeerActivity extends ActionBarActivity {
         percentage = extras.getString("percentage");
         brewer = extras.getString("brewer");
         country = extras.getString("country");
+        cijfer = extras.getString("cijfer");
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         getReviews();
@@ -66,6 +69,7 @@ public class SingleBeerActivity extends ActionBarActivity {
         percentageTV.setText(percentage);
         brewerTV.setText(brewer);
         countryTV.setText(country);
+        cijferTV.setText(cijfer);
     }
 
     @Override
@@ -85,7 +89,7 @@ public class SingleBeerActivity extends ActionBarActivity {
                 for (int i = 0; i < reviews.length(); i++) {
                     JSONObject review = reviews.getJSONObject(i);
                     if (review.getInt("beer_id") == id) {
-                        Review tempReview = new Review(review.getInt("beer_id"), review.getInt("user_id"), review.getString("description"), review.getInt("rating"), review.getString("created_at"), review.getString("proefdatum"));
+                        Review tempReview = new Review(review.getInt("beer_id"), review.getInt("user_id"), review.getString("description"), review.getString("rating"), review.getString("created_at"), review.getString("proefdatum"));
                         insertReview(tempReview);
                     }
                 }
@@ -116,6 +120,7 @@ public class SingleBeerActivity extends ActionBarActivity {
         TextView title = (TextView) view.findViewById(R.id.review_title);
         TextView body = (TextView) view.findViewById(R.id.review_body);
         TextView date = (TextView) view.findViewById(R.id.review_date);
+        TextView ratingTV = (TextView) view.findViewById(R.id.review_rating);
 
         String name = null;
         try {
@@ -131,9 +136,10 @@ public class SingleBeerActivity extends ActionBarActivity {
             e.printStackTrace();
         }
 
-        title.setText(name + " zei over dit biertje: ");
+        title.setText(name + ": ");
         body.setText(review.getDescription());
         date.setText(datum);
+        ratingTV.setText("Cijfer: " + review.getRating());
 
         // Insert into view
         ViewGroup insertPoint = (ViewGroup) findViewById(R.id.review_insert_point);

@@ -4,11 +4,11 @@ public class Review {
     private int beer_id;
     private int user_id;
     private String description;
-    private int rating;
+    private String rating;
     private String created_at;
     private String proefdatum;
 
-    public Review(int beer_id, int user_id, String description, int rating, String created_at, String proefdatum) {
+    public Review(int beer_id, int user_id, String description, String rating, String created_at, String proefdatum) {
         super();
         this.beer_id = beer_id;
         this.user_id = user_id;
@@ -30,7 +30,7 @@ public class Review {
         return description;
     }
 
-    public int getRating() {
+    public String getRating() {
         return rating;
     }
 
