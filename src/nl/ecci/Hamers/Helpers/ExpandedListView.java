@@ -17,12 +17,12 @@ public class ExpandedListView extends ListView {
     protected void onDraw(Canvas canvas) {
         if (getCount() != oldCount) {
 
-            System.out.println("KINDURTELLING:: " + getCount());
+            System.out.println("KINDURTELLING: " + getCount());
 
             int height = 0;
             for (int i = 0; i < getCount(); i++) {
                 System.out.println("---------------- PASS " + i);
-                height += getChildAt(i).getMeasuredHeight();
+                height += getChildAt(0).getHeight();
                 height += getDividerHeight();
             }
             oldCount = getCount();

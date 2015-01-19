@@ -139,16 +139,13 @@
                           android:paddingRight="20dp"
                           android:text="Reviews:"
                           android:gravity="left"
-                          android:layout_marginTop="5dp"/>
-                <nl.ecci.Hamers.Helpers.ExpandedListView
+                          android:layout_marginTop="5dp"
+                          android:textColor="@android:color/primary_text_light"/>
+                <LinearLayout
+                        android:id="@+id/review_insert_point"
+                        android:orientation="vertical"
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/reviews"
-                        android:drawSelectorOnTop="false"
-                        android:listSelector="@android:color/transparent"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
-                        android:scrollbars="none"/>
+                        android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

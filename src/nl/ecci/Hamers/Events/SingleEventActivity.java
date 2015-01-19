@@ -47,9 +47,7 @@ public class SingleEventActivity extends ActionBarActivity {
         ListView afwezig_list = (ListView) findViewById(R.id.event_afwezig);
 
         Bundle extras = getIntent().getExtras();
-
         id = extras.getInt("id");
-
         aanwezigItems = getIntent().getStringArrayListExtra("aanwezig");
         afwezigItems = getIntent().getStringArrayListExtra("afwezig");
 
@@ -64,7 +62,6 @@ public class SingleEventActivity extends ActionBarActivity {
         String appDatum = null;
         try {
             // Current date
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
             Date today = new Date();
 
             // Event date
@@ -111,5 +108,7 @@ public class SingleEventActivity extends ActionBarActivity {
         req.execute();
         this.finish();
     }
+
+
 
 }
