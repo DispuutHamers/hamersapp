@@ -63,7 +63,7 @@ public final class DataManager {
         return null;
     }
 
-    public static boolean isAuthenticated(SharedPreferences prefs){
+    public static boolean isAuthenticated(SharedPreferences prefs) {
         return prefs.getBoolean("Authenticated", false);
     }
 

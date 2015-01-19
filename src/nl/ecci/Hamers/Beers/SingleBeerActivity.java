@@ -100,6 +100,7 @@ public class SingleBeerActivity extends ActionBarActivity {
     /**
      * Called when the user clicks the button to create a new beerreview,
      * starts NewBeerActivity.
+     *
      * @param view
      */
     public void createReview(View view) {

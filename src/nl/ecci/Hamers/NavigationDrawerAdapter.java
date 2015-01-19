@@ -20,52 +20,27 @@ public class NavigationDrawerAdapter extends BaseAdapter {
     public static final int BEER_FRAGMENT_POSITION = 3;
     public static final int MOTION_FRAGMENT_POSITION = 4;
     public static final int SETTINGS_POSITION = 5;
-
-    class ItemImage{
-        String title;
-        int image;
-        public String getTitle() {
-            return title;
-        }
-        public void setTitle(String title) {
-            this.title = title;
-        }
-        public int getImage() {
-            return image;
-        }
-        public void setImage(int image) {
-            this.image = image;
-        }
-        public ItemImage(String title, int image) {
-            super();
-            this.title = title;
-            this.image = image;
-        }
-
-    }
-
+    private static LayoutInflater inflater = null;
     private List<ItemImage> data;
-    private static LayoutInflater inflater=null;
-
-    public NavigationDrawerAdapter(Activity activity,String navigationTitles[]) {
+    public NavigationDrawerAdapter(Activity activity, String navigationTitles[]) {
         data = new ArrayList<NavigationDrawerAdapter.ItemImage>();
         int i = 0;
         for (String navigationTitle : navigationTitles) {
-            if(i == QUOTE_FRAGMENT_POSITION)
+            if (i == QUOTE_FRAGMENT_POSITION)
                 data.add(new ItemImage(navigationTitle, R.drawable.quotes));
-            else if(i == USER_FRAGMENT_POSITION)
+            else if (i == USER_FRAGMENT_POSITION)
                 data.add(new ItemImage(navigationTitle, R.drawable.users));
-            else if(i == EVENT_FRAGMENT_POSITION)
+            else if (i == EVENT_FRAGMENT_POSITION)
                 data.add(new ItemImage(navigationTitle, R.drawable.events));
-            else if(i == BEER_FRAGMENT_POSITION)
+            else if (i == BEER_FRAGMENT_POSITION)
                 data.add(new ItemImage(navigationTitle, R.drawable.beers));
-            else if(i == MOTION_FRAGMENT_POSITION)
+            else if (i == MOTION_FRAGMENT_POSITION)
                 data.add(new ItemImage(navigationTitle, R.drawable.motions));
-            else if(i == SETTINGS_POSITION)
+            else if (i == SETTINGS_POSITION)
                 data.add(new ItemImage(navigationTitle, R.drawable.settings));
             i++;
         }
-        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public int getCount() {
@@ -82,16 +57,44 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
-        if(convertView == null)
+        if (convertView == null)
             vi = inflater.inflate(R.layout.navigation_list_row, parent, false);
 
         final ItemImage itemImage = data.get(position);
-        TextView titleTextView = (TextView)vi.findViewById(R.id.titleTextView);
-        ImageView imageImageView = (ImageView)vi.findViewById(R.id.imageImageView);
+        TextView titleTextView = (TextView) vi.findViewById(R.id.titleTextView);
+        ImageView imageImageView = (ImageView) vi.findViewById(R.id.imageImageView);
 
         titleTextView.setText(itemImage.getTitle());
         imageImageView.setImageResource(itemImage.getImage());
 
         return vi;
+    }
+
+    class ItemImage {
+        String title;
+        int image;
+
+        public ItemImage(String title, int image) {
+            super();
+            this.title = title;
+            this.image = image;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public int getImage() {
+            return image;
+        }
+
+        public void setImage(int image) {
+            this.image = image;
+        }
+
     }
 }

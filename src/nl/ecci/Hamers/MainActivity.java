@@ -37,19 +37,31 @@ import java.text.SimpleDateFormat;
 
 
 public class MainActivity extends ActionBarActivity {
+    public EventFragment eventFragment = new EventFragment();
+    // Fragments
+    QuoteListFragment quoteListFragment = new QuoteListFragment();
+    UserFragment userFragment = new UserFragment();
+    BeerFragment beerFragment = new BeerFragment();
+    MotionFragment motionFragment = new MotionFragment();
+    SettingsFragment settingsFragment = new SettingsFragment();
     // Drawer list
     private String[] mDrawerItems;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    // Fragments
-    QuoteListFragment quoteListFragment = new QuoteListFragment();
-    UserFragment userFragment = new UserFragment();
-    public EventFragment eventFragment = new EventFragment();
-    BeerFragment beerFragment = new BeerFragment();
-    MotionFragment motionFragment = new MotionFragment();
-    SettingsFragment settingsFragment = new SettingsFragment();
+    /**
+     * Parse date
+     *
+     * @param dateTemp
+     * @return String with parsed date
+     * @throws ParseException
+     */
+    public static String parseDate(String dateTemp) throws ParseException {
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+        return outputFormat.format(inputFormat.parse(dateTemp));
+    }
 
     /**
      * Called when the activity is first created.
@@ -118,20 +130,11 @@ public class MainActivity extends ActionBarActivity {
         );
 
 
-
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-    }
-
-    /* The click listener for ListView in the navigation drawer */
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
     }
 
     /**
@@ -307,16 +310,11 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    /**
-     * Parse date
-     *
-     * @param dateTemp
-     * @return String with parsed date
-     * @throws ParseException
-     */
-    public static String parseDate(String dateTemp) throws ParseException {
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
-        return outputFormat.format(inputFormat.parse(dateTemp));
+    /* The click listener for ListView in the navigation drawer */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
     }
 }

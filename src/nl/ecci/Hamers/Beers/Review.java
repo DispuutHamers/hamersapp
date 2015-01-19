@@ -18,7 +18,9 @@ public class Review {
         this.proefdatum = proefdatum;
     }
 
-    public int getBeer_id() { return beer_id; }
+    public int getBeer_id() {
+        return beer_id;
+    }
 
     public int getUser_id() {
         return user_id;
@@ -28,11 +30,15 @@ public class Review {
         return description;
     }
 
-    public int getRating() { return rating; }
+    public int getRating() {
+        return rating;
+    }
 
     public String getCreated_at() {
         return created_at;
     }
 
-    public String getProefdatum() { return proefdatum; }
+    public String getProefdatum() {
+        return proefdatum;
+    }
 }

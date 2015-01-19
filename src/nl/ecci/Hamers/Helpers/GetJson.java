@@ -8,7 +8,6 @@ import android.util.Base64;
 import android.widget.Toast;
 import nl.ecci.Hamers.Beers.BeerFragment;
 import nl.ecci.Hamers.Events.EventFragment;
-import nl.ecci.Hamers.Events.SingleEventActivity;
 import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.Quotes.QuoteListFragment;
 import nl.ecci.Hamers.R;
@@ -21,14 +20,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class GetJson extends AsyncTask<String, String, String> {
-    private static final boolean DEBUG = false;
     public static final String baseURL = "https://zondersikkel.nl/api/v1/";
     public static final String QUOTEURL = "/quote.json";
     public static final String USERURL = "/user.json";
     public static final String EVENTURL = "/event.json";
     public static final String BEERURL = "/beer.json";
     public static final String REVIEWURL = "/review.json";
-
+    private static final boolean DEBUG = false;
     private Fragment f;
     private String typeURL;
     private SharedPreferences prefs;

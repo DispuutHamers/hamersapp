@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class SingleEventActivity extends ActionBarActivity {
+    public SwipeRefreshLayout swipeView;
     int id;
     String title;
     String beschrijving;
@@ -26,7 +27,6 @@ public class SingleEventActivity extends ActionBarActivity {
     ArrayList<String> afwezigItems = new ArrayList<String>();
     ArrayAdapter<String> aanwezigAdapter;
     ArrayAdapter<String> afwezigAadapter;
-    public SwipeRefreshLayout swipeView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,7 @@ public class SingleEventActivity extends ActionBarActivity {
             dbDatum = dbDF.parse(date);
             appDatum = appDF.format(dbDatum);
 
-            if(today.after(dbDatum)) {
+            if (today.after(dbDatum)) {
                 aanwezigButton.setVisibility(View.INVISIBLE);
                 afwezigButton.setVisibility(View.INVISIBLE);
                 rootLayout.removeView(buttonLayout);
@@ -104,11 +104,10 @@ public class SingleEventActivity extends ActionBarActivity {
     }
 
     private void postSignup(int eventid, String status) {
-        SendPostRequest req = new SendPostRequest(this, SendPostRequest.SIGNUPURL, PreferenceManager.getDefaultSharedPreferences(this), "signup[event_id]=" + eventid + "&signup[status]=" + status) ;
+        SendPostRequest req = new SendPostRequest(this, SendPostRequest.SIGNUPURL, PreferenceManager.getDefaultSharedPreferences(this), "signup[event_id]=" + eventid + "&signup[status]=" + status);
         req.execute();
         this.finish();
     }
-
 
 
 }

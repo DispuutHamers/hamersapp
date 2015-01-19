@@ -26,7 +26,7 @@ public class NewBeerActivity extends ActionBarActivity {
     }
 
     private void postBeer(String name, String picture, String percentage, String country, String brewer, String soort) {
-        SendPostRequest req = new SendPostRequest(this, SendPostRequest.BEERURL, PreferenceManager.getDefaultSharedPreferences(this), "beer[name]=" + name + "&beer[picture]=" + picture + "&beer[percentage]=" + percentage +  "&beer[country]=" + country + "&beer[brewer]=" + brewer  + "&beer[soort]=" + soort) ;
+        SendPostRequest req = new SendPostRequest(this, SendPostRequest.BEERURL, PreferenceManager.getDefaultSharedPreferences(this), "beer[name]=" + name + "&beer[picture]=" + picture + "&beer[percentage]=" + percentage + "&beer[country]=" + country + "&beer[brewer]=" + brewer + "&beer[soort]=" + soort);
         req.execute();
     }
 }

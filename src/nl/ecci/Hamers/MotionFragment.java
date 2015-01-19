@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
 
@@ -41,8 +40,7 @@ public class MotionFragment extends Fragment {
         });
 
         Button button = (Button) view.findViewById(R.id.sendmotion_button);
-        button.setOnClickListener(new View.OnClickListener()
-        {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 postMotion();
