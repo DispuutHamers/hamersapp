@@ -100,16 +100,16 @@ public class NewEventActivity extends ActionBarActivity {
         int eventEndYear = Integer.parseInt(endDateParts[2]);
 
         String[] timeParts = eventTime.split(":");
-        int eventStartMinutes = Integer.parseInt(timeParts[0]);
-        int eventStartHour = Integer.parseInt(timeParts[1]);
+        int eventStartHour = Integer.parseInt(timeParts[0]);
+        int eventStartMinutes = Integer.parseInt(timeParts[1]);
 
         String[] endTimeParts = eventEndTime.split(":");
-        int eventEndMinutes = Integer.parseInt(endTimeParts[0]);
-        int eventEndHour = Integer.parseInt(endTimeParts[1]);
+        int eventEndHour = Integer.parseInt(endTimeParts[0]);
+        int eventEndMinutes = Integer.parseInt(endTimeParts[1]);
 
         String[] deadlineTimeParts = deadlineTime.split(":");
-        int eventDeadlineMinutes = Integer.parseInt(deadlineTimeParts[0]);
-        int eventDeadlineHour = Integer.parseInt(deadlineTimeParts[1]);
+        int eventDeadlineHour = Integer.parseInt(deadlineTimeParts[0]);
+        int eventDeadlineMinutes = Integer.parseInt(deadlineTimeParts[1]);
 
         String[] deadlineDateParts = deadlineDate.split("-");
         int eventDeadlineDay = Integer.parseInt(deadlineDateParts[0]);
@@ -121,6 +121,7 @@ public class NewEventActivity extends ActionBarActivity {
                 + "&event[deadline(5i)]=" + eventDeadlineMinutes + "&event[deadline(4i)]=" + eventDeadlineHour + "&event[deadline(3i)]=" + eventDeadlineDay + "&event[deadline(2i)]=" + eventDeadlineMonth + "&event[deadline(1i)]=" + eventDeadlineYear
                 + "&event[date(5i)]=" + eventStartMinutes + "&event[date(4i)]=" + eventStartHour + "&event[date(3i)]=" + eventStartDay + "&event[date(2i)]=" + eventStartMonth + "&event[date(1i)]=" + eventStartYear;
 
+        System.out.println("-----------------------------: " + arguments);
         SendPostRequest req = new SendPostRequest(this, SendPostRequest.EVENTUTL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
         req.execute();
     }
