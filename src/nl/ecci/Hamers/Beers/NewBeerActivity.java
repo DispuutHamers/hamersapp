@@ -22,8 +22,6 @@ public class NewBeerActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_beer_acitivity);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-
     }
 
     @Override
@@ -55,7 +53,7 @@ public class NewBeerActivity extends ActionBarActivity {
             percentage = percentage + "%";
         }
 
-        SendPostRequest req = new SendPostRequest(this, SendPostRequest.BEERURL, PreferenceManager.getDefaultSharedPreferences(this), "beer[name]=" + title + "&beer[picture]=" + picture + "&beer[percentage]=" + percentage + "&beer[country]=" + country + "&beer[brewer]=" + brewer + "&beer[soort]=" + soort);
+        SendPostRequest req = new SendPostRequest(this, SendPostRequest.BEERURL, PreferenceManager.getDefaultSharedPreferences(this), "beer[name]=" + title + "&beer[picture]=" + picture + "&beer[percentage]=" + percentage + "25" + "&beer[country]=" + country + "&beer[brewer]=" + brewer + "&beer[soort]=" + soort);
         req.execute();
     }
 }
