@@ -16,7 +16,7 @@ import nl.ecci.Hamers.R;
 
 public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.OnSeekBarChangeListener {
     int id;
-    String review;
+    private String review;
     private SeekBar sb;
     private TextView progress;
     private int cijfer;

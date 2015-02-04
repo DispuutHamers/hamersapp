@@ -23,7 +23,7 @@
                     android:padding="20dp"/>
 
             <EditText
-                    android:id="@+id/beer_title"
+                    android:id="@+id/beer_title_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -33,7 +33,7 @@
                     android:hint="@string/beer_name"
                     android:padding="20dp"/>
 
-            <EditText android:id="@+id/beer_picture"
+            <EditText android:id="@+id/beer_picture_et"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:layout_marginTop="16dp"
@@ -44,7 +44,7 @@
                       android:hint="@string/beer_picture"
                       android:padding="20dp"/>
 
-            <EditText android:id="@+id/beer_soort"
+            <EditText android:id="@+id/beer_soort_et"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:layout_marginTop="16dp"
@@ -55,7 +55,7 @@
                       android:hint="@string/beer_soort"
                       android:padding="20dp"/>
             <EditText
-                    android:id="@+id/beer_percentage"
+                    android:id="@+id/beer_percentage_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -65,7 +65,7 @@
                     android:hint="@string/beer_percentage"
                     android:padding="20dp"/>
 
-            <EditText android:id="@+id/beer_brewer"
+            <EditText android:id="@+id/beer_brewer_et"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:layout_marginTop="16dp"
@@ -76,7 +76,7 @@
                       android:hint="@string/beer_brewer"
                       android:padding="20dp"/>
             <EditText
-                    android:id="@+id/beer_country"
+                    android:id="@+id/beer_country_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -103,7 +103,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:text="@string/send"/>
+                android:text="@string/send"
+                android:onClick="postBeer"/>
     </LinearLayout>
 
 </RelativeLayout>
