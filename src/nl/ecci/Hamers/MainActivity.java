@@ -51,6 +51,19 @@ public class MainActivity extends ActionBarActivity {
     private ActionBarDrawerToggle mDrawerToggle;
 
     /**
+     * Parse date
+     *
+     * @param dateTemp
+     * @return String with parsed date
+     * @throws java.text.ParseException
+     */
+    public static String parseDate(String dateTemp) throws ParseException {
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+        return outputFormat.format(inputFormat.parse(dateTemp));
+    }
+
+    /**
      * Called when the activity is first created.
      */
     @Override
@@ -177,7 +190,6 @@ public class MainActivity extends ActionBarActivity {
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString(key, value).apply();
     }
 
-
     public void loadData2(SharedPreferences prefs, boolean auth) {
         if (auth) {
             //reload quotes
@@ -300,34 +312,21 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    /**
+     * Hides the soft keyboard
+     */
+    public void hideSoftKeyboard() {
+        if (getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
     /* The click listener for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectItem(position);
-        }
-    }
-
-    /**
-     * Parse date
-     *
-     * @param dateTemp
-     * @return String with parsed date
-     * @throws java.text.ParseException
-     */
-    public static String parseDate(String dateTemp) throws ParseException {
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
-        return outputFormat.format(inputFormat.parse(dateTemp));
-    }
-
-    /**
-     * Hides the soft keyboard
-     */
-    public void hideSoftKeyboard() {
-        if(getCurrentFocus()!=null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
 }

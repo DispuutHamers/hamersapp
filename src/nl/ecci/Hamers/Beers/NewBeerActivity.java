@@ -49,7 +49,7 @@ public class NewBeerActivity extends ActionBarActivity {
         brewer = beer_brewer.getText().toString();
         country = beer_country.getText().toString();
 
-        if(!percentage.contains("%")) {
+        if (!percentage.contains("%")) {
             percentage = percentage + "%";
         }
 

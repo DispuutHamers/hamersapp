@@ -93,7 +93,7 @@
         <string name="beer_name">Naam</string>
         <string name="beer_picture">URL naar afbeelding</string>
         <string name="beer_soort">Soort</string>
-        <string name="beer_percentage">Percentage</string>
+        <string name="beer_percentage">Percentage (e.g. 8.0%)</string>
         <string name="beer_brewer">Brouwer</string>
         <string name="beer_country">Land</string>
 

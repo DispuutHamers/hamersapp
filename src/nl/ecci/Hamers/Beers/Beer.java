@@ -51,5 +51,7 @@ public class Beer {
         return country;
     }
 
-    public String getRating() { return rating; }
+    public String getRating() {
+        return rating;
+    }
 }

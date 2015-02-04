@@ -22,6 +22,7 @@ public class NavigationDrawerAdapter extends BaseAdapter {
     public static final int SETTINGS_POSITION = 5;
     private static LayoutInflater inflater = null;
     private List<ItemImage> data;
+
     public NavigationDrawerAdapter(Activity activity, String navigationTitles[]) {
         data = new ArrayList<NavigationDrawerAdapter.ItemImage>();
         int i = 0;
