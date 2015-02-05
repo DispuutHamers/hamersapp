@@ -37,9 +37,9 @@
             android:text="Dit is de soort (testing purposes)"
             android:textSize="12sp"
             android:gravity="left"
-            android:layout_below="@+id/beer_name"
-            android:layout_toRightOf="@+id/beer_picture"
-            android:layout_toEndOf="@+id/beer_picture"
+            android:layout_below="@id/beer_name"
+            android:layout_toRightOf="@id/beer_picture"
+            android:layout_toEndOf="@id/beer_picture"
             android:textColor="@android:color/secondary_text_light"/>
 
     <TextView
@@ -51,12 +51,23 @@
             android:text="Dit is de brouwer (testing purposes)"
             android:textSize="12sp"
             android:gravity="left"
-            android:layout_below="@+id/beer_soort"
+            android:layout_below="@id/beer_soort"
             android:layout_toRightOf="@+id/beer_picture"
-            android:layout_toEndOf="@+id/beer_picture"
+            android:layout_toEndOf="@id/beer_picture"
             android:textColor="@android:color/secondary_text_light"/>
 
-
+    <TextView android:id="@+id/row_beer_rating"
+              android:layout_width="fill_parent"
+              android:layout_height="16dp"
+              android:ellipsize="marquee"
+              android:singleLine="true"
+              android:text="RATING"
+              android:textSize="12sp"
+              android:gravity="left"
+              android:layout_below="@id/beer_brewer"
+              android:layout_toRightOf="@+id/beer_picture"
+              android:layout_toEndOf="@id/beer_picture"
+              android:textColor="@android:color/secondary_text_light"/>
 
     <TextView
             android:id="@+id/beer_info"

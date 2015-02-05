@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="quote_search" type="id"/>
+    <item name="left_drawer" type="id"/>
 
     <!-- Quotes -->
     <item name="new_quote" type="id"/>

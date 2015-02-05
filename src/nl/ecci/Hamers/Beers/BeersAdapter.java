@@ -42,14 +42,14 @@ public class BeersAdapter extends ArrayAdapter<Beer> {
         TextView soort = (TextView) rowView.findViewById(R.id.beer_soort);
         ImageView picture = (ImageView) rowView.findViewById(R.id.beer_picture);
         TextView brewer = (TextView) rowView.findViewById(R.id.beer_brewer);
-        TextView rating = (TextView) rowView.findViewById(R.id.beer_rating_textview);
+        TextView rating = (TextView) rowView.findViewById(R.id.row_beer_rating);
         TextView info = (TextView) rowView.findViewById(R.id.beer_info);
 
         // 4. Set the text for textView
         name.setText(itemsArrayList.get(position).getName());
         soort.setText("Soort: " + itemsArrayList.get(position).getSoort());
         brewer.setText("Brouwer: " + itemsArrayList.get(position).getBrewer());
-//        rating.setText("Cijfer: " + itemsArrayList.get(position).getRating());
+        rating.setText("Cijfer: " + itemsArrayList.get(position).getRating());
         info.setText(itemsArrayList.get(position).getCountry() + " - " + itemsArrayList.get(position).getPercentage());
 
         // 5. set image
