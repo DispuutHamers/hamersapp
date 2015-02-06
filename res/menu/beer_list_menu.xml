@@ -5,7 +5,7 @@
           android:title="@string/action_new_beer"
           hamers:showAsAction="ifRoom|withText"
           android:onClick="newBeer"/>
-    <group>
+    <group android:checkableBehavior="none">
         <item android:id="@id/sort_name"
               android:title="@string/sort_name" />
         <item android:id="@id/sort_rating"

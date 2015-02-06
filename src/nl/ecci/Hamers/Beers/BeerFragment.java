@@ -63,6 +63,8 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         });
 
+        sort();
+
         return view;
     }
 
@@ -124,6 +126,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
         if (swipeView != null) {
             swipeView.setRefreshing(false);
+            sort();
         }
     }
 
@@ -136,16 +139,34 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sort_name:
-                item.setChecked(true);
-                Collections.sort(listItems, nameComparator);
+                sortByName();
                 return true;
             case R.id.sort_rating:
-                item.setChecked(true);
-                Collections.sort(listItems, ratingComparator);
+                sortByRating();
                 return true;
             default:
                 return false;
         }
+    }
+
+    public void sort() {
+        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        String sortPref = prefs.getString("beerSort", "");
+        if (sortPref.contains("name")) {
+            sortByName();
+        } else if (sortPref.contains("rating")) {
+            sortByRating();
+        }
+    }
+
+    public void sortByName() {
+        Collections.sort(listItems, nameComparator);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void sortByRating() {
+        Collections.sort(listItems, ratingComparator);
+        adapter.notifyDataSetChanged();
     }
 
     public Comparator<Beer> nameComparator = new Comparator<Beer>() {

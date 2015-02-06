@@ -24,4 +24,13 @@
                 android:inputType="textMultiLine"
                 android:hint="@string/apikey_hint"/>
     </PreferenceCategory>
+    <PreferenceCategory
+            android:title="@string/sorting_category">
+        <ListPreference
+                android:title="Bier sorteren"
+                android:key="beerSort"
+                android:defaultValue="none"
+                android:entries="@array/beersort_array"
+                android:entryValues="@array/beersort_array_values" />
+    </PreferenceCategory>
 </PreferenceScreen>

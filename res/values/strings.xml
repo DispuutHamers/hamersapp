@@ -119,6 +119,20 @@
         <string name="apikey_summary">You can get your key on the website.</string>
         <string name="apikey_hint">Copy+paste your key here..</string>
 
+        <!-- Sorting -->
+        <!-- Beer -->
+        <string name="sorting_category">Sorteren</string>
+        <array name="beersort_array_values">
+            <item>none</item>
+            <item>name</item>
+            <item>rating</item>
+        </array>
+        <array name="beersort_array">
+            <item>Niet sorteren</item>
+            <item>Sorteer op naam</item>
+            <item>Sorteer op cijfer</item>
+        </array>
+
     <!-- Toasts -->
         <string name="toast_downloaderror">Fout bij het downloaden</string>
         <string name="toast_downloading">De gegevens worden gedownload</string>
