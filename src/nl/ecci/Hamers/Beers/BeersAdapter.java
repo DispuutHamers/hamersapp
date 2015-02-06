@@ -30,15 +30,10 @@ public class BeersAdapter extends ArrayAdapter<Beer> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        // 1. Create inflater
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        // 2. Get rowView from inflater
         View rowView = inflater.inflate(R.layout.beer_row, parent, false);
 
-        // 3. Get the two text view from the rowView
         TextView name = (TextView) rowView.findViewById(R.id.beer_name);
         TextView soort = (TextView) rowView.findViewById(R.id.beer_soort);
         ImageView picture = (ImageView) rowView.findViewById(R.id.beer_picture);
@@ -46,16 +41,19 @@ public class BeersAdapter extends ArrayAdapter<Beer> {
         TextView rating = (TextView) rowView.findViewById(R.id.row_beer_rating);
         TextView info = (TextView) rowView.findViewById(R.id.beer_info);
 
-        // 4. Set the text for textView
         name.setText(itemsArrayList.get(position).getName());
         soort.setText("Soort: " + itemsArrayList.get(position).getSoort());
         brewer.setText("Brouwer: " + itemsArrayList.get(position).getBrewer());
-        rating.setText("Cijfer: " + itemsArrayList.get(position).getRating());
         info.setText(itemsArrayList.get(position).getCountry() + " - " + itemsArrayList.get(position).getPercentage());
 
-        // 5. set image
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String cijfer = itemsArrayList.get(position).getRating();
+        if (cijfer.equals("null")) {
+            rating.setText("Cijfer: nog niet bekend");
+        } else {
+            rating.setText("Cijfer: " + cijfer);
+        }
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
         Bitmap image = DataManager.getBeerImage(prefs, itemsArrayList.get(position).getName() + "-thumb");
         picture.setImageBitmap(image);
 

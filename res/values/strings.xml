@@ -141,6 +141,6 @@
         <string name="toast_storekeymemory">"Een apikey kan ingevuld worden in het instellingen scherm"</string>
 
     <!-- Sorting -->
-        <string name="sort_rating">Cijfer</string>
-        <string name="sort_name">Naam</string>
+        <string name="sort_rating">Sorteer op cijfer</string>
+        <string name="sort_name">Sorteer op naam</string>
 </resources>
