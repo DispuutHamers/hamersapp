@@ -109,6 +109,11 @@ public class MainActivity extends ActionBarActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     public void initDrawer() {
         // Drawer list
         mDrawerItems = getResources().getStringArray(R.array.drawer_array);
@@ -229,7 +234,6 @@ public class MainActivity extends ActionBarActivity {
      * @param position
      */
     private void selectItem(int position) {
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         hideSoftKeyboard();
