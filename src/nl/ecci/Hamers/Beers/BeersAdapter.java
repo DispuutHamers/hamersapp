@@ -2,6 +2,7 @@ package nl.ecci.Hamers.Beers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,9 @@ public class BeersAdapter extends ArrayAdapter<Beer> {
 
         // 5. set image
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        picture.setImageBitmap(DataManager.getBeerImage(prefs, itemsArrayList.get(position).getName()));
+
+        Bitmap image = DataManager.getBeerImage(prefs, itemsArrayList.get(position).getName() + "-thumb");
+        picture.setImageBitmap(image);
 
         return rowView;
     }

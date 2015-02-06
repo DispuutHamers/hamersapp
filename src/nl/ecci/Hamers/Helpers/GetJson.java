@@ -2,9 +2,13 @@ package nl.ecci.Hamers.Helpers;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
+import android.util.TypedValue;
 import android.widget.Toast;
 import nl.ecci.Hamers.Beers.BeerFragment;
 import nl.ecci.Hamers.Events.EventFragment;
@@ -198,7 +202,22 @@ public class GetJson extends AsyncTask<String, String, String> {
                 }
                 out.close();
                 in.close();
+
                 prefs.edit().putString(DataManager.BEERIMAGEKEY + beers.getJSONObject(i).getString("name"), Base64.encodeToString(out.toByteArray(), Base64.DEFAULT)).apply();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.toByteArray().length);
+
+                Bitmap thumb = null;
+                if (bitmap != null) {
+                    thumb = scaleBitmap(bitmap);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    if (beers.getJSONObject(i).getString("name").contains("jpg")) {
+                        thumb.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    } else {
+                        thumb.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    }
+                    byte[] b = baos.toByteArray();
+                    prefs.edit().putString(DataManager.BEERIMAGEKEY + beers.getJSONObject(i).getString("name") + "-thumb", Base64.encodeToString(b, Base64.DEFAULT)).apply();
+                }
             } catch (MalformedURLException e) {
                 if (DEBUG) {
                     System.out.println("--------------------------Malformed URL!: ");
@@ -215,9 +234,35 @@ public class GetJson extends AsyncTask<String, String, String> {
                     e.printStackTrace();
                 }
             }
-            //For restoring byte[] array = Base64.decode(stringFromSharedPrefs, Base64.DEFAULT);
-
         }
     }
 
+    private Bitmap scaleBitmap(Bitmap bm) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+
+        // Converts 74 dip into its equivalent px
+        Resources r = a.getResources();
+        int maxWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 74, r.getDisplayMetrics());
+        int maxHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 74, r.getDisplayMetrics());
+
+        if (width > height) {
+            // landscape
+            float ratio = (float) width / maxWidth;
+            width = maxWidth;
+            height = (int) (height / ratio);
+        } else if (height > width) {
+            // portrait
+            float ratio = (float) height / maxHeight;
+            height = maxHeight;
+            width = (int) (width / ratio);
+        } else {
+            // square
+            height = maxHeight;
+            width = maxWidth;
+        }
+
+        bm = Bitmap.createScaledBitmap(bm, width, height, false);
+        return bm;
+    }
 }
