@@ -16,6 +16,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static android.widget.AdapterView.OnItemClickListener;
 
@@ -60,10 +62,11 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 }
             }
         });
+
         return view;
     }
 
-    public void initSwiper(View view, final ListView beer_list) {
+    public void initSwiper(View view, ListView beer_list) {
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
@@ -128,4 +131,42 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.beer_list_menu, menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sort_name:
+                item.setChecked(true);
+                Collections.sort(listItems, nameComparator);
+                return true;
+            case R.id.sort_rating:
+                item.setChecked(true);
+                Collections.sort(listItems, ratingComparator);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public Comparator<Beer> nameComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+
+            String name1 = beer1.getName();
+            String name2 = beer2.getName();
+
+            return name1.compareToIgnoreCase(name2);
+        }
+    };
+
+    public Comparator<Beer> ratingComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+
+            String rating1 = beer1.getRating();
+            String rating2 = beer2.getRating();
+
+            return rating2.compareToIgnoreCase(rating1);
+        }
+    };
 }

@@ -1,7 +1,6 @@
 package nl.ecci.Hamers.Quotes;
 
 public class Quote {
-
     private String user;
     private String body;
     private String date;

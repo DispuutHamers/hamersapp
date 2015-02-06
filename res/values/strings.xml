@@ -126,4 +126,7 @@
         <string name="toast_reviewloaderror">Fout bij het laden van de reviews</string>
         <string name="toast_storekeymemory">"Een apikey kan ingevuld worden in het instellingen scherm"</string>
 
+    <!-- Sorting -->
+        <string name="sort_rating">Cijfer</string>
+        <string name="sort_name">Naam</string>
 </resources>

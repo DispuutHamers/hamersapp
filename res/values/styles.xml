@@ -33,4 +33,8 @@
 
     <item name="divider" type="id"/>
 
+    <!-- Sorting menu -->
+    <item name="sort_name" type="id"/>
+    <item name="sort_rating" type="id"/>
+
 </resources>
