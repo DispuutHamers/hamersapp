@@ -69,7 +69,12 @@ public class SingleBeerActivity extends ActionBarActivity {
         percentageTV.setText(percentage);
         brewerTV.setText(brewer);
         countryTV.setText(country);
-        cijferTV.setText(cijfer);
+
+        if (cijfer.equals("null")) {
+            cijferTV.setText("nog niet bekend");
+        } else {
+            cijferTV.setText(cijfer);
+        }
     }
 
     @Override

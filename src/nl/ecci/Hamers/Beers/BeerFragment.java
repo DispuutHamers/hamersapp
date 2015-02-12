@@ -111,8 +111,16 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject temp;
                     temp = json.getJSONObject(i);
-                    Beer tempBeer = new Beer(temp.getInt("id"), temp.getString("name").toString(), temp.getString("soort").toString(),
-                            temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), temp.getString("cijfer"));
+                    Beer tempBeer = null;
+
+                    String cijfer = temp.getString("cijfer");
+                    if (cijfer.equals("null")) {
+                        tempBeer = new Beer(temp.getInt("id"), temp.getString("name").toString(), temp.getString("soort").toString(),
+                                temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), "nog niet bekend");
+                    } else {
+                        tempBeer = new Beer(temp.getInt("id"), temp.getString("name").toString(), temp.getString("soort").toString(),
+                                temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), cijfer);
+                    }
                     listItems.add(tempBeer);
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
@@ -186,6 +194,12 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
             String rating1 = beer1.getRating();
             String rating2 = beer2.getRating();
+
+            if (rating1.equals("nog niet bekend")) {
+                rating1 = "-1";
+            } else if (rating2.equals("nog niet bekend")) {
+                rating2 = "-1";
+            }
 
             return rating2.compareToIgnoreCase(rating1);
         }
