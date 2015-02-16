@@ -6,28 +6,42 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.*;
 import nl.ecci.Hamers.Helpers.Fragments.DatePickerFragment;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
 import nl.ecci.Hamers.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.OnSeekBarChangeListener {
     int id;
     private String review;
     private SeekBar sb;
     private TextView progress;
+    private TextView title;
     private int cijfer;
+    private String name;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_beer_review_activity);
 
+        // Set date to current date
+        Button date_button = (Button) findViewById(R.id.pick_date_button);
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        date_button.setText(dateFormat.format(calendar.getTime()));
+
         Bundle extras = getIntent().getExtras();
         id = extras.getInt("id");
+        name = extras.getString("name");
+
+        title = (TextView) findViewById(R.id.review_title);
+        title.setText(name);
+
+        cijfer = 1;
 
         sb = (SeekBar) findViewById(R.id.ratingseekbar);
         sb.setOnSeekBarChangeListener(this);
@@ -66,20 +80,23 @@ public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.
     }
 
     public void postReview(View view) {
-
         EditText review_body = (EditText) findViewById(R.id.review_body);
-        Button date_button = (Button) findViewById(R.id.pick_date_button);
         review = review_body.getText().toString();
+        Button date_button = (Button) findViewById(R.id.pick_date_button);
         String date = date_button.getText().toString();
 
-        String[] dateParts = date.split("-");
-        int proefdag = Integer.parseInt(dateParts[0]);
-        int proefmaand = Integer.parseInt(dateParts[1]);
-        int proefjaar = Integer.parseInt(dateParts[2]);
+        if (review.length() > 2) {
+            String[] dateParts = date.split("-");
+            int proefdag = Integer.parseInt(dateParts[0]);
+            int proefmaand = Integer.parseInt(dateParts[1]);
+            int proefjaar = Integer.parseInt(dateParts[2]);
 
-        String arguments = "&review[beer_id]=" + id + "&review[description]=" + review + "&review[rating]=" + cijfer
-                + "&review[proefdatum(1i)]=" + proefjaar + "&review[proefdatum(2i)]=" + proefmaand + "&review[proefdatum(3i)]=" + proefdag + "&review[proefdatum(4i)]=" + 20 + "&review[proefdatum(5i)]=" + 00;
-        SendPostRequest req = new SendPostRequest(this, SendPostRequest.REVIEWURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
-        req.execute();
+            String arguments = "&review[beer_id]=" + id + "&review[description]=" + review + "&review[rating]=" + cijfer
+                    + "&review[proefdatum(1i)]=" + proefjaar + "&review[proefdatum(2i)]=" + proefmaand + "&review[proefdatum(3i)]=" + proefdag + "&review[proefdatum(4i)]=" + 20 + "&review[proefdatum(5i)]=" + 00;
+            SendPostRequest req = new SendPostRequest(this, SendPostRequest.REVIEWURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
+            req.execute();
+        } else {
+            Toast.makeText(this, "Vul alle velden in!", Toast.LENGTH_LONG).show();
+        }
     }
 }

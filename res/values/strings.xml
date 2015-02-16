@@ -61,7 +61,7 @@
         <!-- New review -->
         <string name="new_review">Nieuwe review</string>
         <string name="review_hint">Wat vonden we er van?</string>
-        <string name="rating">Cijfer: </string>
+        <string name="rating">Cijfer: 1</string>
         <string name="pick_date">Proefdatum :</string>
         <string name="pick_date_button">Datum</string>
         <string name="pick_time_button">Tijd</string>

@@ -115,6 +115,7 @@ public class SingleBeerActivity extends ActionBarActivity {
     public void createReview(View view) {
         Intent intent = new Intent(this, NewBeerReviewActivity.class);
         intent.putExtra("id", id);
+        intent.putExtra("name", name);
         startActivity(intent);
     }
 
