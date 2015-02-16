@@ -1,9 +1,11 @@
 package nl.ecci.Hamers.Helpers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.Toast;
+import nl.ecci.Hamers.Beers.NewBeerReviewActivity;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -52,7 +54,6 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
 
             response = con.getResponseCode();
             con.disconnect();
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -63,6 +64,9 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
 
     protected void onPostExecute(String result) {
         if (result.equals("201")) {
+            // Finish activity
+            ((Activity) mContext).finish();
+            
             Toast.makeText(mContext, "Item posted!", Toast.LENGTH_SHORT).show();
         } else {
             System.out.println("----------" + result);
