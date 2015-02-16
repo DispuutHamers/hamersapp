@@ -27,6 +27,12 @@
     <PreferenceCategory
             android:title="@string/sorting_category">
         <ListPreference
+                android:title="Leden sorteren"
+                android:key="userSort"
+                android:defaultValue="none"
+                android:entries="@array/usersort_array"
+                android:entryValues="@array/usersort_array_values" />
+        <ListPreference
                 android:title="Bier sorteren"
                 android:key="beerSort"
                 android:defaultValue="none"

@@ -120,8 +120,21 @@
         <string name="apikey_hint">Copy+paste your key here..</string>
 
         <!-- Sorting -->
-        <!-- Beer -->
         <string name="sorting_category">Sorteren</string>
+        <!-- Users -->
+        <array name="usersort_array_values">
+            <item>none</item>
+            <item>name</item>
+            <item>quotecount</item>
+            <item>reviewcount</item>
+        </array>
+        <array name="usersort_array">
+            <item>Niet sorteren</item>
+            <item>Sorteer op naam</item>
+            <item>Sorteer op aantal quotes</item>
+            <item>Sorteer op aantal reviews</item>
+        </array>
+        <!-- Beer -->
         <array name="beersort_array_values">
             <item>none</item>
             <item>name</item>
@@ -141,6 +154,9 @@
         <string name="toast_storekeymemory">"Een apikey kan ingevuld worden in het instellingen scherm"</string>
 
     <!-- Sorting -->
+        <string name="sort_username">Sorteer op naam</string>
+        <string name="sort_quotes">Sorteer op aantal quotes</string>
+        <string name="sort_reviews">Sorteer op aantal reviews</string>
         <string name="sort_rating">Sorteer op cijfer</string>
         <string name="sort_name">Sorteer op naam</string>
 </resources>
