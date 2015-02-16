@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.Toast;
 import nl.ecci.Hamers.Beers.NewBeerReviewActivity;
+import nl.ecci.Hamers.MainActivity;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -64,9 +65,12 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
 
     protected void onPostExecute(String result) {
         if (result.equals("201")) {
-            // Finish activity
-            ((Activity) mContext).finish();
-            
+            Activity activity = (Activity) mContext;
+
+            if (!(activity instanceof MainActivity)) {
+                activity.finish();
+            }
+
             Toast.makeText(mContext, "Item posted!", Toast.LENGTH_SHORT).show();
         } else {
             System.out.println("----------" + result);
