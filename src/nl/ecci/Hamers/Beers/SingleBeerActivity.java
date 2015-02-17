@@ -69,7 +69,12 @@ public class SingleBeerActivity extends ActionBarActivity {
         percentageTV.setText(percentage);
         brewerTV.setText(brewer);
         countryTV.setText(country);
-        cijferTV.setText(cijfer);
+
+        if (cijfer.equals("null")) {
+            cijferTV.setText("nog niet bekend");
+        } else {
+            cijferTV.setText(cijfer);
+        }
     }
 
     @Override
@@ -110,6 +115,7 @@ public class SingleBeerActivity extends ActionBarActivity {
     public void createReview(View view) {
         Intent intent = new Intent(this, NewBeerReviewActivity.class);
         intent.putExtra("id", id);
+        intent.putExtra("name", name);
         startActivity(intent);
     }
 

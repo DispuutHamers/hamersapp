@@ -23,26 +23,6 @@ import static android.widget.AdapterView.OnItemClickListener;
 
 public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public Comparator<Beer> nameComparator = new Comparator<Beer>() {
-        @Override
-        public int compare(Beer beer1, Beer beer2) {
-
-            String name1 = beer1.getName();
-            String name2 = beer2.getName();
-
-            return name1.compareToIgnoreCase(name2);
-        }
-    };
-    public Comparator<Beer> ratingComparator = new Comparator<Beer>() {
-        @Override
-        public int compare(Beer beer1, Beer beer2) {
-
-            String rating1 = beer1.getRating();
-            String rating2 = beer2.getRating();
-
-            return rating2.compareToIgnoreCase(rating1);
-        }
-    };
     ArrayList<Beer> listItems = new ArrayList<Beer>();
     ArrayAdapter<Beer> adapter;
     SwipeRefreshLayout swipeView;
@@ -131,8 +111,16 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject temp;
                     temp = json.getJSONObject(i);
-                    Beer tempBeer = new Beer(temp.getInt("id"), temp.getString("name").toString(), temp.getString("soort").toString(),
-                            temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), temp.getString("cijfer"));
+                    Beer tempBeer = null;
+
+                    String cijfer = temp.getString("cijfer");
+                    if (cijfer.equals("null")) {
+                        tempBeer = new Beer(temp.getInt("id"), temp.getString("name").toString(), temp.getString("soort").toString(),
+                                temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), "nog niet bekend");
+                    } else {
+                        tempBeer = new Beer(temp.getInt("id"), temp.getString("name").toString(), temp.getString("soort").toString(),
+                                temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), cijfer);
+                    }
                     listItems.add(tempBeer);
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
@@ -188,4 +176,32 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         Collections.sort(listItems, ratingComparator);
         adapter.notifyDataSetChanged();
     }
+
+    public Comparator<Beer> nameComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+
+            String name1 = beer1.getName();
+            String name2 = beer2.getName();
+
+            return name1.compareToIgnoreCase(name2);
+        }
+    };
+
+    public Comparator<Beer> ratingComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+
+            String rating1 = beer1.getRating();
+            String rating2 = beer2.getRating();
+
+            if (rating1.equals("nog niet bekend")) {
+                rating1 = "-1";
+            } else if (rating2.equals("nog niet bekend")) {
+                rating2 = "-1";
+            }
+
+            return rating2.compareToIgnoreCase(rating1);
+        }
+    };
 }

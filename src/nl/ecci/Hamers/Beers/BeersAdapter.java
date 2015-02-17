@@ -44,14 +44,8 @@ public class BeersAdapter extends ArrayAdapter<Beer> {
         name.setText(itemsArrayList.get(position).getName());
         soort.setText("Soort: " + itemsArrayList.get(position).getSoort());
         brewer.setText("Brouwer: " + itemsArrayList.get(position).getBrewer());
+        rating.setText("Cijfer: " + itemsArrayList.get(position).getRating());
         info.setText(itemsArrayList.get(position).getCountry() + " - " + itemsArrayList.get(position).getPercentage());
-
-        String cijfer = itemsArrayList.get(position).getRating();
-        if (cijfer.equals("null")) {
-            rating.setText("Cijfer: nog niet bekend");
-        } else {
-            rating.setText("Cijfer: " + cijfer);
-        }
 
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         Bitmap image = DataManager.getBeerImage(prefs, itemsArrayList.get(position).getName() + "-thumb");
