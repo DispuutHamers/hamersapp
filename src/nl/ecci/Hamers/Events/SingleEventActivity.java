@@ -37,14 +37,15 @@ public class SingleEventActivity extends ActionBarActivity {
 
         RelativeLayout rootLayout = (RelativeLayout) findViewById(R.id.single_event_root);
         LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
-        Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
-        Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
+        // Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
+        // Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
 
         TextView titleTV = (TextView) findViewById(R.id.event_title);
         TextView beschrijvingTV = (TextView) findViewById(R.id.event_beschrijving);
         TextView dateTV = (TextView) findViewById(R.id.event_date);
         ListView aanwezig_list = (ListView) findViewById(R.id.event_aanwezig);
         ListView afwezig_list = (ListView) findViewById(R.id.event_afwezig);
+        LinearLayout aanwezig_layout = (LinearLayout) findViewById(R.id.aanwezig_layout);
 
         Bundle extras = getIntent().getExtras();
         id = extras.getInt("id");
@@ -55,6 +56,15 @@ public class SingleEventActivity extends ActionBarActivity {
         afwezigAadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, afwezigItems);
         aanwezig_list.setAdapter(aanwezigAdapter);
         afwezig_list.setAdapter(afwezigAadapter);
+
+        // Remove headers if no user is enrolled for that category
+        if (aanwezigItems.size() == 0) {
+            TextView event_aanwezig_tv = (TextView) findViewById(R.id.event_aanwezig_tv);
+            event_aanwezig_tv.setVisibility(View.INVISIBLE);
+        } else if (afwezigItems.size() == 0) {
+            TextView event_afwezig_tv = (TextView) findViewById(R.id.event_afwezig_tv);
+            event_afwezig_tv.setVisibility(View.INVISIBLE);
+        }
 
         title = extras.getString("title");
         beschrijving = extras.getString("beschrijving");
@@ -72,8 +82,7 @@ public class SingleEventActivity extends ActionBarActivity {
             appDatum = appDF.format(dbDatum);
 
             if (today.after(dbDatum)) {
-                aanwezigButton.setVisibility(View.INVISIBLE);
-                afwezigButton.setVisibility(View.INVISIBLE);
+                aanwezig_layout.setVisibility(View.GONE);
                 rootLayout.removeView(buttonLayout);
             }
         } catch (ParseException e) {

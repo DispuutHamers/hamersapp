@@ -127,9 +127,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     JSONObject temp;
                     try {
                         temp = json.getJSONObject(i);
-
                         String finalDate = parseDate(temp.getString("date").substring(0, 10));
-
                         Event tempEvent = new Event(temp.getInt("id"), temp.getString("title").toString(), temp.getString("beschrijving").toString(), finalDate, temp.getString("end_time"));
                         listItems.add(tempEvent);
                         if (adapter != null) {
