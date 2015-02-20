@@ -51,6 +51,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                         intent.putExtra("id", e.getInt("id"));
                         intent.putExtra("title", e.getString("title"));
                         intent.putExtra("beschrijving", e.getString("beschrijving"));
+                        intent.putExtra("location", e.getString("location"));
                         intent.putExtra("date", e.getString("date"));
 
                         ArrayList<String> aanwezig = new ArrayList<String>();
@@ -128,7 +129,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     try {
                         temp = json.getJSONObject(i);
                         String finalDate = parseDate(temp.getString("date").substring(0, 10));
-                        Event tempEvent = new Event(temp.getInt("id"), temp.getString("title").toString(), temp.getString("beschrijving").toString(), finalDate, temp.getString("end_time"));
+                        Event tempEvent = new Event(temp.getInt("id"), temp.getString("title").toString(), temp.getString("beschrijving").toString(), temp.getString("location").toString(), finalDate, temp.getString("end_time"));
                         listItems.add(tempEvent);
                         if (adapter != null) {
                             adapter.notifyDataSetChanged();

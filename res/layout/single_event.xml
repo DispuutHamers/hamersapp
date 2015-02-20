@@ -28,9 +28,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Date"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/event_date"
                     android:focusable="false"
-                    android:textSize="16dip"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_horizontal"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:id="@+id/event_location"
+                    android:focusable="false"
+                    android:textSize="16sp"
                     android:layout_gravity="center_horizontal"/>
             <TextView
                     android:layout_width="wrap_content"
@@ -40,6 +50,7 @@
                     android:id="@+id/event_beschrijving"
                     android:focusable="false"
                     android:textSize="18dp"
+                    android:layout_gravity="center_horizontal"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:paddingTop="10dp"

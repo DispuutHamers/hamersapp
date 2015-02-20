@@ -21,6 +21,7 @@ public class SingleEventActivity extends ActionBarActivity {
     int id;
     String title;
     String beschrijving;
+    String location;
     String date;
     Date dbDatum;
     ArrayList<String> aanwezigItems = new ArrayList<String>();
@@ -43,6 +44,7 @@ public class SingleEventActivity extends ActionBarActivity {
         TextView titleTV = (TextView) findViewById(R.id.event_title);
         TextView beschrijvingTV = (TextView) findViewById(R.id.event_beschrijving);
         TextView dateTV = (TextView) findViewById(R.id.event_date);
+        TextView locationTV = (TextView) findViewById(R.id.event_location);
         ListView aanwezig_list = (ListView) findViewById(R.id.event_aanwezig);
         ListView afwezig_list = (ListView) findViewById(R.id.event_afwezig);
         LinearLayout aanwezig_layout = (LinearLayout) findViewById(R.id.aanwezig_layout);
@@ -68,6 +70,7 @@ public class SingleEventActivity extends ActionBarActivity {
 
         title = extras.getString("title");
         beschrijving = extras.getString("beschrijving");
+        location = extras.getString("location");
 
         String appDatum = null;
         try {
@@ -92,6 +95,12 @@ public class SingleEventActivity extends ActionBarActivity {
         titleTV.setText(title);
         beschrijvingTV.setText(beschrijving);
         dateTV.setText(appDatum);
+
+        if (!location.equals("null")) {
+            locationTV.setText(location);
+        } else {
+            locationTV.setVisibility(View.GONE);
+        }
     }
 
     @Override
