@@ -68,7 +68,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return view;
     }
 
-    public void initSwiper(View view, ListView beer_list) {
+    public void initSwiper(View view, final ListView beer_list) {
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
