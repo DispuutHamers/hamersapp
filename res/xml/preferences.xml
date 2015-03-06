@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+<!--    <PreferenceCategory
+            android:title="@string/pushnotifications">
+        <CheckBoxPreference
+                android:id="@+id/pushnotification"
+                android:title="@string/push_title"
+                android:defaultValue="true"
+                android:key="pushPref"
+                android:summaryOn="@string/pref_summaryOn"
+                android:summaryOff="@string/pref_summaryOff"/>
+        </PreferenceCategory>
+-->
+    <PreferenceCategory
+        android:title="@string/apikey_category">
+        <EditTextPreference
+                android:id="@+id/apikey"
+                android:title="API Key"
+                android:summary="@string/apikey_summary"
+                android:key="apikey"
+                android:inputType="textMultiLine"
+                android:hint="@string/apikey_hint"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="@string/sorting_category">
+        <ListPreference
+                android:title="Leden sorteren"
+                android:key="userSort"
+                android:defaultValue="none"
+                android:entries="@array/usersort_array"
+                android:entryValues="@array/usersort_array_values" />
+        <ListPreference
+                android:title="Bier sorteren"
+                android:key="beerSort"
+                android:defaultValue="none"
+                android:entries="@array/beersort_array"
+                android:entryValues="@array/beersort_array_values" />
+    </PreferenceCategory>
+</PreferenceScreen>
