@@ -1,15 +1,5 @@
 # ANDROID / ECLIPSE
 
-# built application files
-*.apk
-*.ap_
-
-# files for the dex VM
-*.dex
-
-# Java class files
-*.class
-
 # generated files - android project subfolder
 Android/bin/
 Android/gen/
@@ -23,7 +13,6 @@ gen/
 *.properties
 
 # IOS / Xcode
-build/*
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -63,8 +52,4 @@ atlassian-ide-plugin.xml
 
 # GRADLE
 .gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
 .DS_Store
-/build

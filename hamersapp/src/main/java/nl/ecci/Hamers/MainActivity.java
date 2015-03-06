@@ -23,7 +23,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import nl.ecci.Hamers.Beers.BeerFragment;
 import nl.ecci.Hamers.Beers.NewBeerActivity;
-import nl.ecci.Hamers.Events.EventFragment;
+import nl.ecci.Hamers.Events.EventListFragment;
 import nl.ecci.Hamers.Events.NewEventActivity;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
@@ -37,7 +37,7 @@ import java.text.SimpleDateFormat;
 
 
 public class MainActivity extends ActionBarActivity {
-    public EventFragment eventFragment = new EventFragment();
+    public EventListFragment eventListFragment = new EventListFragment();
     // Fragments
     QuoteListFragment quoteListFragment = new QuoteListFragment();
     UserFragment userFragment = new UserFragment();
@@ -206,9 +206,9 @@ public class MainActivity extends ActionBarActivity {
             }
             //reload Events
             if (prefs.getString(DataManager.EVENTKEY, null) != null) {
-                eventFragment.populateList(prefs);
+                eventListFragment.populateList(prefs);
             } else {
-                GetJson g = new GetJson(this, eventFragment, GetJson.EVENTURL, prefs, false);
+                GetJson g = new GetJson(this, eventListFragment, GetJson.EVENTURL, prefs, false);
                 g.execute();
             }
             //reload Reviews
@@ -254,7 +254,7 @@ public class MainActivity extends ActionBarActivity {
 
             case 2:
                 transaction
-                        .replace(R.id.content_frame, eventFragment)
+                        .replace(R.id.content_frame, eventListFragment)
                         .commit();
                 setTitle(getResources().getStringArray(R.array.drawer_array)[2]);
                 break;
@@ -289,9 +289,9 @@ public class MainActivity extends ActionBarActivity {
     /**
      * When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment
      *
-     * @param item
+     * @param view
      */
-    public void newQuote(MenuItem item) {
+    public void newQuote(View view) {
         DialogFragment newQuoteFragment = new NewQuoteFragment();
         newQuoteFragment.show(getSupportFragmentManager(), "quotes");
     }
@@ -299,9 +299,9 @@ public class MainActivity extends ActionBarActivity {
     /**
      * When user presses "+" in EventFragment, start new dialog with NewEventActivity
      *
-     * @param item
+     * @param view
      */
-    public void newEvent(MenuItem item) {
+    public void newEvent(View view) {
         Intent intent = new Intent(this, NewEventActivity.class);
         startActivity(intent);
     }
@@ -309,9 +309,9 @@ public class MainActivity extends ActionBarActivity {
     /**
      * When user presses "+" in BeerFragment, start new dialog with NewBeerActivity
      *
-     * @param item
+     * @param view
      */
-    public void newBeer(MenuItem item) {
+    public void newBeer(View view) {
         Intent intent = new Intent(this, NewBeerActivity.class);
         startActivity(intent);
     }

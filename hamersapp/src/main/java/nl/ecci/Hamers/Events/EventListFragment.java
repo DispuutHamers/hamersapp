@@ -3,11 +3,13 @@ package nl.ecci.Hamers.Events;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.*;
 import android.widget.*;
+import com.software.shell.fab.ActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.R;
@@ -20,14 +22,15 @@ import java.util.ArrayList;
 
 import static nl.ecci.Hamers.MainActivity.parseDate;
 
-public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class EventListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     ArrayList<Event> listItems = new ArrayList<Event>();
     ArrayAdapter<Event> adapter;
     SwipeRefreshLayout swipeView;
     SharedPreferences prefs;
+    int lastVisibleItem;
 
-    public EventFragment() {
+    public EventListFragment() {
         // Empty constructor required for fragment subclasses
     }
 
@@ -35,10 +38,13 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.events_fragment, container, false);
         ListView event_list = (ListView) view.findViewById(R.id.events_listView);
+        final ActionButton fab = (ActionButton) view.findViewById(R.id.event_add_button);
+        fab.setShowAnimation(ActionButton.Animations.FADE_IN);
+        fab.setHideAnimation(ActionButton.Animations.FADE_OUT);
 
         setHasOptionsMenu(true);
 
-        initSwiper(view, event_list);
+        initSwiper(view, event_list, fab);
 
         adapter = new EventsAdapter(this.getActivity(), listItems);
         event_list.setAdapter(adapter);
@@ -75,14 +81,13 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                         e1.printStackTrace();
                     }
                 }
-
             }
         });
 
         return view;
     }
 
-    public void initSwiper(View view, final ListView event_list) {
+    public void initSwiper(View view, final ListView event_list, final ActionButton fab) {
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.events_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
@@ -105,6 +110,24 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     boolean topOfFirstItemVisible = event_list.getChildAt(0).getTop() == 0;
                     // enabling or disabling the refresh layout
                     enable = firstItemVisible && topOfFirstItemVisible;
+
+                    // Hide/show add-button (after 0.1 second)
+                    if (firstVisibleItem > lastVisibleItem) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                fab.hide();
+                            }
+                        }, 125);
+                    } else if( firstVisibleItem < lastVisibleItem) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                fab.show();
+                            }
+                        }, 125);
+                    }
+                    lastVisibleItem = firstVisibleItem;
                 }
                 swipeView.setEnabled(enable);
             }

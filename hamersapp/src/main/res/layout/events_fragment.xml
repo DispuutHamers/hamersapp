@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
         android:id="@+id/events_swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
+    <RelativeLayout
             android:orientation="vertical"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent">
         <ListView
-                android:layout_width="match_parent"
-                android:layout_height="0dip"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:id="@+id/events_listView"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"/>
-    </LinearLayout>
+        <com.software.shell.fab.ActionButton
+                android:id="@+id/event_add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/fab_margin"
+                android:layout_marginBottom="@dimen/fab_margin"
+                android:onClick="newEvent"
+                fab:type="DEFAULT"
+                fab:button_color="@color/fab_material_red_500"
+                fab:button_colorPressed="@color/fab_material_red_900"
+                fab:image="@drawable/fab_plus_icon"
+                fab:image_size="24dp"
+                fab:shadow_color="#757575"
+                fab:shadow_radius="1.0dp"
+                fab:shadow_xOffset="0.5dp"
+                fab:shadow_yOffset="1.0dp"/>
+    </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

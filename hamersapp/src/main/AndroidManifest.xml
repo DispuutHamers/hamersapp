@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="nl.ecci.Hamers"
-          android:versionCode="11"
-          android:versionName="1.0.10">
+          android:versionCode="12"
+          android:versionName="1.0.11">
     <uses-sdk android:minSdkVersion="10"
               android:targetSdkVersion="21" />
 
@@ -22,9 +22,6 @@
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="nl.ecci.Hamers.MainActivity"/>
-            <meta-data android:name="android.app.searchable"
-                       android:resource="@xml/searchable" />
-
         </activity>
         <activity android:name=".Beers.NewBeerReviewActivity"
                 android:parentActivityName="nl.ecci.Hamers.MainActivity"

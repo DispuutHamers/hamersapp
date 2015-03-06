@@ -7,11 +7,4 @@
             android:icon="@drawable/action_search"
             hamers:showAsAction="ifRoom|withText"
             hamers:actionViewClass="android.support.v7.widget.SearchView"/>
-
-      <item android:id="@+id/action_new_quote"
-          android:icon="@drawable/action_add"
-          android:title="@string/action_new_quote"
-          hamers:showAsAction="ifRoom|withText"
-          android:visible="false"
-          android:onClick="newQuote"/>
 </menu>

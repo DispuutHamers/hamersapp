@@ -3,11 +3,13 @@ package nl.ecci.Hamers.Beers;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.*;
 import android.widget.*;
+import com.software.shell.fab.ActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.R;
@@ -27,6 +29,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     ArrayAdapter<Beer> adapter;
     SwipeRefreshLayout swipeView;
     SharedPreferences prefs;
+    int lastVisibleItem;
 
     public BeerFragment() {
         // Empty constructor required for fragment subclasses
@@ -35,10 +38,13 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.beer_fragment, container, false);
         ListView beer_list = (ListView) view.findViewById(R.id.beer_listView);
+        final ActionButton fab = (ActionButton) view.findViewById(R.id.beer_add_button);
+        fab.setShowAnimation(ActionButton.Animations.FADE_IN);
+        fab.setHideAnimation(ActionButton.Animations.FADE_OUT);
 
         setHasOptionsMenu(true);
 
-        initSwiper(view, beer_list);
+        initSwiper(view, beer_list, fab);
 
         adapter = new BeersAdapter(this.getActivity(), listItems);
         beer_list.setAdapter(adapter);
@@ -68,7 +74,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return view;
     }
 
-    public void initSwiper(View view, final ListView beer_list) {
+    public void initSwiper(View view, final ListView beer_list, final ActionButton fab) {
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
@@ -90,6 +96,21 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     boolean topOfFirstItemVisible = beer_list.getChildAt(0).getTop() == 0;
                     // enabling or disabling the refresh layout
                     enable = firstItemVisible && topOfFirstItemVisible;
+
+
+                    // Hide/show add-button (after 0.1 second)
+                    if (firstVisibleItem > lastVisibleItem) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {fab.hide();}
+                        }, 125);
+                    } else if( firstVisibleItem < lastVisibleItem) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {fab.show();}
+                        }, 125);
+                    }
+                    lastVisibleItem = firstVisibleItem;
                 }
                 swipeView.setEnabled(enable);
             }

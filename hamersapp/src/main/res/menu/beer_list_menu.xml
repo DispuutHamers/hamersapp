@@ -1,10 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:hamers="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/action_new_beer"
-          android:icon="@drawable/action_add"
-          android:title="@string/action_new_beer"
-          hamers:showAsAction="ifRoom|withText"
-          android:onClick="newBeer"/>
     <group android:checkableBehavior="none">
         <item android:id="@id/sort_name"
               android:title="@string/sort_name" />
