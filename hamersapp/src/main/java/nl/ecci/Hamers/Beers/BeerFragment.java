@@ -32,7 +32,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     int lastVisibleItem;
 
     public BeerFragment() {
-        // Empty constructor required for fragment subclasses
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

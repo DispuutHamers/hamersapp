@@ -1,49 +1,112 @@
 package nl.ecci.Hamers.Events;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.R;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class EventsAdapter extends ArrayAdapter<Event> {
+public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
-    private final Context context;
-    private final ArrayList<Event> itemsArrayList;
+    public Context context;
+    private final ArrayList<Event> dataSet;
+    SharedPreferences prefs;
 
-    public EventsAdapter(Context context, ArrayList<Event> itemsArrayList) {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public View view;
+        public TextView title;
+        public TextView beschrijving;
+        public TextView date;
 
-        super(context, R.layout.event_row, itemsArrayList);
+        public ViewHolder(View view) {
+            super(view);
+            this.view = view;
 
-        this.context = context;
-        this.itemsArrayList = itemsArrayList;
+            title = (TextView) view.findViewById(R.id.event_title);
+            beschrijving = (TextView) view.findViewById(R.id.event_beschrijving);
+            date = (TextView) view.findViewById(R.id.event_date);
+        }
+
     }
 
+    public EventsAdapter(ArrayList<Event> itemsArrayList, Context context) {
+        this.dataSet = itemsArrayList;
+        this.context = context;
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    // Create new views (invoked by the layout manager)
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.event_card, parent, false);
 
-        // 1. Create inflater
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final ViewHolder vh = new ViewHolder(view);
 
-        // 2. Get rowView from inflater
-        View rowView = inflater.inflate(R.layout.event_row, parent, false);
+        vh.view.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        // 3. Get the two text view from the rowView
-        TextView title = (TextView) rowView.findViewById(R.id.event_title);
-        TextView beschrijving = (TextView) rowView.findViewById(R.id.event_beschrijving);
-        TextView date = (TextView) rowView.findViewById(R.id.event_date);
+                JSONObject e = DataManager.getEvent(prefs, dataSet.get(vh.getPosition()).getTitle(), dataSet.get(vh.getPosition()).getDate());
+                if (e != null) {
+                    try {
+                        Intent intent = new Intent(context, SingleEventActivity.class);
+                        intent.putExtra("id", e.getInt("id"));
+                        intent.putExtra("title", e.getString("title"));
+                        intent.putExtra("beschrijving", e.getString("beschrijving"));
+                        intent.putExtra("location", e.getString("location"));
+                        intent.putExtra("date", e.getString("date"));
 
-        // 4. Set the text for textView
-        title.setText(itemsArrayList.get(position).getTitle());
-        beschrijving.setText(itemsArrayList.get(position).getBeschrijving());
-        date.setText(itemsArrayList.get(position).getDate());
+                        ArrayList<String> aanwezig = new ArrayList<String>();
+                        ArrayList<String> afwezig = new ArrayList<String>();
 
-        // 5. return rowView
-        return rowView;
+                        JSONArray signups = e.getJSONArray("signups");
+
+                        for (int i = 0; i < signups.length(); i++) {
+                            JSONObject signup = signups.getJSONObject(i);
+                            if (signup.getBoolean("status") == true) {
+                                aanwezig.add(DataManager.getUser(prefs, signup.getInt("user_id")).getString("name"));
+                            } else {
+                                afwezig.add(DataManager.getUser(prefs, signup.getInt("user_id")).getString("name"));
+                            }
+                        }
+                        intent.putStringArrayListExtra("aanwezig", aanwezig);
+                        intent.putStringArrayListExtra("afwezig", afwezig);
+                        context.startActivity(intent);
+
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        return vh;
+    }
+
+    // Replace the contents of a view (invoked by the layout manager)
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.title.setText(dataSet.get(position).getTitle());
+        holder.beschrijving.setText(dataSet.get(position).getBeschrijving());
+        holder.date.setText(dataSet.get(position).getDate());
+    }
+
+    // Return the size of your dataset (invoked by the layout manager)
+    @Override
+    public int getItemCount() {
+        return dataSet.size();
     }
 }
