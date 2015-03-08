@@ -131,9 +131,4 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
             swipeView.setRefreshing(false);
         }
     }
-
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.quote_list_menu, menu);
-//    }
 }
