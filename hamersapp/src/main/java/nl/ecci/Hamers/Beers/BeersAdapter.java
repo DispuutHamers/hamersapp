@@ -29,6 +29,7 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         public TextView title;
         public TextView soort;
         public TextView brewer;
+        public TextView rating;
         public TextView info;
         public ImageView picture;
 
@@ -39,6 +40,7 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
             title = (TextView) view.findViewById(R.id.beer_name);
             soort = (TextView) view.findViewById(R.id.beer_soort);
             brewer = (TextView) view.findViewById(R.id.beer_brewer);
+            rating = (TextView) view.findViewById(R.id.row_beer_rating);
             info = (TextView) view.findViewById(R.id.beer_info);
             picture = (ImageView) view.findViewById(R.id.beer_picture);
         }
@@ -54,7 +56,7 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.beer_row, parent, false);
+                .inflate(R.layout.beer_card, parent, false);
 
         final ViewHolder vh = new ViewHolder(view);
 
@@ -89,6 +91,7 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         holder.title.setText(dataSet.get(position).getName());
         holder.soort.setText(dataSet.get(position).getSoort());
         holder.brewer.setText(dataSet.get(position).getBrewer());
+        holder.rating.setText(dataSet.get(position).getRating());
         holder.info.setText((dataSet.get(position).getCountry() + " - " + dataSet.get(position).getPercentage()));
 
         Bitmap image = DataManager.getBeerImage(prefs, dataSet.get(position).getName() + "-thumb");

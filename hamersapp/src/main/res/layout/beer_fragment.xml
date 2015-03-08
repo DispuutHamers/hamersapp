@@ -13,7 +13,6 @@
                 android:id="@+id/beer_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
                 android:scrollbars="vertical"/>
         <com.software.shell.fab.ActionButton
                 android:id="@+id/beer_add_button"
