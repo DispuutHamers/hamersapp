@@ -29,7 +29,8 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     SwipeRefreshLayout swipeView;
     SharedPreferences prefs;
 
-    public EventFragment() {}
+    public EventFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

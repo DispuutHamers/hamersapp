@@ -70,7 +70,16 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
             @Override
             public void onScrolled(RecyclerView view, int dx, int dy) {
-                swipeView.setEnabled(lm.findFirstCompletelyVisibleItemPosition() == 0);
+                boolean enable = false;
+                if (beer_list != null && beer_list.getChildCount() > 0) {
+                    // check if the first item of the list is visible
+                    boolean firstItemVisible = lm.findFirstCompletelyVisibleItemPosition() == 0;
+                    // check if the top of the first item is visible
+                    boolean topOfFirstItemVisible = beer_list.getChildAt(0).getTop() == 0;
+                    // enabling or disabling the refresh layout
+                    enable = firstItemVisible && topOfFirstItemVisible;
+                }
+                swipeView.setEnabled(enable);
             }
         });
     }

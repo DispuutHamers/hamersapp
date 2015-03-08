@@ -173,7 +173,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             int quote1 = user1.getQuotecount();
             int quote2 = user2.getQuotecount();
 
-            return ((Integer)quote2).compareTo(quote1);
+            return ((Integer) quote2).compareTo(quote1);
         }
     };
 
@@ -184,7 +184,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             int review1 = user1.getReviewcount();
             int review2 = user2.getReviewcount();
 
-            return ((Integer)review2).compareTo(review1);
+            return ((Integer) review2).compareTo(review1);
         }
     };
 }
