@@ -80,7 +80,7 @@ public class SingleEventActivity extends ActionBarActivity {
             // Event date
             date = extras.getString("date");
             DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-            DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss");
+            DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm");
             dbDatum = dbDF.parse(date);
             appDatum = appDF.format(dbDatum);
 
