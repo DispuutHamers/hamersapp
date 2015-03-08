@@ -20,8 +20,8 @@ import java.util.ArrayList;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
-    public Context context;
-    private final ArrayList<Event> dataSet;
+    private Context context;
+    private ArrayList<Event> dataSet;
     SharedPreferences prefs;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -38,7 +38,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             beschrijving = (TextView) view.findViewById(R.id.event_beschrijving);
             date = (TextView) view.findViewById(R.id.event_date);
         }
-
     }
 
     public EventsAdapter(ArrayList<Event> itemsArrayList, Context context) {

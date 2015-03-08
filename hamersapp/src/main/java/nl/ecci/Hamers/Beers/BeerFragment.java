@@ -1,14 +1,14 @@
 package nl.ecci.Hamers.Beers;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.*;
-import android.widget.*;
+import android.widget.Toast;
 import com.software.shell.fab.ActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
@@ -21,97 +21,53 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import static android.widget.AdapterView.OnItemClickListener;
-
 public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     ArrayList<Beer> listItems = new ArrayList<Beer>();
-    ArrayAdapter<Beer> adapter;
+    BeersAdapter adapter;
     SwipeRefreshLayout swipeView;
     SharedPreferences prefs;
-    int lastVisibleItem;
 
     public BeerFragment() {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.beer_fragment, container, false);
-        ListView beer_list = (ListView) view.findViewById(R.id.beer_listView);
-        final ActionButton fab = (ActionButton) view.findViewById(R.id.beer_add_button);
-        fab.setShowAnimation(ActionButton.Animations.FADE_IN);
-        fab.setHideAnimation(ActionButton.Animations.FADE_OUT);
+        RecyclerView beer_list = (RecyclerView) view.findViewById(R.id.beer_recyclerview);
 
         setHasOptionsMenu(true);
 
-        initSwiper(view, beer_list, fab);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        beer_list.setLayoutManager(mLayoutManager);
 
-        adapter = new BeersAdapter(this.getActivity(), listItems);
+        init(view, beer_list, mLayoutManager);
+
+        adapter = new BeersAdapter(listItems, getActivity());
         beer_list.setAdapter(adapter);
-        beer_list.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                JSONObject b = DataManager.getBeer(prefs, adapter.getItem(position).getName());
-                if (b != null) {
-                    try {
-                        Intent intent = new Intent(getActivity(), SingleBeerActivity.class);
-                        intent.putExtra("id", b.getInt("id"));
-                        intent.putExtra("name", b.getString("name"));
-                        intent.putExtra("soort", b.getString("soort"));
-                        intent.putExtra("percentage", b.getString("percentage"));
-                        intent.putExtra("brewer", b.getString("brewer"));
-                        intent.putExtra("country", b.getString("country"));
-                        intent.putExtra("cijfer", b.getString("cijfer"));
-                        startActivity(intent);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
 
         sort();
 
         return view;
     }
 
-    public void initSwiper(View view, final ListView beer_list, final ActionButton fab) {
+    public void init(View view, final RecyclerView beer_list, final LinearLayoutManager lm) {
+        // Floating action button
+        final ActionButton fab = (ActionButton) view.findViewById(R.id.beer_add_button);
+        fab.setShowAnimation(ActionButton.Animations.FADE_IN);
+        fab.setHideAnimation(ActionButton.Animations.FADE_OUT);
+
+        // SwipeRefreshLayout
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
 
         swipeView.setOnRefreshListener(this);
 
-        beer_list.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-            }
+        beer_list.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                boolean enable = false;
-                if (beer_list != null && beer_list.getChildCount() > 0) {
-                    // check if the first item of the list is visible
-                    boolean firstItemVisible = beer_list.getFirstVisiblePosition() == 0;
-                    // check if the top of the first item is visible
-                    boolean topOfFirstItemVisible = beer_list.getChildAt(0).getTop() == 0;
-                    // enabling or disabling the refresh layout
-                    enable = firstItemVisible && topOfFirstItemVisible;
-
-
-                    // Hide/show add-button (after 0.1 second)
-                    if (firstVisibleItem > lastVisibleItem) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {fab.hide();}
-                        }, 125);
-                    } else if( firstVisibleItem < lastVisibleItem) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {fab.show();}
-                        }, 125);
-                    }
-                    lastVisibleItem = firstVisibleItem;
-                }
-                swipeView.setEnabled(enable);
+            public void onScrolled(RecyclerView view, int dx, int dy) {
+                swipeView.setEnabled(lm.findFirstCompletelyVisibleItemPosition() == 0);
             }
         });
     }
@@ -200,7 +156,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public Comparator<Beer> nameComparator = new Comparator<Beer>() {
         @Override
         public int compare(Beer beer1, Beer beer2) {
-
             String name1 = beer1.getName();
             String name2 = beer2.getName();
 
@@ -211,7 +166,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public Comparator<Beer> ratingComparator = new Comparator<Beer>() {
         @Override
         public int compare(Beer beer1, Beer beer2) {
-
             String rating1 = beer1.getRating();
             String rating2 = beer2.getRating();
 
@@ -220,7 +174,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             } else if (rating2.equals("nog niet bekend")) {
                 rating2 = "-1";
             }
-
             return rating2.compareToIgnoreCase(rating1);
         }
     };
