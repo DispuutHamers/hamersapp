@@ -39,16 +39,12 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         fab.setShowAnimation(ActionButton.Animations.FADE_IN);
         fab.setHideAnimation(ActionButton.Animations.FADE_OUT);
 
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
 
         initSwiper(view, quote_list, fab);
 
         adapter = new QuotesAdapter(this.getActivity(), listItems);
         quote_list.setAdapter(adapter);
-        quote_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            }
-        });
 
         return view;
     }
@@ -145,8 +141,8 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         }
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.quote_list_menu, menu);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.quote_list_menu, menu);
+//    }
 }

@@ -36,7 +36,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         View view = inflater.inflate(R.layout.events_fragment, container, false);
         RecyclerView event_list = (RecyclerView) view.findViewById(R.id.events_recyclerview);
 
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         event_list.setLayoutManager(mLayoutManager);
@@ -108,11 +108,5 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.event_list_menu, menu);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        onRefresh();
     }
 }

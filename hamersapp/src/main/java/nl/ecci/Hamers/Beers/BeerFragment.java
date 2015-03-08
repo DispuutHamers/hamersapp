@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.*;
 import android.widget.Toast;
 import com.software.shell.fab.ActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
+import nl.ecci.Hamers.Helpers.DividerItemDecoration;
 import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
@@ -39,6 +41,8 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         beer_list.setLayoutManager(mLayoutManager);
+        beer_list.setItemAnimator(new DefaultItemAnimator());
+        beer_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
         init(view, beer_list, mLayoutManager);
 

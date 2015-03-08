@@ -56,7 +56,7 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.beer_card, parent, false);
+                .inflate(R.layout.beer_row, parent, false);
 
         final ViewHolder vh = new ViewHolder(view);
 
@@ -89,9 +89,9 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(dataSet.get(position).getName());
-        holder.soort.setText(dataSet.get(position).getSoort());
-        holder.brewer.setText(dataSet.get(position).getBrewer());
-        holder.rating.setText(dataSet.get(position).getRating());
+        holder.soort.setText("Soort: " + dataSet.get(position).getSoort());
+        holder.brewer.setText("Brouwer: " + dataSet.get(position).getBrewer());
+        holder.rating.setText("Cijfer: " + dataSet.get(position).getRating());
         holder.info.setText((dataSet.get(position).getCountry() + " - " + dataSet.get(position).getPercentage()));
 
         Bitmap image = DataManager.getBeerImage(prefs, dataSet.get(position).getName() + "-thumb");

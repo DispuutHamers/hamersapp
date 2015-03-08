@@ -6,5 +6,6 @@
             android:title="@string/action_search_quote"
             android:icon="@drawable/action_search"
             hamers:showAsAction="ifRoom|withText"
+            android:visible="false"
             hamers:actionViewClass="android.support.v7.widget.SearchView"/>
 </menu>
