@@ -9,7 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.*;
 import android.widget.Toast;
-import com.software.shell.fab.ActionButton;
+import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.R;
@@ -41,20 +41,19 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         event_list.setLayoutManager(mLayoutManager);
 
-        init(view, event_list, mLayoutManager);
+        initSwiper(view, event_list, mLayoutManager);
 
         adapter = new EventsAdapter(listItems, getActivity());
         event_list.setAdapter(adapter);
 
+        // Floating action button
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.event_add_button);
+        fab.attachToRecyclerView(event_list);
+
         return view;
     }
 
-    public void init(View view, final RecyclerView event_list, final LinearLayoutManager lm) {
-        // Floating action button
-        final ActionButton fab = (ActionButton) view.findViewById(R.id.event_add_button);
-        fab.setShowAnimation(ActionButton.Animations.FADE_IN);
-        fab.setHideAnimation(ActionButton.Animations.FADE_OUT);
-
+    public void initSwiper(View view, final RecyclerView event_list, final LinearLayoutManager lm) {
         // SwipeRefreshLayout
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.events_swipe_container);
         swipeView.setOnRefreshListener(this);

@@ -10,7 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.*;
 import android.widget.Toast;
-import com.software.shell.fab.ActionButton;
+import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.DividerItemDecoration;
 import nl.ecci.Hamers.Helpers.GetJson;
@@ -44,22 +44,21 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         beer_list.setItemAnimator(new DefaultItemAnimator());
         beer_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
-        init(view, beer_list, mLayoutManager);
+        initSwiper(view, beer_list, mLayoutManager);
 
         adapter = new BeersAdapter(listItems, getActivity());
         beer_list.setAdapter(adapter);
 
         sort();
 
+        // Floating action button
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.beer_add_button);
+        fab.attachToRecyclerView(beer_list);
+
         return view;
     }
 
-    public void init(View view, final RecyclerView beer_list, final LinearLayoutManager lm) {
-        // Floating action button
-        final ActionButton fab = (ActionButton) view.findViewById(R.id.beer_add_button);
-        fab.setShowAnimation(ActionButton.Animations.FADE_IN);
-        fab.setHideAnimation(ActionButton.Animations.FADE_OUT);
-
+    public void initSwiper(View view, final RecyclerView beer_list, final LinearLayoutManager lm) {
         // SwipeRefreshLayout
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
         swipeView.setOnRefreshListener(this);

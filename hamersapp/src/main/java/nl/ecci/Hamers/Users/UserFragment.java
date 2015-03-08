@@ -10,7 +10,6 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import nl.ecci.Hamers.Beers.Beer;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.R;

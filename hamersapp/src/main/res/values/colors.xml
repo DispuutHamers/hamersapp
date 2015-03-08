@@ -18,5 +18,7 @@
     <color name="black">#000000</color>
 
     <color name="sikkelrood">#d50000</color>
+    <color name="sikkelrood_pressed">#b71c1c</color>
+
     <color name="ripple">#ff80ab</color>
 </resources>

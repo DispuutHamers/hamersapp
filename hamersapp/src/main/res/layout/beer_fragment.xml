@@ -5,32 +5,23 @@
         android:id="@+id/beer_swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <RelativeLayout
-            android:orientation="vertical"
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/beer_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
+    <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/beer_add_button"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent">
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/beer_recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="vertical"/>
-        <com.software.shell.fab.ActionButton
-                android:id="@+id/beer_add_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/fab_margin"
-                android:layout_marginBottom="@dimen/fab_margin"
-                android:onClick="newBeer"
-                fab:type="DEFAULT"
-                fab:button_color="@color/fab_material_red_500"
-                fab:button_colorPressed="@color/fab_material_red_900"
-                fab:image="@drawable/fab_plus_icon"
-                fab:image_size="24dp"
-                fab:shadow_color="#757575"
-                fab:shadow_radius="1.0dp"
-                fab:shadow_xOffset="0.5dp"
-                fab:shadow_yOffset="1.0dp"/>
-    </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/action_add"
+            fab:fab_colorNormal="@color/sikkelrood"
+            fab:fab_colorPressed="@color/sikkelrood_pressed"
+            fab:fab_colorRipple="@color/ripple"
+            android:onClick="newBeer"/>
 </android.support.v4.widget.SwipeRefreshLayout>

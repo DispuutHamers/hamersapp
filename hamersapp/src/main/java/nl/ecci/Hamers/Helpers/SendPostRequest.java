@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.Toast;
-import nl.ecci.Hamers.Beers.NewBeerReviewActivity;
 import nl.ecci.Hamers.MainActivity;
 
 import java.io.DataOutputStream;

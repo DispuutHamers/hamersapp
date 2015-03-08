@@ -2,13 +2,17 @@ package nl.ecci.Hamers.Quotes;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.*;
-import android.widget.*;
-import com.software.shell.fab.ActionButton;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.R;
@@ -35,21 +39,22 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.quote_list_fragment, container, false);
         ListView quote_list = (ListView) view.findViewById(R.id.quotes_listView);
-        final ActionButton fab = (ActionButton) view.findViewById(R.id.quote_add_button);
-        fab.setShowAnimation(ActionButton.Animations.FADE_IN);
-        fab.setHideAnimation(ActionButton.Animations.FADE_OUT);
 
         //setHasOptionsMenu(true);
 
-        initSwiper(view, quote_list, fab);
+        initSwiper(view, quote_list);
 
         adapter = new QuotesAdapter(this.getActivity(), listItems);
         quote_list.setAdapter(adapter);
 
+        // Floating action button
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.quote_add_button);
+        fab.attachToListView(quote_list);
+
         return view;
     }
 
-    public void initSwiper(View view, final ListView quote_list, final ActionButton fab) {
+    public void initSwiper(View view, final ListView quote_list) {
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.quotes_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
@@ -71,20 +76,6 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
                     boolean topOfFirstItemVisible = quote_list.getChildAt(0).getTop() == 0;
                     // enabling or disabling the refresh layout
                     enable = firstItemVisible && topOfFirstItemVisible;
-
-                    // Hide/show add-button (after 0.1 second)
-                    if (firstVisibleItem > lastVisibleItem) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {fab.hide();}
-                        }, 125);
-                    } else if( firstVisibleItem < lastVisibleItem) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {fab.show();}
-                        }, 125);
-                    }
-                    lastVisibleItem = firstVisibleItem;
                 }
                 swipeView.setEnabled(enable);
             }
