@@ -22,56 +22,49 @@ import java.util.ArrayList;
 
 import static nl.ecci.Hamers.MainActivity.parseDate;
 
-public class EventListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     ArrayList<Event> listItems = new ArrayList<Event>();
     EventsAdapter adapter;
     SwipeRefreshLayout swipeView;
     SharedPreferences prefs;
-    int lastVisibleItem;
-    private RecyclerView.LayoutManager mLayoutManager;
 
-
-    public EventListFragment() {
-    }
+    public EventFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.events_fragment, container, false);
         RecyclerView event_list = (RecyclerView) view.findViewById(R.id.events_recyclerview);
 
-        final ActionButton fab = (ActionButton) view.findViewById(R.id.event_add_button);
-        fab.setShowAnimation(ActionButton.Animations.FADE_IN);
-        fab.setHideAnimation(ActionButton.Animations.FADE_OUT);
-
         setHasOptionsMenu(true);
 
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         event_list.setLayoutManager(mLayoutManager);
 
-        initSwiper(view, event_list, fab);
+        init(view, event_list, mLayoutManager);
 
-        adapter = new EventsAdapter(listItems, this.getActivity());
+        adapter = new EventsAdapter(listItems, getActivity());
         event_list.setAdapter(adapter);
 
         return view;
     }
 
-    public void initSwiper(View view, final RecyclerView event_list, final ActionButton fab) {
+    public void init(View view, final RecyclerView event_list, final LinearLayoutManager lm) {
+        // Floating action button
+        final ActionButton fab = (ActionButton) view.findViewById(R.id.event_add_button);
+        fab.setShowAnimation(ActionButton.Animations.FADE_IN);
+        fab.setHideAnimation(ActionButton.Animations.FADE_OUT);
+
+        // SwipeRefreshLayout
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.events_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
-
-        swipeView.setOnRefreshListener(this);
 
         event_list.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrolled(RecyclerView view, int dx, int dy) {
-                int topRowVerticalPosition = (event_list == null || event_list.getChildCount() == 0) ?
-                        0 : event_list.getChildAt(0).getTop();
-                swipeView.setEnabled((topRowVerticalPosition >= 0));
+                swipeView.setEnabled(lm.findFirstCompletelyVisibleItemPosition() == 0);
             }
         });
     }
@@ -99,7 +92,6 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                         if (adapter != null) {
                             adapter.notifyDataSetChanged();
                         }
-                        ;
                     } catch (ParseException e) {
                         Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
                     }

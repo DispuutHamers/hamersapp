@@ -11,7 +11,7 @@ import android.util.Base64;
 import android.util.TypedValue;
 import android.widget.Toast;
 import nl.ecci.Hamers.Beers.BeerFragment;
-import nl.ecci.Hamers.Events.EventListFragment;
+import nl.ecci.Hamers.Events.EventFragment;
 import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.Quotes.QuoteListFragment;
 import nl.ecci.Hamers.R;
@@ -124,9 +124,9 @@ public class GetJson extends AsyncTask<String, String, String> {
                         ((UserFragment) f).populateList(prefs);
                     }
                     // Event fragment
-                    else if (f instanceof EventListFragment) {
+                    else if (f instanceof EventFragment) {
                         prefs.edit().putString(DataManager.EVENTKEY, result).apply();
-                        ((EventListFragment) f).populateList(prefs);
+                        ((EventFragment) f).populateList(prefs);
                     }
                     // Beer fragment
                     else if (f instanceof BeerFragment) {

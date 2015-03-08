@@ -23,7 +23,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import nl.ecci.Hamers.Beers.BeerFragment;
 import nl.ecci.Hamers.Beers.NewBeerActivity;
-import nl.ecci.Hamers.Events.EventListFragment;
+import nl.ecci.Hamers.Events.EventFragment;
 import nl.ecci.Hamers.Events.NewEventActivity;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
@@ -37,7 +37,7 @@ import java.text.SimpleDateFormat;
 
 
 public class MainActivity extends ActionBarActivity {
-    public EventListFragment eventListFragment = new EventListFragment();
+    public EventFragment eventFragment = new EventFragment();
     // Fragments
     QuoteListFragment quoteListFragment = new QuoteListFragment();
     UserFragment userFragment = new UserFragment();
@@ -206,9 +206,9 @@ public class MainActivity extends ActionBarActivity {
             }
             //reload Events
             if (prefs.getString(DataManager.EVENTKEY, null) != null) {
-                eventListFragment.populateList(prefs);
+                eventFragment.populateList(prefs);
             } else {
-                GetJson g = new GetJson(this, eventListFragment, GetJson.EVENTURL, prefs, false);
+                GetJson g = new GetJson(this, eventFragment, GetJson.EVENTURL, prefs, false);
                 g.execute();
             }
             //reload Reviews
@@ -254,7 +254,7 @@ public class MainActivity extends ActionBarActivity {
 
             case 2:
                 transaction
-                        .replace(R.id.content_frame, eventListFragment)
+                        .replace(R.id.content_frame, eventFragment)
                         .commit();
                 setTitle(getResources().getStringArray(R.array.drawer_array)[2]);
                 break;
