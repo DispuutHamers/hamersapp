@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
@@ -28,9 +27,8 @@ import static nl.ecci.Hamers.MainActivity.parseDate;
 public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public SwipeRefreshLayout swipeView;
-    ArrayList<Quote> listItems = new ArrayList<Quote>();
-    ArrayAdapter<Quote> adapter;
-    int lastVisibleItem;
+    ArrayList<Quote> dataSet = new ArrayList<Quote>();
+    QuotesAdapter adapter;
 
     public QuoteListFragment() {
     }
@@ -38,46 +36,34 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.quote_list_fragment, container, false);
-        ListView quote_list = (ListView) view.findViewById(R.id.quotes_listView);
+        RecyclerView quote_list = (RecyclerView) view.findViewById(R.id.quotes_recyclerview);
 
-        //setHasOptionsMenu(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        quote_list.setLayoutManager(mLayoutManager);
 
-        initSwiper(view, quote_list);
-
-        adapter = new QuotesAdapter(this.getActivity(), listItems);
+        adapter = new QuotesAdapter(this.getActivity(), dataSet);
         quote_list.setAdapter(adapter);
+
+        initSwiper(view, quote_list, mLayoutManager);
 
         // Floating action button
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.quote_add_button);
-        fab.attachToListView(quote_list);
+        fab.attachToRecyclerView(quote_list);
 
         return view;
     }
 
-    public void initSwiper(View view, final ListView quote_list) {
+    public void initSwiper(View view, final RecyclerView event_list, final LinearLayoutManager lm) {
+        // SwipeRefreshLayout
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.quotes_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
 
-        swipeView.setOnRefreshListener(this);
-
-        quote_list.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-            }
+        event_list.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                boolean enable = false;
-                if (quote_list != null && quote_list.getChildCount() > 0) {
-                    // check if the first item of the list is visible
-                    boolean firstItemVisible = quote_list.getFirstVisiblePosition() == 0;
-                    // check if the top of the first item is visible
-                    boolean topOfFirstItemVisible = quote_list.getChildAt(0).getTop() == 0;
-                    // enabling or disabling the refresh layout
-                    enable = firstItemVisible && topOfFirstItemVisible;
-                }
-                swipeView.setEnabled(enable);
+            public void onScrolled(RecyclerView view, int dx, int dy) {
+                swipeView.setEnabled(lm.findFirstCompletelyVisibleItemPosition() == 0);
             }
         });
     }
@@ -92,7 +78,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     public void populateList(SharedPreferences prefs) {
-        listItems.clear();
+        dataSet.clear();
         JSONArray json;
         try {
             if ((json = DataManager.getJsonArray(prefs, DataManager.QUOTEKEY)) != null) {
@@ -116,7 +102,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
                     String date = tempTijd + " - " + parseDate(tempDate);
 
                     Quote tempQuote = new Quote(username, quote.getString("text").toString(), date, id);
-                    listItems.add(tempQuote);
+                    dataSet.add(tempQuote);
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
                     }

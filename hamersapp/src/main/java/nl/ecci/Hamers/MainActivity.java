@@ -39,7 +39,7 @@ import java.text.SimpleDateFormat;
 public class MainActivity extends ActionBarActivity {
     public EventFragment eventFragment = new EventFragment();
     // Fragments
-    QuoteListFragment quoteListFragment = new QuoteListFragment();
+    public QuoteListFragment quoteListFragment = new QuoteListFragment();
     UserFragment userFragment = new UserFragment();
     BeerFragment beerFragment = new BeerFragment();
     MotionFragment motionFragment = new MotionFragment();

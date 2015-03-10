@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:fab="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/quotes_swipe_container"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <RelativeLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent">
-        <ListView
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/quotes_swipe_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/quotes_recyclerview"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/quotes_listView"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:listSelector="@android:color/transparent"/>
-        <com.melnykov.fab.FloatingActionButton
-                android:id="@+id/quote_add_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
-                android:layout_margin="16dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/action_add"
-                fab:fab_colorNormal="@color/sikkelrood"
-                fab:fab_colorPressed="@color/sikkelrood_pressed"
-                fab:fab_colorRipple="@color/ripple"
-                android:onClick="newQuote"/>
-    </RelativeLayout>
-</android.support.v4.widget.SwipeRefreshLayout>
+                android:clickable="false"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/quote_add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/action_add"
+            fab:fab_colorNormal="@color/sikkelrood"
+            fab:fab_colorPressed="@color/sikkelrood_pressed"
+            fab:fab_colorRipple="@color/ripple"
+            android:onClick="newQuote"/>
+</RelativeLayout>

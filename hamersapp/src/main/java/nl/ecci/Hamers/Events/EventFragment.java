@@ -44,7 +44,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         initSwiper(view, event_list, mLayoutManager);
 
-        adapter = new EventsAdapter(listItems, getActivity());
+        adapter = new EventsAdapter(getActivity(), listItems);
         event_list.setAdapter(adapter);
 
         // Floating action button

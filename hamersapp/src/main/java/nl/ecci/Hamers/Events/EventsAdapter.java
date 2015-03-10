@@ -40,9 +40,9 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         }
     }
 
-    public EventsAdapter(ArrayList<Event> itemsArrayList, Context context) {
-        this.dataSet = itemsArrayList;
+    public EventsAdapter(Context context, ArrayList<Event> itemsArrayList) {
         this.context = context;
+        this.dataSet = itemsArrayList;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
