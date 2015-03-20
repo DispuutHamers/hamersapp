@@ -37,10 +37,10 @@ import java.text.SimpleDateFormat;
 
 
 public class MainActivity extends ActionBarActivity {
-    public EventFragment eventFragment = new EventFragment();
     // Fragments
     public QuoteListFragment quoteListFragment = new QuoteListFragment();
     UserFragment userFragment = new UserFragment();
+    public EventFragment eventFragment = new EventFragment();
     BeerFragment beerFragment = new BeerFragment();
     MotionFragment motionFragment = new MotionFragment();
     SettingsFragment settingsFragment = new SettingsFragment();
@@ -129,11 +129,9 @@ public class MainActivity extends ActionBarActivity {
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 mDrawerLayout,         /* DrawerLayout object */
-
                 R.string.drawer_open,  /* "open drawer" description */
                 R.string.drawer_close  /* "close drawer" description */
         );
-
 
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);

@@ -18,6 +18,6 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="4dp"
-            android:inputType="textMultiLine"
+            android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
             android:hint="@string/quote_hint"/>
 </LinearLayout>

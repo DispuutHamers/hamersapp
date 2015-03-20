@@ -100,4 +100,13 @@ public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.
             Toast.makeText(this, "Vul alle velden in!", Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 }

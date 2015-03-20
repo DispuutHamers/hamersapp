@@ -27,11 +27,10 @@
                     android:id="@+id/review_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="4dp"
-                    android:inputType="textMultiLine"
+                    android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
                     android:hint="@string/review_hint"
                     android:padding="20dp"/>
 

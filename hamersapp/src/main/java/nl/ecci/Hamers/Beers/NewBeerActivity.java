@@ -56,4 +56,13 @@ public class NewBeerActivity extends ActionBarActivity {
         SendPostRequest req = new SendPostRequest(this, SendPostRequest.BEERURL, PreferenceManager.getDefaultSharedPreferences(this), "beer[name]=" + title + "&beer[picture]=" + picture + "&beer[percentage]=" + percentage + "25" + "&beer[country]=" + country + "&beer[brewer]=" + brewer + "&beer[soort]=" + soort);
         req.execute();
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 }

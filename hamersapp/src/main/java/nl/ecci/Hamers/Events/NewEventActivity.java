@@ -123,4 +123,13 @@ public class NewEventActivity extends ActionBarActivity {
         SendPostRequest req = new SendPostRequest(this, SendPostRequest.EVENTUTL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
         req.execute();
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 }
