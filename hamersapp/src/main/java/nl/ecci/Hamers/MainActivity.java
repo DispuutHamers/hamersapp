@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.text.Editable;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -339,5 +340,15 @@ public class MainActivity extends ActionBarActivity {
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){ //replace this with actual function which returns if the drawer is open
+            mDrawerLayout.closeDrawer(Gravity.LEFT);     // replace this with actual function which closes drawer
+        }
+        else{
+            super.onBackPressed();
+        }
     }
 }
