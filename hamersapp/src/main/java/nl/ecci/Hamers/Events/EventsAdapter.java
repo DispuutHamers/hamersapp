@@ -20,25 +20,9 @@ import java.util.ArrayList;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
+    SharedPreferences prefs;
     private Context context;
     private ArrayList<Event> dataSet;
-    SharedPreferences prefs;
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public View view;
-        public TextView title;
-        public TextView beschrijving;
-        public TextView date;
-
-        public ViewHolder(View view) {
-            super(view);
-            this.view = view;
-
-            title = (TextView) view.findViewById(R.id.event_title);
-            beschrijving = (TextView) view.findViewById(R.id.event_beschrijving);
-            date = (TextView) view.findViewById(R.id.event_date);
-        }
-    }
 
     public EventsAdapter(Context context, ArrayList<Event> itemsArrayList) {
         this.context = context;
@@ -107,5 +91,21 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return dataSet.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public View view;
+        public TextView title;
+        public TextView beschrijving;
+        public TextView date;
+
+        public ViewHolder(View view) {
+            super(view);
+            this.view = view;
+
+            title = (TextView) view.findViewById(R.id.event_title);
+            beschrijving = (TextView) view.findViewById(R.id.event_beschrijving);
+            date = (TextView) view.findViewById(R.id.event_date);
+        }
     }
 }

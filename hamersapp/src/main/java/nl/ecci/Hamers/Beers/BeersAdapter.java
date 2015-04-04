@@ -20,31 +20,9 @@ import java.util.ArrayList;
 
 public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> {
 
+    SharedPreferences prefs;
     private Context context;
     private ArrayList<Beer> dataSet;
-    SharedPreferences prefs;
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public View view;
-        public TextView title;
-        public TextView soort;
-        public TextView brewer;
-        public TextView rating;
-        public TextView info;
-        public ImageView picture;
-
-        public ViewHolder(View view) {
-            super(view);
-            this.view = view;
-
-            title = (TextView) view.findViewById(R.id.beer_name);
-            soort = (TextView) view.findViewById(R.id.beer_soort);
-            brewer = (TextView) view.findViewById(R.id.beer_brewer);
-            rating = (TextView) view.findViewById(R.id.row_beer_rating);
-            info = (TextView) view.findViewById(R.id.beer_info);
-            picture = (ImageView) view.findViewById(R.id.beer_picture);
-        }
-    }
 
     public BeersAdapter(ArrayList<Beer> itemsArrayList, Context context) {
         this.dataSet = itemsArrayList;
@@ -102,5 +80,27 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return dataSet.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public View view;
+        public TextView title;
+        public TextView soort;
+        public TextView brewer;
+        public TextView rating;
+        public TextView info;
+        public ImageView picture;
+
+        public ViewHolder(View view) {
+            super(view);
+            this.view = view;
+
+            title = (TextView) view.findViewById(R.id.beer_name);
+            soort = (TextView) view.findViewById(R.id.beer_soort);
+            brewer = (TextView) view.findViewById(R.id.beer_brewer);
+            rating = (TextView) view.findViewById(R.id.row_beer_rating);
+            info = (TextView) view.findViewById(R.id.beer_info);
+            picture = (ImageView) view.findViewById(R.id.beer_picture);
+        }
     }
 }

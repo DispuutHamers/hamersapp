@@ -40,8 +40,8 @@ import java.text.SimpleDateFormat;
 public class MainActivity extends ActionBarActivity {
     // Fragments
     public QuoteListFragment quoteListFragment = new QuoteListFragment();
-    UserFragment userFragment = new UserFragment();
     public EventFragment eventFragment = new EventFragment();
+    UserFragment userFragment = new UserFragment();
     BeerFragment beerFragment = new BeerFragment();
     MotionFragment motionFragment = new MotionFragment();
     SettingsFragment settingsFragment = new SettingsFragment();
@@ -325,14 +325,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    /* The click listener for ListView in the navigation drawer */
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
-    }
-
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -343,12 +335,19 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed(){
-        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){    //replace this with actual function which returns if the drawer is open
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {    //replace this with actual function which returns if the drawer is open
             mDrawerLayout.closeDrawer(Gravity.LEFT);     // replace this with actual function which closes drawer
-        }
-        else{
+        } else {
             super.onBackPressed();
+        }
+    }
+
+    /* The click listener for ListView in the navigation drawer */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
         }
     }
 }

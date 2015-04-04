@@ -19,24 +19,6 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     private final ArrayList<Quote> dataSet;
     SharedPreferences prefs;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public View view;
-        public TextView body;
-        public TextView date;
-        public TextView user;
-        public ImageView userImage;
-
-        public ViewHolder(View view) {
-            super(view);
-            this.view = view;
-
-            body = (TextView) view.findViewById(R.id.quote_body);
-            date = (TextView) view.findViewById(R.id.quote_date);
-            user = (TextView) view.findViewById(R.id.quote_user);
-            userImage = (ImageView) view.findViewById(R.id.quote_image);
-        }
-    }
-
     public QuotesAdapter(Context context, ArrayList<Quote> itemsArrayList) {
         this.dataSet = itemsArrayList;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -66,5 +48,23 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return dataSet.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public View view;
+        public TextView body;
+        public TextView date;
+        public TextView user;
+        public ImageView userImage;
+
+        public ViewHolder(View view) {
+            super(view);
+            this.view = view;
+
+            body = (TextView) view.findViewById(R.id.quote_body);
+            date = (TextView) view.findViewById(R.id.quote_date);
+            user = (TextView) view.findViewById(R.id.quote_user);
+            userImage = (ImageView) view.findViewById(R.id.quote_image);
+        }
     }
 }
