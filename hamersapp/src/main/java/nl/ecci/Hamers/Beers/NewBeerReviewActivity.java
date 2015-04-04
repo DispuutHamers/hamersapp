@@ -14,6 +14,8 @@ import nl.ecci.Hamers.R;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import static android.text.Html.escapeHtml;
+
 public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.OnSeekBarChangeListener {
     int id;
     private String review;
@@ -81,7 +83,7 @@ public class NewBeerReviewActivity extends ActionBarActivity implements SeekBar.
 
     public void postReview(View view) {
         EditText review_body = (EditText) findViewById(R.id.review_body);
-        review = review_body.getText().toString();
+        review = escapeHtml(review_body.getText().toString());
         Button date_button = (Button) findViewById(R.id.pick_date_button);
         String date = date_button.getText().toString();
 

@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
 
+import static android.text.Html.escapeHtml;
+
 public class MotionFragment extends Fragment {
     private String type;
 
@@ -54,8 +56,8 @@ public class MotionFragment extends Fragment {
         EditText motion_subject = (EditText) getActivity().findViewById(R.id.motion_subject);
         EditText motion_content = (EditText) getActivity().findViewById(R.id.motion_content);
 
-        String subject = motion_subject.getText().toString();
-        String content = motion_content.getText().toString();
+        String subject = escapeHtml(motion_subject.getText().toString());
+        String content = escapeHtml(motion_content.getText().toString());
 
         String arguments = "motion[motion_type]=" + type + "&motion[subject]=" + subject + "&motion[content]=" + content;
         SendPostRequest req = new SendPostRequest(this.getActivity(), SendPostRequest.MOTIEURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), arguments);

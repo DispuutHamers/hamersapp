@@ -14,6 +14,8 @@ import nl.ecci.Hamers.Helpers.Fragments.TimePickerFragment;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
 import nl.ecci.Hamers.R;
 
+import static android.text.Html.escapeHtml;
+
 public class NewEventActivity extends ActionBarActivity {
     FragmentManager fragmanager = getSupportFragmentManager();
 
@@ -81,7 +83,7 @@ public class NewEventActivity extends ActionBarActivity {
         Button deadlineDateButton = (Button) findViewById(R.id.deadline_date_button);
 
         String title = event_title_temp.getText().toString();
-        String description = event_beschrijving_temp.getText().toString();
+        String description = escapeHtml(event_beschrijving_temp.getText().toString());
         String eventTime = eventTimeButton.getText().toString();
         String eventEndTime = eventEndTimeButton.getText().toString();
         String eventDate = eventDateButton.getText().toString();

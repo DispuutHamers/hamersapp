@@ -344,7 +344,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed(){
-        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){ //replace this with actual function which returns if the drawer is open
+        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){    //replace this with actual function which returns if the drawer is open
             mDrawerLayout.closeDrawer(Gravity.LEFT);     // replace this with actual function which closes drawer
         }
         else{
