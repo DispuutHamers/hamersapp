@@ -149,7 +149,7 @@ public class SingleBeerActivity extends ActionBarActivity {
 
         // Insert into view
         ViewGroup insertPoint = (ViewGroup) findViewById(R.id.review_insert_point);
-        insertPoint.addView(view, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+        insertPoint.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
     }
 
     @Override
