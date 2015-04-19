@@ -17,10 +17,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import static nl.ecci.Hamers.MainActivity.parseDate;
+import java.util.Date;
 
 public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -36,8 +37,6 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.events_fragment, container, false);
         RecyclerView event_list = (RecyclerView) view.findViewById(R.id.events_recyclerview);
-
-        //setHasOptionsMenu(true);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         event_list.setLayoutManager(mLayoutManager);
@@ -84,16 +83,14 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             if ((json = DataManager.getJsonArray(prefs, DataManager.EVENTKEY)) != null) {
                 for (int i = json.length() - 1; i >= 0; i--) {
                     JSONObject temp;
-                    try {
-                        temp = json.getJSONObject(i);
-                        String finalDate = parseDate(temp.getString("date").substring(0, 10));
-                        Event tempEvent = new Event(temp.getInt("id"), temp.getString("title").toString(), temp.getString("beschrijving").toString(), temp.getString("location").toString(), finalDate, temp.getString("end_time"));
-                        listItems.add(tempEvent);
-                        if (adapter != null) {
-                            adapter.notifyDataSetChanged();
-                        }
-                    } catch (ParseException e) {
-                        Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
+                    temp = json.getJSONObject(i);
+
+                    Date date = parseDate2(temp.getString("date"));
+
+                    Event event = new Event(temp.getInt("id"), temp.getString("title").toString(), temp.getString("beschrijving").toString(), temp.getString("location").toString(), date, temp.getString("end_time"));
+                    listItems.add(event);
+                    if (adapter != null) {
+                        adapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -108,5 +105,17 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.event_list_menu, menu);
+    }
+
+    public Date parseDate2(String dateString) {
+        Date date = null;
+        try {
+            // Event date
+            DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+            date = dbDF.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 }

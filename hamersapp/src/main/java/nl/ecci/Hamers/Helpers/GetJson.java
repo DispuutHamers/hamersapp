@@ -154,8 +154,6 @@ public class GetJson extends AsyncTask<String, String, String> {
                         prefs.edit().putString(DataManager.REVIEWKEY, result).apply();
                         GetJson g = new GetJson(a, f, BEERURL, prefs, false);
                         g.execute();
-
-                        System.out.println("--------------------------\nA: " + a + "\nPARENT: " + a.getParent() + "\nCALLING: " + a.getCallingActivity());
                     }
                 }
             } catch (JSONException e) {

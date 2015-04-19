@@ -3,7 +3,9 @@ package nl.ecci.Hamers.Events;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
@@ -41,7 +46,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         vh.view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 JSONObject e = DataManager.getEvent(prefs, dataSet.get(vh.getPosition()).getTitle(), dataSet.get(vh.getPosition()).getDate());
                 if (e != null) {
                     try {
@@ -68,7 +72,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                         intent.putStringArrayListExtra("aanwezig", aanwezig);
                         intent.putStringArrayListExtra("afwezig", afwezig);
                         context.startActivity(intent);
-
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }
@@ -84,7 +87,18 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(dataSet.get(position).getTitle());
         holder.beschrijving.setText(dataSet.get(position).getBeschrijving());
-        holder.date.setText(dataSet.get(position).getDate());
+
+
+        Date date = dataSet.get(position).getDate();
+        CardView card = (CardView) holder.view;
+        if (dateChecker(date)) {
+            card.setCardBackgroundColor(Color.LTGRAY);
+        } else {
+            card.setCardBackgroundColor(Color.WHITE);
+        }
+
+        DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm");
+        holder.date.setText(appDF.format(date));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -107,5 +121,12 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             beschrijving = (TextView) view.findViewById(R.id.event_beschrijving);
             date = (TextView) view.findViewById(R.id.event_date);
         }
+    }
+
+    public boolean dateChecker(Date date) {
+        if (System.currentTimeMillis() > date.getTime()) {
+            return true;
+        }
+        return false;
     }
 }

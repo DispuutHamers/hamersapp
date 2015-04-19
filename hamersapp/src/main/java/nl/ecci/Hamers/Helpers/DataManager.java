@@ -8,9 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.ParseException;
-
-import static nl.ecci.Hamers.MainActivity.parseDate;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public final class DataManager {
     public static final String QUOTEKEY = "quoteData";
@@ -40,13 +41,15 @@ public final class DataManager {
         return null;
     }
 
-    public static JSONObject getEvent(SharedPreferences prefs, String title, String date) {
+    public static JSONObject getEvent(SharedPreferences prefs, String title, Date date) {
         JSONArray events;
         try {
             if ((events = getJsonArray(prefs, EVENTKEY)) != null) {
                 for (int i = 0; i < events.length(); i++) {
                     JSONObject temp = events.getJSONObject(i);
-                    if (parseDate(temp.getString("date").substring(0, 10)).equals(date)) {
+                    DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                    Date dbDatum = dbDF.parse(temp.getString("date"));
+                    if (dbDatum.equals(date)) {
                         if (temp.getString("title").equals(title)) {
                             return temp;
                         }
@@ -58,7 +61,6 @@ public final class DataManager {
             return null;
         } catch (ParseException e) {
             e.printStackTrace();
-            return null;
         }
         return null;
     }

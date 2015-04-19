@@ -1,15 +1,17 @@
 package nl.ecci.Hamers.Events;
 
+import java.util.Date;
+
 public class Event {
 
     private int id;
     private String title;
     private String beschrijving;
     private String location;
-    private String date;
+    private Date date;
     private String end_time;
 
-    public Event(int id, String title, String beschrijving, String location, String date, String end_time) {
+    public Event(int id, String title, String beschrijving, String location, Date date, String end_time) {
         super();
         this.id = id;
         this.title = title;
@@ -35,7 +37,7 @@ public class Event {
         return location;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
