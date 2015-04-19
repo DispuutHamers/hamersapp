@@ -16,28 +16,27 @@ import java.net.URL;
 public class SendPostRequest extends AsyncTask<String, String, String> {
 
     public static final String QUOTEURL = "/quote";
-    public static final String EVENTUTL = "/event";
+    public static final String EVENTURL = "/event";
     public static final String BEERURL = "/beer";
     public static final String MOTIEURL = "/motions";
     public static final String REVIEWURL = "/review";
     public static final String SIGNUPURL = "/signup";
-    private static final String baseurl = "https://zondersikkel.nl/api/v1/";
     private SharedPreferences prefs;
     private String type;
     private String urlParams;
     private Context mContext;
 
     public SendPostRequest(Context context, String type, SharedPreferences s, String urlParams) {
-        prefs = s;
-        this.type = type;
-        this.urlParams = urlParams;
         mContext = context;
+        this.type = type;
+        prefs = s;
+        this.urlParams = urlParams;
     }
 
     protected String doInBackground(String... params) {
         int response = -1;
         try {
-            URL url = new URL(baseurl + prefs.getString("apikey", "a") + type);
+            URL url = new URL(MainActivity.baseURL + prefs.getString("apikey", "a") + type);
             System.out.println(url);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
@@ -68,6 +67,21 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
 
             if (!(activity instanceof MainActivity)) {
                 activity.finish();
+            }
+
+            if(type.equals(QUOTEURL)) {
+                GetJson g = new GetJson((Activity) mContext, MainActivity.quoteListFragment, GetJson.QUOTEURL, prefs, false);
+                g.execute();
+            } else if(type.equals(EVENTURL) || type.equals(SIGNUPURL)) {
+                GetJson g = new GetJson((Activity) mContext, MainActivity.eventFragment, GetJson.EVENTURL, prefs, false);
+                g.execute();
+            } else if(type.equals(BEERURL)) {
+                GetJson g = new GetJson((Activity) mContext, MainActivity.beerFragment, GetJson.BEERURL, prefs, false);
+                g.execute();
+            }
+            else if(type.equals(REVIEWURL)) {
+                GetJson g = new GetJson((Activity) mContext, null, GetJson.REVIEWURL, prefs, false);
+                g.execute();
             }
 
             Toast.makeText(mContext, "Item posted!", Toast.LENGTH_SHORT).show();

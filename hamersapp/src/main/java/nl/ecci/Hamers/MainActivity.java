@@ -38,13 +38,16 @@ import java.text.SimpleDateFormat;
 
 
 public class MainActivity extends ActionBarActivity {
+    // URL
+    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
+//    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
     // Fragments
-    public QuoteListFragment quoteListFragment = new QuoteListFragment();
-    public EventFragment eventFragment = new EventFragment();
-    UserFragment userFragment = new UserFragment();
-    BeerFragment beerFragment = new BeerFragment();
-    MotionFragment motionFragment = new MotionFragment();
-    SettingsFragment settingsFragment = new SettingsFragment();
+    public static QuoteListFragment quoteListFragment = new QuoteListFragment();
+    public static EventFragment eventFragment = new EventFragment();
+    public static UserFragment userFragment = new UserFragment();
+    public static BeerFragment beerFragment = new BeerFragment();
+    public static MotionFragment motionFragment = new MotionFragment();
+    public static SettingsFragment settingsFragment = new SettingsFragment();
     // Drawer list
     private String[] mDrawerItems;
     private ListView mDrawerList;

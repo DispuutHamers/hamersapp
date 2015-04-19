@@ -124,6 +124,7 @@ public class SingleEventActivity extends ActionBarActivity {
     private void postSignup(int eventid, String status) {
         SendPostRequest req = new SendPostRequest(this, SendPostRequest.SIGNUPURL, PreferenceManager.getDefaultSharedPreferences(this), "signup[event_id]=" + eventid + "&signup[status]=" + status);
         req.execute();
+
         this.finish();
     }
 

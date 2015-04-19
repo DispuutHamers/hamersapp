@@ -26,14 +26,14 @@ import static nl.ecci.Hamers.Helpers.DataManager.getUser;
 import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class SingleBeerActivity extends ActionBarActivity {
-    int id;
-    String name;
-    String soort;
-    String percentage;
-    String brewer;
-    String country;
-    String cijfer;
-    SharedPreferences prefs;
+    private int id;
+    private String name;
+    private String soort;
+    private String percentage;
+    private String brewer;
+    private String country;
+    private String cijfer;
+    private SharedPreferences prefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,6 @@ public class SingleBeerActivity extends ActionBarActivity {
         cijfer = extras.getString("cijfer");
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        getReviews();
         beerImage.setImageBitmap(DataManager.getBeerImage(prefs, name));
 
         nameTV.setText(name);
@@ -75,6 +74,7 @@ public class SingleBeerActivity extends ActionBarActivity {
         } else {
             cijferTV.setText(cijfer);
         }
+        getReviews();
     }
 
     @Override
@@ -116,7 +116,9 @@ public class SingleBeerActivity extends ActionBarActivity {
         Intent intent = new Intent(this, NewBeerReviewActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("name", name);
-        startActivity(intent);
+
+        int requestCode = 1; // Or some number you choose
+        startActivityForResult(intent, requestCode);
     }
 
     public void insertReview(Review review) {
@@ -159,5 +161,14 @@ public class SingleBeerActivity extends ActionBarActivity {
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    public void refreshActivity() {
+        finish();
+        startActivity(getIntent());
+    }
+
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        refreshActivity();
     }
 }

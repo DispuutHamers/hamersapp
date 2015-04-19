@@ -24,7 +24,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class GetJson extends AsyncTask<String, String, String> {
-    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
     public static final String QUOTEURL = "/quote.json";
     public static final String USERURL = "/user.json";
     public static final String EVENTURL = "/event.json";
@@ -64,7 +63,7 @@ public class GetJson extends AsyncTask<String, String, String> {
             downloadProfilepictures(DataManager.getJsonArray(prefs, DataManager.USERKEY));
         } else {
             try {
-                URL url = new URL(baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + typeURL);
+                URL url = new URL(MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + typeURL);
                 reader = new BufferedReader(new InputStreamReader(url.openStream()));
                 int read;
                 char[] chars = new char[1024];
@@ -106,12 +105,12 @@ public class GetJson extends AsyncTask<String, String, String> {
                 if (firstload && a instanceof MainActivity) {
                     ((MainActivity) a).loadData2(prefs, true);
                 }
-                if ((!downloadUserPicturesBool && !downloadBeerPicturesBool) && (result == null || result.equals("{}"))) {
+                if ((!downloadUserPicturesBool && !downloadBeerPicturesBool) && result.equals("{}")) {
                     Toast.makeText(a, a.getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
                 } else {
                     if (f instanceof QuoteListFragment) {
                         prefs.edit().putString(DataManager.QUOTEKEY, result).apply();
-                        ((QuoteListFragment) f).populateList(prefs);
+                        MainActivity.quoteListFragment.populateList(prefs);
                     }
                     // User fragment
                     else if (f instanceof UserFragment) {
@@ -121,12 +120,12 @@ public class GetJson extends AsyncTask<String, String, String> {
                             g.setUserPictureDownload();
                             g.execute();
                         }
-                        ((UserFragment) f).populateList(prefs);
+                        MainActivity.userFragment.populateList(prefs);
                     }
                     // Event fragment
                     else if (f instanceof EventFragment) {
                         prefs.edit().putString(DataManager.EVENTKEY, result).apply();
-                        ((EventFragment) f).populateList(prefs);
+                        MainActivity.eventFragment.populateList(prefs);
                     }
                     // Beer fragment
                     else if (f instanceof BeerFragment) {
@@ -138,21 +137,34 @@ public class GetJson extends AsyncTask<String, String, String> {
                             GetJson g2 = new GetJson(a, null, REVIEWURL, prefs, false);
                             g2.execute();
                         }
-                        ((BeerFragment) f).populateList(prefs);
-                    } else if (typeURL.equals(REVIEWURL)) {
+                        MainActivity.beerFragment.populateList(prefs);
+                    }
+                    // Quote
+                    else if (typeURL.equals(QUOTEURL)) {
+                        prefs.edit().putString(DataManager.QUOTEKEY, result).apply();
+                        MainActivity.quoteListFragment.populateList(prefs);
+                    }
+                    // Beer
+                    else if (typeURL.equals(BEERURL)) {
+                        prefs.edit().putString(DataManager.BEERKEY, result).apply();
+                        MainActivity.beerFragment.populateList(prefs);
+                    }
+                    // Review
+                    else if (typeURL.equals(REVIEWURL)) {
                         prefs.edit().putString(DataManager.REVIEWKEY, result).apply();
+                        GetJson g = new GetJson(a, f, BEERURL, prefs, false);
+                        g.execute();
+
+                        System.out.println("--------------------------\nA: " + a + "\nPARENT: " + a.getParent() + "\nCALLING: " + a.getCallingActivity());
                     }
                 }
-
             } catch (JSONException e) {
                 if (firstload) {
                     ((MainActivity) a).loadData2(prefs, false);
                 }
             }
         }
-
     }
-
 
     private void downloadProfilepictures(JSONArray users) {
         for (int i = 0; users != null && i < users.length(); i++) {
