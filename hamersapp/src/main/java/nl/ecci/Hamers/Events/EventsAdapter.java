@@ -90,8 +90,11 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
 
         Date date = dataSet.get(position).getDate();
+        Date end_time = dataSet.get(position).getEnd_time();
         CardView card = (CardView) holder.view;
-        if (dateChecker(date)) {
+        if (dateChecker(date, true) && dateChecker(end_time, false)) {
+            card.setCardBackgroundColor(Color.parseColor("#c5e1a5"));
+        } else if (dateChecker(date, true)) {
             card.setCardBackgroundColor(Color.LTGRAY);
         } else {
             card.setCardBackgroundColor(Color.WHITE);
@@ -123,8 +126,12 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         }
     }
 
-    public boolean dateChecker(Date date) {
-        if (System.currentTimeMillis() > date.getTime()) {
+    public boolean dateChecker(Date date, boolean beginDate) {
+        if (beginDate) {
+            if (System.currentTimeMillis() > date.getTime()) {
+                return true;
+            }
+        } else if (System.currentTimeMillis() < date.getTime()) {
             return true;
         }
         return false;

@@ -9,9 +9,9 @@ public class Event {
     private String beschrijving;
     private String location;
     private Date date;
-    private String end_time;
+    private Date end_time;
 
-    public Event(int id, String title, String beschrijving, String location, Date date, String end_time) {
+    public Event(int id, String title, String beschrijving, String location, Date date, Date end_time) {
         super();
         this.id = id;
         this.title = title;
@@ -41,7 +41,7 @@ public class Event {
         return date;
     }
 
-    public String getEnd_time() {
+    public Date getEnd_time() {
         return end_time;
     }
 

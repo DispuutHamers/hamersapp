@@ -63,7 +63,8 @@ public class SingleEventActivity extends ActionBarActivity {
         if (aanwezigItems.size() == 0) {
             TextView event_aanwezig_tv = (TextView) findViewById(R.id.event_aanwezig_tv);
             event_aanwezig_tv.setVisibility(View.INVISIBLE);
-        } else if (afwezigItems.size() == 0) {
+        }
+        if (afwezigItems.size() == 0) {
             TextView event_afwezig_tv = (TextView) findViewById(R.id.event_afwezig_tv);
             event_afwezig_tv.setVisibility(View.INVISIBLE);
         }

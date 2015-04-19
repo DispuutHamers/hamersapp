@@ -40,7 +40,7 @@ import java.text.SimpleDateFormat;
 public class MainActivity extends ActionBarActivity {
     // URL
     public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-    //    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
+//    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
     // Fragments
     public static QuoteListFragment quoteListFragment = new QuoteListFragment();
     public static EventFragment eventFragment = new EventFragment();
