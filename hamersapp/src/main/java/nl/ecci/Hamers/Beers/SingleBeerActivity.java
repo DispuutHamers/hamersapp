@@ -168,7 +168,7 @@ public class SingleBeerActivity extends ActionBarActivity {
         startActivity(getIntent());
     }
 
-    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         refreshActivity();
     }
 }

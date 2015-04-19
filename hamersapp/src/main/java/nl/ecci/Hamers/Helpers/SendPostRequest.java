@@ -69,17 +69,16 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
                 activity.finish();
             }
 
-            if(type.equals(QUOTEURL)) {
+            if (type.equals(QUOTEURL)) {
                 GetJson g = new GetJson((Activity) mContext, MainActivity.quoteListFragment, GetJson.QUOTEURL, prefs, false);
                 g.execute();
-            } else if(type.equals(EVENTURL) || type.equals(SIGNUPURL)) {
+            } else if (type.equals(EVENTURL) || type.equals(SIGNUPURL)) {
                 GetJson g = new GetJson((Activity) mContext, MainActivity.eventFragment, GetJson.EVENTURL, prefs, false);
                 g.execute();
-            } else if(type.equals(BEERURL)) {
+            } else if (type.equals(BEERURL)) {
                 GetJson g = new GetJson((Activity) mContext, MainActivity.beerFragment, GetJson.BEERURL, prefs, false);
                 g.execute();
-            }
-            else if(type.equals(REVIEWURL)) {
+            } else if (type.equals(REVIEWURL)) {
                 GetJson g = new GetJson((Activity) mContext, null, GetJson.REVIEWURL, prefs, false);
                 g.execute();
             }
