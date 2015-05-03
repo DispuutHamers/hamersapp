@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
@@ -40,7 +41,7 @@ import java.text.SimpleDateFormat;
 public class MainActivity extends ActionBarActivity {
     // URL
     public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-//    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
+    //    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
     // Fragments
     public static QuoteListFragment quoteListFragment = new QuoteListFragment();
     public static EventFragment eventFragment = new EventFragment();
@@ -53,6 +54,7 @@ public class MainActivity extends ActionBarActivity {
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+    private boolean doubleBackToExitPressedOnce;
 
     /**
      * Parse date
@@ -103,8 +105,6 @@ public class MainActivity extends ActionBarActivity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        // Handle your other action bar items...
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -342,7 +342,21 @@ public class MainActivity extends ActionBarActivity {
         if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {    //replace this with actual function which returns if the drawer is open
             mDrawerLayout.closeDrawer(Gravity.LEFT);     // replace this with actual function which closes drawer
         } else {
-            super.onBackPressed();
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Klik nog een keer op 'back' om af te sluiten.", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
         }
     }
 

@@ -169,12 +169,15 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     public void sort() {
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        String sortPref = prefs.getString("beerSort", "");
-        if (sortPref.equals("name")) {
-            sortByName();
-        } else if (sortPref.equals("rating")) {
-            sortByRating();
+        if (getActivity() != null)
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        if (prefs != null) {
+            String sortPref = prefs.getString("beerSort", "");
+            if (sortPref.equals("name")) {
+                sortByName();
+            } else if (sortPref.equals("rating")) {
+                sortByRating();
+            }
         }
     }
 

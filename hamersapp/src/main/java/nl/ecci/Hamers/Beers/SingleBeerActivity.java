@@ -61,7 +61,6 @@ public class SingleBeerActivity extends ActionBarActivity {
         cijfer = extras.getString("cijfer");
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        beerImage.setImageBitmap(DataManager.getBeerImage(prefs, name));
 
         nameTV.setText(name);
         soortTV.setText(soort);
@@ -74,7 +73,11 @@ public class SingleBeerActivity extends ActionBarActivity {
         } else {
             cijferTV.setText(cijfer);
         }
-        getReviews();
+
+        if (prefs != null) {
+            beerImage.setImageBitmap(DataManager.getBeerImage(prefs, name));
+            getReviews();
+        }
     }
 
     @Override

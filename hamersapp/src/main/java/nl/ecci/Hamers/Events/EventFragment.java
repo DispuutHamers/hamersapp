@@ -113,7 +113,9 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         try {
             // Event date
             DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-            date = dbDF.parse(dateString);
+            if (dateString != null) {
+                date = dbDF.parse(dateString);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
