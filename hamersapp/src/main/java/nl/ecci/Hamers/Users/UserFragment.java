@@ -25,40 +25,10 @@ import java.util.Comparator;
 
 public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public Comparator<User> nameComperator = new Comparator<User>() {
-        @Override
-        public int compare(User user1, User user2) {
-
-            String name1 = user1.getUsername();
-            String name2 = user2.getUsername();
-
-            return name1.compareToIgnoreCase(name2);
-        }
-    };
-    public Comparator<User> quoteComperator = new Comparator<User>() {
-        @Override
-        public int compare(User user1, User user2) {
-
-            int quote1 = user1.getQuotecount();
-            int quote2 = user2.getQuotecount();
-
-            return ((Integer) quote2).compareTo(quote1);
-        }
-    };
-    public Comparator<User> reviewComperator = new Comparator<User>() {
-        @Override
-        public int compare(User user1, User user2) {
-
-            int review1 = user1.getReviewcount();
-            int review2 = user2.getReviewcount();
-
-            return ((Integer) review2).compareTo(review1);
-        }
-    };
-    ArrayList<User> listItems = new ArrayList<User>();
-    ArrayAdapter<User> adapter;
-    SwipeRefreshLayout swipeView;
-    SharedPreferences prefs;
+    private ArrayList<User> listItems = new ArrayList<User>();
+    private ArrayAdapter<User> adapter;
+    private SwipeRefreshLayout swipeView;
+    private SharedPreferences prefs;
 
     public UserFragment() {
         // Empty constructor required for fragment subclasses
@@ -71,10 +41,13 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         setHasOptionsMenu(true);
 
-        initSwiper(view, user_list);
-
         adapter = new UsersAdapter(this.getActivity(), listItems);
         user_list.setAdapter(adapter);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        MainActivity.userFragment.populateList(prefs);
+
+        initSwiper(view, user_list);
 
         sort();
 
@@ -118,13 +91,6 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onRefresh() {
         GetJson g = new GetJson(this.getActivity(), this, GetJson.USERURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), false);
         g.execute();
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        MainActivity.userFragment.populateList(prefs);
     }
 
     public void populateList(SharedPreferences prefs) {
@@ -178,6 +144,37 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             sortbyReviewCount();
         }
     }
+
+    public Comparator<User> nameComperator = new Comparator<User>() {
+        @Override
+        public int compare(User user1, User user2) {
+
+            String name1 = user1.getUsername();
+            String name2 = user2.getUsername();
+
+            return name1.compareToIgnoreCase(name2);
+        }
+    };
+    public Comparator<User> quoteComperator = new Comparator<User>() {
+        @Override
+        public int compare(User user1, User user2) {
+
+            int quote1 = user1.getQuotecount();
+            int quote2 = user2.getQuotecount();
+
+            return ((Integer) quote2).compareTo(quote1);
+        }
+    };
+    public Comparator<User> reviewComperator = new Comparator<User>() {
+        @Override
+        public int compare(User user1, User user2) {
+
+            int review1 = user1.getReviewcount();
+            int review2 = user2.getReviewcount();
+
+            return ((Integer) review2).compareTo(review1);
+        }
+    };
 
     public void sortByUsername() {
         Collections.sort(listItems, nameComperator);

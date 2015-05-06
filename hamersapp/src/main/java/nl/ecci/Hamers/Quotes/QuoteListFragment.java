@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
+import nl.ecci.Hamers.Helpers.DividerItemDecoration;
 import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.R;
@@ -46,10 +47,12 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
         adapter = new QuotesAdapter(this.getActivity(), dataSet);
         quote_list.setAdapter(adapter);
-
-        initSwiper(view, quote_list, mLayoutManager);
+        quote_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        MainActivity.quoteListFragment.populateList(prefs);
+
+        initSwiper(view, quote_list, mLayoutManager);
 
         // Floating action button
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.quote_add_button);
@@ -80,13 +83,6 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
             GetJson g = new GetJson(this.getActivity(), this, GetJson.QUOTEURL, prefs, false);
             g.execute();
         }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        MainActivity.quoteListFragment.populateList(prefs);
     }
 
     public void populateList(SharedPreferences prefs) {

@@ -27,33 +27,10 @@ import java.util.Comparator;
 
 public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public Comparator<Beer> nameComparator = new Comparator<Beer>() {
-        @Override
-        public int compare(Beer beer1, Beer beer2) {
-            String name1 = beer1.getName();
-            String name2 = beer2.getName();
-
-            return name1.compareToIgnoreCase(name2);
-        }
-    };
-    public Comparator<Beer> ratingComparator = new Comparator<Beer>() {
-        @Override
-        public int compare(Beer beer1, Beer beer2) {
-            String rating1 = beer1.getRating();
-            String rating2 = beer2.getRating();
-
-            if (rating1.equals("nog niet bekend")) {
-                rating1 = "-1";
-            } else if (rating2.equals("nog niet bekend")) {
-                rating2 = "-1";
-            }
-            return rating2.compareToIgnoreCase(rating1);
-        }
-    };
-    ArrayList<Beer> listItems = new ArrayList<Beer>();
-    BeersAdapter adapter;
-    SwipeRefreshLayout swipeView;
-    SharedPreferences prefs;
+    private ArrayList<Beer> listItems = new ArrayList<Beer>();
+    private BeersAdapter adapter;
+    private SwipeRefreshLayout swipeView;
+    private SharedPreferences prefs;
 
     public BeerFragment() {
     }
@@ -63,6 +40,9 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         RecyclerView beer_list = (RecyclerView) view.findViewById(R.id.beer_recyclerview);
 
         setHasOptionsMenu(true);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        MainActivity.beerFragment.populateList(prefs);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         beer_list.setLayoutManager(mLayoutManager);
@@ -84,7 +64,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     public void initSwiper(View view, final RecyclerView beer_list, final LinearLayoutManager lm) {
-        // SwipeRefreshLayout
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
@@ -115,13 +94,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         g.execute();
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        MainActivity.beerFragment.populateList(prefs);
-    }
-
     public void populateList(SharedPreferences prefs) {
         this.prefs = prefs;
         listItems.clear();
@@ -131,7 +103,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject temp;
                     temp = json.getJSONObject(i);
-                    Beer tempBeer = null;
+                    Beer tempBeer;
 
                     String cijfer = temp.getString("cijfer");
                     if (cijfer.equals("null")) {
@@ -189,6 +161,30 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         }
     }
+
+    public Comparator<Beer> nameComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            String name1 = beer1.getName();
+            String name2 = beer2.getName();
+
+            return name1.compareToIgnoreCase(name2);
+        }
+    };
+    public Comparator<Beer> ratingComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            String rating1 = beer1.getRating();
+            String rating2 = beer2.getRating();
+
+            if (rating1.equals("nog niet bekend")) {
+                rating1 = "-1";
+            } else if (rating2.equals("nog niet bekend")) {
+                rating2 = "-1";
+            }
+            return rating2.compareToIgnoreCase(rating1);
+        }
+    };
 
     public void sortByName() {
         Collections.sort(listItems, nameComparator);

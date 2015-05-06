@@ -27,10 +27,10 @@ import java.util.Date;
 
 public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    ArrayList<NewsItem> listItems = new ArrayList<NewsItem>();
-    NewsAdapter adapter;
-    SwipeRefreshLayout swipeView;
-    SharedPreferences prefs;
+    private ArrayList<NewsItem> listItems = new ArrayList<NewsItem>();
+    private NewsAdapter adapter;
+    private SwipeRefreshLayout swipeView;
+    private SharedPreferences prefs;
 
     public NewsFragment() {
     }
@@ -47,6 +47,9 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         adapter = new NewsAdapter(getActivity(), listItems);
         news_list.setAdapter(adapter);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        MainActivity.newsFragment.populateList(prefs);
 
         // Floating action button
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.news_add_button);
@@ -75,13 +78,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         swipeView.setEnabled(true);
         GetJson g = new GetJson(this.getActivity(), this, GetJson.NEWSURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), false);
         g.execute();
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        MainActivity.newsFragment.populateList(prefs);
     }
 
     public void populateList(SharedPreferences prefs) {

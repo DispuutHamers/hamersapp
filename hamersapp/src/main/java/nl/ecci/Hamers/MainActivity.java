@@ -58,20 +58,7 @@ public class MainActivity extends ActionBarActivity {
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private boolean doubleBackToExitPressedOnce;
-
-    /**
-     * Parse date
-     *
-     * @param dateTemp
-     * @return String with parsed date
-     * @throws java.text.ParseException
-     */
-    public static String parseDate(String dateTemp) throws ParseException {
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
-        return outputFormat.format(inputFormat.parse(dateTemp));
-    }
+    private boolean backPressedOnce;
 
     /**
      * Called when the activity is first created.
@@ -157,7 +144,9 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    //Show the dialog for entering the apikey on startup
+    /**
+     * Show the dialog for entering the apikey on startup
+     */
     private void showApiKeyDialog() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(getString(R.string.apikeydialogtitle));
@@ -232,7 +221,6 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * Swaps fragments in the quote_list_menu content view
-     *
      * @param position
      */
     private void selectItem(int position) {
@@ -349,29 +337,41 @@ public class MainActivity extends ActionBarActivity {
         if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {    //replace this with actual function which returns if the drawer is open
             mDrawerLayout.closeDrawer(Gravity.LEFT);     // replace this with actual function which closes drawer
         } else {
-            if (doubleBackToExitPressedOnce) {
+            if (backPressedOnce) {
                 super.onBackPressed();
                 return;
             }
 
-            this.doubleBackToExitPressedOnce = true;
+            this.backPressedOnce = true;
             Toast.makeText(this, "Klik nog een keer op 'back' om af te sluiten.", Toast.LENGTH_SHORT).show();
 
             new Handler().postDelayed(new Runnable() {
 
                 @Override
                 public void run() {
-                    doubleBackToExitPressedOnce = false;
+                    backPressedOnce = false;
                 }
             }, 2000);
         }
     }
 
-    /* The click listener for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectItem(position);
         }
+    }
+
+    /**
+     * Parse date
+     *
+     * @param dateTemp
+     * @return String with parsed date
+     * @throws java.text.ParseException
+     */
+    public static String parseDate(String dateTemp) throws ParseException {
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+        return outputFormat.format(inputFormat.parse(dateTemp));
     }
 }
