@@ -16,10 +16,11 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 
     public static final int QUOTE_FRAGMENT_POSITION = 0;
     public static final int USER_FRAGMENT_POSITION = 1;
-    public static final int EVENT_FRAGMENT_POSITION = 2;
-    public static final int BEER_FRAGMENT_POSITION = 3;
-    public static final int MOTION_FRAGMENT_POSITION = 4;
-    public static final int SETTINGS_POSITION = 5;
+    public static final int NEWS_FRAGMENT_POSITION = 2;
+    public static final int EVENT_FRAGMENT_POSITION = 3;
+    public static final int BEER_FRAGMENT_POSITION = 4;
+    public static final int MOTION_FRAGMENT_POSITION = 5;
+    public static final int SETTINGS_POSITION = 6;
     private static LayoutInflater inflater = null;
     private List<ItemImage> data;
 
@@ -32,6 +33,8 @@ public class NavigationDrawerAdapter extends BaseAdapter {
             else if (i == USER_FRAGMENT_POSITION)
                 data.add(new ItemImage(navigationTitle, R.drawable.users));
             else if (i == EVENT_FRAGMENT_POSITION)
+                data.add(new ItemImage(navigationTitle, R.drawable.events));
+            else if (i == NEWS_FRAGMENT_POSITION)
                 data.add(new ItemImage(navigationTitle, R.drawable.events));
             else if (i == BEER_FRAGMENT_POSITION)
                 data.add(new ItemImage(navigationTitle, R.drawable.beers));

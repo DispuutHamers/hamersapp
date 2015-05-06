@@ -17,6 +17,7 @@ public final class DataManager {
     public static final String QUOTEKEY = "quoteData";
     public static final String USERKEY = "userData";
     public static final String EVENTKEY = "eventData";
+    public static final String NEWSKEY = "newsData";
     public static final String BEERKEY = "beerData";
     public static final String REVIEWKEY = "reviewdata";
     public static final String USERIMAGEKEY = "userpic-";

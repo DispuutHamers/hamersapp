@@ -29,6 +29,7 @@ import nl.ecci.Hamers.Events.EventFragment;
 import nl.ecci.Hamers.Events.NewEventActivity;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
+import nl.ecci.Hamers.News.NewsFragment;
 import nl.ecci.Hamers.Quotes.NewQuoteFragment;
 import nl.ecci.Hamers.Quotes.QuoteListFragment;
 import nl.ecci.Hamers.Users.UserFragment;
@@ -44,8 +45,9 @@ public class MainActivity extends ActionBarActivity {
     //    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
     // Fragments
     public static QuoteListFragment quoteListFragment = new QuoteListFragment();
-    public static EventFragment eventFragment = new EventFragment();
     public static UserFragment userFragment = new UserFragment();
+    public static EventFragment eventFragment = new EventFragment();
+    public static NewsFragment newsFragment = new NewsFragment();
     public static BeerFragment beerFragment = new BeerFragment();
     public static MotionFragment motionFragment = new MotionFragment();
     public static SettingsFragment settingsFragment = new SettingsFragment();
@@ -263,23 +265,30 @@ public class MainActivity extends ActionBarActivity {
 
             case 3:
                 transaction
-                        .replace(R.id.content_frame, beerFragment)
+                        .replace(R.id.content_frame, newsFragment)
                         .commit();
                 setTitle(getResources().getStringArray(R.array.drawer_array)[3]);
                 break;
 
             case 4:
                 transaction
-                        .replace(R.id.content_frame, motionFragment)
+                        .replace(R.id.content_frame, beerFragment)
                         .commit();
                 setTitle(getResources().getStringArray(R.array.drawer_array)[4]);
                 break;
 
             case 5:
                 transaction
-                        .replace(R.id.content_frame, settingsFragment)
+                        .replace(R.id.content_frame, motionFragment)
                         .commit();
                 setTitle(getResources().getStringArray(R.array.drawer_array)[5]);
+                break;
+
+            case 6:
+                transaction
+                        .replace(R.id.content_frame, settingsFragment)
+                        .commit();
+                setTitle(getResources().getStringArray(R.array.drawer_array)[6]);
                 break;
         }
 

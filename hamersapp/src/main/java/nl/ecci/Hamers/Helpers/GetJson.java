@@ -13,6 +13,7 @@ import android.widget.Toast;
 import nl.ecci.Hamers.Beers.BeerFragment;
 import nl.ecci.Hamers.Events.EventFragment;
 import nl.ecci.Hamers.MainActivity;
+import nl.ecci.Hamers.News.NewsFragment;
 import nl.ecci.Hamers.Quotes.QuoteListFragment;
 import nl.ecci.Hamers.R;
 import nl.ecci.Hamers.Users.UserFragment;
@@ -27,6 +28,7 @@ public class GetJson extends AsyncTask<String, String, String> {
     public static final String QUOTEURL = "/quote.json";
     public static final String USERURL = "/user.json";
     public static final String EVENTURL = "/event.json";
+    public static final String NEWSURL = "/news.json";
     public static final String BEERURL = "/beer.json";
     public static final String REVIEWURL = "/review.json";
     private static final boolean DEBUG = false;
@@ -126,6 +128,10 @@ public class GetJson extends AsyncTask<String, String, String> {
                     else if (f instanceof EventFragment) {
                         prefs.edit().putString(DataManager.EVENTKEY, result).apply();
                         MainActivity.eventFragment.populateList(prefs);
+                    }
+                    else if (f instanceof NewsFragment) {
+                        prefs.edit().putString(DataManager.NEWSKEY, result).apply();
+                        MainActivity.newsFragment.populateList(prefs);
                     }
                     // Beer fragment
                     else if (f instanceof BeerFragment) {
