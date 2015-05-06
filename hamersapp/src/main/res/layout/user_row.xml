@@ -38,7 +38,6 @@
             android:layout_height="16dp"
             android:singleLine="true"
             android:text="Quotes: 0"
-            android:layout_marginRight="2dp"
             android:layout_marginBottom="2dp"
             android:textSize="14sp"
             android:gravity="right"
@@ -47,7 +46,7 @@
             android:layout_alignRight="@+id/user_reviewcount"
             android:layout_alignEnd="@+id/user_reviewcount"
             android:textStyle="italic"
-            android:textColor="@android:color/secondary_text_light"/>
+            android:textColor="@android:color/secondary_text_light" android:layout_marginRight="2dp"/>
 
     <TextView
             android:id="@+id/user_reviewcount"
@@ -64,6 +63,6 @@
             android:layout_toRightOf="@+id/user_image"
             android:layout_toEndOf="@+id/user_image"
             android:textStyle="italic"
-            android:textColor="@android:color/secondary_text_light"/>
+            android:textColor="@android:color/secondary_text_light" android:layout_marginRight="8dp"/>
 
 </RelativeLayout> 

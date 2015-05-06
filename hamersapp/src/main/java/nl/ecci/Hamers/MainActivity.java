@@ -15,7 +15,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.text.Editable;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -51,6 +50,9 @@ public class MainActivity extends ActionBarActivity {
     public static BeerFragment beerFragment = new BeerFragment();
     public static MotionFragment motionFragment = new MotionFragment();
     public static SettingsFragment settingsFragment = new SettingsFragment();
+
+    private SharedPreferences prefs;
+
     // Drawer list
     private String[] mDrawerItems;
     private ListView mDrawerList;
@@ -84,6 +86,9 @@ public class MainActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             selectItem(0);
         }
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         loadData();
     }
 
@@ -108,16 +113,6 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     public void initDrawer() {
@@ -151,13 +146,9 @@ public class MainActivity extends ActionBarActivity {
      * It starts with loading the users and afterwards it calls loaddata2, which downloads the other data.
      */
     public void loadData() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //reload users
         if (prefs.getString("apikey", null) != null) {
-            if (prefs.getString(DataManager.USERKEY, null) != null) {
-                userFragment.populateList(prefs);
-                loadData2(prefs, true);
-            } else {
+            if (prefs.getString(DataManager.USERKEY, null) == null) {
                 GetJson g = new GetJson(this, userFragment, GetJson.USERURL, prefs, true);
                 g.execute();
             }
@@ -218,6 +209,13 @@ public class MainActivity extends ActionBarActivity {
             //reload Reviews
             if (prefs.getString(DataManager.REVIEWKEY, null) == null) {
                 GetJson g = new GetJson(this, null, GetJson.REVIEWURL, prefs, false);
+                g.execute();
+            }
+            //reload News
+            if (prefs.getString(DataManager.NEWSKEY, null) != null) {
+                newsFragment.populateList(prefs);
+            } else {
+                GetJson g = new GetJson(this, newsFragment, GetJson.NEWSURL, prefs, false);
                 g.execute();
             }
             //reload Beers

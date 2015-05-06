@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_toRightOf="@id/quote_image"
-            android:layout_toEndOf="@id/quote_image">
+            android:layout_toEndOf="@id/quote_image" android:layout_marginRight="4dp">
 
         <TextView
                 android:id="@+id/quote_body"

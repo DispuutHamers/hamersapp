@@ -33,7 +33,6 @@ public class NewQuoteFragment extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        //final View view = View.inflate(new ContextThemeWrapper(this.getActivity(), R.style.dialog_light), R.layout.new_quote_fragment, null);
         final View view = inflater.inflate(R.layout.new_quote_fragment, null);
         builder.setView(view)
                 .setTitle(R.string.quote)

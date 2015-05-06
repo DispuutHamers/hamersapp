@@ -1,5 +1,6 @@
 package nl.ecci.Hamers.Beers;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,6 +15,7 @@ import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.DividerItemDecoration;
 import nl.ecci.Hamers.Helpers.GetJson;
+import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -111,6 +113,13 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onRefresh() {
         GetJson g = new GetJson(this.getActivity(), this, GetJson.BEERURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), false);
         g.execute();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        MainActivity.beerFragment.populateList(prefs);
     }
 
     public void populateList(SharedPreferences prefs) {
