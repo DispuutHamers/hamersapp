@@ -1,9 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:hamers="http://schemas.android.com/apk/res-auto">
+        >
     <group android:checkableBehavior="none">
         <item android:id="@id/sort_name"
-              android:title="@string/sort_name" />
+              android:title="@string/sort_name"/>
         <item android:id="@id/sort_rating"
-              android:title="@string/sort_rating" />
+              android:title="@string/sort_rating"/>
     </group>
 </menu>

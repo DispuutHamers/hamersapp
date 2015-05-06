@@ -1,6 +1,5 @@
 package nl.ecci.Hamers.Quotes;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;

@@ -1,6 +1,5 @@
 package nl.ecci.Hamers.Beers;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -151,7 +150,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     public void sort() {
         if (getActivity() != null)
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         if (prefs != null) {
             String sortPref = prefs.getString("beerSort", "");
             if (sortPref.equals("name")) {

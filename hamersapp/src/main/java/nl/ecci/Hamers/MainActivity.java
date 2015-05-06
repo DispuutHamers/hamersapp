@@ -76,7 +76,7 @@ public class MainActivity extends ActionBarActivity {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        loadData();
+        hasApiKey();
     }
 
     @Override
@@ -132,14 +132,8 @@ public class MainActivity extends ActionBarActivity {
      * Loads all the data on startup.
      * It starts with loading the users and afterwards it calls loaddata2, which downloads the other data.
      */
-    public void loadData() {
-        //reload users
-        if (prefs.getString("apikey", null) != null) {
-            if (prefs.getString(DataManager.USERKEY, null) == null) {
-                GetJson g = new GetJson(this, userFragment, GetJson.USERURL, prefs, true);
-                g.execute();
-            }
-        } else {
+    public void hasApiKey() {
+        if (prefs.getString("apikey", null) == null) {
             showApiKeyDialog();
         }
     }
@@ -160,7 +154,7 @@ public class MainActivity extends ActionBarActivity {
                 if (!key.toString().equals("")) {
                     storeInMemory(DataManager.APIKEYKEY, key.toString());
                     showToast(getResources().getString(R.string.toast_downloading), Toast.LENGTH_LONG);
-                    loadData();
+                    hasApiKey();
                 } else {
                     showToast(getResources().getString(R.string.toast_storekeymemory), Toast.LENGTH_LONG);
                 }
@@ -221,6 +215,7 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * Swaps fragments in the quote_list_menu content view
+     *
      * @param position
      */
     private void selectItem(int position) {

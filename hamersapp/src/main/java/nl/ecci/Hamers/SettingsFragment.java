@@ -29,7 +29,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("apikey")) {
             if (this.getActivity() instanceof MainActivity) {
-                ((MainActivity) this.getActivity()).loadData();
+                ((MainActivity) this.getActivity()).hasApiKey();
             }
         }
 

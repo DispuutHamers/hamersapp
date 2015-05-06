@@ -128,8 +128,7 @@ public class GetJson extends AsyncTask<String, String, String> {
                     else if (f instanceof EventFragment) {
                         prefs.edit().putString(DataManager.EVENTKEY, result).apply();
                         MainActivity.eventFragment.populateList(prefs);
-                    }
-                    else if (f instanceof NewsFragment) {
+                    } else if (f instanceof NewsFragment) {
                         prefs.edit().putString(DataManager.NEWSKEY, result).apply();
                         MainActivity.newsFragment.populateList(prefs);
                     }

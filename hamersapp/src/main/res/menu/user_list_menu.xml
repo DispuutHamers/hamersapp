@@ -1,10 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="none">
         <item android:id="@id/sort_username"
-              android:title="@string/sort_name" />
+              android:title="@string/sort_name"/>
         <item android:id="@id/sort_quotes"
-              android:title="@string/sort_quotes" />
+              android:title="@string/sort_quotes"/>
         <item android:id="@id/sort_reviews"
-              android:title="@string/sort_reviews" />
+              android:title="@string/sort_reviews"/>
     </group>
 </menu>
