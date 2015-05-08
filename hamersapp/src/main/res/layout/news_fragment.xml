@@ -25,8 +25,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            fab:fab_colorNormal="@color/sikkelrood"
-            fab:fab_colorPressed="@color/sikkelrood_dark"
+            fab:fab_colorNormal="@color/material_red"
+            fab:fab_colorPressed="@color/material_red_dark"
             fab:fab_colorRipple="@color/ripple"
             android:onClick="newNews"/>
 </RelativeLayout>
