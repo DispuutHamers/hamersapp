@@ -74,8 +74,6 @@ public class MainActivity extends ActionBarActivity {
             selectItem(0);
         }
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
         hasApiKey();
     }
 
@@ -133,6 +131,7 @@ public class MainActivity extends ActionBarActivity {
      * It starts with loading the users and afterwards it calls loaddata2, which downloads the other data.
      */
     public void hasApiKey() {
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (prefs.getString("apikey", null) == null) {
             showApiKeyDialog();
         }

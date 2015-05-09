@@ -44,7 +44,12 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         user_list.setAdapter(adapter);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        MainActivity.userFragment.populateList(prefs);
+
+        if (prefs.getString("userData", null) != null) {
+            populateList(prefs);
+        } else {
+            onRefresh();
+        }
 
         initSwiper(view, user_list);
 

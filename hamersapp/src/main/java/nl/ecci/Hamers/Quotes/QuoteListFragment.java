@@ -48,8 +48,13 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         quote_list.setAdapter(adapter);
         quote_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        MainActivity.quoteListFragment.populateList(prefs);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        if (prefs.getString("quoteData", null) != null) {
+            populateList(prefs);
+        } else {
+            onRefresh();
+        }
 
         initSwiper(view, quote_list, mLayoutManager);
 

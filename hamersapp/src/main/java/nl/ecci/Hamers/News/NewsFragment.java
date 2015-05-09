@@ -50,7 +50,11 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         news_list.setAdapter(adapter);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        MainActivity.newsFragment.populateList(prefs);
+        if (prefs.getString("newsDatak", null) != null) {
+            populateList(prefs);
+        } else {
+            onRefresh();
+        }
 
         // Floating action button
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.news_add_button);
