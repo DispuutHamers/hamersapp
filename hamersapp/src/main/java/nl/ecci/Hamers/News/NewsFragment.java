@@ -57,8 +57,8 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
 
         // Floating action button
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.news_add_button);
-        fab.attachToRecyclerView(news_list);
+        // FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.news_add_button);
+        // fab.attachToRecyclerView(news_list);
 
         return view;
     }

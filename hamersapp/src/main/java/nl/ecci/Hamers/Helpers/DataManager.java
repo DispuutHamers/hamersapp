@@ -91,7 +91,7 @@ public final class DataManager {
     public static JSONArray getJsonArray(SharedPreferences prefs, String key) {
         try {
             return new JSONArray(prefs.getString(key, null));
-        } catch (JSONException e) {
+        } catch (JSONException | NullPointerException e) {
             return null;
         }
     }
