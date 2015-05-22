@@ -116,7 +116,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         try {
             // News date
             DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-            if (dateString != null) {
+            if (!dateString.equals("null")) {
                 date = dbDF.parse(dateString);
             }
         } catch (ParseException e) {
