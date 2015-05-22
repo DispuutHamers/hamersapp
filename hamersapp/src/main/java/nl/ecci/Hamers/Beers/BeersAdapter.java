@@ -52,29 +52,26 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
 
         final ViewHolder vh = new ViewHolder(view);
 
-        vh.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                JSONObject b = null;
+        vh.view.setOnClickListener(view1 -> {
+            JSONObject b = null;
+            try {
+                b = DataManager.getBeer(prefs, dataSet.get(vh.getAdapterPosition()).getName());
+            } catch (NullPointerException ignored) {
+            }
+            if (b != null) {
                 try {
-                    b = DataManager.getBeer(prefs, dataSet.get(vh.getPosition()).getName());
-                } catch (NullPointerException ignored) {
-                }
-                if (b != null) {
-                    try {
-                        Intent intent = new Intent(context, SingleBeerActivity.class);
-                        intent.putExtra("id", b.getInt("id"));
-                        intent.putExtra("name", b.getString("name"));
-                        intent.putExtra("soort", b.getString("soort"));
-                        intent.putExtra("picture", b.getString("picture"));
-                        intent.putExtra("percentage", b.getString("percentage"));
-                        intent.putExtra("brewer", b.getString("brewer"));
-                        intent.putExtra("country", b.getString("country"));
-                        intent.putExtra("cijfer", b.getString("cijfer"));
-                        context.startActivity(intent);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    Intent intent = new Intent(context, SingleBeerActivity.class);
+                    intent.putExtra("id", b.getInt("id"));
+                    intent.putExtra("name", b.getString("name"));
+                    intent.putExtra("soort", b.getString("soort"));
+                    intent.putExtra("picture", b.getString("picture"));
+                    intent.putExtra("percentage", b.getString("percentage"));
+                    intent.putExtra("brewer", b.getString("brewer"));
+                    intent.putExtra("country", b.getString("country"));
+                    intent.putExtra("cijfer", b.getString("cijfer"));
+                    context.startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });

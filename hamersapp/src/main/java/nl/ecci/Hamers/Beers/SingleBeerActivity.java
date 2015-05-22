@@ -33,15 +33,7 @@ public class SingleBeerActivity extends AppCompatActivity {
 
     private int id;
     private String name;
-    private String soort;
-    private String url;
-    private String percentage;
-    private String brewer;
-    private String country;
-    private String cijfer;
     private SharedPreferences prefs;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,12 +54,12 @@ public class SingleBeerActivity extends AppCompatActivity {
 
         id = extras.getInt("id");
         name = extras.getString("name");
-        soort = extras.getString("soort");
-        url = extras.getString("picture");
-        percentage = extras.getString("percentage");
-        brewer = extras.getString("brewer");
-        country = extras.getString("country");
-        cijfer = extras.getString("cijfer");
+        String soort = extras.getString("soort");
+        String url = extras.getString("picture");
+        String percentage = extras.getString("percentage");
+        String brewer = extras.getString("brewer");
+        String country = extras.getString("country");
+        String cijfer = extras.getString("cijfer");
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -84,9 +76,8 @@ public class SingleBeerActivity extends AppCompatActivity {
         }
 
         // Universal Image Loader
-        imageLoader = ImageLoader.getInstance();
-        options = new DisplayImageOptions.Builder()
-                .resetViewBeforeLoading(true)
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .considerExifParams(true)
@@ -173,7 +164,7 @@ public class SingleBeerActivity extends AppCompatActivity {
 
         // Insert into view
         ViewGroup insertPoint = (ViewGroup) findViewById(R.id.review_insert_point);
-        insertPoint.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+        insertPoint.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     @Override

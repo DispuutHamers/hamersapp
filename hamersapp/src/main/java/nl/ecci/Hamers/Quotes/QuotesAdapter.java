@@ -2,6 +2,7 @@ package nl.ecci.Hamers.Quotes;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import nl.ecci.Hamers.Helpers.DataManager;
+import nl.ecci.Hamers.Helpers.Utils;
 import nl.ecci.Hamers.R;
 
 import java.util.ArrayList;
@@ -18,21 +22,30 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
     private final ArrayList<Quote> dataSet;
     private final SharedPreferences prefs;
+    private final ImageLoader imageLoader;
+    private final DisplayImageOptions options;
 
     public QuotesAdapter(Context context, ArrayList<Quote> itemsArrayList) {
         this.dataSet = itemsArrayList;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        // Universal Image Loader
+        imageLoader = ImageLoader.getInstance();
+        options = new DisplayImageOptions.Builder()
+                .resetViewBeforeLoading(true)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
     }
 
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.quote_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.quote_row, parent, false);
 
-        final ViewHolder vh = new ViewHolder(view);
-
-        return vh;
+        return new ViewHolder(view);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -41,7 +54,10 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         holder.body.setText(dataSet.get(position).getBody());
         holder.date.setText(dataSet.get(position).getDate());
         holder.user.setText(dataSet.get(position).getUser());
-        holder.userImage.setImageBitmap(DataManager.getUserImage(prefs, dataSet.get(position).getUserID()));
+
+        String email = DataManager.IDToEmail(prefs, dataSet.get(position).getUserID());
+        String url = "http://gravatar.com/avatar/" + Utils.md5Hex(email) + "?s=200";
+        imageLoader.displayImage(url, holder.userImage, options);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

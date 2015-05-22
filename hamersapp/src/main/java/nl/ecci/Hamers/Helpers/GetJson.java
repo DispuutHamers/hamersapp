@@ -33,19 +33,17 @@ public class GetJson extends AsyncTask<String, String, String> {
     private final String typeURL;
     private final SharedPreferences prefs;
     private final Activity a;
-    private final boolean firstload;
 
-    public GetJson(Activity a, Fragment f, String typeURL, SharedPreferences s, Boolean firstload) {
-        this.f = f;
+    public GetJson(Activity activity, Fragment fragment, String typeURL, SharedPreferences s) {
+        this.f = fragment;
         this.typeURL = typeURL;
         this.prefs = s;
-        this.a = a;
-        this.firstload = firstload;
+        this.a = activity;
     }
 
     protected String doInBackground(String... params) {
         BufferedReader reader;
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         try {
             URL url = new URL(MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + typeURL);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -73,18 +71,13 @@ public class GetJson extends AsyncTask<String, String, String> {
 
     @Override
     protected void onPostExecute(String result) {
-
-        if (result == null) {
-            if (firstload) {
-                ((MainActivity) a).loadData2(prefs, false);
-            }
-        } else {
+        if (result != null) {
             try {
                 JSONArray arr = new JSONArray(result);
                 if (arr.getJSONObject(0).has("error")) {
                     ((MainActivity) a).loadData2(prefs, false);
                 }
-                if (firstload && a instanceof MainActivity) {
+                if (a instanceof MainActivity) {
                     ((MainActivity) a).loadData2(prefs, true);
                 }
                 if (result.equals("{}")) {
@@ -97,7 +90,7 @@ public class GetJson extends AsyncTask<String, String, String> {
                     // User fragment
                     else if (f instanceof UserFragment) {
                         prefs.edit().putString(DataManager.USERKEY, result).apply();
-                        GetJson g = new GetJson(a, f, USERURL, prefs, false);
+                        GetJson g = new GetJson(a, f, USERURL, prefs);
                         g.execute();
                         MainActivity.userFragment.populateList(prefs);
                     }
@@ -112,9 +105,9 @@ public class GetJson extends AsyncTask<String, String, String> {
                     // Beer fragment
                     else if (f instanceof BeerFragment) {
                         prefs.edit().putString(DataManager.BEERKEY, result).apply();
-                        GetJson g = new GetJson(a, f, BEERURL, prefs, false);
+                        GetJson g = new GetJson(a, f, BEERURL, prefs);
                         g.execute();
-                        GetJson g2 = new GetJson(a, null, REVIEWURL, prefs, false);
+                        GetJson g2 = new GetJson(a, null, REVIEWURL, prefs);
                         g2.execute();
                         MainActivity.beerFragment.populateList(prefs);
                     }
@@ -131,15 +124,15 @@ public class GetJson extends AsyncTask<String, String, String> {
                     // Review
                     else if (typeURL.equals(REVIEWURL)) {
                         prefs.edit().putString(DataManager.REVIEWKEY, result).apply();
-                        GetJson g = new GetJson(a, f, BEERURL, prefs, false);
+                        GetJson g = new GetJson(a, f, BEERURL, prefs);
                         g.execute();
                     }
                 }
             } catch (JSONException e) {
-                if (firstload) {
-                    ((MainActivity) a).loadData2(prefs, false);
-                }
+                ((MainActivity) a).loadData2(prefs, false);
             }
+        } else {
+            ((MainActivity) a).loadData2(prefs, false);
         }
     }
 }

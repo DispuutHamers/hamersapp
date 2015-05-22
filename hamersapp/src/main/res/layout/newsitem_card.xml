@@ -23,7 +23,7 @@
                 android:layout_alignWithParentIfMissing="true"
                 android:gravity="center"
                 android:text="Dit is heel boeiend nieuws (testing purposes)"
-                android:textSize="24dp"
+                android:textSize="24sp"
                 android:textColor="@android:color/primary_text_light"/>
         <TextView
                 android:id="@+id/newsitem_date"

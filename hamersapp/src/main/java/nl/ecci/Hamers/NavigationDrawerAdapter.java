@@ -25,7 +25,7 @@ class NavigationDrawerAdapter extends BaseAdapter {
     private final List<ItemImage> data;
 
     public NavigationDrawerAdapter(Activity activity, String navigationTitles[]) {
-        data = new ArrayList<NavigationDrawerAdapter.ItemImage>();
+        data = new ArrayList<>();
         int i = 0;
         for (String navigationTitle : navigationTitles) {
             if (i == QUOTE_FRAGMENT_POSITION)

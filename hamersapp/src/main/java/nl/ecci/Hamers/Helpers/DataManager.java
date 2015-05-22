@@ -1,9 +1,6 @@
 package nl.ecci.Hamers.Helpers;
 
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,8 +17,6 @@ public final class DataManager {
     public static final String NEWSKEY = "newsData";
     public static final String BEERKEY = "beerData";
     public static final String REVIEWKEY = "reviewdata";
-    private static final String USERIMAGEKEY = "userpic-";
-    private static final String BEERIMAGEKEY = "beerpic-";
     public static final String APIKEYKEY = "apikey";
     public static final String AUTHENTICATED = "authenticated";
 
@@ -96,16 +91,6 @@ public final class DataManager {
         }
     }
 
-    public static Bitmap getUserImage(SharedPreferences prefs, int id) {
-        byte[] array = Base64.decode(prefs.getString(USERIMAGEKEY + id, ""), Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(array, 0, array.length);
-    }
-
-    public static Bitmap getBeerImage(SharedPreferences prefs, String name) {
-        byte[] array = Base64.decode(prefs.getString(BEERIMAGEKEY + name, ""), Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(array, 0, array.length);
-    }
-
     public static int usernameToID(SharedPreferences prefs, String name) {
         JSONArray userJSON;
         int returnv = -1;
@@ -121,5 +106,22 @@ public final class DataManager {
             return returnv;
         }
         return returnv;
+    }
+
+    public static String IDToEmail(SharedPreferences prefs, int id) {
+        String result = null;
+        JSONArray users;
+        try {
+            if ((users = getJsonArray(prefs, USERKEY)) != null) {
+                for (int i = 0; i < users.length(); i++) {
+                    if (users.getJSONObject(i).getInt("id") == id) {
+                        result = users.getJSONObject(i).getString("email");
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

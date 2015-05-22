@@ -55,7 +55,7 @@
     <string name="apikeydialogmessage">Deze kan bemachtigd worden op www.zondersikkel.nl</string>
 
     <!-- Dialog buttons -->
-    <string name="dialog_positive">Ok</string>
+    <string name="dialog_positive">OK</string>
     <string name="dialog_negative">Cancel</string>
 
     <!-- Reviews -->

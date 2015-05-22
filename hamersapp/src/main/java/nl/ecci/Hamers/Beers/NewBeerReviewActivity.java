@@ -20,12 +20,8 @@ import static android.text.Html.escapeHtml;
 
 public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
     private int id;
-    private String review;
-    private SeekBar sb;
     private TextView progress;
-    private TextView title;
     private int cijfer;
-    private String name;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,14 +36,14 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
 
         Bundle extras = getIntent().getExtras();
         id = extras.getInt("id");
-        name = extras.getString("name");
+        String name = extras.getString("name");
 
-        title = (TextView) findViewById(R.id.review_title);
+        TextView title = (TextView) findViewById(R.id.review_title);
         title.setText(name);
 
         cijfer = 1;
 
-        sb = (SeekBar) findViewById(R.id.ratingseekbar);
+        SeekBar sb = (SeekBar) findViewById(R.id.ratingseekbar);
         sb.setOnSeekBarChangeListener(this);
         progress = (TextView) findViewById(R.id.rating);
 
@@ -85,7 +81,7 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
 
     public void postReview(View view) {
         EditText review_body = (EditText) findViewById(R.id.review_body);
-        review = escapeHtml(review_body.getText().toString());
+        String review = escapeHtml(review_body.getText().toString());
         Button date_button = (Button) findViewById(R.id.pick_date_button);
         String date = date_button.getText().toString();
 

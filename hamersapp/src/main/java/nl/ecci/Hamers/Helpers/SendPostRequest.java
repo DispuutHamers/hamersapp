@@ -10,7 +10,6 @@ import nl.ecci.Hamers.MainActivity;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class SendPostRequest extends AsyncTask<String, String, String> {
@@ -54,8 +53,6 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
 
             response = con.getResponseCode();
             con.disconnect();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,18 +67,28 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
                 activity.finish();
             }
 
-            if (type.equals(QUOTEURL)) {
-                GetJson g = new GetJson((Activity) mContext, MainActivity.quoteListFragment, GetJson.QUOTEURL, prefs, false);
-                g.execute();
-            } else if (type.equals(EVENTURL) || type.equals(SIGNUPURL)) {
-                GetJson g = new GetJson((Activity) mContext, MainActivity.eventFragment, GetJson.EVENTURL, prefs, false);
-                g.execute();
-            } else if (type.equals(BEERURL)) {
-                GetJson g = new GetJson((Activity) mContext, MainActivity.beerFragment, GetJson.BEERURL, prefs, false);
-                g.execute();
-            } else if (type.equals(REVIEWURL)) {
-                GetJson g = new GetJson((Activity) mContext, null, GetJson.REVIEWURL, prefs, false);
-                g.execute();
+            switch (type) {
+                case QUOTEURL: {
+                    GetJson g = new GetJson((Activity) mContext, MainActivity.quoteListFragment, GetJson.QUOTEURL, prefs);
+                    g.execute();
+                    break;
+                }
+                case EVENTURL:
+                case SIGNUPURL: {
+                    GetJson g = new GetJson((Activity) mContext, MainActivity.eventFragment, GetJson.EVENTURL, prefs);
+                    g.execute();
+                    break;
+                }
+                case BEERURL: {
+                    GetJson g = new GetJson((Activity) mContext, MainActivity.beerFragment, GetJson.BEERURL, prefs);
+                    g.execute();
+                    break;
+                }
+                case REVIEWURL: {
+                    GetJson g = new GetJson((Activity) mContext, null, GetJson.REVIEWURL, prefs);
+                    g.execute();
+                    break;
+                }
             }
 
             Toast.makeText(mContext, "Item posted!", Toast.LENGTH_SHORT).show();

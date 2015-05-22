@@ -5,8 +5,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
-public class ExpandedListView extends ListView {
-    private android.view.ViewGroup.LayoutParams params;
+class ExpandedListView extends ListView {
     private int oldCount = 0;
 
     public ExpandedListView(Context context, AttributeSet attrs) {
@@ -22,7 +21,7 @@ public class ExpandedListView extends ListView {
                 height += getDividerHeight();
             }
             oldCount = getCount();
-            params = getLayoutParams();
+            android.view.ViewGroup.LayoutParams params = getLayoutParams();
             params.height = height;
             setLayoutParams(params);
         }

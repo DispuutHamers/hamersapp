@@ -9,7 +9,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import nl.ecci.Hamers.Helpers.DataManager;
@@ -43,38 +42,35 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
         final ViewHolder vh = new ViewHolder(view);
 
-        vh.view.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                JSONObject e = DataManager.getEvent(prefs, dataSet.get(vh.getPosition()).getTitle(), dataSet.get(vh.getPosition()).getDate());
-                if (e != null) {
-                    try {
-                        Intent intent = new Intent(context, SingleEventActivity.class);
-                        intent.putExtra("id", e.getInt("id"));
-                        intent.putExtra("title", e.getString("title"));
-                        intent.putExtra("beschrijving", e.getString("beschrijving"));
-                        intent.putExtra("location", e.getString("location"));
-                        intent.putExtra("date", e.getString("date"));
+        vh.view.setOnClickListener(view1 -> {
+            JSONObject e = DataManager.getEvent(prefs, dataSet.get(vh.getAdapterPosition()).getTitle(), dataSet.get(vh.getAdapterPosition()).getDate());
+            if (e != null) {
+                try {
+                    Intent intent = new Intent(context, SingleEventActivity.class);
+                    intent.putExtra("id", e.getInt("id"));
+                    intent.putExtra("title", e.getString("title"));
+                    intent.putExtra("beschrijving", e.getString("beschrijving"));
+                    intent.putExtra("location", e.getString("location"));
+                    intent.putExtra("date", e.getString("date"));
 
-                        ArrayList<String> aanwezig = new ArrayList<String>();
-                        ArrayList<String> afwezig = new ArrayList<String>();
+                    ArrayList<String> aanwezig = new ArrayList<>();
+                    ArrayList<String> afwezig = new ArrayList<>();
 
-                        JSONArray signups = e.getJSONArray("signups");
+                    JSONArray signups = e.getJSONArray("signups");
 
-                        for (int i = 0; i < signups.length(); i++) {
-                            JSONObject signup = signups.getJSONObject(i);
-                            if (signup.getBoolean("status")) {
-                                aanwezig.add(DataManager.getUser(prefs, signup.getInt("user_id")).getString("name"));
-                            } else {
-                                afwezig.add(DataManager.getUser(prefs, signup.getInt("user_id")).getString("name"));
-                            }
+                    for (int i = 0; i < signups.length(); i++) {
+                        JSONObject signup = signups.getJSONObject(i);
+                        if (signup.getBoolean("status")) {
+                            aanwezig.add(DataManager.getUser(prefs, signup.getInt("user_id")).getString("name"));
+                        } else {
+                            afwezig.add(DataManager.getUser(prefs, signup.getInt("user_id")).getString("name"));
                         }
-                        intent.putStringArrayListExtra("aanwezig", aanwezig);
-                        intent.putStringArrayListExtra("afwezig", afwezig);
-                        context.startActivity(intent);
-                    } catch (JSONException e1) {
-                        e1.printStackTrace();
                     }
+                    intent.putStringArrayListExtra("aanwezig", aanwezig);
+                    intent.putStringArrayListExtra("afwezig", afwezig);
+                    context.startActivity(intent);
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
                 }
             }
         });

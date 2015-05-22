@@ -2,7 +2,6 @@ package nl.ecci.Hamers;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -61,10 +60,6 @@ public class MainActivity extends AppCompatActivity {
     private static final MotionFragment motionFragment = new MotionFragment();
     private static final SettingsFragment settingsFragment = new SettingsFragment();
 
-    private SharedPreferences prefs;
-
-    // Drawer list
-    private String[] mDrawerItems;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -111,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDrawer() {
         // Drawer list
-        mDrawerItems = getResources().getStringArray(R.array.drawer_array);
+        String[] mDrawerItems = getResources().getStringArray(R.array.drawer_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -140,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
      * It starts with loading the users and afterwards it calls loaddata2, which downloads the other data.
      */
     public void hasApiKey() {
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (prefs.getString("apikey", null) == null) {
             showApiKeyDialog();
         }
@@ -156,16 +151,14 @@ public class MainActivity extends AppCompatActivity {
         final EditText apiKey = new EditText(this);
         apiKey.setHint(getString(R.string.apikey_hint));
         alert.setView(apiKey);
-        alert.setPositiveButton(getString(R.string.dialog_positive), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                Editable key = apiKey.getText();
-                if (!key.toString().equals("")) {
-                    storeInMemory(DataManager.APIKEYKEY, key.toString());
-                    showToast(getResources().getString(R.string.toast_downloading));
-                    hasApiKey();
-                } else {
-                    showToast(getResources().getString(R.string.toast_storekeymemory));
-                }
+        alert.setPositiveButton(getString(R.string.dialog_positive), (dialog, whichButton) -> {
+            Editable key = apiKey.getText();
+            if (!key.toString().equals("")) {
+                storeInMemory(key.toString());
+                showToast(getResources().getString(R.string.toast_downloading));
+                hasApiKey();
+            } else {
+                showToast(getResources().getString(R.string.toast_storekeymemory));
             }
         });
         alert.show();
@@ -177,8 +170,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Stores this key value pair in memory
-    private void storeInMemory(String key, String value) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putString(key, value).apply();
+    private void storeInMemory(String value) {
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString(DataManager.APIKEYKEY, value).apply();
     }
 
     public void loadData2(SharedPreferences prefs, boolean auth) {
@@ -187,33 +180,33 @@ public class MainActivity extends AppCompatActivity {
             if (prefs.getString(DataManager.QUOTEKEY, null) != null) {
                 quoteListFragment.populateList(prefs);
             } else {
-                GetJson g = new GetJson(this, quoteListFragment, GetJson.QUOTEURL, prefs, false);
+                GetJson g = new GetJson(this, quoteListFragment, GetJson.QUOTEURL, prefs);
                 g.execute();
             }
             //reload Events
             if (prefs.getString(DataManager.EVENTKEY, null) != null) {
                 eventFragment.populateList(prefs);
             } else {
-                GetJson g = new GetJson(this, eventFragment, GetJson.EVENTURL, prefs, false);
+                GetJson g = new GetJson(this, eventFragment, GetJson.EVENTURL, prefs);
                 g.execute();
             }
             //reload Reviews
             if (prefs.getString(DataManager.REVIEWKEY, null) == null) {
-                GetJson g = new GetJson(this, null, GetJson.REVIEWURL, prefs, false);
+                GetJson g = new GetJson(this, null, GetJson.REVIEWURL, prefs);
                 g.execute();
             }
             //reload News
             if (prefs.getString(DataManager.NEWSKEY, null) != null) {
                 newsFragment.populateList(prefs);
             } else {
-                GetJson g = new GetJson(this, newsFragment, GetJson.NEWSURL, prefs, false);
+                GetJson g = new GetJson(this, newsFragment, GetJson.NEWSURL, prefs);
                 g.execute();
             }
             //reload Beers
             if (prefs.getString(DataManager.BEERKEY, null) != null) {
                 beerFragment.populateList(prefs);
             } else {
-                GetJson g = new GetJson(this, beerFragment, GetJson.BEERURL, prefs, false);
+                GetJson g = new GetJson(this, beerFragment, GetJson.BEERURL, prefs);
                 g.execute();
             }
         } else {
@@ -348,8 +341,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {    //replace this with actual function which returns if the drawer is open
-            mDrawerLayout.closeDrawer(Gravity.LEFT);     // replace this with actual function which closes drawer
+        if (mDrawerLayout.isDrawerOpen(Gravity.START)) {    //replace this with actual function which returns if the drawer is open
+            mDrawerLayout.closeDrawer(Gravity.START);     // replace this with actual function which closes drawer
         } else {
             if (backPressedOnce) {
                 super.onBackPressed();
@@ -359,12 +352,7 @@ public class MainActivity extends AppCompatActivity {
             this.backPressedOnce = true;
             Toast.makeText(this, "Klik nog een keer op 'back' om af te sluiten.", Toast.LENGTH_SHORT).show();
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    backPressedOnce = false;
-                }
-            }, 2000);
+            new Handler().postDelayed(() -> backPressedOnce = false, 2000);
         }
     }
 

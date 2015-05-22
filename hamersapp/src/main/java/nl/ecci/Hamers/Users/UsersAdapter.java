@@ -1,7 +1,6 @@
 package nl.ecci.Hamers.Users;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import nl.ecci.Hamers.Helpers.MD5Util;
+import nl.ecci.Hamers.Helpers.Utils;
 import nl.ecci.Hamers.R;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ class UsersAdapter extends ArrayAdapter<User> {
 
     private final Context context;
     private final ArrayList<User> dataSet;
-    private SharedPreferences prefs;
     private final ImageLoader imageLoader;
     private final DisplayImageOptions options;
 
@@ -63,7 +61,7 @@ class UsersAdapter extends ArrayAdapter<User> {
 
         // Image
         ImageView userImage = (ImageView) rowView.findViewById(R.id.user_image);
-        String url = "http://gravatar.com/avatar/" + MD5Util.md5Hex(dataSet.get(position).getEmail());
+        String url = "http://gravatar.com/avatar/" + Utils.md5Hex(dataSet.get(position).getEmail()) + "?s=200";
         imageLoader.displayImage(url, userImage, options);
 
         // 5. return rowView

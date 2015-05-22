@@ -25,7 +25,7 @@ import java.util.Date;
 
 public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private final ArrayList<Event> listItems = new ArrayList<Event>();
+    private final ArrayList<Event> listItems = new ArrayList<>();
     private EventsAdapter adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
@@ -79,7 +79,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onRefresh() {
         swipeView.setEnabled(true);
-        GetJson g = new GetJson(this.getActivity(), this, GetJson.EVENTURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), false);
+        GetJson g = new GetJson(this.getActivity(), this, GetJson.EVENTURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()));
         g.execute();
     }
 

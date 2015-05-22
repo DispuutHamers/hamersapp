@@ -10,7 +10,7 @@
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent">
+                android:layout_height="wrap_content">
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Scotch Ale"
                             android:id="@+id/beer_soort"
-                            android:textSize="16dp"
+                            android:textSize="16sp"
                             android:gravity="right"/>
                 </LinearLayout>
                 <LinearLayout
@@ -76,7 +76,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="8%"
                             android:id="@+id/beer_alc"
-                            android:textSize="16dp"
+                            android:textSize="16sp"
                             android:gravity="right"/>
                 </LinearLayout>
                 <LinearLayout
@@ -100,7 +100,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="John Martin"
                             android:id="@+id/beer_brewer"
-                            android:textSize="16dp"
+                            android:textSize="16sp"
                             android:gravity="right"/>
                 </LinearLayout>
                 <LinearLayout
@@ -124,7 +124,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="BE"
                             android:id="@+id/beer_country"
-                            android:textSize="16dp"
+                            android:textSize="16sp"
                             android:gravity="right"/>
                 </LinearLayout>
                 <LinearLayout
@@ -149,7 +149,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="8"
                             android:id="@+id/beer_rating"
-                            android:textSize="16dp"
+                            android:textSize="16sp"
                             android:gravity="right"/>
                 </LinearLayout>
                 <View
@@ -186,7 +186,7 @@
 
         <Button
                 android:id="@+id/sendreview_button"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"

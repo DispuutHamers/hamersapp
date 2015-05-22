@@ -20,15 +20,6 @@ import java.util.Date;
 public class SingleEventActivity extends AppCompatActivity {
     public SwipeRefreshLayout swipeView;
     private int id;
-    private String title;
-    private String beschrijving;
-    private String location;
-    private String date;
-    private Date dbDatum;
-    private ArrayList<String> aanwezigItems = new ArrayList<String>();
-    private ArrayList<String> afwezigItems = new ArrayList<String>();
-    private ArrayAdapter<String> aanwezigAdapter;
-    private ArrayAdapter<String> afwezigAadapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,11 +43,11 @@ public class SingleEventActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         id = extras.getInt("id");
-        aanwezigItems = getIntent().getStringArrayListExtra("aanwezig");
-        afwezigItems = getIntent().getStringArrayListExtra("afwezig");
+        ArrayList<String> aanwezigItems = getIntent().getStringArrayListExtra("aanwezig");
+        ArrayList<String> afwezigItems = getIntent().getStringArrayListExtra("afwezig");
 
-        aanwezigAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, aanwezigItems);
-        afwezigAadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, afwezigItems);
+        ArrayAdapter<String> aanwezigAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, aanwezigItems);
+        ArrayAdapter<String> afwezigAadapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, afwezigItems);
         aanwezig_list.setAdapter(aanwezigAdapter);
         afwezig_list.setAdapter(afwezigAadapter);
 
@@ -70,9 +61,9 @@ public class SingleEventActivity extends AppCompatActivity {
             event_afwezig_tv.setVisibility(View.INVISIBLE);
         }
 
-        title = extras.getString("title");
-        beschrijving = extras.getString("beschrijving");
-        location = extras.getString("location");
+        String title = extras.getString("title");
+        String beschrijving = extras.getString("beschrijving");
+        String location = extras.getString("location");
 
         String appDatum = null;
         try {
@@ -80,10 +71,10 @@ public class SingleEventActivity extends AppCompatActivity {
             Date today = new Date();
 
             // Event date
-            date = extras.getString("date");
+            String date = extras.getString("date");
             DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
             DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm");
-            dbDatum = dbDF.parse(date);
+            Date dbDatum = dbDF.parse(date);
             appDatum = appDF.format(dbDatum);
 
             if (today.after(dbDatum)) {

@@ -3,7 +3,6 @@ package nl.ecci.Hamers.Quotes;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -25,7 +24,7 @@ import java.util.ArrayList;
 
 public class NewQuoteFragment extends DialogFragment {
 
-    private final ArrayList<String> users = new ArrayList<String>();
+    private final ArrayList<String> users = new ArrayList<>();
     private SharedPreferences prefs;
 
     @NonNull
@@ -38,32 +37,28 @@ public class NewQuoteFragment extends DialogFragment {
         final View view = inflater.inflate(R.layout.new_quote_fragment, null);
         builder.setView(view)
                 .setTitle(R.string.quote)
-                .setPositiveButton(R.string.send_quote, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                .setPositiveButton(R.string.send_quote, (dialog, id) -> {
 
-                        // Get quote from editText
-                        EditText edit = (EditText) view.findViewById(R.id.quote_input);
-                        String quote = edit.getText().toString();
+                    // Get quote from editText
+                    EditText edit = (EditText) view.findViewById(R.id.quote_input);
+                    String quote = edit.getText().toString();
 
-                        // Get userID from spinner
-                        Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
-                        int userID = DataManager.usernameToID(prefs, userSpinner.getSelectedItem().toString());
+                    // Get userID from spinner
+                    Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
+                    int userID = DataManager.usernameToID(prefs, userSpinner.getSelectedItem().toString());
 
-                        // Post quote
-                        postQuote(quote, userID);
+                    // Post quote
+                    postQuote(quote, userID);
 
-                    }
                 })
-                .setNegativeButton(R.string.cancel_quote, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                    }
+                .setNegativeButton(R.string.cancel_quote, (dialog, id) -> {
+                    // User cancelled the dialog
                 });
 
         // Initialize spinner
         Spinner spinner = (Spinner) view.findViewById(R.id.user_spinner);
         createUserList();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, users);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, users);
 
         spinner.setAdapter(adapter);
 

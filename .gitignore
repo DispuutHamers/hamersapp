@@ -51,5 +51,3 @@ atlassian-ide-plugin.xml
 *.swp
 
 # GRADLE
-.gradle
-.DS_Store

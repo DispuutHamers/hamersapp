@@ -13,7 +13,7 @@ import nl.ecci.Hamers.Helpers.SendPostRequest;
 
 import static android.text.Html.escapeHtml;
 
-public class MotionFragment extends Fragment {
+class MotionFragment extends Fragment {
     private String type;
 
     @Override
@@ -21,33 +21,24 @@ public class MotionFragment extends Fragment {
         View view = inflater.inflate(R.layout.motion_fragment, container, false);
 
         RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.motionradiogroup);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.radio_duurtlang:
+                    type = "duurt lang";
+                    break;
 
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.radio_duurtlang:
-                        type = "duurt lang";
-                        break;
+                case R.id.radio_arelaxed:
+                    type = "vet arelaxed";
+                    break;
 
-                    case R.id.radio_arelaxed:
-                        type = "vet arelaxed";
-                        break;
-
-                    case R.id.radio_nietchill:
-                        type = "niet chill";
-                        break;
-                }
+                case R.id.radio_nietchill:
+                    type = "niet chill";
+                    break;
             }
         });
 
         Button button = (Button) view.findViewById(R.id.sendmotion_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                postMotion();
-            }
-        });
+        button.setOnClickListener(v -> postMotion());
 
         return view;
     }
