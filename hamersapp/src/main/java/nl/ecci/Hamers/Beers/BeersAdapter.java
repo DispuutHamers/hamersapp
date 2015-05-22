@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.R;
 import org.json.JSONException;
@@ -20,14 +22,26 @@ import java.util.ArrayList;
 
 public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> {
 
-    SharedPreferences prefs;
+    private SharedPreferences prefs;
     private Context context;
     private ArrayList<Beer> dataSet;
+    private ImageLoader imageLoader;
+    private DisplayImageOptions options;
 
     public BeersAdapter(ArrayList<Beer> itemsArrayList, Context context) {
         this.dataSet = itemsArrayList;
         this.context = context;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        imageLoader = ImageLoader.getInstance();
+
+        // set options for image display
+        options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
     }
 
     // Create new views (invoked by the layout manager)
@@ -41,7 +55,7 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         vh.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JSONObject b = DataManager.getBeer(prefs, dataSet.get(vh.getPosition()).getName());
+                JSONObject b = DataManager.getBeer(prefs, dataSet.get(vh.getLayoutPosition()).getName());
                 if (b != null) {
                     try {
                         Intent intent = new Intent(context, SingleBeerActivity.class);
@@ -72,8 +86,7 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         holder.rating.setText("Cijfer: " + dataSet.get(position).getRating());
         holder.info.setText((dataSet.get(position).getCountry() + " - " + dataSet.get(position).getPercentage()));
 
-        Bitmap image = DataManager.getBeerImage(prefs, dataSet.get(position).getName() + "-thumb");
-        holder.picture.setImageBitmap(image);
+        imageLoader.displayImage(dataSet.get(position).getImageURL(), holder.picture, options);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

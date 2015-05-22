@@ -1,6 +1,7 @@
 package nl.ecci.Hamers;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +23,11 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 import nl.ecci.Hamers.Beers.BeerFragment;
 import nl.ecci.Hamers.Beers.NewBeerActivity;
 import nl.ecci.Hamers.Events.EventFragment;
@@ -33,6 +39,7 @@ import nl.ecci.Hamers.Quotes.NewQuoteFragment;
 import nl.ecci.Hamers.Quotes.QuoteListFragment;
 import nl.ecci.Hamers.Users.UserFragment;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -341,7 +348,6 @@ public class MainActivity extends ActionBarActivity {
             Toast.makeText(this, "Klik nog een keer op 'back' om af te sluiten.", Toast.LENGTH_SHORT).show();
 
             new Handler().postDelayed(new Runnable() {
-
                 @Override
                 public void run() {
                     backPressedOnce = false;
@@ -368,5 +374,24 @@ public class MainActivity extends ActionBarActivity {
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
         return outputFormat.format(inputFormat.parse(dateTemp));
+    }
+
+    /**
+     * Setup of default ImageLoader configuration (Universal Image Loader)
+     * https://github.com/nostra13/Android-Universal-Image-Loader
+     *
+     * @param context
+     */
+    public static void configureDefaultImageLoader(Context context) {
+        File cacheDir = StorageUtils.getCacheDirectory(context);
+        ImageLoaderConfiguration defaultConfiguration
+                = new ImageLoaderConfiguration.Builder(context)
+                .denyCacheImageMultipleSizesInMemory()
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
+                .diskCache(new UnlimitedDiscCache(cacheDir))
+                .build();
+
+        // Initialize ImageLoader with configuration
+        ImageLoader.getInstance().init(defaultConfiguration);
     }
 }

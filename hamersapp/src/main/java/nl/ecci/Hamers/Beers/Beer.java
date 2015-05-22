@@ -5,18 +5,18 @@ public class Beer {
     private int id;
     private String name;
     private String soort;
-    private String pictureURL;
+    private String imageURL;
     private String percentage;
     private String brewer;
     private String country;
     private String rating;
 
-    public Beer(int id, String name, String soort, String pictureURL, String percentage, String brewer, String country, String rating) {
+    public Beer(int id, String name, String soort, String imageURL, String percentage, String brewer, String country, String rating) {
         super();
         this.id = id;
         this.name = name;
         this.soort = soort;
-        this.pictureURL = pictureURL;
+        this.imageURL = imageURL;
         this.percentage = percentage;
         this.brewer = brewer;
         this.country = country;
@@ -35,8 +35,8 @@ public class Beer {
         return soort;
     }
 
-    public String getPictureUrl() {
-        return pictureURL;
+    public String getImageURL() {
+        return imageURL;
     }
 
     public String getPercentage() {
