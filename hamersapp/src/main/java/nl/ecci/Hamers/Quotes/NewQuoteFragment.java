@@ -3,6 +3,7 @@ package nl.ecci.Hamers.Quotes;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -37,22 +38,22 @@ public class NewQuoteFragment extends DialogFragment {
         final View view = inflater.inflate(R.layout.new_quote_fragment, null);
         builder.setView(view)
                 .setTitle(R.string.quote)
-                .setPositiveButton(R.string.send_quote, (dialog, id) -> {
+                .setPositiveButton(R.string.send_quote, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
 
-                    // Get quote from editText
-                    EditText edit = (EditText) view.findViewById(R.id.quote_input);
-                    String quote = edit.getText().toString();
+                        // Get quote from editText
+                        EditText edit = (EditText) view.findViewById(R.id.quote_input);
+                        String quote = edit.getText().toString();
 
-                    // Get userID from spinner
-                    Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
-                    int userID = DataManager.usernameToID(prefs, userSpinner.getSelectedItem().toString());
+                        // Get userID from spinner
+                        Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
+                        int userID = DataManager.usernameToID(prefs, userSpinner.getSelectedItem().toString());
 
-                    // Post quote
-                    postQuote(quote, userID);
+                        // Post quote
+                        NewQuoteFragment.this.postQuote(quote, userID);
 
-                })
-                .setNegativeButton(R.string.cancel_quote, (dialog, id) -> {
-                    // User cancelled the dialog
+                    }
                 });
 
         // Initialize spinner

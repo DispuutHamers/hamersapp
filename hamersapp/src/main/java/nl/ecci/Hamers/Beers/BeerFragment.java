@@ -164,22 +164,28 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     }
 
-    private final Comparator<Beer> nameComparator = (beer1, beer2) -> {
-        String name1 = beer1.getName();
-        String name2 = beer2.getName();
+    private final Comparator<Beer> nameComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            String name1 = beer1.getName();
+            String name2 = beer2.getName();
 
-        return name1.compareToIgnoreCase(name2);
-    };
-    private final Comparator<Beer> ratingComparator = (beer1, beer2) -> {
-        String rating1 = beer1.getRating();
-        String rating2 = beer2.getRating();
-
-        if (rating1.equals("nog niet bekend")) {
-            rating1 = "-1";
-        } else if (rating2.equals("nog niet bekend")) {
-            rating2 = "-1";
+            return name1.compareToIgnoreCase(name2);
         }
-        return rating2.compareToIgnoreCase(rating1);
+    };
+    private final Comparator<Beer> ratingComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            String rating1 = beer1.getRating();
+            String rating2 = beer2.getRating();
+
+            if (rating1.equals("nog niet bekend")) {
+                rating1 = "-1";
+            } else if (rating2.equals("nog niet bekend")) {
+                rating2 = "-1";
+            }
+            return rating2.compareToIgnoreCase(rating1);
+        }
     };
 
     private void sortByName() {

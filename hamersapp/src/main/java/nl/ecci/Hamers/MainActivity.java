@@ -2,6 +2,7 @@ package nl.ecci.Hamers;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -151,14 +152,17 @@ public class MainActivity extends AppCompatActivity {
         final EditText apiKey = new EditText(this);
         apiKey.setHint(getString(R.string.apikey_hint));
         alert.setView(apiKey);
-        alert.setPositiveButton(getString(R.string.dialog_positive), (dialog, whichButton) -> {
-            Editable key = apiKey.getText();
-            if (!key.toString().equals("")) {
-                storeInMemory(key.toString());
-                showToast(getResources().getString(R.string.toast_downloading));
-                hasApiKey();
-            } else {
-                showToast(getResources().getString(R.string.toast_storekeymemory));
+        alert.setPositiveButton(getString(R.string.dialog_positive), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Editable key = apiKey.getText();
+                if (!key.toString().equals("")) {
+                    MainActivity.this.storeInMemory(key.toString());
+                    MainActivity.this.showToast(getResources().getString(R.string.toast_downloading));
+                    MainActivity.this.hasApiKey();
+                } else {
+                    MainActivity.this.showToast(getResources().getString(R.string.toast_storekeymemory));
+                }
             }
         });
         alert.show();
@@ -352,7 +356,12 @@ public class MainActivity extends AppCompatActivity {
             this.backPressedOnce = true;
             Toast.makeText(this, "Klik nog een keer op 'back' om af te sluiten.", Toast.LENGTH_SHORT).show();
 
-            new Handler().postDelayed(() -> backPressedOnce = false, 2000);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    backPressedOnce = false;
+                }
+            }, 2000);
         }
     }
 

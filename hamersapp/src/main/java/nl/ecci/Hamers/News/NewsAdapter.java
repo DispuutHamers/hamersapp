@@ -40,18 +40,21 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
         final ViewHolder vh = new ViewHolder(view);
 
-        vh.view.setOnClickListener(view1 -> {
-            JSONObject e = DataManager.getEvent(prefs, dataSet.get(vh.getAdapterPosition()).getTitle(), dataSet.get(vh.getAdapterPosition()).getDate());
-            if (e != null) {
-                try {
-                    Intent intent = new Intent(context, SingleEventActivity.class);
-                    intent.putExtra("title", e.getString("title"));
-                    intent.putExtra("body", e.getString("body"));
-                    intent.putExtra("category", e.getString("category"));
-                    intent.putExtra("date", e.getString("date"));
-                    context.startActivity(intent);
-                } catch (JSONException e1) {
-                    e1.printStackTrace();
+        vh.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view1) {
+                JSONObject e = DataManager.getEvent(prefs, dataSet.get(vh.getAdapterPosition()).getTitle(), dataSet.get(vh.getAdapterPosition()).getDate());
+                if (e != null) {
+                    try {
+                        Intent intent = new Intent(context, SingleEventActivity.class);
+                        intent.putExtra("title", e.getString("title"));
+                        intent.putExtra("body", e.getString("body"));
+                        intent.putExtra("category", e.getString("category"));
+                        intent.putExtra("date", e.getString("date"));
+                        context.startActivity(intent);
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
                 }
             }
         });
