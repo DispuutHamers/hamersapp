@@ -3,9 +3,10 @@ package nl.ecci.Hamers.Beers;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
@@ -25,15 +28,19 @@ import static nl.ecci.Hamers.Helpers.DataManager.getJsonArray;
 import static nl.ecci.Hamers.Helpers.DataManager.getUser;
 import static nl.ecci.Hamers.MainActivity.parseDate;
 
-public class SingleBeerActivity extends ActionBarActivity {
+public class SingleBeerActivity extends AppCompatActivity {
+
     private int id;
     private String name;
     private String soort;
+    private String url;
     private String percentage;
     private String brewer;
     private String country;
     private String cijfer;
     private SharedPreferences prefs;
+    private ImageLoader imageLoader;
+    private DisplayImageOptions options;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,7 @@ public class SingleBeerActivity extends ActionBarActivity {
         id = extras.getInt("id");
         name = extras.getString("name");
         soort = extras.getString("soort");
+        url = extras.getString("picture");
         percentage = extras.getString("percentage");
         brewer = extras.getString("brewer");
         country = extras.getString("country");
@@ -74,8 +82,19 @@ public class SingleBeerActivity extends ActionBarActivity {
             cijferTV.setText(cijfer);
         }
 
+        // Universal Image Loader
+        imageLoader = ImageLoader.getInstance();
+        options = new DisplayImageOptions.Builder()
+                .resetViewBeforeLoading(true)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
+
+        imageLoader.displayImage(url, beerImage, options);
+
         if (prefs != null) {
-            beerImage.setImageBitmap(DataManager.getBeerImage(prefs, name));
             getReviews();
         }
     }
@@ -135,7 +154,7 @@ public class SingleBeerActivity extends ActionBarActivity {
 
         String name = null;
         try {
-            name = getUser(prefs, review.getUser_id()).getString("name").toString();
+            name = getUser(prefs, review.getUser_id()).getString("name");
         } catch (JSONException e) {
             e.printStackTrace();
         }

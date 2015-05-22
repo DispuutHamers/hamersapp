@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +16,7 @@ import nl.ecci.Hamers.R;
 
 import static android.text.Html.escapeHtml;
 
-public class NewEventActivity extends ActionBarActivity {
+public class NewEventActivity extends AppCompatActivity {
     FragmentManager fragmanager = getSupportFragmentManager();
 
     @Override

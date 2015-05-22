@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
-import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,9 +55,9 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             onRefresh();
         }
 
-        // Floating action button
-        // FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.news_add_button);
-        // fab.attachToRecyclerView(news_list);
+         // Floating action button
+         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.news_add_button);
+         fab.attachToRecyclerView(news_list);
 
         return view;
     }
@@ -97,7 +96,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
                     Date date = parseDate2(temp.getString("date"));
 
-                    NewsItem newsItem = new NewsItem(temp.getString("title").toString(), temp.getString("body").toString(), temp.getString("cat").toString(), date);
+                    NewsItem newsItem = new NewsItem(temp.getString("title"), temp.getString("body"), temp.getString("cat"), date);
                     listItems.add(newsItem);
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();

@@ -19,7 +19,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/new_beer"
                     android:textStyle="bold"
-                    android:textSize="22dp"
+                    android:textSize="22sp"
                     android:padding="20dp"/>
 
             <EditText
@@ -99,7 +99,7 @@
 
         <Button
                 android:id="@+id/sendbeer_button"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"

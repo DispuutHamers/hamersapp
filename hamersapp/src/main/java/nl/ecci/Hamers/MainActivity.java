@@ -12,8 +12,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -27,6 +27,7 @@ import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import nl.ecci.Hamers.Beers.BeerFragment;
 import nl.ecci.Hamers.Beers.NewBeerActivity;
@@ -34,6 +35,7 @@ import nl.ecci.Hamers.Events.EventFragment;
 import nl.ecci.Hamers.Events.NewEventActivity;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
+import nl.ecci.Hamers.News.NewNewsActivity;
 import nl.ecci.Hamers.News.NewsFragment;
 import nl.ecci.Hamers.Quotes.NewQuoteFragment;
 import nl.ecci.Hamers.Quotes.QuoteListFragment;
@@ -45,7 +47,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
     // URL
     public static final String baseURL = "https://zondersikkel.nl/api/v1/";
     //    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
@@ -80,6 +82,8 @@ public class MainActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             selectItem(0);
         }
+
+        configureDefaultImageLoader(this);
 
         hasApiKey();
     }
@@ -315,6 +319,16 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
+     * When user presses "+" in NewsFragment, start new dialog with NewNewsActivity
+     *
+     * @param view
+     */
+    public void newNews(View view) {
+        Intent intent = new Intent(this, NewNewsActivity.class);
+        startActivity(intent);
+    }
+
+    /**
      * Hides the soft keyboard
      */
     public void hideSoftKeyboard() {
@@ -387,6 +401,7 @@ public class MainActivity extends ActionBarActivity {
                 = new ImageLoaderConfiguration.Builder(context)
                 .denyCacheImageMultipleSizesInMemory()
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
                 .diskCache(new UnlimitedDiscCache(cacheDir))
                 .build();
 

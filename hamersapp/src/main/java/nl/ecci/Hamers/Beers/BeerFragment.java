@@ -14,7 +14,6 @@ import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.DividerItemDecoration;
 import nl.ecci.Hamers.Helpers.GetJson;
-import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -110,10 +109,10 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
                     String cijfer = temp.getString("cijfer");
                     if (cijfer.equals("null")) {
-                        tempBeer = new Beer(temp.getInt("id"), temp.getString("name").toString(), temp.getString("soort").toString(),
+                        tempBeer = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
                                 temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), "nog niet bekend");
                     } else {
-                        tempBeer = new Beer(temp.getInt("id"), temp.getString("name").toString(), temp.getString("soort").toString(),
+                        tempBeer = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
                                 temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), cijfer);
                     }
                     listItems.add(tempBeer);

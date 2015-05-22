@@ -12,7 +12,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
-import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -105,7 +104,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject temp;
                     temp = json.getJSONObject(i);
-                    User tempUser = new User(temp.getString("name"), temp.getInt("id"), temp.getInt("quotes"), temp.getInt("reviews"));
+                    User tempUser = new User(temp.getString("name"), temp.getInt("id"), temp.getString("email"), temp.getInt("quotes"), temp.getInt("reviews"));
                     listItems.add(tempUser);
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();

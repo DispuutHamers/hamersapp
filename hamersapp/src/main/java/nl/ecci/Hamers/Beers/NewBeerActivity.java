@@ -2,20 +2,14 @@ package nl.ecci.Hamers.Beers;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
 import nl.ecci.Hamers.R;
 
-public class NewBeerActivity extends ActionBarActivity {
-    private String title;
-    private String picture;
-    private String soort;
-    private String percentage;
-    private String brewer;
-    private String country;
+public class NewBeerActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,12 +36,12 @@ public class NewBeerActivity extends ActionBarActivity {
         EditText beer_brewer = (EditText) findViewById(R.id.beer_brewer_et);
         EditText beer_country = (EditText) findViewById(R.id.beer_country_et);
 
-        title = beer_title.getText().toString();
-        picture = beer_picture.getText().toString();
-        soort = beer_soort.getText().toString();
-        percentage = beer_percentage.getText().toString();
-        brewer = beer_brewer.getText().toString();
-        country = beer_country.getText().toString();
+        String title = beer_title.getText().toString();
+        String picture = beer_picture.getText().toString();
+        String soort = beer_soort.getText().toString();
+        String percentage = beer_percentage.getText().toString();
+        String brewer = beer_brewer.getText().toString();
+        String country = beer_country.getText().toString();
 
         if (!percentage.contains("%")) {
             percentage = percentage + "%";
@@ -58,7 +52,6 @@ public class NewBeerActivity extends ActionBarActivity {
         req.execute();
     }
 
-    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
     }

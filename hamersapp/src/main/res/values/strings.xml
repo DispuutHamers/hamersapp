@@ -98,6 +98,11 @@
     <string name="beer_brewer">Brouwer</string>
     <string name="beer_country">Land</string>
 
+    <!-- News -->
+    <string name="new_news">Lekker roddeluh</string>
+    <string name="news_title">Wat moet erboven?</string>
+    <string name="news_body">Vertel dan..</string>
+
     <!-- Motions -->
     <string name="motiontypetext">Motietype:</string>
     <string name="motie_nietchill">Motie van niet chill</string>
@@ -152,7 +157,7 @@
     <string name="toast_downloading">De gegevens worden gedownload</string>
     <string name="toast_userloaderror">Fout bij het laden van de leden</string>
     <string name="toast_reviewloaderror">Fout bij het laden van de reviews</string>
-    <string name="toast_storekeymemory">"Een apikey kan ingevuld worden in het instellingen scherm"</string>
+    <string name="toast_storekeymemory">Een apikey kan ingevuld worden bij instellingen</string>
 
     <!-- Sorting -->
     <string name="sort_username">Sorteer op naam</string>

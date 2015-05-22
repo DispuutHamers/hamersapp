@@ -18,6 +18,7 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
     public static final String QUOTEURL = "/quote";
     public static final String EVENTURL = "/event";
     public static final String BEERURL = "/beer";
+    public static final String NEWSURL = "/news";
     public static final String MOTIEURL = "/motions";
     public static final String REVIEWURL = "/review";
     public static final String SIGNUPURL = "/signup";

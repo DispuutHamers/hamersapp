@@ -33,10 +33,10 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         this.context = context;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        // Universal Image Loader
         imageLoader = ImageLoader.getInstance();
+
+        // set options for image display
         options = new DisplayImageOptions.Builder()
-                .resetViewBeforeLoading(true)
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .considerExifParams(true)
@@ -55,18 +55,21 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         vh.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< HEAD
+                JSONObject b = DataManager.getBeer(prefs, dataSet.get(vh.getLayoutPosition()).getName());
+=======
                 JSONObject b = null;
                 try {
                     b = DataManager.getBeer(prefs, dataSet.get(vh.getPosition()).getName());
                 } catch (NullPointerException e) {
                 }
+>>>>>>> d6109fcbd6d36d1fbe4df75d44ecb32020d7038a
                 if (b != null) {
                     try {
                         Intent intent = new Intent(context, SingleBeerActivity.class);
                         intent.putExtra("id", b.getInt("id"));
                         intent.putExtra("name", b.getString("name"));
                         intent.putExtra("soort", b.getString("soort"));
-                        intent.putExtra("picture", b.getString("picture"));
                         intent.putExtra("percentage", b.getString("percentage"));
                         intent.putExtra("brewer", b.getString("brewer"));
                         intent.putExtra("country", b.getString("country"));

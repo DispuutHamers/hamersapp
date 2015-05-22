@@ -3,7 +3,7 @@ package nl.ecci.Hamers.Events;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class SingleEventActivity extends ActionBarActivity {
+public class SingleEventActivity extends AppCompatActivity {
     public SwipeRefreshLayout swipeView;
     int id;
     String title;

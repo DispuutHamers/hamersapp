@@ -15,7 +15,6 @@ import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.DividerItemDecoration;
 import nl.ecci.Hamers.Helpers.GetJson;
-import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -113,16 +112,14 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
                     String date = tempTijd + " - " + parseDate(tempDate);
 
-                    Quote tempQuote = new Quote(username, quote.getString("text").toString(), date, id);
+                    Quote tempQuote = new Quote(username, quote.getString("text"), date, id);
                     dataSet.add(tempQuote);
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
                     }
                 }
             }
-        } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
-        } catch (ParseException e) {
+        } catch (JSONException | ParseException e) {
             Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
         }
         if (swipeView != null) {

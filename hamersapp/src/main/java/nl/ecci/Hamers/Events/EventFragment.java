@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
-import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -97,7 +96,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     Date date = parseDate2(temp.getString("date"));
                     Date end_time = parseDate2(temp.getString("end_time"));
 
-                    Event event = new Event(temp.getInt("id"), temp.getString("title").toString(), temp.getString("beschrijving").toString(), temp.getString("location").toString(), date, end_time);
+                    Event event = new Event(temp.getInt("id"), temp.getString("title"), temp.getString("beschrijving"), temp.getString("location"), date, end_time);
                     listItems.add(event);
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
