@@ -55,7 +55,11 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         vh.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JSONObject b = DataManager.getBeer(prefs, dataSet.get(vh.getLayoutPosition()).getName());
+                JSONObject b = null;
+                try {
+                    b = DataManager.getBeer(prefs, dataSet.get(vh.getPosition()).getName());
+                } catch (NullPointerException e) {
+                }
                 if (b != null) {
                     try {
                         Intent intent = new Intent(context, SingleBeerActivity.class);

@@ -28,9 +28,9 @@ import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public SwipeRefreshLayout swipeView;
     private ArrayList<Quote> dataSet = new ArrayList<Quote>();
     private QuotesAdapter adapter;
+    private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
 
     public QuoteListFragment() {
@@ -48,8 +48,13 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         quote_list.setAdapter(adapter);
         quote_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        MainActivity.quoteListFragment.populateList(prefs);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        if (prefs.getString("quoteData", null) != null) {
+            populateList(prefs);
+        } else {
+            onRefresh();
+        }
 
         initSwiper(view, quote_list, mLayoutManager);
 

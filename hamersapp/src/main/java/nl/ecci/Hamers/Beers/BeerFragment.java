@@ -41,7 +41,11 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         setHasOptionsMenu(true);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        MainActivity.beerFragment.populateList(prefs);
+        if (prefs.getString("beerData", null) != null) {
+            populateList(prefs);
+        } else {
+            onRefresh();
+        }
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         beer_list.setLayoutManager(mLayoutManager);

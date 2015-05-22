@@ -17,10 +17,11 @@
     <color name="navy">#000080</color>
     <color name="black">#000000</color>
 
-    <color name="sikkelrood">#d50000</color>
-    <color name="sikkelrood_dark">#b71c1c</color>
-
     <color name="light_red">#ffebee</color>
-
     <color name="ripple">#ff80ab</color>
+
+    <!-- RED -->
+    <color name="material_red">#f44336</color>
+    <color name="material_red_dark">#b71c1c</color>
+
 </resources>

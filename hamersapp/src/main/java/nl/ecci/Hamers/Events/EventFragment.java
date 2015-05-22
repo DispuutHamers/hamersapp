@@ -48,7 +48,12 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         event_list.setAdapter(adapter);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        MainActivity.eventFragment.populateList(prefs);
+
+        if (prefs.getString("eventData", null) != null) {
+            populateList(prefs);
+        } else {
+            onRefresh();
+        }
 
         // Floating action button
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.event_add_button);
