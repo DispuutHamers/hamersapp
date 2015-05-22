@@ -2,6 +2,7 @@ package nl.ecci.Hamers.Events;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +18,7 @@ import nl.ecci.Hamers.R;
 import static android.text.Html.escapeHtml;
 
 public class NewEventActivity extends AppCompatActivity {
-    FragmentManager fragmanager = getSupportFragmentManager();
+    private final FragmentManager fragmanager = getSupportFragmentManager();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -131,7 +132,8 @@ public class NewEventActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
 }

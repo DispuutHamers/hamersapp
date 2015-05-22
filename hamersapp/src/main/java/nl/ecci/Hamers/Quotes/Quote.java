@@ -1,10 +1,10 @@
 package nl.ecci.Hamers.Quotes;
 
-public class Quote {
-    private String user;
-    private String body;
-    private String date;
-    private int userID;
+class Quote {
+    private final String user;
+    private final String body;
+    private final String date;
+    private final int userID;
 
     public Quote(String user, String body, String date, int userID) {
         super();

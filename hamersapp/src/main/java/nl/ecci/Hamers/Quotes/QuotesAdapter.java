@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder> {
 
     private final ArrayList<Quote> dataSet;
-    SharedPreferences prefs;
+    private final SharedPreferences prefs;
 
     public QuotesAdapter(Context context, ArrayList<Quote> itemsArrayList) {
         this.dataSet = itemsArrayList;
@@ -51,11 +51,11 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public View view;
-        public TextView body;
-        public TextView date;
-        public TextView user;
-        public ImageView userImage;
+        public final View view;
+        public final TextView body;
+        public final TextView date;
+        public final TextView user;
+        public final ImageView userImage;
 
         public ViewHolder(View view) {
             super(view);

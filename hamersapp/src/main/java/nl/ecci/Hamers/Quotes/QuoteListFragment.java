@@ -27,7 +27,7 @@ import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private ArrayList<Quote> dataSet = new ArrayList<Quote>();
+    private final ArrayList<Quote> dataSet = new ArrayList<Quote>();
     private QuotesAdapter adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
@@ -64,7 +64,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         return view;
     }
 
-    public void initSwiper(View view, final RecyclerView event_list, final LinearLayoutManager lm) {
+    private void initSwiper(View view, final RecyclerView event_list, final LinearLayoutManager lm) {
         // SwipeRefreshLayout
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.quotes_swipe_container);
         swipeView.setOnRefreshListener(this);

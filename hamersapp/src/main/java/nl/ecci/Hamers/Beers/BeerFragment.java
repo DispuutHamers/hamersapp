@@ -25,7 +25,7 @@ import java.util.Comparator;
 
 public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private ArrayList<Beer> listItems = new ArrayList<Beer>();
+    private final ArrayList<Beer> listItems = new ArrayList<Beer>();
     private BeersAdapter adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
@@ -65,7 +65,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return view;
     }
 
-    public void initSwiper(View view, final RecyclerView beer_list, final LinearLayoutManager lm) {
+    private void initSwiper(View view, final RecyclerView beer_list, final LinearLayoutManager lm) {
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
@@ -151,7 +151,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     }
 
-    public void sort() {
+    private void sort() {
         if (getActivity() != null)
             prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         if (prefs != null) {
@@ -164,7 +164,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     }
 
-    public Comparator<Beer> nameComparator = new Comparator<Beer>() {
+    private final Comparator<Beer> nameComparator = new Comparator<Beer>() {
         @Override
         public int compare(Beer beer1, Beer beer2) {
             String name1 = beer1.getName();
@@ -173,7 +173,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             return name1.compareToIgnoreCase(name2);
         }
     };
-    public Comparator<Beer> ratingComparator = new Comparator<Beer>() {
+    private final Comparator<Beer> ratingComparator = new Comparator<Beer>() {
         @Override
         public int compare(Beer beer1, Beer beer2) {
             String rating1 = beer1.getRating();
@@ -188,12 +188,12 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     };
 
-    public void sortByName() {
+    private void sortByName() {
         Collections.sort(listItems, nameComparator);
         adapter.notifyDataSetChanged();
     }
 
-    public void sortByRating() {
+    private void sortByRating() {
         Collections.sort(listItems, ratingComparator);
         adapter.notifyDataSetChanged();
     }

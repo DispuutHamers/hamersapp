@@ -31,11 +31,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         Button beerDateButton = (Button) getActivity().findViewById(R.id.pick_date_button);
         Button deadlineDateButton = (Button) getActivity().findViewById(R.id.deadline_date_button);
 
-        StringBuilder builder = new StringBuilder();
-        builder.append(day).append("-")
-                .append(month + 1).append("-")
-                .append(year);
-        String date = builder.toString();
+        String date = String.valueOf(day) + "-" + (month + 1) + "-" + year;
 
         if (getActivity().getSupportFragmentManager().findFragmentByTag("date") != null) {
             eventDateButton.setText(date);

@@ -25,9 +25,9 @@ import java.util.Date;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
-    SharedPreferences prefs;
-    private Context context;
-    private ArrayList<Event> dataSet;
+    private final SharedPreferences prefs;
+    private final Context context;
+    private final ArrayList<Event> dataSet;
 
     public EventsAdapter(Context context, ArrayList<Event> itemsArrayList) {
         this.context = context;
@@ -63,7 +63,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
                         for (int i = 0; i < signups.length(); i++) {
                             JSONObject signup = signups.getJSONObject(i);
-                            if (signup.getBoolean("status") == true) {
+                            if (signup.getBoolean("status")) {
                                 aanwezig.add(DataManager.getUser(prefs, signup.getInt("user_id")).getString("name"));
                             } else {
                                 afwezig.add(DataManager.getUser(prefs, signup.getInt("user_id")).getString("name"));
@@ -111,10 +111,10 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public View view;
-        public TextView title;
-        public TextView beschrijving;
-        public TextView date;
+        public final View view;
+        public final TextView title;
+        public final TextView beschrijving;
+        public final TextView date;
 
         public ViewHolder(View view) {
             super(view);
@@ -126,7 +126,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         }
     }
 
-    public boolean dateChecker(Date date, boolean beginDate) {
+    private boolean dateChecker(Date date, boolean beginDate) {
         if (beginDate) {
             if (System.currentTimeMillis() > date.getTime()) {
                 return true;

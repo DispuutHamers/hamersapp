@@ -1,15 +1,15 @@
 package nl.ecci.Hamers.Beers;
 
-public class Beer {
+class Beer {
 
-    private int id;
-    private String name;
-    private String soort;
-    private String imageURL;
-    private String percentage;
-    private String brewer;
-    private String country;
-    private String rating;
+    private final int id;
+    private final String name;
+    private final String soort;
+    private final String imageURL;
+    private final String percentage;
+    private final String brewer;
+    private final String country;
+    private final String rating;
 
     public Beer(int id, String name, String soort, String imageURL, String percentage, String brewer, String country, String rating) {
         super();

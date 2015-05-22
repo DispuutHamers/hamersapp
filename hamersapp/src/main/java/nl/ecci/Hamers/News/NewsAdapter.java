@@ -22,9 +22,9 @@ import java.util.ArrayList;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
-    SharedPreferences prefs;
-    private Context context;
-    private ArrayList<NewsItem> dataSet;
+    private final SharedPreferences prefs;
+    private final Context context;
+    private final ArrayList<NewsItem> dataSet;
 
     public NewsAdapter(Context context, ArrayList<NewsItem> itemsArrayList) {
         this.context = context;
@@ -79,11 +79,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public View view;
-        public TextView title;
-        public TextView body;
+        public final View view;
+        public final TextView title;
+        public final TextView body;
         public TextView category;
-        public TextView date;
+        public final TextView date;
 
         public ViewHolder(View view) {
             super(view);

@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -52,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
     public static final String baseURL = "https://zondersikkel.nl/api/v1/";
     //    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
     // Fragments
-    public static QuoteListFragment quoteListFragment = new QuoteListFragment();
-    public static UserFragment userFragment = new UserFragment();
-    public static EventFragment eventFragment = new EventFragment();
-    public static NewsFragment newsFragment = new NewsFragment();
-    public static BeerFragment beerFragment = new BeerFragment();
-    public static MotionFragment motionFragment = new MotionFragment();
-    public static SettingsFragment settingsFragment = new SettingsFragment();
+    public static final QuoteListFragment quoteListFragment = new QuoteListFragment();
+    public static final UserFragment userFragment = new UserFragment();
+    public static final EventFragment eventFragment = new EventFragment();
+    public static final NewsFragment newsFragment = new NewsFragment();
+    public static final BeerFragment beerFragment = new BeerFragment();
+    private static final MotionFragment motionFragment = new MotionFragment();
+    private static final SettingsFragment settingsFragment = new SettingsFragment();
 
     private SharedPreferences prefs;
 
@@ -105,13 +106,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
         // true, then it has handled the app icon touch event
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
-    public void initDrawer() {
+    private void initDrawer() {
         // Drawer list
         mDrawerItems = getResources().getStringArray(R.array.drawer_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -163,10 +161,10 @@ public class MainActivity extends AppCompatActivity {
                 Editable key = apiKey.getText();
                 if (!key.toString().equals("")) {
                     storeInMemory(DataManager.APIKEYKEY, key.toString());
-                    showToast(getResources().getString(R.string.toast_downloading), Toast.LENGTH_LONG);
+                    showToast(getResources().getString(R.string.toast_downloading));
                     hasApiKey();
                 } else {
-                    showToast(getResources().getString(R.string.toast_storekeymemory), Toast.LENGTH_LONG);
+                    showToast(getResources().getString(R.string.toast_storekeymemory));
                 }
             }
         });
@@ -174,8 +172,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Show a toast with the supplied text and the supplied length
-    private void showToast(String text, int length) {
-        Toast.makeText(this, text, length).show();
+    private void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 
     //Stores this key value pair in memory
@@ -331,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Hides the soft keyboard
      */
-    public void hideSoftKeyboard() {
+    private void hideSoftKeyboard() {
         if (getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
@@ -343,7 +341,8 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
@@ -395,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param context
      */
-    public static void configureDefaultImageLoader(Context context) {
+    private static void configureDefaultImageLoader(Context context) {
         File cacheDir = StorageUtils.getCacheDirectory(context);
         ImageLoaderConfiguration defaultConfiguration
                 = new ImageLoaderConfiguration.Builder(context)

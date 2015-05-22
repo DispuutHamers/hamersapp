@@ -2,6 +2,7 @@ package nl.ecci.Hamers.Events;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -18,16 +19,16 @@ import java.util.Date;
 
 public class SingleEventActivity extends AppCompatActivity {
     public SwipeRefreshLayout swipeView;
-    int id;
-    String title;
-    String beschrijving;
-    String location;
-    String date;
-    Date dbDatum;
-    ArrayList<String> aanwezigItems = new ArrayList<String>();
-    ArrayList<String> afwezigItems = new ArrayList<String>();
-    ArrayAdapter<String> aanwezigAdapter;
-    ArrayAdapter<String> afwezigAadapter;
+    private int id;
+    private String title;
+    private String beschrijving;
+    private String location;
+    private String date;
+    private Date dbDatum;
+    private ArrayList<String> aanwezigItems = new ArrayList<String>();
+    private ArrayList<String> afwezigItems = new ArrayList<String>();
+    private ArrayAdapter<String> aanwezigAdapter;
+    private ArrayAdapter<String> afwezigAadapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -134,7 +135,8 @@ public class SingleEventActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
 }

@@ -1,12 +1,12 @@
 package nl.ecci.Hamers.Beers;
 
-public class Review {
-    private int beer_id;
-    private int user_id;
-    private String description;
-    private String rating;
-    private String created_at;
-    private String proefdatum;
+class Review {
+    private final int beer_id;
+    private final int user_id;
+    private final String description;
+    private final String rating;
+    private final String created_at;
+    private final String proefdatum;
 
     public Review(int beer_id, int user_id, String description, String rating, String created_at, String proefdatum) {
         super();

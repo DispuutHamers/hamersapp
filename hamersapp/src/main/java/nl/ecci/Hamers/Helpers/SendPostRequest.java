@@ -22,10 +22,10 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
     public static final String MOTIEURL = "/motions";
     public static final String REVIEWURL = "/review";
     public static final String SIGNUPURL = "/signup";
-    private SharedPreferences prefs;
-    private String type;
-    private String urlParams;
-    private Context mContext;
+    private final SharedPreferences prefs;
+    private final String type;
+    private final String urlParams;
+    private final Context mContext;
 
     public SendPostRequest(Context context, String type, SharedPreferences s, String urlParams) {
         mContext = context;

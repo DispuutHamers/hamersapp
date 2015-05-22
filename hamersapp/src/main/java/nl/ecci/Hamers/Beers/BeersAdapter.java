@@ -22,11 +22,11 @@ import java.util.ArrayList;
 
 public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> {
 
-    private SharedPreferences prefs;
-    private Context context;
-    private ArrayList<Beer> dataSet;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
+    private final SharedPreferences prefs;
+    private final Context context;
+    private final ArrayList<Beer> dataSet;
+    private final ImageLoader imageLoader;
+    private final DisplayImageOptions options;
 
     public BeersAdapter(ArrayList<Beer> itemsArrayList, Context context) {
         this.dataSet = itemsArrayList;
@@ -58,7 +58,7 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
                 JSONObject b = null;
                 try {
                     b = DataManager.getBeer(prefs, dataSet.get(vh.getPosition()).getName());
-                } catch (NullPointerException e) {
+                } catch (NullPointerException ignored) {
                 }
                 if (b != null) {
                     try {
@@ -101,13 +101,13 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public View view;
-        public TextView title;
-        public TextView soort;
-        public TextView brewer;
-        public TextView rating;
-        public TextView info;
-        public ImageView picture;
+        public final View view;
+        public final TextView title;
+        public final TextView soort;
+        public final TextView brewer;
+        public final TextView rating;
+        public final TextView info;
+        public final ImageView picture;
 
         public ViewHolder(View view) {
             super(view);

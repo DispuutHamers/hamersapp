@@ -12,17 +12,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NavigationDrawerAdapter extends BaseAdapter {
+class NavigationDrawerAdapter extends BaseAdapter {
 
-    public static final int QUOTE_FRAGMENT_POSITION = 0;
-    public static final int USER_FRAGMENT_POSITION = 1;
-    public static final int EVENT_FRAGMENT_POSITION = 2;
-    public static final int NEWS_FRAGMENT_POSITION = 3;
-    public static final int BEER_FRAGMENT_POSITION = 4;
-    public static final int MOTION_FRAGMENT_POSITION = 5;
-    public static final int SETTINGS_POSITION = 6;
+    private static final int QUOTE_FRAGMENT_POSITION = 0;
+    private static final int USER_FRAGMENT_POSITION = 1;
+    private static final int EVENT_FRAGMENT_POSITION = 2;
+    private static final int NEWS_FRAGMENT_POSITION = 3;
+    private static final int BEER_FRAGMENT_POSITION = 4;
+    private static final int MOTION_FRAGMENT_POSITION = 5;
+    private static final int SETTINGS_POSITION = 6;
     private static LayoutInflater inflater = null;
-    private List<ItemImage> data;
+    private final List<ItemImage> data;
 
     public NavigationDrawerAdapter(Activity activity, String navigationTitles[]) {
         data = new ArrayList<NavigationDrawerAdapter.ItemImage>();

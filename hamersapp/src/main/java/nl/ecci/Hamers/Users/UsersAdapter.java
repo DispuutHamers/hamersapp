@@ -16,13 +16,13 @@ import nl.ecci.Hamers.R;
 
 import java.util.ArrayList;
 
-public class UsersAdapter extends ArrayAdapter<User> {
+class UsersAdapter extends ArrayAdapter<User> {
 
     private final Context context;
     private final ArrayList<User> dataSet;
     private SharedPreferences prefs;
-    private ImageLoader imageLoader;
-    private DisplayImageOptions options;
+    private final ImageLoader imageLoader;
+    private final DisplayImageOptions options;
 
     public UsersAdapter(Context context, ArrayList<User> dataSet) {
         super(context, R.layout.user_row, dataSet);

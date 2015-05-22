@@ -23,7 +23,7 @@ import java.util.Comparator;
 
 public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private ArrayList<User> listItems = new ArrayList<User>();
+    private final ArrayList<User> listItems = new ArrayList<User>();
     private ArrayAdapter<User> adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
@@ -57,7 +57,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return view;
     }
 
-    public void initSwiper(View view, final ListView user_list) {
+    private void initSwiper(View view, final ListView user_list) {
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.users_swipe_container);
         swipeView.setOnRefreshListener(this);
         swipeView.setColorSchemeResources(android.R.color.holo_red_light);
@@ -136,7 +136,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     }
 
-    public void sort() {
+    private void sort() {
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         String sortPref = prefs.getString("userSort", "");
         if (sortPref.equals("name")) {
@@ -148,7 +148,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     }
 
-    public Comparator<User> nameComperator = new Comparator<User>() {
+    private final Comparator<User> nameComperator = new Comparator<User>() {
         @Override
         public int compare(User user1, User user2) {
 
@@ -158,7 +158,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             return name1.compareToIgnoreCase(name2);
         }
     };
-    public Comparator<User> quoteComperator = new Comparator<User>() {
+    private final Comparator<User> quoteComperator = new Comparator<User>() {
         @Override
         public int compare(User user1, User user2) {
 
@@ -168,7 +168,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             return ((Integer) quote2).compareTo(quote1);
         }
     };
-    public Comparator<User> reviewComperator = new Comparator<User>() {
+    private final Comparator<User> reviewComperator = new Comparator<User>() {
         @Override
         public int compare(User user1, User user2) {
 
@@ -179,17 +179,17 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     };
 
-    public void sortByUsername() {
+    private void sortByUsername() {
         Collections.sort(listItems, nameComperator);
         adapter.notifyDataSetChanged();
     }
 
-    public void sortbyQuoteCount() {
+    private void sortbyQuoteCount() {
         Collections.sort(listItems, quoteComperator);
         adapter.notifyDataSetChanged();
     }
 
-    public void sortbyReviewCount() {
+    private void sortbyReviewCount() {
         Collections.sort(listItems, reviewComperator);
         adapter.notifyDataSetChanged();
     }

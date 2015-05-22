@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -109,7 +110,7 @@ public class SingleBeerActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private JSONObject getReviews() {
+    private void getReviews() {
         JSONArray reviews;
         try {
             if ((reviews = getJsonArray(prefs, DataManager.REVIEWKEY)) != null) {
@@ -125,7 +126,6 @@ public class SingleBeerActivity extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.toast_reviewloaderror), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-        return null;
     }
 
     /**
@@ -143,7 +143,7 @@ public class SingleBeerActivity extends AppCompatActivity {
         startActivityForResult(intent, requestCode);
     }
 
-    public void insertReview(Review review) {
+    private void insertReview(Review review) {
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.review_row, null);
 
@@ -155,7 +155,7 @@ public class SingleBeerActivity extends AppCompatActivity {
         String name = null;
         try {
             name = getUser(prefs, review.getUser_id()).getString("name");
-        } catch (JSONException e) {
+        } catch (JSONException | NullPointerException e) {
             e.printStackTrace();
         }
 
@@ -181,11 +181,12 @@ public class SingleBeerActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-    public void refreshActivity() {
+    private void refreshActivity() {
         finish();
         startActivity(getIntent());
     }

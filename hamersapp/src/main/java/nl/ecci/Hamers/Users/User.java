@@ -1,12 +1,12 @@
 package nl.ecci.Hamers.Users;
 
-public class User {
+class User {
 
-    private String username;
-    private int userID;
-    private String email;
-    private int quotecount;
-    private int reviewcount;
+    private final String username;
+    private final int userID;
+    private final String email;
+    private final int quotecount;
+    private final int reviewcount;
 
     public User(String username, int userID, String email, int quotecount, int reviewcount) {
         super();

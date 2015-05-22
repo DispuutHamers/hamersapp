@@ -20,8 +20,8 @@ public final class DataManager {
     public static final String NEWSKEY = "newsData";
     public static final String BEERKEY = "beerData";
     public static final String REVIEWKEY = "reviewdata";
-    public static final String USERIMAGEKEY = "userpic-";
-    public static final String BEERIMAGEKEY = "beerpic-";
+    private static final String USERIMAGEKEY = "userpic-";
+    private static final String BEERIMAGEKEY = "beerpic-";
     public static final String APIKEYKEY = "apikey";
     public static final String AUTHENTICATED = "authenticated";
 

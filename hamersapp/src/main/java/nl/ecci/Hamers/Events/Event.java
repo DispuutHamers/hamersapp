@@ -2,14 +2,14 @@ package nl.ecci.Hamers.Events;
 
 import java.util.Date;
 
-public class Event {
+class Event {
 
-    private int id;
-    private String title;
-    private String beschrijving;
-    private String location;
-    private Date date;
-    private Date end_time;
+    private final int id;
+    private final String title;
+    private final String beschrijving;
+    private final String location;
+    private final Date date;
+    private final Date end_time;
 
     public Event(int id, String title, String beschrijving, String location, Date date, Date end_time) {
         super();

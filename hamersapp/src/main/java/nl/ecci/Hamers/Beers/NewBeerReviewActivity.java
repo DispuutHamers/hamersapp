@@ -3,6 +3,7 @@ package nl.ecci.Hamers.Beers;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -18,7 +19,7 @@ import java.util.Calendar;
 import static android.text.Html.escapeHtml;
 
 public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
-    int id;
+    private int id;
     private String review;
     private SeekBar sb;
     private TextView progress;
@@ -95,7 +96,7 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
             int proefjaar = Integer.parseInt(dateParts[2]);
 
             String arguments = "&review[beer_id]=" + id + "&review[description]=" + review + "&review[rating]=" + cijfer
-                    + "&review[proefdatum(1i)]=" + proefjaar + "&review[proefdatum(2i)]=" + proefmaand + "&review[proefdatum(3i)]=" + proefdag + "&review[proefdatum(4i)]=" + 20 + "&review[proefdatum(5i)]=" + 00;
+                    + "&review[proefdatum(1i)]=" + proefjaar + "&review[proefdatum(2i)]=" + proefmaand + "&review[proefdatum(3i)]=" + proefdag + "&review[proefdatum(4i)]=20" + "&review[proefdatum(5i)]=00";
 
             SendPostRequest req = new SendPostRequest(this, SendPostRequest.REVIEWURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
 
@@ -113,7 +114,8 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
 }

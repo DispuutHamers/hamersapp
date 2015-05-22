@@ -27,7 +27,7 @@ import java.util.Date;
 
 public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private ArrayList<NewsItem> listItems = new ArrayList<NewsItem>();
+    private final ArrayList<NewsItem> listItems = new ArrayList<NewsItem>();
     private NewsAdapter adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
@@ -55,14 +55,14 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             onRefresh();
         }
 
-         // Floating action button
-         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.news_add_button);
-         fab.attachToRecyclerView(news_list);
+        // Floating action button
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.news_add_button);
+        fab.attachToRecyclerView(news_list);
 
         return view;
     }
 
-    public void initSwiper(View view, final RecyclerView news_list, final LinearLayoutManager lm) {
+    private void initSwiper(View view, final RecyclerView news_list, final LinearLayoutManager lm) {
         // SwipeRefreshLayout
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.news_swipe_container);
         swipeView.setOnRefreshListener(this);
@@ -111,7 +111,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     }
 
-    public Date parseDate2(String dateString) {
+    private Date parseDate2(String dateString) {
         Date date = null;
         try {
             // News date

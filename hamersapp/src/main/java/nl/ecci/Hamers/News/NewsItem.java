@@ -2,12 +2,12 @@ package nl.ecci.Hamers.News;
 
 import java.util.Date;
 
-public class NewsItem {
+class NewsItem {
 
-    private String title;
-    private String body;
-    private String category;
-    private Date date;
+    private final String title;
+    private final String body;
+    private final String category;
+    private final Date date;
 
     public NewsItem(String title, String body, String category, Date date) {
         super();

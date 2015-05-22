@@ -25,7 +25,7 @@ import java.util.Date;
 
 public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private ArrayList<Event> listItems = new ArrayList<Event>();
+    private final ArrayList<Event> listItems = new ArrayList<Event>();
     private EventsAdapter adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
@@ -61,7 +61,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         return view;
     }
 
-    public void initSwiper(View view, final RecyclerView event_list, final LinearLayoutManager lm) {
+    private void initSwiper(View view, final RecyclerView event_list, final LinearLayoutManager lm) {
         // SwipeRefreshLayout
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.events_swipe_container);
         swipeView.setOnRefreshListener(this);
@@ -116,7 +116,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         inflater.inflate(R.menu.event_list_menu, menu);
     }
 
-    public Date parseDate2(String dateString) {
+    private Date parseDate2(String dateString) {
         Date date = null;
         try {
             // Event date

@@ -29,11 +29,11 @@ public class GetJson extends AsyncTask<String, String, String> {
     public static final String BEERURL = "/beer.json";
     public static final String REVIEWURL = "/review.json";
     private static final boolean DEBUG = false;
-    private Fragment f;
-    private String typeURL;
-    private SharedPreferences prefs;
-    private Activity a;
-    private boolean firstload;
+    private final Fragment f;
+    private final String typeURL;
+    private final SharedPreferences prefs;
+    private final Activity a;
+    private final boolean firstload;
 
     public GetJson(Activity a, Fragment f, String typeURL, SharedPreferences s, Boolean firstload) {
         this.f = f;

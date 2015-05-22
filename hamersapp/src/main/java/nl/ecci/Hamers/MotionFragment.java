@@ -52,7 +52,7 @@ public class MotionFragment extends Fragment {
         return view;
     }
 
-    public void postMotion() {
+    private void postMotion() {
         EditText motion_subject = (EditText) getActivity().findViewById(R.id.motion_subject);
         EditText motion_content = (EditText) getActivity().findViewById(R.id.motion_content);
 
