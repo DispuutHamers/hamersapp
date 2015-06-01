@@ -13,6 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.imageaware.ImageAware;
+import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import nl.ecci.Hamers.Helpers.AnimateFirstDisplayListener;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.R;
 import org.json.JSONException;
@@ -20,23 +24,24 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> {
+public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
 
     private final SharedPreferences prefs;
     private final Context context;
     private final ArrayList<Beer> dataSet;
     private final ImageLoader imageLoader;
+    public static ImageLoadingListener animateFirstListener;
     private final DisplayImageOptions options;
 
-    public BeersAdapter(ArrayList<Beer> itemsArrayList, Context context) {
+    public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context) {
         this.dataSet = itemsArrayList;
         this.context = context;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         // Universal Image Loader
         imageLoader = ImageLoader.getInstance();
+        animateFirstListener = new AnimateFirstDisplayListener();
         options = new DisplayImageOptions.Builder()
-                .resetViewBeforeLoading(true)
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .considerExifParams(true)
@@ -91,7 +96,18 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         holder.rating.setText("Cijfer: " + dataSet.get(position).getRating());
         holder.info.setText((dataSet.get(position).getCountry() + " - " + dataSet.get(position).getPercentage()));
 
-        imageLoader.displayImage(dataSet.get(position).getImageURL(), holder.picture, options);
+        //imageLoader.displayImage(dataSet.get(position).getImageURL(), holder.picture, options, animateFirstListener);
+
+        String imageURL = dataSet.get(position).getImageURL();
+
+        if (holder.picture.getTag() == null ||
+                !holder.picture.getTag().equals(imageURL)) {
+
+            //we only load image if prev. URL and current URL do not match, or tag is null
+            ImageAware imageAware = new ImageViewAware(holder.picture, false);
+            imageLoader.displayImage(imageURL, imageAware, options, animateFirstListener);
+            holder.picture.setTag(imageURL);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

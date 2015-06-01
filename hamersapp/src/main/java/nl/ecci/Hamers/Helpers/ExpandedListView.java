@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
-class ExpandedListView extends ListView {
+public class ExpandedListView extends ListView {
     private int oldCount = 0;
 
     public ExpandedListView(Context context, AttributeSet attrs) {

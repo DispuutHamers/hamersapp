@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import nl.ecci.Hamers.Helpers.AnimateFirstDisplayListener;
 import nl.ecci.Hamers.Helpers.Utils;
 import nl.ecci.Hamers.R;
 
@@ -20,6 +21,7 @@ class UsersAdapter extends ArrayAdapter<User> {
     private final Context context;
     private final ArrayList<User> dataSet;
     private final ImageLoader imageLoader;
+    public static AnimateFirstDisplayListener animateFirstListener;
     private final DisplayImageOptions options;
 
     public UsersAdapter(Context context, ArrayList<User> dataSet) {
@@ -30,6 +32,7 @@ class UsersAdapter extends ArrayAdapter<User> {
 
         // Universal Image Loader
         imageLoader = ImageLoader.getInstance();
+        animateFirstListener = new AnimateFirstDisplayListener();
         options = new DisplayImageOptions.Builder()
                 .resetViewBeforeLoading(true)
                 .cacheInMemory(true)
@@ -62,7 +65,7 @@ class UsersAdapter extends ArrayAdapter<User> {
         // Image
         ImageView userImage = (ImageView) rowView.findViewById(R.id.user_image);
         String url = "http://gravatar.com/avatar/" + Utils.md5Hex(dataSet.get(position).getEmail()) + "?s=200";
-        imageLoader.displayImage(url, userImage, options);
+        imageLoader.displayImage(url, userImage, options, animateFirstListener);
 
         // 5. return rowView
         return rowView;

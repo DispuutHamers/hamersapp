@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import nl.ecci.Hamers.Helpers.AnimateFirstDisplayListener;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.Utils;
 import nl.ecci.Hamers.R;
@@ -23,6 +24,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     private final ArrayList<Quote> dataSet;
     private final SharedPreferences prefs;
     private final ImageLoader imageLoader;
+    public static AnimateFirstDisplayListener animateFirstListener;
     private final DisplayImageOptions options;
 
     public QuotesAdapter(Context context, ArrayList<Quote> itemsArrayList) {
@@ -31,6 +33,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
         // Universal Image Loader
         imageLoader = ImageLoader.getInstance();
+        animateFirstListener = new AnimateFirstDisplayListener();
         options = new DisplayImageOptions.Builder()
                 .resetViewBeforeLoading(true)
                 .cacheInMemory(true)
@@ -57,7 +60,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
 
         String email = DataManager.IDToEmail(prefs, dataSet.get(position).getUserID());
         String url = "http://gravatar.com/avatar/" + Utils.md5Hex(email) + "?s=200";
-        imageLoader.displayImage(url, holder.userImage, options);
+        imageLoader.displayImage(url, holder.userImage, options, animateFirstListener);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

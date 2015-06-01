@@ -87,7 +87,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         holder.title.setText(dataSet.get(position).getTitle());
         holder.beschrijving.setText(dataSet.get(position).getBeschrijving());
 
-
         Date date = dataSet.get(position).getDate();
         Date end_time = dataSet.get(position).getEnd_time();
         CardView card = (CardView) holder.view;
@@ -126,11 +125,11 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     }
 
     private boolean dateChecker(Date date, boolean beginDate) {
-        if (beginDate) {
+        if (date != null && beginDate) {
             if (System.currentTimeMillis() > date.getTime()) {
                 return true;
             }
-        } else if (System.currentTimeMillis() < date.getTime()) {
+        } else if (date != null &&System.currentTimeMillis() < date.getTime()) {
             return true;
         }
         return false;

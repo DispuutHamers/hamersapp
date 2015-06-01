@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.*;
 import android.widget.Toast;
 import com.melnykov.fab.FloatingActionButton;
+import nl.ecci.Hamers.Helpers.AnimateFirstDisplayListener;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.DividerItemDecoration;
 import nl.ecci.Hamers.Helpers.GetJson;
@@ -26,7 +27,7 @@ import java.util.Comparator;
 public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private final ArrayList<Beer> listItems = new ArrayList<>();
-    private BeersAdapter adapter;
+    private BeerAdapter adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
 
@@ -53,7 +54,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         initSwiper(view, beer_list, mLayoutManager);
 
-        adapter = new BeersAdapter(listItems, getActivity());
+        adapter = new BeerAdapter(listItems, getActivity());
         beer_list.setAdapter(adapter);
 
         sort();
@@ -196,5 +197,11 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private void sortByRating() {
         Collections.sort(listItems, ratingComparator);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        AnimateFirstDisplayListener.displayedImages.clear();
     }
 }
