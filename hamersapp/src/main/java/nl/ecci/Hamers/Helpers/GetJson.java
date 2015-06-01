@@ -105,8 +105,6 @@ public class GetJson extends AsyncTask<String, String, String> {
                     // Beer fragment
                     else if (f instanceof BeerFragment) {
                         prefs.edit().putString(DataManager.BEERKEY, result).apply();
-                        GetJson g = new GetJson(a, f, BEERURL, prefs);
-                        g.execute();
                         GetJson g2 = new GetJson(a, null, REVIEWURL, prefs);
                         g2.execute();
                         MainActivity.beerFragment.populateList(prefs);

@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
                 .tasksProcessingOrder(QueueProcessingType.LIFO)
                 .diskCache(new UnlimitedDiskCache(cacheDir))
+                .threadPoolSize(3)
+                .threadPriority(Thread.NORM_PRIORITY - 2)
                 .build();
 
         // Initialize ImageLoader with configuration

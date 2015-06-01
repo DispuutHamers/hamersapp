@@ -84,7 +84,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
                 }
             }
         });
-
         return vh;
     }
 
@@ -97,12 +96,10 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
         holder.rating.setText("Cijfer: " + dataSet.get(position).getRating());
         holder.info.setText((dataSet.get(position).getCountry() + " - " + dataSet.get(position).getPercentage()));
 
-        //imageLoader.displayImage(dataSet.get(position).getImageURL(), holder.picture, options, animateFirstListener);
-
         String imageURL = dataSet.get(position).getImageURL();
+        System.out.println("IMAGE URL: " + imageURL);
 
-        if (holder.picture.getTag() == null ||
-                !holder.picture.getTag().equals(imageURL)) {
+        if (holder.picture.getTag() == null || !holder.picture.getTag().equals(imageURL) && !imageURL.equals("")) {
 
             //we only load image if prev. URL and current URL do not match, or tag is null
             ImageAware imageAware = new ImageViewAware(holder.picture, false);
