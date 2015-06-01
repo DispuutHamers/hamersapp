@@ -5,34 +5,24 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -50,11 +40,8 @@ import nl.ecci.Hamers.News.NewsFragment;
 import nl.ecci.Hamers.Quotes.NewQuoteFragment;
 import nl.ecci.Hamers.Quotes.QuoteListFragment;
 import nl.ecci.Hamers.Users.UserFragment;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -73,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private static final MotionFragment motionFragment = new MotionFragment();
     private static final SettingsFragment settingsFragment = new SettingsFragment();
 
-    private ListView mDrawerList;
+    private DrawerLayout drawerLayout;
     private boolean backPressedOnce;
 
     /**
@@ -117,10 +104,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        initToolbar();
         initDrawer();
 
         if (savedInstanceState == null) {
-            selectItem(0);
+            selectItem(2131624210);
         }
 
         configureDefaultImageLoader(this);
@@ -128,50 +116,43 @@ public class MainActivity extends AppCompatActivity {
         hasApiKey();
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
+    private void initToolbar() {
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        final ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+//            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(true);
+        }
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+    private void initDrawer() {
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        final NavigationView view = (NavigationView) findViewById(R.id.navigation_view);
+        view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                selectItem(menuItem.getItemId());
+                menuItem.setChecked(true);
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
-        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
-    }
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
 
-    private void initDrawer() {
-        // Drawer list
-        String[] mDrawerItems = getResources().getStringArray(R.array.drawer_array);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-        // Set the adapter for the list view
-        mDrawerList.setAdapter(new NavigationDrawerAdapter(this, mDrawerItems));
-        // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        );
-
-        // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -271,59 +252,55 @@ public class MainActivity extends AppCompatActivity {
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         hideSoftKeyboard();
         switch (position) {
-            case 0:
+            case 2131624210:
                 transaction
                         .replace(R.id.content_frame, quoteListFragment)
                         .commit();
-                setTitle(getResources().getStringArray(R.array.drawer_array)[0]);
+                setTitle(getResources().getString(R.string.navigation_item_1));
                 break;
 
-            case 1:
+            case 2131624211:
                 transaction
                         .replace(R.id.content_frame, userFragment)
                         .commit();
-                setTitle(getResources().getStringArray(R.array.drawer_array)[1]);
+                setTitle(getResources().getString(R.string.navigation_item_2));
                 break;
 
-            case 2:
+            case 2131624212:
                 transaction
                         .replace(R.id.content_frame, eventFragment)
                         .commit();
-                setTitle(getResources().getStringArray(R.array.drawer_array)[2]);
+                setTitle(getResources().getString(R.string.navigation_item_3));
                 break;
 
-            case 3:
+            case 2131624213:
                 transaction
                         .replace(R.id.content_frame, newsFragment)
                         .commit();
-                setTitle(getResources().getStringArray(R.array.drawer_array)[3]);
+                setTitle(getResources().getString(R.string.navigation_item_4));
                 break;
 
-            case 4:
+            case 2131624214:
                 transaction
                         .replace(R.id.content_frame, beerFragment)
                         .commit();
-                setTitle(getResources().getStringArray(R.array.drawer_array)[4]);
+                setTitle(getResources().getString(R.string.navigation_item_5));
                 break;
 
-            case 5:
+            case 2131624215:
                 transaction
                         .replace(R.id.content_frame, motionFragment)
                         .commit();
-                setTitle(getResources().getStringArray(R.array.drawer_array)[5]);
+                setTitle(getResources().getString(R.string.navigation_item_6));
                 break;
 
-            case 6:
+            case 2131624216:
                 transaction
                         .replace(R.id.content_frame, settingsFragment)
                         .commit();
-                setTitle(getResources().getStringArray(R.array.drawer_array)[6]);
+                setTitle(getResources().getString(R.string.navigation_item_7));
                 break;
         }
-
-        // Highlight the selected item and close the drawer
-        mDrawerList.setItemChecked(position, true);
-        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     /**
@@ -388,23 +365,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {    //replace this with actual function which returns if the drawer is open
-            mDrawerLayout.closeDrawer(GravityCompat.START);     // replace this with actual function which closes drawer
-        } else {
-            if (backPressedOnce) {
-                super.onBackPressed();
-                return;
-            }
-
-            this.backPressedOnce = true;
-            Toast.makeText(this, "Klik nog een keer op 'back' om af te sluiten.", Toast.LENGTH_SHORT).show();
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    backPressedOnce = false;
-                }
-            }, 2000);
+        if (backPressedOnce) {
+            super.onBackPressed();
+            return;
         }
+
+        this.backPressedOnce = true;
+        Toast.makeText(this, "Klik nog een keer op 'back' om af te sluiten.", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                backPressedOnce = false;
+            }
+        }, 2000);
     }
 }

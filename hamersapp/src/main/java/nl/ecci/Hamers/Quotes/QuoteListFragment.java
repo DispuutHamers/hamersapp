@@ -3,6 +3,7 @@ package nl.ecci.Hamers.Quotes;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.DividerItemDecoration;
 import nl.ecci.Hamers.Helpers.GetJson;
@@ -58,7 +58,6 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
 
         // Floating action button
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.quote_add_button);
-        fab.attachToRecyclerView(quote_list);
 
         return view;
     }
