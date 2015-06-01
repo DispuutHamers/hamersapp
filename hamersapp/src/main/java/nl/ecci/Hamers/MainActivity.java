@@ -74,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
     private static final SettingsFragment settingsFragment = new SettingsFragment();
 
     private ListView mDrawerList;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
     private boolean backPressedOnce;
 
     /**
