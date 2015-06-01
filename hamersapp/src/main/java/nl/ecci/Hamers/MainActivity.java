@@ -5,17 +5,23 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.Loader;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +30,9 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -41,8 +50,11 @@ import nl.ecci.Hamers.News.NewsFragment;
 import nl.ecci.Hamers.Quotes.NewQuoteFragment;
 import nl.ecci.Hamers.Quotes.QuoteListFragment;
 import nl.ecci.Hamers.Users.UserFragment;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,6 +77,39 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private boolean backPressedOnce;
+
+    /**
+     * Parse date
+     *
+     * @param dateTemp
+     * @return String with parsed date
+     * @throws java.text.ParseException
+     */
+    public static String parseDate(String dateTemp) throws ParseException {
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+        return outputFormat.format(inputFormat.parse(dateTemp));
+    }
+
+    /**
+     * Setup of default ImageLoader configuration (Universal Image Loader)
+     * https://github.com/nostra13/Android-Universal-Image-Loader
+     *
+     * @param context
+     */
+    private static void configureDefaultImageLoader(Context context) {
+        File cacheDir = StorageUtils.getCacheDirectory(context);
+        ImageLoaderConfiguration defaultConfiguration
+                = new ImageLoaderConfiguration.Builder(context)
+                .denyCacheImageMultipleSizesInMemory()
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+                .diskCache(new UnlimitedDiskCache(cacheDir))
+                .build();
+
+        // Initialize ImageLoader with configuration
+        ImageLoader.getInstance().init(defaultConfiguration);
+    }
 
     /**
      * Called when the activity is first created.
@@ -345,8 +390,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(Gravity.START)) {    //replace this with actual function which returns if the drawer is open
-            mDrawerLayout.closeDrawer(Gravity.START);     // replace this with actual function which closes drawer
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {    //replace this with actual function which returns if the drawer is open
+            mDrawerLayout.closeDrawer(GravityCompat.START);     // replace this with actual function which closes drawer
         } else {
             if (backPressedOnce) {
                 super.onBackPressed();
@@ -363,45 +408,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }, 2000);
         }
-    }
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
-    }
-
-    /**
-     * Parse date
-     *
-     * @param dateTemp
-     * @return String with parsed date
-     * @throws java.text.ParseException
-     */
-    public static String parseDate(String dateTemp) throws ParseException {
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
-        return outputFormat.format(inputFormat.parse(dateTemp));
-    }
-
-    /**
-     * Setup of default ImageLoader configuration (Universal Image Loader)
-     * https://github.com/nostra13/Android-Universal-Image-Loader
-     *
-     * @param context
-     */
-    private static void configureDefaultImageLoader(Context context) {
-        File cacheDir = StorageUtils.getCacheDirectory(context);
-        ImageLoaderConfiguration defaultConfiguration
-                = new ImageLoaderConfiguration.Builder(context)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .tasksProcessingOrder(QueueProcessingType.LIFO)
-                .diskCache(new UnlimitedDiskCache(cacheDir))
-                .build();
-
-        // Initialize ImageLoader with configuration
-        ImageLoader.getInstance().init(defaultConfiguration);
     }
 }
