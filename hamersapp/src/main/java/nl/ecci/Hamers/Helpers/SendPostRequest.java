@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 import android.widget.Toast;
 import nl.ecci.Hamers.MainActivity;
+import nl.ecci.Hamers.R;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -24,12 +27,14 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
     private final SharedPreferences prefs;
     private final String type;
     private final String urlParams;
-    private final Context mContext;
+    private final View view;
+    private final Context context;
 
-    public SendPostRequest(Context context, String type, SharedPreferences s, String urlParams) {
-        mContext = context;
+    public SendPostRequest(Context context, View view, String type, SharedPreferences prefs, String urlParams) {
+        this.view = view;
+        this.context = context;
         this.type = type;
-        prefs = s;
+        this.prefs = prefs;
         this.urlParams = urlParams;
     }
 
@@ -61,7 +66,7 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
 
     protected void onPostExecute(String result) {
         if (result.equals("201")) {
-            Activity activity = (Activity) mContext;
+            Activity activity = (Activity) context;
 
             if (!(activity instanceof MainActivity)) {
                 activity.finish();
@@ -69,32 +74,39 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
 
             switch (type) {
                 case QUOTEURL: {
-                    GetJson g = new GetJson((Activity) mContext, MainActivity.quoteListFragment, GetJson.QUOTEURL, prefs);
+                    GetJson g = new GetJson((Activity) context, MainActivity.quoteListFragment, GetJson.QUOTEURL, prefs);
                     g.execute();
                     break;
                 }
                 case EVENTURL:
                 case SIGNUPURL: {
-                    GetJson g = new GetJson((Activity) mContext, MainActivity.eventFragment, GetJson.EVENTURL, prefs);
+                    GetJson g = new GetJson((Activity) context, MainActivity.eventFragment, GetJson.EVENTURL, prefs);
                     g.execute();
                     break;
                 }
                 case BEERURL: {
-                    GetJson g = new GetJson((Activity) mContext, MainActivity.beerFragment, GetJson.BEERURL, prefs);
+                    GetJson g = new GetJson((Activity) context, MainActivity.beerFragment, GetJson.BEERURL, prefs);
                     g.execute();
                     break;
                 }
                 case REVIEWURL: {
-                    GetJson g = new GetJson((Activity) mContext, null, GetJson.REVIEWURL, prefs);
+                    GetJson g = new GetJson((Activity) context, null, GetJson.REVIEWURL, prefs);
                     g.execute();
                     break;
                 }
             }
 
-            Toast.makeText(mContext, "Item posted!", Toast.LENGTH_SHORT).show();
+            if (view != null) {
+                Snackbar.make(view, context.getResources().getString(R.string.posted), Snackbar.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, context.getResources().getString(R.string.posted), Toast.LENGTH_SHORT).show();
+            }
         } else {
-            System.out.println("----------" + result);
-            Toast.makeText(mContext, "Item not posted, try again later...", Toast.LENGTH_SHORT).show();
+            if (view != null) {
+                Snackbar.make(view, context.getResources().getString(R.string.not_posted), Snackbar.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, context.getResources().getString(R.string.not_posted), Toast.LENGTH_SHORT).show();
+            }
         }
 
     }

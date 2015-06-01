@@ -11,10 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.*;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
 import nl.ecci.Hamers.R;
@@ -31,8 +28,6 @@ public class NewQuoteFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.new_quote_fragment, null);
@@ -41,7 +36,6 @@ public class NewQuoteFragment extends DialogFragment {
                 .setPositiveButton(R.string.send_quote, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-
                         // Get quote from editText
                         EditText edit = (EditText) view.findViewById(R.id.quote_input);
                         String quote = edit.getText().toString();
@@ -52,7 +46,6 @@ public class NewQuoteFragment extends DialogFragment {
 
                         // Post quote
                         NewQuoteFragment.this.postQuote(quote, userID);
-
                     }
                 });
 
@@ -83,7 +76,7 @@ public class NewQuoteFragment extends DialogFragment {
     }
 
     private void postQuote(String quote, int userid) {
-        SendPostRequest req = new SendPostRequest(this.getActivity(), SendPostRequest.QUOTEURL, prefs, "quote[text]=" + quote + " &quote[user_id]=" + userid);
+        SendPostRequest req = new SendPostRequest(this.getActivity(), null, SendPostRequest.QUOTEURL, prefs, "quote[text]=" + quote + " &quote[user_id]=" + userid);
         req.execute();
     }
 

@@ -20,14 +20,18 @@ import java.util.Calendar;
 import static android.text.Html.escapeHtml;
 
 public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
+
     private int id;
     private TextView progress;
     private int cijfer;
+    private LinearLayout parentLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_beer_review_activity);
+
+        parentLayout = (LinearLayout) findViewById(R.id.new_beer_review_parent);
 
         final android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -102,7 +106,7 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
             String arguments = "&review[beer_id]=" + id + "&review[description]=" + review + "&review[rating]=" + cijfer
                     + "&review[proefdatum(1i)]=" + proefjaar + "&review[proefdatum(2i)]=" + proefmaand + "&review[proefdatum(3i)]=" + proefdag + "&review[proefdatum(4i)]=20" + "&review[proefdatum(5i)]=00";
 
-            SendPostRequest req = new SendPostRequest(this, SendPostRequest.REVIEWURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
+            SendPostRequest req = new SendPostRequest(this, parentLayout, SendPostRequest.REVIEWURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
 
             Intent intent = new Intent();
             setResult(RESULT_OK, intent);

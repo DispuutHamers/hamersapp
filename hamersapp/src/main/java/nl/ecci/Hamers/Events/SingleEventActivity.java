@@ -21,11 +21,14 @@ import java.util.Date;
 public class SingleEventActivity extends AppCompatActivity {
 
     private int id;
+    private LinearLayout parentLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.single_event);
+
+        parentLayout = (LinearLayout) findViewById(R.id.single_event_parent);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -123,7 +126,7 @@ public class SingleEventActivity extends AppCompatActivity {
     }
 
     private void postSignup(int eventid, String status) {
-        SendPostRequest req = new SendPostRequest(this, SendPostRequest.SIGNUPURL, PreferenceManager.getDefaultSharedPreferences(this), "signup[event_id]=" + eventid + "&signup[status]=" + status);
+        SendPostRequest req = new SendPostRequest(this, parentLayout, SendPostRequest.SIGNUPURL, PreferenceManager.getDefaultSharedPreferences(this), "signup[event_id]=" + eventid + "&signup[status]=" + status);
         req.execute();
 
         this.finish();

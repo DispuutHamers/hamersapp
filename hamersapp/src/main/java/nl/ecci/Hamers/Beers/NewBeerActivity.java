@@ -3,20 +3,34 @@ package nl.ecci.Hamers.Beers;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
 import nl.ecci.Hamers.R;
 
 public class NewBeerActivity extends AppCompatActivity {
+    private RelativeLayout parentLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_beer_acitivity);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        setContentView(R.layout.new_beer_activity);
+
+        parentLayout = (RelativeLayout) findViewById(R.id.new_beer_activity_parent);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
 
     @Override
@@ -49,7 +63,7 @@ public class NewBeerActivity extends AppCompatActivity {
         }
 
         // Send request
-        SendPostRequest req = new SendPostRequest(this, SendPostRequest.BEERURL, PreferenceManager.getDefaultSharedPreferences(this), "beer[name]=" + title + "&beer[picture]=" + picture + "&beer[percentage]=" + percentage + "25" + "&beer[country]=" + country + "&beer[brewer]=" + brewer + "&beer[soort]=" + soort);
+        SendPostRequest req = new SendPostRequest(this, parentLayout, SendPostRequest.BEERURL, PreferenceManager.getDefaultSharedPreferences(this), "beer[name]=" + title + "&beer[picture]=" + picture + "&beer[percentage]=" + percentage + "25" + "&beer[country]=" + country + "&beer[brewer]=" + brewer + "&beer[soort]=" + soort);
         req.execute();
     }
 

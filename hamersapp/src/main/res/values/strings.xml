@@ -164,4 +164,8 @@
     <string name="sort_reviews">Sorteer op aantal reviews</string>
     <string name="sort_rating">Sorteer op cijfer</string>
     <string name="sort_name">Sorteer op naam</string>
+
+    <string name="posted">Gelukt! :)</string>
+    <string name="not_posted">Niet gelukt.. :(</string>
+    <string name="missing_fields">Graag alle velden invullen!</string>
 </resources>

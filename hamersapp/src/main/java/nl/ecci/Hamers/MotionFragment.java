@@ -9,16 +9,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
 
 import static android.text.Html.escapeHtml;
 
 public class MotionFragment extends Fragment {
-    private String type;
 
+    private String type;
+    private RelativeLayout parentLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.motion_fragment, container, false);
+
+        parentLayout = (RelativeLayout) view.findViewById(R.id.motion_parent);
 
         RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.motionradiogroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -59,7 +63,7 @@ public class MotionFragment extends Fragment {
         String content = escapeHtml(motion_content.getText().toString());
 
         String arguments = "motion[motion_type]=" + type + "&motion[subject]=" + subject + "&motion[content]=" + content;
-        SendPostRequest req = new SendPostRequest(this.getActivity(), SendPostRequest.MOTIEURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), arguments);
+        SendPostRequest req = new SendPostRequest(this.getActivity(), parentLayout, SendPostRequest.MOTIEURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), arguments);
         req.execute();
     }
 }

@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
 
         if (savedInstanceState == null) {
-            selectItem(2131624209);
+            selectItem("Quotes");
         }
 
         configureDefaultImageLoader(this);
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                selectItem(menuItem.getItemId());
+                selectItem(menuItem.getTitle().toString());
                 menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
                 return true;
@@ -255,56 +255,56 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Swaps fragments in the quote_list_menu content view
      *
-     * @param position
+     * @param title
      */
-    private void selectItem(int position) {
+    private void selectItem(String title) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         hideSoftKeyboard();
-        switch (position) {
-            case 2131624209:
+        switch (title) {
+            case "Quotes":
                 transaction
                         .replace(R.id.content_frame, quoteListFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_1));
                 break;
 
-            case 2131624210:
+            case "Leden":
                 transaction
                         .replace(R.id.content_frame, userFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_2));
                 break;
 
-            case 2131624211:
+            case "Activiteiten":
                 transaction
                         .replace(R.id.content_frame, eventFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_3));
                 break;
 
-            case 2131624212:
+            case "Nieuws":
                 transaction
                         .replace(R.id.content_frame, newsFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_4));
                 break;
 
-            case 2131624213:
+            case "Bieren":
                 transaction
                         .replace(R.id.content_frame, beerFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_5));
                 break;
 
-            case 2131624214:
+            case "Moties":
                 transaction
                         .replace(R.id.content_frame, motionFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_6));
                 break;
 
-            case 2131624215:
+            case "Instellingen":
                 transaction
                         .replace(R.id.content_frame, settingsFragment)
                         .commit();
