@@ -3,8 +3,9 @@ package nl.ecci.Hamers.Events;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class SingleEventActivity extends AppCompatActivity {
-    public SwipeRefreshLayout swipeView;
+
     private int id;
 
     @Override
@@ -26,9 +27,16 @@ public class SingleEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.single_event);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
 
-        RelativeLayout rootLayout = (RelativeLayout) findViewById(R.id.single_event_root);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
+
+        ScrollView scrollView = (ScrollView) findViewById(R.id.single_event_scrollview);
         LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
         // Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
         // Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
@@ -79,7 +87,7 @@ public class SingleEventActivity extends AppCompatActivity {
 
             if (today.after(dbDatum)) {
                 aanwezig_layout.setVisibility(View.GONE);
-                rootLayout.removeView(buttonLayout);
+                scrollView.removeView(buttonLayout);
             }
         } catch (ParseException e) {
             e.printStackTrace();

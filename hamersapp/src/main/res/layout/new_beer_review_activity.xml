@@ -1,99 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
-    <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/scrollView"
-            android:layout_above="@+id/buttonLayout">
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-            <TextView
-                    android:id="@+id/review_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/new_review"
-                    android:textStyle="bold"
-                    android:textSize="22sp"
-                    android:padding="20dp"/>
+    <include layout="@layout/toolbar"/>
 
-            <EditText
-                    android:id="@+id/review_body"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="4dp"
-                    android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
-                    android:hint="@string/review_hint"
-                    android:padding="20dp"/>
+                    android:layout_height="match_parent">
 
-            <TextView android:text="@string/rating"
-                      android:id="@+id/rating"
-                      android:layout_height="wrap_content"
-                      android:layout_width="wrap_content"
-                      android:layout_marginTop="16dp"
-                      android:layout_marginLeft="15dp"
-                      android:layout_marginRight="15dp"
-                      android:textSize="18sp"/>
-            <SeekBar android:id="@+id/ratingseekbar"
-                     android:max="9"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:layout_marginLeft="15dp"
-                     android:layout_marginRight="15dp"
-                    />
+        <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/scrollView"
+                android:layout_above="@+id/buttonLayout">
             <LinearLayout
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content">
-                <TextView android:text="@string/pick_date"
-                          android:id="@+id/pick_date_textview"
-                          android:layout_height="fill_parent"
-                          android:layout_width="0dp"
-                          android:layout_weight="1"
-                          android:textSize="18sp"
-                          android:ellipsize="end"
-                          android:singleLine="true"
-                          android:gravity="left|center_vertical"
-                          android:layout_marginTop="16dp"
-                          android:layout_marginLeft="15dp"
-                          android:layout_marginRight="15dp"/>
-                <Button
-                        android:id="@id/pick_date_button"
+                <TextView
+                        android:id="@+id/review_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/pick_date_button"
-                        android:layout_marginTop="16dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/new_review"
+                        android:textStyle="bold"
+                        android:textSize="22sp"
+                        android:padding="20dp"/>
+
+                <EditText
+                        android:id="@+id/review_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:onClick="showDatePickerDialog"/>
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-    <LinearLayout
-            android:id="@+id/buttonLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+                        android:layout_marginBottom="4dp"
+                        android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
+                        android:hint="@string/review_hint"
+                        android:padding="20dp"/>
 
-        <Button
-                android:id="@+id/sendreview_button"
-                android:layout_width="0dp"
+                <TextView android:text="@string/rating"
+                          android:id="@+id/rating"
+                          android:layout_height="wrap_content"
+                          android:layout_width="wrap_content"
+                          android:layout_marginTop="16dp"
+                          android:layout_marginLeft="15dp"
+                          android:layout_marginRight="15dp"
+                          android:textSize="18sp"/>
+                <SeekBar android:id="@+id/ratingseekbar"
+                         android:max="9"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginLeft="15dp"
+                         android:layout_marginRight="15dp"
+                        />
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+                    <TextView android:text="@string/pick_date"
+                              android:id="@+id/pick_date_textview"
+                              android:layout_height="fill_parent"
+                              android:layout_width="0dp"
+                              android:layout_weight="1"
+                              android:textSize="18sp"
+                              android:ellipsize="end"
+                              android:singleLine="true"
+                              android:gravity="left|center_vertical"
+                              android:layout_marginTop="16dp"
+                              android:layout_marginLeft="15dp"
+                              android:layout_marginRight="15dp"/>
+                    <Button
+                            android:id="@id/pick_date_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pick_date_button"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:onClick="showDatePickerDialog"/>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+        <LinearLayout
+                android:id="@+id/buttonLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:text="@string/send"
-                android:onClick="postReview"/>
-    </LinearLayout>
-</RelativeLayout>
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+
+            <Button
+                    android:id="@+id/sendreview_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:text="@string/send"
+                    android:onClick="postReview"/>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

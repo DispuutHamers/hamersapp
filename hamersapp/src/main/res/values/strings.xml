@@ -24,6 +24,9 @@
     <string name="send">Verstuur</string>
 
     <!-- Drawer -->
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
     <string name="navigation_item_1">Quotes</string>
     <string name="navigation_item_2">Leden</string>
     <string name="navigation_item_3">Activiteiten</string>

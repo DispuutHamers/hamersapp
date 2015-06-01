@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +29,15 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_beer_review_activity);
 
+        final android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
+
         // Set date to current date
         Button date_button = (Button) findViewById(R.id.pick_date_button);
         Calendar calendar = Calendar.getInstance();
@@ -46,8 +56,6 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
         SeekBar sb = (SeekBar) findViewById(R.id.ratingseekbar);
         sb.setOnSeekBarChangeListener(this);
         progress = (TextView) findViewById(R.id.rating);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override

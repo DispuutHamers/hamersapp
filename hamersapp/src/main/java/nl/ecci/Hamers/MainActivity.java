@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -46,12 +47,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-
 public class MainActivity extends AppCompatActivity {
     // URL
     public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-    //    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
-    // Fragments
+    //     public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
+//     Fragments
     public static final QuoteListFragment quoteListFragment = new QuoteListFragment();
     public static final UserFragment userFragment = new UserFragment();
     public static final EventFragment eventFragment = new EventFragment();
@@ -104,29 +104,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        initToolbar();
         initDrawer();
+        initToolbar();
 
         if (savedInstanceState == null) {
-            selectItem(2131624210);
+            selectItem(2131624209);
         }
 
         configureDefaultImageLoader(this);
 
         hasApiKey();
-    }
-
-    private void initToolbar() {
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        final ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) {
-//            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(true);
-        }
     }
 
     private void initDrawer() {
@@ -142,6 +129,30 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+    }
+
+    private void initToolbar() {
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolbar,
+                R.string.drawer_open,
+                R.string.drawer_close
+        );
+        drawerLayout.setDrawerListener(mDrawerToggle);
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
+
+        mDrawerToggle.syncState();
     }
 
     @Override
@@ -151,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -252,49 +262,49 @@ public class MainActivity extends AppCompatActivity {
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         hideSoftKeyboard();
         switch (position) {
-            case 2131624210:
+            case 2131624209:
                 transaction
                         .replace(R.id.content_frame, quoteListFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_1));
                 break;
 
-            case 2131624211:
+            case 2131624210:
                 transaction
                         .replace(R.id.content_frame, userFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_2));
                 break;
 
-            case 2131624212:
+            case 2131624211:
                 transaction
                         .replace(R.id.content_frame, eventFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_3));
                 break;
 
-            case 2131624213:
+            case 2131624212:
                 transaction
                         .replace(R.id.content_frame, newsFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_4));
                 break;
 
-            case 2131624214:
+            case 2131624213:
                 transaction
                         .replace(R.id.content_frame, beerFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_5));
                 break;
 
-            case 2131624215:
+            case 2131624214:
                 transaction
                         .replace(R.id.content_frame, motionFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_6));
                 break;
 
-            case 2131624216:
+            case 2131624215:
                 transaction
                         .replace(R.id.content_frame, settingsFragment)
                         .commit();

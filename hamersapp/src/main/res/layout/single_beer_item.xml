@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
     <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -164,7 +167,7 @@
                           android:paddingLeft="20dp"
                           android:paddingRight="20dp"
                           android:text="Reviews:"
-                          android:gravity="left"
+                          android:gravity="start"
                           android:layout_marginTop="5dp"
                           android:textColor="@android:color/primary_text_light"/>
                 <LinearLayout
@@ -172,25 +175,15 @@
                         android:orientation="vertical"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"/>
+                <Button
+                        android:id="@+id/sendreview_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_gravity="bottom"
+                        android:layout_weight="1"
+                        android:text="@string/new_review"
+                        android:onClick="createReview"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-    <LinearLayout
-            android:id="@id/buttonLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-        <Button
-                android:id="@+id/sendreview_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:text="@string/new_review"
-                android:onClick="createReview"/>
-    </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

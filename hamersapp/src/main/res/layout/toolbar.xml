@@ -23,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:title="@string/app_name"
-        android:background="?attr/colorPrimary"
+        android:background="@color/material_red"
         android:elevation="4dp"
-        app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:fitsSystemWindows="true"/>

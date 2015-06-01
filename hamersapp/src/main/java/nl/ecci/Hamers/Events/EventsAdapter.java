@@ -129,7 +129,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             if (System.currentTimeMillis() > date.getTime()) {
                 return true;
             }
-        } else if (date != null &&System.currentTimeMillis() < date.getTime()) {
+        } else if (date != null && System.currentTimeMillis() < date.getTime()) {
             return true;
         }
         return false;
