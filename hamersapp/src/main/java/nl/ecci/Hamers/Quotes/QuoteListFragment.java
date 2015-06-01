@@ -119,7 +119,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
                 }
             }
         } catch (JSONException | ParseException e) {
-            Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
         }
         if (swipeView != null) {
             swipeView.setRefreshing(false);

@@ -151,12 +151,12 @@
         <item>Sorteer op cijfer</item>
     </array>
 
-    <!-- Toasts -->
-    <string name="toast_downloaderror">Fout bij het downloaden</string>
-    <string name="toast_downloading">De gegevens worden gedownload</string>
-    <string name="toast_userloaderror">Fout bij het laden van de leden</string>
-    <string name="toast_reviewloaderror">Fout bij het laden van de reviews</string>
-    <string name="toast_storekeymemory">Een apikey kan ingevuld worden bij instellingen</string>
+    <!-- Snackbar -->
+    <string name="snackbar_downloaderror">Fout bij het downloaden</string>
+    <string name="snackbar_downloading">De gegevens worden gedownload</string>
+    <string name="snackbar_userloaderror">Fout bij het laden van de leden</string>
+    <string name="snackbar_reviewloaderror">Fout bij het laden van de reviews</string>
+    <string name="snackbar_storekeymemory">Een apikey kan ingevuld worden bij instellingen</string>
 
     <!-- Sorting -->
     <string name="sort_username">Sorteer op naam</string>
@@ -168,4 +168,6 @@
     <string name="posted">Gelukt! :)</string>
     <string name="not_posted">Niet gelukt.. :(</string>
     <string name="missing_fields">Graag alle velden invullen!</string>
+
+    <string name="press_back_again">Klik nog een keer op \'back\' om af te sluiten.</string>
 </resources>

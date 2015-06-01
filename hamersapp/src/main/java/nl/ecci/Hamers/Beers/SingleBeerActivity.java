@@ -123,7 +123,7 @@ public class SingleBeerActivity extends AppCompatActivity {
                 }
             }
         } catch (JSONException e) {
-            Toast.makeText(this, getString(R.string.toast_reviewloaderror), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.snackbar_reviewloaderror), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }

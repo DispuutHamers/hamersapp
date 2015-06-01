@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -23,7 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private static final MotionFragment motionFragment = new MotionFragment();
     private static final SettingsFragment settingsFragment = new SettingsFragment();
 
+    private LinearLayout parentLayout;
     private DrawerLayout drawerLayout;
     private boolean backPressedOnce;
 
@@ -103,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        parentLayout = (LinearLayout) findViewById(R.id.main_parent);
 
         initDrawer();
         initToolbar();
@@ -192,19 +196,19 @@ public class MainActivity extends AppCompatActivity {
                 Editable key = apiKey.getText();
                 if (!key.toString().equals("")) {
                     MainActivity.this.storeInMemory(key.toString());
-                    MainActivity.this.showToast(getResources().getString(R.string.toast_downloading));
+                    MainActivity.this.showSnackbar(getResources().getString(R.string.snackbar_downloading));
                     MainActivity.this.hasApiKey();
                 } else {
-                    MainActivity.this.showToast(getResources().getString(R.string.toast_storekeymemory));
+                    MainActivity.this.showSnackbar(getResources().getString(R.string.snackbar_storekeymemory));
                 }
             }
         });
         alert.show();
     }
 
-    //Show a toast with the supplied text and the supplied length
-    private void showToast(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    //Show a Snackbar with the supplied text and the supplied length
+    private void showSnackbar(String text) {
+        Snackbar.make(parentLayout, text, Snackbar.LENGTH_LONG).show();
     }
 
     //Stores this key value pair in memory
@@ -381,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         this.backPressedOnce = true;
-        Toast.makeText(this, "Klik nog een keer op 'back' om af te sluiten.", Toast.LENGTH_SHORT).show();
+        Snackbar.make(parentLayout, getResources().getString(R.string.press_back_again), Snackbar.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -113,7 +114,7 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
 
             req.execute();
         } else {
-            Toast.makeText(this, "Vul alle velden in!", Toast.LENGTH_LONG).show();
+            Snackbar.make(parentLayout, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show();
         }
     }
 

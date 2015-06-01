@@ -69,7 +69,7 @@ public class NewQuoteFragment extends DialogFragment {
                 }
             }
         } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.toast_userloaderror), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.snackbar_userloaderror), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 

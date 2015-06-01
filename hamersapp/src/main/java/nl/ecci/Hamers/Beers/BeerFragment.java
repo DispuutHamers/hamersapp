@@ -124,7 +124,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         } catch (JSONException e) {
             if (this.getActivity() != null) {
-                Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
             }
         }
         if (swipeView != null) {

@@ -104,7 +104,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
             }
         } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
         }
         if (swipeView != null) {
             swipeView.setRefreshing(false);

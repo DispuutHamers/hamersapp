@@ -81,7 +81,7 @@ public class GetJson extends AsyncTask<String, String, String> {
                     ((MainActivity) a).loadData2(prefs, true);
                 }
                 if (result.equals("{}")) {
-                    Toast.makeText(a, a.getString(R.string.toast_downloaderror), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(a, a.getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
                 } else {
                     if (f instanceof QuoteListFragment) {
                         prefs.edit().putString(DataManager.QUOTEKEY, result).apply();

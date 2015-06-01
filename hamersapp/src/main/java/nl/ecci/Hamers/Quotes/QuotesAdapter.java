@@ -59,8 +59,10 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
         holder.user.setText(dataSet.get(position).getUser());
 
         String email = DataManager.IDToEmail(prefs, dataSet.get(position).getUserID());
-        String url = "http://gravatar.com/avatar/" + Utils.md5Hex(email) + "?s=200";
-        imageLoader.displayImage(url, holder.userImage, options, animateFirstListener);
+        if (email != null) {
+            String url = "http://gravatar.com/avatar/" + Utils.md5Hex(email) + "?s=200";
+            imageLoader.displayImage(url, holder.userImage, options, animateFirstListener);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
