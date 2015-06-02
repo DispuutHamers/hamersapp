@@ -28,10 +28,10 @@ import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    public static RelativeLayout parentLayout;
     private final ArrayList<Quote> dataSet = new ArrayList<>();
     private QuotesAdapter adapter;
     private SwipeRefreshLayout swipeView;
-    public static RelativeLayout parentLayout;
 
     public QuoteListFragment() {
     }

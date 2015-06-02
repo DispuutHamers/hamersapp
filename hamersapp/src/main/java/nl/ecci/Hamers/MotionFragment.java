@@ -18,6 +18,7 @@ public class MotionFragment extends Fragment {
 
     private String type;
     private RelativeLayout parentLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.motion_fragment, container, false);

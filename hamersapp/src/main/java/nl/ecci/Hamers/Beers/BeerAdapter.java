@@ -26,11 +26,11 @@ import java.util.ArrayList;
 
 public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
 
+    public static ImageLoadingListener animateFirstListener;
     private final SharedPreferences prefs;
     private final Context context;
     private final ArrayList<Beer> dataSet;
     private final ImageLoader imageLoader;
-    public static ImageLoadingListener animateFirstListener;
     private final DisplayImageOptions options;
 
     public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context) {

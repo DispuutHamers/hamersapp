@@ -108,6 +108,17 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         return dataSet.size();
     }
 
+    private boolean dateChecker(Date date, boolean beginDate) {
+        if (date != null && beginDate) {
+            if (System.currentTimeMillis() > date.getTime()) {
+                return true;
+            }
+        } else if (date != null && System.currentTimeMillis() < date.getTime()) {
+            return true;
+        }
+        return false;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;
         public final TextView title;
@@ -122,16 +133,5 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             beschrijving = (TextView) view.findViewById(R.id.event_beschrijving);
             date = (TextView) view.findViewById(R.id.event_date);
         }
-    }
-
-    private boolean dateChecker(Date date, boolean beginDate) {
-        if (date != null && beginDate) {
-            if (System.currentTimeMillis() > date.getTime()) {
-                return true;
-            }
-        } else if (date != null && System.currentTimeMillis() < date.getTime()) {
-            return true;
-        }
-        return false;
     }
 }
