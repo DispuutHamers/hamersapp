@@ -185,7 +185,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         AnimateFirstDisplayListener.displayedImages.clear();
     }
 
-    public static Comparator<Beer> nameComparator = new Comparator<Beer>() {
+    private static final Comparator<Beer> nameComparator = new Comparator<Beer>() {
         @Override
         public int compare(Beer beer1, Beer beer2) {
             String name1 = beer1.getName();
@@ -194,7 +194,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             return name1.compareToIgnoreCase(name2);
         }
     };
-    public static Comparator<Beer> ratingComparator = new Comparator<Beer>() {
+    private static final Comparator<Beer> ratingComparator = new Comparator<Beer>() {
         @Override
         public int compare(Beer beer1, Beer beer2) {
             String rating1 = beer1.getRating();

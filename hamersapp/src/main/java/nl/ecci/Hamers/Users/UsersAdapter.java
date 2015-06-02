@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 class UsersAdapter extends ArrayAdapter<User> {
 
-    public static AnimateFirstDisplayListener animateFirstListener;
+    private static AnimateFirstDisplayListener animateFirstListener;
     private final Context context;
     private final ArrayList<User> dataSet;
     private final ImageLoader imageLoader;

@@ -170,4 +170,7 @@
     <string name="missing_fields">Graag alle velden invullen!</string>
 
     <string name="press_back_again">Klik nog een keer op \'back\' om af te sluiten.</string>
+
+    <!--Transitions-->
+    <string name="transition_beer_image">transition_beer_image</string>
 </resources>

@@ -34,7 +34,8 @@
                         android:id="@+id/beer_image"
                         android:padding="0dp"
                         android:layout_gravity="center_horizontal"
-                        android:paddingBottom="16dp"/>
+                        android:paddingBottom="16dp"
+                        android:transitionName="@string/transition_beer_image"/>
                 <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="fill_parent"

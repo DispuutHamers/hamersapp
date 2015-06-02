@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -62,7 +64,8 @@ public class SingleBeerActivity extends AppCompatActivity {
         TextView brewerTV = (TextView) findViewById(R.id.beer_brewer);
         TextView countryTV = (TextView) findViewById(R.id.beer_country);
         TextView cijferTV = (TextView) findViewById(R.id.beer_rating);
-        ImageView beerImage = (ImageView) findViewById(R.id.beer_image);
+        final ImageView beerImage = (ImageView) findViewById(R.id.beer_image);
+        final View beerView = findViewById(R.id.beer_image);
 
         Bundle extras = getIntent().getExtras();
 
@@ -103,10 +106,13 @@ public class SingleBeerActivity extends AppCompatActivity {
         beerImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent().setClass(SingleBeerActivity.this, SingleImageActivity.class);
+                Intent intent = new Intent(SingleBeerActivity.this, SingleImageActivity.class);
+                String transitionName = getString(R.string.transition_beer_image);
+
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(SingleBeerActivity.this, beerView, transitionName);
                 intent.putExtra(SingleImageActivity.BEER_NAME, name);
                 intent.putExtra(SingleImageActivity.IMAGE_URL, url);
-                startActivity(intent);
+                ActivityCompat.startActivity(SingleBeerActivity.this, intent, options.toBundle());
             }
         });
 

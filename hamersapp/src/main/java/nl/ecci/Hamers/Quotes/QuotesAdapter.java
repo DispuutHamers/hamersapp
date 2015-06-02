@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder> {
 
-    public static AnimateFirstDisplayListener animateFirstListener;
+    private static AnimateFirstDisplayListener animateFirstListener;
     private final ArrayList<Quote> dataSet;
     private final SharedPreferences prefs;
     private final ImageLoader imageLoader;

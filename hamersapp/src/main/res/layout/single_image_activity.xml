@@ -5,10 +5,11 @@
 
     <include layout="@layout/toolbar"/>
 
-    <ImageView android:id="@+id/single_image"
+    <ImageView android:id="@+id/beer_image"
                android:layout_width="fill_parent"
                android:layout_height="fill_parent"
                android:layout_gravity="center_vertical|center_horizontal"
                android:layout_margin="0dp"
+               android:transitionName="@string/transition_beer_image"
                android:scaleType="fitCenter"/>
 </FrameLayout>

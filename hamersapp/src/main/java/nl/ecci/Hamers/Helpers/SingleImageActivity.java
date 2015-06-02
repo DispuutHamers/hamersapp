@@ -19,9 +19,7 @@ public class SingleImageActivity extends AppCompatActivity {
 
     public static final String BEER_NAME = "BEER_NAME";
     public static final String IMAGE_URL = "IMAGE_URL";
-    private String name;
-    private String url;
-    PhotoViewAttacher mAttacher;
+    private PhotoViewAttacher mAttacher;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +29,10 @@ public class SingleImageActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
 
-        ImageView imageView = (ImageView) findViewById(R.id.single_image);
+        ImageView imageView = (ImageView) findViewById(R.id.beer_image);
 
-        name = getIntent().getStringExtra(BEER_NAME);
-        url = getIntent().getStringExtra(IMAGE_URL);
+        String name = getIntent().getStringExtra(BEER_NAME);
+        String url = getIntent().getStringExtra(IMAGE_URL);
 
         // Universal Image Loader
         ImageLoader imageLoader = ImageLoader.getInstance();
@@ -59,7 +57,9 @@ public class SingleImageActivity extends AppCompatActivity {
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                mAttacher.update();
+                if (mAttacher != null){
+                    mAttacher.update();
+                }
             }
 
             @Override
@@ -74,8 +74,6 @@ public class SingleImageActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setTitle(name);
         }
-
-
     }
 
     @Override
