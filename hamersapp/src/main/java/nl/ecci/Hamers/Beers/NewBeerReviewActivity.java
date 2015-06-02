@@ -1,6 +1,5 @@
 package nl.ecci.Hamers.Beers;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -107,11 +106,7 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
             String arguments = "&review[beer_id]=" + id + "&review[description]=" + review + "&review[rating]=" + cijfer
                     + "&review[proefdatum(1i)]=" + proefjaar + "&review[proefdatum(2i)]=" + proefmaand + "&review[proefdatum(3i)]=" + proefdag + "&review[proefdatum(4i)]=20" + "&review[proefdatum(5i)]=00";
 
-            SendPostRequest req = new SendPostRequest(this, parentLayout, SendPostRequest.REVIEWURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
-
-            Intent intent = new Intent();
-            setResult(RESULT_OK, intent);
-
+            SendPostRequest req = new SendPostRequest(this, null, SingleBeerActivity.parentLayout, SendPostRequest.REVIEWURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
             req.execute();
         } else {
             Snackbar.make(parentLayout, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show();

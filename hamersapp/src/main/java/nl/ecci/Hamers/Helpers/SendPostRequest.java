@@ -28,11 +28,13 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
     private final String type;
     private final String urlParams;
     private final View view;
+    private final View parentView;
     private final Context context;
 
-    public SendPostRequest(Context context, View view, String type, SharedPreferences prefs, String urlParams) {
-        this.view = view;
+    public SendPostRequest(Context context, View view, View parentView, String type, SharedPreferences prefs, String urlParams) {
         this.context = context;
+        this.view = view;
+        this.parentView = parentView;
         this.type = type;
         this.prefs = prefs;
         this.urlParams = urlParams;
@@ -65,7 +67,7 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
     }
 
     protected void onPostExecute(String result) {
-        if (result.equals("201")) {
+        if (result.equals("201") || result.equals("200")) {
             Activity activity = (Activity) context;
 
             if (!(activity instanceof MainActivity)) {
@@ -98,12 +100,16 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
 
             if (view != null) {
                 Snackbar.make(view, context.getResources().getString(R.string.posted), Snackbar.LENGTH_SHORT).show();
+            } else if (parentView != null) {
+                Snackbar.make(parentView, context.getResources().getString(R.string.posted), Snackbar.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(context, context.getResources().getString(R.string.posted), Toast.LENGTH_SHORT).show();
             }
         } else {
             if (view != null) {
                 Snackbar.make(view, context.getResources().getString(R.string.not_posted), Snackbar.LENGTH_SHORT).show();
+            } else if (parentView != null) {
+                Snackbar.make(parentView, context.getResources().getString(R.string.not_posted), Snackbar.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(context, context.getResources().getString(R.string.not_posted), Toast.LENGTH_SHORT).show();
             }

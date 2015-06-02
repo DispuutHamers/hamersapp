@@ -14,9 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import nl.ecci.Hamers.Helpers.DataManager;
@@ -36,11 +34,14 @@ public class SingleBeerActivity extends AppCompatActivity {
     private int id;
     private String name;
     private SharedPreferences prefs;
+    public static LinearLayout parentLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.single_beer_item);
+
+        parentLayout = (LinearLayout) findViewById(R.id.single_beer_parent);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

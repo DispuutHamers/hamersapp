@@ -40,7 +40,7 @@ public class NewNewsActivity extends AppCompatActivity {
         String body = news_body.getText().toString();
 
         // Send request
-        SendPostRequest req = new SendPostRequest(this, parentLayout, SendPostRequest.NEWSURL, PreferenceManager.getDefaultSharedPreferences(this), "news[title]=" + title + "&news[body]=" + body);
+        SendPostRequest req = new SendPostRequest(this, parentLayout, NewsFragment.parentLayout, SendPostRequest.NEWSURL, PreferenceManager.getDefaultSharedPreferences(this), "news[title]=" + title + "&news[body]=" + body);
         req.execute();
     }
 

@@ -106,7 +106,9 @@ public class NewEventActivity extends AppCompatActivity {
         String deadlineTime = deadlineTimeButton.getText().toString();
         String deadlineDate = deadlineDateButton.getText().toString();
 
-        if (!eventDate.equals("Datum") || !title.equals("") || !description.equals("")) {
+        if (!eventDate.contains("Datum") && !title.equals("") && !description.equals("") &&
+                !eventTime.contains("Tijd") && !eventEndDate.contains("Datum") && !eventEndTime.contains("Tijd") &&
+                !deadlineDate.contains("Datum") && !deadlineTime.contains("Tijd")) {
             String[] dateParts = eventDate.split("-");
             int eventStartDay = Integer.parseInt(dateParts[0]);
             int eventStartMonth = Integer.parseInt(dateParts[1]);
@@ -138,7 +140,7 @@ public class NewEventActivity extends AppCompatActivity {
                     + "&event[end_time(5i)]=" + eventEndMinutes + "&event[end_time(4i)]=" + eventEndHour + "&event[end_time(3i)]=" + eventEndDay + "&event[end_time(2i)]=" + eventEndMonth + "&event[end_time(1i)]=" + eventEndYear
                     + "&event[deadline(5i)]=" + eventDeadlineMinutes + "&event[deadline(4i)]=" + eventDeadlineHour + "&event[deadline(3i)]=" + eventDeadlineDay + "&event[deadline(2i)]=" + eventDeadlineMonth + "&event[deadline(1i)]=" + eventDeadlineYear
                     + "&event[date(5i)]=" + eventStartMinutes + "&event[date(4i)]=" + eventStartHour + "&event[date(3i)]=" + eventStartDay + "&event[date(2i)]=" + eventStartMonth + "&event[date(1i)]=" + eventStartYear;
-            SendPostRequest req = new SendPostRequest(this, parentLayout, SendPostRequest.EVENTURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
+            SendPostRequest req = new SendPostRequest(this, null, EventFragment.parentLayout, SendPostRequest.EVENTURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
             req.execute();
         } else {
             Snackbar.make(parentLayout, getResources().getString(R.string.missing_fields), Snackbar.LENGTH_SHORT).show();

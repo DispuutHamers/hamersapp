@@ -63,7 +63,7 @@ public class NewBeerActivity extends AppCompatActivity {
         }
 
         // Send request
-        SendPostRequest req = new SendPostRequest(this, parentLayout, SendPostRequest.BEERURL, PreferenceManager.getDefaultSharedPreferences(this), "beer[name]=" + title + "&beer[picture]=" + picture + "&beer[percentage]=" + percentage + "25" + "&beer[country]=" + country + "&beer[brewer]=" + brewer + "&beer[soort]=" + soort);
+        SendPostRequest req = new SendPostRequest(this, null, BeerFragment.parentLayout, SendPostRequest.BEERURL, PreferenceManager.getDefaultSharedPreferences(this), "beer[name]=" + title + "&beer[picture]=" + picture + "&beer[percentage]=" + percentage + "25" + "&beer[country]=" + country + "&beer[brewer]=" + brewer + "&beer[soort]=" + soort);
         req.execute();
     }
 

@@ -64,7 +64,7 @@ public class MotionFragment extends Fragment {
         String content = escapeHtml(motion_content.getText().toString());
 
         String arguments = "motion[motion_type]=" + type + "&motion[subject]=" + subject + "&motion[content]=" + content;
-        SendPostRequest req = new SendPostRequest(this.getActivity(), parentLayout, SendPostRequest.MOTIEURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), arguments);
+        SendPostRequest req = new SendPostRequest(this.getActivity(), parentLayout, null, SendPostRequest.MOTIEURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), arguments);
         req.execute();
     }
 }

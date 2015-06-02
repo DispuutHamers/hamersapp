@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
@@ -31,6 +32,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private NewsAdapter adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
+    public static RelativeLayout parentLayout;
 
     public NewsFragment() {
     }
@@ -39,6 +41,8 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.news_fragment, container, false);
         RecyclerView news_list = (RecyclerView) view.findViewById(R.id.news_recyclerview);
+
+        parentLayout = (RelativeLayout) view.findViewById(R.id.news_parent);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         news_list.setLayoutManager(mLayoutManager);
@@ -49,7 +53,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         news_list.setAdapter(adapter);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        if (prefs.getString("newsDatak", null) != null) {
+        if (prefs.getString("newsData", null) != null) {
             populateList(prefs);
         } else {
             onRefresh();

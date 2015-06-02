@@ -3,12 +3,13 @@ package nl.ecci.Hamers.Events;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.*;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
 import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
@@ -25,6 +26,7 @@ import java.util.Date;
 
 public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    public static RelativeLayout parentLayout;
     private final ArrayList<Event> listItems = new ArrayList<>();
     private EventsAdapter adapter;
     private SwipeRefreshLayout swipeView;
@@ -35,8 +37,10 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.events_fragment, container, false);
+        View view = inflater.inflate(R.layout.event_fragment, container, false);
         RecyclerView event_list = (RecyclerView) view.findViewById(R.id.events_recyclerview);
+
+        parentLayout = (RelativeLayout) view.findViewById(R.id.event_parent);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         event_list.setLayoutManager(mLayoutManager);
@@ -104,7 +108,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
             }
         } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
+            Snackbar.make(parentLayout, getString(R.string.snackbar_downloaderror), Snackbar.LENGTH_SHORT).show();
         }
         if (swipeView != null) {
             swipeView.setRefreshing(false);

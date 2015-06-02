@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.*;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.AnimateFirstDisplayListener;
@@ -26,30 +27,8 @@ import java.util.Comparator;
 
 public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    public static RelativeLayout parentLayout;
     private final ArrayList<Beer> listItems = new ArrayList<>();
-    private final Comparator<Beer> nameComparator = new Comparator<Beer>() {
-        @Override
-        public int compare(Beer beer1, Beer beer2) {
-            String name1 = beer1.getName();
-            String name2 = beer2.getName();
-
-            return name1.compareToIgnoreCase(name2);
-        }
-    };
-    private final Comparator<Beer> ratingComparator = new Comparator<Beer>() {
-        @Override
-        public int compare(Beer beer1, Beer beer2) {
-            String rating1 = beer1.getRating();
-            String rating2 = beer2.getRating();
-
-            if (rating1.equals("nog niet bekend")) {
-                rating1 = "-1";
-            } else if (rating2.equals("nog niet bekend")) {
-                rating2 = "-1";
-            }
-            return rating2.compareToIgnoreCase(rating1);
-        }
-    };
     private BeerAdapter adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
@@ -60,6 +39,8 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.beer_fragment, container, false);
         RecyclerView beer_list = (RecyclerView) view.findViewById(R.id.beer_recyclerview);
+
+        parentLayout = (RelativeLayout) view.findViewById(R.id.beer_parent);
 
         setHasOptionsMenu(true);
 
@@ -203,4 +184,28 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         super.onDestroy();
         AnimateFirstDisplayListener.displayedImages.clear();
     }
+
+    public static Comparator<Beer> nameComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            String name1 = beer1.getName();
+            String name2 = beer2.getName();
+
+            return name1.compareToIgnoreCase(name2);
+        }
+    };
+    public static Comparator<Beer> ratingComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            String rating1 = beer1.getRating();
+            String rating2 = beer2.getRating();
+
+            if (rating1.equals("nog niet bekend")) {
+                rating1 = "-1";
+            } else if (rating2.equals("nog niet bekend")) {
+                rating2 = "-1";
+            }
+            return rating2.compareToIgnoreCase(rating1);
+        }
+    };
 }
