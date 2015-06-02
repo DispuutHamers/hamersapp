@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.melnykov.fab.FloatingActionButton;
 import nl.ecci.Hamers.Helpers.DataManager;
@@ -30,6 +31,7 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
     private final ArrayList<Quote> dataSet = new ArrayList<>();
     private QuotesAdapter adapter;
     private SwipeRefreshLayout swipeView;
+    public static RelativeLayout parentLayout;
 
     public QuoteListFragment() {
     }
@@ -38,6 +40,8 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.quote_list_fragment, container, false);
         RecyclerView quote_list = (RecyclerView) view.findViewById(R.id.quotes_recyclerview);
+
+        parentLayout = (RelativeLayout) view.findViewById(R.id.quote_list_parent);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         quote_list.setLayoutManager(mLayoutManager);
