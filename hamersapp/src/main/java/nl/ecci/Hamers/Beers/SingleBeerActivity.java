@@ -14,10 +14,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import nl.ecci.Hamers.Helpers.DataManager;
+import nl.ecci.Hamers.Helpers.SingleImageActivity;
 import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,12 +68,12 @@ public class SingleBeerActivity extends AppCompatActivity {
 
         id = extras.getInt("id");
         name = extras.getString("name");
-        String soort = extras.getString("soort");
-        String url = extras.getString("picture");
-        String percentage = extras.getString("percentage");
-        String brewer = extras.getString("brewer");
-        String country = extras.getString("country");
-        String cijfer = extras.getString("cijfer");
+        final String soort = extras.getString("soort");
+        final String url = extras.getString("picture");
+        final String percentage = extras.getString("percentage");
+        final String brewer = extras.getString("brewer");
+        final String country = extras.getString("country");
+        final String cijfer = extras.getString("cijfer");
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -95,6 +99,16 @@ public class SingleBeerActivity extends AppCompatActivity {
                 .build();
 
         imageLoader.displayImage(url, beerImage, options);
+
+        beerImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent().setClass(SingleBeerActivity.this, SingleImageActivity.class);
+                intent.putExtra(SingleImageActivity.BEER_NAME, name);
+                intent.putExtra(SingleImageActivity.IMAGE_URL, url);
+                startActivity(intent);
+            }
+        });
 
         if (prefs != null) {
             getReviews();

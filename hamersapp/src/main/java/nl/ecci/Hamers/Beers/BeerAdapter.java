@@ -97,7 +97,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
         holder.info.setText((dataSet.get(position).getCountry() + " - " + dataSet.get(position).getPercentage()));
 
         String imageURL = dataSet.get(position).getImageURL();
-        System.out.println("IMAGE URL: " + imageURL);
 
         if (holder.picture.getTag() == null || !holder.picture.getTag().equals(imageURL) && !imageURL.equals("")) {
 
