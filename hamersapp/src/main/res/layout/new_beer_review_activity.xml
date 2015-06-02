@@ -30,17 +30,20 @@
                         android:textStyle="bold"
                         android:textSize="22sp"
                         android:padding="20dp"/>
-
-                <EditText
-                        android:id="@+id/review_body"
+                <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginBottom="4dp"
-                        android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
-                        android:hint="@string/review_hint"
-                        android:padding="20dp"/>
+                        android:layout_height="wrap_content">
+                    <EditText
+                            android:id="@+id/review_body"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginBottom="4dp"
+                            android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
+                            android:hint="@string/review_hint"
+                            android:padding="20dp"/>
+                </android.support.design.widget.TextInputLayout>
 
                 <TextView android:text="@string/rating"
                           android:id="@+id/rating"

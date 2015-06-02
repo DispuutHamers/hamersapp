@@ -90,8 +90,6 @@ public class GetJson extends AsyncTask<String, String, String> {
                     // User fragment
                     else if (f instanceof UserFragment) {
                         prefs.edit().putString(DataManager.USERKEY, result).apply();
-                        GetJson g = new GetJson(a, f, USERURL, prefs);
-                        g.execute();
                         MainActivity.userFragment.populateList(prefs);
                     }
                     // Event fragment

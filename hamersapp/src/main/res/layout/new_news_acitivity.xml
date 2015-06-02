@@ -29,29 +29,34 @@
                         android:textStyle="bold"
                         android:textSize="22sp"
                         android:padding="20dp"/>
-
-                <EditText
-                        android:id="@+id/news_title"
+                <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginBottom="4dp"
-                        android:hint="@string/news_title"
-                        android:padding="20dp"/>
-
-                <EditText android:id="@+id/news_body"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:layout_marginTop="16dp"
-                          android:layout_marginLeft="15dp"
-                          android:layout_marginRight="15dp"
-                          android:layout_marginBottom="4dp"
-                          android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
-                          android:hint="@string/news_body"
-                          android:padding="20dp"/>
-
+                        android:layout_height="wrap_content">
+                    <EditText
+                            android:id="@+id/news_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginBottom="4dp"
+                            android:hint="@string/news_title"
+                            android:padding="20dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <EditText android:id="@+id/news_body"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_marginTop="16dp"
+                              android:layout_marginLeft="15dp"
+                              android:layout_marginRight="15dp"
+                              android:layout_marginBottom="4dp"
+                              android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
+                              android:hint="@string/news_body"
+                              android:padding="20dp"/>
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
         </ScrollView>
         <LinearLayout

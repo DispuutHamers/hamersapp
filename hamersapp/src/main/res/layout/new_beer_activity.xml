@@ -24,70 +24,90 @@
                     android:textStyle="bold"
                     android:textSize="22sp"
                     android:padding="20dp"/>
-
-            <EditText
-                    android:id="@+id/beer_title_et"
+            <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="4dp"
-                    android:hint="@string/beer_name"
-                    android:padding="20dp"/>
-
-            <EditText android:id="@+id/beer_picture_et"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="16dp"
-                      android:layout_marginLeft="15dp"
-                      android:layout_marginRight="15dp"
-                      android:layout_marginBottom="4dp"
-                      android:inputType="textMultiLine"
-                      android:hint="@string/beer_picture"
-                      android:padding="20dp"/>
-
-            <EditText android:id="@+id/beer_soort_et"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="16dp"
-                      android:layout_marginLeft="15dp"
-                      android:layout_marginRight="15dp"
-                      android:layout_marginBottom="4dp"
-                      android:inputType="textMultiLine"
-                      android:hint="@string/beer_soort"
-                      android:padding="20dp"/>
-            <EditText
-                    android:id="@+id/beer_percentage_et"
+                    android:layout_height="wrap_content">
+                <EditText
+                        android:id="@+id/beer_title_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="4dp"
+                        android:hint="@string/beer_name"
+                        android:padding="20dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="4dp"
-                    android:hint="@string/beer_percentage"
-                    android:padding="20dp"/>
-
-            <EditText android:id="@+id/beer_brewer_et"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="16dp"
-                      android:layout_marginLeft="15dp"
-                      android:layout_marginRight="15dp"
-                      android:layout_marginBottom="4dp"
-                      android:inputType="textMultiLine"
-                      android:hint="@string/beer_brewer"
-                      android:padding="20dp"/>
-            <EditText
-                    android:id="@+id/beer_country_et"
+                    android:layout_height="wrap_content">
+                <EditText android:id="@+id/beer_picture_et"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="16dp"
+                          android:layout_marginLeft="15dp"
+                          android:layout_marginRight="15dp"
+                          android:layout_marginBottom="4dp"
+                          android:inputType="textMultiLine"
+                          android:hint="@string/beer_picture"
+                          android:padding="20dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="4dp"
-                    android:hint="@string/beer_country"
-                    android:padding="20dp"/>
+                    android:layout_height="wrap_content">
+                <EditText android:id="@+id/beer_soort_et"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="16dp"
+                          android:layout_marginLeft="15dp"
+                          android:layout_marginRight="15dp"
+                          android:layout_marginBottom="4dp"
+                          android:inputType="textMultiLine"
+                          android:hint="@string/beer_soort"
+                          android:padding="20dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <EditText
+                        android:id="@+id/beer_percentage_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="4dp"
+                        android:hint="@string/beer_percentage"
+                        android:padding="20dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <EditText android:id="@+id/beer_brewer_et"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="16dp"
+                          android:layout_marginLeft="15dp"
+                          android:layout_marginRight="15dp"
+                          android:layout_marginBottom="4dp"
+                          android:inputType="textMultiLine"
+                          android:hint="@string/beer_brewer"
+                          android:padding="20dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <EditText
+                        android:id="@+id/beer_country_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="4dp"
+                        android:hint="@string/beer_country"
+                        android:padding="20dp"/>
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
     </ScrollView>
     <LinearLayout
@@ -109,5 +129,4 @@
                 android:text="@string/send"
                 android:onClick="postBeer"/>
     </LinearLayout>
-
 </RelativeLayout>
