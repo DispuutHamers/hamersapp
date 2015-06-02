@@ -14,7 +14,7 @@ import nl.ecci.Hamers.Helpers.SendPostRequest;
 
 import static android.text.Html.escapeHtml;
 
-class MotionFragment extends Fragment {
+public class MotionFragment extends Fragment {
 
     private String type;
     private RelativeLayout parentLayout;

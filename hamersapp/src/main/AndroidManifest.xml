@@ -3,10 +3,8 @@
           package="nl.ecci.Hamers">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-
     <!-- Internet + sdcard access (for caching purposes) -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
     <!-- Push notifications -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
@@ -15,7 +13,6 @@
     <permission android:name="com.example.gcm.permission.C2D_MESSAGE"
                 android:protectionLevel="signature"/>
     <uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE"/>
-
 
     <application android:label="@string/app_name"
                  android:icon="@drawable/ic_launcher"
