@@ -1,10 +1,14 @@
 package nl.ecci.Hamers.Beers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +22,7 @@ import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import nl.ecci.Hamers.Helpers.AnimateFirstDisplayListener;
 import nl.ecci.Hamers.Helpers.DataManager;
+import nl.ecci.Hamers.Helpers.SingleImageActivity;
 import nl.ecci.Hamers.R;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,13 +34,15 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
     private static ImageLoadingListener animateFirstListener;
     private final SharedPreferences prefs;
     private final Context context;
+    private final View parentLayout;
     private final ArrayList<Beer> dataSet;
     private final ImageLoader imageLoader;
     private final DisplayImageOptions options;
 
-    public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context) {
+    public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context, View parentLayout) {
         this.dataSet = itemsArrayList;
         this.context = context;
+        this.parentLayout = parentLayout;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         // Universal Image Loader
@@ -52,11 +59,12 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
 
     // Create new views (invoked by the layout manager)
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.beer_row, parent, false);
 
         final ViewHolder vh = new ViewHolder(view);
+        final View beerView = view.findViewById(R.id.beer_image);
 
         vh.view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +92,34 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
                 }
             }
         });
+
+        beerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JSONObject b = null;
+                try {
+                    b = DataManager.getBeer(prefs, dataSet.get(vh.getAdapterPosition()).getName());
+                } catch (NullPointerException ignored) {
+                }
+                if (b != null) {
+                    try {
+                        if (!b.getString("picture").equals("")) {
+                            Activity activity = (Activity) context;
+                            Intent intent = new Intent(context, SingleImageActivity.class);
+                            String transitionName = context.getString(R.string.transition_beer_image);
+                            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, transitionName);
+                            intent.putExtra(SingleImageActivity.BEER_NAME, b.getString("name"));
+                            intent.putExtra(SingleImageActivity.IMAGE_URL, b.getString("picture"));
+                            ActivityCompat.startActivity(activity, intent, options.toBundle());
+                        } else {
+                            Snackbar.make(parentLayout, context.getString(R.string.no_image), Snackbar.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
         return vh;
     }
 
@@ -98,7 +134,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
 
         String imageURL = dataSet.get(position).getImageURL();
 
-        if (holder.picture.getTag() == null || !holder.picture.getTag().equals(imageURL) && !imageURL.equals("")) {
+        if (holder.picture.getTag() == null || !holder.picture.getTag().equals(imageURL) && !imageURL.equals(null)) {
 
             //we only load image if prev. URL and current URL do not match, or tag is null
             ImageAware imageAware = new ImageViewAware(holder.picture, false);
@@ -131,7 +167,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
             brewer = (TextView) view.findViewById(R.id.beer_brewer);
             rating = (TextView) view.findViewById(R.id.row_beer_rating);
             info = (TextView) view.findViewById(R.id.beer_info);
-            picture = (ImageView) view.findViewById(R.id.beer_picture);
+            picture = (ImageView) view.findViewById(R.id.beer_image);
         }
     }
 }

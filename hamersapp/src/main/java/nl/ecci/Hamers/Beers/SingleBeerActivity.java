@@ -108,7 +108,6 @@ public class SingleBeerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SingleBeerActivity.this, SingleImageActivity.class);
                 String transitionName = getString(R.string.transition_beer_image);
-
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(SingleBeerActivity.this, beerView, transitionName);
                 intent.putExtra(SingleImageActivity.BEER_NAME, name);
                 intent.putExtra(SingleImageActivity.IMAGE_URL, url);

@@ -171,6 +171,7 @@
 
     <string name="press_back_again">Klik nog een keer op \'back\' om af te sluiten.</string>
 
-    <!--Transitions-->
+    <!-- Beer images -->
+    <string name="no_image">Dit biertje heeft geen afbeelding!</string>
     <string name="transition_beer_image">transition_beer_image</string>
 </resources>

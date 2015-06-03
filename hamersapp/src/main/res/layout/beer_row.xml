@@ -6,7 +6,7 @@
                 android:background="?attr/selectableItemBackground">
 
     <ImageView
-            android:id="@+id/beer_picture"
+            android:id="@+id/beer_image"
             android:layout_width="74dp"
             android:layout_height="74dp"
             android:layout_alignParentBottom="true"
@@ -24,7 +24,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_alignWithParentIfMissing="true"
-            android:layout_toRightOf="@id/beer_picture"
+            android:layout_toRightOf="@id/beer_image"
             android:gravity="left"
             android:text="Dit is een duizendlekker bier (testing purposes)"
             android:textSize="16sp"
@@ -40,8 +40,8 @@
             android:textSize="12sp"
             android:gravity="left"
             android:layout_below="@id/beer_name"
-            android:layout_toRightOf="@id/beer_picture"
-            android:layout_toEndOf="@id/beer_picture"
+            android:layout_toRightOf="@id/beer_image"
+            android:layout_toEndOf="@id/beer_image"
             android:textColor="@android:color/secondary_text_light"/>
 
     <TextView
@@ -54,8 +54,8 @@
             android:textSize="12sp"
             android:gravity="left"
             android:layout_below="@id/beer_soort"
-            android:layout_toRightOf="@+id/beer_picture"
-            android:layout_toEndOf="@id/beer_picture"
+            android:layout_toRightOf="@+id/beer_image"
+            android:layout_toEndOf="@id/beer_image"
             android:textColor="@android:color/secondary_text_light"/>
 
     <TextView android:id="@+id/row_beer_rating"
@@ -67,8 +67,8 @@
               android:textSize="12sp"
               android:gravity="left"
               android:layout_below="@id/beer_brewer"
-              android:layout_toRightOf="@+id/beer_picture"
-              android:layout_toEndOf="@id/beer_picture"
+              android:layout_toRightOf="@+id/beer_image"
+              android:layout_toEndOf="@id/beer_image"
               android:textColor="@android:color/secondary_text_light"/>
 
     <TextView
