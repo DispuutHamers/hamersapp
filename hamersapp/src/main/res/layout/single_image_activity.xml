@@ -10,6 +10,6 @@
                android:layout_height="fill_parent"
                android:layout_gravity="center_vertical|center_horizontal"
                android:layout_margin="0dp"
-               android:transitionName="@string/transition_beer_image"
+               android:transitionName="@string/transition_single_image"
                android:scaleType="fitCenter"/>
 </FrameLayout>

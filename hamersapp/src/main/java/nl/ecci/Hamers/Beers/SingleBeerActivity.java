@@ -70,25 +70,25 @@ public class SingleBeerActivity extends AppCompatActivity {
 
         id = extras.getInt(Beer.BEER_ID);
         name = extras.getString(Beer.BEER_NAME);
-        final String soort = extras.getString(Beer.BEER_KIND);
+        final String kind = extras.getString(Beer.BEER_KIND);
         final String url = extras.getString(Beer.BEER_URL);
         final String percentage = extras.getString(Beer.BEER_PERCENTAGE);
         final String brewer = extras.getString(Beer.BEER_PERCENTAGE);
         final String country = extras.getString(Beer.BEER_COUNTRY);
-        final String cijfer = extras.getString(Beer.BEER_RATING);
+        final String rating = extras.getString(Beer.BEER_RATING);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         nameTV.setText(name);
-        soortTV.setText(soort);
+        soortTV.setText(kind);
         percentageTV.setText(percentage);
         brewerTV.setText(brewer);
         countryTV.setText(country);
 
-        if (cijfer.equals("null")) {
+        if (rating.equals("null")) {
             cijferTV.setText("nog niet bekend");
         } else {
-            cijferTV.setText(cijfer);
+            cijferTV.setText(rating);
         }
 
         // Universal Image Loader
@@ -106,7 +106,7 @@ public class SingleBeerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SingleBeerActivity.this, SingleImageActivity.class);
-                String transitionName = getString(R.string.transition_beer_image);
+                String transitionName = getString(R.string.transition_single_image);
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(SingleBeerActivity.this, beerImage, transitionName);
                 intent.putExtra(Beer.BEER_NAME, name);
                 intent.putExtra(Beer.BEER_URL, url);
@@ -123,7 +123,7 @@ public class SingleBeerActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                this.finish();
+                supportFinishAfterTransition();
                 return true;
         }
         return super.onOptionsItemSelected(item);

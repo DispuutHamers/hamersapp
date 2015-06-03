@@ -174,5 +174,5 @@
 
     <!-- Beer images -->
     <string name="no_image">Dit biertje heeft geen afbeelding!</string>
-    <string name="transition_beer_image">transition_beer_image</string>
+    <string name="transition_single_image">transition_beer_image</string>
 </resources>
