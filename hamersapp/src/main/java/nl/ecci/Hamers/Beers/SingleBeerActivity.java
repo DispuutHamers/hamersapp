@@ -65,18 +65,17 @@ public class SingleBeerActivity extends AppCompatActivity {
         TextView countryTV = (TextView) findViewById(R.id.beer_country);
         TextView cijferTV = (TextView) findViewById(R.id.beer_rating);
         final ImageView beerImage = (ImageView) findViewById(R.id.beer_image);
-        final View beerView = findViewById(R.id.beer_image);
 
         Bundle extras = getIntent().getExtras();
 
-        id = extras.getInt("id");
-        name = extras.getString("name");
-        final String soort = extras.getString("soort");
-        final String url = extras.getString("picture");
-        final String percentage = extras.getString("percentage");
-        final String brewer = extras.getString("brewer");
-        final String country = extras.getString("country");
-        final String cijfer = extras.getString("cijfer");
+        id = extras.getInt(Beer.BEER_ID);
+        name = extras.getString(Beer.BEER_NAME);
+        final String soort = extras.getString(Beer.BEER_KIND);
+        final String url = extras.getString(Beer.BEER_URL);
+        final String percentage = extras.getString(Beer.BEER_PERCENTAGE);
+        final String brewer = extras.getString(Beer.BEER_PERCENTAGE);
+        final String country = extras.getString(Beer.BEER_COUNTRY);
+        final String cijfer = extras.getString(Beer.BEER_RATING);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -108,9 +107,9 @@ public class SingleBeerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SingleBeerActivity.this, SingleImageActivity.class);
                 String transitionName = getString(R.string.transition_beer_image);
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(SingleBeerActivity.this, beerView, transitionName);
-                intent.putExtra(SingleImageActivity.BEER_NAME, name);
-                intent.putExtra(SingleImageActivity.IMAGE_URL, url);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(SingleBeerActivity.this, beerImage, transitionName);
+                intent.putExtra(Beer.BEER_NAME, name);
+                intent.putExtra(Beer.BEER_URL, url);
                 ActivityCompat.startActivity(SingleBeerActivity.this, intent, options.toBundle());
             }
         });

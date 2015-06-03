@@ -157,6 +157,7 @@
     <string name="snackbar_userloaderror">Fout bij het laden van de leden</string>
     <string name="snackbar_reviewloaderror">Fout bij het laden van de reviews</string>
     <string name="snackbar_storekeymemory">Een apikey kan ingevuld worden bij instellingen</string>
+    <string name="snackbar_error">Er is iets misgegaan, probeer het later opnieuw.</string>
 
     <!-- Sorting -->
     <string name="sort_username">Sorteer op naam</string>

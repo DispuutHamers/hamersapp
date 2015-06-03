@@ -12,13 +12,12 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import nl.ecci.Hamers.Beers.Beer;
 import nl.ecci.Hamers.R;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class SingleImageActivity extends AppCompatActivity {
 
-    public static final String BEER_NAME = "BEER_NAME";
-    public static final String IMAGE_URL = "IMAGE_URL";
     private PhotoViewAttacher mAttacher;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +30,8 @@ public class SingleImageActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.beer_image);
 
-        String name = getIntent().getStringExtra(BEER_NAME);
-        String url = getIntent().getStringExtra(IMAGE_URL);
+        String name = getIntent().getStringExtra(Beer.BEER_NAME);
+        String url = getIntent().getStringExtra(Beer.BEER_URL);
 
         // Universal Image Loader
         ImageLoader imageLoader = ImageLoader.getInstance();

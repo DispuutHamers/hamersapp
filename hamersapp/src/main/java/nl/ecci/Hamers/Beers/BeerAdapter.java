@@ -60,7 +60,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        final View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.beer_row, parent, false);
 
         final ViewHolder vh = new ViewHolder(view);
@@ -68,58 +68,17 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
 
         vh.view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view1) {
-                JSONObject b = null;
-                try {
-                    b = DataManager.getBeer(prefs, dataSet.get(vh.getAdapterPosition()).getName());
-                } catch (NullPointerException ignored) {
-                }
-                if (b != null) {
-                    try {
-                        Intent intent = new Intent(context, SingleBeerActivity.class);
-                        intent.putExtra("id", b.getInt("id"));
-                        intent.putExtra("name", b.getString("name"));
-                        intent.putExtra("soort", b.getString("soort"));
-                        intent.putExtra("picture", b.getString("picture"));
-                        intent.putExtra("percentage", b.getString("percentage"));
-                        intent.putExtra("brewer", b.getString("brewer"));
-                        intent.putExtra("country", b.getString("country"));
-                        intent.putExtra("cijfer", b.getString("cijfer"));
-                        context.startActivity(intent);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+            public void onClick(View v1) {
+                startIntentActivity(true, vh, beerView, view);
             }
         });
-
         beerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JSONObject b = null;
-                try {
-                    b = DataManager.getBeer(prefs, dataSet.get(vh.getAdapterPosition()).getName());
-                } catch (NullPointerException ignored) {
-                }
-                if (b != null) {
-                    try {
-                        if (!b.getString("picture").equals("")) {
-                            Activity activity = (Activity) context;
-                            Intent intent = new Intent(context, SingleImageActivity.class);
-                            String transitionName = context.getString(R.string.transition_beer_image);
-                            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, transitionName);
-                            intent.putExtra(SingleImageActivity.BEER_NAME, b.getString("name"));
-                            intent.putExtra(SingleImageActivity.IMAGE_URL, b.getString("picture"));
-                            ActivityCompat.startActivity(activity, intent, options.toBundle());
-                        } else {
-                            Snackbar.make(parentLayout, context.getString(R.string.no_image), Snackbar.LENGTH_SHORT).show();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                startIntentActivity(false, vh, beerView, view);
             }
         });
+
         return vh;
     }
 
@@ -141,6 +100,42 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
             imageLoader.displayImage(imageURL, imageAware, options, animateFirstListener);
             holder.picture.setTag(imageURL);
         }
+    }
+
+    public void startIntentActivity(Boolean single, ViewHolder vh, View beerView, View view) {
+        try {
+            JSONObject b = DataManager.getBeer(prefs, dataSet.get(vh.getAdapterPosition()).getName());
+            Activity activity = (Activity) context;
+
+            String transitionName = context.getString(R.string.transition_beer_image);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, transitionName);
+            assert b != null;
+
+            if (single) {
+                Intent intent = new Intent(context, SingleBeerActivity.class);
+                intent.putExtra(Beer.BEER_ID, b.getInt("id"));
+                intent.putExtra(Beer.BEER_NAME, b.getString("name"));
+                intent.putExtra(Beer.BEER_KIND, b.getString("soort"));
+                intent.putExtra(Beer.BEER_URL, b.getString("picture"));
+                intent.putExtra(Beer.BEER_PERCENTAGE, b.getString("percentage"));
+                intent.putExtra(Beer.BEER_BREWER, b.getString("brewer"));
+                intent.putExtra(Beer.BEER_COUNTRY, b.getString("country"));
+                intent.putExtra(Beer.BEER_RATING, b.getString("cijfer"));
+                ActivityCompat.startActivity(activity, intent, options.toBundle());
+            } else {
+                if (!b.getString("picture").equals("")) {
+                    Intent intent = new Intent(context, SingleImageActivity.class);
+                    intent.putExtra(Beer.BEER_NAME, b.getString("name"));
+                    intent.putExtra(Beer.BEER_URL, b.getString("picture"));
+                    ActivityCompat.startActivity(activity, intent, options.toBundle());
+                } else {
+                    Snackbar.make(parentLayout, context.getString(R.string.no_image), Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        } catch (JSONException | NullPointerException ignored) {
+            Snackbar.make(view, context.getString(R.string.snackbar_error), Snackbar.LENGTH_LONG).show();
+        }
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
