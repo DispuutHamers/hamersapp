@@ -56,7 +56,7 @@ public class SingleImageActivity extends AppCompatActivity {
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                if (mAttacher != null){
+                if (mAttacher != null) {
                     mAttacher.update();
                 }
             }

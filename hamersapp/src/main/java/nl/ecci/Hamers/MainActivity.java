@@ -51,7 +51,7 @@ import java.text.SimpleDateFormat;
 public class MainActivity extends AppCompatActivity {
     // URL
     public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-//    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
+    //    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
     //     Fragments
     public static final QuoteListFragment quoteListFragment = new QuoteListFragment();
     public static final UserFragment userFragment = new UserFragment();
