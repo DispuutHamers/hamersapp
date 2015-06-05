@@ -73,7 +73,7 @@ public class SingleBeerActivity extends AppCompatActivity {
         final String kind = extras.getString(Beer.BEER_KIND);
         final String url = extras.getString(Beer.BEER_URL);
         final String percentage = extras.getString(Beer.BEER_PERCENTAGE);
-        final String brewer = extras.getString(Beer.BEER_PERCENTAGE);
+        final String brewer = extras.getString(Beer.BEER_BREWER);
         final String country = extras.getString(Beer.BEER_COUNTRY);
         final String rating = extras.getString(Beer.BEER_RATING);
 
