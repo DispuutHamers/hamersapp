@@ -24,6 +24,7 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
     public static final String MOTIEURL = "/motions";
     public static final String REVIEWURL = "/review";
     public static final String SIGNUPURL = "/signup";
+    public static final String GCMURL = "/register";
     private final SharedPreferences prefs;
     private final String type;
     private final String urlParams;
@@ -70,7 +71,7 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
         if (result.equals("201") || result.equals("200")) {
             Activity activity = (Activity) context;
 
-            if (!(activity instanceof MainActivity)) {
+            if (!(activity instanceof MainActivity) && activity != null) {
                 activity.finish();
             }
 
@@ -98,14 +99,14 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
                 }
             }
 
-            if (view != null) {
+            if (view != null && context != null) {
                 Snackbar.make(view, context.getResources().getString(R.string.posted), Snackbar.LENGTH_SHORT).show();
-            } else if (parentView != null) {
+            } else if (parentView != null && context != null) {
                 Snackbar.make(parentView, context.getResources().getString(R.string.posted), Snackbar.LENGTH_SHORT).show();
-            } else {
+            } else if (context != null) {
                 Toast.makeText(context, context.getResources().getString(R.string.posted), Toast.LENGTH_SHORT).show();
             }
-        } else {
+        } else if (context != null){
             if (view != null) {
                 Snackbar.make(view, context.getResources().getString(R.string.not_posted), Snackbar.LENGTH_SHORT).show();
             } else if (parentView != null) {

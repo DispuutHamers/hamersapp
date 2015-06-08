@@ -24,6 +24,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.iid.InstanceID;
+import nl.ecci.Hamers.Helpers.SendPostRequest;
 import nl.ecci.Hamers.MainActivity;
 
 import java.io.IOException;
@@ -33,6 +34,7 @@ public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";
     private static final String[] TOPICS = {"global"};
+    public SharedPreferences sharedPreferences;
 
     public RegistrationIntentService() {
         super(TAG);
@@ -40,7 +42,7 @@ public class RegistrationIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         try {
             // In the (unlikely) event that multiple refresh operations occur simultaneously,
@@ -59,7 +61,6 @@ public class RegistrationIntentService extends IntentService {
                 // [END get_token]
                 Log.i(TAG, "GCM Registration Token: " + token);
 
-                // TODO: Implement this method to send any registration to your app's servers.
                 sendRegistrationToServer(token);
 
                 // Subscribe to topic channels
@@ -91,7 +92,8 @@ public class RegistrationIntentService extends IntentService {
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-        // Add custom implementation, as needed.
+        SendPostRequest req = new SendPostRequest(null, null, null, SendPostRequest.GCMURL, sharedPreferences, "device[device_key]=" + token);
+        req.execute();
     }
 
     /**
