@@ -1,10 +1,7 @@
 package nl.ecci.Hamers;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -13,6 +10,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -25,6 +23,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -42,6 +42,7 @@ import nl.ecci.Hamers.News.NewsFragment;
 import nl.ecci.Hamers.Quotes.NewQuoteFragment;
 import nl.ecci.Hamers.Quotes.QuoteListFragment;
 import nl.ecci.Hamers.Users.UserFragment;
+import nl.ecci.Hamers.gcm.RegistrationIntentService;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -64,6 +65,12 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout parentLayout;
     private DrawerLayout drawerLayout;
     private boolean backPressedOnce;
+
+    // GCM
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
+    public static final String REGISTRATION_COMPLETE = "registrationComplete";
 
     /**
      * Parse date
@@ -114,10 +121,31 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
 
         if (savedInstanceState == null) {
-            selectItem("Quotes");
+            selectItem(R.id.navigation_item_1);
         }
 
         configureDefaultImageLoader(this);
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                SharedPreferences prefs =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+                boolean sentToken = prefs
+                        .getBoolean(SENT_TOKEN_TO_SERVER, false);
+                if (sentToken) {
+                    System.out.println(getString(R.string.gcm_send_message));
+                } else {
+                    System.out.println(getString(R.string.token_error_message));
+                }
+            }
+        };
+
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
 
         hasApiKey();
     }
@@ -129,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                selectItem(menuItem.getTitle().toString());
+                selectItem(menuItem.getItemId());
                 menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
                 return true;
@@ -170,6 +198,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                System.out.println("This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Loads all the data on startup.
      * It starts with loading the users and afterwards it calls loaddata2, which downloads the other data.
      */
@@ -204,6 +252,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         alert.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(REGISTRATION_COMPLETE));
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
     }
 
     //Show a Snackbar with the supplied text and the supplied length
@@ -259,56 +320,56 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Swaps fragments in the quote_list_menu content view
      *
-     * @param title
+     * @param id
      */
-    private void selectItem(String title) {
+    private void selectItem(int id) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         hideSoftKeyboard();
-        switch (title) {
-            case "Quotes":
+        switch (id) {
+            case R.id.navigation_item_1:
                 transaction
                         .replace(R.id.content_frame, quoteListFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_1));
                 break;
 
-            case "Leden":
+            case R.id.navigation_item_2:
                 transaction
                         .replace(R.id.content_frame, userFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_2));
                 break;
 
-            case "Activiteiten":
+            case R.id.navigation_item_3:
                 transaction
                         .replace(R.id.content_frame, eventFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_3));
                 break;
 
-            case "Nieuws":
+            case R.id.navigation_item_4:
                 transaction
                         .replace(R.id.content_frame, newsFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_4));
                 break;
 
-            case "Bieren":
+            case R.id.navigation_item_5:
                 transaction
                         .replace(R.id.content_frame, beerFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_5));
                 break;
 
-            case "Moties":
+            case R.id.navigation_item_6:
                 transaction
                         .replace(R.id.content_frame, motionFragment)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_6));
                 break;
 
-            case "Instellingen":
+            case R.id.navigation_item_7:
                 transaction
                         .replace(R.id.content_frame, settingsFragment)
                         .commit();
