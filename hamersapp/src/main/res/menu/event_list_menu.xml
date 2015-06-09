@@ -3,7 +3,7 @@
     <group android:checkableBehavior="none">
         <item android:id="@id/scroll_top"
               android:title="@string/scroll_top"
-              android:icon="@drawable/ic_up"
+              android:icon="@drawable/ic_action_up"
               app:showAsAction="ifRoom"/>
     </group>
 </menu>
