@@ -1,9 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:hamers="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/event_search"
-          android:title="@string/action_search_event"
-          android:icon="@drawable/action_search"
-          hamers:showAsAction="ifRoom|withText"
-          android:visible="false"
-          android:actionViewClass="android.widget.SearchView"/>
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="none">
+        <item android:id="@id/scroll_top"
+              android:title="@string/scroll_top"
+              android:icon="@drawable/ic_up"
+              app:showAsAction="ifRoom"/>
+    </group>
 </menu>

@@ -31,6 +31,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     private EventsAdapter adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
+    private RecyclerView event_list;
 
     public EventFragment() {
     }
@@ -38,12 +39,14 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.event_fragment, container, false);
-        RecyclerView event_list = (RecyclerView) view.findViewById(R.id.events_recyclerview);
+        event_list = (RecyclerView) view.findViewById(R.id.events_recyclerview);
 
         parentLayout = (RelativeLayout) view.findViewById(R.id.event_parent);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         event_list.setLayoutManager(mLayoutManager);
+
+        setHasOptionsMenu(true);
 
         initSwiper(view, event_list, mLayoutManager);
 
@@ -113,6 +116,21 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         if (swipeView != null) {
             swipeView.setRefreshing(false);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.scroll_top:
+                scrollTop();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void scrollTop() {
+        event_list.smoothScrollToPosition(0);
     }
 
     @Override

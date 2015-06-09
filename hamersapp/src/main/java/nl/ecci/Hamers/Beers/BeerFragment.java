@@ -32,13 +32,14 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private BeerAdapter adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
+    private RecyclerView beer_list;
 
     public BeerFragment() {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.beer_fragment, container, false);
-        RecyclerView beer_list = (RecyclerView) view.findViewById(R.id.beer_recyclerview);
+        beer_list = (RecyclerView) view.findViewById(R.id.beer_recyclerview);
 
         parentLayout = (RelativeLayout) view.findViewById(R.id.beer_parent);
 
@@ -145,6 +146,9 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.scroll_top:
+                scrollTop();
+                return true;
             case R.id.sort_name:
                 sortByName();
                 return true;
@@ -154,6 +158,10 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             default:
                 return false;
         }
+    }
+
+    private void scrollTop() {
+        beer_list.smoothScrollToPosition(0);
     }
 
     private void sort() {

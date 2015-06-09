@@ -39,6 +39,7 @@
     <item name="sort_reviews" type="id"/>
 
     <!-- Beer sorting menu -->
+    <item name="scroll_top" type="id"/>
     <item name="sort_name" type="id"/>
     <item name="sort_rating" type="id"/>
 

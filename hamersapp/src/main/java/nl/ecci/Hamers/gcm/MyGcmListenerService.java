@@ -24,7 +24,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import com.google.android.gms.gcm.GcmListenerService;
 import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.R;
@@ -44,15 +43,10 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
-        Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
-
-        /**
-         * Production applications would usually process the message here.
-         * Eg: - Syncing with server.
-         *     - Store message in local database.
-         *     - Update UI.
-         */
+        System.out.println("-----------------------------------------");
+        System.out.println("From: " + from);
+        System.out.println("Message: " + message);
+        System.out.println("-----------------------------------------");
 
         /**
          * In some cases it may be useful to show a notification indicating to the user
