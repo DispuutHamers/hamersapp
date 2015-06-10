@@ -16,13 +16,16 @@ package nl.ecci.Hamers.gcm;
  * limitations under the License.
  */
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import com.google.android.gms.gcm.GcmListenerService;
 import nl.ecci.Hamers.MainActivity;
@@ -50,11 +53,12 @@ public class MyGcmListenerService extends GcmListenerService {
         System.out.println("Message: " + message);
         System.out.println("-----------------------------------------");
 
-        /**
-         * In some cases it may be useful to show a notification indicating to the user
-         * that a message was received.
-         */
-        sendNotification(title, message);
+        // Show notification
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean push = settings.getBoolean("pushPref", true);
+        if (push) {
+            sendNotification(title, message);
+        }
     }
     // [END receive_message]
 
@@ -70,6 +74,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(title)
