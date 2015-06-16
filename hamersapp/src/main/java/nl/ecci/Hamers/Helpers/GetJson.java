@@ -9,7 +9,7 @@ import nl.ecci.Hamers.Beers.BeerFragment;
 import nl.ecci.Hamers.Events.EventFragment;
 import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.News.NewsFragment;
-import nl.ecci.Hamers.Quotes.QuoteListFragment;
+import nl.ecci.Hamers.Quotes.QuoteFragment;
 import nl.ecci.Hamers.R;
 import nl.ecci.Hamers.Users.UserFragment;
 import org.json.JSONArray;
@@ -83,39 +83,39 @@ public class GetJson extends AsyncTask<String, String, String> {
                 if (result.equals("{}")) {
                     Toast.makeText(a, a.getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
                 } else {
-                    if (f instanceof QuoteListFragment) {
+                    if (f instanceof QuoteFragment) {
                         prefs.edit().putString(DataManager.QUOTEKEY, result).apply();
-                        MainActivity.quoteListFragment.populateList(prefs);
+                        MainActivity.QUOTE_FRAGMENT.populateList(prefs);
                     }
                     // User fragment
                     else if (f instanceof UserFragment) {
                         prefs.edit().putString(DataManager.USERKEY, result).apply();
-                        MainActivity.userFragment.populateList(prefs);
+                        MainActivity.USER_FRAGMENT.populateList(prefs);
                     }
                     // Event fragment
                     else if (f instanceof EventFragment) {
                         prefs.edit().putString(DataManager.EVENTKEY, result).apply();
-                        MainActivity.eventFragment.populateList(prefs);
+                        MainActivity.EVENT_FRAGMENT.populateList(prefs);
                     } else if (f instanceof NewsFragment) {
                         prefs.edit().putString(DataManager.NEWSKEY, result).apply();
-                        MainActivity.newsFragment.populateList(prefs);
+                        MainActivity.NEWS_FRAGMENT.populateList(prefs);
                     }
                     // Beer fragment
                     else if (f instanceof BeerFragment) {
                         prefs.edit().putString(DataManager.BEERKEY, result).apply();
                         GetJson g2 = new GetJson(a, null, REVIEWURL, prefs);
                         g2.execute();
-                        MainActivity.beerFragment.populateList(prefs);
+                        MainActivity.BEER_FRAGMENT.populateList(prefs);
                     }
                     // Quote
                     else if (typeURL.equals(QUOTEURL)) {
                         prefs.edit().putString(DataManager.QUOTEKEY, result).apply();
-                        MainActivity.quoteListFragment.populateList(prefs);
+                        MainActivity.QUOTE_FRAGMENT.populateList(prefs);
                     }
                     // Beer
                     else if (typeURL.equals(BEERURL)) {
                         prefs.edit().putString(DataManager.BEERKEY, result).apply();
-                        MainActivity.beerFragment.populateList(prefs);
+                        MainActivity.BEER_FRAGMENT.populateList(prefs);
                     }
                     // Review
                     else if (typeURL.equals(REVIEWURL)) {

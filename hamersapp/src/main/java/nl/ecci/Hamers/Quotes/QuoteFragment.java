@@ -7,9 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.melnykov.fab.FloatingActionButton;
@@ -26,22 +24,25 @@ import java.util.ArrayList;
 
 import static nl.ecci.Hamers.MainActivity.parseDate;
 
-public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public static RelativeLayout parentLayout;
     private final ArrayList<Quote> dataSet = new ArrayList<>();
     private QuotesAdapter adapter;
+    private RecyclerView quote_list;
     private SwipeRefreshLayout swipeView;
 
-    public QuoteListFragment() {
+    public QuoteFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.quote_list_fragment, container, false);
-        RecyclerView quote_list = (RecyclerView) view.findViewById(R.id.quotes_recyclerview);
+        quote_list = (RecyclerView) view.findViewById(R.id.quotes_recyclerview);
 
         parentLayout = (RelativeLayout) view.findViewById(R.id.quote_list_parent);
+
+        setHasOptionsMenu(true);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         quote_list.setLayoutManager(mLayoutManager);
@@ -128,5 +129,25 @@ public class QuoteListFragment extends Fragment implements SwipeRefreshLayout.On
         if (swipeView != null) {
             swipeView.setRefreshing(false);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.event_list_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.scroll_top:
+                scrollTop();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void scrollTop() {
+        quote_list.smoothScrollToPosition(0);
     }
 }

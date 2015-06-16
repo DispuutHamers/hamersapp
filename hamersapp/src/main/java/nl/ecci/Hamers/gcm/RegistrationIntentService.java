@@ -29,7 +29,6 @@ import nl.ecci.Hamers.MainActivity;
 
 import java.io.IOException;
 
-
 public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";

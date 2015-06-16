@@ -40,7 +40,7 @@ import nl.ecci.Hamers.Helpers.GetJson;
 import nl.ecci.Hamers.News.NewNewsActivity;
 import nl.ecci.Hamers.News.NewsFragment;
 import nl.ecci.Hamers.Quotes.NewQuoteFragment;
-import nl.ecci.Hamers.Quotes.QuoteListFragment;
+import nl.ecci.Hamers.Quotes.QuoteFragment;
 import nl.ecci.Hamers.Users.UserFragment;
 import nl.ecci.Hamers.gcm.RegistrationIntentService;
 
@@ -54,13 +54,13 @@ public class MainActivity extends AppCompatActivity {
     public static final String baseURL = "https://zondersikkel.nl/api/v1/";
     //    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
     //     Fragments
-    public static final QuoteListFragment quoteListFragment = new QuoteListFragment();
-    public static final UserFragment userFragment = new UserFragment();
-    public static final EventFragment eventFragment = new EventFragment();
-    public static final NewsFragment newsFragment = new NewsFragment();
-    public static final BeerFragment beerFragment = new BeerFragment();
-    private static final MotionFragment motionFragment = new MotionFragment();
-    private static final SettingsFragment settingsFragment = new SettingsFragment();
+    public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
+    public static final UserFragment USER_FRAGMENT = new UserFragment();
+    public static final EventFragment EVENT_FRAGMENT = new EventFragment();
+    public static final NewsFragment NEWS_FRAGMENT = new NewsFragment();
+    public static final BeerFragment BEER_FRAGMENT = new BeerFragment();
+    private static final MotionFragment MOTION_FRAGMENT = new MotionFragment();
+    private static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
 
     private LinearLayout parentLayout;
     private DrawerLayout drawerLayout;
@@ -281,16 +281,16 @@ public class MainActivity extends AppCompatActivity {
         if (auth) {
             //reload quotes
             if (prefs.getString(DataManager.QUOTEKEY, null) != null) {
-                quoteListFragment.populateList(prefs);
+                QUOTE_FRAGMENT.populateList(prefs);
             } else {
-                GetJson g = new GetJson(this, quoteListFragment, GetJson.QUOTEURL, prefs);
+                GetJson g = new GetJson(this, QUOTE_FRAGMENT, GetJson.QUOTEURL, prefs);
                 g.execute();
             }
             //reload Events
             if (prefs.getString(DataManager.EVENTKEY, null) != null) {
-                eventFragment.populateList(prefs);
+                EVENT_FRAGMENT.populateList(prefs);
             } else {
-                GetJson g = new GetJson(this, eventFragment, GetJson.EVENTURL, prefs);
+                GetJson g = new GetJson(this, EVENT_FRAGMENT, GetJson.EVENTURL, prefs);
                 g.execute();
             }
             //reload Reviews
@@ -300,16 +300,16 @@ public class MainActivity extends AppCompatActivity {
             }
             //reload News
             if (prefs.getString(DataManager.NEWSKEY, null) != null) {
-                newsFragment.populateList(prefs);
+                NEWS_FRAGMENT.populateList(prefs);
             } else {
-                GetJson g = new GetJson(this, newsFragment, GetJson.NEWSURL, prefs);
+                GetJson g = new GetJson(this, NEWS_FRAGMENT, GetJson.NEWSURL, prefs);
                 g.execute();
             }
             //reload Beers
             if (prefs.getString(DataManager.BEERKEY, null) != null) {
-                beerFragment.populateList(prefs);
+                BEER_FRAGMENT.populateList(prefs);
             } else {
-                GetJson g = new GetJson(this, beerFragment, GetJson.BEERURL, prefs);
+                GetJson g = new GetJson(this, BEER_FRAGMENT, GetJson.BEERURL, prefs);
                 g.execute();
             }
         } else {
@@ -329,49 +329,49 @@ public class MainActivity extends AppCompatActivity {
         switch (id) {
             case R.id.navigation_item_1:
                 transaction
-                        .replace(R.id.content_frame, quoteListFragment)
+                        .replace(R.id.content_frame, QUOTE_FRAGMENT)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_1));
                 break;
 
             case R.id.navigation_item_2:
                 transaction
-                        .replace(R.id.content_frame, userFragment)
+                        .replace(R.id.content_frame, USER_FRAGMENT)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_2));
                 break;
 
             case R.id.navigation_item_3:
                 transaction
-                        .replace(R.id.content_frame, eventFragment)
+                        .replace(R.id.content_frame, EVENT_FRAGMENT)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_3));
                 break;
 
             case R.id.navigation_item_4:
                 transaction
-                        .replace(R.id.content_frame, newsFragment)
+                        .replace(R.id.content_frame, NEWS_FRAGMENT)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_4));
                 break;
 
             case R.id.navigation_item_5:
                 transaction
-                        .replace(R.id.content_frame, beerFragment)
+                        .replace(R.id.content_frame, BEER_FRAGMENT)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_5));
                 break;
 
             case R.id.navigation_item_6:
                 transaction
-                        .replace(R.id.content_frame, motionFragment)
+                        .replace(R.id.content_frame, MOTION_FRAGMENT)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_6));
                 break;
 
             case R.id.navigation_item_7:
                 transaction
-                        .replace(R.id.content_frame, settingsFragment)
+                        .replace(R.id.content_frame, SETTINGS_FRAGMENT)
                         .commit();
                 setTitle(getResources().getString(R.string.navigation_item_7));
                 break;

@@ -77,18 +77,18 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
 
             switch (type) {
                 case QUOTEURL: {
-                    GetJson g = new GetJson((Activity) context, MainActivity.quoteListFragment, GetJson.QUOTEURL, prefs);
+                    GetJson g = new GetJson((Activity) context, MainActivity.QUOTE_FRAGMENT, GetJson.QUOTEURL, prefs);
                     g.execute();
                     break;
                 }
                 case EVENTURL:
                 case SIGNUPURL: {
-                    GetJson g = new GetJson((Activity) context, MainActivity.eventFragment, GetJson.EVENTURL, prefs);
+                    GetJson g = new GetJson((Activity) context, MainActivity.EVENT_FRAGMENT, GetJson.EVENTURL, prefs);
                     g.execute();
                     break;
                 }
                 case BEERURL: {
-                    GetJson g = new GetJson((Activity) context, MainActivity.beerFragment, GetJson.BEERURL, prefs);
+                    GetJson g = new GetJson((Activity) context, MainActivity.BEER_FRAGMENT, GetJson.BEERURL, prefs);
                     g.execute();
                     break;
                 }
