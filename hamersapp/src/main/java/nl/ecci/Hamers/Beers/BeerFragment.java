@@ -4,10 +4,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.*;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -27,18 +29,43 @@ import java.util.Comparator;
 
 public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    private static final Comparator<Beer> nameComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            String name1 = beer1.getName();
+            String name2 = beer2.getName();
+
+            return name1.compareToIgnoreCase(name2);
+        }
+    };
+    private static final Comparator<Beer> ratingComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            String rating1 = beer1.getRating();
+            String rating2 = beer2.getRating();
+
+            if (rating1.equals("nog niet bekend")) {
+                rating1 = "-1";
+            } else if (rating2.equals("nog niet bekend")) {
+                rating2 = "-1";
+            }
+            return rating2.compareToIgnoreCase(rating1);
+        }
+    };
     public static RelativeLayout parentLayout;
     private final ArrayList<Beer> listItems = new ArrayList<>();
+    public View view;
     private BeerAdapter adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
     private RecyclerView beer_list;
+    private String grid_currentQuery = null;
 
     public BeerFragment() {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.beer_fragment, container, false);
+        view = inflater.inflate(R.layout.beer_fragment, container, false);
         beer_list = (RecyclerView) view.findViewById(R.id.beer_recyclerview);
 
         parentLayout = (RelativeLayout) view.findViewById(R.id.beer_parent);
@@ -141,6 +168,21 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.beer_list_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.beer_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setQueryHint(getString(R.string.search_hint));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s.toLowerCase());
+                return false;
+            }
+        });
     }
 
     @Override
@@ -192,28 +234,4 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         super.onDestroy();
         AnimateFirstDisplayListener.displayedImages.clear();
     }
-
-    private static final Comparator<Beer> nameComparator = new Comparator<Beer>() {
-        @Override
-        public int compare(Beer beer1, Beer beer2) {
-            String name1 = beer1.getName();
-            String name2 = beer2.getName();
-
-            return name1.compareToIgnoreCase(name2);
-        }
-    };
-    private static final Comparator<Beer> ratingComparator = new Comparator<Beer>() {
-        @Override
-        public int compare(Beer beer1, Beer beer2) {
-            String rating1 = beer1.getRating();
-            String rating2 = beer2.getRating();
-
-            if (rating1.equals("nog niet bekend")) {
-                rating1 = "-1";
-            } else if (rating2.equals("nog niet bekend")) {
-                rating2 = "-1";
-            }
-            return rating2.compareToIgnoreCase(rating1);
-        }
-    };
 }

@@ -13,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -29,7 +31,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
+public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implements Filterable {
 
     private static ImageLoadingListener animateFirstListener;
     private final SharedPreferences prefs;
@@ -38,9 +40,11 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
     private final ArrayList<Beer> dataSet;
     private final ImageLoader imageLoader;
     private final DisplayImageOptions options;
+    private ArrayList<Beer> filteredDataSet;
 
     public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context, View parentLayout) {
         this.dataSet = itemsArrayList;
+        filteredDataSet = itemsArrayList;
         this.context = context;
         this.parentLayout = parentLayout;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -70,7 +74,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
             @Override
             public void onClick(View v1) {
                 try {
-                    JSONObject b = DataManager.getBeer(prefs, dataSet.get(vh.getAdapterPosition()).getName());
+                    JSONObject b = DataManager.getBeer(prefs, filteredDataSet.get(vh.getAdapterPosition()).getName());
                     Activity activity = (Activity) context;
                     String imageTransitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, imageTransitionName);
@@ -95,7 +99,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 try {
-                    JSONObject b = DataManager.getBeer(prefs, dataSet.get(vh.getAdapterPosition()).getName());
+                    JSONObject b = DataManager.getBeer(prefs, filteredDataSet.get(vh.getAdapterPosition()).getName());
                     Activity activity = (Activity) context;
                     String transitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, transitionName);
@@ -121,13 +125,13 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.title.setText(dataSet.get(position).getName());
-        holder.soort.setText("Soort: " + dataSet.get(position).getSoort());
-        holder.brewer.setText("Brouwer: " + dataSet.get(position).getBrewer());
-        holder.rating.setText("Cijfer: " + dataSet.get(position).getRating());
-        holder.info.setText((dataSet.get(position).getCountry() + " - " + dataSet.get(position).getPercentage()));
+        holder.title.setText(filteredDataSet.get(position).getName());
+        holder.soort.setText("Soort: " + filteredDataSet.get(position).getSoort());
+        holder.brewer.setText("Brouwer: " + filteredDataSet.get(position).getBrewer());
+        holder.rating.setText("Cijfer: " + filteredDataSet.get(position).getRating());
+        holder.info.setText((filteredDataSet.get(position).getCountry() + " - " + filteredDataSet.get(position).getPercentage()));
 
-        String imageURL = dataSet.get(position).getImageURL();
+        String imageURL = filteredDataSet.get(position).getImageURL();
 
         if (holder.picture.getTag() == null || !holder.picture.getTag().equals(imageURL) && !imageURL.equals(null)) {
 
@@ -141,7 +145,43 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return dataSet.size();
+        return filteredDataSet.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                FilterResults results = new FilterResults();
+
+                //If there's nothing to filter on, return the original data for your list
+                if (charSequence == null || charSequence.length() == 0) {
+                    results.values = dataSet;
+                    results.count = dataSet.size();
+                } else {
+                    ArrayList<Beer> filterResultsData = new ArrayList<>();
+                    for (Beer beer : dataSet) {
+                        if (beer.getName().toLowerCase().contains(charSequence) || beer.getBrewer().toLowerCase().contains(charSequence)
+                                || beer.getBrewer().toLowerCase().contains(charSequence) || beer.getPercentage().toLowerCase().contains(charSequence)
+                                || beer.getSoort().toLowerCase().contains(charSequence))
+                        {
+                            filterResultsData.add(beer);
+                        }
+                    }
+
+                    results.values = filterResultsData;
+                    results.count = filterResultsData.size();
+                }
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                filteredDataSet = (ArrayList<Beer>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

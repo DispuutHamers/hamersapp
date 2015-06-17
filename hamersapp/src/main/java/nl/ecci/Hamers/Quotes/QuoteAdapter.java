@@ -19,7 +19,7 @@ import nl.ecci.Hamers.R;
 
 import java.util.ArrayList;
 
-public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder> {
+public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> {
 
     private static AnimateFirstDisplayListener animateFirstListener;
     private final ArrayList<Quote> dataSet;
@@ -27,7 +27,7 @@ public class QuotesAdapter extends RecyclerView.Adapter<QuotesAdapter.ViewHolder
     private final ImageLoader imageLoader;
     private final DisplayImageOptions options;
 
-    public QuotesAdapter(Context context, ArrayList<Quote> itemsArrayList) {
+    public QuoteAdapter(Context context, ArrayList<Quote> itemsArrayList) {
         this.dataSet = itemsArrayList;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
 

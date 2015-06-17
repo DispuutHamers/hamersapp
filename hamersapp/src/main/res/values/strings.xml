@@ -184,4 +184,7 @@
         running the sample again.</string>
 
     <string name="scroll_top">Naar top</string>
+
+    <string name="search_title">Zoeken</string>
+    <string name="search_hint">Zoek…</string>
 </resources>

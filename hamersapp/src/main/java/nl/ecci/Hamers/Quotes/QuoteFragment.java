@@ -28,7 +28,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     public static RelativeLayout parentLayout;
     private final ArrayList<Quote> dataSet = new ArrayList<>();
-    private QuotesAdapter adapter;
+    private QuoteAdapter adapter;
     private RecyclerView quote_list;
     private SwipeRefreshLayout swipeView;
 
@@ -47,7 +47,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         quote_list.setLayoutManager(mLayoutManager);
 
-        adapter = new QuotesAdapter(this.getActivity(), dataSet);
+        adapter = new QuoteAdapter(this.getActivity(), dataSet);
         quote_list.setAdapter(adapter);
         quote_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
