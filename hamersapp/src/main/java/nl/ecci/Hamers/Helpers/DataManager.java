@@ -26,9 +26,9 @@ public final class DataManager {
         try {
             if ((users = getJsonArray(prefs, USERKEY)) != null) {
                 for (int i = 0; i < users.length(); i++) {
-                    JSONObject temp = users.getJSONObject(i);
-                    if (temp.getInt("id") == id) {
-                        return temp;
+                    JSONObject user = users.getJSONObject(i);
+                    if (user.getInt("id") == id) {
+                        return user;
                     }
                 }
             }
@@ -117,6 +117,39 @@ public final class DataManager {
                 for (int i = 0; i < users.length(); i++) {
                     if (users.getJSONObject(i).getInt("id") == id) {
                         result = users.getJSONObject(i).getString("email");
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static String UserIDtoUserName(SharedPreferences prefs, int id) {
+        String result = null;
+        JSONArray users;
+        try {
+            if ((users = getJsonArray(prefs, USERKEY)) != null) {
+                for (int i = 0; i < users.length(); i++) {
+                    if (users.getJSONObject(i).getInt("id") == id) {
+                        result = users.getJSONObject(i).getString("name");
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public static String BeerIDtoBeerName(SharedPreferences prefs, int id) {
+        String result = null;
+        JSONArray users;
+        try {
+            if ((users = getJsonArray(prefs, BEERKEY)) != null) {
+                for (int i = 0; i < users.length(); i++) {
+                    if (users.getJSONObject(i).getInt("id") == id) {
+                        result = users.getJSONObject(i).getString("name");
                     }
                 }
             }

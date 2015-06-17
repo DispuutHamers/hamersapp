@@ -2,13 +2,13 @@ package nl.ecci.Hamers.gcm;
 
 /**
  * Copyright 2015 Google Inc. All Rights Reserved.
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,7 +16,6 @@ package nl.ecci.Hamers.gcm;
  * limitations under the License.
  */
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -28,12 +27,34 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import com.google.android.gms.gcm.GcmListenerService;
+import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.R;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Set;
 
 public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
+    // Quote
+    private final String QUOTETYPE = "quote";
+    private final String QUOTEBODY = "text";
+
+    // Beer
+    private final String BEERTYPE = "beer";
+    private final String BEERNAME = "name";
+    // Review
+    private final String REVIEWTYPE = "review";
+    private final String REVIEWBEER = "beer_id";
+    private final String REVIEWDESCRIPTION = "description";
+    private final String REVIEWRATING = "rating";
+
+    // Common
+    private final String USER = "user_id";
+
+    private SharedPreferences prefs;
 
     /**
      * Called when message is received.
@@ -45,13 +66,77 @@ public class MyGcmListenerService extends GcmListenerService {
     // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        String title = data.getString("title");
-        String message = data.getString("message");
-        System.out.println("-----------------------------------------");
-        System.out.println("From: " + from);
-        System.out.println("Title: " + title);
-        System.out.println("Message: " + message);
-        System.out.println("-----------------------------------------");
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String title = null;
+        String message = null;
+
+        JSONObject object = new JSONObject();
+        Set<String> keys = data.keySet();
+        for (String key : keys) {
+            try {
+                object.put(key, data.get(key));
+            } catch (JSONException ignored) {
+            }
+        }
+
+        System.out.println("-------------------------------------------" + object.toString());
+
+        JSONObject quote;
+        JSONObject beer;
+        JSONObject review = null;
+
+        // QUOTE
+        try {
+            quote = new JSONObject(object.getString(QUOTETYPE));
+            if (quote.length() != 0) {
+                title = quote.getString(QUOTEBODY);
+
+                String userName = null;
+                userName = DataManager.UserIDtoUserName(prefs, Integer.valueOf(quote.getString(USER)));
+                if (userName != null) {
+                    message = "- " + userName;
+                } else {
+                    message = "- user";
+                }
+            }
+        } catch (JSONException | NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        // BEER
+        try {
+            beer = new JSONObject(object.getString(BEERTYPE));
+            if (beer.length() != 0) {
+                title = beer.getString(BEERNAME);
+                message = "Is net toegevoegd aan de database!";
+
+            }
+        } catch (JSONException | NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        // Review
+        try {
+            review = new JSONObject(object.getString(REVIEWTYPE));
+            if (review.length() != 0) {
+
+                String userName = null;
+                String beerName = null;
+                userName = DataManager.UserIDtoUserName(prefs, Integer.valueOf(review.getString(USER)));
+                beerName = DataManager.BeerIDtoBeerName(prefs, Integer.valueOf(review.getString(REVIEWBEER)));
+                if (userName != null && beerName != null) {
+                    title = userName + " / " + beerName;
+                } else {
+                    title = "Something went wrong";
+                }
+
+                message = review.getString(REVIEWRATING) + " - " + review.getString(REVIEWDESCRIPTION);
+
+            }
+        } catch (JSONException | NullPointerException e) {
+            e.printStackTrace();
+        }
 
         // Show notification
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
@@ -73,7 +158,7 @@ public class MyGcmListenerService extends GcmListenerService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_launcher)
