@@ -22,7 +22,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -37,12 +39,16 @@ import nl.ecci.Hamers.Events.EventFragment;
 import nl.ecci.Hamers.Events.NewEventActivity;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.GetJson;
+import nl.ecci.Hamers.Helpers.Utils;
 import nl.ecci.Hamers.News.NewNewsActivity;
 import nl.ecci.Hamers.News.NewsFragment;
 import nl.ecci.Hamers.Quotes.NewQuoteFragment;
 import nl.ecci.Hamers.Quotes.QuoteFragment;
 import nl.ecci.Hamers.Users.UserFragment;
 import nl.ecci.Hamers.gcm.RegistrationIntentService;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -59,18 +65,19 @@ public class MainActivity extends AppCompatActivity {
     public static final EventFragment EVENT_FRAGMENT = new EventFragment();
     public static final NewsFragment NEWS_FRAGMENT = new NewsFragment();
     public static final BeerFragment BEER_FRAGMENT = new BeerFragment();
+    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
+    public static final String REGISTRATION_COMPLETE = "registrationComplete";
     private static final MotionFragment MOTION_FRAGMENT = new MotionFragment();
     private static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
+    private static SharedPreferences prefs;
 
     private LinearLayout parentLayout;
     private DrawerLayout drawerLayout;
     private boolean backPressedOnce;
-
     // GCM
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
-    public static final String REGISTRATION_COMPLETE = "registrationComplete";
 
     /**
      * Parse date
@@ -125,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         configureDefaultImageLoader(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -146,6 +154,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         }
+
+        getUserInformation();
 
         hasApiKey();
     }
@@ -222,7 +232,6 @@ public class MainActivity extends AppCompatActivity {
      * It starts with loading the users and afterwards it calls loaddata2, which downloads the other data.
      */
     public void hasApiKey() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (prefs.getString("apikey", null) == null) {
             showApiKeyDialog();
         }
@@ -312,6 +321,7 @@ public class MainActivity extends AppCompatActivity {
                 GetJson g = new GetJson(this, BEER_FRAGMENT, GetJson.BEERURL, prefs);
                 g.execute();
             }
+            getUserInformation();
         } else {
             showApiKeyDialog();
         }
@@ -454,5 +464,31 @@ public class MainActivity extends AppCompatActivity {
                 backPressedOnce = false;
             }
         }, 2000);
+    }
+
+    public void getUserInformation() {
+        JSONArray whoami = DataManager.getJsonArray(prefs, DataManager.WHOAMIKEY);
+
+        try {
+            if (whoami != null) {
+                JSONObject user = whoami.getJSONObject(0);
+
+                TextView userName = (TextView) findViewById(R.id.header_user_name);
+                TextView userEmail = (TextView) findViewById(R.id.header_user_email);
+                ImageView userImage = (ImageView) findViewById(R.id.header_user_image);
+
+                userName.setText(user.getString("name"));
+                userEmail.setText(user.getString("email"));
+
+                // Image
+                String url = "http://gravatar.com/avatar/" + Utils.md5Hex(user.getString("email")) + "?s=200";
+                ImageLoader.getInstance().displayImage(url, userImage);
+            } else {
+                GetJson g = new GetJson(this, null, GetJson.WHOAMIURL, PreferenceManager.getDefaultSharedPreferences(this));
+                g.execute();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

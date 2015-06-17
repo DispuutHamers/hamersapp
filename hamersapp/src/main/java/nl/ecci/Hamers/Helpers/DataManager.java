@@ -18,6 +18,7 @@ public final class DataManager {
     public static final String BEERKEY = "beerData";
     public static final String REVIEWKEY = "reviewdata";
     public static final String APIKEYKEY = "apikey";
+    public static final String WHOAMIKEY = "whoamikey";
     public static final String AUTHENTICATED = "authenticated";
 
     public static JSONObject getUser(SharedPreferences prefs, int id) {

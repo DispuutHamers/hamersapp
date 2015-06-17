@@ -28,6 +28,7 @@ public class GetJson extends AsyncTask<String, String, String> {
     public static final String NEWSURL = "/news.json";
     public static final String BEERURL = "/beer.json";
     public static final String REVIEWURL = "/review.json";
+    public static final String WHOAMIURL = "/whoami.json";
     private static final boolean DEBUG = false;
     private final Fragment f;
     private final String typeURL;
@@ -122,6 +123,10 @@ public class GetJson extends AsyncTask<String, String, String> {
                         prefs.edit().putString(DataManager.REVIEWKEY, result).apply();
                         GetJson g = new GetJson(a, f, BEERURL, prefs);
                         g.execute();
+                    }
+                    // WHOAMI
+                    else if (typeURL.equals(WHOAMIURL)) {
+                        prefs.edit().putString(DataManager.WHOAMIKEY, result).apply();
                     }
                 }
             } catch (JSONException e) {
