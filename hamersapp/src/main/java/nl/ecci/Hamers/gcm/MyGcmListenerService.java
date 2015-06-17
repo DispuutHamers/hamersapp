@@ -42,9 +42,15 @@ public class MyGcmListenerService extends GcmListenerService {
     private final String QUOTETYPE = "quote";
     private final String QUOTEBODY = "text";
 
+    // Event
+    private final String EVENTTYPE = "event";
+    private final String EVENTTITLE = "title";
+    private final String EVENTDESCRIPTION = "beschrijving";
+
     // Beer
     private final String BEERTYPE = "beer";
     private final String BEERNAME = "name";
+
     // Review
     private final String REVIEWTYPE = "review";
     private final String REVIEWBEER = "beer_id";
@@ -83,8 +89,9 @@ public class MyGcmListenerService extends GcmListenerService {
         System.out.println("-------------------------------------------" + object.toString());
 
         JSONObject quote;
+        JSONObject event;
         JSONObject beer;
-        JSONObject review = null;
+        JSONObject review;
 
         // QUOTE
         try {
@@ -99,6 +106,18 @@ public class MyGcmListenerService extends GcmListenerService {
                 } else {
                     message = "- user";
                 }
+            }
+        } catch (JSONException | NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        // EVENT
+        try {
+            event = new JSONObject(object.getString(EVENTTYPE));
+            if (event.length() != 0) {
+                title = event.getString(EVENTTITLE);
+                message = event.getString(EVENTDESCRIPTION);
+
             }
         } catch (JSONException | NullPointerException e) {
             e.printStackTrace();
