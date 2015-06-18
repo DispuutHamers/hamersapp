@@ -1,5 +1,6 @@
 package nl.ecci.Hamers.Events;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
 import nl.ecci.Hamers.R;
 
@@ -22,6 +24,7 @@ public class SingleEventActivity extends AppCompatActivity {
 
     private int id;
     private LinearLayout parentLayout;
+    private SharedPreferences prefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public class SingleEventActivity extends AppCompatActivity {
         this.setContentView(R.layout.single_event);
 
         parentLayout = (LinearLayout) findViewById(R.id.single_event_parent);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,8 +45,8 @@ public class SingleEventActivity extends AppCompatActivity {
 
         ScrollView scrollView = (ScrollView) findViewById(R.id.single_event_scrollview);
         LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
-        // Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
-        // Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
+         Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
+         Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
 
         TextView titleTV = (TextView) findViewById(R.id.event_title);
         TextView beschrijvingTV = (TextView) findViewById(R.id.event_beschrijving);
@@ -100,10 +104,22 @@ public class SingleEventActivity extends AppCompatActivity {
         beschrijvingTV.setText(beschrijving);
         dateTV.setText(appDatum);
 
-        if (!location.equals("null")) {
+        if (!location.equals("null") && !location.equals("")) {
             locationTV.setText(location);
         } else {
             locationTV.setVisibility(View.GONE);
+        }
+
+        String userName = DataManager.getUserName(prefs);
+        for (int i = 0; i < aanwezigItems.size(); i++) {
+            if (aanwezigItems.get(i).equals(userName)) {
+                aanwezigButton.setVisibility(View.GONE);
+            }
+        }
+        for (int i = 0; i < afwezigItems.size(); i++) {
+            if (afwezigItems.get(i).equals(userName)) {
+                afwezigButton.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -126,7 +142,7 @@ public class SingleEventActivity extends AppCompatActivity {
     }
 
     private void postSignup(int eventid, String status) {
-        SendPostRequest req = new SendPostRequest(this, null, EventFragment.parentLayout, SendPostRequest.SIGNUPURL, PreferenceManager.getDefaultSharedPreferences(this), "signup[event_id]=" + eventid + "&signup[status]=" + status);
+        SendPostRequest req = new SendPostRequest(this, null, EventFragment.parentLayout, SendPostRequest.SIGNUPURL, prefs, "signup[event_id]=" + eventid + "&signup[status]=" + status);
         req.execute();
 
         this.finish();

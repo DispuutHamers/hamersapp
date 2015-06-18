@@ -142,6 +142,7 @@ public final class DataManager {
         }
         return result;
     }
+
     public static String BeerIDtoBeerName(SharedPreferences prefs, int id) {
         String result = null;
         JSONArray users;
@@ -157,5 +158,22 @@ public final class DataManager {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static int getUserID(SharedPreferences prefs) {
+        int result = 0;
+        JSONArray whoami = DataManager.getJsonArray(prefs, DataManager.WHOAMIKEY);
+        try {
+            if (whoami != null) {
+                result = whoami.getJSONObject(0).getInt("id");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static String getUserName(SharedPreferences prefs) {
+        return UserIDtoUserName(prefs, getUserID(prefs));
     }
 }

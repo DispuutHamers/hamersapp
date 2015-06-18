@@ -103,7 +103,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     Date date = parseDate2(temp.getString("date"));
                     Date end_time = parseDate2(temp.getString("end_time"));
 
-                    Event event = new Event(temp.getInt("id"), temp.getString("title"), temp.getString("beschrijving"), temp.getString("location"), date, end_time);
+                    Event event = new Event(temp.getInt("id"), temp.getString("title"), temp.getString("beschrijving"), temp.getString("location"), date, end_time, temp.getJSONArray("signups"));
                     listItems.add(event);
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();

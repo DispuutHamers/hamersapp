@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.R;
@@ -98,6 +99,41 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             card.setCardBackgroundColor(Color.WHITE);
         }
 
+        if (!dataSet.get(position).getLocation().equals("null") && !dataSet.get(position).getLocation().equals("")) {
+            holder.location.setText(dataSet.get(position).getLocation());
+        } else {
+            holder.location.setVisibility(View.GONE);
+        }
+
+        try {
+            JSONArray signups = dataSet.get(position).getSignups();
+            int userID = DataManager.getUserID(prefs);
+            Boolean aanwezig = null;
+            for (int i = 0; i < signups.length(); i++) {
+                JSONObject signup = signups.getJSONObject(i);
+
+                if (signup.getInt("user_id") == userID) {
+                    if (signup.getBoolean("status")) {
+                        aanwezig = true;
+                    } else {
+                        aanwezig = false;
+                    }
+                }
+            }
+
+            if (aanwezig != null) {
+                if (aanwezig) {
+                    holder.thumbs.setImageResource(R.drawable.ic_thumbs_up);
+                } else {
+                    holder.thumbs.setImageResource(R.drawable.ic_thumbs_down);
+                }
+            } else {
+                holder.thumbs.setImageResource(R.drawable.ic_questionmark);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm");
         holder.date.setText(appDF.format(date));
     }
@@ -124,6 +160,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         public final TextView title;
         public final TextView beschrijving;
         public final TextView date;
+        public final TextView location;
+        public final ImageView thumbs;
 
         public ViewHolder(View view) {
             super(view);
@@ -132,6 +170,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             title = (TextView) view.findViewById(R.id.event_title);
             beschrijving = (TextView) view.findViewById(R.id.event_beschrijving);
             date = (TextView) view.findViewById(R.id.event_date);
+            location = (TextView) view.findViewById(R.id.event_location);
+            thumbs = (ImageView) view.findViewById(R.id.thumbs);
         }
     }
 }
