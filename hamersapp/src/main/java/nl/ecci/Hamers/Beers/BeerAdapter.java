@@ -16,11 +16,9 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import nl.ecci.Hamers.Helpers.AnimateFirstDisplayListener;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.SingleImageActivity;
@@ -44,14 +42,16 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     private final ImageLoader imageLoader;
     private final DisplayImageOptions options;
     private ArrayList<Beer> filteredDataSet;
+    private int userID;
     private ProgressBar progressBar;
 
     public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context, View view, View parentLayout) {
         this.dataSet = itemsArrayList;
-        filteredDataSet = itemsArrayList;
+        this.filteredDataSet = itemsArrayList;
         this.context = context;
         this.parentLayout = parentLayout;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        userID = getUserID(prefs);
 
         // Universal Image Loader
         imageLoader = ImageLoader.getInstance();
@@ -139,44 +139,25 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         String imageURL = filteredDataSet.get(position).getImageURL();
 
         if (holder.picture.getTag() == null || !holder.picture.getTag().equals(imageURL) && !imageURL.equals(null)) {
-
-            //we only load image if prev. URL and current URL do not match, or tag is null
             ImageAware imageAware = new ImageViewAware(holder.picture, false);
             imageLoader.displayImage(imageURL, imageAware, options, animateFirstListener);
             holder.picture.setTag(imageURL);
         }
 
         try {
-            JSONArray signups = getReviews(position);
-            int userID = DataManager.getUserID(prefs);
-            Boolean lekker = null;
-            for (int i = 0; i < signups.length(); i++) {
-                JSONObject signup = signups.getJSONObject(i);
-
-                if (signup.getInt("user_id") == userID) {
-                    if (signup.getBoolean("status")) {
-                        lekker = true;
-                    } else {
-                        lekker = false;
-                    }
-                }
-            }
-
-            if (lekker != null) {
-                if (lekker) {
-                    holder.thumbs.setImageResource(R.drawable.ic_thumbs_up);
-                } else {
-                    holder.thumbs.setImageResource(R.drawable.ic_thumbs_down);
-                }
-            } else {
+            int rating = getRating(filteredDataSet.get(position).getId());
+            if (rating >= 5) {
+                holder.thumbs.setImageResource(R.drawable.ic_thumbs_up);
+            } else if (rating == 0) {
                 holder.thumbs.setImageResource(R.drawable.ic_questionmark);
+            } else {
+                holder.thumbs.setImageResource(R.drawable.ic_thumbs_down);
             }
-        } catch (JSONException | NullPointerException e) {
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return filteredDataSet.size();
@@ -217,24 +198,21 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         };
     }
 
-    private JSONArray getReviews(int position) {
-        JSONArray result = null;
+    private int getRating(int id) {
+        int rating = 0;
         JSONArray reviews;
         try {
             if ((reviews = getJsonArray(prefs, DataManager.REVIEWKEY)) != null) {
                 for (int i = 0; i < reviews.length(); i++) {
                     JSONObject review = reviews.getJSONObject(i);
-                    if (review.getInt("beer_id") == dataSet.get(position).getId()) {
-                        if (review.getInt("user_id") == getUserID(prefs)) {
-                            result.put(review);
-                        }
+                    if (review.getInt("beer_id") == id && review.getInt("user_id") == userID) {
+                        rating = review.getInt("rating");
                     }
                 }
             }
-
-        } catch (JSONException | NullPointerException e) {
+        } catch (JSONException | NullPointerException ignored) {
         }
-        return result;
+        return rating;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
