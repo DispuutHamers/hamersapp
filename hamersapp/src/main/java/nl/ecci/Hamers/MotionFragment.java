@@ -12,7 +12,8 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
 
-import static android.text.Html.escapeHtml;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 public class MotionFragment extends Fragment {
 
@@ -61,14 +62,17 @@ public class MotionFragment extends Fragment {
     }
 
     private void postMotion() {
-        EditText motion_subject = (EditText) getActivity().findViewById(R.id.motion_subject);
-        EditText motion_content = (EditText) getActivity().findViewById(R.id.motion_content);
+        try {
+            EditText motion_subject = (EditText) getActivity().findViewById(R.id.motion_subject);
+            EditText motion_content = (EditText) getActivity().findViewById(R.id.motion_content);
 
-        String subject = escapeHtml(motion_subject.getText().toString());
-        String content = escapeHtml(motion_content.getText().toString());
+            String subject = URLEncoder.encode(motion_subject.getText().toString(), "UTF-8");
+            String content = URLEncoder.encode(motion_content.getText().toString(), "UTF-8");
 
-        String arguments = "motion[motion_type]=" + type + "&motion[subject]=" + subject + "&motion[content]=" + content;
-        SendPostRequest req = new SendPostRequest(this.getActivity(), parentLayout, null, SendPostRequest.MOTIEURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), arguments);
-        req.execute();
+            String arguments = "motion[motion_type]=" + type + "&motion[subject]=" + subject + "&motion[content]=" + content;
+            SendPostRequest req = new SendPostRequest(this.getActivity(), parentLayout, null, SendPostRequest.MOTIEURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), arguments);
+            req.execute();
+        } catch (UnsupportedEncodingException e) {
+        }
     }
 }
