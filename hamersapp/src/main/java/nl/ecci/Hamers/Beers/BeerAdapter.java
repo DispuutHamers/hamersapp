@@ -25,10 +25,14 @@ import nl.ecci.Hamers.Helpers.AnimateFirstDisplayListener;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.SingleImageActivity;
 import nl.ecci.Hamers.R;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import static nl.ecci.Hamers.Helpers.DataManager.getJsonArray;
+import static nl.ecci.Hamers.Helpers.DataManager.getUserID;
 
 public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implements Filterable {
 
@@ -141,6 +145,35 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             imageLoader.displayImage(imageURL, imageAware, options, animateFirstListener);
             holder.picture.setTag(imageURL);
         }
+
+        try {
+            JSONArray signups = getReviews(position);
+            int userID = DataManager.getUserID(prefs);
+            Boolean lekker = null;
+            for (int i = 0; i < signups.length(); i++) {
+                JSONObject signup = signups.getJSONObject(i);
+
+                if (signup.getInt("user_id") == userID) {
+                    if (signup.getBoolean("status")) {
+                        lekker = true;
+                    } else {
+                        lekker = false;
+                    }
+                }
+            }
+
+            if (lekker != null) {
+                if (lekker) {
+                    holder.thumbs.setImageResource(R.drawable.ic_thumbs_up);
+                } else {
+                    holder.thumbs.setImageResource(R.drawable.ic_thumbs_down);
+                }
+            } else {
+                holder.thumbs.setImageResource(R.drawable.ic_questionmark);
+            }
+        } catch (JSONException | NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -184,6 +217,26 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         };
     }
 
+    private JSONArray getReviews(int position) {
+        JSONArray result = null;
+        JSONArray reviews;
+        try {
+            if ((reviews = getJsonArray(prefs, DataManager.REVIEWKEY)) != null) {
+                for (int i = 0; i < reviews.length(); i++) {
+                    JSONObject review = reviews.getJSONObject(i);
+                    if (review.getInt("beer_id") == dataSet.get(position).getId()) {
+                        if (review.getInt("user_id") == getUserID(prefs)) {
+                            result.put(review);
+                        }
+                    }
+                }
+            }
+
+        } catch (JSONException | NullPointerException e) {
+        }
+        return result;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;
         public final TextView title;
@@ -192,6 +245,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         public final TextView rating;
         public final TextView info;
         public final ImageView picture;
+        public final ImageView thumbs;
 
         public ViewHolder(View view) {
             super(view);
@@ -203,6 +257,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             rating = (TextView) view.findViewById(R.id.row_beer_rating);
             info = (TextView) view.findViewById(R.id.beer_info);
             picture = (ImageView) view.findViewById(R.id.beer_image);
+            thumbs = (ImageView) view.findViewById(R.id.beer_thumbs);
         }
     }
 }

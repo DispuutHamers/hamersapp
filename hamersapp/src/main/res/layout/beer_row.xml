@@ -14,7 +14,6 @@
             android:contentDescription="TODO"
             android:padding="0dp"
             android:layout_alignParentLeft="true"/>
-
     <TextView
             android:id="@+id/beer_name"
             android:layout_width="wrap_content"
@@ -27,7 +26,6 @@
             android:gravity="start"
             android:textSize="16sp"
             android:textColor="@android:color/primary_text_light"/>
-
     <TextView
             android:id="@+id/beer_soort"
             android:layout_width="fill_parent"
@@ -55,7 +53,6 @@
             android:layout_toRightOf="@+id/beer_image"
             android:layout_toEndOf="@id/beer_image"
             android:textColor="@android:color/secondary_text_light"/>
-
     <TextView android:id="@+id/row_beer_rating"
               android:layout_width="fill_parent"
               android:layout_height="16dp"
@@ -68,7 +65,6 @@
               android:layout_toRightOf="@+id/beer_image"
               android:layout_toEndOf="@id/beer_image"
               android:textColor="@android:color/secondary_text_light"/>
-
     <TextView
             android:id="@+id/beer_info"
             android:layout_width="fill_parent"
@@ -86,4 +82,16 @@
             android:gravity="right"
             android:textStyle="italic"
             android:textColor="@android:color/tertiary_text_light"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/beer_thumbs"
+            android:maxHeight="15dp"
+            android:maxWidth="15dp"
+            android:padding="8dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_questionmark"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
 </RelativeLayout>
