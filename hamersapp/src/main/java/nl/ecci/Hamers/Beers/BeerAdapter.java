@@ -13,15 +13,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import nl.ecci.Hamers.Helpers.AnimateFirstDisplayListener;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.SingleImageActivity;
@@ -41,8 +40,9 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     private final ImageLoader imageLoader;
     private final DisplayImageOptions options;
     private ArrayList<Beer> filteredDataSet;
+    private ProgressBar progressBar;
 
-    public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context, View parentLayout) {
+    public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context, View view, View parentLayout) {
         this.dataSet = itemsArrayList;
         filteredDataSet = itemsArrayList;
         this.context = context;
@@ -54,6 +54,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         animateFirstListener = new AnimateFirstDisplayListener();
         options = new DisplayImageOptions.Builder()
                 .resetViewBeforeLoading(true)
+                .showImageForEmptyUri(R.drawable.ic_questionmark)
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .considerExifParams(true)

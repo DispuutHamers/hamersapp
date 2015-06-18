@@ -4,7 +4,6 @@
                 android:padding="0dp"
                 android:clickable="true"
                 android:background="?attr/selectableItemBackground">
-
     <ImageView
             android:id="@+id/beer_image"
             android:layout_width="74dp"
