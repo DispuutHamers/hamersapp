@@ -164,8 +164,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
                     for (Beer beer : dataSet) {
                         if (beer.getName().toLowerCase().contains(charSequence) || beer.getBrewer().toLowerCase().contains(charSequence)
                                 || beer.getBrewer().toLowerCase().contains(charSequence) || beer.getPercentage().toLowerCase().contains(charSequence)
-                                || beer.getSoort().toLowerCase().contains(charSequence))
-                        {
+                                || beer.getSoort().toLowerCase().contains(charSequence)) {
                             filterResultsData.add(beer);
                         }
                     }

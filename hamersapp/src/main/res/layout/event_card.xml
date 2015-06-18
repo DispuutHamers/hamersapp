@@ -73,7 +73,7 @@
                     android:maxHeight="15dp"
                     android:maxWidth="15dp"
                     android:src="@drawable/ic_questionmark"
-                    android:adjustViewBounds= "true"
+                    android:adjustViewBounds="true"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"/>

@@ -106,7 +106,7 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
             } else if (context != null) {
                 Toast.makeText(context, context.getResources().getString(R.string.posted), Toast.LENGTH_SHORT).show();
             }
-        } else if (context != null){
+        } else if (context != null) {
             if (view != null) {
                 Snackbar.make(view, context.getResources().getString(R.string.not_posted), Snackbar.LENGTH_SHORT).show();
             } else if (parentView != null) {

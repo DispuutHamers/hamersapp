@@ -45,8 +45,8 @@ public class SingleEventActivity extends AppCompatActivity {
 
         ScrollView scrollView = (ScrollView) findViewById(R.id.single_event_scrollview);
         LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
-         Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
-         Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
+        Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
+        Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
 
         TextView titleTV = (TextView) findViewById(R.id.event_title);
         TextView beschrijvingTV = (TextView) findViewById(R.id.event_beschrijving);
