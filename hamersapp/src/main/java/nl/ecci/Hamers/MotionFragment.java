@@ -19,6 +19,10 @@ public class MotionFragment extends Fragment {
     private String type;
     private RelativeLayout parentLayout;
 
+    private final String DUURTLANG = "duurt lang";
+    private final String ARELAXED = "vet arelaxed";
+    private final String NIETCHILL = "niet chilll";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.motion_fragment, container, false);
@@ -31,15 +35,15 @@ public class MotionFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.radio_duurtlang:
-                        type = "duurt lang";
+                        type = DUURTLANG;
                         break;
 
                     case R.id.radio_arelaxed:
-                        type = "vet arelaxed";
+                        type = ARELAXED;
                         break;
 
                     case R.id.radio_nietchill:
-                        type = "niet chill";
+                        type = NIETCHILL;
                         break;
                 }
             }

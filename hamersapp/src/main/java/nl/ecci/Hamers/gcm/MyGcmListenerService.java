@@ -21,6 +21,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,6 +43,7 @@ public class MyGcmListenerService extends GcmListenerService {
     // Quote
     private final String QUOTETYPE = "quote";
     private final String QUOTEBODY = "text";
+    private final String QUOTEDATE = "created_at";
 
     // Event
     private final String EVENTTYPE = "event";
@@ -85,8 +88,6 @@ public class MyGcmListenerService extends GcmListenerService {
             } catch (JSONException ignored) {
             }
         }
-
-        System.out.println("-------------------------------------------" + object.toString());
 
         JSONObject quote;
         JSONObject event;
@@ -151,7 +152,6 @@ public class MyGcmListenerService extends GcmListenerService {
                 }
 
                 message = review.getString(REVIEWRATING) + " - " + review.getString(REVIEWDESCRIPTION);
-
             }
         } catch (JSONException | NullPointerException e) {
             e.printStackTrace();
@@ -178,9 +178,11 @@ public class MyGcmListenerService extends GcmListenerService {
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_launcher)
+                .setLargeIcon(icon)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
