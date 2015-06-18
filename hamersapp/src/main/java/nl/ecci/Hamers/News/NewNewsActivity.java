@@ -12,6 +12,9 @@ import android.widget.LinearLayout;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
 import nl.ecci.Hamers.R;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class NewNewsActivity extends AppCompatActivity {
 
     private LinearLayout parentLayout;
@@ -34,15 +37,18 @@ public class NewNewsActivity extends AppCompatActivity {
     }
 
     public void postNews(View view) {
-        EditText news_title = (EditText) findViewById(R.id.news_title);
-        EditText news_body = (EditText) findViewById(R.id.news_body);
+        try {
+            EditText news_title = (EditText) findViewById(R.id.news_title);
+            EditText news_body = (EditText) findViewById(R.id.news_body);
 
-        String title = news_title.getText().toString();
-        String body = news_body.getText().toString();
+            String title = URLEncoder.encode(news_title.getText().toString(), "UTF-8");
+            String body = URLEncoder.encode(news_body.getText().toString(), "UTF-8");
 
-        // Send request
-        SendPostRequest req = new SendPostRequest(this, parentLayout, NewsFragment.parentLayout, SendPostRequest.NEWSURL, PreferenceManager.getDefaultSharedPreferences(this), "news[title]=" + title + "&news[body]=" + body);
-        req.execute();
+            // Send request
+            SendPostRequest req = new SendPostRequest(this, parentLayout, NewsFragment.parentLayout, SendPostRequest.NEWSURL, PreferenceManager.getDefaultSharedPreferences(this), "news[title]=" + title + "&news[body]=" + body);
+            req.execute();
+        } catch (UnsupportedEncodingException e) {
+        }
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {

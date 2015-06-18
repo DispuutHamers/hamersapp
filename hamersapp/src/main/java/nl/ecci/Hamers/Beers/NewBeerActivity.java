@@ -13,6 +13,9 @@ import android.widget.RelativeLayout;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
 import nl.ecci.Hamers.R;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class NewBeerActivity extends AppCompatActivity {
     private RelativeLayout parentLayout;
 
@@ -44,27 +47,30 @@ public class NewBeerActivity extends AppCompatActivity {
     }
 
     public void postBeer(View view) {
-        EditText beer_title = (EditText) findViewById(R.id.beer_title_et);
-        EditText beer_picture = (EditText) findViewById(R.id.beer_picture_et);
-        EditText beer_soort = (EditText) findViewById(R.id.beer_soort_et);
-        EditText beer_percentage = (EditText) findViewById(R.id.beer_percentage_et);
-        EditText beer_brewer = (EditText) findViewById(R.id.beer_brewer_et);
-        EditText beer_country = (EditText) findViewById(R.id.beer_country_et);
+        try {
+            EditText beer_title = (EditText) findViewById(R.id.beer_title_et);
+            EditText beer_picture = (EditText) findViewById(R.id.beer_picture_et);
+            EditText beer_soort = (EditText) findViewById(R.id.beer_soort_et);
+            EditText beer_percentage = (EditText) findViewById(R.id.beer_percentage_et);
+            EditText beer_brewer = (EditText) findViewById(R.id.beer_brewer_et);
+            EditText beer_country = (EditText) findViewById(R.id.beer_country_et);
 
-        String title = beer_title.getText().toString();
-        String picture = beer_picture.getText().toString();
-        String soort = beer_soort.getText().toString();
-        String percentage = beer_percentage.getText().toString();
-        String brewer = beer_brewer.getText().toString();
-        String country = beer_country.getText().toString();
+            String title = URLEncoder.encode(beer_title.getText().toString(), "UTF-8");
+            String picture = URLEncoder.encode(beer_picture.getText().toString(), "UTF-8");
+            String soort = URLEncoder.encode(beer_soort.getText().toString(), "UTF-8");
+            String percentage = URLEncoder.encode(beer_percentage.getText().toString(), "UTF-8");
+            String brewer = URLEncoder.encode(beer_brewer.getText().toString(), "UTF-8");
+            String country = URLEncoder.encode(beer_country.getText().toString(), "UTF-8");
 
-        if (!percentage.contains("%")) {
-            percentage = percentage + "%";
+            if (!percentage.contains("%")) {
+                percentage = percentage + "%";
+            }
+
+            // Send request
+            SendPostRequest req = new SendPostRequest(this, null, BeerFragment.parentLayout, SendPostRequest.BEERURL, PreferenceManager.getDefaultSharedPreferences(this), "beer[name]=" + title + "&beer[picture]=" + picture + "&beer[percentage]=" + percentage + "25" + "&beer[country]=" + country + "&beer[brewer]=" + brewer + "&beer[soort]=" + soort);
+            req.execute();
+        } catch (UnsupportedEncodingException e) {
         }
-
-        // Send request
-        SendPostRequest req = new SendPostRequest(this, null, BeerFragment.parentLayout, SendPostRequest.BEERURL, PreferenceManager.getDefaultSharedPreferences(this), "beer[name]=" + title + "&beer[picture]=" + picture + "&beer[percentage]=" + percentage + "25" + "&beer[country]=" + country + "&beer[brewer]=" + brewer + "&beer[soort]=" + soort);
-        req.execute();
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {

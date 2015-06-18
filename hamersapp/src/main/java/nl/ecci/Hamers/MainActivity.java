@@ -478,7 +478,7 @@ public class MainActivity extends AppCompatActivity {
                 ImageView userImage = (ImageView) findViewById(R.id.header_user_image);
 
                 userName.setText(user.getString("name"));
-                userEmail.setText(user.getString("email") + " - q:" + user.getInt("quotes") + " rx:" + user.getInt("reviews"));
+                userEmail.setText(user.getString("email") + " - q:" + user.getInt("quotes") + " r:" + user.getInt("reviews"));
 
                 // Image
                 String url = "http://gravatar.com/avatar/" + Utils.md5Hex(user.getString("email")) + "?s=200";

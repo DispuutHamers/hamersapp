@@ -100,7 +100,7 @@ public class NewEventActivity extends AppCompatActivity {
             Button deadlineTimeButton = (Button) findViewById(R.id.deadline_time_button);
             Button deadlineDateButton = (Button) findViewById(R.id.deadline_date_button);
 
-            String title = event_title.getText().toString();
+            String title = URLEncoder.encode(event_title.getText().toString(), "UTF-8");
             String location = URLEncoder.encode(event_location.getText().toString(), "UTF-8");
             String description = URLEncoder.encode(event_beschrijving.getText().toString(), "UTF-8");
             String eventTime = eventTimeButton.getText().toString();

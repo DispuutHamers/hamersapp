@@ -21,6 +21,8 @@ import nl.ecci.Hamers.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class NewQuoteFragment extends DialogFragment {
@@ -39,16 +41,19 @@ public class NewQuoteFragment extends DialogFragment {
                 .setPositiveButton(R.string.send_quote, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        // Get quote from editText
-                        EditText edit = (EditText) view.findViewById(R.id.quote_input);
-                        String quote = edit.getText().toString();
+                        try {
+                            // Get quote from editText
+                            EditText edit = (EditText) view.findViewById(R.id.quote_input);
+                            String quote = URLEncoder.encode(edit.getText().toString(), "UTF-8");
 
-                        // Get userID from spinner
-                        Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
-                        int userID = DataManager.usernameToID(prefs, userSpinner.getSelectedItem().toString());
+                            // Get userID from spinner
+                            Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
+                            int userID = DataManager.usernameToID(prefs, userSpinner.getSelectedItem().toString());
 
-                        // Post quote
-                        NewQuoteFragment.this.postQuote(quote, userID);
+                            // Post quote
+                            NewQuoteFragment.this.postQuote(quote, userID);
+                        } catch (UnsupportedEncodingException e) {
+                        }
                     }
                 });
 
