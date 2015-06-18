@@ -16,10 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import nl.ecci.Hamers.Helpers.DataManager;
@@ -31,8 +28,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 
-import static nl.ecci.Hamers.Helpers.DataManager.getJsonArray;
-import static nl.ecci.Hamers.Helpers.DataManager.getUser;
+import static nl.ecci.Hamers.Helpers.DataManager.*;
 import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class SingleBeerActivity extends AppCompatActivity {
@@ -41,6 +37,7 @@ public class SingleBeerActivity extends AppCompatActivity {
     private String name;
     private SharedPreferences prefs;
     public static LinearLayout parentLayout;
+    private Button reviewButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +62,7 @@ public class SingleBeerActivity extends AppCompatActivity {
         TextView countryTV = (TextView) findViewById(R.id.beer_country);
         TextView cijferTV = (TextView) findViewById(R.id.beer_rating);
         final ImageView beerImage = (ImageView) findViewById(R.id.beer_image);
+        reviewButton = (Button) findViewById(R.id.sendreview_button);
 
         Bundle extras = getIntent().getExtras();
 
@@ -136,6 +134,9 @@ public class SingleBeerActivity extends AppCompatActivity {
                 for (int i = 0; i < reviews.length(); i++) {
                     JSONObject review = reviews.getJSONObject(i);
                     if (review.getInt("beer_id") == id) {
+                        if (review.getInt("user_id") == getUserID(prefs)) {
+                            reviewButton.setVisibility(View.GONE);
+                        }
                         Review tempReview = new Review(review.getInt("beer_id"), review.getInt("user_id"), review.getString("description"), review.getString("rating"), review.getString("created_at"), review.getString("proefdatum"));
                         insertReview(tempReview);
                     }

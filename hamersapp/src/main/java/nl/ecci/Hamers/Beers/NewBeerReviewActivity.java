@@ -14,10 +14,10 @@ import nl.ecci.Hamers.Helpers.Fragments.DatePickerFragment;
 import nl.ecci.Hamers.Helpers.SendPostRequest;
 import nl.ecci.Hamers.R;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
-import static android.text.Html.escapeHtml;
 
 public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
 
@@ -92,24 +92,27 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
     }
 
     public void postReview(View view) {
-        EditText review_body = (EditText) findViewById(R.id.review_body);
-        String review = escapeHtml(review_body.getText().toString());
-        Button date_button = (Button) findViewById(R.id.pick_date_button);
-        String date = date_button.getText().toString();
+        try {
+            EditText review_body = (EditText) findViewById(R.id.review_body);
+            String review = URLEncoder.encode(review_body.getText().toString(), "UTF-8");
+            Button date_button = (Button) findViewById(R.id.pick_date_button);
+            String date = date_button.getText().toString();
 
-        if (review.length() > 2) {
-            String[] dateParts = date.split("-");
-            int proefdag = Integer.parseInt(dateParts[0]);
-            int proefmaand = Integer.parseInt(dateParts[1]);
-            int proefjaar = Integer.parseInt(dateParts[2]);
+            if (review.length() > 2) {
+                String[] dateParts = date.split("-");
+                int proefdag = Integer.parseInt(dateParts[0]);
+                int proefmaand = Integer.parseInt(dateParts[1]);
+                int proefjaar = Integer.parseInt(dateParts[2]);
 
-            String arguments = "&review[beer_id]=" + id + "&review[description]=" + review + "&review[rating]=" + cijfer
-                    + "&review[proefdatum(1i)]=" + proefjaar + "&review[proefdatum(2i)]=" + proefmaand + "&review[proefdatum(3i)]=" + proefdag + "&review[proefdatum(4i)]=20" + "&review[proefdatum(5i)]=00";
+                String arguments = "&review[beer_id]=" + id + "&review[description]=" + review + "&review[rating]=" + cijfer
+                        + "&review[proefdatum(1i)]=" + proefjaar + "&review[proefdatum(2i)]=" + proefmaand + "&review[proefdatum(3i)]=" + proefdag + "&review[proefdatum(4i)]=20" + "&review[proefdatum(5i)]=00";
 
-            SendPostRequest req = new SendPostRequest(this, null, SingleBeerActivity.parentLayout, SendPostRequest.REVIEWURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
-            req.execute();
-        } else {
-            Snackbar.make(parentLayout, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show();
+                SendPostRequest req = new SendPostRequest(this, null, SingleBeerActivity.parentLayout, SendPostRequest.REVIEWURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
+                req.execute();
+            } else {
+                Snackbar.make(parentLayout, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show();
+            }
+        } catch (UnsupportedEncodingException e) {
         }
     }
 
