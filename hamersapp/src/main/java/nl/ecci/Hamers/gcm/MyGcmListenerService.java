@@ -128,7 +128,7 @@ public class MyGcmListenerService extends GcmListenerService {
         try {
             beer = new JSONObject(object.getString(BEERTYPE));
             if (beer.length() != 0) {
-                title = beer.getString(BEERNAME);
+                title = "Biertje: " + beer.getString(BEERNAME);
                 message = "Is net toegevoegd aan de database!";
 
             }
@@ -141,14 +141,14 @@ public class MyGcmListenerService extends GcmListenerService {
             review = new JSONObject(object.getString(REVIEWTYPE));
             if (review.length() != 0) {
 
-                String userName = null;
-                String beerName = null;
-                userName = DataManager.UserIDtoUserName(prefs, Integer.valueOf(review.getString(USER)));
-                beerName = DataManager.BeerIDtoBeerName(prefs, Integer.valueOf(review.getString(REVIEWBEER)));
+                String userName;
+                String beerName;
+                userName = DataManager.UserIDtoUserName(prefs, review.getInt(USER));
+                beerName = DataManager.BeerIDtoBeerName(prefs, review.getInt(REVIEWBEER));
                 if (userName != null && beerName != null) {
                     title = userName + " / " + beerName;
                 } else {
-                    title = "Something went wrong";
+                    title = "Hamers";
                 }
 
                 message = review.getString(REVIEWRATING) + " - " + review.getString(REVIEWDESCRIPTION);

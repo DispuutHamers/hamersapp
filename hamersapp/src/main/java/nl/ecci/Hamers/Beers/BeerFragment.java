@@ -86,7 +86,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         initSwiper(view, beer_list, mLayoutManager);
 
-        adapter = new BeerAdapter(listItems, getActivity(), view, parentLayout);
+        adapter = new BeerAdapter(listItems, getActivity(), parentLayout);
         beer_list.setAdapter(adapter);
 
         sort();

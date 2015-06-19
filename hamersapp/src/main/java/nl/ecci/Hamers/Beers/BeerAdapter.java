@@ -45,7 +45,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     private int userID;
     private ProgressBar progressBar;
 
-    public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context, View view, View parentLayout) {
+    public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context, View parentLayout) {
         this.dataSet = itemsArrayList;
         this.filteredDataSet = itemsArrayList;
         this.context = context;
