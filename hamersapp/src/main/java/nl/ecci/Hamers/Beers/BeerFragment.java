@@ -170,19 +170,21 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         inflater.inflate(R.menu.beer_list_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.beer_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-        searchView.setQueryHint(getString(R.string.search_hint));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
+        if (searchView != null) {
+            searchView.setQueryHint(getString(R.string.search_hint));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                adapter.getFilter().filter(s.toLowerCase());
-                return false;
-            }
-        });
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    adapter.getFilter().filter(s.toLowerCase());
+                    return false;
+                }
+            });
+        }
     }
 
     @Override

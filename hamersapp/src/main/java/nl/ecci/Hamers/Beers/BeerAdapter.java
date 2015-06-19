@@ -154,7 +154,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
                 holder.thumbs.setImageResource(R.drawable.ic_thumbs_down);
             }
         } catch (NullPointerException e) {
-            e.printStackTrace();
         }
     }
 
