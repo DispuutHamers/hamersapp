@@ -21,3 +21,4 @@
 -dontpreverify
 -verbose
 -optimizations !code/simplification/arithmetic,!field
+-keep class android.support.v7.widget.SearchView { *; }
