@@ -2,13 +2,13 @@ package nl.ecci.Hamers.gcm;
 
 /**
  * Copyright 2015 Google Inc. All Rights Reserved.
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -32,6 +32,7 @@ import com.google.android.gms.gcm.GcmListenerService;
 import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.MainActivity;
 import nl.ecci.Hamers.R;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,25 +45,21 @@ public class MyGcmListenerService extends GcmListenerService {
     private final String QUOTETYPE = "quote";
     private final String QUOTEBODY = "text";
     private final String QUOTEDATE = "created_at";
-
     // Event
     private final String EVENTTYPE = "event";
     private final String EVENTTITLE = "title";
     private final String EVENTDESCRIPTION = "beschrijving";
-
     // Beer
     private final String BEERTYPE = "beer";
     private final String BEERNAME = "name";
-
     // Review
     private final String REVIEWTYPE = "review";
     private final String REVIEWBEER = "beer_id";
     private final String REVIEWDESCRIPTION = "description";
     private final String REVIEWRATING = "rating";
-
     // Common
     private final String USER = "user_id";
-
+    private JSONArray json;
     private SharedPreferences prefs;
 
     /**
@@ -106,6 +103,16 @@ public class MyGcmListenerService extends GcmListenerService {
                     message = "- " + userName;
                 } else {
                     message = "- user";
+                }
+
+                // Add quote to quotelist
+                if ((json = DataManager.getJsonArray(prefs, DataManager.QUOTEKEY)) != null) {
+                    JSONArray quotes = new JSONArray();
+                    quotes.put(quote);
+                    for (int i = 0; i < json.length(); i++) {
+                        quotes.put(json.getJSONObject(i));
+                    }
+                    prefs.edit().putString(DataManager.QUOTEKEY, quotes.toString()).apply();
                 }
             }
         } catch (JSONException | NullPointerException e) {

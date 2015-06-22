@@ -57,18 +57,16 @@ import java.text.SimpleDateFormat;
 
 public class MainActivity extends AppCompatActivity {
     // URL
-    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-    //    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
+//    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
+    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
     //     Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
     public static final UserFragment USER_FRAGMENT = new UserFragment();
     public static final EventFragment EVENT_FRAGMENT = new EventFragment();
     public static final NewsFragment NEWS_FRAGMENT = new NewsFragment();
     public static final BeerFragment BEER_FRAGMENT = new BeerFragment();
-    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
-    public static final String REGISTRATION_COMPLETE = "registrationComplete";
-    private static final MotionFragment MOTION_FRAGMENT = new MotionFragment();
-    private static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
+    public static final MotionFragment MOTION_FRAGMENT = new MotionFragment();
+    public static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     private static SharedPreferences prefs;
@@ -78,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean backPressedOnce;
     // GCM
     private BroadcastReceiver mRegistrationBroadcastReceiver;
+    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
+    public static final String REGISTRATION_COMPLETE = "registrationComplete";
 
     /**
      * Parse date
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
             startService(intent);
         }
 
-        getUserInformation();
+        fillHeader();
 
         hasApiKey();
     }
@@ -321,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
                 GetJson g = new GetJson(this, BEER_FRAGMENT, GetJson.BEERURL, prefs);
                 g.execute();
             }
-            getUserInformation();
+            fillHeader();
         } else {
             showApiKeyDialog();
         }
@@ -466,7 +466,7 @@ public class MainActivity extends AppCompatActivity {
         }, 2000);
     }
 
-    public void getUserInformation() {
+    public void fillHeader() {
         JSONArray whoami = DataManager.getJsonArray(prefs, DataManager.WHOAMIKEY);
 
         try {

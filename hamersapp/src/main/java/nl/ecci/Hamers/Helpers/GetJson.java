@@ -121,8 +121,6 @@ public class GetJson extends AsyncTask<String, String, String> {
                     // Review
                     else if (typeURL.equals(REVIEWURL)) {
                         prefs.edit().putString(DataManager.REVIEWKEY, result).apply();
-                        GetJson g = new GetJson(a, f, BEERURL, prefs);
-                        g.execute();
                     }
                     // WHOAMI
                     else if (typeURL.equals(WHOAMIURL)) {

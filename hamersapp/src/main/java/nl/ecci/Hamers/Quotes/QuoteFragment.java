@@ -28,7 +28,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     public static RelativeLayout parentLayout;
     private final ArrayList<Quote> dataSet = new ArrayList<>();
-    private QuoteAdapter adapter;
+    public QuoteAdapter adapter;
     private RecyclerView quote_list;
     private SwipeRefreshLayout swipeView;
 
