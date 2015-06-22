@@ -54,11 +54,13 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     // URL
-//    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
+    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
+//    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
     //     Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
     public static final UserFragment USER_FRAGMENT = new UserFragment();
@@ -78,19 +80,6 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
-
-    /**
-     * Parse date
-     *
-     * @param dateTemp
-     * @return String with parsed date
-     * @throws java.text.ParseException
-     */
-    public static String parseDate(String dateTemp) throws ParseException {
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
-        return outputFormat.format(inputFormat.parse(dateTemp));
-    }
 
     /**
      * Setup of default ImageLoader configuration (Universal Image Loader)
@@ -490,5 +479,24 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Parse date
+     * @param dateString
+     * @return
+     */
+    public static Date parseDate(String dateString) {
+        Date date = null;
+        try {
+            // Event date
+            DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", new Locale("nl"));
+            if (!dateString.equals("null")) {
+                date = dbDF.parse(dateString);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 }

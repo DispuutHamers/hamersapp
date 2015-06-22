@@ -22,6 +22,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
@@ -134,7 +135,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             e.printStackTrace();
         }
 
-        DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm");
+        DateFormat appDF = new SimpleDateFormat("EEEE dd MMMM yyyy HH:mm", new Locale("nl"));
         holder.date.setText(appDF.format(date));
     }
 

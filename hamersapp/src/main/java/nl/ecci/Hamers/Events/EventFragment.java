@@ -18,11 +18,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -100,8 +99,8 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     JSONObject temp;
                     temp = json.getJSONObject(i);
 
-                    Date date = parseDate2(temp.getString("date"));
-                    Date end_time = parseDate2(temp.getString("end_time"));
+                    Date date = parseDate(temp.getString("date"));
+                    Date end_time = parseDate(temp.getString("end_time"));
 
                     Event event = new Event(temp.getInt("id"), temp.getString("title"), temp.getString("beschrijving"), temp.getString("location"), date, end_time, temp.getJSONArray("signups"));
                     listItems.add(event);
@@ -136,19 +135,5 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.event_list_menu, menu);
-    }
-
-    private Date parseDate2(String dateString) {
-        Date date = null;
-        try {
-            // Event date
-            DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-            if (!dateString.equals("null")) {
-                date = dbDF.parse(dateString);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
     }
 }

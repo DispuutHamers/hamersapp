@@ -19,6 +19,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
@@ -68,7 +69,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.title.setText(dataSet.get(position).getTitle());
         holder.body.setText(dataSet.get(position).getBody());
 
-        DateFormat appDF = new SimpleDateFormat("EEEE dd MMMM yyyy");
+        DateFormat appDF = new SimpleDateFormat("EEEE dd MMMM yyyy", new Locale("nl"));
         Date date = dataSet.get(position).getDate();
         if (date != null) {
             holder.date.setText(appDF.format(date));

@@ -17,7 +17,9 @@ import nl.ecci.Hamers.Helpers.DataManager;
 import nl.ecci.Hamers.Helpers.Utils;
 import nl.ecci.Hamers.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> {
 
@@ -26,6 +28,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     private final SharedPreferences prefs;
     private final ImageLoader imageLoader;
     private final DisplayImageOptions options;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss - dd MMM yyyy", new Locale("nl"));
 
     public QuoteAdapter(Context context, ArrayList<Quote> itemsArrayList) {
         this.dataSet = itemsArrayList;
@@ -55,7 +58,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.body.setText(dataSet.get(position).getBody());
-        holder.date.setText(dataSet.get(position).getDate());
+        holder.date.setText(dateFormat.format(dataSet.get(position).getDate()));
         holder.user.setText(dataSet.get(position).getUser());
 
         String email = DataManager.IDToEmail(prefs, dataSet.get(position).getUserID());

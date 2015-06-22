@@ -19,8 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static nl.ecci.Hamers.MainActivity.parseDate;
 
@@ -111,10 +111,9 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                         id = -1;
                     }
 
-                    String tempDate = quote.getString("created_at").substring(0, 10);
-                    String tempTijd = quote.getString("created_at").substring(11, 16);
+                    String tempDate = quote.getString("created_at");
 
-                    String date = tempTijd + " - " + parseDate(tempDate);
+                    Date date = parseDate(tempDate);
 
                     Quote tempQuote = new Quote(username, quote.getString("text"), date, id);
                     dataSet.add(tempQuote);
@@ -123,7 +122,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     }
                 }
             }
-        } catch (JSONException | ParseException e) {
+        } catch (JSONException e) {
             Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
         }
         if (swipeView != null) {

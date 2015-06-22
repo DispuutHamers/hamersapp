@@ -26,10 +26,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import static nl.ecci.Hamers.Helpers.DataManager.*;
-import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class SingleBeerActivity extends AppCompatActivity {
 
@@ -213,5 +215,11 @@ public class SingleBeerActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         refreshActivity();
+    }
+
+    public String parseDate(String dateTemp) throws ParseException {
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", new Locale("nl"));
+        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("nl"));
+        return outputFormat.format(inputFormat.parse(dateTemp));
     }
 }

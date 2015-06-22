@@ -126,6 +126,15 @@ public class MyGcmListenerService extends GcmListenerService {
                 title = event.getString(EVENTTITLE);
                 message = event.getString(EVENTDESCRIPTION);
 
+                // Add event to eventlist
+                if ((json = DataManager.getJsonArray(prefs, DataManager.EVENTKEY)) != null) {
+                    JSONArray events = new JSONArray();
+                    events.put(event);
+                    for (int i = 0; i < json.length(); i++) {
+                        events.put(json.getJSONObject(i));
+                    }
+                    prefs.edit().putString(DataManager.EVENTKEY, events.toString()).apply();
+                }
             }
         } catch (JSONException | NullPointerException e) {
             e.printStackTrace();
@@ -157,8 +166,17 @@ public class MyGcmListenerService extends GcmListenerService {
                 } else {
                     title = "Hamers";
                 }
-
                 message = review.getString(REVIEWRATING) + " - " + review.getString(REVIEWDESCRIPTION);
+
+                // Add review to reviewlist
+                if ((json = DataManager.getJsonArray(prefs, DataManager.REVIEWKEY)) != null) {
+                    JSONArray reviews = new JSONArray();
+                    reviews.put(review);
+                    for (int i = 0; i < json.length(); i++) {
+                        reviews.put(json.getJSONObject(i));
+                    }
+                    prefs.edit().putString(DataManager.REVIEWKEY, reviews.toString()).apply();
+                }
             }
         } catch (JSONException | NullPointerException e) {
             e.printStackTrace();

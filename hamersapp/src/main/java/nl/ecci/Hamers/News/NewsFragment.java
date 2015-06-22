@@ -20,11 +20,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -98,7 +97,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     JSONObject temp;
                     temp = json.getJSONObject(i);
 
-                    Date date = parseDate2(temp.getString("date"));
+                    Date date = parseDate(temp.getString("date"));
 
                     NewsItem newsItem = new NewsItem(temp.getString("title"), temp.getString("body"), temp.getString("cat"), date);
                     listItems.add(newsItem);
@@ -113,19 +112,5 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         if (swipeView != null) {
             swipeView.setRefreshing(false);
         }
-    }
-
-    private Date parseDate2(String dateString) {
-        Date date = null;
-        try {
-            // News date
-            DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-            if (!dateString.equals("null")) {
-                date = dbDF.parse(dateString);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
     }
 }

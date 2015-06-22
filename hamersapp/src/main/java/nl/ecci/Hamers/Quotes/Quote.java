@@ -1,12 +1,14 @@
 package nl.ecci.Hamers.Quotes;
 
+import java.util.Date;
+
 class Quote {
     private final String user;
     private final String body;
-    private final String date;
+    private final Date date;
     private final int userID;
 
-    public Quote(String user, String body, String date, int userID) {
+    public Quote(String user, String body, Date date, int userID) {
         super();
         this.user = user;
         this.body = body;
@@ -18,7 +20,7 @@ class Quote {
         return body;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
