@@ -34,7 +34,7 @@
         <ListPreference
                 android:title="Bier sorteren"
                 android:key="beerSort"
-                android:defaultValue="none"
+                android:defaultValue="datumASC"
                 android:entries="@array/beersort_array"
                 android:entryValues="@array/beersort_array_values"/>
     </PreferenceCategory>

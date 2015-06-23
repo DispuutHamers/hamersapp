@@ -1,5 +1,7 @@
 package nl.ecci.Hamers.Beers;
 
+import java.util.Date;
+
 public class Beer {
 
     public static final String BEER_ID = "BEER_ID";
@@ -19,9 +21,10 @@ public class Beer {
     private final String brewer;
     private final String country;
     private final String rating;
+    private final Date createdAt;
 
 
-    public Beer(int id, String name, String soort, String imageURL, String percentage, String brewer, String country, String rating) {
+    public Beer(int id, String name, String soort, String imageURL, String percentage, String brewer, String country, String rating, Date createdAt) {
         super();
         this.id = id;
         this.name = name;
@@ -31,6 +34,7 @@ public class Beer {
         this.brewer = brewer;
         this.country = country;
         this.rating = rating;
+        this.createdAt = createdAt;
     }
 
     public int getId() {
@@ -64,4 +68,6 @@ public class Beer {
     public String getRating() {
         return rating;
     }
+
+    public Date getCreatedAt() { return createdAt; }
 }

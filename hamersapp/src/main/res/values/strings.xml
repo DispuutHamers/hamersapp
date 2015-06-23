@@ -142,14 +142,16 @@
     </array>
     <!-- Beer -->
     <array name="beersort_array_values">
-        <item>none</item>
         <item>name</item>
         <item>rating</item>
+        <item>datumASC</item>
+        <item>datumDESC</item>
     </array>
     <array name="beersort_array">
-        <item>Niet sorteren</item>
         <item>Sorteer op naam</item>
         <item>Sorteer op cijfer</item>
+        <item>Sorteer op datum (ASC)</item>
+        <item>Sorteer op datum (DESC)</item>
     </array>
 
     <!-- Snackbar -->
@@ -166,6 +168,8 @@
     <string name="sort_reviews">Sorteer op aantal reviews</string>
     <string name="sort_rating">Sorteer op cijfer</string>
     <string name="sort_name">Sorteer op naam</string>
+    <string name="sort_date_asc">Sorteer op datum (ASC)</string>
+    <string name="sort_date_desc">Sorteer op datum (DESC)</string>
 
     <string name="posted">Gelukt! :)</string>
     <string name="not_posted">Niet gelukt.. :(</string>

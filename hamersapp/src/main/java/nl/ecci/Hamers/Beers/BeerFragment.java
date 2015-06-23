@@ -26,32 +26,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+
+import static nl.ecci.Hamers.MainActivity.parseDate;
 
 public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private static final Comparator<Beer> nameComparator = new Comparator<Beer>() {
-        @Override
-        public int compare(Beer beer1, Beer beer2) {
-            String name1 = beer1.getName();
-            String name2 = beer2.getName();
-
-            return name1.compareToIgnoreCase(name2);
-        }
-    };
-    private static final Comparator<Beer> ratingComparator = new Comparator<Beer>() {
-        @Override
-        public int compare(Beer beer1, Beer beer2) {
-            String rating1 = beer1.getRating();
-            String rating2 = beer2.getRating();
-
-            if (rating1.equals("nog niet bekend")) {
-                rating1 = "-1";
-            } else if (rating2.equals("nog niet bekend")) {
-                rating2 = "-1";
-            }
-            return rating2.compareToIgnoreCase(rating1);
-        }
-    };
     public static RelativeLayout parentLayout;
     private final ArrayList<Beer> listItems = new ArrayList<>();
     public View view;
@@ -89,7 +69,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         adapter = new BeerAdapter(listItems, getActivity(), parentLayout);
         beer_list.setAdapter(adapter);
 
-        sort();
+        sortList();
 
         // Floating action button
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.beer_add_button);
@@ -143,10 +123,10 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     String cijfer = temp.getString("cijfer");
                     if (cijfer.equals("null")) {
                         tempBeer = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
-                                temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), "nog niet bekend");
+                                temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), "nog niet bekend", parseDate(temp.getString("created_at")));
                     } else {
                         tempBeer = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
-                                temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), cijfer);
+                                temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), cijfer, parseDate(temp.getString("created_at")));
                     }
                     listItems.add(tempBeer);
                     if (adapter != null) {
@@ -161,7 +141,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
         if (swipeView != null) {
             swipeView.setRefreshing(false);
-            sort();
+            sortList();
         }
     }
 
@@ -194,10 +174,16 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 scrollTop();
                 return true;
             case R.id.sort_name:
-                sortByName();
+                sort(nameComparator);
                 return true;
             case R.id.sort_rating:
-                sortByRating();
+                sort(ratingComparator);
+                return true;
+            case R.id.sort_date_asc:
+                sort(dateASCComperator);
+                return true;
+            case R.id.sort_date_desc:
+                sort(dateDESCComperator);
                 return true;
             default:
                 return false;
@@ -208,26 +194,25 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         beer_list.smoothScrollToPosition(0);
     }
 
-    private void sort() {
+    private void sortList() {
         if (getActivity() != null)
             prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         if (prefs != null) {
             String sortPref = prefs.getString("beerSort", "");
             if (sortPref.equals("name")) {
-                sortByName();
+                sort(nameComparator);
             } else if (sortPref.equals("rating")) {
-                sortByRating();
+                sort(ratingComparator);
+            } else if (sortPref.equals("datumASC")) {
+                sort(dateASCComperator);
+            } else if (sortPref.equals("datumDESC")) {
+                sort(dateDESCComperator);
             }
         }
     }
 
-    private void sortByName() {
-        Collections.sort(listItems, nameComparator);
-        adapter.notifyDataSetChanged();
-    }
-
-    private void sortByRating() {
-        Collections.sort(listItems, ratingComparator);
+    private void sort(Comparator<Beer> comperator) {
+        Collections.sort(listItems, comperator);
         adapter.notifyDataSetChanged();
     }
 
@@ -236,4 +221,49 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         super.onDestroy();
         AnimateFirstDisplayListener.displayedImages.clear();
     }
+
+    private static final Comparator<Beer> nameComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            String name1 = beer1.getName();
+            String name2 = beer2.getName();
+
+            return name1.compareToIgnoreCase(name2);
+        }
+    };
+
+    private static final Comparator<Beer> ratingComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            String rating1 = beer1.getRating();
+            String rating2 = beer2.getRating();
+
+            if (rating1.equals("nog niet bekend")) {
+                rating1 = "-1";
+            } else if (rating2.equals("nog niet bekend")) {
+                rating2 = "-1";
+            }
+            return rating2.compareToIgnoreCase(rating1);
+        }
+    };
+
+    private static final Comparator<Beer> dateASCComperator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            Date date1 = beer1.getCreatedAt();
+            Date date2 = beer2.getCreatedAt();
+
+            return date1.compareTo(date2);
+        }
+    };
+
+    private static final Comparator<Beer> dateDESCComperator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            Date date1 = beer1.getCreatedAt();
+            Date date2 = beer2.getCreatedAt();
+
+            return date2.compareTo(date1);
+        }
+    };
 }

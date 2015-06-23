@@ -10,9 +10,17 @@
               android:title="@string/scroll_top"
               android:icon="@drawable/ic_action_up"
               app:showAsAction="ifRoom"/>
-        <item android:id="@id/sort_name"
-              android:title="@string/sort_name"/>
-        <item android:id="@id/sort_rating"
-              android:title="@string/sort_rating"/>
+        <item android:id="@+id/sort_name"
+              android:title="@string/sort_name"
+              app:showAsAction="never"/>
+        <item android:id="@+id/sort_rating"
+              android:title="@string/sort_rating"
+              app:showAsAction="never"/>
+        <item android:id="@+id/sort_date_asc"
+              android:title="@string/sort_date_asc"
+              app:showAsAction="never"/>
+        <item android:id="@+id/sort_date_desc"
+              android:title="@string/sort_date_desc"
+              app:showAsAction="never"/>
     </group>
 </menu>
