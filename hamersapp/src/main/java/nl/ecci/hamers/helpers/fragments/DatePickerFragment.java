@@ -1,4 +1,4 @@
-package nl.ecci.hamers.helpers.Fragments;
+package nl.ecci.hamers.helpers.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

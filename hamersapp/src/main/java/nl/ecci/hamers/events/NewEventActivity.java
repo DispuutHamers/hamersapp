@@ -14,8 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import nl.ecci.hamers.helpers.Fragments.DatePickerFragment;
-import nl.ecci.hamers.helpers.Fragments.TimePickerFragment;
+import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
+import nl.ecci.hamers.helpers.fragments.TimePickerFragment;
 import nl.ecci.hamers.helpers.SendPostRequest;
 import nl.ecci.hamers.R;
 
