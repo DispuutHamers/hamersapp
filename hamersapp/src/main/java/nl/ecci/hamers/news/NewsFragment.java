@@ -113,4 +113,10 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             swipeView.setRefreshing(false);
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        populateList(prefs);
+    }
 }

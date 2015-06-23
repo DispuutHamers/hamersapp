@@ -152,7 +152,7 @@ public class MyGcmListenerService extends GcmListenerService {
             e.printStackTrace();
         }
 
-        // Review
+        // REVIEW
         try {
             review = new JSONObject(object.getString(REVIEWTYPE));
             if (review.length() != 0) {

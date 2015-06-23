@@ -12,13 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.Utils;
-import nl.ecci.hamers.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> {
@@ -58,8 +59,12 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.body.setText(dataSet.get(position).getBody());
-        holder.date.setText(dateFormat.format(dataSet.get(position).getDate()));
         holder.user.setText(dataSet.get(position).getUser());
+
+        Date date = dataSet.get(position).getDate();
+        if (date != null) {
+            holder.date.setText(dateFormat.format(date));
+        }
 
         String email = DataManager.IDToEmail(prefs, dataSet.get(position).getUserID());
         if (email != null) {

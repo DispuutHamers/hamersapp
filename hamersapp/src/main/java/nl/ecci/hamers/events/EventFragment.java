@@ -128,6 +128,12 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        populateList(prefs);
+    }
+
     private void scrollTop() {
         event_list.smoothScrollToPosition(0);
     }

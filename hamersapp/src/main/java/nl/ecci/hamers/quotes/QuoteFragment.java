@@ -31,6 +31,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public QuoteAdapter adapter;
     private RecyclerView quote_list;
     private SwipeRefreshLayout swipeView;
+    private SharedPreferences prefs;
 
     public QuoteFragment() {
     }
@@ -51,7 +52,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         quote_list.setAdapter(adapter);
         quote_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         if (prefs.getString("quoteData", null) != null) {
             populateList(prefs);
@@ -133,6 +134,12 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.event_list_menu, menu);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        populateList(prefs);
     }
 
     @Override

@@ -190,6 +190,12 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        populateList(prefs);
+    }
+
     private void scrollTop() {
         beer_list.smoothScrollToPosition(0);
     }
