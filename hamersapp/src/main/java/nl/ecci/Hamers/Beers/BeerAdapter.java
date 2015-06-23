@@ -43,7 +43,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     private final DisplayImageOptions options;
     private ArrayList<Beer> filteredDataSet;
     private int userID;
-    private ProgressBar progressBar;
 
     public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context, View parentLayout) {
         this.dataSet = itemsArrayList;
@@ -79,7 +78,8 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             @Override
             public void onClick(View v1) {
                 try {
-                    JSONObject b = DataManager.getBeer(prefs, filteredDataSet.get(vh.getAdapterPosition()).getName());
+                    System.out.println("------------------------- " + filteredDataSet.get(vh.getAdapterPosition()).getId());
+                    JSONObject b = DataManager.getBeer(prefs, filteredDataSet.get(vh.getAdapterPosition()).getId());
                     Activity activity = (Activity) context;
                     String imageTransitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, imageTransitionName);
@@ -96,6 +96,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
                     ActivityCompat.startActivity(activity, intent, options.toBundle());
                 } catch (JSONException | NullPointerException ignored) {
                     Snackbar.make(view, context.getString(R.string.snackbar_error), Snackbar.LENGTH_LONG).show();
+                    ignored.printStackTrace();
                 }
             }
         });
@@ -104,7 +105,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             @Override
             public void onClick(View v) {
                 try {
-                    JSONObject b = DataManager.getBeer(prefs, filteredDataSet.get(vh.getAdapterPosition()).getName());
+                    JSONObject b = DataManager.getBeer(prefs, filteredDataSet.get(vh.getAdapterPosition()).getId());
                     Activity activity = (Activity) context;
                     String transitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, transitionName);

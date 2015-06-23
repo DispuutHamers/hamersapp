@@ -84,6 +84,24 @@ public final class DataManager {
         return null;
     }
 
+    public static JSONObject getBeer(SharedPreferences prefs, int id) {
+        JSONArray beers;
+        try {
+            if ((beers = getJsonArray(prefs, BEERKEY)) != null) {
+                for (int i = 0; i < beers.length(); i++) {
+                    JSONObject temp = beers.getJSONObject(i);
+                    if (temp.getInt("id") == id) {
+                        return temp;
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+    }
+
     public static JSONArray getJsonArray(SharedPreferences prefs, String key) {
         try {
             return new JSONArray(prefs.getString(key, null));
