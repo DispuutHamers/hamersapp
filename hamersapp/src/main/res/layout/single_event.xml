@@ -69,7 +69,7 @@
                     android:paddingBottom="5dp"
                     android:text="@string/event_aanwezig"
                     android:id="@+id/event_aanwezig_tv"/>
-            <nl.ecci.Hamers.Helpers.ExpandedListView
+            <nl.ecci.hamers.helpers.ExpandedListView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:id="@+id/event_aanwezig"
@@ -89,7 +89,7 @@
                     android:paddingBottom="5dp"
                     android:text="@string/event_afwezig"
                     android:id="@+id/event_afwezig_tv"/>
-            <nl.ecci.Hamers.Helpers.ExpandedListView
+            <nl.ecci.hamers.helpers.ExpandedListView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:id="@+id/event_afwezig"
