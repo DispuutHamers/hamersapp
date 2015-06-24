@@ -10,8 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import nl.ecci.hamers.helpers.SendPostRequest;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.SendPostRequest;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -67,9 +67,9 @@ public class NewBeerActivity extends AppCompatActivity {
             }
 
             // Send request
-            SendPostRequest req = new SendPostRequest(this, null, BeerFragment.parentLayout, SendPostRequest.BEERURL, PreferenceManager.getDefaultSharedPreferences(this), "beer[name]=" + title + "&beer[picture]=" + picture + "&beer[percentage]=" + percentage + "25" + "&beer[country]=" + country + "&beer[brewer]=" + brewer + "&beer[soort]=" + soort);
+            SendPostRequest req = new SendPostRequest(this, null, BeerFragment.parentLayout, SendPostRequest.BEERURL, PreferenceManager.getDefaultSharedPreferences(this), "beer[name]=" + title + "&beer[picture]=" + picture + "&beer[percentage]=" + percentage + "&beer[country]=" + country + "&beer[brewer]=" + brewer + "&beer[soort]=" + soort);
             req.execute();
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException ignored) {
         }
     }
 

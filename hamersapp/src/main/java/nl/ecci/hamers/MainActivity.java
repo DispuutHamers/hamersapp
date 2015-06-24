@@ -37,6 +37,7 @@ import nl.ecci.hamers.beers.BeerFragment;
 import nl.ecci.hamers.beers.NewBeerActivity;
 import nl.ecci.hamers.events.EventFragment;
 import nl.ecci.hamers.events.NewEventActivity;
+import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.GetJson;
 import nl.ecci.hamers.helpers.Utils;
@@ -45,7 +46,6 @@ import nl.ecci.hamers.news.NewsFragment;
 import nl.ecci.hamers.quotes.NewQuoteFragment;
 import nl.ecci.hamers.quotes.QuoteFragment;
 import nl.ecci.hamers.users.UserFragment;
-import nl.ecci.hamers.gcm.RegistrationIntentService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,8 +59,8 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     // URL
-//    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-        public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
+    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
+    //        public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
     //     Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
     public static final UserFragment USER_FRAGMENT = new UserFragment();
@@ -467,7 +467,7 @@ public class MainActivity extends AppCompatActivity {
                 ImageView userImage = (ImageView) findViewById(R.id.header_user_image);
 
                 userName.setText(user.getString("name"));
-                userEmail.setText(user.getString("email") + " - q:" + user.getInt("quotes") + " r:" + user.getInt("reviews"));
+                userEmail.setText(user.getString("email"));
 
                 // Image
                 String url = "http://gravatar.com/avatar/" + Utils.md5Hex(user.getString("email")) + "?s=200";

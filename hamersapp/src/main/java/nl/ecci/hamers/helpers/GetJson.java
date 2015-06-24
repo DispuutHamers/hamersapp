@@ -5,12 +5,11 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
-import nl.ecci.hamers.beers.BeerFragment;
-import nl.ecci.hamers.events.EventFragment;
 import nl.ecci.hamers.MainActivity;
+import nl.ecci.hamers.R;
+import nl.ecci.hamers.events.EventFragment;
 import nl.ecci.hamers.news.NewsFragment;
 import nl.ecci.hamers.quotes.QuoteFragment;
-import nl.ecci.hamers.R;
 import nl.ecci.hamers.users.UserFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -97,16 +96,11 @@ public class GetJson extends AsyncTask<String, String, String> {
                     else if (f instanceof EventFragment) {
                         prefs.edit().putString(DataManager.EVENTKEY, result).apply();
                         MainActivity.EVENT_FRAGMENT.populateList(prefs);
-                    } else if (f instanceof NewsFragment) {
+                    }
+                    // News fragment
+                    else if (f instanceof NewsFragment) {
                         prefs.edit().putString(DataManager.NEWSKEY, result).apply();
                         MainActivity.NEWS_FRAGMENT.populateList(prefs);
-                    }
-                    // Beer fragment
-                    else if (f instanceof BeerFragment) {
-                        prefs.edit().putString(DataManager.BEERKEY, result).apply();
-                        GetJson g2 = new GetJson(a, null, REVIEWURL, prefs);
-                        g2.execute();
-                        MainActivity.BEER_FRAGMENT.populateList(prefs);
                     }
                     // Quote
                     else if (typeURL.equals(QUOTEURL)) {
