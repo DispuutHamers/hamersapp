@@ -16,7 +16,7 @@ import nl.ecci.hamers.R;
 
 import java.util.ArrayList;
 
-class UsersAdapter extends ArrayAdapter<User> {
+class UserAdapter extends ArrayAdapter<User> {
 
     private static AnimateFirstDisplayListener animateFirstListener;
     private final Context context;
@@ -24,7 +24,7 @@ class UsersAdapter extends ArrayAdapter<User> {
     private final ImageLoader imageLoader;
     private final DisplayImageOptions options;
 
-    public UsersAdapter(Context context, ArrayList<User> dataSet) {
+    public UserAdapter(Context context, ArrayList<User> dataSet) {
         super(context, R.layout.user_row, dataSet);
 
         this.context = context;

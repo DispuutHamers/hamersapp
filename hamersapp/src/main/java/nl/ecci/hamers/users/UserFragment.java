@@ -69,7 +69,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         setHasOptionsMenu(true);
 
-        adapter = new UsersAdapter(this.getActivity(), listItems);
+        adapter = new UserAdapter(this.getActivity(), listItems);
         user_list.setAdapter(adapter);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());

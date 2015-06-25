@@ -68,9 +68,19 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
     }
 
     protected void onPostExecute(String result) {
-        if (result.equals("201") || result.equals("200")) {
-            Activity activity = (Activity) context;
+        Activity activity = (Activity) context;
 
+        System.out.println("------------- RESULT: " + result);
+
+        if (result.equals("500")) {
+            if (view != null && context != null) {
+                Snackbar.make(view, context.getResources().getString(R.string.api_stuk), Snackbar.LENGTH_SHORT).show();
+            } else if (parentView != null && context != null) {
+                Snackbar.make(parentView, context.getResources().getString(R.string.api_stuk), Snackbar.LENGTH_SHORT).show();
+            } else if (context != null) {
+                Toast.makeText(context, context.getResources().getString(R.string.api_stuk), Toast.LENGTH_SHORT).show();
+            }
+        } else if (result.equals("201") || result.equals("200")) {
             if (!(activity instanceof MainActivity) && activity != null) {
                 activity.finish();
             }
@@ -81,7 +91,11 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
                     g.execute();
                     break;
                 }
-                case EVENTURL:
+                case EVENTURL: {
+                    GetJson g = new GetJson((Activity) context, MainActivity.EVENT_FRAGMENT, GetJson.EVENTURL, prefs);
+                    g.execute();
+                    break;
+                }
                 case SIGNUPURL: {
                     GetJson g = new GetJson((Activity) context, MainActivity.EVENT_FRAGMENT, GetJson.EVENTURL, prefs);
                     g.execute();
@@ -115,6 +129,5 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
                 Toast.makeText(context, context.getResources().getString(R.string.not_posted), Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 }

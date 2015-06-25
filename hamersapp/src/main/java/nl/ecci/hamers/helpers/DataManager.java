@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public final class DataManager {
     public static final String QUOTEKEY = "quoteData";
@@ -44,7 +45,7 @@ public final class DataManager {
             if ((events = getJsonArray(prefs, EVENTKEY)) != null) {
                 for (int i = 0; i < events.length(); i++) {
                     JSONObject temp = events.getJSONObject(i);
-                    DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                    DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", new Locale("nl"));
                     Date dbDatum = dbDF.parse(temp.getString("date"));
                     if (dbDatum.equals(date)) {
                         if (temp.getString("title").equals(title)) {

@@ -194,4 +194,6 @@
 
     <string name="search_title">Zoeken</string>
     <string name="search_hint">Zoek…</string>
+
+    <string name="api_stuk">500: De API is stuk.</string>
 </resources>
