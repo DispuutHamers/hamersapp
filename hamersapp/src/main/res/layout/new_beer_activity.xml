@@ -5,27 +5,28 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar"
+             android:id="@+id/toolbar"/>
 
     <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/scrollView"
-            android:layout_above="@+id/buttonLayout">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar">
         <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp">
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp">
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/new_beer"
                     android:textStyle="bold"
-                    android:textSize="22sp"
-                    android:padding="20dp"/>
+                    android:padding="20dp"
+                    android:textSize="22sp" android:layout_gravity="center_horizontal"/>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -34,8 +35,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
                         android:layout_marginBottom="4dp"
                         android:hint="@string/beer_name"
                         android:padding="20dp"/>
@@ -47,8 +46,6 @@
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:layout_marginTop="16dp"
-                          android:layout_marginLeft="15dp"
-                          android:layout_marginRight="15dp"
                           android:layout_marginBottom="4dp"
                           android:inputType="textMultiLine"
                           android:hint="@string/beer_picture"
@@ -61,8 +58,6 @@
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:layout_marginTop="16dp"
-                          android:layout_marginLeft="15dp"
-                          android:layout_marginRight="15dp"
                           android:layout_marginBottom="4dp"
                           android:inputType="textMultiLine"
                           android:hint="@string/beer_soort"
@@ -76,8 +71,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
                         android:layout_marginBottom="4dp"
                         android:hint="@string/beer_percentage"
                         android:padding="20dp"/>
@@ -89,8 +82,6 @@
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:layout_marginTop="16dp"
-                          android:layout_marginLeft="15dp"
-                          android:layout_marginRight="15dp"
                           android:layout_marginBottom="4dp"
                           android:inputType="textMultiLine"
                           android:hint="@string/beer_brewer"
@@ -104,31 +95,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
                         android:layout_marginBottom="4dp"
                         android:hint="@string/beer_country"
                         android:padding="20dp"/>
             </android.support.design.widget.TextInputLayout>
+            <Button
+                    android:id="@+id/sendbeer_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:text="@string/send"
+                    android:onClick="postBeer"/>
         </LinearLayout>
     </ScrollView>
-    <LinearLayout
-            android:id="@+id/buttonLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
-
-        <Button
-                android:id="@+id/sendbeer_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:text="@string/send"
-                android:onClick="postBeer"/>
-    </LinearLayout>
 </RelativeLayout>

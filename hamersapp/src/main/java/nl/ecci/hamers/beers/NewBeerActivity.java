@@ -17,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class NewBeerActivity extends AppCompatActivity {
+
     private RelativeLayout parentLayout;
 
     @Override
