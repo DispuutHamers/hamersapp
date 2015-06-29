@@ -13,25 +13,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.SendPostRequest;
 import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
 import nl.ecci.hamers.helpers.fragments.TimePickerFragment;
-import nl.ecci.hamers.helpers.SendPostRequest;
-import nl.ecci.hamers.R;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class NewEventActivity extends AppCompatActivity {
     private final FragmentManager fragmanager = getSupportFragmentManager();
-    private LinearLayout parentLayout;
+    private RelativeLayout parentLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_event_activity);
 
-        parentLayout = (LinearLayout) findViewById(R.id.new_event_parent);
+        parentLayout = (RelativeLayout) findViewById(R.id.new_event_parent);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

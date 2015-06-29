@@ -133,10 +133,10 @@ public class MyGcmListenerService extends GcmListenerService {
                 // Add event to eventlist
                 if ((json = DataManager.getJsonArray(prefs, DataManager.EVENTKEY)) != null) {
                     JSONArray events = new JSONArray();
-                    events.put(event);
                     for (int i = 0; i < json.length(); i++) {
                         events.put(json.getJSONObject(i));
                     }
+                    events.put(event);
                     prefs.edit().putString(DataManager.EVENTKEY, events.toString()).apply();
                 }
             }

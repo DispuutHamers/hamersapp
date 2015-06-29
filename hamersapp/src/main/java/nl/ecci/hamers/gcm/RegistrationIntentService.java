@@ -47,11 +47,8 @@ public class RegistrationIntentService extends IntentService {
             // In the (unlikely) event that multiple refresh operations occur simultaneously,
             // ensure that they are processed sequentially.
             synchronized (TAG) {
-                // [START register_for_gcm]
                 // Initially this call goes out to the network to retrieve the token, subsequent calls
                 // are local.
-                // [START get_token]
-
                 String authorizedEntity = "285371922467"; // Project id from Google Developers Console
                 String scope = "GCM"; // e.g. communicating using GCM, but you can use any
                 // URL-safe characters up to a maximum of 1000, or
@@ -69,7 +66,6 @@ public class RegistrationIntentService extends IntentService {
                 // sent to your server. If the boolean is false, send the token to your server,
                 // otherwise your server should have already received the token.
                 sharedPreferences.edit().putBoolean(MainActivity.SENT_TOKEN_TO_SERVER, true).apply();
-                // [END register_for_gcm]
             }
         } catch (Exception e) {
             Log.d(TAG, "Failed to complete token refresh", e);
@@ -101,13 +97,11 @@ public class RegistrationIntentService extends IntentService {
      * @param token GCM token
      * @throws IOException if unable to reach the GCM PubSub service
      */
-    // [START subscribe_topics]
     private void subscribeTopics(String token) throws IOException {
         for (String topic : TOPICS) {
             GcmPubSub pubSub = GcmPubSub.getInstance(this);
             pubSub.subscribe(token, "/topics/" + topic, null);
         }
     }
-    // [END subscribe_topics]
 
 }
