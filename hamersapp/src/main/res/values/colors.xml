@@ -24,4 +24,6 @@
     <color name="material_red">#f44336</color>
     <color name="material_red_dark">#b71c1c</color>
 
+    <color name="line_seperator">#DADADA</color>
+
 </resources>

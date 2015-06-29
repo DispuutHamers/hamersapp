@@ -46,16 +46,17 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:singleLine="false"
-                android:text="Dit is de description van de review"
                 android:textSize="12sp"
                 android:gravity="left"
                 android:textColor="@android:color/tertiary_text_light"
                 android:paddingBottom="20dp"
                 android:clickable="false"/>
+
         <TextView
                 android:id="@+id/review_rating"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:paddingBottom="2dp"
                 android:ellipsize="marquee"
                 android:singleLine="true"
@@ -63,14 +64,6 @@
                 android:textSize="14sp"
                 android:gravity="left|bottom"
                 android:textStyle="italic"
-                android:layout_above="@id/divider"
                 android:textColor="@android:color/tertiary_text_light"/>
-        <View
-                android:layout_width="fill_parent"
-                android:id="@id/divider"
-                android:layout_height="1dp"
-                android:layout_below="@id/review_body"
-                android:layout_alignParentBottom="true"
-                android:background="@android:color/darker_gray"/>
     </RelativeLayout>
 </RelativeLayout>
