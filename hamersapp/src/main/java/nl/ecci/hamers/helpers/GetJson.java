@@ -77,9 +77,6 @@ public class GetJson extends AsyncTask<String, String, String> {
                 if (arr.getJSONObject(0).has("error")) {
                     ((MainActivity) a).loadData2(prefs, false);
                 }
-                if (a instanceof MainActivity) {
-                    ((MainActivity) a).loadData2(prefs, true);
-                }
                 if (result.equals("{}")) {
                     Toast.makeText(a, a.getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
                 } else {
@@ -111,6 +108,8 @@ public class GetJson extends AsyncTask<String, String, String> {
                     else if (typeURL.equals(BEERURL)) {
                         prefs.edit().putString(DataManager.BEERKEY, result).apply();
                         MainActivity.BEER_FRAGMENT.populateList(prefs);
+                        GetJson g = new GetJson(null, null, GetJson.REVIEWURL, prefs);
+                        g.execute();
                     }
                     // Review
                     else if (typeURL.equals(REVIEWURL)) {

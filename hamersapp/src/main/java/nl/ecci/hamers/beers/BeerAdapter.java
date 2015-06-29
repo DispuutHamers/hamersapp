@@ -78,7 +78,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             @Override
             public void onClick(View v1) {
                 try {
-                    System.out.println("------------------------- " + filteredDataSet.get(vh.getAdapterPosition()).getId());
                     JSONObject b = DataManager.getBeer(prefs, filteredDataSet.get(vh.getAdapterPosition()).getId());
                     Activity activity = (Activity) context;
                     String imageTransitionName = context.getString(R.string.transition_single_image);
