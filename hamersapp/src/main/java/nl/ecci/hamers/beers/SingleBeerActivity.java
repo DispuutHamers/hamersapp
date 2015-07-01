@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -44,7 +45,7 @@ public class SingleBeerActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.single_beer_item);
+        this.setContentView(R.layout.single_beer);
 
         parentLayout = (LinearLayout) findViewById(R.id.single_beer_parent);
 
@@ -58,11 +59,13 @@ public class SingleBeerActivity extends AppCompatActivity {
         }
 
         TextView nameTV = (TextView) findViewById(R.id.beer_name);
-        TextView soortTV = (TextView) findViewById(R.id.beer_soort);
-        TextView percentageTV = (TextView) findViewById(R.id.beer_alc);
-        TextView brewerTV = (TextView) findViewById(R.id.beer_brewer);
-        TextView countryTV = (TextView) findViewById(R.id.beer_country);
-        TextView cijferTV = (TextView) findViewById(R.id.beer_rating);
+
+        View kindRow = findViewById(R.id.row_kind);
+        View alcRow = findViewById(R.id.row_alc);
+        View brewerRow = findViewById(R.id.row_brewer);
+        View countryRow = findViewById(R.id.row_country);
+        View ratingRow = findViewById(R.id.row_rating);
+
         final ImageView beerImage = (ImageView) findViewById(R.id.beer_image);
         reviewButton = (Button) findViewById(R.id.sendreview_button);
 
@@ -79,16 +82,17 @@ public class SingleBeerActivity extends AppCompatActivity {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
+        fillRow(kindRow, getString(R.string.beer_soort), kind);
+        fillRow(alcRow, getString(R.string.beer_alc), percentage);
+        fillRow(brewerRow, getString(R.string.beer_brewer), brewer);
+        fillRow(countryRow, getString(R.string.beer_country), country);
+
         nameTV.setText(name);
-        soortTV.setText(kind);
-        percentageTV.setText(percentage);
-        brewerTV.setText(brewer);
-        countryTV.setText(country);
 
         if (rating.equals("null")) {
-            cijferTV.setText("nog niet bekend");
+            fillRow(ratingRow, "Nog niet bekend", rating);
         } else {
-            cijferTV.setText(rating);
+            fillRow(ratingRow, getString(R.string.beer_rating), rating);
         }
 
         // Universal Image Loader
@@ -168,6 +172,7 @@ public class SingleBeerActivity extends AppCompatActivity {
     private void insertReview(Review review) {
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.review_row, null);
+        View divider = inflater.inflate(R.layout.divider, null);
 
         TextView title = (TextView) view.findViewById(R.id.review_title);
         TextView body = (TextView) view.findViewById(R.id.review_body);
@@ -196,6 +201,7 @@ public class SingleBeerActivity extends AppCompatActivity {
         // Insert into view
         ViewGroup insertPoint = (ViewGroup) findViewById(R.id.review_insert_point);
         insertPoint.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        insertPoint.addView(divider);
     }
 
     @Override
@@ -221,5 +227,13 @@ public class SingleBeerActivity extends AppCompatActivity {
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", new Locale("nl"));
         DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("nl"));
         return outputFormat.format(inputFormat.parse(dateTemp));
+    }
+
+    public void fillRow(View view, final String title, final String description) {
+        TextView titleView = (TextView) view.findViewById(R.id.title);
+        titleView.setText(title);
+
+        TextView descriptionView = (TextView) view.findViewById(R.id.description);
+        descriptionView.setText(description);
     }
 }
