@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import nl.ecci.hamers.R;
 import nl.ecci.hamers.events.SingleEventActivity;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 

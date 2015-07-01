@@ -69,5 +69,7 @@ public class Beer {
         return rating;
     }
 
-    public Date getCreatedAt() { return createdAt; }
+    public Date getCreatedAt() {
+        return createdAt;
+    }
 }

@@ -10,9 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.SendPostRequest;
-import nl.ecci.hamers.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
