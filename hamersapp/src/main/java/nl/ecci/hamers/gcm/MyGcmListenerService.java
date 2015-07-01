@@ -151,6 +151,15 @@ public class MyGcmListenerService extends GcmListenerService {
                 title = "Biertje: " + beer.getString(BEERNAME);
                 message = "Is net toegevoegd aan de database!";
 
+                // Add review to reviewlist
+                if ((json = DataManager.getJsonArray(prefs, DataManager.BEERKEY)) != null) {
+                    JSONArray beers = new JSONArray();
+                    for (int i = 0; i < json.length(); i++) {
+                        beers.put(json.getJSONObject(i));
+                    }
+                    beers.put(beer);
+                    prefs.edit().putString(DataManager.REVIEWKEY, beers.toString()).apply();
+                }
             }
         } catch (JSONException | NullPointerException e) {
             e.printStackTrace();
