@@ -41,29 +41,18 @@ public class SingleEventActivity extends AppCompatActivity {
         parentLayout = (LinearLayout) findViewById(R.id.single_event_parent);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        final ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-        }
-
-        LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
-        Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
-        Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
+        initToolbar();
 
         TextView titleTV = (TextView) findViewById(R.id.event_title);
-
         View dateRow = findViewById(R.id.row_date);
         View locationRow = findViewById(R.id.row_location);
         View descriptionRow = findViewById(R.id.row_description);
-
         LinearLayout aanwezig_layout = (LinearLayout) findViewById(R.id.aanwezig_layout);
-
         ViewGroup aanwezigView = (ViewGroup) findViewById(R.id.aanwezig_insert_point);
         ViewGroup afwezigView = (ViewGroup) findViewById(R.id.afwezig_insert_point);
+        LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
+        Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
+        Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
 
         Bundle extras = getIntent().getExtras();
         id = extras.getInt("id");
@@ -176,6 +165,17 @@ public class SingleEventActivity extends AppCompatActivity {
     @Override
     public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    public void initToolbar() {
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
 
     public void fillSingleRow(View view, final String title) {
