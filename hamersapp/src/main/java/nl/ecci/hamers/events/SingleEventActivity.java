@@ -71,7 +71,7 @@ public class SingleEventActivity extends AppCompatActivity {
         ArrayList<String> afwezigItems = getIntent().getStringArrayListExtra("afwezig");
 
         if (aanwezigItems.size() != 0) {
-            for(String u : aanwezigItems) {
+            for (String u : aanwezigItems) {
                 View view = inflater.inflate(R.layout.row_singleview, null);
 
                 fillSingleRow(view, u);
@@ -83,7 +83,7 @@ public class SingleEventActivity extends AppCompatActivity {
         }
 
         if (afwezigItems.size() != 0) {
-            for(String u : afwezigItems) {
+            for (String u : afwezigItems) {
                 View view = inflater.inflate(R.layout.row_singleview, null);
 
                 fillSingleRow(view, u);
