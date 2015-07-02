@@ -16,9 +16,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp">
+                android:padding="16dp">
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -26,7 +24,8 @@
                     android:text="@string/new_beer"
                     android:textStyle="bold"
                     android:padding="20dp"
-                    android:textSize="22sp" android:layout_gravity="center_horizontal"/>
+                    android:textSize="22sp"
+                    android:layout_gravity="center_horizontal"/>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -34,10 +33,9 @@
                         android:id="@+id/beer_title_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
-                        android:hint="@string/beer_name"
-                        android:padding="20dp"/>
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:hint="@string/beer_name"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -45,11 +43,10 @@
                 <EditText android:id="@+id/beer_picture_et"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:layout_marginTop="16dp"
-                          android:layout_marginBottom="4dp"
+                          android:paddingTop="12dp"
+                          android:paddingBottom="12dp"
                           android:inputType="textMultiLine"
-                          android:hint="@string/beer_picture"
-                          android:padding="20dp"/>
+                          android:hint="@string/beer_picture"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -57,11 +54,10 @@
                 <EditText android:id="@+id/beer_soort_et"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:layout_marginTop="16dp"
-                          android:layout_marginBottom="4dp"
+                          android:paddingTop="12dp"
+                          android:paddingBottom="12dp"
                           android:inputType="textMultiLine"
-                          android:hint="@string/beer_soort"
-                          android:padding="20dp"/>
+                          android:hint="@string/beer_soort"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -70,10 +66,9 @@
                         android:id="@+id/beer_percentage_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
-                        android:hint="@string/beer_percentage"
-                        android:padding="20dp"/>
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:hint="@string/beer_percentage"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -81,11 +76,10 @@
                 <EditText android:id="@+id/beer_brewer_et"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:layout_marginTop="16dp"
-                          android:layout_marginBottom="4dp"
+                          android:paddingTop="12dp"
+                          android:paddingBottom="12dp"
                           android:inputType="textMultiLine"
-                          android:hint="@string/beer_brewer"
-                          android:padding="20dp"/>
+                          android:hint="@string/beer_brewer"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -94,10 +88,9 @@
                         android:id="@+id/beer_country_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
-                        android:hint="@string/beer_country"
-                        android:padding="20dp"/>
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:hint="@string/beer_country"/>
             </android.support.design.widget.TextInputLayout>
             <Button
                     android:id="@+id/sendbeer_button"
