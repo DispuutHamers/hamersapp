@@ -4,9 +4,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.*;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -47,10 +49,10 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         quote_list.setLayoutManager(mLayoutManager);
-
-        adapter = new QuoteAdapter(this.getActivity(), dataSet);
-        quote_list.setAdapter(adapter);
         quote_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+
+        adapter = new QuoteAdapter(getActivity(), dataSet);
+        quote_list.setAdapter(adapter);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
@@ -133,7 +135,24 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.event_list_menu, menu);
+        inflater.inflate(R.menu.quote_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.quote_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        if (searchView != null) {
+            searchView.setQueryHint(getString(R.string.search_hint));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    adapter.getFilter().filter(s.toLowerCase());
+                    return false;
+                }
+            });
+        }
     }
 
     @Override

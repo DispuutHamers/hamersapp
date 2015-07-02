@@ -317,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Swaps fragments in the quote_list_menu content view
+     * Swaps fragments in the quote_menu content view
      *
      * @param id
      */

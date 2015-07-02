@@ -33,7 +33,7 @@ import static nl.ecci.hamers.MainActivity.parseDate;
 public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public static RelativeLayout parentLayout;
-    private final ArrayList<Beer> listItems = new ArrayList<>();
+    private final ArrayList<Beer> dataSet = new ArrayList<>();
     public View view;
     private BeerAdapter adapter;
     private SwipeRefreshLayout swipeView;
@@ -66,7 +66,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         initSwiper(view, beer_list, mLayoutManager);
 
-        adapter = new BeerAdapter(listItems, getActivity(), parentLayout);
+        adapter = new BeerAdapter(dataSet, getActivity(), parentLayout);
         beer_list.setAdapter(adapter);
 
         sortList();
@@ -111,7 +111,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     public void populateList(SharedPreferences prefs) {
         this.prefs = prefs;
-        listItems.clear();
+        dataSet.clear();
         JSONArray json;
         try {
             if ((json = DataManager.getJsonArray(prefs, DataManager.BEERKEY)) != null) {
@@ -128,7 +128,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         tempBeer = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
                                 temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), cijfer, parseDate(temp.getString("created_at")));
                     }
-                    listItems.add(tempBeer);
+                    dataSet.add(tempBeer);
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
                     }
@@ -147,7 +147,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.beer_list_menu, menu);
+        inflater.inflate(R.menu.beer_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.beer_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         if (searchView != null) {
@@ -218,7 +218,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void sort(Comparator<Beer> comperator) {
-        Collections.sort(listItems, comperator);
+        Collections.sort(dataSet, comperator);
         adapter.notifyDataSetChanged();
     }
 

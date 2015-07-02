@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -22,10 +24,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> {
+public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> implements Filterable {
 
     private static AnimateFirstDisplayListener animateFirstListener;
     private final ArrayList<Quote> dataSet;
+    private ArrayList<Quote> filteredDataSet;
     private final SharedPreferences prefs;
     private final ImageLoader imageLoader;
     private final DisplayImageOptions options;
@@ -33,6 +36,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
     public QuoteAdapter(Context context, ArrayList<Quote> itemsArrayList) {
         this.dataSet = itemsArrayList;
+        this.filteredDataSet = itemsArrayList;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         // Universal Image Loader
@@ -76,7 +80,41 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return dataSet.size();
+        return filteredDataSet.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                FilterResults results = new FilterResults();
+
+                //If there's nothing to filter on, return the original data for your list
+                if (charSequence == null || charSequence.length() == 0) {
+                    results.values = dataSet;
+                    results.count = dataSet.size();
+                } else {
+                    ArrayList<Quote> filterResultsData = new ArrayList<>();
+                    for (Quote quote : dataSet) {
+                        if (quote.getBody().toLowerCase().contains(charSequence) ||
+                                quote.getUser().toLowerCase().contains(charSequence)) {
+                            filterResultsData.add(quote);
+                        }
+                    }
+
+                    results.values = filterResultsData;
+                    results.count = filterResultsData.size();
+                }
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                filteredDataSet = (ArrayList<Quote>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

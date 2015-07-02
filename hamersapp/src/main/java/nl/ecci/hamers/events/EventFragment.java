@@ -140,6 +140,6 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.event_list_menu, menu);
+        inflater.inflate(R.menu.event_menu, menu);
     }
 }
