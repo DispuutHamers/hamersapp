@@ -38,7 +38,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.quote_list_fragment, container, false);
+        View view = inflater.inflate(R.layout.quote_fragment, container, false);
         quote_list = (RecyclerView) view.findViewById(R.id.quotes_recyclerview);
 
         parentLayout = (RelativeLayout) view.findViewById(R.id.quote_list_parent);

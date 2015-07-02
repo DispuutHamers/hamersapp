@@ -14,13 +14,14 @@
                 android:id="@+id/events_recyclerview"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:padding="8dp"
                 android:clickable="true"/>
     </android.support.v4.widget.SwipeRefreshLayout>
     <com.melnykov.fab.FloatingActionButton
             android:id="@+id/event_add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:src="@drawable/action_add"
             android:layout_alignParentRight="true"
