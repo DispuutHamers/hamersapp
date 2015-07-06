@@ -149,10 +149,10 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
 
         try {
             int rating = getRating(filteredDataSet.get(position).getId());
-            if (rating <= 4) {
-                holder.thumbs.setImageResource(R.drawable.ic_thumbs_down);
-            } else if (rating == 0) {
+            if (rating == 0) {
                 holder.thumbs.setImageResource(R.drawable.ic_questionmark);
+            } else if (rating <= 4) {
+                holder.thumbs.setImageResource(R.drawable.ic_thumbs_down);
             } else if (rating >= 5 && rating <= 7) {
                 holder.thumbs.setImageResource(R.drawable.ic_thumbs_up_down);
             } else if (rating >= 8) {
