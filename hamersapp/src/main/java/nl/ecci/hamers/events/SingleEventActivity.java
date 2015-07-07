@@ -31,6 +31,8 @@ public class SingleEventActivity extends AppCompatActivity {
     private int id;
     private LinearLayout parentLayout;
     private SharedPreferences prefs;
+    private ViewGroup aanwezigLayout;
+    private ViewGroup afwezigLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,12 +49,15 @@ public class SingleEventActivity extends AppCompatActivity {
         View dateRow = findViewById(R.id.row_date);
         View locationRow = findViewById(R.id.row_location);
         View descriptionRow = findViewById(R.id.row_description);
-        LinearLayout aanwezig_layout = (LinearLayout) findViewById(R.id.aanwezig_layout);
+        LinearLayout button_layout = (LinearLayout) findViewById(R.id.button_layout);
         ViewGroup aanwezigView = (ViewGroup) findViewById(R.id.aanwezig_insert_point);
         ViewGroup afwezigView = (ViewGroup) findViewById(R.id.afwezig_insert_point);
         LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
         Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
         Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
+
+        ViewGroup aanwezigLayout = (ViewGroup) findViewById(R.id.aanwezig_layout);
+        ViewGroup afwezigLayout = (ViewGroup) findViewById(R.id.afwezig_layout);
 
         Bundle extras = getIntent().getExtras();
         id = extras.getInt("id");
@@ -68,7 +73,7 @@ public class SingleEventActivity extends AppCompatActivity {
                 aanwezigView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             }
         } else {
-            aanwezigView.removeAllViews();
+            aanwezigLayout.removeAllViews();
         }
 
         if (afwezigItems.size() != 0) {
@@ -80,7 +85,7 @@ public class SingleEventActivity extends AppCompatActivity {
                 afwezigView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             }
         } else {
-            afwezigView.removeAllViews();
+            afwezigLayout.removeAllViews();
         }
 
         String title = extras.getString("title");
@@ -100,7 +105,7 @@ public class SingleEventActivity extends AppCompatActivity {
             appDatum = appDF.format(dbDatum);
 
             if (today.after(dbDatum)) {
-                aanwezig_layout.setVisibility(View.GONE);
+                button_layout.setVisibility(View.GONE);
                 ScrollView scrollView = (ScrollView) findViewById(R.id.single_event_scrollview);
                 scrollView.removeView(buttonLayout);
             }

@@ -40,6 +40,7 @@ public class SingleBeerActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     public static LinearLayout parentLayout;
     private Button reviewButton;
+    private ViewGroup reviewViewGroup;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class SingleBeerActivity extends AppCompatActivity {
         View brewerRow = findViewById(R.id.row_brewer);
         View countryRow = findViewById(R.id.row_country);
         View ratingRow = findViewById(R.id.row_rating);
+        reviewViewGroup = (ViewGroup) findViewById(R.id.reviews);
 
         final ImageView beerImage = (ImageView) findViewById(R.id.beer_image);
         reviewButton = (Button) findViewById(R.id.sendreview_button);
@@ -134,17 +136,22 @@ public class SingleBeerActivity extends AppCompatActivity {
 
     private void getReviews() {
         JSONArray reviews;
+        boolean hasReviews = false;
         try {
             if ((reviews = getJsonArray(prefs, DataManager.REVIEWKEY)) != null) {
                 for (int i = 0; i < reviews.length(); i++) {
                     JSONObject review = reviews.getJSONObject(i);
                     if (review.getInt("beer_id") == id) {
+                        hasReviews = true;
                         if (review.getInt("user_id") == getUserID(prefs)) {
                             reviewButton.setVisibility(View.GONE);
                         }
                         Review tempReview = new Review(review.getInt("beer_id"), review.getInt("user_id"), review.getString("description"), review.getString("rating"), review.getString("created_at"), review.getString("proefdatum"));
                         insertReview(tempReview);
                     }
+                }
+                if (!hasReviews) {
+                    reviewViewGroup.removeAllViews();
                 }
             }
         } catch (JSONException e) {
