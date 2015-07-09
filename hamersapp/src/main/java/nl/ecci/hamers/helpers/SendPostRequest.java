@@ -70,8 +70,6 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
     protected void onPostExecute(String result) {
         Activity activity = (Activity) context;
 
-        System.out.println("------------- RESULT: " + result);
-
         if (result.equals("500")) {
             if (view != null && context != null) {
                 Snackbar.make(view, context.getResources().getString(R.string.api_stuk), Snackbar.LENGTH_SHORT).show();

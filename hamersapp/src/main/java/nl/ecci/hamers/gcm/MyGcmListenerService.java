@@ -48,10 +48,15 @@ public class MyGcmListenerService extends GcmListenerService {
     // Event
     private final String EVENTTYPE = "event";
     private final String EVENTTITLE = "title";
+    private final String EVENTLOCATION = "location";
     private final String EVENTDESCRIPTION = "beschrijving";
     // Beer
     private final String BEERTYPE = "beer";
     private final String BEERNAME = "name";
+    private final String BEERKIND = "soort";
+    private final String BEERPERCENTAGE = "percentage";
+    private final String BEERBREWER = "brewer";
+    private final String BEERCOUNTRY = "country";
     // Review
     private final String REVIEWTYPE = "review";
     private final String REVIEWBEER = "beer_id";
@@ -61,6 +66,13 @@ public class MyGcmListenerService extends GcmListenerService {
     private final String USER = "user_id";
     private JSONArray json;
     private SharedPreferences prefs;
+
+    private JSONObject quote;
+    private JSONObject event;
+    private JSONObject beer;
+    private JSONObject review;
+
+    private Type type;
 
     /**
      * Called when message is received.
@@ -74,10 +86,6 @@ public class MyGcmListenerService extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-//        System.out.println("-------------------------------------");
-//        System.out.println(data.toString());
-//        System.out.println("-------------------------------------");
-
         String title = null;
         String message = null;
 
@@ -90,21 +98,17 @@ public class MyGcmListenerService extends GcmListenerService {
             }
         }
 
-        JSONObject quote;
-        JSONObject event;
-        JSONObject beer;
-        JSONObject review;
-
         // QUOTE
         try {
             quote = new JSONObject(object.getString(QUOTETYPE));
             if (quote.length() != 0) {
+                type = Type.QUOTE;
                 title = quote.getString(QUOTEBODY);
 
                 String userName = null;
                 userName = DataManager.UserIDtoUserName(prefs, Integer.valueOf(quote.getString(USER)));
                 if (userName != null) {
-                    message = "- " + userName;
+                    message = userName;
                 } else {
                     message = "- user";
                 }
@@ -127,6 +131,7 @@ public class MyGcmListenerService extends GcmListenerService {
         try {
             event = new JSONObject(object.getString(EVENTTYPE));
             if (event.length() != 0) {
+                type = Type.EVENT;
                 title = event.getString(EVENTTITLE);
                 message = event.getString(EVENTDESCRIPTION);
 
@@ -148,6 +153,7 @@ public class MyGcmListenerService extends GcmListenerService {
         try {
             beer = new JSONObject(object.getString(BEERTYPE));
             if (beer.length() != 0) {
+                type = Type.BEER;
                 title = "Biertje: " + beer.getString(BEERNAME);
                 message = "Is net toegevoegd aan de database!";
 
@@ -169,17 +175,17 @@ public class MyGcmListenerService extends GcmListenerService {
         try {
             review = new JSONObject(object.getString(REVIEWTYPE));
             if (review.length() != 0) {
-
+                type = Type.REVIEW;
                 String userName;
                 String beerName;
                 userName = DataManager.UserIDtoUserName(prefs, review.getInt(USER));
                 beerName = DataManager.BeerIDtoBeerName(prefs, review.getInt(REVIEWBEER));
                 if (userName != null && beerName != null) {
-                    title = userName + " / " + beerName;
+                    title = userName + " / " + beerName + " / " + review.getString(REVIEWRATING);
                 } else {
                     title = "Hamers";
                 }
-                message = review.getString(REVIEWRATING) + " - " + review.getString(REVIEWDESCRIPTION);
+                message = review.getString(REVIEWDESCRIPTION);
 
                 // Add review to reviewlist
                 if ((json = DataManager.getJsonArray(prefs, DataManager.REVIEWKEY)) != null) {
@@ -200,7 +206,7 @@ public class MyGcmListenerService extends GcmListenerService {
         Boolean push = settings.getBoolean("pushPref", true);
 
         if (push && title != null && message != null) {
-            sendNotification(title, message);
+            sendNotification(title, message, type);
         }
     }
 
@@ -209,7 +215,7 @@ public class MyGcmListenerService extends GcmListenerService {
      *
      * @param message GCM message received.
      */
-    private void sendNotification(String title, String message) {
+    private void sendNotification(String title, String message, Type type) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -227,9 +233,72 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        int index = 0;
+        switch (type) {
+            case QUOTE:
+                inboxStyle.setBigContentTitle(message);
+
+                index = 0;
+                while (index < title.length()) {
+                    inboxStyle.addLine(title.substring(index, Math.min(index + 38, title.length())));
+                    index += 38;
+                }
+                break;
+
+            case EVENT:
+                inboxStyle.setBigContentTitle(title);
+                try {
+                    inboxStyle.addLine("Locatie: " + event.getString(EVENTLOCATION));
+                } catch (JSONException ignored) {
+                }
+                index = 0;
+                while (index < message.length()) {
+                    inboxStyle.addLine(message.substring(index, Math.min(index + 38, message.length())));
+                    index += 38;
+                }
+                break;
+
+            case BEER:
+                inboxStyle.setBigContentTitle(title);
+
+                try {
+                    inboxStyle.addLine("Soort: " + beer.getString(BEERKIND));
+                    inboxStyle.addLine("ALC: " + beer.getString(BEERPERCENTAGE));
+                    inboxStyle.addLine("Brouwer: " + beer.getString(BEERBREWER));
+                    inboxStyle.addLine("Land: " + beer.getString(BEERCOUNTRY));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case REVIEW:
+                String[] parts = title.split(" / ");
+                String name = parts[0];
+                String beer = parts[1];
+                String rating = parts[2];
+
+                inboxStyle.setBigContentTitle(beer);
+                inboxStyle.addLine(name + ", Cijfer: " + rating);
+
+                index = 0;
+                while (index < message.length()) {
+                    inboxStyle.addLine(message.substring(index, Math.min(index + 38, message.length())));
+                    index += 38;
+                }
+                break;
+        }
+
+
+        notificationBuilder.setStyle(inboxStyle);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(0, notificationBuilder.build());
+    }
+
+    public enum Type {
+        QUOTE, EVENT, BEER, REVIEW
     }
 }
