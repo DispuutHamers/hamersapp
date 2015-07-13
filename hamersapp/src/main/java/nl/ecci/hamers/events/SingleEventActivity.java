@@ -31,8 +31,6 @@ public class SingleEventActivity extends AppCompatActivity {
     private int id;
     private LinearLayout parentLayout;
     private SharedPreferences prefs;
-    private ViewGroup aanwezigLayout;
-    private ViewGroup afwezigLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +54,7 @@ public class SingleEventActivity extends AppCompatActivity {
         Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
         Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
 
+        ViewGroup eventLayout = (ViewGroup) findViewById(R.id.single_event_layout);
         ViewGroup aanwezigLayout = (ViewGroup) findViewById(R.id.aanwezig_layout);
         ViewGroup afwezigLayout = (ViewGroup) findViewById(R.id.afwezig_layout);
 
@@ -73,7 +72,7 @@ public class SingleEventActivity extends AppCompatActivity {
                 aanwezigView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             }
         } else {
-            aanwezigLayout.removeAllViews();
+            eventLayout.removeView(aanwezigLayout);
         }
 
         if (afwezigItems.size() != 0) {
@@ -85,7 +84,7 @@ public class SingleEventActivity extends AppCompatActivity {
                 afwezigView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             }
         } else {
-            afwezigLayout.removeAllViews();
+            eventLayout.removeView(afwezigLayout);
         }
 
         String title = extras.getString("title");
