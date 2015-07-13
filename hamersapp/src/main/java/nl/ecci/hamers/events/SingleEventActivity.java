@@ -1,12 +1,18 @@
 package nl.ecci.hamers.events;
 
+import android.annotation.SuppressLint;
+import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,6 +37,9 @@ public class SingleEventActivity extends AppCompatActivity {
     private int id;
     private LinearLayout parentLayout;
     private SharedPreferences prefs;
+    private Date dbDate;
+    private DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", new Locale("nl"));
+    private DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", new Locale("nl"));
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,21 +98,24 @@ public class SingleEventActivity extends AppCompatActivity {
 
         String title = extras.getString("title");
         String beschrijving = extras.getString("beschrijving");
-        String location = extras.getString("location");
+        final String location = extras.getString("location");
 
-        String appDatum = null;
+        String deadLine = null;
+        String date = null;
         try {
             // Current date
             Date today = new Date();
+            // Event deadline
+            deadLine = extras.getString("deadline");
+            Date dbDeadlineDate = dbDF.parse(deadLine);
+            deadLine = appDF.format(dbDeadlineDate);
 
             // Event date
-            String date = extras.getString("date");
-            DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", new Locale("nl"));
-            DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", new Locale("nl"));
-            Date dbDatum = dbDF.parse(date);
-            appDatum = appDF.format(dbDatum);
+            date = extras.getString("date");
+            dbDate = dbDF.parse(date);
+            date = appDF.format(dbDate);
 
-            if (today.after(dbDatum)) {
+            if (today.after(dbDeadlineDate)) {
                 button_layout.setVisibility(View.GONE);
                 ScrollView scrollView = (ScrollView) findViewById(R.id.single_event_scrollview);
                 scrollView.removeView(buttonLayout);
@@ -112,25 +124,57 @@ public class SingleEventActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Resources res = getResources();
         titleTV.setText(title);
         fillDetailRow(descriptionRow, "Beschrijving", beschrijving);
-        fillImageRow(dateRow, "Datum", appDatum, res.getDrawable(R.drawable.ic_event));
+        fillImageRow(dateRow, "Datum", date, ContextCompat.getDrawable(this, R.drawable.ic_event));
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            dateRow.setClickable(true);
+            dateRow.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("NewApi")
+                @Override
+                public void onClick(View v) {
+                    long startMillis = dbDate.getTime();
+                    Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
+                    builder.appendPath("time");
+                    ContentUris.appendId(builder, startMillis);
+                    Intent intent = new Intent(Intent.ACTION_VIEW).setData(builder.build());
+                    startActivity(intent);
+                }
+            });
+        }
 
         if (!location.equals("null") && !location.equals("")) {
-            fillImageRow(locationRow, "Locatie", location, res.getDrawable(R.drawable.ic_location));
+            fillImageRow(locationRow, "Locatie", location, ContextCompat.getDrawable(this, R.drawable.ic_location));
+            locationRow.setClickable(true);
+
+            locationRow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Create a Uri from an intent string. Use the result to create an Intent.
+                    Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + location);
+                    // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    // Make the Intent explicit by setting the Google Maps package
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                        // Attempt to start an activity that can handle the Intent
+                        startActivity(mapIntent);
+                    }
+                }
+            });
         } else {
             locationRow.setVisibility(View.GONE);
         }
 
         String userName = DataManager.getUserName(prefs);
-        for (int i = 0; i < aanwezigItems.size(); i++) {
-            if (aanwezigItems.get(i).equals(userName)) {
+        for (String aanwezigItem : aanwezigItems) {
+            if (aanwezigItem.equals(userName)) {
                 aanwezigButton.setVisibility(View.GONE);
             }
         }
-        for (int i = 0; i < afwezigItems.size(); i++) {
-            if (afwezigItems.get(i).equals(userName)) {
+        for (String afwezigItem : afwezigItems) {
+            if (afwezigItem.equals(userName)) {
                 afwezigButton.setVisibility(View.GONE);
             }
         }

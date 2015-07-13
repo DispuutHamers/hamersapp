@@ -56,6 +56,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                         intent.putExtra("beschrijving", e.getString("beschrijving"));
                         intent.putExtra("location", e.getString("location"));
                         intent.putExtra("date", e.getString("date"));
+                        intent.putExtra("deadline", e.getString("deadline"));
 
                         ArrayList<String> aanwezig = new ArrayList<>();
                         ArrayList<String> afwezig = new ArrayList<>();
