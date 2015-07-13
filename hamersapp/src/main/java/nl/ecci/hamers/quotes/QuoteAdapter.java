@@ -62,15 +62,15 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.body.setText(dataSet.get(position).getBody());
-        holder.user.setText(dataSet.get(position).getUser());
+        holder.body.setText(filteredDataSet.get(position).getBody());
+        holder.user.setText(filteredDataSet.get(position).getUser());
 
-        Date date = dataSet.get(position).getDate();
+        Date date = filteredDataSet.get(position).getDate();
         if (date != null) {
             holder.date.setText(dateFormat.format(date));
         }
 
-        String email = DataManager.IDToEmail(prefs, dataSet.get(position).getUserID());
+        String email = DataManager.IDToEmail(prefs, filteredDataSet.get(position).getUserID());
         if (email != null) {
             String url = "http://gravatar.com/avatar/" + Utils.md5Hex(email) + "?s=200";
             imageLoader.displayImage(url, holder.userImage, options, animateFirstListener);
@@ -102,7 +102,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
                             filterResultsData.add(quote);
                         }
                     }
-
                     results.values = filterResultsData;
                     results.count = filterResultsData.size();
                 }

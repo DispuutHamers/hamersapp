@@ -39,7 +39,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
     private RecyclerView beer_list;
-    private String grid_currentQuery = null;
 
     public BeerFragment() {
     }

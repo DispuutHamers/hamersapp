@@ -98,7 +98,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
                     ActivityCompat.startActivity(activity, intent, options.toBundle());
                 } catch (JSONException | NullPointerException ignored) {
                     Snackbar.make(view, context.getString(R.string.snackbar_error), Snackbar.LENGTH_LONG).show();
-                    ignored.printStackTrace();
                 }
             }
         });
@@ -158,7 +157,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             } else if (rating >= 8) {
                 holder.thumbs.setImageResource(R.drawable.ic_thumbs_up);
             }
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ignored) {
         }
     }
 
@@ -187,7 +186,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
                             filterResultsData.add(beer);
                         }
                     }
-
                     results.values = filterResultsData;
                     results.count = filterResultsData.size();
                 }
