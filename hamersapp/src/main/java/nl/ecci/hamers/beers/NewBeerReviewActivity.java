@@ -112,7 +112,7 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
             } else {
                 Snackbar.make(parentLayout, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show();
             }
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException ignored) {
         }
     }
 

@@ -47,7 +47,7 @@ public class NewNewsActivity extends AppCompatActivity {
             // Send request
             SendPostRequest req = new SendPostRequest(this, parentLayout, NewsFragment.parentLayout, SendPostRequest.NEWSURL, PreferenceManager.getDefaultSharedPreferences(this), "news[title]=" + title + "&news[body]=" + body);
             req.execute();
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException ignored) {
         }
     }
 

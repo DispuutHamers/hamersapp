@@ -38,8 +38,8 @@ public class SingleEventActivity extends AppCompatActivity {
     private LinearLayout parentLayout;
     private SharedPreferences prefs;
     private Date dbDate;
-    private DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", new Locale("nl"));
-    private DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", new Locale("nl"));
+    private final DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", new Locale("nl"));
+    private final DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", new Locale("nl"));
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -215,7 +215,7 @@ public class SingleEventActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-    public void initToolbar() {
+    private void initToolbar() {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
@@ -226,12 +226,12 @@ public class SingleEventActivity extends AppCompatActivity {
         }
     }
 
-    public void fillSingleRow(View view, final String title) {
+    private void fillSingleRow(View view, final String title) {
         TextView titleView = (TextView) view.findViewById(R.id.title);
         titleView.setText(title);
     }
 
-    public void fillDetailRow(View view, final String title, final String description) {
+    private void fillDetailRow(View view, final String title, final String description) {
         TextView titleView = (TextView) view.findViewById(R.id.title);
         titleView.setText(title);
 
@@ -239,7 +239,7 @@ public class SingleEventActivity extends AppCompatActivity {
         descriptionView.setText(description);
     }
 
-    public void fillImageRow(View view, final String title, final String description, final Drawable image) {
+    private void fillImageRow(View view, final String title, final String description, final Drawable image) {
         TextView titleView = (TextView) view.findViewById(R.id.title);
         titleView.setText(title);
 

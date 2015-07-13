@@ -34,7 +34,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     public static RelativeLayout parentLayout;
     private final ArrayList<Beer> dataSet = new ArrayList<>();
-    public View view;
+    private View view;
     private BeerAdapter adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
@@ -204,14 +204,19 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         if (prefs != null) {
             String sortPref = prefs.getString("beerSort", "");
-            if (sortPref.equals("name")) {
-                sort(nameComparator);
-            } else if (sortPref.equals("rating")) {
-                sort(ratingComparator);
-            } else if (sortPref.equals("datumASC")) {
-                sort(dateASCComperator);
-            } else if (sortPref.equals("datumDESC")) {
-                sort(dateDESCComperator);
+            switch (sortPref) {
+                case "name":
+                    sort(nameComparator);
+                    break;
+                case "rating":
+                    sort(ratingComparator);
+                    break;
+                case "datumASC":
+                    sort(dateASCComperator);
+                    break;
+                case "datumDESC":
+                    sort(dateDESCComperator);
+                    break;
             }
         }
     }

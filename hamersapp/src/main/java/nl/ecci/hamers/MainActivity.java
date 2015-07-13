@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
     public static final EventFragment EVENT_FRAGMENT = new EventFragment();
     public static final NewsFragment NEWS_FRAGMENT = new NewsFragment();
     public static final BeerFragment BEER_FRAGMENT = new BeerFragment();
-    public static final MotionFragment MOTION_FRAGMENT = new MotionFragment();
-    public static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
+    private static final MotionFragment MOTION_FRAGMENT = new MotionFragment();
+    private static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     private static SharedPreferences prefs;
@@ -455,7 +455,7 @@ public class MainActivity extends AppCompatActivity {
         }, 2000);
     }
 
-    public void fillHeader() {
+    private void fillHeader() {
         JSONArray whoami = DataManager.getJsonArray(prefs, DataManager.WHOAMIKEY);
 
         try {

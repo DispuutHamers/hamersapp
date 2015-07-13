@@ -229,13 +229,13 @@ public class SingleBeerActivity extends AppCompatActivity {
         refreshActivity();
     }
 
-    public String parseDate(String dateTemp) throws ParseException {
+    private String parseDate(String dateTemp) throws ParseException {
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", new Locale("nl"));
         DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("nl"));
         return outputFormat.format(inputFormat.parse(dateTemp));
     }
 
-    public void fillRow(View view, final String title, final String description) {
+    private void fillRow(View view, final String title, final String description) {
         TextView titleView = (TextView) view.findViewById(R.id.title);
         titleView.setText(title);
 

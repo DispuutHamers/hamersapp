@@ -149,7 +149,7 @@ public class NewEventActivity extends AppCompatActivity {
             } else {
                 Snackbar.make(parentLayout, getResources().getString(R.string.missing_fields), Snackbar.LENGTH_SHORT).show();
             }
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException ignored) {
         }
     }
 

@@ -45,7 +45,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     private final ImageLoader imageLoader;
     private final DisplayImageOptions options;
     private ArrayList<Beer> filteredDataSet;
-    private int userID;
+    private final int userID;
 
     public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context, View parentLayout) {
         this.dataSet = itemsArrayList;
@@ -140,7 +140,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
 
         String imageURL = filteredDataSet.get(position).getImageURL();
 
-        if (holder.picture.getTag() == null || !holder.picture.getTag().equals(imageURL) && !imageURL.equals(null)) {
+        if (holder.picture.getTag() == null || !holder.picture.getTag().equals(imageURL) && imageURL != null) {
             ImageAware imageAware = new ImageViewAware(holder.picture, false);
             imageLoader.displayImage(imageURL, imageAware, options, animateFirstListener);
             holder.picture.setTag(imageURL);

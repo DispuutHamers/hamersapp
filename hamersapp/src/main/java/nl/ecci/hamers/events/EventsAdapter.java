@@ -115,11 +115,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 JSONObject signup = signups.getJSONObject(i);
 
                 if (signup.getInt("user_id") == userID) {
-                    if (signup.getBoolean("status")) {
-                        aanwezig = true;
-                    } else {
-                        aanwezig = false;
-                    }
+                    aanwezig = signup.getBoolean("status");
                 }
             }
 

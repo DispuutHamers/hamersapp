@@ -72,7 +72,7 @@ public class MotionFragment extends Fragment {
             String arguments = "motion[motion_type]=" + type + "&motion[subject]=" + subject + "&motion[content]=" + content;
             SendPostRequest req = new SendPostRequest(this.getActivity(), parentLayout, null, SendPostRequest.MOTIEURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), arguments);
             req.execute();
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException ignored) {
         }
     }
 }

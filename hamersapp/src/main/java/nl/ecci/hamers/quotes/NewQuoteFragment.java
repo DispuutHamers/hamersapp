@@ -52,7 +52,7 @@ public class NewQuoteFragment extends DialogFragment {
 
                             // Post quote
                             NewQuoteFragment.this.postQuote(quote, userID);
-                        } catch (UnsupportedEncodingException e) {
+                        } catch (UnsupportedEncodingException ignored) {
                         }
                     }
                 });
