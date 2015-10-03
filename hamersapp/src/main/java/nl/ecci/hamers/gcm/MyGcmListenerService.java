@@ -2,13 +2,13 @@ package nl.ecci.hamers.gcm;
 
 /**
  * Copyright 2015 Google Inc. All Rights Reserved.
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,6 +28,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import com.google.android.gms.gcm.GcmListenerService;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
@@ -157,14 +158,14 @@ public class MyGcmListenerService extends GcmListenerService {
                 title = "Biertje: " + beer.getString(BEERNAME);
                 message = "Is net toegevoegd aan de database!";
 
-                // Add review to reviewlist
+                // Add beer to beerlist
                 if ((json = DataManager.getJsonArray(prefs, DataManager.BEERKEY)) != null) {
                     JSONArray beers = new JSONArray();
                     for (int i = 0; i < json.length(); i++) {
                         beers.put(json.getJSONObject(i));
                     }
                     beers.put(beer);
-                    prefs.edit().putString(DataManager.REVIEWKEY, beers.toString()).apply();
+                    prefs.edit().putString(DataManager.BEERKEY, beers.toString()).apply();
                 }
             }
         } catch (JSONException | NullPointerException e) {
@@ -182,6 +183,8 @@ public class MyGcmListenerService extends GcmListenerService {
                 beerName = DataManager.BeerIDtoBeerName(prefs, review.getInt(REVIEWBEER));
                 if (userName != null && beerName != null) {
                     title = userName + " / " + beerName + " / " + review.getString(REVIEWRATING);
+                } else if (userName != null) {
+                    title = userName + " / onbekend / " + review.getString(REVIEWRATING);
                 } else {
                     title = "Hamers";
                 }
@@ -233,41 +236,32 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
-        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+        NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
 
         int index = 0;
         switch (type) {
             case QUOTE:
-                inboxStyle.setBigContentTitle(message);
-
-                index = 0;
-                while (index < title.length()) {
-                    inboxStyle.addLine(title.substring(index, Math.min(index + 38, title.length())));
-                    index += 38;
-                }
+                bigTextStyle.setBigContentTitle(message);
+                bigTextStyle.bigText(title);
                 break;
 
             case EVENT:
-                inboxStyle.setBigContentTitle(title);
+                bigTextStyle.setBigContentTitle(title);
                 try {
-                    inboxStyle.addLine("Locatie: " + event.getString(EVENTLOCATION));
+                    bigTextStyle.bigText("Locatie: " + event.getString(EVENTLOCATION) + "\n" +
+                            message);
                 } catch (JSONException ignored) {
-                }
-                index = 0;
-                while (index < message.length()) {
-                    inboxStyle.addLine(message.substring(index, Math.min(index + 38, message.length())));
-                    index += 38;
                 }
                 break;
 
             case BEER:
-                inboxStyle.setBigContentTitle(title);
+                bigTextStyle.setBigContentTitle(title);
 
                 try {
-                    inboxStyle.addLine("Soort: " + beer.getString(BEERKIND));
-                    inboxStyle.addLine("ALC: " + beer.getString(BEERPERCENTAGE));
-                    inboxStyle.addLine("Brouwer: " + beer.getString(BEERBREWER));
-                    inboxStyle.addLine("Land: " + beer.getString(BEERCOUNTRY));
+                    bigTextStyle.bigText("Soort: " + beer.getString(BEERKIND) + "\n" +
+                            "ALC: " + beer.getString(BEERPERCENTAGE) + "\n" +
+                            "Brouwer: " + beer.getString(BEERBREWER) + "\n" +
+                            "Land: " + beer.getString(BEERCOUNTRY));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -279,19 +273,13 @@ public class MyGcmListenerService extends GcmListenerService {
                 String beer = parts[1];
                 String rating = parts[2];
 
-                inboxStyle.setBigContentTitle(beer);
-                inboxStyle.addLine(name + ", Cijfer: " + rating);
-
-                index = 0;
-                while (index < message.length()) {
-                    inboxStyle.addLine(message.substring(index, Math.min(index + 38, message.length())));
-                    index += 38;
-                }
+                bigTextStyle.setBigContentTitle(beer);
+                bigTextStyle.bigText(name + ", Cijfer: " + rating + "\n" + message);
                 break;
         }
 
 
-        notificationBuilder.setStyle(inboxStyle);
+        notificationBuilder.setStyle(bigTextStyle);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
