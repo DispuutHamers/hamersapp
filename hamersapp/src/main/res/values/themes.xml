@@ -3,6 +3,11 @@
     <style name="AppTheme"
            parent="Theme.AppCompat.Light.NoActionBar">
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+
+        <!-- Preference theme -->
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <!-- The following is temporary, see: http://stackoverflow.com/questions/32070670/preferencefragmentcompat-requires-preferencetheme-to-be-set -->
+        <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
