@@ -22,3 +22,6 @@
 -verbose
 -optimizations !code/simplification/arithmetic,!field
 -keep class android.support.v7.widget.SearchView { *; }
+-dontwarn org.apache.http.**
+-dontwarn android.net.http.AndroidHttpClient
+-dontwarn com.google.android.gms.**
