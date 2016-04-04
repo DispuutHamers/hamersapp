@@ -8,18 +8,26 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
 import com.melnykov.fab.FloatingActionButton;
-import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.GetJson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.GetJson;
 
 import static nl.ecci.hamers.MainActivity.parseDate;
 

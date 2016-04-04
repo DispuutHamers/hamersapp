@@ -15,15 +15,17 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.SendPostRequest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+
+import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.SendPostRequest;
 
 public class NewQuoteFragment extends DialogFragment {
 

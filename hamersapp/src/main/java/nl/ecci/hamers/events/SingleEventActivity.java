@@ -20,10 +20,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.SendPostRequest;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -31,6 +32,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.SendPostRequest;
 
 public class SingleEventActivity extends AppCompatActivity {
 

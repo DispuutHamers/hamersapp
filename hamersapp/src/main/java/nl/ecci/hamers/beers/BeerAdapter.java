@@ -17,20 +17,23 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
-import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.SingleImageActivity;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
+import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.SingleImageActivity;
 
 import static nl.ecci.hamers.helpers.DataManager.getJsonArray;
 import static nl.ecci.hamers.helpers.DataManager.getUserID;

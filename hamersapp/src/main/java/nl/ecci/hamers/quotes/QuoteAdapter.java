@@ -12,17 +12,19 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
-import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
+import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.Utils;
 
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> implements Filterable {
 

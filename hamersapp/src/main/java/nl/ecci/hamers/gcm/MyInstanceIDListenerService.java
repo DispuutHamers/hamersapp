@@ -1,6 +1,7 @@
 package nl.ecci.hamers.gcm;
 
 import android.content.Intent;
+
 import com.google.android.gms.iid.InstanceIDListenerService;
 
 public class MyInstanceIDListenerService extends InstanceIDListenerService {

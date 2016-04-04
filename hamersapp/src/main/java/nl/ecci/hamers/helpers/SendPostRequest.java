@@ -7,13 +7,14 @@ import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Toast;
-import nl.ecci.hamers.MainActivity;
-import nl.ecci.hamers.R;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import nl.ecci.hamers.MainActivity;
+import nl.ecci.hamers.R;
 
 public class SendPostRequest extends AsyncTask<String, String, String> {
 

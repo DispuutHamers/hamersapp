@@ -3,6 +3,7 @@ package nl.ecci.hamers.helpers;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 

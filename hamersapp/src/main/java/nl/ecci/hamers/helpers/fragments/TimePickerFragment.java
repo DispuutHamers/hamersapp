@@ -8,9 +8,10 @@ import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
 import android.widget.Button;
 import android.widget.TimePicker;
-import nl.ecci.hamers.R;
 
 import java.util.Calendar;
+
+import nl.ecci.hamers.R;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 

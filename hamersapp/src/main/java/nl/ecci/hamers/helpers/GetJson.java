@@ -5,12 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
-import nl.ecci.hamers.MainActivity;
-import nl.ecci.hamers.R;
-import nl.ecci.hamers.events.EventFragment;
-import nl.ecci.hamers.news.NewsFragment;
-import nl.ecci.hamers.quotes.QuoteFragment;
-import nl.ecci.hamers.users.UserFragment;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -19,6 +14,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import nl.ecci.hamers.MainActivity;
+import nl.ecci.hamers.R;
+import nl.ecci.hamers.events.EventFragment;
+import nl.ecci.hamers.news.NewsFragment;
+import nl.ecci.hamers.quotes.QuoteFragment;
+import nl.ecci.hamers.users.UserFragment;
 
 public class GetJson extends AsyncTask<String, String, String> {
     public static final String QUOTEURL = "/quote.json";

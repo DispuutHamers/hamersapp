@@ -10,11 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.SendPostRequest;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+
+import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.SendPostRequest;
 
 public class NewBeerActivity extends AppCompatActivity {
 

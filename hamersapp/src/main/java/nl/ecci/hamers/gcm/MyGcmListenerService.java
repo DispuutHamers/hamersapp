@@ -28,16 +28,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
+
 import com.google.android.gms.gcm.GcmListenerService;
-import nl.ecci.hamers.MainActivity;
-import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Set;
+
+import nl.ecci.hamers.MainActivity;
+import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.DataManager;
 
 public class MyGcmListenerService extends GcmListenerService {
 

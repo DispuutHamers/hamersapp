@@ -10,10 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import nl.ecci.hamers.helpers.SendPostRequest;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+
+import nl.ecci.hamers.helpers.SendPostRequest;
 
 public class MotionFragment extends Fragment {
 

@@ -5,14 +5,17 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.GetJson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,6 +23,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.GetJson;
 
 public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 

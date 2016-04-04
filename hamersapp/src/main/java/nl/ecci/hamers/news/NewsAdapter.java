@@ -9,9 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import nl.ecci.hamers.R;
-import nl.ecci.hamers.events.SingleEventActivity;
-import nl.ecci.hamers.helpers.DataManager;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,6 +18,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import nl.ecci.hamers.R;
+import nl.ecci.hamers.events.SingleEventActivity;
+import nl.ecci.hamers.helpers.DataManager;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 

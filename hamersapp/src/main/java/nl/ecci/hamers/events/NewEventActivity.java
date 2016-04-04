@@ -14,13 +14,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.SendPostRequest;
 import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
 import nl.ecci.hamers.helpers.fragments.TimePickerFragment;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 public class NewEventActivity extends AppCompatActivity {
     private final FragmentManager fragmanager = getSupportFragmentManager();

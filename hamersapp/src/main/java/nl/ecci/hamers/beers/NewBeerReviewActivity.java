@@ -9,15 +9,20 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
-import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.SendPostRequest;
-import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.SendPostRequest;
+import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
 
 public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
 
