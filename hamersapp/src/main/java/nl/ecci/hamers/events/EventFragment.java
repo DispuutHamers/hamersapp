@@ -35,7 +35,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public static RelativeLayout parentLayout;
     private final ArrayList<Event> listItems = new ArrayList<>();
     private EventAdapter adapter;
-    private SwipeRefreshLayout swipeView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private SharedPreferences prefs;
     private RecyclerView event_list;
 
@@ -61,11 +61,8 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
 
-        if (prefs.getString("eventData", null) != null) {
-            populateList(prefs);
-        } else {
-            onRefresh();
-        }
+        onRefresh();
+
 
         // Floating action button
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.event_add_button);
@@ -76,22 +73,21 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     private void initSwiper(View view, final RecyclerView event_list, final LinearLayoutManager lm) {
         // SwipeRefreshLayout
-        swipeView = (SwipeRefreshLayout) view.findViewById(R.id.events_swipe_container);
-        swipeView.setOnRefreshListener(this);
-        swipeView.setColorSchemeResources(android.R.color.holo_red_light);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.events_swipe_container);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
 
         event_list.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrolled(RecyclerView view, int dx, int dy) {
-                swipeView.setEnabled(lm.findFirstCompletelyVisibleItemPosition() == 0);
+                swipeRefreshLayout.setEnabled(lm.findFirstCompletelyVisibleItemPosition() == 0);
             }
         });
     }
 
     @Override
     public void onRefresh() {
-        swipeView.setEnabled(true);
         DataManager.getData(getContext(), prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
         DataManager.getData(getContext(), prefs, DataManager.SIGNUPURL, DataManager.SIGNUPKEY);
     }
@@ -119,8 +115,8 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         } catch (JSONException e) {
             Snackbar.make(parentLayout, getString(R.string.snackbar_downloaderror), Snackbar.LENGTH_SHORT).show();
         }
-        if (swipeView != null) {
-            swipeView.setRefreshing(false);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 

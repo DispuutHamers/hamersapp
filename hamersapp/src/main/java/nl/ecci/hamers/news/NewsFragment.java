@@ -13,10 +13,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -26,10 +22,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
-import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.Singleton;
 
 import static nl.ecci.hamers.MainActivity.parseDate;
 
@@ -37,7 +31,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private final ArrayList<NewsItem> listItems = new ArrayList<>();
     private NewsAdapter adapter;
-    private SwipeRefreshLayout swipeView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private SharedPreferences prefs;
     public static RelativeLayout parentLayout;
 
@@ -60,11 +54,8 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         news_list.setAdapter(adapter);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        if (prefs.getString("newsData", null) != null) {
-            populateList(prefs);
-        } else {
-            onRefresh();
-        }
+
+        onRefresh();
 
         // Floating action button
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.news_add_button);
@@ -75,22 +66,20 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private void initSwiper(View view, final RecyclerView news_list, final LinearLayoutManager lm) {
         // SwipeRefreshLayout
-        swipeView = (SwipeRefreshLayout) view.findViewById(R.id.news_swipe_container);
-        swipeView.setOnRefreshListener(this);
-        swipeView.setColorSchemeResources(android.R.color.holo_red_light);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.news_swipe_container);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
 
         news_list.setOnScrollListener(new RecyclerView.OnScrollListener() {
-
             @Override
             public void onScrolled(RecyclerView view, int dx, int dy) {
-                swipeView.setEnabled(lm.findFirstCompletelyVisibleItemPosition() == 0);
+                swipeRefreshLayout.setEnabled(lm.findFirstCompletelyVisibleItemPosition() == 0);
             }
         });
     }
 
     @Override
     public void onRefresh() {
-        swipeView.setEnabled(true);
         DataManager.getData(getContext(), prefs, DataManager.NEWSURL, DataManager.NEWSKEY);
     }
 
@@ -116,8 +105,8 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         } catch (JSONException e) {
             Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
         }
-        if (swipeView != null) {
-            swipeView.setRefreshing(false);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 

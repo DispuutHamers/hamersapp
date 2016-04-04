@@ -19,10 +19,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -34,12 +30,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
-import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
-import nl.ecci.hamers.helpers.Singleton;
 
 import static nl.ecci.hamers.MainActivity.parseDate;
 
@@ -48,7 +42,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public static RelativeLayout parentLayout;
     private final ArrayList<Beer> dataSet = new ArrayList<>();
     private BeerAdapter adapter;
-    private SwipeRefreshLayout swipeView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private SharedPreferences prefs;
     private RecyclerView beer_list;
 
@@ -64,11 +58,8 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         setHasOptionsMenu(true);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        if (prefs.getString("beerData", null) != null) {
-            populateList(prefs);
-        } else {
-            onRefresh();
-        }
+
+        onRefresh();
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         beer_list.setLayoutManager(mLayoutManager);
@@ -90,11 +81,11 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void initSwiper(View view, final RecyclerView beer_list, final LinearLayoutManager lm) {
-        swipeView = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
-        swipeView.setOnRefreshListener(this);
-        swipeView.setColorSchemeResources(android.R.color.holo_red_light);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
 
-        swipeView.setOnRefreshListener(this);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         beer_list.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -109,7 +100,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     // enabling or disabling the refresh layout
                     enable = firstItemVisible && topOfFirstItemVisible;
                 }
-                swipeView.setEnabled(enable);
+                swipeRefreshLayout.setEnabled(enable);
             }
         });
     }
@@ -152,8 +143,8 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
             }
         }
-        if (swipeView != null) {
-            swipeView.setRefreshing(false);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
             sortList();
         }
     }

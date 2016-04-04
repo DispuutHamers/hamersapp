@@ -18,11 +18,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -32,11 +27,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
-import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
-import nl.ecci.hamers.helpers.Singleton;
 
 import static nl.ecci.hamers.MainActivity.parseDate;
 
@@ -46,7 +39,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     private final ArrayList<Quote> dataSet = new ArrayList<>();
     private QuoteAdapter adapter;
     private RecyclerView quote_list;
-    private SwipeRefreshLayout swipeView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private SharedPreferences prefs;
 
     public QuoteFragment() {
@@ -70,13 +63,9 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        if (prefs.getString("quoteData", null) != null) {
-            populateList(prefs);
-        } else {
-            onRefresh();
-        }
-
         initSwiper(view, quote_list, mLayoutManager);
+
+        onRefresh();
 
         // Floating action button
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.quote_add_button);
@@ -87,15 +76,15 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     private void initSwiper(View view, final RecyclerView event_list, final LinearLayoutManager lm) {
         // SwipeRefreshLayout
-        swipeView = (SwipeRefreshLayout) view.findViewById(R.id.quotes_swipe_container);
-        swipeView.setOnRefreshListener(this);
-        swipeView.setColorSchemeResources(android.R.color.holo_red_light);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.quotes_swipe_container);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
 
         event_list.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrolled(RecyclerView view, int dx, int dy) {
-                swipeView.setEnabled(lm.findFirstCompletelyVisibleItemPosition() == 0);
+                swipeRefreshLayout.setEnabled(lm.findFirstCompletelyVisibleItemPosition() == 0);
             }
         });
     }
@@ -138,8 +127,8 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         } catch (JSONException e) {
             Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
         }
-        if (swipeView != null) {
-            swipeView.setRefreshing(false);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 

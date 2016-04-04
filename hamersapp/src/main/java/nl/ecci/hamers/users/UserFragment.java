@@ -16,11 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,10 +24,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.Singleton;
 
 public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -68,7 +61,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     };
     private ArrayAdapter<User> adapter;
-    private SwipeRefreshLayout swipeView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private SharedPreferences prefs;
 
     public UserFragment() {
@@ -87,25 +80,21 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
 
-        if (prefs.getString("userData", null) != null) {
-            populateList(prefs);
-        } else {
-            onRefresh();
-        }
-
         initSwiper(view, user_list);
 
         sort();
+
+        onRefresh();
 
         return view;
     }
 
     private void initSwiper(View view, final ListView user_list) {
-        swipeView = (SwipeRefreshLayout) view.findViewById(R.id.users_swipe_container);
-        swipeView.setOnRefreshListener(this);
-        swipeView.setColorSchemeResources(android.R.color.holo_red_light);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.users_swipe_container);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
 
-        swipeView.setOnRefreshListener(this);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         user_list.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -123,7 +112,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     // enabling or disabling the refresh layout
                     enable = firstItemVisible && topOfFirstItemVisible;
                 }
-                swipeView.setEnabled(enable);
+                swipeRefreshLayout.setEnabled(enable);
             }
         });
     }
@@ -156,8 +145,8 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         } catch (JSONException e) {
             Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
         }
-        if (swipeView != null) {
-            swipeView.setRefreshing(false);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 
