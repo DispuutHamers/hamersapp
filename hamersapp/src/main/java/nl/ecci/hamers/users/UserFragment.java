@@ -135,24 +135,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
-        String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + DataManager.USERURL;
-
-        StringRequest request = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        prefs.edit().putString(DataManager.USERKEY, response).apply();
-                        populateList(prefs);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Handle error
-                    }
-                });
-
-        Singleton.getInstance(this.getContext()).addToRequestQueue(request);
+        DataManager.getData(getContext(), prefs, DataManager.USERURL, DataManager.USERKEY);
     }
 
     public void populateList(SharedPreferences prefs) {

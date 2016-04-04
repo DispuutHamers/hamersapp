@@ -86,7 +86,7 @@ public class NewQuoteFragment extends DialogFragment {
     }
 
     private void postQuote(String quote, int userid) {
-        SendPostRequest req = new SendPostRequest(this.getActivity(), null, QuoteFragment.parentLayout, DataManager.QUOTEURL, prefs, "quote[text]=" + quote + " &quote[user_id]=" + userid);
+        SendPostRequest req = new SendPostRequest(this.getActivity(), null, QuoteFragment.parentLayout, DataManager.QUOTEURL, DataManager.QUOTEKEY, prefs, "quote[text]=" + quote + " &quote[user_id]=" + userid);
         req.execute();
     }
 

@@ -18,17 +18,19 @@ import nl.ecci.hamers.R;
 
 public class SendPostRequest extends AsyncTask<String, String, String> {
     private final SharedPreferences prefs;
-    private final String type;
+    private final String dataURL;
+    private final String dataKEY;
     private final String urlParams;
     private final View view;
     private final View parentView;
     private final Context context;
 
-    public SendPostRequest(Context context, View view, View parentView, String type, SharedPreferences prefs, String urlParams) {
+    public SendPostRequest(Context context, View view, View parentView, String dataURL, String dataKEY, SharedPreferences prefs, String urlParams) {
         this.context = context;
         this.view = view;
         this.parentView = parentView;
-        this.type = type;
+        this.dataURL = dataURL;
+        this.dataKEY = dataKEY;
         this.prefs = prefs;
         this.urlParams = urlParams;
     }
@@ -36,7 +38,7 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
     protected String doInBackground(String... params) {
         int response = -1;
         try {
-            URL url = new URL(MainActivity.baseURL + prefs.getString("apikey", "a") + type);
+            URL url = new URL(MainActivity.baseURL + prefs.getString("apikey", "a") + dataURL);
             System.out.println(url);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
@@ -75,33 +77,7 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
                 activity.finish();
             }
 
-//            switch (type) {
-//                case DataManager.QUOTEURL: {
-//                    GetJson g = new GetJson((Activity) context, MainActivity.QUOTE_FRAGMENT, DataManager.QUOTEURL, prefs);
-//                    g.execute();
-//                    break;
-//                }
-//                case DataManager.EVENTURL: {
-//                    GetJson g = new GetJson((Activity) context, MainActivity.EVENT_FRAGMENT, DataManager.EVENTURL, prefs);
-//                    g.execute();
-//                    break;
-//                }
-//                case DataManager.SIGNUPURL: {
-//                    GetJson g = new GetJson((Activity) context, MainActivity.EVENT_FRAGMENT, DataManager.EVENTURL, prefs);
-//                    g.execute();
-//                    break;
-//                }
-//                case DataManager.BEERURL: {
-//                    GetJson g = new GetJson((Activity) context, MainActivity.BEER_FRAGMENT, DataManager.BEERURL, prefs);
-//                    g.execute();
-//                    break;
-//                }
-//                case DataManager.REVIEWURL: {
-//                    GetJson g = new GetJson((Activity) context, null, DataManager.REVIEWURL, prefs);
-//                    g.execute();
-//                    break;
-//                }
-//            }
+            DataManager.getData(context, prefs, dataURL, dataKEY);
 
             if (view != null && context != null) {
                 Snackbar.make(view, context.getResources().getString(R.string.posted), Snackbar.LENGTH_SHORT).show();

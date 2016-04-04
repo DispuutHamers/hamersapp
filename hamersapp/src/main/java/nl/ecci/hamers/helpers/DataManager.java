@@ -1,6 +1,13 @@
 package nl.ecci.hamers.helpers;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,6 +18,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import nl.ecci.hamers.MainActivity;
 
 public final class DataManager {
     public static final String QUOTEURL = "/quote.json";
@@ -32,6 +41,54 @@ public final class DataManager {
     public static final String APIKEYKEY = "apikey";
     public static final String WHOAMIKEY = "whoamikey";
     public static final String AUTHENTICATED = "authenticated";
+
+
+    public static void getData(Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
+        String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + dataURL;
+
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        prefs.edit().putString(dataKEY, response).apply();
+                        populateList(dataURL, prefs);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("--------------------\nError:\n" + error.toString());
+                        if (error instanceof AuthFailureError) {
+                            // Wrong API key
+                        }
+                    }
+                });
+
+        Singleton.getInstance(context).addToRequestQueue(request);
+    }
+
+    public static void populateList(String data, SharedPreferences prefs) {
+        switch (data) {
+            case QUOTEURL:
+                MainActivity.QUOTE_FRAGMENT.populateList(prefs);
+                break;
+            case BEERURL:
+                MainActivity.BEER_FRAGMENT.populateList(prefs);
+                break;
+            case REVIEWURL:
+                MainActivity.BEER_FRAGMENT.populateList(prefs);
+                break;
+            case EVENTURL:
+                MainActivity.EVENT_FRAGMENT.populateList(prefs);
+                break;
+            case NEWSURL:
+                MainActivity.NEWS_FRAGMENT.populateList(prefs);
+                break;
+            case USERURL:
+                MainActivity.USER_FRAGMENT.populateList(prefs);
+                break;
+        }
+    }
 
     public static JSONObject getUser(SharedPreferences prefs, int id) {
         JSONArray users;

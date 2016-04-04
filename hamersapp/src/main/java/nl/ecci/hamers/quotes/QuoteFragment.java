@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -101,24 +102,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public void onRefresh() {
-        String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + DataManager.QUOTEURL;
-
-        StringRequest request = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        prefs.edit().putString(DataManager.QUOTEKEY, response).apply();
-                        populateList(prefs);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Handle error
-                    }
-                });
-
-        Singleton.getInstance(this.getContext()).addToRequestQueue(request);
+        DataManager.getData(getContext(), prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY);
     }
 
     public void populateList(SharedPreferences prefs) {

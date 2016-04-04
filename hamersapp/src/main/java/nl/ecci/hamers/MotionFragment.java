@@ -72,7 +72,7 @@ public class MotionFragment extends Fragment {
             String content = URLEncoder.encode(motion_content.getText().toString(), "UTF-8");
 
             String arguments = "motion[motion_type]=" + type + "&motion[subject]=" + subject + "&motion[content]=" + content;
-            SendPostRequest req = new SendPostRequest(this.getActivity(), parentLayout, null, DataManager.MOTIEURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), arguments);
+            SendPostRequest req = new SendPostRequest(this.getActivity(), parentLayout, null, DataManager.MOTIEURL, null, PreferenceManager.getDefaultSharedPreferences(this.getActivity()), arguments);
             req.execute();
         } catch (UnsupportedEncodingException ignored) {
         }

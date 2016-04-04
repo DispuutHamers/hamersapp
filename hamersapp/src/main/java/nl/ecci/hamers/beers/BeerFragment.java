@@ -47,7 +47,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     public static RelativeLayout parentLayout;
     private final ArrayList<Beer> dataSet = new ArrayList<>();
-    private View view;
     private BeerAdapter adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
@@ -57,7 +56,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.beer_fragment, container, false);
+        View view = inflater.inflate(R.layout.beer_fragment, container, false);
         beer_list = (RecyclerView) view.findViewById(R.id.beer_recyclerview);
 
         parentLayout = (RelativeLayout) view.findViewById(R.id.beer_parent);
@@ -117,24 +116,10 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
-        String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + DataManager.BEERURL;
-
-        StringRequest request = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        prefs.edit().putString(DataManager.BEERKEY, response).apply();
-                        populateList(prefs);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Handle error
-                    }
-                });
-
-        Singleton.getInstance(this.getContext()).addToRequestQueue(request);
+        // Get beers
+        DataManager.getData(getContext(), prefs, DataManager.BEERURL, DataManager.BEERKEY);
+        // Get reviews
+        DataManager.getData(getContext(), prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY);
     }
 
     public void populateList(SharedPreferences prefs) {

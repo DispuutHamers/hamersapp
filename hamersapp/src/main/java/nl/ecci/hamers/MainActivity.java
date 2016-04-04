@@ -72,7 +72,7 @@ import nl.ecci.hamers.users.UserFragment;
 public class MainActivity extends AppCompatActivity {
     // URL
 //    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-        public static final String baseURL = "http://192.168.100.100:3000/api/v1/";
+    public static final String baseURL = "http://192.168.100.100:3000/api/v1/";
     // Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
     public static final UserFragment USER_FRAGMENT = new UserFragment();
@@ -115,9 +115,6 @@ public class MainActivity extends AppCompatActivity {
         ImageLoader.getInstance().init(defaultConfiguration);
     }
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,15 +162,17 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         final NavigationView view = (NavigationView) findViewById(R.id.navigation_view);
-        view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                selectItem(menuItem.getItemId());
-                menuItem.setChecked(true);
-                drawerLayout.closeDrawers();
-                return true;
-            }
-        });
+        if (view != null) {
+            view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    selectItem(menuItem.getItemId());
+                    menuItem.setChecked(true);
+                    drawerLayout.closeDrawers();
+                    return true;
+                }
+            });
+        }
     }
 
     private void initToolbar() {
@@ -229,8 +228,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Loads all the data on startup.
-     * It starts with loading the users and afterwards it calls loaddata2, which downloads the other data.
+     * Checks if the API key is present
      */
     public void hasApiKey() {
         if (prefs.getString("apikey", null) == null) {
@@ -446,23 +444,7 @@ public class MainActivity extends AppCompatActivity {
                     ImageLoader.getInstance().displayImage(url, userImage);
                 }
             } else {
-                String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + DataManager.WHOAMIURL;
-
-                StringRequest request = new StringRequest(Request.Method.GET, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                prefs.edit().putString(DataManager.WHOAMIKEY, response).apply();
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // Handle error
-                            }
-                        });
-
-                Singleton.getInstance(this).addToRequestQueue(request);
+                DataManager.getData(this, prefs, DataManager.WHOAMIURL, DataManager.WHOAMIKEY);
             }
         } catch (JSONException e) {
             e.printStackTrace();

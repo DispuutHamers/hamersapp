@@ -90,7 +90,7 @@ public class RegistrationIntentService extends IntentService {
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-        SendPostRequest req = new SendPostRequest(null, null, null, DataManager.GCMURL, sharedPreferences, "device[device_key]=" + token);
+        SendPostRequest req = new SendPostRequest(null, null, null, null, DataManager.GCMURL, sharedPreferences, "device[device_key]=" + token);
         req.execute();
     }
 

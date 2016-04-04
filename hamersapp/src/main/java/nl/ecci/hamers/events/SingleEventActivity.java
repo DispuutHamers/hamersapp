@@ -204,7 +204,7 @@ public class SingleEventActivity extends AppCompatActivity {
     }
 
     private void postSignup(int eventid, String status) {
-        SendPostRequest req = new SendPostRequest(this, null, EventFragment.parentLayout, DataManager.SIGNUPURL, prefs, "signup[event_id]=" + eventid + "&signup[status]=" + status);
+        SendPostRequest req = new SendPostRequest(this, null, EventFragment.parentLayout, DataManager.SIGNUPURL, null, prefs, "signup[event_id]=" + eventid + "&signup[status]=" + status);
         req.execute();
 
         this.finish();
