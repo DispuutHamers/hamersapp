@@ -49,7 +49,7 @@ public final class DataManager {
     public static final String AUTHENTICATED = "authenticated";
 
 
-    public static void getData(Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
+    public static void getData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
         String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + dataURL;
 
         StringRequest request = new StringRequest(Request.Method.GET, url,
@@ -66,6 +66,7 @@ public final class DataManager {
                         System.out.println("--------------------\nError:\n" + error.toString());
                         if (error instanceof AuthFailureError) {
                             // Wrong API key
+                            Utils.showApiKeyDialog(context);
                         }
                     }
                 });

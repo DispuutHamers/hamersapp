@@ -1,9 +1,7 @@
 package nl.ecci.hamers;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -22,11 +20,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -82,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     private LinearLayout parentLayout;
     private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
     private boolean backPressedOnce;
     // GCM
     private BroadcastReceiver mRegistrationBroadcastReceiver;
@@ -150,15 +147,15 @@ public class MainActivity extends AppCompatActivity {
 
         fillHeader();
 
-        hasApiKey();
+        Utils.hasApiKey(this);
     }
 
     private void initDrawer() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        final NavigationView view = (NavigationView) findViewById(R.id.navigation_view);
-        if (view != null) {
-            view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(MenuItem menuItem) {
                     selectItem(menuItem.getItemId());
@@ -222,41 +219,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    /**
-     * Checks if the API key is present
-     */
-    public void hasApiKey() {
-        if (prefs.getString("apikey", null) == null) {
-            showApiKeyDialog();
-        }
-    }
-
-    /**
-     * Show the dialog for entering the apikey on startup
-     */
-    private void showApiKeyDialog() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle(getString(R.string.apikeydialogtitle));
-        alert.setMessage(getString(R.string.apikeydialogmessage));
-        final EditText apiKey = new EditText(this);
-        apiKey.setHint(getString(R.string.apikey_hint));
-        alert.setView(apiKey);
-        alert.setPositiveButton(getString(R.string.dialog_positive), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int whichButton) {
-                Editable key = apiKey.getText();
-                if (!key.toString().equals("")) {
-                    MainActivity.this.storeInMemory(key.toString());
-                    MainActivity.this.showSnackbar(getResources().getString(R.string.snackbar_downloading));
-                    MainActivity.this.hasApiKey();
-                } else {
-                    MainActivity.this.showSnackbar(getResources().getString(R.string.snackbar_storekeymemory));
-                }
-            }
-        });
-        alert.show();
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -268,16 +230,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
-    }
-
-    //Show a Snackbar with the supplied text and the supplied length
-    private void showSnackbar(String text) {
-        Snackbar.make(parentLayout, text, Snackbar.LENGTH_LONG).show();
-    }
-
-    //Stores this key value pair in memory
-    private void storeInMemory(String value) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putString(DataManager.APIKEYKEY, value).apply();
     }
 
     /**
@@ -426,9 +378,10 @@ public class MainActivity extends AppCompatActivity {
             if (whoami != null) {
                 JSONObject user = whoami.getJSONObject(0);
 
-                TextView userName = (TextView) findViewById(R.id.header_user_name);
-                TextView userEmail = (TextView) findViewById(R.id.header_user_email);
-                ImageView userImage = (ImageView) findViewById(R.id.header_user_image);
+                View headerLayout = navigationView.getHeaderView(0);
+                TextView userName = (TextView) headerLayout.findViewById(R.id.header_user_name);
+                TextView userEmail = (TextView) headerLayout.findViewById(R.id.header_user_email);
+                ImageView userImage = (ImageView) headerLayout.findViewById(R.id.header_user_image);
 
                 if (userName != null && userEmail != null && userImage != null) {
                     userName.setText(user.getString("name"));

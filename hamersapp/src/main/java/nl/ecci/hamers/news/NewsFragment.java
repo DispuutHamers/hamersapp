@@ -70,7 +70,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
 
-        news_list.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        news_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView view, int dx, int dy) {
                 swipeRefreshLayout.setEnabled(lm.findFirstCompletelyVisibleItemPosition() == 0);

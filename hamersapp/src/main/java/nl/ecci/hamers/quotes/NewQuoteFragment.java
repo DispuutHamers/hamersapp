@@ -91,7 +91,7 @@ public class NewQuoteFragment extends DialogFragment {
         params.put("quote[text]", quote);
         params.put("quote[user_id]", Integer.toString(userid));
 
-        DataManager.postData(this.getContext(), prefs, DataManager.QUOTEURL, null, params);
+        DataManager.postData(this.getContext(), prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY, params);
     }
 
     @Override
