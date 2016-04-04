@@ -62,8 +62,8 @@ import nl.ecci.hamers.users.UserFragment;
 
 public class MainActivity extends AppCompatActivity {
     // URL
-    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-//    public static final String baseURL = "http://192.168.100.100:3000/api/v1/";
+//    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
+    public static final String baseURL = "http://192.168.100.100:3000/api/v1/";
     // Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
     public static final UserFragment USER_FRAGMENT = new UserFragment();
@@ -127,8 +127,6 @@ public class MainActivity extends AppCompatActivity {
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                SharedPreferences prefs =
-                        PreferenceManager.getDefaultSharedPreferences(context);
                 boolean sentToken = prefs
                         .getBoolean(SENT_TOKEN_TO_SERVER, false);
                 if (sentToken) {
@@ -145,9 +143,9 @@ public class MainActivity extends AppCompatActivity {
             startService(intent);
         }
 
-        fillHeader();
+        Utils.hasApiKey(this, prefs);
 
-        Utils.hasApiKey(this);
+        fillHeader();
     }
 
     private void initDrawer() {

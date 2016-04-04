@@ -48,7 +48,6 @@ public final class DataManager {
     public static final String SIGNUPKEY = "signupkey";
     public static final String AUTHENTICATED = "authenticated";
 
-
     public static void getData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
         String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + dataURL;
 
@@ -66,11 +65,17 @@ public final class DataManager {
                         System.out.println("--------------------\nError:\n" + error.toString());
                         if (error instanceof AuthFailureError) {
                             // Wrong API key
-                            Utils.showApiKeyDialog(context);
+                            if (Utils.alertDialog == null) {
+                                Utils.showApiKeyDialog(context);
+                            } else if (!Utils.alertDialog.isShowing()) {
+                                Utils.showApiKeyDialog(context);
+                            }
+                        } else {
+                            // (Generic) Volley error
+                            Toast.makeText(context, context.getString(R.string.snackbar_error), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
         Singleton.getInstance(context).addToRequestQueue(request);
     }
 
@@ -84,7 +89,7 @@ public final class DataManager {
                         if (!(context instanceof MainActivity)) {
                             ((Activity) context).finish();
                         }
-                        Toast.makeText(context, context.getResources().getString(R.string.posted), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
                         getData(context, prefs, dataURL, dataKEY);
                     }
                 },
@@ -94,6 +99,11 @@ public final class DataManager {
                         System.out.println("--------------------\nError:\n" + error.toString());
                         if (error instanceof AuthFailureError) {
                             // Wrong API key
+                            if (Utils.alertDialog == null) {
+                                Utils.showApiKeyDialog(context);
+                            } else if (!Utils.alertDialog.isShowing()) {
+                                Utils.showApiKeyDialog(context);
+                            }
                         }
                     }
                 }) {
@@ -109,7 +119,6 @@ public final class DataManager {
                 return params;
             }
         };
-
         Singleton.getInstance(context).addToRequestQueue(request);
     }
 
