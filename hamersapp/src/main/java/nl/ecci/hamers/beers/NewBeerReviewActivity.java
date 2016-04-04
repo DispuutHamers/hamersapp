@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.SendPostRequest;
 import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
 
@@ -112,7 +113,7 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
                 String arguments = "&review[beer_id]=" + id + "&review[description]=" + review + "&review[rating]=" + cijfer
                         + "&review[proefdatum(1i)]=" + proefjaar + "&review[proefdatum(2i)]=" + proefmaand + "&review[proefdatum(3i)]=" + proefdag + "&review[proefdatum(4i)]=20" + "&review[proefdatum(5i)]=00";
 
-                SendPostRequest req = new SendPostRequest(this, null, SingleBeerActivity.parentLayout, SendPostRequest.REVIEWURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
+                SendPostRequest req = new SendPostRequest(this, null, SingleBeerActivity.parentLayout, DataManager.REVIEWURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
                 req.execute();
             } else {
                 Snackbar.make(parentLayout, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show();

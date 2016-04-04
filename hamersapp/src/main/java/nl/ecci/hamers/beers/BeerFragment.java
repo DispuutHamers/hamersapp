@@ -19,6 +19,10 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -30,11 +34,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
-import nl.ecci.hamers.helpers.GetJson;
+import nl.ecci.hamers.helpers.Singleton;
 
 import static nl.ecci.hamers.MainActivity.parseDate;
 
@@ -112,8 +117,24 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
-        GetJson g = new GetJson(this.getActivity(), this, GetJson.BEERURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()));
-        g.execute();
+        String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + DataManager.BEERURL;
+
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        prefs.edit().putString(DataManager.BEERKEY, response).apply();
+                        populateList(prefs);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle error
+                    }
+                });
+
+        Singleton.getInstance(this.getContext()).addToRequestQueue(request);
     }
 
     public void populateList(SharedPreferences prefs) {

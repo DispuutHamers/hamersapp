@@ -13,6 +13,16 @@ import java.util.Date;
 import java.util.Locale;
 
 public final class DataManager {
+    public static final String QUOTEURL = "/quote.json";
+    public static final String USERURL = "/user.json";
+    public static final String EVENTURL = "/event.json";
+    public static final String NEWSURL = "/news.json";
+    public static final String BEERURL = "/beer.json";
+    public static final String REVIEWURL = "/review.json";
+    public static final String WHOAMIURL = "/whoami.json";
+    public static final String MOTIEURL = "/motions";
+    public static final String SIGNUPURL = "/signup";
+    public static final String GCMURL = "/register";
     public static final String QUOTEKEY = "quoteData";
     public static final String USERKEY = "userData";
     public static final String EVENTKEY = "eventData";

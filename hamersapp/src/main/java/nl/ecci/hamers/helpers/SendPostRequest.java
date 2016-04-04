@@ -17,15 +17,6 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 
 public class SendPostRequest extends AsyncTask<String, String, String> {
-
-    public static final String QUOTEURL = "/quote";
-    public static final String EVENTURL = "/event";
-    public static final String BEERURL = "/beer";
-    public static final String NEWSURL = "/news";
-    public static final String MOTIEURL = "/motions";
-    public static final String REVIEWURL = "/review";
-    public static final String SIGNUPURL = "/signup";
-    public static final String GCMURL = "/register";
     private final SharedPreferences prefs;
     private final String type;
     private final String urlParams;
@@ -84,33 +75,33 @@ public class SendPostRequest extends AsyncTask<String, String, String> {
                 activity.finish();
             }
 
-            switch (type) {
-                case QUOTEURL: {
-                    GetJson g = new GetJson((Activity) context, MainActivity.QUOTE_FRAGMENT, GetJson.QUOTEURL, prefs);
-                    g.execute();
-                    break;
-                }
-                case EVENTURL: {
-                    GetJson g = new GetJson((Activity) context, MainActivity.EVENT_FRAGMENT, GetJson.EVENTURL, prefs);
-                    g.execute();
-                    break;
-                }
-                case SIGNUPURL: {
-                    GetJson g = new GetJson((Activity) context, MainActivity.EVENT_FRAGMENT, GetJson.EVENTURL, prefs);
-                    g.execute();
-                    break;
-                }
-                case BEERURL: {
-                    GetJson g = new GetJson((Activity) context, MainActivity.BEER_FRAGMENT, GetJson.BEERURL, prefs);
-                    g.execute();
-                    break;
-                }
-                case REVIEWURL: {
-                    GetJson g = new GetJson((Activity) context, null, GetJson.REVIEWURL, prefs);
-                    g.execute();
-                    break;
-                }
-            }
+//            switch (type) {
+//                case DataManager.QUOTEURL: {
+//                    GetJson g = new GetJson((Activity) context, MainActivity.QUOTE_FRAGMENT, DataManager.QUOTEURL, prefs);
+//                    g.execute();
+//                    break;
+//                }
+//                case DataManager.EVENTURL: {
+//                    GetJson g = new GetJson((Activity) context, MainActivity.EVENT_FRAGMENT, DataManager.EVENTURL, prefs);
+//                    g.execute();
+//                    break;
+//                }
+//                case DataManager.SIGNUPURL: {
+//                    GetJson g = new GetJson((Activity) context, MainActivity.EVENT_FRAGMENT, DataManager.EVENTURL, prefs);
+//                    g.execute();
+//                    break;
+//                }
+//                case DataManager.BEERURL: {
+//                    GetJson g = new GetJson((Activity) context, MainActivity.BEER_FRAGMENT, DataManager.BEERURL, prefs);
+//                    g.execute();
+//                    break;
+//                }
+//                case DataManager.REVIEWURL: {
+//                    GetJson g = new GetJson((Activity) context, null, DataManager.REVIEWURL, prefs);
+//                    g.execute();
+//                    break;
+//                }
+//            }
 
             if (view != null && context != null) {
                 Snackbar.make(view, context.getResources().getString(R.string.posted), Snackbar.LENGTH_SHORT).show();

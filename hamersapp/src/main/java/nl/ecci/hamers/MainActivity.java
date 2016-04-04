@@ -31,6 +31,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -57,7 +61,7 @@ import nl.ecci.hamers.events.EventFragment;
 import nl.ecci.hamers.events.NewEventActivity;
 import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.GetJson;
+import nl.ecci.hamers.helpers.Singleton;
 import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.news.NewNewsActivity;
 import nl.ecci.hamers.news.NewsFragment;
@@ -67,9 +71,9 @@ import nl.ecci.hamers.users.UserFragment;
 
 public class MainActivity extends AppCompatActivity {
     // URL
-    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-    //    public static final String baseURL = "http://192.168.100.80:3000/api/v1/";
-    //     Fragments
+//    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
+        public static final String baseURL = "http://192.168.100.100:3000/api/v1/";
+    // Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
     public static final UserFragment USER_FRAGMENT = new UserFragment();
     public static final EventFragment EVENT_FRAGMENT = new EventFragment();
@@ -283,47 +287,6 @@ public class MainActivity extends AppCompatActivity {
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString(DataManager.APIKEYKEY, value).apply();
     }
 
-    public void loadData2(SharedPreferences prefs, boolean auth) {
-        if (auth) {
-            //reload quotes
-            if (prefs.getString(DataManager.QUOTEKEY, null) != null) {
-                QUOTE_FRAGMENT.populateList(prefs);
-            } else {
-                GetJson g = new GetJson(this, QUOTE_FRAGMENT, GetJson.QUOTEURL, prefs);
-                g.execute();
-            }
-            //reload Events
-            if (prefs.getString(DataManager.EVENTKEY, null) != null) {
-                EVENT_FRAGMENT.populateList(prefs);
-            } else {
-                GetJson g = new GetJson(this, EVENT_FRAGMENT, GetJson.EVENTURL, prefs);
-                g.execute();
-            }
-            //reload Reviews
-            if (prefs.getString(DataManager.REVIEWKEY, null) == null) {
-                GetJson g = new GetJson(this, null, GetJson.REVIEWURL, prefs);
-                g.execute();
-            }
-            //reload News
-            if (prefs.getString(DataManager.NEWSKEY, null) != null) {
-                NEWS_FRAGMENT.populateList(prefs);
-            } else {
-                GetJson g = new GetJson(this, NEWS_FRAGMENT, GetJson.NEWSURL, prefs);
-                g.execute();
-            }
-            //reload Beers
-            if (prefs.getString(DataManager.BEERKEY, null) != null) {
-                BEER_FRAGMENT.populateList(prefs);
-            } else {
-                GetJson g = new GetJson(this, BEER_FRAGMENT, GetJson.BEERURL, prefs);
-                g.execute();
-            }
-            fillHeader();
-        } else {
-            showApiKeyDialog();
-        }
-    }
-
     /**
      * Swaps fragments in the quote_menu content view
      *
@@ -483,8 +446,23 @@ public class MainActivity extends AppCompatActivity {
                     ImageLoader.getInstance().displayImage(url, userImage);
                 }
             } else {
-                GetJson g = new GetJson(this, null, GetJson.WHOAMIURL, PreferenceManager.getDefaultSharedPreferences(this));
-                g.execute();
+                String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + DataManager.WHOAMIURL;
+
+                StringRequest request = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                prefs.edit().putString(DataManager.WHOAMIKEY, response).apply();
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // Handle error
+                            }
+                        });
+
+                Singleton.getInstance(this).addToRequestQueue(request);
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -29,6 +29,7 @@ import com.google.android.gms.iid.InstanceID;
 import java.io.IOException;
 
 import nl.ecci.hamers.MainActivity;
+import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.SendPostRequest;
 
 public class RegistrationIntentService extends IntentService {
@@ -89,7 +90,7 @@ public class RegistrationIntentService extends IntentService {
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-        SendPostRequest req = new SendPostRequest(null, null, null, SendPostRequest.GCMURL, sharedPreferences, "device[device_key]=" + token);
+        SendPostRequest req = new SendPostRequest(null, null, null, DataManager.GCMURL, sharedPreferences, "device[device_key]=" + token);
         req.execute();
     }
 

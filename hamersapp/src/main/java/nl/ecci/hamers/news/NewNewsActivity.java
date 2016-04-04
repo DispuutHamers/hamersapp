@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.SendPostRequest;
 
 public class NewNewsActivity extends AppCompatActivity {
@@ -46,7 +47,7 @@ public class NewNewsActivity extends AppCompatActivity {
             String body = URLEncoder.encode(news_body.getText().toString(), "UTF-8");
 
             // Send request
-            SendPostRequest req = new SendPostRequest(this, parentLayout, NewsFragment.parentLayout, SendPostRequest.NEWSURL, PreferenceManager.getDefaultSharedPreferences(this), "news[title]=" + title + "&news[body]=" + body);
+            SendPostRequest req = new SendPostRequest(this, parentLayout, NewsFragment.parentLayout, DataManager.NEWSURL, PreferenceManager.getDefaultSharedPreferences(this), "news[title]=" + title + "&news[body]=" + body);
             req.execute();
         } catch (UnsupportedEncodingException ignored) {
         }

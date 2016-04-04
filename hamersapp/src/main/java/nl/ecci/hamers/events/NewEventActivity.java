@@ -15,11 +15,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.SendPostRequest;
+import nl.ecci.hamers.helpers.Singleton;
 import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
 import nl.ecci.hamers.helpers.fragments.TimePickerFragment;
 
@@ -145,7 +153,7 @@ public class NewEventActivity extends AppCompatActivity {
                         + "&event[end_time(5i)]=" + eventEndMinutes + "&event[end_time(4i)]=" + eventEndHour + "&event[end_time(3i)]=" + eventEndDay + "&event[end_time(2i)]=" + eventEndMonth + "&event[end_time(1i)]=" + eventEndYear
                         + "&event[deadline(5i)]=" + eventDeadlineMinutes + "&event[deadline(4i)]=" + eventDeadlineHour + "&event[deadline(3i)]=" + eventDeadlineDay + "&event[deadline(2i)]=" + eventDeadlineMonth + "&event[deadline(1i)]=" + eventDeadlineYear
                         + "&event[date(5i)]=" + eventStartMinutes + "&event[date(4i)]=" + eventStartHour + "&event[date(3i)]=" + eventStartDay + "&event[date(2i)]=" + eventStartMonth + "&event[date(1i)]=" + eventStartYear;
-                SendPostRequest req = new SendPostRequest(this, null, EventFragment.parentLayout, SendPostRequest.EVENTURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
+                SendPostRequest req = new SendPostRequest(this, null, EventFragment.parentLayout, DataManager.EVENTURL, PreferenceManager.getDefaultSharedPreferences(this), arguments);
                 req.execute();
             } else {
                 Snackbar.make(parentLayout, getResources().getString(R.string.missing_fields), Snackbar.LENGTH_SHORT).show();

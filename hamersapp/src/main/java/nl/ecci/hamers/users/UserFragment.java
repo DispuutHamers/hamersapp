@@ -16,6 +16,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,9 +29,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.GetJson;
+import nl.ecci.hamers.helpers.Singleton;
 
 public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -129,8 +135,24 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
-        GetJson g = new GetJson(this.getActivity(), this, GetJson.USERURL, PreferenceManager.getDefaultSharedPreferences(this.getActivity()));
-        g.execute();
+        String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + DataManager.USERURL;
+
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        prefs.edit().putString(DataManager.USERKEY, response).apply();
+                        populateList(prefs);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle error
+                    }
+                });
+
+        Singleton.getInstance(this.getContext()).addToRequestQueue(request);
     }
 
     public void populateList(SharedPreferences prefs) {

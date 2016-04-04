@@ -18,6 +18,10 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -27,10 +31,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
-import nl.ecci.hamers.helpers.GetJson;
+import nl.ecci.hamers.helpers.Singleton;
 
 import static nl.ecci.hamers.MainActivity.parseDate;
 
@@ -96,11 +101,24 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public void onRefresh() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        if (prefs.getString("userData", null) != null) {
-            GetJson g = new GetJson(this.getActivity(), this, GetJson.QUOTEURL, prefs);
-            g.execute();
-        }
+        String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + DataManager.QUOTEURL;
+
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        prefs.edit().putString(DataManager.QUOTEKEY, response).apply();
+                        populateList(prefs);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle error
+                    }
+                });
+
+        Singleton.getInstance(this.getContext()).addToRequestQueue(request);
     }
 
     public void populateList(SharedPreferences prefs) {
