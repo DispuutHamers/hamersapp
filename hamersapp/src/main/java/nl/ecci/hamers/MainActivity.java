@@ -1,7 +1,12 @@
 package nl.ecci.hamers;
 
 import android.app.AlertDialog;
-import android.content.*;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -25,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -33,6 +39,18 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import nl.ecci.hamers.beers.BeerFragment;
 import nl.ecci.hamers.beers.NewBeerActivity;
 import nl.ecci.hamers.events.EventFragment;
@@ -46,16 +64,6 @@ import nl.ecci.hamers.news.NewsFragment;
 import nl.ecci.hamers.quotes.NewQuoteFragment;
 import nl.ecci.hamers.quotes.QuoteFragment;
 import nl.ecci.hamers.users.UserFragment;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     // URL
@@ -466,12 +474,14 @@ public class MainActivity extends AppCompatActivity {
                 TextView userEmail = (TextView) findViewById(R.id.header_user_email);
                 ImageView userImage = (ImageView) findViewById(R.id.header_user_image);
 
-                userName.setText(user.getString("name"));
-                userEmail.setText(user.getString("email"));
+                if (userName != null && userEmail != null && userImage != null) {
+                    userName.setText(user.getString("name"));
+                    userEmail.setText(user.getString("email"));
 
-                // Image
-                String url = "http://gravatar.com/avatar/" + Utils.md5Hex(user.getString("email")) + "?s=200";
-                ImageLoader.getInstance().displayImage(url, userImage);
+                    // Image
+                    String url = "http://gravatar.com/avatar/" + Utils.md5Hex(user.getString("email")) + "?s=200";
+                    ImageLoader.getInstance().displayImage(url, userImage);
+                }
             } else {
                 GetJson g = new GetJson(this, null, GetJson.WHOAMIURL, PreferenceManager.getDefaultSharedPreferences(this));
                 g.execute();
