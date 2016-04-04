@@ -16,10 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -29,10 +25,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
-import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.Singleton;
 
 import static nl.ecci.hamers.MainActivity.parseDate;
 
@@ -40,7 +34,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     public static RelativeLayout parentLayout;
     private final ArrayList<Event> listItems = new ArrayList<>();
-    private EventsAdapter adapter;
+    private EventAdapter adapter;
     private SwipeRefreshLayout swipeView;
     private SharedPreferences prefs;
     private RecyclerView event_list;
@@ -62,7 +56,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         initSwiper(view, event_list, mLayoutManager);
 
-        adapter = new EventsAdapter(getActivity(), listItems);
+        adapter = new EventAdapter(getActivity(), listItems);
         event_list.setAdapter(adapter);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());

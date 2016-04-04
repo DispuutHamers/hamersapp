@@ -22,10 +22,11 @@ import org.json.JSONException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.SendPostRequest;
 
 public class NewQuoteFragment extends DialogFragment {
 
@@ -86,8 +87,11 @@ public class NewQuoteFragment extends DialogFragment {
     }
 
     private void postQuote(String quote, int userid) {
-        SendPostRequest req = new SendPostRequest(this.getActivity(), null, QuoteFragment.parentLayout, DataManager.QUOTEURL, DataManager.QUOTEKEY, prefs, "quote[text]=" + quote + " &quote[user_id]=" + userid);
-        req.execute();
+        Map<String, String> params = new HashMap<>();
+        params.put("quote[text]", quote);
+        params.put("quote[user_id]", Integer.toString(userid));
+
+        DataManager.postData(this.getContext(), prefs, DataManager.QUOTEURL, null, params);
     }
 
     @Override

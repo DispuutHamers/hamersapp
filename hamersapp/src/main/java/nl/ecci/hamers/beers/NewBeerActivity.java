@@ -1,5 +1,6 @@
 package nl.ecci.hamers.beers;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -9,29 +10,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.SendPostRequest;
 
 public class NewBeerActivity extends AppCompatActivity {
 
-    private RelativeLayout parentLayout;
+    private SharedPreferences prefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_beer_activity);
 
-        parentLayout = (RelativeLayout) findViewById(R.id.new_beer_activity_parent);
-
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -69,9 +70,15 @@ public class NewBeerActivity extends AppCompatActivity {
                 percentage = percentage + "%";
             }
 
-            // Send request
-            SendPostRequest req = new SendPostRequest(this, this.findViewById(android.R.id.content), BeerFragment.parentLayout, DataManager.BEERURL, DataManager.BEERKEY, PreferenceManager.getDefaultSharedPreferences(this), "beer[name]=" + title + "&beer[picture]=" + picture + "&beer[percentage]=" + percentage + "&beer[country]=" + country + "&beer[brewer]=" + brewer + "&beer[soort]=" + soort);
-            req.execute();
+            Map<String, String> params = new HashMap<>();
+            params.put("beer[name]", title);
+            params.put("beer[picture]", picture);
+            params.put("beer[percentage]", percentage);
+            params.put("beer[country]", country);
+            params.put("beer[brewer]", brewer);
+            params.put("beer[soort]", soort);
+
+            DataManager.postData(this, prefs, DataManager.BEERURL, DataManager.BEERKEY, params);
         } catch (UnsupportedEncodingException ignored) {
         }
     }

@@ -1,5 +1,6 @@
 package nl.ecci.hamers.news;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -12,21 +13,22 @@ import android.widget.LinearLayout;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.SendPostRequest;
 
 public class NewNewsActivity extends AppCompatActivity {
 
-    private LinearLayout parentLayout;
+    private SharedPreferences prefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_news_acitivity);
 
-        parentLayout = (LinearLayout) findViewById(R.id.new_news_parent);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         final android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -46,9 +48,11 @@ public class NewNewsActivity extends AppCompatActivity {
             String title = URLEncoder.encode(news_title.getText().toString(), "UTF-8");
             String body = URLEncoder.encode(news_body.getText().toString(), "UTF-8");
 
-            // Send request
-            SendPostRequest req = new SendPostRequest(this, parentLayout, NewsFragment.parentLayout, DataManager.NEWSURL, DataManager.NEWSKEY, PreferenceManager.getDefaultSharedPreferences(this), "news[title]=" + title + "&news[body]=" + body);
-            req.execute();
+            Map<String, String> params = new HashMap<>();
+            params.put("news[title]", title);
+            params.put("news[body]", body);
+
+            DataManager.postData(this, prefs, DataManager.NEWSURL, DataManager.NEWSKEY, params);
         } catch (UnsupportedEncodingException ignored) {
         }
     }

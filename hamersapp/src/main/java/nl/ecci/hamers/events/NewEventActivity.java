@@ -1,5 +1,6 @@
 package nl.ecci.hamers.events;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -15,25 +16,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
-import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.SendPostRequest;
-import nl.ecci.hamers.helpers.Singleton;
 import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
 import nl.ecci.hamers.helpers.fragments.TimePickerFragment;
 
 public class NewEventActivity extends AppCompatActivity {
     private final FragmentManager fragmanager = getSupportFragmentManager();
     private RelativeLayout parentLayout;
+    private SharedPreferences prefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +37,8 @@ public class NewEventActivity extends AppCompatActivity {
         setContentView(R.layout.new_event_activity);
 
         parentLayout = (RelativeLayout) findViewById(R.id.new_event_parent);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -119,42 +117,43 @@ public class NewEventActivity extends AppCompatActivity {
             String deadlineTime = deadlineTimeButton.getText().toString();
             String deadlineDate = deadlineDateButton.getText().toString();
 
-            if (!eventDate.contains("Datum") && !title.equals("") && !description.equals("") &&
-                    !eventTime.contains("Tijd") && !eventEndDate.contains("Datum") && !eventEndTime.contains("Tijd") &&
-                    !deadlineDate.contains("Datum") && !deadlineTime.contains("Tijd")) {
+            if (!eventDate.contains("Datum") &&
+                    !title.equals("") &&
+                    !description.equals("") &&
+                    !eventTime.contains("Tijd") &&
+                    !eventEndDate.contains("Datum") &&
+                    !eventEndTime.contains("Tijd") &&
+                    !deadlineDate.contains("Datum") &&
+                    !deadlineTime.contains("Tijd")) {
+
                 String[] dateParts = eventDate.split("-");
-                int eventStartDay = Integer.parseInt(dateParts[0]);
-                int eventStartMonth = Integer.parseInt(dateParts[1]);
-                int eventStartYear = Integer.parseInt(dateParts[2]);
-
                 String[] endDateParts = eventEndDate.split("-");
-                int eventEndDay = Integer.parseInt(endDateParts[0]);
-                int eventEndMonth = Integer.parseInt(endDateParts[1]);
-                int eventEndYear = Integer.parseInt(endDateParts[2]);
-
                 String[] timeParts = eventTime.split(":");
-                int eventStartHour = Integer.parseInt(timeParts[0]);
-                int eventStartMinutes = Integer.parseInt(timeParts[1]);
-
                 String[] endTimeParts = eventEndTime.split(":");
-                int eventEndHour = Integer.parseInt(endTimeParts[0]);
-                int eventEndMinutes = Integer.parseInt(endTimeParts[1]);
-
                 String[] deadlineTimeParts = deadlineTime.split(":");
-                int eventDeadlineHour = Integer.parseInt(deadlineTimeParts[0]);
-                int eventDeadlineMinutes = Integer.parseInt(deadlineTimeParts[1]);
-
                 String[] deadlineDateParts = deadlineDate.split("-");
-                int eventDeadlineDay = Integer.parseInt(deadlineDateParts[0]);
-                int eventDeadlineMonth = Integer.parseInt(deadlineDateParts[1]);
-                int eventDeadlineYear = Integer.parseInt(deadlineDateParts[2]);
 
-                String arguments = "&event[title]=" + title + "&event[beschrijving]=" + description + "&event[location]=" + location
-                        + "&event[end_time(5i)]=" + eventEndMinutes + "&event[end_time(4i)]=" + eventEndHour + "&event[end_time(3i)]=" + eventEndDay + "&event[end_time(2i)]=" + eventEndMonth + "&event[end_time(1i)]=" + eventEndYear
-                        + "&event[deadline(5i)]=" + eventDeadlineMinutes + "&event[deadline(4i)]=" + eventDeadlineHour + "&event[deadline(3i)]=" + eventDeadlineDay + "&event[deadline(2i)]=" + eventDeadlineMonth + "&event[deadline(1i)]=" + eventDeadlineYear
-                        + "&event[date(5i)]=" + eventStartMinutes + "&event[date(4i)]=" + eventStartHour + "&event[date(3i)]=" + eventStartDay + "&event[date(2i)]=" + eventStartMonth + "&event[date(1i)]=" + eventStartYear;
-                SendPostRequest req = new SendPostRequest(this, null, EventFragment.parentLayout, DataManager.EVENTURL, DataManager.EVENTKEY, PreferenceManager.getDefaultSharedPreferences(this), arguments);
-                req.execute();
+                Map<String, String> params = new HashMap<>();
+                params.put("event[title]", title);
+                params.put("event[beschrijving]", description);
+                params.put("event[location]", location);
+                params.put("event[end_time(5i)]", endTimeParts[1]);
+                params.put("event[end_time(4i)]", endTimeParts[0]);
+                params.put("event[end_time(3i)]", endDateParts[0]);
+                params.put("event[end_time(2i)]", endDateParts[1]);
+                params.put("event[end_time(1i)]", endDateParts[2]);
+                params.put("event[deadline(5i)]", deadlineTimeParts[1]);
+                params.put("event[deadline(4i)]", deadlineTimeParts[0]);
+                params.put("event[deadline(3i)]",  deadlineDateParts[0]);
+                params.put("event[deadline(2i)]",  deadlineDateParts[1]);
+                params.put("event[deadline(1i)]",  deadlineDateParts[2]);
+                params.put("event[date(5i)]", timeParts[1]);
+                params.put("event[date(4i)]", timeParts[0]);
+                params.put("event[date(3i)]", dateParts[0]);
+                params.put("event[date(2i)]", dateParts[1]);
+                params.put("event[date(1i)]", dateParts[2]);
+
+                DataManager.postData(this, prefs, DataManager.EVENTURL, DataManager.EVENTKEY, params);
             } else {
                 Snackbar.make(parentLayout, getResources().getString(R.string.missing_fields), Snackbar.LENGTH_SHORT).show();
             }

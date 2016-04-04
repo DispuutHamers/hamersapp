@@ -31,16 +31,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.SendPostRequest;
 
 public class SingleEventActivity extends AppCompatActivity {
 
     private int id;
-    private LinearLayout parentLayout;
     private SharedPreferences prefs;
     private Date dbDate;
     private final DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", new Locale("nl"));
@@ -52,7 +52,6 @@ public class SingleEventActivity extends AppCompatActivity {
         this.setContentView(R.layout.single_event);
 
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        parentLayout = (LinearLayout) findViewById(R.id.single_event_parent);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         initToolbar();
@@ -204,9 +203,11 @@ public class SingleEventActivity extends AppCompatActivity {
     }
 
     private void postSignup(int eventid, String status) {
-        SendPostRequest req = new SendPostRequest(this, null, EventFragment.parentLayout, DataManager.SIGNUPURL, null, prefs, "signup[event_id]=" + eventid + "&signup[status]=" + status);
-        req.execute();
+        Map<String, String> params = new HashMap<>();
+        params.put("signup[event_id]", Integer.toString(eventid));
+        params.put("signup[status]", status);
 
+        DataManager.postData(this, prefs, DataManager.SIGNUPURL, null, params);
         this.finish();
     }
 

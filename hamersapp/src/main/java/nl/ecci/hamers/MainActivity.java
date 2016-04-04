@@ -31,10 +31,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -61,7 +57,6 @@ import nl.ecci.hamers.events.EventFragment;
 import nl.ecci.hamers.events.NewEventActivity;
 import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.Singleton;
 import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.news.NewNewsActivity;
 import nl.ecci.hamers.news.NewsFragment;
@@ -71,8 +66,8 @@ import nl.ecci.hamers.users.UserFragment;
 
 public class MainActivity extends AppCompatActivity {
     // URL
-//    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-    public static final String baseURL = "http://192.168.100.100:3000/api/v1/";
+    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
+//    public static final String baseURL = "http://192.168.100.100:3000/api/v1/";
     // Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
     public static final UserFragment USER_FRAGMENT = new UserFragment();

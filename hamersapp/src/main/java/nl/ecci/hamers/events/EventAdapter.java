@@ -26,13 +26,13 @@ import java.util.Locale;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 
-public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
+public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
     private final SharedPreferences prefs;
     private final Context context;
     private final ArrayList<Event> dataSet;
 
-    public EventsAdapter(Context context, ArrayList<Event> itemsArrayList) {
+    public EventAdapter(Context context, ArrayList<Event> itemsArrayList) {
         this.context = context;
         this.dataSet = itemsArrayList;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);

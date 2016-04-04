@@ -91,7 +91,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onRefresh() {
         swipeView.setEnabled(true);
-        DataManager.getData(getContext(), prefs, DataManager.NEWSURL, DataManager.NEWSURL);
+        DataManager.getData(getContext(), prefs, DataManager.NEWSURL, DataManager.NEWSKEY);
     }
 
     public void populateList(SharedPreferences prefs) {

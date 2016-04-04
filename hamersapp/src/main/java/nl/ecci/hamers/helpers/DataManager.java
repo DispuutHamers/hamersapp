@@ -1,7 +1,9 @@
 package nl.ecci.hamers.helpers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -17,9 +19,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import nl.ecci.hamers.MainActivity;
+import nl.ecci.hamers.R;
 
 public final class DataManager {
     public static final String QUOTEURL = "/quote.json";
@@ -63,6 +68,45 @@ public final class DataManager {
                         }
                     }
                 });
+
+        Singleton.getInstance(context).addToRequestQueue(request);
+    }
+
+    public static void postData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY, final Map<String, String> urlParams) {
+        String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + dataURL;
+
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (!(context instanceof MainActivity)) {
+                            ((Activity) context).finish();
+                        }
+                        Toast.makeText(context, context.getResources().getString(R.string.posted), Toast.LENGTH_SHORT).show();
+                        getData(context, prefs, dataURL, dataKEY);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("--------------------\nError:\n" + error.toString());
+                        if (error instanceof AuthFailureError) {
+                            // Wrong API key
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                return urlParams;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
 
         Singleton.getInstance(context).addToRequestQueue(request);
     }
@@ -115,10 +159,8 @@ public final class DataManager {
                     JSONObject temp = events.getJSONObject(i);
                     DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", new Locale("nl"));
                     Date dbDatum = dbDF.parse(temp.getString("date"));
-                    if (dbDatum.equals(date)) {
-                        if (temp.getString("title").equals(title)) {
-                            return temp;
-                        }
+                    if (dbDatum.equals(date) && temp.getString("title").equals(title)) {
+                        return temp;
                     }
                 }
             }

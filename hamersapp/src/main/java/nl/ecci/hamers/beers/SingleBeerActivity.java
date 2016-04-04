@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
@@ -180,7 +181,7 @@ public class SingleBeerActivity extends AppCompatActivity {
         intent.putExtra("id", id);
         intent.putExtra("name", name);
 
-        int requestCode = 1; // Or some number you choose
+        int requestCode = 1;
         startActivityForResult(intent, requestCode);
     }
 

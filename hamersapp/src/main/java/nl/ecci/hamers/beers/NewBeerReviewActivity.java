@@ -1,5 +1,6 @@
 package nl.ecci.hamers.beers;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -19,10 +20,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.SendPostRequest;
 import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
 
 public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
@@ -31,6 +33,7 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
     private TextView progress;
     private int cijfer;
     private LinearLayout parentLayout;
+    private SharedPreferences prefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,8 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         // Set date to current date
         Button date_button = (Button) findViewById(R.id.pick_date_button);
@@ -106,15 +111,18 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
 
             if (review.length() > 2) {
                 String[] dateParts = date.split("-");
-                int proefdag = Integer.parseInt(dateParts[0]);
-                int proefmaand = Integer.parseInt(dateParts[1]);
-                int proefjaar = Integer.parseInt(dateParts[2]);
 
-                String arguments = "&review[beer_id]=" + id + "&review[description]=" + review + "&review[rating]=" + cijfer
-                        + "&review[proefdatum(1i)]=" + proefjaar + "&review[proefdatum(2i)]=" + proefmaand + "&review[proefdatum(3i)]=" + proefdag + "&review[proefdatum(4i)]=20" + "&review[proefdatum(5i)]=00";
+                Map<String, String> params = new HashMap<>();
+                params.put("review[beer_id]", Integer.toString(id));
+                params.put("review[description]", review);
+                params.put("review[rating]", Integer.toString(cijfer));
+                params.put("review[proefdatum(1i)]", dateParts[2]);
+                params.put("review[proefdatum(2i)]", dateParts[1]);
+                params.put("review[proefdatum(3i)]", dateParts[0]);
+                params.put("review[proefdatum(4i)]", "20");
+                params.put("review[proefdatum(5i)]", "00");
 
-                SendPostRequest req = new SendPostRequest(this, null, SingleBeerActivity.parentLayout, DataManager.REVIEWURL, DataManager.REVIEWKEY, PreferenceManager.getDefaultSharedPreferences(this), arguments);
-                req.execute();
+                DataManager.postData(this, prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY, params);
             } else {
                 Snackbar.make(parentLayout, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show();
             }
