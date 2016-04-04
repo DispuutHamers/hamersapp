@@ -93,6 +93,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void onRefresh() {
         swipeView.setEnabled(true);
         DataManager.getData(getContext(), prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
+        DataManager.getData(getContext(), prefs, DataManager.SIGNUPURL, DataManager.SIGNUPKEY);
     }
 
     public void populateList(SharedPreferences prefs) {

@@ -45,6 +45,7 @@ public final class DataManager {
     public static final String REVIEWKEY = "reviewdata";
     public static final String APIKEYKEY = "apikey";
     public static final String WHOAMIKEY = "whoamikey";
+    public static final String SIGNUPKEY = "signupkey";
     public static final String AUTHENTICATED = "authenticated";
 
 
@@ -123,6 +124,9 @@ public final class DataManager {
                 MainActivity.BEER_FRAGMENT.populateList(prefs);
                 break;
             case EVENTURL:
+                MainActivity.EVENT_FRAGMENT.populateList(prefs);
+                break;
+            case SIGNUPURL:
                 MainActivity.EVENT_FRAGMENT.populateList(prefs);
                 break;
             case NEWSURL:
