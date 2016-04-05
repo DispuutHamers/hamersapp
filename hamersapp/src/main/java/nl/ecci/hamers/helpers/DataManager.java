@@ -34,7 +34,7 @@ public final class DataManager {
     public static final String BEERURL = "/beer.json";
     public static final String REVIEWURL = "/review.json";
     public static final String WHOAMIURL = "/whoami.json";
-    public static final String MOTIEURL = "/motions";
+    public static final String MOTIEURL = "/motion";
     public static final String SIGNUPURL = "/signup";
     public static final String GCMURL = "/register";
     public static final String QUOTEKEY = "quoteData";
