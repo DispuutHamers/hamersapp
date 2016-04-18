@@ -51,36 +51,33 @@ public class NewBeerActivity extends AppCompatActivity {
     }
 
     public void postBeer(View view) {
-        try {
-            EditText beer_title = (EditText) findViewById(R.id.beer_title_et);
-            EditText beer_picture = (EditText) findViewById(R.id.beer_picture_et);
-            EditText beer_soort = (EditText) findViewById(R.id.beer_soort_et);
-            EditText beer_percentage = (EditText) findViewById(R.id.beer_percentage_et);
-            EditText beer_brewer = (EditText) findViewById(R.id.beer_brewer_et);
-            EditText beer_country = (EditText) findViewById(R.id.beer_country_et);
+        EditText beer_title = (EditText) findViewById(R.id.beer_title_et);
+        EditText beer_picture = (EditText) findViewById(R.id.beer_picture_et);
+        EditText beer_soort = (EditText) findViewById(R.id.beer_soort_et);
+        EditText beer_percentage = (EditText) findViewById(R.id.beer_percentage_et);
+        EditText beer_brewer = (EditText) findViewById(R.id.beer_brewer_et);
+        EditText beer_country = (EditText) findViewById(R.id.beer_country_et);
 
-            String title = URLEncoder.encode(beer_title.getText().toString(), "UTF-8");
-            String picture = URLEncoder.encode(beer_picture.getText().toString(), "UTF-8");
-            String soort = URLEncoder.encode(beer_soort.getText().toString(), "UTF-8");
-            String percentage = URLEncoder.encode(beer_percentage.getText().toString(), "UTF-8");
-            String brewer = URLEncoder.encode(beer_brewer.getText().toString(), "UTF-8");
-            String country = URLEncoder.encode(beer_country.getText().toString(), "UTF-8");
+        String title = beer_title.getText().toString();
+        String picture = beer_picture.getText().toString();
+        String soort = beer_soort.getText().toString();
+        String percentage = beer_percentage.getText().toString();
+        String brewer = beer_brewer.getText().toString();
+        String country = beer_country.getText().toString();
 
-            if (!percentage.contains("%")) {
-                percentage = percentage + "%";
-            }
-
-            Map<String, String> params = new HashMap<>();
-            params.put("beer[name]", title);
-            params.put("beer[picture]", picture);
-            params.put("beer[percentage]", percentage);
-            params.put("beer[country]", country);
-            params.put("beer[brewer]", brewer);
-            params.put("beer[soort]", soort);
-
-            DataManager.postData(this, prefs, DataManager.BEERURL, DataManager.BEERKEY, params);
-        } catch (UnsupportedEncodingException ignored) {
+        if (!percentage.contains("%")) {
+            percentage = percentage + "%";
         }
+
+        Map<String, String> params = new HashMap<>();
+        params.put("beer[name]", title);
+        params.put("beer[picture]", picture);
+        params.put("beer[percentage]", percentage);
+        params.put("beer[country]", country);
+        params.put("beer[brewer]", brewer);
+        params.put("beer[soort]", soort);
+
+        DataManager.postData(this, prefs, DataManager.BEERURL, DataManager.BEERKEY, params);
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {

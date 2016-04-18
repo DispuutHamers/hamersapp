@@ -1,6 +1,7 @@
 package nl.ecci.hamers.news;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -41,20 +42,17 @@ public class NewNewsActivity extends AppCompatActivity {
     }
 
     public void postNews(View view) {
-        try {
-            EditText news_title = (EditText) findViewById(R.id.news_title);
-            EditText news_body = (EditText) findViewById(R.id.news_body);
+        EditText news_title = (EditText) findViewById(R.id.news_title);
+        EditText news_body = (EditText) findViewById(R.id.news_body);
 
-            String title = URLEncoder.encode(news_title.getText().toString(), "UTF-8");
-            String body = URLEncoder.encode(news_body.getText().toString(), "UTF-8");
+        String title = news_title.getText().toString();
+        String body = news_body.getText().toString();
 
-            Map<String, String> params = new HashMap<>();
-            params.put("news[title]", title);
-            params.put("news[body]", body);
+        Map<String, String> params = new HashMap<>();
+        params.put("news[title]", Uri.encode(title));
+        params.put("news[body]", Uri.encode(body));
 
-            DataManager.postData(this, prefs, DataManager.NEWSURL, DataManager.NEWSKEY, params);
-        } catch (UnsupportedEncodingException ignored) {
-        }
+        DataManager.postData(this, prefs, DataManager.NEWSURL, DataManager.NEWSKEY, params);
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {

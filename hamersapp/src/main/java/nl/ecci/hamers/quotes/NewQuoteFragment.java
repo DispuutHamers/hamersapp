@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -42,27 +43,28 @@ public class NewQuoteFragment extends DialogFragment {
         builder.setView(view)
                 .setTitle(R.string.quote)
                 .setPositiveButton(R.string.send_quote, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        try {
-                            // Get quote from editText
-                            EditText edit = (EditText) view.findViewById(R.id.quote_input);
-                            String quote = URLEncoder.encode(edit.getText().toString(), "UTF-8");
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Get quote from editText
+                                EditText edit = (EditText) view.findViewById(R.id.quote_input);
+                                String quote = edit.getText().toString();
 
-                            // Get userID from spinner
-                            Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
-                            int userID = DataManager.usernameToID(prefs, userSpinner.getSelectedItem().toString());
+                                // Get userID from spinner
+                                Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
+                                int userID = DataManager.usernameToID(prefs, userSpinner.getSelectedItem().toString());
 
-                            // Post quote
-                            NewQuoteFragment.this.postQuote(quote, userID);
-                        } catch (UnsupportedEncodingException ignored) {
+                                // Post quote
+                                NewQuoteFragment.this.postQuote(quote, userID);
+                            }
                         }
-                    }
-                });
+
+                );
 
         // Initialize spinner
         Spinner spinner = (Spinner) view.findViewById(R.id.user_spinner);
+
         createUserList();
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, users);
 
         spinner.setAdapter(adapter);

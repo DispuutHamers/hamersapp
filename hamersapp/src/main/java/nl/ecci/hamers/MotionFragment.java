@@ -22,7 +22,6 @@ import nl.ecci.hamers.helpers.DataManager;
 public class MotionFragment extends Fragment {
 
     private String type;
-    private RelativeLayout parentLayout;
     private SharedPreferences prefs;
 
     private final String DUURTLANG = "duurt lang";
@@ -32,8 +31,6 @@ public class MotionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.motion_fragment, container, false);
-
-        parentLayout = (RelativeLayout) view.findViewById(R.id.motion_parent);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
 
@@ -69,20 +66,17 @@ public class MotionFragment extends Fragment {
     }
 
     private void postMotion() {
-        try {
-            EditText motion_subject = (EditText) getActivity().findViewById(R.id.motion_subject);
-            EditText motion_content = (EditText) getActivity().findViewById(R.id.motion_content);
+        EditText motion_subject = (EditText) getActivity().findViewById(R.id.motion_subject);
+        EditText motion_content = (EditText) getActivity().findViewById(R.id.motion_content);
 
-            String subject = URLEncoder.encode(motion_subject.getText().toString(), "UTF-8");
-            String content = URLEncoder.encode(motion_content.getText().toString(), "UTF-8");
+        String subject = motion_subject.getText().toString();
+        String content = motion_content.getText().toString();
 
-            Map<String, String> params = new HashMap<>();
-            params.put("motion[motion_type]", type);
-            params.put("motion[subject]", subject);
-            params.put("motion[content]", content);
+        Map<String, String> params = new HashMap<>();
+        params.put("motion[motion_type]", type);
+        params.put("motion[subject]", subject);
+        params.put("motion[content]", content);
 
-            DataManager.postData(this.getContext(), prefs, DataManager.MOTIEURL, null, params);
-        } catch (UnsupportedEncodingException ignored) {
-        }
+        DataManager.postData(this.getContext(), prefs, DataManager.MOTIEURL, null, params);
     }
 }
