@@ -31,7 +31,6 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable false
-            proguardFile '/home/kennedy/development/android/hamersapp/hamersapp/proguard-rules.pro'
             zipAlignEnabled true
         }
     }
