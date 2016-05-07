@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="fill_parent"
-             android:layout_height="fill_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
-    <ImageView android:id="@+id/beer_image"
-               android:layout_width="fill_parent"
-               android:layout_height="fill_parent"
-               android:layout_gravity="center_vertical|center_horizontal"
-               android:layout_margin="0dp"
-               android:transitionName="@string/transition_single_image"
-               android:scaleType="fitCenter"/>
+    <ImageView
+        android:id="@+id/beer_image"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_margin="0dp"
+        android:transitionName="@string/transition_single_image"
+        android:scaleType="fitCenter" />
 </merge>
