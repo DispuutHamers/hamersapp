@@ -28,10 +28,10 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="navigation_item_1">Quotes</string>
-    <string name="navigation_item_2">Leden</string>
-    <string name="navigation_item_3">Activiteiten</string>
+    <string name="navigation_item_2">Activiteiten</string>
+    <string name="navigation_item_3">Bieren</string>
     <string name="navigation_item_4">Nieuws</string>
-    <string name="navigation_item_5">Bieren</string>
+    <string name="navigation_item_5">Leden</string>
     <string name="navigation_item_6">Moties</string>
     <string name="navigation_item_7">Instellingen</string>
 

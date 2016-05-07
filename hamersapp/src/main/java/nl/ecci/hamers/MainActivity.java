@@ -63,7 +63,6 @@ import nl.ecci.hamers.users.UserFragment;
 public class MainActivity extends AppCompatActivity {
     // URL
     public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-//    public static final String baseURL = "http://192.168.100.100:3000/api/v1/";
     // Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
     public static final UserFragment USER_FRAGMENT = new UserFragment();
@@ -241,51 +240,37 @@ public class MainActivity extends AppCompatActivity {
         hideSoftKeyboard();
         switch (id) {
             case R.id.navigation_item_1:
-                transaction
-                        .replace(R.id.content_frame, QUOTE_FRAGMENT)
-                        .commit();
+                transaction.replace(R.id.content_frame, QUOTE_FRAGMENT).commit();
                 setTitle(getResources().getString(R.string.navigation_item_1));
                 break;
 
             case R.id.navigation_item_2:
-                transaction
-                        .replace(R.id.content_frame, USER_FRAGMENT)
-                        .commit();
+                transaction.replace(R.id.content_frame, EVENT_FRAGMENT).commit();
                 setTitle(getResources().getString(R.string.navigation_item_2));
                 break;
 
             case R.id.navigation_item_3:
-                transaction
-                        .replace(R.id.content_frame, EVENT_FRAGMENT)
-                        .commit();
+                transaction.replace(R.id.content_frame, BEER_FRAGMENT).commit();
                 setTitle(getResources().getString(R.string.navigation_item_3));
                 break;
 
             case R.id.navigation_item_4:
-                transaction
-                        .replace(R.id.content_frame, NEWS_FRAGMENT)
-                        .commit();
+                transaction.replace(R.id.content_frame, NEWS_FRAGMENT).commit();
                 setTitle(getResources().getString(R.string.navigation_item_4));
                 break;
 
             case R.id.navigation_item_5:
-                transaction
-                        .replace(R.id.content_frame, BEER_FRAGMENT)
-                        .commit();
+                transaction.replace(R.id.content_frame, USER_FRAGMENT).commit();
                 setTitle(getResources().getString(R.string.navigation_item_5));
                 break;
 
             case R.id.navigation_item_6:
-                transaction
-                        .replace(R.id.content_frame, MOTION_FRAGMENT)
-                        .commit();
+                transaction.replace(R.id.content_frame, MOTION_FRAGMENT).commit();
                 setTitle(getResources().getString(R.string.navigation_item_6));
                 break;
 
             case R.id.navigation_item_7:
-                transaction
-                        .replace(R.id.content_frame, SETTINGS_FRAGMENT)
-                        .commit();
+                transaction.replace(R.id.content_frame, SETTINGS_FRAGMENT).commit();
                 setTitle(getResources().getString(R.string.navigation_item_7));
                 break;
         }
