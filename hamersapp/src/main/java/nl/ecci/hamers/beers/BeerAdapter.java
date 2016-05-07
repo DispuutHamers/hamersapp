@@ -17,6 +17,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -43,18 +44,16 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     private static ImageLoadingListener animateFirstListener;
     private final SharedPreferences prefs;
     private final Context context;
-    private final View parentLayout;
     private final ArrayList<Beer> dataSet;
     private final ImageLoader imageLoader;
     private final DisplayImageOptions options;
     private ArrayList<Beer> filteredDataSet;
     private final int userID;
 
-    public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context, View parentLayout) {
+    public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context) {
         this.dataSet = itemsArrayList;
         this.filteredDataSet = itemsArrayList;
         this.context = context;
-        this.parentLayout = parentLayout;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         userID = getUserID(prefs);
 
@@ -120,7 +119,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
                         intent.putExtra(Beer.BEER_URL, b.getString("picture"));
                         ActivityCompat.startActivity(activity, intent, options.toBundle());
                     } else {
-                        Snackbar.make(parentLayout, context.getString(R.string.no_image), Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getString(R.string.no_image), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException | NullPointerException ignored) {
                     Snackbar.make(view, context.getString(R.string.snackbar_error), Snackbar.LENGTH_LONG).show();

@@ -3,7 +3,6 @@ package nl.ecci.hamers.events;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,9 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-
-import com.melnykov.fab.FloatingActionButton;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,7 +29,6 @@ import static nl.ecci.hamers.MainActivity.parseDate;
 
 public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public static RelativeLayout parentLayout;
     private final ArrayList<Event> listItems = new ArrayList<>();
     private EventAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -47,8 +43,6 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         View view = inflater.inflate(R.layout.event_fragment, container, false);
         event_list = (RecyclerView) view.findViewById(R.id.events_recyclerview);
 
-        parentLayout = (RelativeLayout) view.findViewById(R.id.event_parent);
-
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         event_list.setLayoutManager(mLayoutManager);
 
@@ -62,11 +56,6 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
 
         onRefresh();
-
-
-        // Floating action button
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.event_add_button);
-        fab.attachToRecyclerView(event_list);
 
         return view;
     }
@@ -113,7 +102,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
             }
         } catch (JSONException e) {
-            Snackbar.make(parentLayout, getString(R.string.snackbar_downloaderror), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
         }
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(false);

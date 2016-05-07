@@ -3,6 +3,7 @@ package nl.ecci.hamers.beers;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,8 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +38,6 @@ import static nl.ecci.hamers.MainActivity.parseDate;
 
 public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public static RelativeLayout parentLayout;
     private final ArrayList<Beer> dataSet = new ArrayList<>();
     private BeerAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -52,8 +50,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.beer_fragment, container, false);
         beer_list = (RecyclerView) view.findViewById(R.id.beer_recyclerview);
-
-        parentLayout = (RelativeLayout) view.findViewById(R.id.beer_parent);
 
         setHasOptionsMenu(true);
 
@@ -68,14 +64,10 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         initSwiper(view, beer_list, mLayoutManager);
 
-        adapter = new BeerAdapter(dataSet, getActivity(), parentLayout);
+        adapter = new BeerAdapter(dataSet, getActivity());
         beer_list.setAdapter(adapter);
 
         sortList();
-
-        // Floating action button
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.beer_add_button);
-        fab.attachToRecyclerView(beer_list);
 
         return view;
     }

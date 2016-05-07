@@ -10,10 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +30,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private NewsAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private SharedPreferences prefs;
-    public static RelativeLayout parentLayout;
 
     public NewsFragment() {
     }
@@ -42,8 +38,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.news_fragment, container, false);
         RecyclerView news_list = (RecyclerView) view.findViewById(R.id.news_recyclerview);
-
-        parentLayout = (RelativeLayout) view.findViewById(R.id.news_parent);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         news_list.setLayoutManager(mLayoutManager);
@@ -57,15 +51,10 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         onRefresh();
 
-        // Floating action button
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.news_add_button);
-        fab.attachToRecyclerView(news_list);
-
         return view;
     }
 
     private void initSwiper(View view, final RecyclerView news_list, final LinearLayoutManager lm) {
-        // SwipeRefreshLayout
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.news_swipe_container);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);

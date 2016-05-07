@@ -15,10 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +32,6 @@ import static nl.ecci.hamers.MainActivity.parseDate;
 
 public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public static RelativeLayout parentLayout;
     private final ArrayList<Quote> dataSet = new ArrayList<>();
     private QuoteAdapter adapter;
     private RecyclerView quote_list;
@@ -49,8 +45,6 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.quote_fragment, container, false);
         quote_list = (RecyclerView) view.findViewById(R.id.quotes_recyclerview);
-
-        parentLayout = (RelativeLayout) view.findViewById(R.id.quote_list_parent);
 
         setHasOptionsMenu(true);
 
@@ -66,10 +60,6 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         initSwiper(view, quote_list, mLayoutManager);
 
         onRefresh();
-
-        // Floating action button
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.quote_add_button);
-        fab.attachToRecyclerView(quote_list);
 
         return view;
     }

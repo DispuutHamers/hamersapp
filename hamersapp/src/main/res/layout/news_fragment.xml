@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:fab="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/news_parent"
-        android:orientation="vertical"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/event_fragment_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/news_swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/news_swipe_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
         <android.support.v7.widget.RecyclerView
-                android:id="@+id/news_recyclerview"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:clickable="false"/>
+            android:id="@+id/news_recyclerview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="false"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp" />
+
     </android.support.v4.widget.SwipeRefreshLayout>
-    <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/news_add_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:src="@drawable/action_add"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            fab:fab_colorNormal="@color/material_red"
-            fab:fab_colorPressed="@color/material_red_dark"
-            fab:fab_colorRipple="@color/ripple"
-            android:onClick="newNews"/>
-</RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/beer_add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:onClick="newNews"
+        android:src="@drawable/action_add"
+        app:backgroundTint="@color/material_red"
+        app:layout_anchor="@id/news_recyclerview"
+        app:layout_anchorGravity="bottom|right|end"
+        app:layout_behavior="nl.ecci.hamers.helpers.ScrollAwareFABBehavior" />
+
+</android.support.design.widget.CoordinatorLayout>
