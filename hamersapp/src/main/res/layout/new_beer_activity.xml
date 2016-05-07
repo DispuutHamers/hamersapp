@@ -1,105 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/new_beer_activity_parent"
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/toolbar"
-             android:id="@+id/toolbar"/>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
         <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
             <TextView
-                    android:layout_width="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="20dp"
+                android:text="@string/new_beer"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/beer_title_et"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/new_beer"
-                    android:textStyle="bold"
-                    android:padding="20dp"
-                    android:textSize="22sp"
-                    android:layout_gravity="center_horizontal"/>
+                    android:hint="@string/beer_name"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp" />
+            </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                 <EditText
-                        android:id="@+id/beer_title_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="12dp"
-                        android:paddingBottom="12dp"
-                        android:hint="@string/beer_name"/>
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/beer_picture_et"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <EditText android:id="@+id/beer_picture_et"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:paddingTop="12dp"
-                          android:paddingBottom="12dp"
-                          android:inputType="textMultiLine"
-                          android:hint="@string/beer_picture"/>
+                    android:layout_height="wrap_content"
+                    android:hint="@string/beer_picture"
+                    android:inputType="textMultiLine"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp" />
             </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <EditText android:id="@+id/beer_soort_et"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:paddingTop="12dp"
-                          android:paddingBottom="12dp"
-                          android:inputType="textMultiLine"
-                          android:hint="@string/beer_soort"/>
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                 <EditText
-                        android:id="@+id/beer_percentage_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="12dp"
-                        android:paddingBottom="12dp"
-                        android:hint="@string/beer_percentage"/>
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/beer_soort_et"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <EditText android:id="@+id/beer_brewer_et"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:paddingTop="12dp"
-                          android:paddingBottom="12dp"
-                          android:inputType="textMultiLine"
-                          android:hint="@string/beer_brewer"/>
+                    android:layout_height="wrap_content"
+                    android:hint="@string/beer_soort"
+                    android:inputType="textMultiLine"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp" />
             </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                 <EditText
-                        android:id="@+id/beer_country_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="12dp"
-                        android:paddingBottom="12dp"
-                        android:hint="@string/beer_country"/>
+                    android:id="@+id/beer_percentage_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/beer_percentage"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp" />
             </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/beer_brewer_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/beer_brewer"
+                    android:inputType="textMultiLine"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/beer_country_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/beer_country"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp" />
+            </android.support.design.widget.TextInputLayout>
+
             <Button
-                    android:id="@+id/sendbeer_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_weight="1"
-                    android:text="@string/send"
-                    android:onClick="postBeer"/>
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:onClick="postBeer"
+                android:text="@string/send" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

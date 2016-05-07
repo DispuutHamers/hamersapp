@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="left_drawer" type="id"/>
 
     <!-- Quotes -->
-    <item name="new_quote" type="id"/>
     <item name="quote_date" type="id"/>
 
     <!-- Users -->
     <item name="username" type="id"/>
-    <item name="user_id" type="id"/>
     <item name="user_image" type="id"/>
     <item name="user_quotecount" type="id"/>
     <item name="user_reviewcount" type="id"/>
@@ -17,21 +14,15 @@
     <item name="event_title" type="id"/>
     <item name="event_beschrijving" type="id"/>
     <item name="event_date" type="id"/>
-    <item name="event_end_time" type="id"/>
 
     <!-- Beers -->
     <item name="beer_name" type="id"/>
     <item name="beer_soort" type="id"/>
-    <item name="beer_picture" type="id"/>
     <item name="beer_brewer" type="id"/>
     <item name="beer_info" type="id"/>
 
-    <item name="pushnotification" type="id"/>
-
     <item name="pick_date_button" type="id"/>
     <item name="end_time_button" type="id"/>
-
-    <item name="divider" type="id"/>
 
     <!-- User sorting menu -->
     <item name="sort_username" type="id"/>

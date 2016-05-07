@@ -18,15 +18,13 @@
     <string name="app_name">Hamers</string>
 
     <!-- General -->
-    <string name="yes">Ja</string>
-    <string name="no">Nee</string>
-    <string name="ok">Oké</string>
     <string name="send">Verstuur</string>
 
     <!-- Drawer -->
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
+    <!-- Navigation -->
     <string name="navigation_item_1">Quotes</string>
     <string name="navigation_item_2">Activiteiten</string>
     <string name="navigation_item_3">Bieren</string>
@@ -35,30 +33,15 @@
     <string name="navigation_item_6">Moties</string>
     <string name="navigation_item_7">Instellingen</string>
 
-    <!-- Mainactivity -->
-
-    <!-- Quote list -->
-    <!-- Action bar -->
-    <string name="action_new_quote">Nieuwe quote</string>
-    <string name="action_search_quote">Zoek quote</string>
-
     <!-- Dialogs -->
-    <!-- New quote dialog -->
     <string name="quote">Wat zei die lul?</string>
     <string name="send_quote">Post</string>
-    <string name="cancel_quote">Cancel</string>
     <string name="quote_hint">Typ dan heumeu!</string>
-
-    <!-- Api key dialog -->
     <string name="apikeydialogtitle">Voer je API-key in!</string>
     <string name="apikeydialogmessage">Deze kan bemachtigd worden op www.zondersikkel.nl</string>
-
-    <!-- Dialog buttons -->
     <string name="dialog_positive">OK</string>
-    <string name="dialog_negative">Cancel</string>
 
     <!-- Reviews -->
-    <!-- New review -->
     <string name="new_review">Nieuwe review</string>
     <string name="review_hint">Wat vonden we er van?</string>
     <string name="rating">Cijfer: 1</string>
@@ -67,16 +50,8 @@
     <string name="pick_time_button">Tijd</string>
 
     <!-- Events -->
-    <!-- Action bar -->
-    <string name="action_new_event">Nieuwe activiteit</string>
-    <string name="action_search_event">Zoek activiteit</string>
-    <!-- Event details -->
-    <string name="event_switch">Ik kom:</string>
-    <string name="event_aanwezig">Aanwezig:</string>
-    <string name="event_afwezig">Afwezig:</string>
     <string name="event_aanwezig_button">Ik ben aanwezig!</string>
     <string name="event_afwezig_button">Ik ben afwezig.</string>
-    <!-- New event -->
     <string name="new_event">Nieuwe activiteit</string>
     <string name="event_title">Naam</string>
     <string name="event_location">Waar is het?</string>
@@ -86,10 +61,6 @@
     <string name="deadline">Deadline:</string>
 
     <!-- Beers -->
-    <!-- Action bar -->
-    <string name="action_new_beer">Nieuw biertje</string>
-    <string name="action_search_beer">Zoek biertje</string>
-    <!-- New beer -->
     <string name="new_beer">Nieuw biertje</string>
     <string name="beer_name">Naam</string>
     <string name="beer_picture">URL naar afbeelding</string>
@@ -165,7 +136,6 @@
     <string name="snackbar_error">Er is iets misgegaan, probeer het later opnieuw.</string>
 
     <!-- Sorting -->
-    <string name="sort_username">Sorteer op naam</string>
     <string name="sort_quotes">Sorteer op aantal quotes</string>
     <string name="sort_reviews">Sorteer op aantal reviews</string>
     <string name="sort_rating">Sorteer op cijfer</string>
@@ -197,5 +167,4 @@
     <string name="search_title">Zoeken</string>
     <string name="search_hint">Zoek…</string>
 
-    <string name="api_stuk">500: De API is stuk.</string>
 </resources>

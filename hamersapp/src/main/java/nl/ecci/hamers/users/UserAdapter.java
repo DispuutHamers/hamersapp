@@ -61,8 +61,8 @@ class UserAdapter extends ArrayAdapter<User> {
 
         // 4. Set the text for textView
         username.setText(dataSet.get(position).getUsername());
-        quotecount.setText("Aantal quotes: " + String.valueOf(dataSet.get(position).getQuotecount()));
-        reviewcount.setText("Aantal reviews: " + dataSet.get(position).getReviewcount());
+        quotecount.setText(String.format("Aantal quotes: %s", String.valueOf(dataSet.get(position).getQuotecount())));
+        reviewcount.setText(String.format("Aantal reviews: %d", dataSet.get(position).getReviewcount()));
 
         // Image
         ImageView userImage = (ImageView) rowView.findViewById(R.id.user_image);

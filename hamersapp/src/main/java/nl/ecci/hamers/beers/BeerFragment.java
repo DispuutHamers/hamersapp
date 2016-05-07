@@ -79,7 +79,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        beer_list.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        beer_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrolled(RecyclerView view, int dx, int dy) {

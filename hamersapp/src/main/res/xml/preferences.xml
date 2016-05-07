@@ -6,8 +6,7 @@
     <PreferenceCategory
             android:title="@string/pushnotifications">
         <CheckBoxPreference
-                android:id="@+id/pushnotification"
-                android:title="@string/push_title"
+            android:title="@string/push_title"
                 android:defaultValue="true"
                 android:key="pushPref"
                 android:summaryOn="@string/pref_summaryOn"
@@ -16,8 +15,7 @@
     <PreferenceCategory
             android:title="@string/apikey_category">
         <EditTextPreference
-                android:id="@+id/apikey"
-                android:title="API Key"
+            android:title="API Key"
                 android:summary="@string/apikey_summary"
                 android:key="apikey"
                 android:inputType="textMultiLine"

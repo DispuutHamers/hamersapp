@@ -66,7 +66,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
 
-        event_list.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        event_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrolled(RecyclerView view, int dx, int dy) {

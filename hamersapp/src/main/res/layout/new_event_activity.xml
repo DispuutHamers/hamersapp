@@ -110,8 +110,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content">
                 <TextView android:text="@string/end_time"
-                          android:id="@+id/event_end_time"
-                          android:layout_height="fill_parent"
+                    android:layout_height="fill_parent"
                           android:layout_width="0dp"
                           android:layout_weight="1"
                           android:textSize="18sp"
@@ -144,8 +143,7 @@
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content">
                 <TextView android:text="@string/deadline"
-                          android:id="@+id/textView"
-                          android:layout_height="fill_parent"
+                    android:layout_height="fill_parent"
                           android:layout_width="0dp"
                           android:layout_weight="1"
                           android:textSize="18sp"
@@ -173,8 +171,7 @@
                         android:onClick="showDeadlineDatePickerDialog"/>
             </LinearLayout>
             <Button
-                    android:id="@+id/sendevent_button"
-                    android:layout_width="match_parent"
+                android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_gravity="bottom"
                     android:layout_weight="1"
