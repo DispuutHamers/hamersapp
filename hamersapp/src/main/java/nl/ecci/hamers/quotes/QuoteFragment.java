@@ -50,7 +50,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         quote_list.setLayoutManager(mLayoutManager);
-        quote_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        quote_list.addItemDecoration(new DividerItemDecoration(getActivity()));
 
         adapter = new QuoteAdapter(getActivity(), dataSet);
         quote_list.setAdapter(adapter);

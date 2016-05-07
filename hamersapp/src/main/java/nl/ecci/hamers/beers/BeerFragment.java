@@ -60,7 +60,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         beer_list.setLayoutManager(mLayoutManager);
         beer_list.setItemAnimator(new DefaultItemAnimator());
-        beer_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        beer_list.addItemDecoration(new DividerItemDecoration(getActivity()));
 
         initSwiper(view, beer_list, mLayoutManager);
 
