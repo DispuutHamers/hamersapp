@@ -1,6 +1,5 @@
 # ANDROID / ECLIPSE
 
-# generated files - android project subfolder
 Android/bin/
 Android/gen/
 Android/assets/
@@ -8,9 +7,6 @@ Android/assets/
 # generated files
 bin/
 gen/
-
-# Local configuration file (sdk path, etc)
-*.properties
 
 # IOS / Xcode
 *.pbxuser
@@ -50,4 +46,4 @@ atlassian-ide-plugin.xml
 *~*
 *.swp
 
-# GRADLE
+local.properties
