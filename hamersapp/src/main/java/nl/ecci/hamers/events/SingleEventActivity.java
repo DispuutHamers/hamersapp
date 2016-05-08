@@ -32,9 +32,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 
@@ -43,8 +43,8 @@ public class SingleEventActivity extends AppCompatActivity {
     private int id;
     private SharedPreferences prefs;
     private Date dbDate;
-    private final DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", new Locale("nl"));
-    private final DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", new Locale("nl"));
+    private final DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", MainActivity.locale);
+    private final DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", MainActivity.locale);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,9 +57,9 @@ public class SingleEventActivity extends AppCompatActivity {
         initToolbar();
 
         TextView titleTV = (TextView) findViewById(R.id.event_title);
-        View dateRow = findViewById(R.id.row_date);
-        View locationRow = findViewById(R.id.row_location);
-        View descriptionRow = findViewById(R.id.row_description);
+        View dateRow = findViewById(R.id.date_row);
+        View locationRow = findViewById(R.id.location_row);
+        View descriptionRow = findViewById(R.id.description_row);
         LinearLayout button_layout = (LinearLayout) findViewById(R.id.button_layout);
         ViewGroup aanwezigView = (ViewGroup) findViewById(R.id.aanwezig_insert_point);
         ViewGroup afwezigView = (ViewGroup) findViewById(R.id.afwezig_insert_point);
@@ -128,10 +128,10 @@ public class SingleEventActivity extends AppCompatActivity {
         }
 
         titleTV.setText(title);
-        fillDetailRow(descriptionRow, "Beschrijving", beschrijving);
         fillImageRow(dateRow, "Datum", date, ContextCompat.getDrawable(this, R.drawable.ic_event));
+        fillDetailRow(descriptionRow, "Beschrijving", beschrijving);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             dateRow.setClickable(true);
             dateRow.setOnClickListener(new View.OnClickListener() {
                 @SuppressLint("NewApi")

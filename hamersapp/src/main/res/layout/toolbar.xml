@@ -24,6 +24,6 @@
     android:title="@string/app_name"
     android:background="@color/material_red"
     android:elevation="4dp"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     android:fitsSystemWindows="true" />

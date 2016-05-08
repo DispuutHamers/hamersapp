@@ -53,13 +53,13 @@
                         android:orientation="vertical">
 
                         <include
-                            android:id="@+id/row_date"
+                            android:id="@+id/date_row"
                             layout="@layout/row_imageview" />
 
                         <include layout="@layout/divider" />
 
                         <include
-                            android:id="@+id/row_location"
+                            android:id="@+id/location_row"
                             layout="@layout/row_imageview" />
 
                         <include layout="@layout/divider" />
@@ -74,7 +74,7 @@
                         android:paddingRight="16dp">
 
                         <include
-                            android:id="@+id/row_description"
+                            android:id="@+id/description_row"
                             layout="@layout/row_detailview" />
 
                     </LinearLayout>
