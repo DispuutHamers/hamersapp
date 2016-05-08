@@ -108,7 +108,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 type = Type.QUOTE;
                 title = quote.getString(QUOTEBODY);
 
-                String userName = null;
+                String userName;
                 userName = DataManager.UserIDtoUserName(prefs, Integer.valueOf(quote.getString(USER)));
                 if (userName != null) {
                     message = userName;
@@ -240,7 +240,6 @@ public class MyGcmListenerService extends GcmListenerService {
 
         NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
 
-        int index = 0;
         switch (type) {
             case QUOTE:
                 bigTextStyle.setBigContentTitle(message);

@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
@@ -48,7 +47,6 @@ public class SingleBeerActivity extends AppCompatActivity {
     private int id;
     private String name;
     private SharedPreferences prefs;
-    public static LinearLayout parentLayout;
     private Button reviewButton;
     private ViewGroup reviewViewGroup;
 
@@ -56,8 +54,6 @@ public class SingleBeerActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.single_beer);
-
-        parentLayout = (LinearLayout) findViewById(R.id.single_beer_parent);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -246,10 +242,10 @@ public class SingleBeerActivity extends AppCompatActivity {
     }
 
     private void fillRow(View view, final String title, final String description) {
-        TextView titleView = (TextView) view.findViewById(R.id.title);
+        TextView titleView = (TextView) view.findViewById(R.id.row_title);
         titleView.setText(title);
 
-        TextView descriptionView = (TextView) view.findViewById(R.id.description);
+        TextView descriptionView = (TextView) view.findViewById(R.id.row_description);
         descriptionView.setText(description);
     }
 }

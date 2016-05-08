@@ -104,7 +104,7 @@ public class SingleEventActivity extends AppCompatActivity {
         String beschrijving = extras.getString("beschrijving");
         final String location = extras.getString("location");
 
-        String deadLine = null;
+        String deadLine;
         String date = null;
         try {
             // Current date
@@ -112,7 +112,6 @@ public class SingleEventActivity extends AppCompatActivity {
             // Event deadline
             deadLine = extras.getString("deadline");
             Date dbDeadlineDate = dbDF.parse(deadLine);
-            deadLine = appDF.format(dbDeadlineDate);
 
             // Event date
             date = extras.getString("date");
@@ -132,7 +131,7 @@ public class SingleEventActivity extends AppCompatActivity {
         fillDetailRow(descriptionRow, "Beschrijving", beschrijving);
         fillImageRow(dateRow, "Datum", date, ContextCompat.getDrawable(this, R.drawable.ic_event));
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             dateRow.setClickable(true);
             dateRow.setOnClickListener(new View.OnClickListener() {
                 @SuppressLint("NewApi")
@@ -233,23 +232,23 @@ public class SingleEventActivity extends AppCompatActivity {
     }
 
     private void fillSingleRow(View view, final String title) {
-        TextView titleView = (TextView) view.findViewById(R.id.title);
+        TextView titleView = (TextView) view.findViewById(R.id.row_title);
         titleView.setText(title);
     }
 
     private void fillDetailRow(View view, final String title, final String description) {
-        TextView titleView = (TextView) view.findViewById(R.id.title);
+        TextView titleView = (TextView) view.findViewById(R.id.row_title);
         titleView.setText(title);
 
-        TextView descriptionView = (TextView) view.findViewById(R.id.description);
+        TextView descriptionView = (TextView) view.findViewById(R.id.row_description);
         descriptionView.setText(description);
     }
 
     private void fillImageRow(View view, final String title, final String description, final Drawable image) {
-        TextView titleView = (TextView) view.findViewById(R.id.title);
+        TextView titleView = (TextView) view.findViewById(R.id.row_title);
         titleView.setText(title);
 
-        TextView descriptionView = (TextView) view.findViewById(R.id.description);
+        TextView descriptionView = (TextView) view.findViewById(R.id.row_description);
         descriptionView.setText(description);
 
         ImageView iconView = (ImageView) view.findViewById(R.id.icon);

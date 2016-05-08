@@ -16,8 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -54,24 +52,27 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        // Set date to current date
-        Button date_button = (Button) findViewById(R.id.pick_date_button);
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        date_button.setText(dateFormat.format(calendar.getTime()));
+        try {
+            // Set date to current date
+            Button date_button = (Button) findViewById(R.id.pick_date_button);
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", MainActivity.locale);
+            date_button.setText(dateFormat.format(calendar.getTime()));
 
-        Bundle extras = getIntent().getExtras();
-        id = extras.getInt("id");
-        String name = extras.getString("name");
+            Bundle extras = getIntent().getExtras();
+            id = extras.getInt("id");
+            String name = extras.getString("name");
 
-        TextView title = (TextView) findViewById(R.id.review_title);
-        title.setText(name);
+            TextView title = (TextView) findViewById(R.id.review_title);
+            title.setText(name);
 
-        cijfer = 1;
+            cijfer = 1;
 
-        SeekBar sb = (SeekBar) findViewById(R.id.ratingseekbar);
-        sb.setOnSeekBarChangeListener(this);
-        progress = (TextView) findViewById(R.id.rating);
+            SeekBar sb = (SeekBar) findViewById(R.id.ratingseekbar);
+            sb.setOnSeekBarChangeListener(this);
+            progress = (TextView) findViewById(R.id.rating);
+        } catch (NullPointerException ignored) {
+        }
     }
 
     @Override

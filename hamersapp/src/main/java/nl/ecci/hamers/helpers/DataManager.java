@@ -122,7 +122,7 @@ public final class DataManager {
         Singleton.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void populateList(String data, SharedPreferences prefs) {
+    private static void populateList(String data, SharedPreferences prefs) {
         switch (data) {
             case QUOTEURL:
                 MainActivity.QUOTE_FRAGMENT.populateList(prefs);

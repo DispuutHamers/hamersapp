@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     private static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
+    public static Locale locale = new Locale("nl_NL");
+
     private static SharedPreferences prefs;
 
     private LinearLayout parentLayout;
@@ -176,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 R.string.drawer_open,
                 R.string.drawer_close
         );
-        drawerLayout.setDrawerListener(mDrawerToggle);
+        drawerLayout.addDrawerListener(mDrawerToggle);
 
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);

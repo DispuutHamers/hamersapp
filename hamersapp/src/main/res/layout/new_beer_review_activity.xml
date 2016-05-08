@@ -79,7 +79,7 @@
                         android:textSize="18sp"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:gravity="left|center_vertical"
+                        android:gravity="start|center_vertical"
                         android:layout_marginTop="16dp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp" />

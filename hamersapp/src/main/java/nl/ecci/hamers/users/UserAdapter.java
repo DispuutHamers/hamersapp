@@ -14,6 +14,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.Utils;
@@ -62,7 +63,7 @@ class UserAdapter extends ArrayAdapter<User> {
         // 4. Set the text for textView
         username.setText(dataSet.get(position).getUsername());
         quotecount.setText(String.format("Aantal quotes: %s", String.valueOf(dataSet.get(position).getQuotecount())));
-        reviewcount.setText(String.format("Aantal reviews: %d", dataSet.get(position).getReviewcount()));
+        reviewcount.setText(String.format(MainActivity.locale, "Aantal reviews: %d", dataSet.get(position).getReviewcount()));
 
         // Image
         ImageView userImage = (ImageView) rowView.findViewById(R.id.user_image);

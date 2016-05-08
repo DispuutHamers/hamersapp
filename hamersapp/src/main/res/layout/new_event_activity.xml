@@ -107,6 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginBottom="4dp"
                     android:text="@string/pick_time_button"
                     android:onClick="showTimePickerDialog" />
@@ -116,6 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="4dp"
                     android:text="@string/pick_date_button"
@@ -135,7 +137,7 @@
                     android:textSize="18sp"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:gravity="left|center_vertical"
+                    android:gravity="start|center_vertical"
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp" />
@@ -145,6 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="4dp"
                     android:text="@string/pick_time_button"
@@ -156,6 +159,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="15dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginBottom="4dp"
                     android:text="@string/pick_date_button"
                     android:onClick="showEndDatePickerDialog" />
@@ -174,7 +178,7 @@
                     android:textSize="18sp"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:gravity="left|center_vertical"
+                    android:gravity="start|center_vertical"
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp" />
@@ -184,6 +188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="4dp"
                     android:text="@string/pick_time_button"
@@ -195,6 +200,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="15dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginBottom="4dp"
                     android:text="@string/pick_date_button"
                     android:onClick="showDeadlineDatePickerDialog" />
