@@ -90,8 +90,6 @@ public class NewEventActivity extends AppCompatActivity {
 
     /**
      * Posts event
-     *
-     * @param v
      */
     public void postEvent(View v) {
         EditText event_title = (EditText) findViewById(R.id.new_event_title);

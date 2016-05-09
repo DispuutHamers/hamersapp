@@ -129,7 +129,7 @@ public class SingleEventActivity extends AppCompatActivity {
 
         titleTV.setText(title);
         fillImageRow(dateRow, "Datum", date, ContextCompat.getDrawable(this, R.drawable.ic_event));
-        fillDetailRow(descriptionRow, "Beschrijving", beschrijving);
+        fillDetailRow(descriptionRow, beschrijving);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             dateRow.setClickable(true);
@@ -236,9 +236,9 @@ public class SingleEventActivity extends AppCompatActivity {
         titleView.setText(title);
     }
 
-    private void fillDetailRow(View view, final String title, final String description) {
+    private void fillDetailRow(View view, final String description) {
         TextView titleView = (TextView) view.findViewById(R.id.row_title);
-        titleView.setText(title);
+        titleView.setText(R.string.description);
 
         TextView descriptionView = (TextView) view.findViewById(R.id.row_description);
         descriptionView.setText(description);

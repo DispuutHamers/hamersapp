@@ -1,2 +1,1 @@
 include ':hamersapp'
-include 'libs/android-support-v4-preferencefragment'

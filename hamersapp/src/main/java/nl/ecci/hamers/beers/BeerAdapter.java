@@ -135,10 +135,10 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(filteredDataSet.get(position).getName());
-        holder.soort.setText("Soort: " + filteredDataSet.get(position).getSoort());
-        holder.brewer.setText("Brouwer: " + filteredDataSet.get(position).getBrewer());
-        holder.rating.setText("Cijfer: " + filteredDataSet.get(position).getRating());
-        holder.info.setText((filteredDataSet.get(position).getCountry() + " - " + filteredDataSet.get(position).getPercentage()));
+        holder.soort.setText(String.format("Soort: %s", filteredDataSet.get(position).getSoort()));
+        holder.brewer.setText(String.format("Brouwer: %s", filteredDataSet.get(position).getBrewer()));
+        holder.rating.setText(String.format("Cijfer: %s", filteredDataSet.get(position).getRating()));
+        holder.info.setText((String.format("%s - %s", filteredDataSet.get(position).getCountry(), filteredDataSet.get(position).getPercentage())));
 
         String imageURL = filteredDataSet.get(position).getImageURL();
 
@@ -195,6 +195,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             }
 
             @Override
+            @SuppressWarnings("unchecked")
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                 filteredDataSet = (ArrayList<Beer>) filterResults.values;
                 notifyDataSetChanged();

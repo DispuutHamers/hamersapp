@@ -59,6 +59,7 @@
     <string name="date">Datum:</string>
     <string name="end_time">End time:</string>
     <string name="deadline">Deadline:</string>
+    <string name="description">Beschrijving</string>
 
     <!-- Beers -->
     <string name="new_beer">Nieuw biertje</string>
@@ -70,6 +71,7 @@
     <string name="beer_brewer">Brouwer</string>
     <string name="beer_country">Land</string>
     <string name="beer_rating">Gemiddelde cijfer</string>
+    <string name="date_unknown">Datum niet bekend</string>
 
     <!-- News -->
     <string name="new_news">Lekker roddeluh</string>
@@ -87,7 +89,7 @@
     <string name="create_motion">Dien motie in</string>
 
     <!-- Settings -->
-    <string name="pushnotifications">Push notificaties</string>
+    <string name="general">Algemeen</string>
     <string name="push_title">Push notificaties</string>
     <string name="pref_summaryOn">Push notifications enabled</string>
     <string name="pref_summaryOff">Push notifications disabled</string>
@@ -153,6 +155,8 @@
     <string name="transition_single_image">transition_beer_image</string>
 
     <!-- GCM -->
+    <string name="gps_missing">Google Play Services missing! This app probably won\'t function properly.</string>
+
     <string name="gcm_send_message">Token retrieved and sent to server! You can now use gcmsender to
         send downstream messages to this app.
     </string>

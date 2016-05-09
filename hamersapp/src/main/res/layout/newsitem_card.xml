@@ -8,6 +8,7 @@
     android:layout_marginRight="8dp"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
+    android:focusable="false"
     android:clickable="false">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -47,6 +48,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
                 android:layout_alignWithParentIfMissing="true"

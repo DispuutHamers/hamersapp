@@ -10,12 +10,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
         android:layout_toRightOf="@id/beer_image"
-        android:gravity="left"
-        android:text="Piet zei over dit biertje: "
+        android:layout_toEndOf="@id/beer_image"
+        android:gravity="start"
         android:textSize="16sp"
         android:textColor="@android:color/secondary_text_light" />
 
@@ -31,9 +32,8 @@
         android:layout_marginRight="2dp"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:text="Datum"
         android:textSize="14sp"
-        android:gravity="right"
+        android:gravity="end"
         android:textStyle="italic"
         android:textColor="@android:color/tertiary_text_light" />
 
@@ -49,7 +49,7 @@
             android:layout_height="fill_parent"
             android:singleLine="false"
             android:textSize="12sp"
-            android:gravity="left"
+            android:gravity="start"
             android:textColor="@android:color/tertiary_text_light"
             android:paddingBottom="20dp"
             android:clickable="false" />
@@ -62,9 +62,8 @@
             android:paddingBottom="2dp"
             android:ellipsize="marquee"
             android:singleLine="true"
-            android:text="Cijfer"
             android:textSize="14sp"
-            android:gravity="left|bottom"
+            android:gravity="start|bottom"
             android:textStyle="italic"
             android:textColor="@android:color/tertiary_text_light" />
     </RelativeLayout>

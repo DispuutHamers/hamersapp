@@ -76,7 +76,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         if (date != null) {
             holder.date.setText(appDF.format(date));
         } else {
-            holder.date.setText("Datum niet bekend");
+            holder.date.setText(R.string.date_unknown);
         }
     }
 

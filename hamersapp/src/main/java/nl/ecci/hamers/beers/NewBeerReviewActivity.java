@@ -32,6 +32,8 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
     private TextView progress;
     private int cijfer;
     private LinearLayout parentLayout;
+    private EditText review_body;
+    private Button date_button;
     private SharedPreferences prefs;
 
     @Override
@@ -39,6 +41,8 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_beer_review_activity);
 
+        review_body = (EditText) findViewById(R.id.review_body);
+        date_button = (Button) findViewById(R.id.pick_date_button);
         parentLayout = (LinearLayout) findViewById(R.id.new_beer_review_parent);
 
         final android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
@@ -52,27 +56,24 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        try {
-            // Set date to current date
-            Button date_button = (Button) findViewById(R.id.pick_date_button);
-            Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", MainActivity.locale);
-            date_button.setText(dateFormat.format(calendar.getTime()));
+        // Set date to current date
+        Button date_button = (Button) findViewById(R.id.pick_date_button);
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", MainActivity.locale);
+        date_button.setText(dateFormat.format(calendar.getTime()));
 
-            Bundle extras = getIntent().getExtras();
-            id = extras.getInt("id");
-            String name = extras.getString("name");
+        Bundle extras = getIntent().getExtras();
+        id = extras.getInt("id");
+        String name = extras.getString("name");
 
-            TextView title = (TextView) findViewById(R.id.review_title);
-            title.setText(name);
+        TextView title = (TextView) findViewById(R.id.review_title);
+        title.setText(name);
 
-            cijfer = 1;
+        cijfer = 1;
 
-            SeekBar sb = (SeekBar) findViewById(R.id.ratingseekbar);
-            sb.setOnSeekBarChangeListener(this);
-            progress = (TextView) findViewById(R.id.rating);
-        } catch (NullPointerException ignored) {
-        }
+        SeekBar sb = (SeekBar) findViewById(R.id.ratingseekbar);
+        sb.setOnSeekBarChangeListener(this);
+        progress = (TextView) findViewById(R.id.rating);
     }
 
     @Override
@@ -93,7 +94,7 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
     @Override
     public void onProgressChanged(SeekBar seekBar, int rating, boolean fromUser) {
         cijfer = rating + 1;
-        progress.setText("Cijfer: " + cijfer);
+        progress.setText(String.format("Cijfer: %d", cijfer));
     }
 
     @Override
@@ -105,9 +106,7 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
     }
 
     public void postReview(View view) {
-        EditText review_body = (EditText) findViewById(R.id.review_body);
         String review = review_body.getText().toString();
-        Button date_button = (Button) findViewById(R.id.pick_date_button);
         String date = date_button.getText().toString();
 
         if (review.length() > 2) {

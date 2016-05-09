@@ -111,6 +111,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
             }
 
             @Override
+            @SuppressWarnings("unchecked")
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                 filteredDataSet = (ArrayList<Quote>) filterResults.values;
                 notifyDataSetChanged();

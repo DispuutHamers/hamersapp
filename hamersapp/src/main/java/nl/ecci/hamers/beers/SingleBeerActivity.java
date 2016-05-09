@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -169,8 +168,6 @@ public class SingleBeerActivity extends AppCompatActivity {
     /**
      * Called when the user clicks the button to create a new beerreview,
      * starts NewBeerActivity.
-     *
-     * @param view
      */
     public void createReview(View view) {
         Intent intent = new Intent(this, NewBeerReviewActivity.class);
@@ -205,15 +202,17 @@ public class SingleBeerActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        title.setText(name + ": ");
+        title.setText(String.format("%s: ", name));
         body.setText(review.getDescription());
         date.setText(datum);
-        ratingTV.setText("Cijfer: " + review.getRating());
+        ratingTV.setText(String.format("Cijfer: %s", review.getRating()));
 
         // Insert into view
         ViewGroup insertPoint = (ViewGroup) findViewById(R.id.review_insert_point);
-        insertPoint.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        insertPoint.addView(divider);
+        if (insertPoint != null) {
+            insertPoint.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            insertPoint.addView(divider);
+        }
     }
 
     @Override

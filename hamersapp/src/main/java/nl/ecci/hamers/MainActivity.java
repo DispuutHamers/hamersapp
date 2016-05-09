@@ -26,9 +26,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -62,7 +63,8 @@ import nl.ecci.hamers.users.UserFragment;
 
 public class MainActivity extends AppCompatActivity {
     // URL
-    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
+//    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
+    public static final String baseURL = "http://192.168.100.100:3000/api/v1/";
     // Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
     public static final UserFragment USER_FRAGMENT = new UserFragment();
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
-    public static Locale locale = new Locale("nl_NL");
+    public static final Locale locale = new Locale("nl_NL");
 
     private static SharedPreferences prefs;
 
@@ -89,8 +91,6 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Setup of default ImageLoader configuration (Universal Image Loader)
      * https://github.com/nostra13/Android-Universal-Image-Loader
-     *
-     * @param context
      */
     private static void configureDefaultImageLoader(Context context) {
         File cacheDir = StorageUtils.getCacheDirectory(context);
@@ -204,13 +204,13 @@ public class MainActivity extends AppCompatActivity {
      * the Google Play Store or enable it in the device's system settings.
      */
     private boolean checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        int resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+            if (GoogleApiAvailability.getInstance().isUserResolvableError(resultCode)) {
+                GoogleApiAvailability.getInstance().getErrorDialog(this, resultCode,
                         PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
-                System.out.println("This device is not supported.");
+                Toast.makeText(this, getResources().getString(R.string.gps_missing), Toast.LENGTH_SHORT).show();
                 finish();
             }
             return false;
@@ -233,8 +233,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Swaps fragments in the quote_menu content view
-     *
-     * @param id
      */
     private void selectItem(int id) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -280,8 +278,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment
-     *
-     * @param view
      */
     public void newQuote(View view) {
         DialogFragment newQuoteFragment = new NewQuoteFragment();
@@ -290,8 +286,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * When user presses "+" in EventFragment, start new dialog with NewEventActivity
-     *
-     * @param view
      */
     public void newEvent(View view) {
         Intent intent = new Intent(this, NewEventActivity.class);
@@ -300,8 +294,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * When user presses "+" in BeerFragment, start new dialog with NewBeerActivity
-     *
-     * @param view
      */
     public void newBeer(View view) {
         Intent intent = new Intent(this, NewBeerActivity.class);
@@ -310,8 +302,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * When user presses "+" in NewsFragment, start new dialog with NewNewsActivity
-     *
-     * @param view
      */
     public void newNews(View view) {
         Intent intent = new Intent(this, NewNewsActivity.class);
@@ -386,9 +376,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Parse date
-     *
-     * @param dateString
-     * @return
      */
     public static Date parseDate(String dateString) {
         Date date = null;
