@@ -87,20 +87,17 @@
     <string name="create_motion">Dien motie in</string>
 
     <!-- Settings -->
-    <!-- Notifications -->
     <string name="pushnotifications">Push notificaties</string>
     <string name="push_title">Push notificaties</string>
     <string name="pref_summaryOn">Push notifications enabled</string>
     <string name="pref_summaryOff">Push notifications disabled</string>
 
-    <!-- API key -->
     <string name="apikey_category">API Key</string>
     <string name="apikey_summary">You can get your key on the website.</string>
     <string name="apikey_hint">Copy+paste your key here..</string>
 
-    <!-- Sorting -->
     <string name="sorting_category">Sorteren</string>
-    <!-- Users -->
+
     <array name="usersort_array_values">
         <item>none</item>
         <item>name</item>
@@ -113,7 +110,6 @@
         <item>Sorteer op aantal quotes</item>
         <item>Sorteer op aantal reviews</item>
     </array>
-    <!-- Beer -->
     <array name="beersort_array_values">
         <item>name</item>
         <item>rating</item>
@@ -126,6 +122,10 @@
         <item>Sorteer op datum (ASC)</item>
         <item>Sorteer op datum (DESC)</item>
     </array>
+
+    <string name="other_category">Overig</string>
+    <string name="clear_image_cache_setting">Clear image cache</string>
+    <string name="clear_image_cache_snackbar">Image cache cleared!</string>
 
     <!-- Snackbar -->
     <string name="snackbar_downloaderror">Fout bij het downloaden</string>
