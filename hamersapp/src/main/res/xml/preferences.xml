@@ -1,44 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="vertical"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent">
-    <PreferenceCategory
-            android:title="@string/pushnotifications">
-        <CheckBoxPreference
-            android:title="@string/push_title"
-                android:defaultValue="true"
-                android:key="pushPref"
-                android:summaryOn="@string/pref_summaryOn"
-                android:summaryOff="@string/pref_summaryOff"/>
-    </PreferenceCategory>
-    <PreferenceCategory
-            android:title="@string/apikey_category">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <PreferenceCategory android:title="@string/general">
         <EditTextPreference
-            android:title="API Key"
-                android:summary="@string/apikey_summary"
-                android:key="apikey"
-                android:inputType="textMultiLine"
-                android:hint="@string/apikey_hint"/>
+            android:hint="@string/apikey_hint"
+            android:inputType="textMultiLine"
+            android:key="apikey"
+            android:summary="@string/apikey_summary"
+            android:title="API Key" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pushPref"
+            android:summaryOff="@string/pref_summaryOff"
+            android:summaryOn="@string/pref_summaryOn"
+            android:title="@string/push_title" />
     </PreferenceCategory>
-    <PreferenceCategory
-            android:title="@string/sorting_category">
+    <PreferenceCategory android:title="@string/sorting_category">
         <ListPreference
-                android:title="Leden sorteren"
-                android:key="userSort"
-                android:defaultValue="none"
-                android:entries="@array/usersort_array"
-                android:entryValues="@array/usersort_array_values"/>
+            android:defaultValue="none"
+            android:entries="@array/usersort_array"
+            android:entryValues="@array/usersort_array_values"
+            android:key="userSort"
+            android:title="Leden sorteren" />
         <ListPreference
-                android:title="Bier sorteren"
-                android:key="beerSort"
-                android:defaultValue="datumASC"
-                android:entries="@array/beersort_array"
-                android:entryValues="@array/beersort_array_values"/>
+            android:defaultValue="datumASC"
+            android:entries="@array/beersort_array"
+            android:entryValues="@array/beersort_array_values"
+            android:key="beerSort"
+            android:title="Bier sorteren" />
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/other_category">
-        <Preference android:title="@string/clear_image_cache_setting" android:key="clear_image_cache"/>
+    <PreferenceCategory android:title="@string/other_category">
+        <Preference
+            android:key="clear_image_cache"
+            android:title="@string/clear_image_cache_setting" />
     </PreferenceCategory>
 </PreferenceScreen>
