@@ -6,4 +6,7 @@
 
     <color name="line_seperator">#DADADA</color>
 
+    <color name="sliding_tabs_text_normal">#bdbdbd</color>
+    <color name="sliding_tabs_text_selected">#ffffff</color>
+
 </resources>

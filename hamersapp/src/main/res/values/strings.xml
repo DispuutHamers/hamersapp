@@ -60,6 +60,8 @@
     <string name="end_time">End time:</string>
     <string name="deadline">Deadline:</string>
     <string name="description">Beschrijving</string>
+    <string name="menu_upcoming">Aankomend</string>
+    <string name="menu_all">Alle</string>
 
     <!-- Beers -->
     <string name="new_beer">Nieuw biertje</string>

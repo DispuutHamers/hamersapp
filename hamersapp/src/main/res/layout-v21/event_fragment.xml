@@ -8,7 +8,9 @@
         android:id="@+id/event_fragment_sliding_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/material_red" />
+        android:background="@color/material_red"
+        android:backgroundTint="@color/material_red"
+        android:elevation="10dp" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/event_fragment_viewpager"

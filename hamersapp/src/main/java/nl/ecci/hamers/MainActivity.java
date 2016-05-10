@@ -52,6 +52,7 @@ import nl.ecci.hamers.beers.BeerFragment;
 import nl.ecci.hamers.beers.NewBeerActivity;
 import nl.ecci.hamers.events.EventFragment;
 import nl.ecci.hamers.events.NewEventActivity;
+import nl.ecci.hamers.events.EventListFragment;
 import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.Utils;
@@ -63,12 +64,13 @@ import nl.ecci.hamers.users.UserFragment;
 
 public class MainActivity extends AppCompatActivity {
     // URL
-//    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-    public static final String baseURL = "http://192.168.100.100:3000/api/v1/";
+    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
     // Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
     public static final UserFragment USER_FRAGMENT = new UserFragment();
     public static final EventFragment EVENT_FRAGMENT = new EventFragment();
+    public static final EventListFragment EVENT_FRAGMENT_ALL = new EventListFragment();
+    public static final EventListFragment EVENT_FRAGMENT_UPCOMING = new EventListFragment();
     public static final NewsFragment NEWS_FRAGMENT = new NewsFragment();
     public static final BeerFragment BEER_FRAGMENT = new BeerFragment();
     private static final MotionFragment MOTION_FRAGMENT = new MotionFragment();
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static SharedPreferences prefs;
 
-    private LinearLayout parentLayout;
+//    private LinearLayout parentLayout;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private boolean backPressedOnce;
@@ -113,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        parentLayout = (LinearLayout) findViewById(R.id.main_parent);
+//        parentLayout = (LinearLayout) findViewById(R.id.main_parent);
 
         initDrawer();
         initToolbar();
@@ -336,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         this.backPressedOnce = true;
-        Snackbar.make(parentLayout, getResources().getString(R.string.press_back_again), Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(parentLayout, getResources().getString(R.string.press_back_again), Snackbar.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
             @Override

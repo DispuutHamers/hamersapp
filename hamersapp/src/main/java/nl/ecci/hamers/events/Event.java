@@ -4,7 +4,7 @@ import org.json.JSONArray;
 
 import java.util.Date;
 
-class Event {
+public class Event {
 
     private final int id;
     private final String title;
