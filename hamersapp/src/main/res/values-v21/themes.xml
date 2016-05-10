@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorPrimary">@color/material_red</item>
-        <item name="android:colorPrimaryDark">@color/material_red_dark</item>
+        <item name="colorPrimary">@color/material_red</item>
+        <item name="colorPrimaryDark">@color/material_red_dark</item>
+        <item name="colorAccent">@color/material_red_dark</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:windowContentTransitions">true</item>
-        <item name="colorAccent">?android:attr/colorPrimaryDark</item>
-
         <!-- Preference theme -->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
