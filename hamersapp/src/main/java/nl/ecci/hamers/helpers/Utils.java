@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.widget.EditText;
@@ -75,5 +76,27 @@ public class Utils {
                 Utils.showApiKeyDialog(context);
             }
         }
+    }
+
+    public static CharSequence[] stringArrayToCharSequenceArray(Object[] stringArray) {
+        CharSequence[] charSequenceArray = new CharSequence[stringArray.length];
+
+        for (int i=0; i<stringArray.length; i++)
+            charSequenceArray[i] = (String) stringArray[i];
+
+        return charSequenceArray;
+    }
+
+    /**
+     * Get app version
+     */
+    public static String getAppVersion(Context context) {
+        String versionName;
+        try {
+            versionName = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            versionName = "";
+        }
+        return versionName;
     }
 }

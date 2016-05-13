@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="nl.ecci.hamers">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="nl.ecci.hamers">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- Internet + sdcard access (for caching purposes) -->
@@ -19,7 +20,8 @@
                  android:icon="@drawable/ic_launcher"
                  android:theme="@style/AppTheme"
                  android:hardwareAccelerated="true"
-                 android:allowBackup="false">
+                 android:allowBackup="false"
+                 tools:replace="android:allowBackup">
         <receiver
                 android:name="com.google.android.gms.gcm.GcmReceiver"
                 android:exported="true"

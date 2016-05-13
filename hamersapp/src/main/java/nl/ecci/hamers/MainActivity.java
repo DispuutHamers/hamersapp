@@ -10,11 +10,11 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,12 +24,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.mikepenz.iconics.context.IconicsLayoutInflater;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     public static final BeerFragment BEER_FRAGMENT = new BeerFragment();
     private static final MotionFragment MOTION_FRAGMENT = new MotionFragment();
     private static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
+    private static final AboutFragment ABOUT_FRAGMENT = new AboutFragment();
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     public static final Locale locale = new Locale("nl_NL");
@@ -112,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        LayoutInflaterCompat.setFactory(getLayoutInflater(), new IconicsLayoutInflater(getDelegate()));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
@@ -121,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
 
         if (savedInstanceState == null) {
-            selectItem(R.id.navigation_item_1);
+            selectItem(R.id.navigation_item_quotes);
         }
 
         configureDefaultImageLoader(this);
@@ -241,39 +244,44 @@ public class MainActivity extends AppCompatActivity {
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         hideSoftKeyboard();
         switch (id) {
-            case R.id.navigation_item_1:
+            case R.id.navigation_item_quotes:
                 transaction.replace(R.id.content_frame, QUOTE_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_1));
+                setTitle(getResources().getString(R.string.navigation_item_quotes));
                 break;
 
-            case R.id.navigation_item_2:
+            case R.id.navigation_item_events:
                 transaction.replace(R.id.content_frame, EVENT_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_2));
+                setTitle(getResources().getString(R.string.navigation_item_events));
                 break;
 
-            case R.id.navigation_item_3:
+            case R.id.navigation_item_beers:
                 transaction.replace(R.id.content_frame, BEER_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_3));
+                setTitle(getResources().getString(R.string.navigation_item_beers));
                 break;
 
-            case R.id.navigation_item_4:
+            case R.id.navigation_item_news:
                 transaction.replace(R.id.content_frame, NEWS_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_4));
+                setTitle(getResources().getString(R.string.navigation_item_news));
                 break;
 
-            case R.id.navigation_item_5:
+            case R.id.navigation_item_users:
                 transaction.replace(R.id.content_frame, USER_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_5));
+                setTitle(getResources().getString(R.string.navigation_item_users));
                 break;
 
-            case R.id.navigation_item_6:
+            case R.id.navigation_item_motions:
                 transaction.replace(R.id.content_frame, MOTION_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_6));
+                setTitle(getResources().getString(R.string.navigation_item_motions));
                 break;
 
-            case R.id.navigation_item_7:
+            case R.id.navigation_item_settings:
                 transaction.replace(R.id.content_frame, SETTINGS_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_7));
+                setTitle(getResources().getString(R.string.navigation_item_settings));
+                break;
+
+            case R.id.navigation_item_about:
+                transaction.replace(R.id.content_frame, ABOUT_FRAGMENT).commit();
+                setTitle(getResources().getString(R.string.navigation_item_about));
                 break;
         }
     }
