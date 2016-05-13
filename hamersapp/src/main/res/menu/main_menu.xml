@@ -5,33 +5,34 @@
         <item
             android:id="@+id/navigation_item_quotes"
             android:checked="true"
-            android:icon="@drawable/quotes"
-            android:title="@string/navigation_item_quotes" />
+            android:title="@string/navigation_item_quotes"
+            android:icon="@drawable/quotes" />
         <item
             android:id="@+id/navigation_item_events"
-            android:icon="@drawable/events"
-            android:title="@string/navigation_item_events" />
+            android:title="@string/navigation_item_events"
+            android:icon="@drawable/events" />
 
         <item
             android:id="@+id/navigation_item_beers"
-            android:icon="@drawable/beers"
-            android:title="@string/navigation_item_beers" />
+            android:title="@string/navigation_item_beers"
+            android:icon="@drawable/beers"/>
         <item
             android:id="@+id/navigation_item_news"
-            android:icon="@drawable/ic_newspaper"
-            android:title="@string/navigation_item_news" />
+            android:title="@string/navigation_item_news"
+            android:icon="@drawable/news" />
         <item
             android:id="@+id/navigation_item_users"
-            android:icon="@drawable/users"
-            android:title="@string/navigation_item_users" />
+            android:title="@string/navigation_item_users"
+            android:icon="@drawable/users"/>
         <item
             android:id="@+id/navigation_item_motions"
             android:icon="@drawable/motions"
             android:title="@string/navigation_item_motions" />
         <item
             android:id="@+id/navigation_item_settings"
-            android:icon="@drawable/settings"
-            android:title="@string/navigation_item_settings" />
+            android:title="@string/navigation_item_settings"
+            android:icon="@drawable/settings" />
+
     </group>
     <group
         android:id="@+id/menu_bottom"
@@ -39,7 +40,7 @@
         <item
             android:id="@+id/navigation_item_about"
             android:title="@string/navigation_item_about"
-            app:ico_icon="gmd-plus-circle"/>
+            android:icon="@drawable/about"/>
     </group>
 
 </menu>

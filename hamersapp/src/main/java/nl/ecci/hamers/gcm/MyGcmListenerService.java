@@ -227,10 +227,10 @@ public class MyGcmListenerService extends GcmListenerService {
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.launcher_icon);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.launcher_icon)
                 .setLargeIcon(icon)
                 .setContentTitle(title)
                 .setContentText(message)

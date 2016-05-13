@@ -148,7 +148,7 @@ public class SingleEventActivity extends AppCompatActivity {
         }
 
         if (!location.equals("null") && !location.equals("")) {
-            fillImageRow(locationRow, "Locatie", location, ContextCompat.getDrawable(this, R.drawable.ic_location));
+            fillImageRow(locationRow, "Locatie", location, ContextCompat.getDrawable(this, R.drawable.location));
             locationRow.setClickable(true);
 
             locationRow.setOnClickListener(new View.OnClickListener() {
