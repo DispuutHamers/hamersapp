@@ -13,6 +13,7 @@ apply plugin: 'com.google.gms.google-services'
 repositories {
     jcenter()
     mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 android {
@@ -59,7 +60,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:8.4.0'
     // Other libraries
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile 'com.commit451:PhotoView:1.2.5'
+    compile 'com.github.chrisbanes:PhotoView:1.2.6'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.android.volley:volley:1.0.0'
     compile 'us.feras.mdv:markdownview:1.1.0'
