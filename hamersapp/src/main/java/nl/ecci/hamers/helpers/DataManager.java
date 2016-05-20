@@ -134,12 +134,12 @@ public final class DataManager {
                 MainActivity.BEER_FRAGMENT.populateList(prefs);
                 break;
             case EVENTURL:
-                MainActivity.EVENT_FRAGMENT_ALL.populateList(prefs);
-                MainActivity.EVENT_FRAGMENT_UPCOMING.populateList(prefs);
+                MainActivity.EVENT_FRAGMENT_ALL.populateList();
+                MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
                 break;
             case SIGNUPURL:
-                MainActivity.EVENT_FRAGMENT_ALL.populateList(prefs);
-                MainActivity.EVENT_FRAGMENT_UPCOMING.populateList(prefs);
+                MainActivity.EVENT_FRAGMENT_ALL.populateList();
+                MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
                 break;
             case NEWSURL:
                 MainActivity.NEWS_FRAGMENT.populateList(prefs);

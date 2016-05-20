@@ -31,14 +31,18 @@ public class EventFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                Bundle argUpcoming = new Bundle();
-                argUpcoming.putBoolean(upcoming, true);
-                MainActivity.EVENT_FRAGMENT_UPCOMING.setArguments(argUpcoming);
+                if (MainActivity.EVENT_FRAGMENT_UPCOMING.getArguments() == null) {
+                    Bundle argUpcoming = new Bundle();
+                    argUpcoming.putBoolean(upcoming, true);
+                    MainActivity.EVENT_FRAGMENT_UPCOMING.setArguments(argUpcoming);
+                }
                 return MainActivity.EVENT_FRAGMENT_UPCOMING;
             case 1:
-                Bundle argAll = new Bundle();
-                argAll.putBoolean(upcoming, false);
-                MainActivity.EVENT_FRAGMENT_ALL.setArguments(argAll);
+                if (MainActivity.EVENT_FRAGMENT_ALL.getArguments() == null) {
+                    Bundle argAll = new Bundle();
+                    argAll.putBoolean(upcoming, false);
+                    MainActivity.EVENT_FRAGMENT_ALL.setArguments(argAll);
+                }
                 return MainActivity.EVENT_FRAGMENT_ALL;
         }
         return null;

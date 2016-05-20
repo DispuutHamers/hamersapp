@@ -14,13 +14,11 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -80,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final Locale locale = new Locale("nl_NL");
 
-    private static SharedPreferences prefs;
+    public static SharedPreferences prefs;
 
 //    private LinearLayout parentLayout;
     private DrawerLayout drawerLayout;

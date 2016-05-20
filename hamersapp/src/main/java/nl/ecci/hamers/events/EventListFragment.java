@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 
@@ -33,7 +34,6 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     private final ArrayList<Event> listItems = new ArrayList<>();
     private EventListAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private SharedPreferences prefs;
     private RecyclerView event_list;
     private boolean upcoming;
 
@@ -54,8 +54,6 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 
         adapter = new EventListAdapter(getActivity(), listItems);
         event_list.setAdapter(adapter);
-
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
 
         onRefresh();
 
@@ -86,17 +84,16 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-        DataManager.getData(getContext(), prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
-        DataManager.getData(getContext(), prefs, DataManager.SIGNUPURL, DataManager.SIGNUPKEY);
+        DataManager.getData(getContext(), MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
+        DataManager.getData(getContext(), MainActivity.prefs, DataManager.SIGNUPURL, DataManager.SIGNUPKEY);
     }
 
-    public void populateList(SharedPreferences prefs) {
-        this.prefs = prefs;
+    public void populateList() {
         listItems.clear();
         JSONArray json;
         Date currentDate = Calendar.getInstance().getTime();
         try {
-            if ((json = DataManager.getJsonArray(prefs, DataManager.EVENTKEY)) != null) {
+            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.EVENTKEY)) != null) {
                 for (int i = json.length() - 1; i >= 0; i--) {
                     JSONObject temp;
                     temp = json.getJSONObject(i);
@@ -143,7 +140,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onResume() {
         super.onResume();
-        populateList(prefs);
+        populateList();
     }
 
     private void scrollTop() {
