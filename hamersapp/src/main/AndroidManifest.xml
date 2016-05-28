@@ -65,7 +65,7 @@
         <activity android:name="nl.ecci.hamers.beers.NewBeerReviewActivity"
                   android:parentActivityName="nl.ecci.hamers.beers.SingleBeerActivity"
                   android:screenOrientation="portrait"
-                  android:label="Nieuwe review">
+                  android:label="@string/new_review">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="nl.ecci.hamers.beers.SingleBeerActivity"/>
@@ -82,7 +82,7 @@
         <activity android:name="nl.ecci.hamers.events.SingleEventActivity"
                   android:parentActivityName="nl.ecci.hamers.MainActivity"
                   android:screenOrientation="portrait"
-                  android:label="Activiteit">
+            android:label="@string/event_title">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="nl.ecci.hamers.MainActivity">
@@ -91,7 +91,7 @@
         <activity android:name="nl.ecci.hamers.events.NewEventActivity"
                   android:parentActivityName="nl.ecci.hamers.MainActivity"
                   android:screenOrientation="portrait"
-                  android:label="Nieuwe activiteit">
+                    android:label="@string/new_event">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="nl.ecci.hamers.MainActivity">
@@ -100,7 +100,7 @@
         <activity android:name="nl.ecci.hamers.news.NewNewsActivity"
                   android:parentActivityName="nl.ecci.hamers.MainActivity"
                   android:screenOrientation="portrait"
-                  android:label="Nieuwe roddel">
+                  android:label="@string/new_news">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="nl.ecci.hamers.MainActivity">
@@ -108,7 +108,8 @@
         </activity>
         <activity android:name="nl.ecci.hamers.beers.NewBeerActivity"
                   android:parentActivityName="nl.ecci.hamers.MainActivity"
-                  android:screenOrientation="portrait">
+                  android:screenOrientation="portrait"
+                android:label="@string/new_beer">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="nl.ecci.hamers.MainActivity">

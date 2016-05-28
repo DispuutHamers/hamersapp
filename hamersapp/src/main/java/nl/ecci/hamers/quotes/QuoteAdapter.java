@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DataManager;
@@ -31,15 +32,13 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     private static AnimateFirstDisplayListener animateFirstListener;
     private final ArrayList<Quote> dataSet;
     private ArrayList<Quote> filteredDataSet;
-    private final SharedPreferences prefs;
     private final ImageLoader imageLoader;
     private final DisplayImageOptions options;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss - dd MMM yyyy", new Locale("nl"));
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss - dd MMM yyyy", MainActivity.locale);
 
     public QuoteAdapter(Context context, ArrayList<Quote> itemsArrayList) {
         this.dataSet = itemsArrayList;
         this.filteredDataSet = itemsArrayList;
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         // Universal Image Loader
         imageLoader = ImageLoader.getInstance();
@@ -72,7 +71,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
             holder.date.setText(dateFormat.format(date));
         }
 
-        String email = DataManager.IDToEmail(prefs, filteredDataSet.get(position).getUserID());
+        String email = DataManager.IDToEmail(MainActivity.prefs, filteredDataSet.get(position).getUserID());
         if (email != null) {
             String url = "http://gravatar.com/avatar/" + Utils.md5Hex(email) + "?s=200";
             imageLoader.displayImage(url, holder.userImage, options, animateFirstListener);

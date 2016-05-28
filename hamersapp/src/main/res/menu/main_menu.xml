@@ -28,15 +28,14 @@
             android:id="@+id/navigation_item_motions"
             android:icon="@drawable/motions"
             android:title="@string/navigation_item_motions" />
-        <item
-            android:id="@+id/navigation_item_settings"
-            android:title="@string/navigation_item_settings"
-            android:icon="@drawable/settings" />
-
     </group>
     <group
         android:id="@+id/menu_bottom"
         android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_item_settings"
+            android:title="@string/navigation_item_settings"
+            android:icon="@drawable/settings" />
         <item
             android:id="@+id/navigation_item_about"
             android:title="@string/navigation_item_about"

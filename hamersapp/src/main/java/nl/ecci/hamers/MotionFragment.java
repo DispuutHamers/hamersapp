@@ -19,7 +19,6 @@ import nl.ecci.hamers.helpers.DataManager;
 public class MotionFragment extends Fragment {
 
     private String type;
-    private SharedPreferences prefs;
 
     private final String DUURTLANG = "duurt lang";
     private final String ARELAXED = "vet arelaxed";
@@ -28,8 +27,6 @@ public class MotionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.motion_fragment, container, false);
-
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
 
         RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.motionradiogroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -74,6 +71,6 @@ public class MotionFragment extends Fragment {
         params.put("motion[subject]", subject);
         params.put("motion[content]", content);
 
-        DataManager.postData(this.getContext(), prefs, DataManager.MOTIEURL, null, params);
+        DataManager.postData(this.getContext(), MainActivity.prefs, DataManager.MOTIEURL, null, params);
     }
 }

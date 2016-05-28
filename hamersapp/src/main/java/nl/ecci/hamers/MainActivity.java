@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -80,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static SharedPreferences prefs;
 
-//    private LinearLayout parentLayout;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private boolean backPressedOnce;
@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         this.backPressedOnce = true;
-//        Snackbar.make(parentLayout, getResources().getString(R.string.press_back_again), Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(this, getResources().getString(R.string.press_back_again), Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -31,6 +31,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DataManager;
@@ -42,7 +43,6 @@ import static nl.ecci.hamers.helpers.DataManager.getUserID;
 public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implements Filterable {
 
     private static ImageLoadingListener animateFirstListener;
-    private final SharedPreferences prefs;
     private final Context context;
     private final ArrayList<Beer> dataSet;
     private final ImageLoader imageLoader;
@@ -54,8 +54,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         this.dataSet = itemsArrayList;
         this.filteredDataSet = itemsArrayList;
         this.context = context;
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        userID = getUserID(prefs);
+        userID = getUserID(MainActivity.prefs);
 
         // Universal Image Loader
         imageLoader = ImageLoader.getInstance();
@@ -83,7 +82,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             @Override
             public void onClick(View v1) {
                 try {
-                    JSONObject b = DataManager.getBeer(prefs, filteredDataSet.get(vh.getAdapterPosition()).getId());
+                    JSONObject b = DataManager.getBeer(MainActivity.prefs, filteredDataSet.get(vh.getAdapterPosition()).getId());
                     Activity activity = (Activity) context;
                     String imageTransitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, imageTransitionName);
@@ -108,7 +107,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             @Override
             public void onClick(View v) {
                 try {
-                    JSONObject b = DataManager.getBeer(prefs, filteredDataSet.get(vh.getAdapterPosition()).getId());
+                    JSONObject b = DataManager.getBeer(MainActivity.prefs, filteredDataSet.get(vh.getAdapterPosition()).getId());
                     Activity activity = (Activity) context;
                     String transitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, transitionName);
@@ -207,7 +206,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         int rating = 0;
         JSONArray reviews;
         try {
-            if ((reviews = getJsonArray(prefs, DataManager.REVIEWKEY)) != null) {
+            if ((reviews = getJsonArray(MainActivity.prefs, DataManager.REVIEWKEY)) != null) {
                 for (int i = 0; i < reviews.length(); i++) {
                     JSONObject review = reviews.getJSONObject(i);
                     if (review.getInt("beer_id") == id && review.getInt("user_id") == userID) {

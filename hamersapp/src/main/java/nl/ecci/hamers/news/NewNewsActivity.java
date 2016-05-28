@@ -14,19 +14,16 @@ import android.widget.EditText;
 import java.util.HashMap;
 import java.util.Map;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 
 public class NewNewsActivity extends AppCompatActivity {
 
-    private SharedPreferences prefs;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_news_acitivity);
-
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         final android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -49,7 +46,7 @@ public class NewNewsActivity extends AppCompatActivity {
         params.put("news[title]", Uri.encode(title));
         params.put("news[body]", Uri.encode(body));
 
-        DataManager.postData(this, prefs, DataManager.NEWSURL, DataManager.NEWSKEY, params);
+        DataManager.postData(this, MainActivity.prefs, DataManager.NEWSURL, DataManager.NEWSKEY, params);
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {

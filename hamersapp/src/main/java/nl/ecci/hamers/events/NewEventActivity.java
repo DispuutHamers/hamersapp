@@ -1,8 +1,6 @@
 package nl.ecci.hamers.events;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -19,6 +17,7 @@ import android.widget.RelativeLayout;
 import java.util.HashMap;
 import java.util.Map;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
@@ -27,7 +26,6 @@ import nl.ecci.hamers.helpers.fragments.TimePickerFragment;
 public class NewEventActivity extends AppCompatActivity {
     private final FragmentManager fragmanager = getSupportFragmentManager();
     private RelativeLayout parentLayout;
-    private SharedPreferences prefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +34,6 @@ public class NewEventActivity extends AppCompatActivity {
 
         parentLayout = (RelativeLayout) findViewById(R.id.new_event_parent);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -148,7 +145,7 @@ public class NewEventActivity extends AppCompatActivity {
             params.put("event[date(2i)]", dateParts[1]);
             params.put("event[date(1i)]", dateParts[2]);
 
-            DataManager.postData(this, prefs, DataManager.EVENTURL, DataManager.EVENTKEY, params);
+            DataManager.postData(this, MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY, params);
         } else {
             Snackbar.make(parentLayout, getResources().getString(R.string.missing_fields), Snackbar.LENGTH_SHORT).show();
         }

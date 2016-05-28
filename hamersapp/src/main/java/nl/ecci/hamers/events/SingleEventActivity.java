@@ -41,7 +41,6 @@ import nl.ecci.hamers.helpers.DataManager;
 public class SingleEventActivity extends AppCompatActivity {
 
     private int id;
-    private SharedPreferences prefs;
     private Date dbDate;
     private final DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", MainActivity.locale);
     private final DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", MainActivity.locale);
@@ -52,7 +51,6 @@ public class SingleEventActivity extends AppCompatActivity {
         this.setContentView(R.layout.single_event);
 
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         initToolbar();
 
@@ -170,7 +168,7 @@ public class SingleEventActivity extends AppCompatActivity {
             locationRow.setVisibility(View.GONE);
         }
 
-        String userName = DataManager.getUserName(prefs);
+        String userName = DataManager.getUserName(MainActivity.prefs);
         for (String aanwezigItem : aanwezigItems) {
             if (aanwezigItem.equals(userName)) {
                 aanwezigButton.setVisibility(View.GONE);
@@ -206,7 +204,7 @@ public class SingleEventActivity extends AppCompatActivity {
         params.put("signup[event_id]", Integer.toString(eventid));
         params.put("signup[status]", status);
 
-        DataManager.postData(this, prefs, DataManager.SIGNUPURL, null, params);
+        DataManager.postData(this, MainActivity.prefs, DataManager.SIGNUPURL, null, params);
         this.finish();
     }
 

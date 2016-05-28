@@ -23,13 +23,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 
 public class NewQuoteFragment extends DialogFragment {
 
     private final ArrayList<String> users = new ArrayList<>();
-    private SharedPreferences prefs;
 
     @NonNull
     @Override
@@ -48,7 +48,7 @@ public class NewQuoteFragment extends DialogFragment {
 
                                 // Get userID from spinner
                                 Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
-                                int userID = DataManager.usernameToID(prefs, userSpinner.getSelectedItem().toString());
+                                int userID = DataManager.usernameToID(MainActivity.prefs, userSpinner.getSelectedItem().toString());
 
                                 // Post quote
                                 NewQuoteFragment.this.postQuote(quote, userID);
@@ -73,7 +73,7 @@ public class NewQuoteFragment extends DialogFragment {
     private void createUserList() {
         JSONArray userJSON;
         try {
-            if ((userJSON = DataManager.getJsonArray(prefs, DataManager.USERKEY)) != null) {
+            if ((userJSON = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERKEY)) != null) {
                 for (int i = 0; i < userJSON.length(); i++) {
                     users.add(userJSON.getJSONObject(i).getString("name"));
                 }
@@ -90,12 +90,11 @@ public class NewQuoteFragment extends DialogFragment {
         params.put("quote[text]", quote);
         params.put("quote[user_id]", Integer.toString(userid));
 
-        DataManager.postData(this.getContext(), prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY, params);
+        DataManager.postData(this.getContext(), MainActivity.prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY, params);
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        prefs = PreferenceManager.getDefaultSharedPreferences(activity);
     }
 }

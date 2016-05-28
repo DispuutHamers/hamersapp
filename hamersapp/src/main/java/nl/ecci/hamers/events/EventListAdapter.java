@@ -2,9 +2,7 @@ package nl.ecci.hamers.events;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,33 +21,31 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
 
-    private final SharedPreferences prefs;
     private final Context context;
     private final ArrayList<Event> dataSet;
 
     public EventListAdapter(Context context, ArrayList<Event> itemsArrayList) {
         this.context = context;
         this.dataSet = itemsArrayList;
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.event_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card, parent, false);
 
         final ViewHolder vh = new ViewHolder(view);
 
         vh.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view1) {
-                JSONObject e = DataManager.getEvent(prefs, dataSet.get(vh.getAdapterPosition()).getTitle(), dataSet.get(vh.getAdapterPosition()).getDate());
+                JSONObject e = DataManager.getEvent(MainActivity.prefs, dataSet.get(vh.getAdapterPosition()).getTitle(), dataSet.get(vh.getAdapterPosition()).getDate());
                 if (e != null) {
                     try {
                         Intent intent = new Intent(context, SingleEventActivity.class);
@@ -68,9 +64,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
                         for (int i = 0; i < signups.length(); i++) {
                             JSONObject signup = signups.getJSONObject(i);
                             if (signup.getBoolean("status")) {
-                                aanwezig.add(DataManager.getUser(prefs, signup.getInt("user_id")).getString("name"));
+                                aanwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getString("name"));
                             } else {
-                                afwezig.add(DataManager.getUser(prefs, signup.getInt("user_id")).getString("name"));
+                                afwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getString("name"));
                             }
                         }
                         intent.putStringArrayListExtra("aanwezig", aanwezig);
@@ -111,7 +107,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         try {
             JSONArray signups = dataSet.get(position).getSignups();
-            int userID = DataManager.getUserID(prefs);
+            int userID = DataManager.getUserID(MainActivity.prefs);
             Boolean aanwezig = null;
             for (int i = 0; i < signups.length(); i++) {
                 JSONObject signup = signups.getJSONObject(i);
@@ -134,11 +130,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
             e.printStackTrace();
         }
 
-        DateFormat appDF = new SimpleDateFormat("EEEE dd MMMM yyyy HH:mm", new Locale("nl"));
+        DateFormat appDF = new SimpleDateFormat("EEEE dd MMMM yyyy HH:mm", MainActivity.locale);
         holder.date.setText(appDF.format(date));
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return dataSet.size();

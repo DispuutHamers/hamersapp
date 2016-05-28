@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 
@@ -62,10 +63,8 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     };
     private ArrayAdapter<User> adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private SharedPreferences prefs;
 
     public UserFragment() {
-        // Empty constructor required for fragment subclasses
     }
 
     @Override
@@ -77,8 +76,6 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         adapter = new UserAdapter(this.getActivity(), listItems);
         user_list.setAdapter(adapter);
-
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
 
         initSwiper(view, user_list);
 
@@ -125,13 +122,13 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onRefresh() {
         setRefreshing(true);
-        DataManager.getData(getContext(), prefs, DataManager.USERURL, DataManager.USERKEY);
+        DataManager.getData(getContext(), MainActivity.prefs, DataManager.USERURL, DataManager.USERKEY);
     }
 
     public void populateList() {
         JSONArray json;
         try {
-            if (prefs != null && (json = DataManager.getJsonArray(prefs, DataManager.USERKEY)) != null) {
+            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERKEY)) != null) {
                 listItems.clear();
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject temp;
@@ -167,8 +164,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void sort() {
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        String sortPref = prefs.getString("userSort", "");
+        String sortPref = MainActivity.prefs.getString("userSort", "");
         switch (sortPref) {
             case "name":
                 sortByUsername();
