@@ -385,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
         Date date = null;
         try {
             // Event date
-            DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", new Locale("nl"));
+            DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", locale);
             if (!dateString.equals("null")) {
                 date = dbDF.parse(dateString);
             }

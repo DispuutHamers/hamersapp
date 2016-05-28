@@ -1,8 +1,6 @@
 package nl.ecci.hamers.events;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -84,6 +82,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
+        setRefreshing(true);
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.SIGNUPURL, DataManager.SIGNUPKEY);
     }
@@ -121,9 +120,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         } catch (JSONException e) {
             Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
         }
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
+        setRefreshing(false);
     }
 
     @Override
@@ -154,6 +151,17 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.event_menu, menu);
+    }
+
+    private void setRefreshing(final Boolean bool) {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(bool);
+                }
+            });
+        }
     }
 }
 

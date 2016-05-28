@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 
@@ -29,7 +30,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private final ArrayList<NewsItem> listItems = new ArrayList<>();
     private NewsAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private SharedPreferences prefs;
 
     public NewsFragment() {
     }
@@ -46,8 +46,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         adapter = new NewsAdapter(getActivity(), listItems);
         news_list.setAdapter(adapter);
-
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
 
         onRefresh();
 
@@ -69,15 +67,15 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
-        DataManager.getData(getContext(), prefs, DataManager.NEWSURL, DataManager.NEWSKEY);
+        setRefreshing(true);
+        DataManager.getData(getContext(), MainActivity.prefs, DataManager.NEWSURL, DataManager.NEWSKEY);
     }
 
-    public void populateList(SharedPreferences prefs) {
-        this.prefs = prefs;
+    public void populateList() {
         listItems.clear();
         JSONArray json;
         try {
-            if ((json = DataManager.getJsonArray(prefs, DataManager.NEWSKEY)) != null) {
+            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.NEWSKEY)) != null) {
                 for (int i = json.length() - 1; i >= 0; i--) {
                     JSONObject temp;
                     temp = json.getJSONObject(i);
@@ -94,14 +92,23 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         } catch (JSONException e) {
             Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
         }
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
+        setRefreshing(false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        populateList(prefs);
+        populateList();
+    }
+
+    private void setRefreshing(final Boolean bool) {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(bool);
+                }
+            });
+        }
     }
 }

@@ -1,8 +1,6 @@
 package nl.ecci.hamers.beers;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -27,6 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DataManager;
@@ -39,7 +38,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private final ArrayList<Beer> dataSet = new ArrayList<>();
     private BeerAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private SharedPreferences prefs;
     private RecyclerView beer_list;
 
     public BeerFragment() {
@@ -51,10 +49,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         setHasOptionsMenu(true);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-
-        onRefresh();
-
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         beer_list.setLayoutManager(mLayoutManager);
         beer_list.setItemAnimator(new DefaultItemAnimator());
@@ -64,6 +58,8 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         adapter = new BeerAdapter(dataSet, getActivity());
         beer_list.setAdapter(adapter);
+
+        onRefresh();
 
         sortList();
 
@@ -97,18 +93,18 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
+        setRefreshing(true);
         // Get beers
-        DataManager.getData(getContext(), prefs, DataManager.BEERURL, DataManager.BEERKEY);
+        DataManager.getData(getContext(), MainActivity.prefs, DataManager.BEERURL, DataManager.BEERKEY);
         // Get reviews
-        DataManager.getData(getContext(), prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY);
+        DataManager.getData(getContext(), MainActivity.prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY);
     }
 
-    public void populateList(SharedPreferences prefs) {
-        this.prefs = prefs;
+    public void populateList() {
         dataSet.clear();
         JSONArray json;
         try {
-            if ((json = DataManager.getJsonArray(prefs, DataManager.BEERKEY)) != null) {
+            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.BEERKEY)) != null) {
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject temp;
                     temp = json.getJSONObject(i);
@@ -133,10 +129,8 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
             }
         }
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(false);
-            sortList();
-        }
+        setRefreshing(false);
+        sortList();
     }
 
     @Override
@@ -187,7 +181,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onResume() {
         super.onResume();
-        populateList(prefs);
+        onRefresh();
     }
 
     private void scrollTop() {
@@ -196,24 +190,23 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private void sortList() {
         if (getActivity() != null)
-            prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        if (prefs != null) {
-            String sortPref = prefs.getString("beerSort", "");
-            switch (sortPref) {
-                case "name":
-                    sort(nameComparator);
-                    break;
-                case "rating":
-                    sort(ratingComparator);
-                    break;
-                case "datumASC":
-                    sort(dateASCComperator);
-                    break;
-                case "datumDESC":
-                    sort(dateDESCComperator);
-                    break;
+            if (MainActivity.prefs != null) {
+                String sortPref = MainActivity.prefs.getString("beerSort", "");
+                switch (sortPref) {
+                    case "name":
+                        sort(nameComparator);
+                        break;
+                    case "rating":
+                        sort(ratingComparator);
+                        break;
+                    case "datumASC":
+                        sort(dateASCComperator);
+                        break;
+                    case "datumDESC":
+                        sort(dateDESCComperator);
+                        break;
+                }
             }
-        }
     }
 
     private void sort(Comparator<Beer> comperator) {
@@ -225,6 +218,17 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onDestroy() {
         super.onDestroy();
         AnimateFirstDisplayListener.displayedImages.clear();
+    }
+
+    private void setRefreshing(final Boolean bool) {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(bool);
+                }
+            });
+        }
     }
 
     private static final Comparator<Beer> nameComparator = new Comparator<Beer>() {

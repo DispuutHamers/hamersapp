@@ -1,8 +1,6 @@
 package nl.ecci.hamers.quotes;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -24,6 +22,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
@@ -36,7 +35,6 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     private QuoteAdapter adapter;
     private RecyclerView quote_list;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private SharedPreferences prefs;
 
     public QuoteFragment() {
     }
@@ -54,8 +52,6 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         adapter = new QuoteAdapter(getActivity(), dataSet);
         quote_list.setAdapter(adapter);
-
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         initSwiper(view, quote_list, mLayoutManager);
 
@@ -81,21 +77,22 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public void onRefresh() {
-        DataManager.getData(getContext(), prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY);
+        setRefreshing(true);
+        DataManager.getData(getContext(), MainActivity.prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY);
     }
 
-    public void populateList(SharedPreferences prefs) {
+    public void populateList() {
         dataSet.clear();
         JSONArray json;
         try {
-            if ((json = DataManager.getJsonArray(prefs, DataManager.QUOTEKEY)) != null) {
+            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.QUOTEKEY)) != null) {
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject quote = json.getJSONObject(i);
                     JSONObject user;
 
                     String username;
                     int id;
-                    if ((user = DataManager.getUser(prefs, quote.getInt("user_id"))) != null) {
+                    if ((user = DataManager.getUser(MainActivity.prefs, quote.getInt("user_id"))) != null) {
                         username = user.getString("name");
                         id = user.getInt("id");
                     } else {
@@ -117,9 +114,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         } catch (JSONException e) {
             Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
         }
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
+        setRefreshing(false);
     }
 
     @Override
@@ -147,7 +142,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onResume() {
         super.onResume();
-        populateList(prefs);
+        populateList();
     }
 
     @Override
@@ -163,5 +158,16 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     private void scrollTop() {
         quote_list.smoothScrollToPosition(0);
+    }
+
+    private void setRefreshing(final Boolean bool) {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(bool);
+                }
+            });
+        }
     }
 }

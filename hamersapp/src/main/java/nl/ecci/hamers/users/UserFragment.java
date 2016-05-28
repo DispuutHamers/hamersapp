@@ -124,10 +124,11 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
+        setRefreshing(true);
         DataManager.getData(getContext(), prefs, DataManager.USERURL, DataManager.USERKEY);
     }
 
-    public void populateList(SharedPreferences prefs) {
+    public void populateList() {
         JSONArray json;
         try {
             if (prefs != null && (json = DataManager.getJsonArray(prefs, DataManager.USERKEY)) != null) {
@@ -145,9 +146,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         } catch (JSONException e) {
             Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
         }
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
+        setRefreshing(false);
     }
 
     @Override
@@ -180,6 +179,17 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             case "reviewcount":
                 sortbyReviewCount();
                 break;
+        }
+    }
+
+    private void setRefreshing(final Boolean bool) {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(bool);
+                }
+            });
         }
     }
 

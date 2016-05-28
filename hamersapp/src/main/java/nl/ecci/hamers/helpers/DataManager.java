@@ -56,7 +56,7 @@ public final class DataManager {
                     @Override
                     public void onResponse(String response) {
                         prefs.edit().putString(dataKEY, response).apply();
-                        populateList(dataURL, prefs);
+                        populateList(dataURL);
                     }
                 },
                 new Response.ErrorListener() {
@@ -96,7 +96,7 @@ public final class DataManager {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("--------------------\nError:\n" + error.toString());
+                        System.out.println("--------------------\nError:" + error.toString());
                         if (error instanceof AuthFailureError) {
                             // Wrong API key
                             if (Utils.alertDialog == null) {
@@ -122,16 +122,16 @@ public final class DataManager {
         Singleton.getInstance(context).addToRequestQueue(request);
     }
 
-    private static void populateList(String data, SharedPreferences prefs) {
+    private static void populateList(String data) {
         switch (data) {
             case QUOTEURL:
-                MainActivity.QUOTE_FRAGMENT.populateList(prefs);
+                MainActivity.QUOTE_FRAGMENT.populateList();
                 break;
             case BEERURL:
-                MainActivity.BEER_FRAGMENT.populateList(prefs);
+                MainActivity.BEER_FRAGMENT.populateList();
                 break;
             case REVIEWURL:
-                MainActivity.BEER_FRAGMENT.populateList(prefs);
+                MainActivity.BEER_FRAGMENT.populateList();
                 break;
             case EVENTURL:
                 MainActivity.EVENT_FRAGMENT_ALL.populateList();
@@ -142,10 +142,10 @@ public final class DataManager {
                 MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
                 break;
             case NEWSURL:
-                MainActivity.NEWS_FRAGMENT.populateList(prefs);
+                MainActivity.NEWS_FRAGMENT.populateList();
                 break;
             case USERURL:
-                MainActivity.USER_FRAGMENT.populateList(prefs);
+                MainActivity.USER_FRAGMENT.populateList();
                 break;
         }
     }
