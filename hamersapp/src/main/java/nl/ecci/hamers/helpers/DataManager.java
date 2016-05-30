@@ -46,7 +46,6 @@ public final class DataManager {
     public static final String APIKEYKEY = "apikey";
     public static final String WHOAMIKEY = "whoamikey";
     public static final String SIGNUPKEY = "signupkey";
-    public static final String AUTHENTICATED = "authenticated";
 
     public static void getData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
         String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + dataURL;
@@ -86,11 +85,13 @@ public final class DataManager {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (!(context instanceof MainActivity)) {
-                            ((Activity) context).finish();
+                        if (context != null) {
+                            if (!(context instanceof MainActivity)) {
+                                ((Activity) context).finish();
+                            }
+                            Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
+                            getData(context, prefs, dataURL, dataKEY);
                         }
-                        Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
-                        getData(context, prefs, dataURL, dataKEY);
                     }
                 },
                 new Response.ErrorListener() {
@@ -173,7 +174,7 @@ public final class DataManager {
             if ((events = getJsonArray(prefs, EVENTKEY)) != null) {
                 for (int i = 0; i < events.length(); i++) {
                     JSONObject temp = events.getJSONObject(i);
-                    DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", new Locale("nl"));
+                    DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", MainActivity.locale);
                     Date dbDatum = dbDF.parse(temp.getString("date"));
                     if (dbDatum.equals(date) && temp.getString("title").equals(title)) {
                         return temp;
@@ -185,28 +186,6 @@ public final class DataManager {
             return null;
         } catch (ParseException e) {
             e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static boolean isAuthenticated(SharedPreferences prefs) {
-        return prefs.getBoolean("Authenticated", false);
-    }
-
-    public static JSONObject getBeer(SharedPreferences prefs, String name) {
-        JSONArray beers;
-        try {
-            if ((beers = getJsonArray(prefs, BEERKEY)) != null) {
-                for (int i = 0; i < beers.length(); i++) {
-                    JSONObject temp = beers.getJSONObject(i);
-                    if (temp.getString("name").equals(name)) {
-                        return temp;
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
         }
         return null;
     }
