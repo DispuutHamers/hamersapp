@@ -123,6 +123,15 @@
                     android:value="nl.ecci.hamers.MainActivity">
             </meta-data>
         </activity>
+        <activity android:name="nl.ecci.hamers.users.SingleUserActivity"
+            android:parentActivityName="nl.ecci.hamers.MainActivity"
+            android:screenOrientation="portrait"
+            android:label="Hamers">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nl.ecci.hamers.MainActivity">
+            </meta-data>
+        </activity>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

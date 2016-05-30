@@ -37,14 +37,8 @@ public class SingleImageActivity extends AppCompatActivity {
 
         // Universal Image Loader
         ImageLoader imageLoader = ImageLoader.getInstance();
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
 
-        imageLoader.displayImage(url, imageView, options, new ImageLoadingListener() {
+        imageLoader.displayImage(url, imageView, new ImageLoadingListener() {
 
             @Override
             public void onLoadingStarted(String imageUri, View view) {

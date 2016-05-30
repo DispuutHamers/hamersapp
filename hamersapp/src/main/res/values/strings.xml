@@ -87,6 +87,12 @@
     <string name="news_title">Wat moet erboven?</string>
     <string name="news_body">Vertel dan..</string>
 
+    <!-- Users -->
+    <string name="user_name">Naam</string>
+    <string name="user_email">Email</string>
+    <string name="user_quotecount">Aantal quotes</string>
+    <string name="user_reviewcount">Aantal reviews</string>
+
     <!-- Motions -->
     <string name="motiontypetext">Motietype:</string>
     <string name="motie_nietchill">Motie van niet chill</string>

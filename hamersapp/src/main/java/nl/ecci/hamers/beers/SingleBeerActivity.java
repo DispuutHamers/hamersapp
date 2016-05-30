@@ -2,10 +2,7 @@ package nl.ecci.hamers.beers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -21,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONArray;
@@ -33,6 +29,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.SingleImageActivity;
@@ -45,7 +42,6 @@ public class SingleBeerActivity extends AppCompatActivity {
 
     private int id;
     private String name;
-    private SharedPreferences prefs;
     private Button reviewButton;
     private ViewGroup reviewViewGroup;
 
@@ -86,8 +82,6 @@ public class SingleBeerActivity extends AppCompatActivity {
         final String country = extras.getString(Beer.BEER_COUNTRY);
         final String rating = extras.getString(Beer.BEER_RATING);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
         fillRow(kindRow, getString(R.string.beer_soort), kind);
         fillRow(alcRow, getString(R.string.beer_alc), percentage);
         fillRow(brewerRow, getString(R.string.beer_brewer), brewer);
@@ -103,14 +97,8 @@ public class SingleBeerActivity extends AppCompatActivity {
 
         // Universal Image Loader
         ImageLoader imageLoader = ImageLoader.getInstance();
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
 
-        imageLoader.displayImage(url, beerImage, options);
+        imageLoader.displayImage(url, beerImage);
 
         beerImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,9 +112,7 @@ public class SingleBeerActivity extends AppCompatActivity {
             }
         });
 
-        if (prefs != null) {
-            getReviews();
-        }
+        getReviews();
     }
 
     @Override
@@ -143,12 +129,12 @@ public class SingleBeerActivity extends AppCompatActivity {
         JSONArray reviews;
         boolean hasReviews = false;
         try {
-            if ((reviews = getJsonArray(prefs, DataManager.REVIEWKEY)) != null) {
+            if ((reviews = getJsonArray(MainActivity.prefs, DataManager.REVIEWKEY)) != null) {
                 for (int i = 0; i < reviews.length(); i++) {
                     JSONObject review = reviews.getJSONObject(i);
                     if (review.getInt("beer_id") == id) {
                         hasReviews = true;
-                        if (review.getInt("user_id") == getUserID(prefs)) {
+                        if (review.getInt("user_id") == getUserID(MainActivity.prefs)) {
                             reviewButton.setVisibility(View.GONE);
                         }
                         Review tempReview = new Review(review.getInt("beer_id"), review.getInt("user_id"), review.getString("description"), review.getString("rating"), review.getString("created_at"), review.getString("proefdatum"));
@@ -190,7 +176,7 @@ public class SingleBeerActivity extends AppCompatActivity {
 
         String name = null;
         try {
-            name = getUser(prefs, review.getUser_id()).getString("name");
+            name = getUser(MainActivity.prefs, review.getUser_id()).getString("name");
         } catch (JSONException | NullPointerException e) {
             e.printStackTrace();
         }

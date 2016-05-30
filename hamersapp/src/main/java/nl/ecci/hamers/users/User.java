@@ -1,12 +1,17 @@
 package nl.ecci.hamers.users;
 
 class User {
-
     private final String username;
     private final int userID;
     private final String email;
     private final int quotecount;
     private final int reviewcount;
+    public static final String USER_NAME = "USER_NAME";
+    public static final String USER_ID = "USER_ID";
+    public static final String USER_EMAIL = "USER_EMAIL";
+    public static final String USER_QUOTECOUNT = "USER_QUOTECOUNT";
+    public static final String USER_REVIEWCOUNT = "USER_REVIEWCOUNT";
+    public static final String USER_IMAGE_URL = "USER_IMAGE_URL";
 
     public User(String username, int userID, String email, int quotecount, int reviewcount) {
         super();

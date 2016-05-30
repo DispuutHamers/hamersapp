@@ -3,9 +3,6 @@ package nl.ecci.hamers.beers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -19,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
@@ -46,7 +42,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     private final Context context;
     private final ArrayList<Beer> dataSet;
     private final ImageLoader imageLoader;
-    private final DisplayImageOptions options;
     private ArrayList<Beer> filteredDataSet;
     private final int userID;
 
@@ -59,14 +54,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         // Universal Image Loader
         imageLoader = ImageLoader.getInstance();
         animateFirstListener = new AnimateFirstDisplayListener();
-        options = new DisplayImageOptions.Builder()
-                .resetViewBeforeLoading(true)
-                .showImageForEmptyUri(R.drawable.ic_questionmark)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
     }
 
     // Create new views (invoked by the layout manager)
@@ -143,7 +130,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
 
         if (holder.picture.getTag() == null || !holder.picture.getTag().equals(imageURL) && imageURL != null) {
             ImageAware imageAware = new ImageViewAware(holder.picture, false);
-            imageLoader.displayImage(imageURL, imageAware, options, animateFirstListener);
+            imageLoader.displayImage(imageURL, imageAware, animateFirstListener);
             holder.picture.setTag(imageURL);
         }
 

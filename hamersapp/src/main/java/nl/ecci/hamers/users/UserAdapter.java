@@ -1,7 +1,11 @@
 package nl.ecci.hamers.users;
 
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
+import nl.ecci.hamers.helpers.SingleImageActivity;
 import nl.ecci.hamers.helpers.Utils;
 
 class UserAdapter extends ArrayAdapter<User> {
@@ -25,7 +29,6 @@ class UserAdapter extends ArrayAdapter<User> {
     private final Context context;
     private final ArrayList<User> dataSet;
     private final ImageLoader imageLoader;
-    private final DisplayImageOptions options;
 
     public UserAdapter(Context context, ArrayList<User> dataSet) {
         super(context, R.layout.user_row, dataSet);
@@ -36,17 +39,10 @@ class UserAdapter extends ArrayAdapter<User> {
         // Universal Image Loader
         imageLoader = ImageLoader.getInstance();
         animateFirstListener = new AnimateFirstDisplayListener();
-        options = new DisplayImageOptions.Builder()
-                .resetViewBeforeLoading(true)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         // 1. Create inflater
         LayoutInflater inflater = (LayoutInflater) context
@@ -66,9 +62,27 @@ class UserAdapter extends ArrayAdapter<User> {
         reviewcount.setText(String.format(MainActivity.locale, "Aantal reviews: %d", dataSet.get(position).getReviewcount()));
 
         // Image
-        ImageView userImage = (ImageView) rowView.findViewById(R.id.user_image);
-        String url = "http://gravatar.com/avatar/" + Utils.md5Hex(dataSet.get(position).getEmail()) + "?s=200";
-        imageLoader.displayImage(url, userImage, options, animateFirstListener);
+        final ImageView userImage = (ImageView) rowView.findViewById(R.id.user_image);
+        final String url = "http://gravatar.com/avatar/" + Utils.md5Hex(dataSet.get(position).getEmail()) + "?s=200";
+        imageLoader.displayImage(url, userImage, animateFirstListener);
+
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Activity activity = (Activity) context;
+                String transitionName = context.getString(R.string.transition_single_image);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, userImage, transitionName);
+
+                Intent intent = new Intent(context, SingleUserActivity.class);
+                intent.putExtra(User.USER_NAME, dataSet.get(position).getUsername());
+                intent.putExtra(User.USER_ID, dataSet.get(position).getUserID());
+                intent.putExtra(User.USER_EMAIL, dataSet.get(position).getEmail());
+                intent.putExtra(User.USER_QUOTECOUNT, dataSet.get(position).getQuotecount());
+                intent.putExtra(User.USER_REVIEWCOUNT, dataSet.get(position).getReviewcount());
+                intent.putExtra(User.USER_IMAGE_URL, url);
+                ActivityCompat.startActivity(activity, intent, options.toBundle());
+            }
+        });
 
         // 5. return rowView
         return rowView;
