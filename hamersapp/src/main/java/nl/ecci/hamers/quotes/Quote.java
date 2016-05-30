@@ -2,7 +2,7 @@ package nl.ecci.hamers.quotes;
 
 import java.util.Date;
 
-class Quote {
+public class Quote {
     private final String user;
     private final String body;
     private final Date date;

@@ -1,12 +1,15 @@
 package nl.ecci.hamers.users;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -17,12 +20,12 @@ import nl.ecci.hamers.R;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class SingleUserActivity extends AppCompatActivity {
-
     private String username;
     private int userID;
     private String userEmail;
     private int userQuoteCount;
     private int userReviewCount;
+    private ListView quote_list;
     private PhotoViewAttacher mAttacher;
 
     @Override
@@ -46,10 +49,24 @@ public class SingleUserActivity extends AppCompatActivity {
 
         loadBackdrop();
 
+        View emailRow = findViewById(R.id.row_user_email);
+
         fillRow(findViewById(R.id.row_user_name), getString(R.string.user_name), username);
-        fillRow(findViewById(R.id.row_user_email), getString(R.string.user_email), userEmail);
+        fillRow(emailRow, getString(R.string.user_email), userEmail);
         fillRow(findViewById(R.id.row_user_quotecount), getString(R.string.user_quotecount), String.valueOf(userQuoteCount));
         fillRow(findViewById(R.id.row_user_reviewcount), getString(R.string.user_reviewcount), String.valueOf(userReviewCount));
+
+        emailRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{userEmail});
+
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadBackdrop() {
@@ -59,10 +76,12 @@ public class SingleUserActivity extends AppCompatActivity {
 
         ImageLoader.getInstance().displayImage(getIntent().getStringExtra(User.USER_IMAGE_URL), imageView, new ImageLoadingListener() {
             @Override
-            public void onLoadingStarted(String imageUri, View view) {}
+            public void onLoadingStarted(String imageUri, View view) {
+            }
 
             @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {}
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+            }
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
@@ -72,7 +91,8 @@ public class SingleUserActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onLoadingCancelled(String imageUri, View view) {}
+            public void onLoadingCancelled(String imageUri, View view) {
+            }
         });
     }
 
