@@ -103,11 +103,11 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     temp = json.getJSONObject(i);
                     User tempUser = new User(temp.getString("name"), temp.getInt("id"), temp.getString("email"), temp.getInt("quotes"), temp.getInt("reviews"));
 
-                    if (temp.getInt("approved") == 1) {
+//                    if (temp.getInt("approved") == 1) {
                         listItems.add(tempUser);
                         if (adapter != null) {
                             adapter.notifyDataSetChanged();
-                        }
+//                        }
                     }
                 }
             }
@@ -175,11 +175,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         final Comparator<User> quoteComperator = new Comparator<User>() {
             @Override
             public int compare(User user1, User user2) {
-
-                int quote1 = user1.getQuotecount();
-                int quote2 = user2.getQuotecount();
-
-                return ((Integer) quote2).compareTo(quote1);
+                return user2.getQuotecount() - user1.getQuotecount();
             }
         };
         Collections.sort(listItems, quoteComperator);
@@ -190,7 +186,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         final Comparator<User> reviewComperator = new Comparator<User>() {
             @Override
             public int compare(User user1, User user2) {
-                return ((Integer) user1.getReviewcount()).compareTo(user2.getReviewcount());
+                return user2.getReviewcount() - user1.getReviewcount();
             }
         };
         Collections.sort(listItems, reviewComperator);
