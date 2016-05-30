@@ -5,12 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -31,6 +31,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
@@ -50,8 +51,8 @@ import java.util.Locale;
 import nl.ecci.hamers.beers.BeerFragment;
 import nl.ecci.hamers.beers.NewBeerActivity;
 import nl.ecci.hamers.events.EventFragment;
-import nl.ecci.hamers.events.NewEventActivity;
 import nl.ecci.hamers.events.EventListFragment;
+import nl.ecci.hamers.events.NewEventActivity;
 import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.Utils;
@@ -72,22 +73,19 @@ public class MainActivity extends AppCompatActivity {
     public static final EventListFragment EVENT_FRAGMENT_UPCOMING = new EventListFragment();
     public static final NewsFragment NEWS_FRAGMENT = new NewsFragment();
     public static final BeerFragment BEER_FRAGMENT = new BeerFragment();
+    public static final Locale locale = new Locale("nl_NL");
+    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
+    public static final String REGISTRATION_COMPLETE = "registrationComplete";
     private static final MotionFragment MOTION_FRAGMENT = new MotionFragment();
     private static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
     private static final AboutFragment ABOUT_FRAGMENT = new AboutFragment();
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-
-    public static final Locale locale = new Locale("nl_NL");
-
     public static SharedPreferences prefs;
-
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private boolean backPressedOnce;
     // GCM
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
-    public static final String REGISTRATION_COMPLETE = "registrationComplete";
 
     /**
      * Setup of default ImageLoader configuration (Universal Image Loader)
@@ -95,6 +93,14 @@ public class MainActivity extends AppCompatActivity {
      */
     private static void configureDefaultImageLoader(Context context) {
         File cacheDir = StorageUtils.getCacheDirectory(context);
+        DisplayImageOptions options =  new DisplayImageOptions.Builder()
+                .resetViewBeforeLoading(true)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
+
         ImageLoaderConfiguration defaultConfiguration
                 = new ImageLoaderConfiguration.Builder(context)
                 .denyCacheImageMultipleSizesInMemory()
@@ -103,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 .diskCache(new UnlimitedDiskCache(cacheDir))
                 .threadPoolSize(3)
                 .threadPriority(Thread.NORM_PRIORITY - 2)
+                .defaultDisplayImageOptions(options)
                 .build();
 
         // Initialize ImageLoader with configuration
