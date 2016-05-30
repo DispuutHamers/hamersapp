@@ -50,7 +50,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         quote_list.setLayoutManager(mLayoutManager);
         quote_list.addItemDecoration(new DividerItemDecoration(getActivity()));
 
-        adapter = new QuoteAdapter(getActivity(), dataSet);
+        adapter = new QuoteAdapter(dataSet);
         quote_list.setAdapter(adapter);
 
         initSwiper(view, quote_list, mLayoutManager);
@@ -61,7 +61,6 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     private void initSwiper(View view, final RecyclerView event_list, final LinearLayoutManager lm) {
-        // SwipeRefreshLayout
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.quotes_swipe_container);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
@@ -101,9 +100,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     }
 
                     String tempDate = quote.getString("created_at");
-
                     Date date = parseDate(tempDate);
-
                     Quote tempQuote = new Quote(username, quote.getString("text"), date, id);
                     dataSet.add(tempQuote);
                     if (adapter != null) {
@@ -112,7 +109,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
             }
         } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
         }
         setRefreshing(false);
     }

@@ -139,7 +139,7 @@
     <string name="clear_image_cache_snackbar">Image cache cleared!</string>
 
     <!-- Snackbar -->
-    <string name="snackbar_downloaderror">Fout bij het downloaden</string>
+    <string name="snackbar_loaderror">Fout bij inladen</string>
     <string name="snackbar_downloading">De gegevens worden gedownload</string>
     <string name="snackbar_userloaderror">Fout bij het laden van de leden</string>
     <string name="snackbar_reviewloaderror">Fout bij het laden van de reviews</string>

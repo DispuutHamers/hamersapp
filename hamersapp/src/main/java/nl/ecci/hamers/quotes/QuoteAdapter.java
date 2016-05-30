@@ -1,9 +1,6 @@
 package nl.ecci.hamers.quotes;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +10,11 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
@@ -33,26 +28,17 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     private final ArrayList<Quote> dataSet;
     private ArrayList<Quote> filteredDataSet;
     private final ImageLoader imageLoader;
-    private final DisplayImageOptions options;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss - dd MMM yyyy", MainActivity.locale);
 
-    public QuoteAdapter(Context context, ArrayList<Quote> itemsArrayList) {
+    public QuoteAdapter(ArrayList<Quote> itemsArrayList) {
         this.dataSet = itemsArrayList;
         this.filteredDataSet = itemsArrayList;
 
         // Universal Image Loader
         imageLoader = ImageLoader.getInstance();
         animateFirstListener = new AnimateFirstDisplayListener();
-        options = new DisplayImageOptions.Builder()
-                .resetViewBeforeLoading(true)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.quote_row, parent, false);
@@ -60,7 +46,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
         return new ViewHolder(view);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.body.setText(filteredDataSet.get(position).getBody());
@@ -74,11 +59,10 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
         String email = DataManager.IDToEmail(MainActivity.prefs, filteredDataSet.get(position).getUserID());
         if (email != null) {
             String url = "http://gravatar.com/avatar/" + Utils.md5Hex(email) + "?s=200";
-            imageLoader.displayImage(url, holder.userImage, options, animateFirstListener);
+            imageLoader.displayImage(url, holder.userImage, animateFirstListener);
         }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return filteredDataSet.size();

@@ -88,7 +88,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 }
             }
         } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
         }
         setRefreshing(false);
     }

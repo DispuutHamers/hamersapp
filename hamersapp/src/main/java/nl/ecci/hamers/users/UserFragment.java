@@ -1,8 +1,6 @@
 package nl.ecci.hamers.users;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -31,36 +29,6 @@ import nl.ecci.hamers.helpers.DataManager;
 public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private final ArrayList<User> listItems = new ArrayList<>();
-    private final Comparator<User> nameComperator = new Comparator<User>() {
-        @Override
-        public int compare(User user1, User user2) {
-
-            String name1 = user1.getUsername();
-            String name2 = user2.getUsername();
-
-            return name1.compareToIgnoreCase(name2);
-        }
-    };
-    private final Comparator<User> quoteComperator = new Comparator<User>() {
-        @Override
-        public int compare(User user1, User user2) {
-
-            int quote1 = user1.getQuotecount();
-            int quote2 = user2.getQuotecount();
-
-            return ((Integer) quote2).compareTo(quote1);
-        }
-    };
-    private final Comparator<User> reviewComperator = new Comparator<User>() {
-        @Override
-        public int compare(User user1, User user2) {
-
-            int review1 = user1.getReviewcount();
-            int review2 = user2.getReviewcount();
-
-            return ((Integer) review2).compareTo(review1);
-        }
-    };
     private ArrayAdapter<User> adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -134,14 +102,17 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     JSONObject temp;
                     temp = json.getJSONObject(i);
                     User tempUser = new User(temp.getString("name"), temp.getInt("id"), temp.getString("email"), temp.getInt("quotes"), temp.getInt("reviews"));
-                    listItems.add(tempUser);
-                    if (adapter != null) {
-                        adapter.notifyDataSetChanged();
+
+                    if (temp.getInt("approved") == 1) {
+                        listItems.add(tempUser);
+                        if (adapter != null) {
+                            adapter.notifyDataSetChanged();
+                        }
                     }
                 }
             }
         } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.snackbar_downloaderror), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
         }
         setRefreshing(false);
     }
@@ -190,16 +161,38 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void sortByUsername() {
+        final Comparator<User> nameComperator = new Comparator<User>() {
+            @Override
+            public int compare(User user1, User user2) {
+                return user1.getUsername().compareToIgnoreCase(user2.getUsername());
+            }
+        };
         Collections.sort(listItems, nameComperator);
         adapter.notifyDataSetChanged();
     }
 
     private void sortbyQuoteCount() {
+        final Comparator<User> quoteComperator = new Comparator<User>() {
+            @Override
+            public int compare(User user1, User user2) {
+
+                int quote1 = user1.getQuotecount();
+                int quote2 = user2.getQuotecount();
+
+                return ((Integer) quote2).compareTo(quote1);
+            }
+        };
         Collections.sort(listItems, quoteComperator);
         adapter.notifyDataSetChanged();
     }
 
     private void sortbyReviewCount() {
+        final Comparator<User> reviewComperator = new Comparator<User>() {
+            @Override
+            public int compare(User user1, User user2) {
+                return ((Integer) user1.getReviewcount()).compareTo(user2.getReviewcount());
+            }
+        };
         Collections.sort(listItems, reviewComperator);
         adapter.notifyDataSetChanged();
     }
