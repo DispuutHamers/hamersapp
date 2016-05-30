@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="none">
-        <item android:id="@id/scroll_top"
+        <item android:id="@+id/scroll_top"
               android:title="@string/scroll_top"
               android:icon="@drawable/action_up"
               app:showAsAction="ifRoom"/>

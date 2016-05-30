@@ -6,7 +6,7 @@
           app:showAsAction="ifRoom"
           app:actionViewClass="android.support.v7.widget.SearchView"/>
     <group android:checkableBehavior="none">
-        <item android:id="@id/scroll_top"
+        <item android:id="@+id/scroll_top"
               android:title="@string/scroll_top"
               android:icon="@drawable/action_up"
               app:showAsAction="ifRoom"/>
