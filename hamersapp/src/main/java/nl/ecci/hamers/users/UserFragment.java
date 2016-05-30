@@ -164,7 +164,7 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         final Comparator<User> nameComperator = new Comparator<User>() {
             @Override
             public int compare(User user1, User user2) {
-                return user1.getUsername().compareToIgnoreCase(user2.getUsername());
+                return user1.getName().compareToIgnoreCase(user2.getName());
             }
         };
         Collections.sort(listItems, nameComperator);

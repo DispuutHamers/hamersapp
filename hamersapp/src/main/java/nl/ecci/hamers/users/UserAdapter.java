@@ -49,7 +49,7 @@ class UserAdapter extends ArrayAdapter<User> {
         TextView reviewcount = (TextView) rowView.findViewById(R.id.user_reviewcount);
 
         // 4. Set the text for textView
-        username.setText(dataSet.get(position).getUsername());
+        username.setText(dataSet.get(position).getName());
         quotecount.setText(String.format("Aantal quotes: %s", String.valueOf(dataSet.get(position).getQuotecount())));
         reviewcount.setText(String.format(MainActivity.locale, "Aantal reviews: %d", dataSet.get(position).getReviewcount()));
 
@@ -62,13 +62,11 @@ class UserAdapter extends ArrayAdapter<User> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, SingleUserActivity.class);
-                intent.putExtra(User.USER_NAME, dataSet.get(position).getUsername());
+                intent.putExtra(User.USER_NAME, dataSet.get(position).getName());
                 intent.putExtra(User.USER_ID, dataSet.get(position).getUserID());
                 intent.putExtra(User.USER_EMAIL, dataSet.get(position).getEmail());
                 intent.putExtra(User.USER_QUOTECOUNT, dataSet.get(position).getQuotecount());
                 intent.putExtra(User.USER_REVIEWCOUNT, dataSet.get(position).getReviewcount());
-                intent.putExtra(User.USER_IMAGE_URL, url);
-
                 context.startActivity(intent);
             }
         });

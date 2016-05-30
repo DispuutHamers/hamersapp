@@ -56,11 +56,9 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         animateFirstListener = new AnimateFirstDisplayListener();
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.beer_row, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.beer_row, parent, false);
 
         final ViewHolder vh = new ViewHolder(view);
         final View beerView = view.findViewById(R.id.beer_image);

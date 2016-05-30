@@ -176,9 +176,8 @@ public class SingleBeerActivity extends AppCompatActivity {
 
         String name = null;
         try {
-            name = getUser(MainActivity.prefs, review.getUser_id()).getString("name");
-        } catch (JSONException | NullPointerException e) {
-            e.printStackTrace();
+            name = getUser(MainActivity.prefs, review.getUser_id()).getName();
+        } catch (NullPointerException ignored) {
         }
 
         String datum = null;

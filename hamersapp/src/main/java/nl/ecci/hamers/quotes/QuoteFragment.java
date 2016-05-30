@@ -26,6 +26,7 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
+import nl.ecci.hamers.users.User;
 
 import static nl.ecci.hamers.MainActivity.parseDate;
 
@@ -50,7 +51,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         quote_list.setLayoutManager(mLayoutManager);
         quote_list.addItemDecoration(new DividerItemDecoration(getActivity()));
 
-        adapter = new QuoteAdapter(dataSet);
+        adapter = new QuoteAdapter(dataSet, getContext());
         quote_list.setAdapter(adapter);
 
         initSwiper(view, quote_list, mLayoutManager);
@@ -87,13 +88,13 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.QUOTEKEY)) != null) {
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject quote = json.getJSONObject(i);
-                    JSONObject user;
+                    User user;
 
                     String username;
                     int id;
                     if ((user = DataManager.getUser(MainActivity.prefs, quote.getInt("user_id"))) != null) {
-                        username = user.getString("name");
-                        id = user.getInt("id");
+                        username = user.getName();
+                        id = user.getUserID();
                     } else {
                         username = "unknown user";
                         id = -1;

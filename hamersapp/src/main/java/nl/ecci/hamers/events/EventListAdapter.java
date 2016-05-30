@@ -63,9 +63,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
                         for (int i = 0; i < signups.length(); i++) {
                             JSONObject signup = signups.getJSONObject(i);
                             if (signup.getBoolean("status")) {
-                                aanwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getString("name"));
+                                aanwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getName());
                             } else {
-                                afwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getString("name"));
+                                afwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getName());
                             }
                         }
                         intent.putStringArrayListExtra("aanwezig", aanwezig);
@@ -81,7 +81,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(dataSet.get(position).getTitle());
