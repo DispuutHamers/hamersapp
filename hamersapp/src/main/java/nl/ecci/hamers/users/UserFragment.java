@@ -104,9 +104,9 @@ public class UserFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     User tempUser = new User(temp.getString("name"), temp.getInt("id"), temp.getString("email"), temp.getInt("quotes"), temp.getInt("reviews"));
 
 //                    if (temp.getInt("approved") == 1) {
-                        listItems.add(tempUser);
-                        if (adapter != null) {
-                            adapter.notifyDataSetChanged();
+                    listItems.add(tempUser);
+                    if (adapter != null) {
+                        adapter.notifyDataSetChanged();
 //                        }
                     }
                 }

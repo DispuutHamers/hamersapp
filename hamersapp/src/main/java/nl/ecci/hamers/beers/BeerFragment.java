@@ -35,6 +35,38 @@ import static nl.ecci.hamers.MainActivity.parseDate;
 
 public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    private static final Comparator<Beer> nameComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            return beer1.getName().compareToIgnoreCase(beer2.getName());
+        }
+    };
+    private static final Comparator<Beer> ratingComparator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            String rating1 = beer1.getRating();
+            String rating2 = beer2.getRating();
+
+            if (rating1.equals("nog niet bekend")) {
+                rating1 = "-1";
+            } else if (rating2.equals("nog niet bekend")) {
+                rating2 = "-1";
+            }
+            return rating2.compareToIgnoreCase(rating1);
+        }
+    };
+    private static final Comparator<Beer> dateASCComperator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            return beer1.getCreatedAt().compareTo(beer2.getCreatedAt());
+        }
+    };
+    private static final Comparator<Beer> dateDESCComperator = new Comparator<Beer>() {
+        @Override
+        public int compare(Beer beer1, Beer beer2) {
+            return beer2.getCreatedAt().compareTo(beer1.getCreatedAt());
+        }
+    };
     private final ArrayList<Beer> dataSet = new ArrayList<>();
     private BeerAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -230,49 +262,4 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             });
         }
     }
-
-    private static final Comparator<Beer> nameComparator = new Comparator<Beer>() {
-        @Override
-        public int compare(Beer beer1, Beer beer2) {
-            String name1 = beer1.getName();
-            String name2 = beer2.getName();
-
-            return name1.compareToIgnoreCase(name2);
-        }
-    };
-
-    private static final Comparator<Beer> ratingComparator = new Comparator<Beer>() {
-        @Override
-        public int compare(Beer beer1, Beer beer2) {
-            String rating1 = beer1.getRating();
-            String rating2 = beer2.getRating();
-
-            if (rating1.equals("nog niet bekend")) {
-                rating1 = "-1";
-            } else if (rating2.equals("nog niet bekend")) {
-                rating2 = "-1";
-            }
-            return rating2.compareToIgnoreCase(rating1);
-        }
-    };
-
-    private static final Comparator<Beer> dateASCComperator = new Comparator<Beer>() {
-        @Override
-        public int compare(Beer beer1, Beer beer2) {
-            Date date1 = beer1.getCreatedAt();
-            Date date2 = beer2.getCreatedAt();
-
-            return date1.compareTo(date2);
-        }
-    };
-
-    private static final Comparator<Beer> dateDESCComperator = new Comparator<Beer>() {
-        @Override
-        public int compare(Beer beer1, Beer beer2) {
-            Date date1 = beer1.getCreatedAt();
-            Date date2 = beer2.getCreatedAt();
-
-            return date2.compareTo(date1);
-        }
-    };
 }

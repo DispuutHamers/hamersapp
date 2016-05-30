@@ -8,8 +8,8 @@ import com.android.volley.toolbox.Volley;
 
 public class Singleton {
     private static Singleton mInstance;
-    private RequestQueue mRequestQueue;
     private static Context mCtx;
+    private RequestQueue mRequestQueue;
 
     private Singleton(Context context) {
         mCtx = context;

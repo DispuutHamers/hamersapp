@@ -42,8 +42,8 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     private final Context context;
     private final ArrayList<Beer> dataSet;
     private final ImageLoader imageLoader;
-    private ArrayList<Beer> filteredDataSet;
     private final int userID;
+    private ArrayList<Beer> filteredDataSet;
 
     public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context) {
         this.dataSet = itemsArrayList;

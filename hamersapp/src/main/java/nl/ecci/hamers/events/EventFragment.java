@@ -15,7 +15,6 @@ public class EventFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // retain this fragment
         setRetainInstance(true);
 
         View rootView = inflater.inflate(R.layout.event_fragment, container, false);

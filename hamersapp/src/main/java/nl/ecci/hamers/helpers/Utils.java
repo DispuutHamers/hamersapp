@@ -81,7 +81,7 @@ public class Utils {
     public static CharSequence[] stringArrayToCharSequenceArray(Object[] stringArray) {
         CharSequence[] charSequenceArray = new CharSequence[stringArray.length];
 
-        for (int i=0; i<stringArray.length; i++)
+        for (int i = 0; i < stringArray.length; i++)
             charSequenceArray[i] = (String) stringArray[i];
 
         return charSequenceArray;

@@ -10,9 +10,9 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 
 public class EventFragmentPagerAdapter extends FragmentPagerAdapter {
+    public final static String upcoming = "upcoming";
     private static String[] tabTitles = null;
     private final int PAGE_COUNT = 2;
-    public final static String upcoming = "upcoming";
 
     public EventFragmentPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
@@ -50,7 +50,6 @@ public class EventFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        // Generate title based on item position
         return tabTitles[position];
     }
 }

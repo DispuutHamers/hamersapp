@@ -1,8 +1,6 @@
 package nl.ecci.hamers;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +16,10 @@ import nl.ecci.hamers.helpers.DataManager;
 
 public class MotionFragment extends Fragment {
 
-    private String type;
-
     private final String DUURTLANG = "duurt lang";
     private final String ARELAXED = "vet arelaxed";
     private final String NIETCHILL = "niet chilll";
+    private String type;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

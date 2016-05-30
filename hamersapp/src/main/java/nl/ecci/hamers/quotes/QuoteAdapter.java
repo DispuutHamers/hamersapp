@@ -1,6 +1,5 @@
 package nl.ecci.hamers.quotes;
 
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +25,9 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
     private static AnimateFirstDisplayListener animateFirstListener;
     private final ArrayList<Quote> dataSet;
-    private ArrayList<Quote> filteredDataSet;
     private final ImageLoader imageLoader;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss - dd MMM yyyy", MainActivity.locale);
+    private ArrayList<Quote> filteredDataSet;
 
     public QuoteAdapter(ArrayList<Quote> itemsArrayList) {
         this.dataSet = itemsArrayList;
