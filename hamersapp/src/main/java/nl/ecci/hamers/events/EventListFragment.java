@@ -87,8 +87,9 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.SIGNUPURL, DataManager.SIGNUPKEY);
     }
 
+    @SuppressWarnings("unchecked")
     public void populateList() {
-        new populateList().execute("");
+        new populateList().execute(dataSet);
     }
 
     @Override
@@ -132,10 +133,11 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         }
     }
 
-    public class populateList extends AsyncTask<String, Void, String> {
+    public class populateList extends AsyncTask<ArrayList<Event>, Void, ArrayList<Event>> {
+        @SafeVarargs
         @Override
-        protected String doInBackground(String... params) {
-            dataSet.clear();
+        protected final ArrayList<Event> doInBackground(ArrayList<Event>... param) {
+            final ArrayList<Event> dataSet = new ArrayList<>();
             JSONArray json;
             Date currentDate = Calendar.getInstance().getTime();
             try {
@@ -162,11 +164,13 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
             } catch (JSONException e) {
                 Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
             }
-            return "";
+            return dataSet;
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(ArrayList<Event> result) {
+            dataSet.clear();
+            dataSet.addAll(result);
             if (EventListFragment.this.adapter != null) {
                 EventListFragment.this.adapter.notifyDataSetChanged();
             }
@@ -176,10 +180,6 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         @Override
         protected void onPreExecute() {
             setRefreshing(true);
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
         }
     }
 }

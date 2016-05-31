@@ -131,9 +131,9 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.BEERURL, DataManager.BEERKEY);
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY);
     }
-
+    @SuppressWarnings("unchecked")
     public void populateList() {
-        new populateList().execute("");
+        new populateList().execute(dataSet);
     }
 
     @Override
@@ -234,10 +234,11 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     }
 
-    public class populateList extends AsyncTask<String, Void, String> {
+    public class populateList extends AsyncTask<ArrayList<Beer>, Void, ArrayList<Beer>> {
+        @SafeVarargs
         @Override
-        protected String doInBackground(String... params) {
-            dataSet.clear();
+        protected final ArrayList<Beer> doInBackground(ArrayList<Beer>... param) {
+            final ArrayList<Beer> dataSet = new ArrayList<>();
             JSONArray json;
             try {
                 if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.BEERKEY)) != null) {
@@ -257,20 +258,22 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         dataSet.add(tempBeer);
                     }
                 }
-            } catch (JSONException e) {
-                return "Error";
+            } catch (JSONException ignored) {
             }
-            return "";
+            return dataSet;
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            if (result.equals("Error")) {
+        protected void onPostExecute(ArrayList<Beer> result) {
+            if (result.isEmpty()) {
                 Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
-            }
+            } else {
 
-            if (BeerFragment.this.adapter != null) {
-                BeerFragment.this.adapter.notifyDataSetChanged();
+                dataSet.clear();
+                dataSet.addAll(result);
+                if (BeerFragment.this.adapter != null) {
+                    BeerFragment.this.adapter.notifyDataSetChanged();
+                }
             }
             setRefreshing(false);
             sortList();
@@ -279,10 +282,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         @Override
         protected void onPreExecute() {
             setRefreshing(true);
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
         }
     }
 }
