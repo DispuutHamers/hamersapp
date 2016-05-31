@@ -6,8 +6,12 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
@@ -63,18 +67,7 @@ public final class DataManager {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("--------------------\nError:\n" + error.toString());
-                        if (error instanceof AuthFailureError) {
-                            // Wrong API key
-                            if (Utils.alertDialog == null) {
-                                Utils.showApiKeyDialog(context);
-                            } else if (!Utils.alertDialog.isShowing()) {
-                                Utils.showApiKeyDialog(context);
-                            }
-                        } else {
-                            // (Generic) Volley error
-                            Toast.makeText(context, context.getString(R.string.snackbar_volley_error), Toast.LENGTH_SHORT).show();
-                        }
+                        handleErrorResponse(context, error);
                     }
                 });
         Singleton.getInstance(context).addToRequestQueue(request);
@@ -99,15 +92,7 @@ public final class DataManager {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("--------------------\nError:" + error.toString());
-                        if (error instanceof AuthFailureError) {
-                            // Wrong API key
-                            if (Utils.alertDialog == null) {
-                                Utils.showApiKeyDialog(context);
-                            } else if (!Utils.alertDialog.isShowing()) {
-                                Utils.showApiKeyDialog(context);
-                            }
-                        }
+                        handleErrorResponse(context, error);
                     }
                 }) {
             @Override
@@ -123,6 +108,33 @@ public final class DataManager {
             }
         };
         Singleton.getInstance(context).addToRequestQueue(request);
+    }
+
+    private static void handleErrorResponse(Context context, VolleyError error) {
+        System.out.println("--------------------\nError:\n" + error.toString());
+        if (error instanceof AuthFailureError) {
+            // Wrong API key
+            if (Utils.alertDialog == null) {
+                Utils.showApiKeyDialog(context);
+            } else if (!Utils.alertDialog.isShowing()) {
+                Utils.showApiKeyDialog(context);
+            }
+        } else if (error instanceof TimeoutError) {
+            // Timeout
+            Toast.makeText(context, context.getString(R.string.snackbar_timeout_error), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof ServerError) {
+            // Server error (500)
+            Toast.makeText(context, context.getString(R.string.snackbar_server_error), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof NoConnectionError) {
+            // No network connection
+            Toast.makeText(context, context.getString(R.string.snackbar_connection_error), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof NetworkError) {
+            // No network connection
+            Toast.makeText(context, context.getString(R.string.snackbar_network_error), Toast.LENGTH_SHORT).show();
+        } else {
+            // Other error
+            Toast.makeText(context, context.getString(R.string.snackbar_volley_error), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private static void populateList(String data) {
@@ -141,8 +153,8 @@ public final class DataManager {
                 MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
                 break;
             case SIGNUPURL:
-//                MainActivity.EVENT_FRAGMENT_ALL.populateList();
-//                MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
+                MainActivity.EVENT_FRAGMENT_ALL.populateList();
+                MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
                 break;
             case NEWSURL:
                 MainActivity.NEWS_FRAGMENT.populateList();

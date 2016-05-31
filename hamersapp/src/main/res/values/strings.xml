@@ -156,6 +156,10 @@
     <string name="snackbar_storekeymemory">Een apikey kan ingevuld worden bij instellingen</string>
     <string name="snackbar_error">Er is iets misgegaan, probeer het later opnieuw.</string>
     <string name="snackbar_volley_error">Fout bij ophalen data van server.</string>
+    <string name="snackbar_server_error">Oh noes! De server verslikte zich!</string>
+    <string name="snackbar_connection_error">Oh noes! Je hebt geen verbinding!</string>
+    <string name="snackbar_network_error">Oh noes! De verbinding ging stuk!</string>
+    <string name="snackbar_timeout_error">Timeout bij ophalen data.</string>
 
     <!-- Sorting -->
     <string name="sort_quotes">Sorteer op aantal quotes</string>
