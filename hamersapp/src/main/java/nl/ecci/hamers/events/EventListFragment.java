@@ -1,5 +1,6 @@
 package nl.ecci.hamers.events;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -53,14 +54,14 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         adapter = new EventListAdapter(getActivity(), listItems);
         event_list.setAdapter(adapter);
 
-        onRefresh();
-
         // If upcoming, reverse order
         upcoming = getArguments().getBoolean(EventFragmentPagerAdapter.upcoming, false);
         if (upcoming) {
             mLayoutManager.setReverseLayout(true);
             mLayoutManager.setStackFromEnd(true);
         }
+
+        onRefresh();
 
         return view;
     }
@@ -82,45 +83,12 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-        setRefreshing(true);
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.SIGNUPURL, DataManager.SIGNUPKEY);
     }
 
     public void populateList() {
-        listItems.clear();
-        JSONArray json;
-        Date currentDate = Calendar.getInstance().getTime();
-        try {
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.EVENTKEY)) != null) {
-                for (int i = json.length() - 1; i >= 0; i--) {
-                    JSONObject temp;
-                    temp = json.getJSONObject(i);
-
-                    Date date = parseDate(temp.getString("date"));
-                    Date end_time = parseDate(temp.getString("end_time"));
-
-                    Event event = new Event(temp.getInt("id"), temp.getString("title"), temp.getString("beschrijving"), temp.getString("location"), date, end_time, temp.getJSONArray("signups"));
-
-                    if (upcoming) {
-                        if (date.after(currentDate)) {
-                            listItems.add(event);
-                            if (adapter != null) {
-                                adapter.notifyDataSetChanged();
-                            }
-                        }
-                    } else {
-                        listItems.add(event);
-                        if (adapter != null) {
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
-        }
-        setRefreshing(false);
+        new populateList().execute("");
     }
 
     @Override
@@ -161,6 +129,58 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                     swipeRefreshLayout.setRefreshing(bool);
                 }
             });
+        }
+    }
+
+    public class populateList extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            listItems.clear();
+            JSONArray json;
+            Date currentDate = Calendar.getInstance().getTime();
+            try {
+                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.EVENTKEY)) != null) {
+                    for (int i = json.length() - 1; i >= 0; i--) {
+                        JSONObject temp;
+                        temp = json.getJSONObject(i);
+
+                        Date date = parseDate(temp.getString("date"));
+                        Date end_time = parseDate(temp.getString("end_time"));
+                        Date deadline = parseDate(temp.getString("deadline"));
+
+                        Event event = new Event(temp.getInt("id"), temp.getString("title"), temp.getString("beschrijving"), temp.getString("location"), date, end_time, deadline, temp.getJSONArray("signups"));
+
+                        if (upcoming) {
+                            if (date.after(currentDate)) {
+                                listItems.add(event);
+                            }
+                        } else {
+                            listItems.add(event);
+                        }
+                    }
+                }
+            } catch (JSONException e) {
+                Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (EventListFragment.this.adapter != null) {
+                EventListFragment.this.adapter.notifyDataSetChanged();
+            }
+            setRefreshing(false);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            setRefreshing(true);
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
         }
     }
 }
