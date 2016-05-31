@@ -29,7 +29,7 @@ public class AboutFragment extends Fragment {
         setHasOptionsMenu(true);
 
         MarkdownView markdownView = (MarkdownView) view.findViewById(R.id.mdv_changelog);
-        markdownView.loadMarkdown(getString(R.string.about_changelog));
+        markdownView.loadMarkdownFile("https://raw.githubusercontent.com/dexbleeker/hamersapp/master/CHANGELOG.md");
         markdownView.setBackgroundColor(0);
 
         String versionName = Utils.getAppVersion(getContext());
