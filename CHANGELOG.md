@@ -2,13 +2,14 @@
 
 ## [1.5.0](https://github.com/dexbleeker/hamersapp/tree/1.5.0) (Upcoming release)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.4.2...1.5.0)
-- Button to clear image cache
+- Significant speed and stability improvements
+- Buttons to clear image cache and data storage
 - Show loading indicator when app is loading by itself
 - Tabs in ActivitiesFragment (Upcoming / All)
 - Users are clickable (view is to be expanded in the future)
-- About fragment
+- About
+- Small layout + theming improvements
 - A lot of dependency-updates
-- Speed and stability improvements
 
 ## [1.4.2](https://github.com/dexbleeker/hamersapp/tree/1.4.2) (2016-05-08)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.4.1...1.4.2)
