@@ -43,8 +43,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
                 final int position = vh.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Intent intent = new Intent(context, SingleEventActivity.class);
-                    intent.putExtra("title", dataSet.get(position).getTitle());
-                    intent.putExtra("date", dataSet.get(position).getDate().getTime());
+                    intent.putExtra("id", dataSet.get(position).getId());
                     context.startActivity(intent);
                 }
             }

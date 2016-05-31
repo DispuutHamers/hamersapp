@@ -51,10 +51,7 @@ public class SingleEventActivity extends AppCompatActivity {
 
         inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        Bundle extras = getIntent().getExtras();
-        Date date = new Date();
-        date.setTime(extras.getLong("date", -1));
-        event = DataManager.getEvent(MainActivity.prefs, extras.getString("title"), date);
+        event = DataManager.getEvent(MainActivity.prefs, getIntent().getExtras().getInt("id"));
 
         initToolbar();
 
@@ -94,7 +91,7 @@ public class SingleEventActivity extends AppCompatActivity {
         }
 
         if (dateRow != null) {
-            fillImageRow(dateRow, "Datum", MainActivity.appDF.format(date), ContextCompat.getDrawable(this, R.drawable.ic_event));
+            fillImageRow(dateRow, "Datum", MainActivity.appDF.format(event.getDate()), ContextCompat.getDrawable(this, R.drawable.ic_event));
             dateRow.setClickable(true);
             dateRow.setOnClickListener(new View.OnClickListener() {
                 @Override
