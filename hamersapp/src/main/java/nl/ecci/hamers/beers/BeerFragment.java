@@ -1,5 +1,6 @@
 package nl.ecci.hamers.beers;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -21,12 +22,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.events.Event;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
@@ -125,44 +128,12 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
-        setRefreshing(true);
-        // Get beers
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.BEERURL, DataManager.BEERKEY);
-        // Get reviews
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY);
     }
 
     public void populateList() {
-        dataSet.clear();
-        JSONArray json;
-        try {
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.BEERKEY)) != null) {
-                for (int i = 0; i < json.length(); i++) {
-                    JSONObject temp;
-                    temp = json.getJSONObject(i);
-                    Beer tempBeer;
-
-                    String cijfer = temp.getString("cijfer");
-                    if (cijfer.equals("null")) {
-                        tempBeer = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
-                                temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), "nog niet bekend", parseDate(temp.getString("created_at")));
-                    } else {
-                        tempBeer = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
-                                temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), cijfer, parseDate(temp.getString("created_at")));
-                    }
-                    dataSet.add(tempBeer);
-                    if (adapter != null) {
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            if (this.getActivity() != null) {
-                Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
-            }
-        }
-        setRefreshing(false);
-        sortList();
+        new populateList().execute("");
     }
 
     @Override
@@ -260,6 +231,58 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     swipeRefreshLayout.setRefreshing(bool);
                 }
             });
+        }
+    }
+
+    public class populateList extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            dataSet.clear();
+            JSONArray json;
+            try {
+                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.BEERKEY)) != null) {
+                    for (int i = 0; i < json.length(); i++) {
+                        JSONObject temp;
+                        temp = json.getJSONObject(i);
+                        Beer tempBeer;
+
+                        String cijfer = temp.getString("cijfer");
+                        if (cijfer.equals("null")) {
+                            tempBeer = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
+                                    temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), "nog niet bekend", parseDate(temp.getString("created_at")));
+                        } else {
+                            tempBeer = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
+                                    temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), cijfer, parseDate(temp.getString("created_at")));
+                        }
+                        dataSet.add(tempBeer);
+                    }
+                }
+            } catch (JSONException e) {
+                return "Error";
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result.equals("Error")) {
+                Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
+            }
+
+            if (BeerFragment.this.adapter != null) {
+                BeerFragment.this.adapter.notifyDataSetChanged();
+            }
+            setRefreshing(false);
+            sortList();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            setRefreshing(true);
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
         }
     }
 }

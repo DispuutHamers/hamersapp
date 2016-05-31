@@ -30,7 +30,7 @@ import static nl.ecci.hamers.MainActivity.parseDate;
 
 public class EventListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private final ArrayList<Event> listItems = new ArrayList<>();
+    private final ArrayList<Event> dataSet = new ArrayList<>();
     private EventListAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView event_list;
@@ -51,7 +51,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 
         initSwiper(view, event_list, mLayoutManager);
 
-        adapter = new EventListAdapter(getActivity(), listItems);
+        adapter = new EventListAdapter(getActivity(), dataSet);
         event_list.setAdapter(adapter);
 
         // If upcoming, reverse order
@@ -133,10 +133,9 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     public class populateList extends AsyncTask<String, Void, String> {
-
         @Override
         protected String doInBackground(String... params) {
-            listItems.clear();
+            dataSet.clear();
             JSONArray json;
             Date currentDate = Calendar.getInstance().getTime();
             try {
@@ -153,10 +152,10 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 
                         if (upcoming) {
                             if (date.after(currentDate)) {
-                                listItems.add(event);
+                                dataSet.add(event);
                             }
                         } else {
-                            listItems.add(event);
+                            dataSet.add(event);
                         }
                     }
                 }
