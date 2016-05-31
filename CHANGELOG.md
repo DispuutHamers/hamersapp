@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.5.0](https://github.com/dexbleeker/hamersapp/tree/1.5.0) (Upcoming release)
+## [1.5.0](https://github.com/dexbleeker/hamersapp/tree/1.5.0) (2016-05-31)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.4.2...1.5.0)
 - Significant speed and stability improvements
 - Buttons to clear image cache and data storage
