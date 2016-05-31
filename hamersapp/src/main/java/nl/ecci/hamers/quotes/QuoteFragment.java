@@ -1,5 +1,6 @@
 package nl.ecci.hamers.quotes;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -81,38 +82,9 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY);
     }
 
+    @SuppressWarnings("unchecked")
     public void populateList() {
-        dataSet.clear();
-        JSONArray json;
-        try {
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.QUOTEKEY)) != null) {
-                for (int i = 0; i < json.length(); i++) {
-                    JSONObject quote = json.getJSONObject(i);
-                    User user;
-
-                    String username;
-                    int id;
-                    if ((user = DataManager.getUser(MainActivity.prefs, quote.getInt("user_id"))) != null) {
-                        username = user.getName();
-                        id = user.getUserID();
-                    } else {
-                        username = "unknown user";
-                        id = -1;
-                    }
-
-                    String tempDate = quote.getString("created_at");
-                    Date date = parseDate(tempDate);
-                    Quote tempQuote = new Quote(username, quote.getString("text"), date, id);
-                    dataSet.add(tempQuote);
-                    if (adapter != null) {
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
-        }
-        setRefreshing(false);
+        new populateList().execute(dataSet);
     }
 
     @Override
@@ -166,6 +138,59 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     swipeRefreshLayout.setRefreshing(bool);
                 }
             });
+        }
+    }
+
+    public class populateList extends AsyncTask<ArrayList<Quote>, Void, ArrayList<Quote>> {
+        @SafeVarargs
+        @Override
+        protected final ArrayList<Quote> doInBackground(ArrayList<Quote>... param) {
+            final ArrayList<Quote> dataSet = new ArrayList<>();
+            JSONArray json;
+            try {
+                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.QUOTEKEY)) != null) {
+                    for (int i = 0; i < json.length(); i++) {
+                        JSONObject quote = json.getJSONObject(i);
+                        User user;
+
+                        String username;
+                        int id;
+                        if ((user = DataManager.getUser(MainActivity.prefs, quote.getInt("user_id"))) != null) {
+                            username = user.getName();
+                            id = user.getUserID();
+                        } else {
+                            username = "unknown user";
+                            id = -1;
+                        }
+
+                        String tempDate = quote.getString("created_at");
+                        Date date = parseDate(tempDate);
+                        Quote tempQuote = new Quote(username, quote.getString("text"), date, id);
+                        dataSet.add(tempQuote);
+                    }
+                }
+            } catch (JSONException ignored) {
+            }
+            return dataSet;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Quote> result) {
+            if (result.isEmpty()) {
+                Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
+            } else {
+                dataSet.clear();
+                dataSet.addAll(result);
+                if (QuoteFragment.this.adapter != null) {
+                    QuoteFragment.this.adapter.notifyDataSetChanged();
+                }
+            }
+            setRefreshing(false);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            setRefreshing(true);
         }
     }
 }

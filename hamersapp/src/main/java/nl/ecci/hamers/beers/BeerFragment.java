@@ -131,6 +131,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.BEERURL, DataManager.BEERKEY);
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY);
     }
+
     @SuppressWarnings("unchecked")
     public void populateList() {
         new populateList().execute(dataSet);
@@ -268,7 +269,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             if (result.isEmpty()) {
                 Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
             } else {
-
                 dataSet.clear();
                 dataSet.addAll(result);
                 if (BeerFragment.this.adapter != null) {

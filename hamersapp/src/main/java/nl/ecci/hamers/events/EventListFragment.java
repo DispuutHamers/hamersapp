@@ -161,18 +161,21 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                         }
                     }
                 }
-            } catch (JSONException e) {
-                Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
+            } catch (JSONException ignored) {
             }
             return dataSet;
         }
 
         @Override
         protected void onPostExecute(ArrayList<Event> result) {
-            dataSet.clear();
-            dataSet.addAll(result);
-            if (EventListFragment.this.adapter != null) {
-                EventListFragment.this.adapter.notifyDataSetChanged();
+            if (result.isEmpty()) {
+                Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
+            } else {
+                dataSet.clear();
+                dataSet.addAll(result);
+                if (EventListFragment.this.adapter != null) {
+                    EventListFragment.this.adapter.notifyDataSetChanged();
+                }
             }
             setRefreshing(false);
         }
