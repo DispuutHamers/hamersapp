@@ -1,6 +1,5 @@
 package nl.ecci.hamers.quotes;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -52,19 +51,12 @@ public class NewQuoteFragment extends DialogFragment {
                                 NewQuoteFragment.this.postQuote(quote, userID);
                             }
                         }
-
                 );
-
-        // Initialize spinner
         Spinner spinner = (Spinner) view.findViewById(R.id.user_spinner);
-
         createUserList();
-
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, users);
-
         spinner.setAdapter(adapter);
 
-        // Create the AlertDialog object and return it
         return builder.create();
     }
 
@@ -78,7 +70,6 @@ public class NewQuoteFragment extends DialogFragment {
             }
         } catch (JSONException e) {
             Toast.makeText(getActivity(), getString(R.string.snackbar_userloaderror), Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
         }
 
     }
@@ -89,10 +80,5 @@ public class NewQuoteFragment extends DialogFragment {
         params.put("quote[user_id]", Integer.toString(userid));
 
         DataManager.postData(this.getContext(), MainActivity.prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY, params);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
     }
 }

@@ -39,7 +39,9 @@ import java.util.Set;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.users.User;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -66,7 +68,7 @@ public class MyGcmListenerService extends GcmListenerService {
     private final String REVIEWDESCRIPTION = "description";
     private final String REVIEWRATING = "rating";
     // Common
-    private final String USER = "user_id";
+    private final String USERID = "user_id";
     private JSONArray json;
     private SharedPreferences prefs;
 
@@ -108,10 +110,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 type = Type.QUOTE;
                 title = quote.getString(QUOTEBODY);
 
-                String userName;
-                userName = DataManager.UserIDtoUserName(prefs, Integer.valueOf(quote.getString(USER)));
-                if (userName != null) {
-                    message = userName;
+                User user = DataManager.getUser(prefs, Integer.valueOf(quote.getString(USERID)));
+                if (user != null) {
+                    message = user.getName();
                 } else {
                     message = "- user";
                 }
@@ -179,14 +180,12 @@ public class MyGcmListenerService extends GcmListenerService {
             review = new JSONObject(object.getString(REVIEWTYPE));
             if (review.length() != 0) {
                 type = Type.REVIEW;
-                String userName;
-                String beerName;
-                userName = DataManager.UserIDtoUserName(prefs, review.getInt(USER));
-                beerName = DataManager.BeerIDtoBeerName(prefs, review.getInt(REVIEWBEER));
-                if (userName != null && beerName != null) {
-                    title = userName + " / " + beerName + " / " + review.getString(REVIEWRATING);
-                } else if (userName != null) {
-                    title = userName + " / onbekend / " + review.getString(REVIEWRATING);
+                User user = DataManager.getUser(prefs, review.getInt(USERID));
+                Beer beer = DataManager.getBeer(prefs, review.getInt(REVIEWBEER));
+                if (user != null && beer != null) {
+                    title = user.getName() + " / " + beer.getName() + " / " + review.getString(REVIEWRATING);
+                } else if (user != null) {
+                    title = user.getName() + " / onbekend / " + review.getString(REVIEWRATING);
                 } else {
                     title = "Hamers";
                 }

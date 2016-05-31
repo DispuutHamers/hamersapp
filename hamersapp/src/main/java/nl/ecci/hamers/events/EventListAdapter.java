@@ -15,8 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -34,57 +32,30 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         this.dataSet = itemsArrayList;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card, parent, false);
-
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card, parent, false);
         final ViewHolder vh = new ViewHolder(view);
 
-        vh.view.setOnClickListener(new View.OnClickListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view1) {
-                JSONObject e = DataManager.getEvent(MainActivity.prefs, dataSet.get(vh.getAdapterPosition()).getTitle(), dataSet.get(vh.getAdapterPosition()).getDate());
-                if (e != null) {
-                    try {
-                        Intent intent = new Intent(context, SingleEventActivity.class);
-                        intent.putExtra("id", e.getInt("id"));
-                        intent.putExtra("title", e.getString("title"));
-                        intent.putExtra("beschrijving", e.getString("beschrijving"));
-                        intent.putExtra("location", e.getString("location"));
-                        intent.putExtra("date", e.getString("date"));
-                        intent.putExtra("deadline", e.getString("deadline"));
-
-                        ArrayList<String> aanwezig = new ArrayList<>();
-                        ArrayList<String> afwezig = new ArrayList<>();
-
-                        JSONArray signups = e.getJSONArray("signups");
-
-                        for (int i = 0; i < signups.length(); i++) {
-                            JSONObject signup = signups.getJSONObject(i);
-                            if (signup.getBoolean("status")) {
-                                aanwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getName());
-                            } else {
-                                afwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getName());
-                            }
-                        }
-                        intent.putStringArrayListExtra("aanwezig", aanwezig);
-                        intent.putStringArrayListExtra("afwezig", afwezig);
-                        context.startActivity(intent);
-                    } catch (JSONException e1) {
-                        e1.printStackTrace();
-                    }
+            public void onClick(View v) {
+                final int position = vh.getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Intent intent = new Intent(context, SingleEventActivity.class);
+                    intent.putExtra("title", dataSet.get(position).getTitle());
+                    intent.putExtra("date", dataSet.get(position).getDate().getTime());
+                    context.startActivity(intent);
                 }
             }
         });
-
         return vh;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(dataSet.get(position).getTitle());
-        holder.beschrijving.setText(dataSet.get(position).getBeschrijving());
+        holder.beschrijving.setText(dataSet.get(position).getDescription());
 
         Date date = dataSet.get(position).getDate();
         Date end_time = dataSet.get(position).getEnd_time();
@@ -105,7 +76,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         try {
             JSONArray signups = dataSet.get(position).getSignups();
-            int userID = DataManager.getUserID(MainActivity.prefs);
+            int userID = DataManager.getOwnUser(MainActivity.prefs).getUserID();
             Boolean aanwezig = null;
             for (int i = 0; i < signups.length(); i++) {
                 JSONObject signup = signups.getJSONObject(i);
@@ -128,8 +99,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
             e.printStackTrace();
         }
 
-        DateFormat appDF = new SimpleDateFormat("EEEE dd MMMM yyyy HH:mm", MainActivity.locale);
-        holder.date.setText(appDF.format(date));
+        holder.date.setText(MainActivity.appDF2.format(date));
     }
 
     @Override

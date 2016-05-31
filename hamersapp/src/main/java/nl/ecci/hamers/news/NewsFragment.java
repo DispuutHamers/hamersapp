@@ -42,7 +42,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         initSwiper(view, news_list, mLayoutManager);
 
-        adapter = new NewsAdapter(getActivity(), listItems);
+        adapter = new NewsAdapter(listItems);
         news_list.setAdapter(adapter);
 
         onRefresh();

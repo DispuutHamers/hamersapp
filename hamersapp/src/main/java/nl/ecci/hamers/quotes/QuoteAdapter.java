@@ -47,18 +47,15 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.quote_row, parent, false);
-
-        final ViewHolder holder = new ViewHolder(view);
-
+        final ViewHolder vh = new ViewHolder(view);
         final View imageView = view.findViewById(R.id.quote_image);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final int position = holder.getAdapterPosition();
+                final int position = vh.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    User user = DataManager.getUser(MainActivity.prefs, filteredDataSet.get(holder.getAdapterPosition()).getUserID());
-                    assert user != null;
+                    User user = DataManager.getUser(MainActivity.prefs, filteredDataSet.get(vh.getAdapterPosition()).getUserID());
                     Intent intent = new Intent(context, SingleUserActivity.class);
                     intent.putExtra(User.USER_NAME, user.getName());
                     intent.putExtra(User.USER_ID, user.getUserID());
@@ -70,7 +67,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
             }
         });
 
-        return holder;
+        return vh;
     }
 
     @Override
@@ -83,9 +80,9 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
             holder.date.setText(dateFormat.format(date));
         }
 
-        String email = DataManager.IDToEmail(MainActivity.prefs, filteredDataSet.get(position).getUserID());
-        if (email != null) {
-            String url = "http://gravatar.com/avatar/" + Utils.md5Hex(email) + "?s=200";
+        User user = DataManager.getUser(MainActivity.prefs, filteredDataSet.get(position).getUserID());
+        if (user != null) {
+            String url = "http://gravatar.com/avatar/" + Utils.md5Hex(user.getEmail()) + "?s=200";
             imageLoader.displayImage(url, holder.userImage, animateFirstListener);
         }
     }

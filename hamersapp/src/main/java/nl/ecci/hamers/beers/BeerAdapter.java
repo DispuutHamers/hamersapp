@@ -34,7 +34,7 @@ import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.SingleImageActivity;
 
 import static nl.ecci.hamers.helpers.DataManager.getJsonArray;
-import static nl.ecci.hamers.helpers.DataManager.getUserID;
+import static nl.ecci.hamers.helpers.DataManager.getOwnUser;
 
 public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implements Filterable {
 
@@ -49,7 +49,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         this.dataSet = itemsArrayList;
         this.filteredDataSet = itemsArrayList;
         this.context = context;
-        userID = getUserID(MainActivity.prefs);
+        userID = getOwnUser(MainActivity.prefs).getUserID();
 
         // Universal Image Loader
         imageLoader = ImageLoader.getInstance();
@@ -67,22 +67,22 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             @Override
             public void onClick(View v1) {
                 try {
-                    JSONObject b = DataManager.getBeer(MainActivity.prefs, filteredDataSet.get(vh.getAdapterPosition()).getId());
+                    Beer beer = DataManager.getBeer(MainActivity.prefs, filteredDataSet.get(vh.getAdapterPosition()).getId());
                     Activity activity = (Activity) context;
                     String imageTransitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, imageTransitionName);
-                    assert b != null;
+                    assert beer != null;
                     Intent intent = new Intent(context, SingleBeerActivity.class);
-                    intent.putExtra(Beer.BEER_ID, b.getInt("id"));
-                    intent.putExtra(Beer.BEER_NAME, b.getString("name"));
-                    intent.putExtra(Beer.BEER_KIND, b.getString("soort"));
-                    intent.putExtra(Beer.BEER_URL, b.getString("picture"));
-                    intent.putExtra(Beer.BEER_PERCENTAGE, b.getString("percentage"));
-                    intent.putExtra(Beer.BEER_BREWER, b.getString("brewer"));
-                    intent.putExtra(Beer.BEER_COUNTRY, b.getString("country"));
-                    intent.putExtra(Beer.BEER_RATING, b.getString("cijfer"));
+                    intent.putExtra(Beer.BEER_ID, beer.getId());
+                    intent.putExtra(Beer.BEER_NAME, beer.getName());
+                    intent.putExtra(Beer.BEER_KIND, beer.getSoort());
+                    intent.putExtra(Beer.BEER_URL, beer.getImageURL());
+                    intent.putExtra(Beer.BEER_PERCENTAGE, beer.getPercentage());
+                    intent.putExtra(Beer.BEER_BREWER, beer.getBrewer());
+                    intent.putExtra(Beer.BEER_COUNTRY, beer.getCountry());
+                    intent.putExtra(Beer.BEER_RATING, beer.getRating());
                     ActivityCompat.startActivity(activity, intent, options.toBundle());
-                } catch (JSONException | NullPointerException ignored) {
+                } catch (NullPointerException ignored) {
                     Snackbar.make(view, context.getString(R.string.snackbar_error), Snackbar.LENGTH_LONG).show();
                 }
             }
@@ -92,20 +92,20 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             @Override
             public void onClick(View v) {
                 try {
-                    JSONObject b = DataManager.getBeer(MainActivity.prefs, filteredDataSet.get(vh.getAdapterPosition()).getId());
+                    Beer beer = DataManager.getBeer(MainActivity.prefs, filteredDataSet.get(vh.getAdapterPosition()).getId());
                     Activity activity = (Activity) context;
                     String transitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, transitionName);
-                    assert b != null;
-                    if (!b.getString("picture").equals("")) {
+                    assert beer != null;
+                    if (!beer.getImageURL().equals("")) {
                         Intent intent = new Intent(context, SingleImageActivity.class);
-                        intent.putExtra(Beer.BEER_NAME, b.getString("name"));
-                        intent.putExtra(Beer.BEER_URL, b.getString("picture"));
+                        intent.putExtra(Beer.BEER_NAME, beer.getName());
+                        intent.putExtra(Beer.BEER_URL, beer.getImageURL());
                         ActivityCompat.startActivity(activity, intent, options.toBundle());
                     } else {
                         Toast.makeText(context, context.getString(R.string.no_image), Toast.LENGTH_SHORT).show();
                     }
-                } catch (JSONException | NullPointerException ignored) {
+                } catch (NullPointerException ignored) {
                     Snackbar.make(view, context.getString(R.string.snackbar_error), Snackbar.LENGTH_LONG).show();
                 }
             }

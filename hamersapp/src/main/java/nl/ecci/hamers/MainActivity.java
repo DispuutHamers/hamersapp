@@ -73,19 +73,22 @@ public class MainActivity extends AppCompatActivity {
     public static final EventListFragment EVENT_FRAGMENT_UPCOMING = new EventListFragment();
     public static final NewsFragment NEWS_FRAGMENT = new NewsFragment();
     public static final BeerFragment BEER_FRAGMENT = new BeerFragment();
-    public static final Locale locale = new Locale("nl_NL");
-    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
-    public static final String REGISTRATION_COMPLETE = "registrationComplete";
     private static final MotionFragment MOTION_FRAGMENT = new MotionFragment();
     private static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
     private static final AboutFragment ABOUT_FRAGMENT = new AboutFragment();
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    public static final Locale locale = new Locale("nl_NL");
+    public static final DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", locale);
+    public static final DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", locale);
+    public static final DateFormat appDF2 = new SimpleDateFormat("EEEE dd MMMM yyyy", locale);
     public static SharedPreferences prefs;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private boolean backPressedOnce;
     // GCM
     private BroadcastReceiver mRegistrationBroadcastReceiver;
+    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
+    public static final String REGISTRATION_COMPLETE = "registrationComplete";
 
     /**
      * Setup of default ImageLoader configuration (Universal Image Loader)
@@ -380,8 +383,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 DataManager.getData(this, prefs, DataManager.WHOAMIURL, DataManager.WHOAMIKEY);
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (JSONException ignored) {
         }
     }
 
@@ -392,7 +394,6 @@ public class MainActivity extends AppCompatActivity {
         Date date = null;
         try {
             // Event date
-            DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", locale);
             if (!dateString.equals("null")) {
                 date = dbDF.parse(dateString);
             }
