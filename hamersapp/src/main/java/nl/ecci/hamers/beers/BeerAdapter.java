@@ -83,7 +83,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
                     intent.putExtra(Beer.BEER_RATING, beer.getRating());
                     ActivityCompat.startActivity(activity, intent, options.toBundle());
                 } catch (NullPointerException ignored) {
-                    Snackbar.make(view, context.getString(R.string.snackbar_error), Snackbar.LENGTH_LONG).show();
                 }
             }
         });
@@ -115,7 +114,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(filteredDataSet.get(position).getName());

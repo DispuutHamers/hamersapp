@@ -140,9 +140,13 @@
         <item>Sorteer op datum (DESC)</item>
     </array>
 
-    <string name="other_category">Overig</string>
+    <string name="data_category">Data</string>
     <string name="clear_image_cache_setting">Clear image cache</string>
     <string name="clear_image_cache_snackbar">Image cache cleared!</string>
+    <string name="clear_image_cache_summary">Only deletes cached images.</string>
+    <string name="clear_storage_setting">Clear data storage</string>
+    <string name="clear_storage_snackbar">Data storage cleared!</string>
+    <string name="clear_storage_summary">Does not clear your API key.</string>
 
     <!-- Snackbar -->
     <string name="snackbar_loaderror">Fout bij inladen</string>
@@ -151,6 +155,7 @@
     <string name="snackbar_reviewloaderror">Fout bij het laden van de reviews</string>
     <string name="snackbar_storekeymemory">Een apikey kan ingevuld worden bij instellingen</string>
     <string name="snackbar_error">Er is iets misgegaan, probeer het later opnieuw.</string>
+    <string name="snackbar_volley_error">Fout bij ophalen data van server.</string>
 
     <!-- Sorting -->
     <string name="sort_quotes">Sorteer op aantal quotes</string>

@@ -266,9 +266,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         @Override
         protected void onPostExecute(ArrayList<Beer> result) {
-            if (result.isEmpty()) {
-                Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
-            } else {
+            if (!result.isEmpty()) {
                 dataSet.clear();
                 dataSet.addAll(result);
                 if (BeerFragment.this.adapter != null) {

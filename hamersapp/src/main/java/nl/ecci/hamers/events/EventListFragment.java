@@ -168,9 +168,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 
         @Override
         protected void onPostExecute(ArrayList<Event> result) {
-            if (result.isEmpty()) {
-                Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
-            } else {
+            if (!result.isEmpty()) {
                 dataSet.clear();
                 dataSet.addAll(result);
                 if (EventListFragment.this.adapter != null) {

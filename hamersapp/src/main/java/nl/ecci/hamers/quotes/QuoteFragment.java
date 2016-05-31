@@ -176,9 +176,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         @Override
         protected void onPostExecute(ArrayList<Quote> result) {
-            if (result.isEmpty()) {
-                Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
-            } else {
+            if (!result.isEmpty()) {
                 dataSet.clear();
                 dataSet.addAll(result);
                 if (QuoteFragment.this.adapter != null) {

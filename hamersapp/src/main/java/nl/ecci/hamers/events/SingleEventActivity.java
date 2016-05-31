@@ -177,27 +177,30 @@ public class SingleEventActivity extends AppCompatActivity {
         JSONArray signups = event.getSignups();
         ArrayList<String> aanwezig = new ArrayList<>();
         ArrayList<String> afwezig = new ArrayList<>();
-        try {
-            for (int i = 0; i < signups.length(); i++) {
-                JSONObject signup = signups.getJSONObject(i);
-                if (signup.getBoolean("status")) {
-                    aanwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getName());
+
+        if (signups != null) {
+            try {
+                for (int i = 0; i < signups.length(); i++) {
+                    JSONObject signup = signups.getJSONObject(i);
+                    if (signup.getBoolean("status")) {
+                        aanwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getName());
+                    } else {
+                        afwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getName());
+                    }
+                }
+
+                if (aanwezig.size() != 0) {
+                    for (String name : aanwezig) {
+                        View view = inflater.inflate(R.layout.row_singleview, null);
+                        fillSingleRow(view, name);
+                        aanwezigView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                    }
                 } else {
-                    afwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getName());
+                    eventLayout.removeView(aanwezigLayout);
                 }
-            }
 
-            if (aanwezig.size() != 0) {
-                for (String name : aanwezig) {
-                    View view = inflater.inflate(R.layout.row_singleview, null);
-                    fillSingleRow(view, name);
-                    aanwezigView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                }
-            } else {
-                eventLayout.removeView(aanwezigLayout);
+            } catch (JSONException ignored) {
             }
-
-        } catch (JSONException ignored) {
         }
 
         if (afwezig.size() != 0) {
@@ -211,9 +214,9 @@ public class SingleEventActivity extends AppCompatActivity {
         }
 
         User ownUser = DataManager.getOwnUser(MainActivity.prefs);
-        if (aanwezig.contains(ownUser.getName())) {
+        if (aanwezig.contains(ownUser.getName()) && aanwezigButton != null) {
             aanwezigButton.setVisibility(View.GONE);
-        } else if (afwezig.contains(ownUser.getName())) {
+        } else if (afwezig.contains(ownUser.getName()) && afwezigButton != null) {
             afwezigButton.setVisibility(View.GONE);
         }
     }

@@ -73,7 +73,7 @@ public final class DataManager {
                             }
                         } else {
                             // (Generic) Volley error
-                            Toast.makeText(context, context.getString(R.string.snackbar_error), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, context.getString(R.string.snackbar_volley_error), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -141,8 +141,8 @@ public final class DataManager {
                 MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
                 break;
             case SIGNUPURL:
-                MainActivity.EVENT_FRAGMENT_ALL.populateList();
-                MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
+//                MainActivity.EVENT_FRAGMENT_ALL.populateList();
+//                MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
                 break;
             case NEWSURL:
                 MainActivity.NEWS_FRAGMENT.populateList();
