@@ -53,7 +53,16 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                         if (view != null) {
                             Snackbar.make(view, R.string.clear_storage_snackbar, Snackbar.LENGTH_SHORT).show();
                         }
+                        return true;
+                    }
+                }
+        );
 
+        Preference refresh_app = findPreference("refresh_app");
+        refresh_app.setOnPreferenceClickListener(
+                new OnPreferenceClickListener() {
+                    public boolean onPreferenceClick(Preference preference) {
+                        getActivity().recreate();
                         return true;
                     }
                 }

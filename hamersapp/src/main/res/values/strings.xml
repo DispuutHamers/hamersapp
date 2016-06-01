@@ -1,20 +1,4 @@
-<!--
-  Copyright 2013 The Android Open Source Project
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-  -->
-
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Hamers</string>
 
     <!-- General -->
@@ -46,11 +30,11 @@
     <string name="quote_hint">Typ dan heumeu!</string>
     <string name="apikeydialogtitle">Voer je API-key in!</string>
     <string name="apikeydialogmessage">Deze kan bemachtigd worden op www.zondersikkel.nl</string>
-    <string name="dialog_positive">OK</string>
+    <string name="dialog_positive">Oké</string>
 
     <!-- Reviews -->
     <string name="new_review">Nieuwe review</string>
-    <string name="review_hint">Wat vonden we er van?</string>
+    <string name="review_hint">Wat vond je er van?</string>
     <string name="rating">Cijfer: 1</string>
     <string name="pick_date">Proefdatum :</string>
     <string name="pick_date_button">Datum</string>
@@ -112,12 +96,22 @@
     <!-- Settings -->
     <string name="general">Algemeen</string>
     <string name="push_title">Push notificaties</string>
-    <string name="pref_summaryOn">Push notifications enabled</string>
-    <string name="pref_summaryOff">Push notifications disabled</string>
+    <string name="pref_summaryOn">Push notifications ontvangen</string>
+    <string name="pref_summaryOff">Push notifications niet ontvangen</string>
 
-    <string name="apikey_category">API Key</string>
-    <string name="apikey_summary">You can get your key on the website.</string>
-    <string name="apikey_hint">Copy+paste your key here..</string>
+    <string name="apikey_category">API-key</string>
+    <string name="apikey_summary">Deze vind je op de website</string>
+    <string name="apikey_hint">Plak je key hier..</string>
+
+    <string name="data_category">Data</string>
+    <string name="clear_image_cache_setting">Leeg image cache</string>
+    <string name="clear_image_cache_snackbar">Image cache cleared!</string>
+    <string name="clear_image_cache_summary">Only deletes cached images</string>
+    <string name="clear_storage_setting">Clear data storage</string>
+    <string name="clear_storage_snackbar">Data storage cleared!</string>
+    <string name="clear_storage_summary">Does not clear your API-key</string>
+    <string name="refresh_app">Herlaad app</string>
+    <string name="refresh_app_summary">Dit is veel sneller dan een herstart</string>
 
     <string name="sorting_category">Sorteren</string>
 
@@ -145,14 +139,6 @@
         <item>Sorteer op datum (ASC)</item>
         <item>Sorteer op datum (DESC)</item>
     </array>
-
-    <string name="data_category">Data</string>
-    <string name="clear_image_cache_setting">Clear image cache</string>
-    <string name="clear_image_cache_snackbar">Image cache cleared!</string>
-    <string name="clear_image_cache_summary">Only deletes cached images.</string>
-    <string name="clear_storage_setting">Clear data storage</string>
-    <string name="clear_storage_snackbar">Data storage cleared!</string>
-    <string name="clear_storage_summary">Does not clear your API key.</string>
 
     <!-- Snackbar -->
     <string name="snackbar_loaderror">Fout bij inladen</string>

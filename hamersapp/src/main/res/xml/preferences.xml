@@ -16,6 +16,10 @@
             android:summaryOff="@string/pref_summaryOff"
             android:summaryOn="@string/pref_summaryOn"
             android:title="@string/push_title" />
+        <Preference
+            android:key="refresh_app"
+            android:title="@string/refresh_app"
+            android:summary="@string/refresh_app_summary" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/data_category">
