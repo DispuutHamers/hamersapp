@@ -92,6 +92,8 @@
     <string name="user_email">Email</string>
     <string name="user_quotecount">Aantal quotes</string>
     <string name="user_reviewcount">Aantal reviews</string>
+    <string name="menu_users">Leden</string>
+    <string name="menu_users_ex">Oud-leden</string>
 
     <!-- Motions -->
     <string name="motiontypetext">Motietype:</string>

@@ -61,6 +61,7 @@ import nl.ecci.hamers.news.NewsFragment;
 import nl.ecci.hamers.quotes.NewQuoteFragment;
 import nl.ecci.hamers.quotes.QuoteFragment;
 import nl.ecci.hamers.users.UserFragment;
+import nl.ecci.hamers.users.UserListFragment;
 
 public class MainActivity extends AppCompatActivity {
     // URL
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
     // Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
     public static final UserFragment USER_FRAGMENT = new UserFragment();
+    public static final UserListFragment USER_FRAGMENT_ALL = new UserListFragment();
+    public static final UserListFragment USER_FRAGMENT_EX = new UserListFragment();
     public static final EventFragment EVENT_FRAGMENT = new EventFragment();
     public static final EventListFragment EVENT_FRAGMENT_ALL = new EventListFragment();
     public static final EventListFragment EVENT_FRAGMENT_UPCOMING = new EventListFragment();

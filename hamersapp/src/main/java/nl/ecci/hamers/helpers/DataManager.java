@@ -160,20 +160,21 @@ public final class DataManager {
                 MainActivity.NEWS_FRAGMENT.populateList();
                 break;
             case USERURL:
-                MainActivity.USER_FRAGMENT.populateList();
+                MainActivity.USER_FRAGMENT_ALL.populateList();
+                MainActivity.USER_FRAGMENT_EX.populateList();
                 break;
         }
     }
 
     public static User getUser(SharedPreferences prefs, int id) {
-        User result = new User("Unknown", -1, "example@example.org", 0, 0);
+        User result = new User("Unknown", -1, "example@example.org", 0, 0, true);
         JSONArray users;
         try {
             if ((users = getJsonArray(prefs, USERKEY)) != null) {
                 for (int i = 0; i < users.length(); i++) {
                     JSONObject user = users.getJSONObject(i);
                     if (user.getInt("id") == id) {
-                        result = new User(user.getString("name"), user.getInt("id"), user.getString("email"), user.getInt("quotes"), user.getInt("reviews"));
+                        result = new User(user.getString("name"), user.getInt("id"), user.getString("email"), user.getInt("quotes"), user.getInt("reviews"), user.getBoolean("lid"));
                         return result;
                     }
                 }
@@ -188,11 +189,11 @@ public final class DataManager {
         try {
             if (whoami != null) {
                 JSONObject user = whoami.getJSONObject(0);
-                return new User(user.getString("name"), user.getInt("id"), user.getString("email"), user.getInt("quotes"), user.getInt("reviews"));
+                return new User(user.getString("name"), user.getInt("id"), user.getString("email"), user.getInt("quotes"), user.getInt("reviews"), user.getBoolean("lid"));
             }
         } catch (JSONException ignored) {
         }
-        return new User("Unknown", -1, "example@example.org", 0, 0);
+        return new User("Unknown", -1, "example@example.org", 0, 0, true);
     }
 
     public static Event getEvent(SharedPreferences prefs, int id) {
