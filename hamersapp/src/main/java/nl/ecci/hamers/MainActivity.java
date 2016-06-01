@@ -37,10 +37,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -60,6 +56,7 @@ import nl.ecci.hamers.news.NewNewsActivity;
 import nl.ecci.hamers.news.NewsFragment;
 import nl.ecci.hamers.quotes.NewQuoteFragment;
 import nl.ecci.hamers.quotes.QuoteFragment;
+import nl.ecci.hamers.users.User;
 import nl.ecci.hamers.users.UserFragment;
 import nl.ecci.hamers.users.UserListFragment;
 
@@ -99,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private static void configureDefaultImageLoader(Context context) {
         File cacheDir = StorageUtils.getCacheDirectory(context);
-        DisplayImageOptions options =  new DisplayImageOptions.Builder()
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .resetViewBeforeLoading(true)
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
@@ -364,29 +361,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fillHeader() {
-        JSONArray whoami = DataManager.getJsonArray(prefs, DataManager.WHOAMIKEY);
+        User user = DataManager.getOwnUser(prefs);
+        if (user != null) {
+            View headerLayout = navigationView.getHeaderView(0);
+            TextView userName = (TextView) headerLayout.findViewById(R.id.header_user_name);
+            TextView userEmail = (TextView) headerLayout.findViewById(R.id.header_user_email);
+            ImageView userImage = (ImageView) headerLayout.findViewById(R.id.header_user_image);
 
-        try {
-            if (whoami != null) {
-                JSONObject user = whoami.getJSONObject(0);
+            if (userName != null && userEmail != null && userImage != null) {
+                userName.setText(user.getName());
+                userEmail.setText(user.getEmail());
 
-                View headerLayout = navigationView.getHeaderView(0);
-                TextView userName = (TextView) headerLayout.findViewById(R.id.header_user_name);
-                TextView userEmail = (TextView) headerLayout.findViewById(R.id.header_user_email);
-                ImageView userImage = (ImageView) headerLayout.findViewById(R.id.header_user_image);
-
-                if (userName != null && userEmail != null && userImage != null) {
-                    userName.setText(user.getString("name"));
-                    userEmail.setText(user.getString("email"));
-
-                    // Image
-                    String url = "http://gravatar.com/avatar/" + Utils.md5Hex(user.getString("email")) + "?s=200";
-                    ImageLoader.getInstance().displayImage(url, userImage);
-                }
-            } else {
-                DataManager.getData(this, prefs, DataManager.WHOAMIURL, DataManager.WHOAMIKEY);
+                // Image
+                String url = String.format("http://gravatar.com/avatar/%s/?s=200", Utils.md5Hex(user.getEmail()));
+                ImageLoader.getInstance().displayImage(url, userImage);
             }
-        } catch (JSONException ignored) {
+        } else {
+            DataManager.getData(this, prefs, DataManager.WHOAMIURL, DataManager.WHOAMIKEY);
         }
     }
 
