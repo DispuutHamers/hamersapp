@@ -256,11 +256,9 @@ public final class DataManager {
                     }
                 }
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
+        } catch (JSONException ignored) {
         }
-        return null;
+        return new Beer(-1, "Unknown", "Unknown", null, "Unknown", "Unknown", "Unknown", "Unknown", new Date());
     }
 
     public static JSONArray getJsonArray(SharedPreferences prefs, String key) {

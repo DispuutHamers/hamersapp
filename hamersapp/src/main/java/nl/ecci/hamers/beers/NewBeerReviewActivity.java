@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,7 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
 
-public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
+public class NewBeerReviewActivity extends AppCompatActivity {
 
     private int id;
     private TextView progress;
@@ -45,7 +46,7 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
         date_button = (Button) findViewById(R.id.pick_date_button);
         parentLayout = (LinearLayout) findViewById(R.id.new_beer_review_parent);
 
-        final android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
 
@@ -72,7 +73,25 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
         cijfer = 1;
 
         SeekBar sb = (SeekBar) findViewById(R.id.ratingseekbar);
-        sb.setOnSeekBarChangeListener(this);
+        if (sb != null) {
+            sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int rating, boolean fromUser) {
+                    cijfer = rating + 1;
+                    progress.setText(String.format("Cijfer: %s", cijfer));
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+        }
         progress = (TextView) findViewById(R.id.rating);
     }
 
@@ -89,20 +108,6 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
     public void showDatePickerDialog(View v) {
         DialogFragment datePicker = new DatePickerFragment();
         datePicker.show(getSupportFragmentManager(), "proefdatum");
-    }
-
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int rating, boolean fromUser) {
-        cijfer = rating + 1;
-        progress.setText(String.format("Cijfer: %d", cijfer));
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
     }
 
     public void postReview(View view) {
@@ -126,15 +131,5 @@ public class NewBeerReviewActivity extends AppCompatActivity implements SeekBar.
         } else {
             Snackbar.make(parentLayout, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show();
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
     }
 }

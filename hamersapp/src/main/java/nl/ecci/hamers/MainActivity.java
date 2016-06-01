@@ -333,16 +333,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
     public void onBackPressed() {
         if (backPressedOnce) {
             super.onBackPressed();
@@ -362,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void fillHeader() {
         User user = DataManager.getOwnUser(prefs);
-        if (user != null) {
+        if (user.getUserID() != -1) {
             View headerLayout = navigationView.getHeaderView(0);
             TextView userName = (TextView) headerLayout.findViewById(R.id.header_user_name);
             TextView userEmail = (TextView) headerLayout.findViewById(R.id.header_user_email);

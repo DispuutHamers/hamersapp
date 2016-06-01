@@ -71,7 +71,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
                     Activity activity = (Activity) context;
                     String imageTransitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, imageTransitionName);
-                    assert beer != null;
                     Intent intent = new Intent(context, SingleBeerActivity.class);
                     intent.putExtra(Beer.BEER_ID, beer.getId());
                     intent.putExtra(Beer.BEER_NAME, beer.getName());
@@ -95,7 +94,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
                     Activity activity = (Activity) context;
                     String transitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, transitionName);
-                    assert beer != null;
                     if (!beer.getImageURL().equals("")) {
                         Intent intent = new Intent(context, SingleImageActivity.class);
                         intent.putExtra(Beer.BEER_NAME, beer.getName());
