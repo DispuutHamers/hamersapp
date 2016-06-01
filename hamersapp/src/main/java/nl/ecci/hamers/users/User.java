@@ -12,14 +12,16 @@ public class User {
     private final String email;
     private final int quotecount;
     private final int reviewcount;
+    private final boolean member;
 
-    public User(String name, int userID, String email, int quotecount, int reviewcount) {
+    public User(String name, int userID, String email, int quotecount, int reviewcount, boolean member) {
         super();
         this.name = name;
         this.userID = userID;
         this.email = email;
         this.quotecount = quotecount;
         this.reviewcount = reviewcount;
+        this.member = member;
     }
 
     public String getName() {
@@ -40,5 +42,9 @@ public class User {
 
     public int getReviewcount() {
         return reviewcount;
+    }
+
+    public boolean isMember() {
+        return member;
     }
 }
