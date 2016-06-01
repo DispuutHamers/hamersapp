@@ -1,3 +1,7 @@
+before_script:
+  - export ANDROID_HOME="/opt/android-sdk"
+  - chmod +x gradlew
+
 stages:
   - build
   - test
