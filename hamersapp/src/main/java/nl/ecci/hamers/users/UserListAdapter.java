@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
+import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.Utils;
 
 class UserListAdapter extends ArrayAdapter<User> {
@@ -42,15 +43,17 @@ class UserListAdapter extends ArrayAdapter<User> {
         View rowView = inflater.inflate(R.layout.user_row, parent, false);
 
         TextView username = (TextView) rowView.findViewById(R.id.username);
+        TextView nickname = (TextView) rowView.findViewById(R.id.user_nickname);
         TextView quotecount = (TextView) rowView.findViewById(R.id.user_quotecount);
         TextView reviewcount = (TextView) rowView.findViewById(R.id.user_reviewcount);
 
         username.setText(dataSet.get(position).getName());
+        nickname.setText(dataSet.get(position).getNickname());
         quotecount.setText(String.format("Aantal quotes: %s", String.valueOf(dataSet.get(position).getQuotecount())));
         reviewcount.setText(String.format(MainActivity.locale, "Aantal reviews: %d", dataSet.get(position).getReviewcount()));
 
         final ImageView userImage = (ImageView) rowView.findViewById(R.id.user_image);
-        final String url = "http://gravatar.com/avatar/" + Utils.md5Hex(dataSet.get(position).getEmail()) + "?s=200";
+        String url = DataManager.getGravatarURL(dataSet.get(position).getEmail());
         imageLoader.displayImage(url, userImage, animateFirstListener);
 
         rowView.setOnClickListener(new View.OnClickListener() {

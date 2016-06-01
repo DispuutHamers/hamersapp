@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
                 userEmail.setText(user.getEmail());
 
                 // Image
-                String url = String.format("http://gravatar.com/avatar/%s/?s=200", Utils.md5Hex(user.getEmail()));
+                String url = DataManager.getGravatarURL(user.getEmail());
                 ImageLoader.getInstance().displayImage(url, userImage);
             }
         } else {

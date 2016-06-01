@@ -3,6 +3,7 @@ package nl.ecci.hamers.helpers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -110,7 +111,7 @@ public final class DataManager {
         Singleton.getInstance(context).addToRequestQueue(request);
     }
 
-    private static void handleErrorResponse(Context context, VolleyError error) {
+    private static void handleErrorResponse(@NonNull Context context, @NonNull VolleyError error) {
         System.out.println("--------------------\nError:\n" + error.toString());
         if (error instanceof AuthFailureError) {
             // Wrong API key
@@ -284,5 +285,9 @@ public final class DataManager {
             return returnv;
         }
         return returnv;
+    }
+
+    public static String getGravatarURL(String email) {
+        return String.format("http://gravatar.com/avatar/%s/?s=200", Utils.md5Hex(email));
     }
 }
