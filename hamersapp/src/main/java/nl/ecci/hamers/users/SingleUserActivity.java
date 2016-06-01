@@ -16,12 +16,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.Utils;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class SingleUserActivity extends AppCompatActivity {
-    private String userEmail;
     private String imageURL;
     private PhotoViewAttacher mAttacher;
 
@@ -36,32 +37,42 @@ public class SingleUserActivity extends AppCompatActivity {
 
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
-        String username = getIntent().getStringExtra(User.USER_NAME);
-        int userID = getIntent().getIntExtra(User.USER_ID, 1);
-        userEmail = getIntent().getStringExtra(User.USER_EMAIL);
-        int userQuoteCount = getIntent().getIntExtra(User.USER_QUOTECOUNT, 0);
-        int userReviewCount = getIntent().getIntExtra(User.USER_REVIEWCOUNT, 0);
-        imageURL = "http://gravatar.com/avatar/" + Utils.md5Hex(userEmail) + "?s=200";
+        final User user = DataManager.getUser(MainActivity.prefs, getIntent().getIntExtra(User.USER_ID, 1));
+        imageURL = "http://gravatar.com/avatar/" + Utils.md5Hex(user.getEmail()) + "?s=200";
 
-        collapsingToolbar.setTitle(username);
+        collapsingToolbar.setTitle(user.getName());
 
         loadBackdrop();
 
+        fillRow(findViewById(R.id.row_user_name), getString(R.string.user_name), user.getName());
+        fillRow(findViewById(R.id.row_user_quotecount), getString(R.string.user_quotecount), String.valueOf(user.getQuotecount()));
+        fillRow(findViewById(R.id.row_user_reviewcount), getString(R.string.user_reviewcount), String.valueOf(user.getReviewcount()));
 
-        fillRow(findViewById(R.id.row_user_name), getString(R.string.user_name), username);
-        fillRow(findViewById(R.id.row_user_quotecount), getString(R.string.user_quotecount), String.valueOf(userQuoteCount));
-        fillRow(findViewById(R.id.row_user_reviewcount), getString(R.string.user_reviewcount), String.valueOf(userReviewCount));
+        View nicknameRow = findViewById(R.id.row_user_nickname);
+        View nicknameDivider = findViewById(R.id.user_nickname_divider);
+        if (!user.getNickname().isEmpty()) {
+            fillRow(nicknameRow, getString(R.string.user_nickname), user.getNickname());
+        } else if (nicknameRow != null) {
+            nicknameRow.setVisibility(View.GONE);
+            nicknameDivider.setVisibility(View.GONE);
+        }
+
+        if (user.isMember()) {
+            fillRow(findViewById(R.id.row_user_status), getString(R.string.user_status), getString(R.string.user_member));
+        } else {
+            fillRow(findViewById(R.id.row_user_status), getString(R.string.user_status), getString(R.string.user_member_ex));
+        }
 
         View emailRow = findViewById(R.id.row_user_email);
         if (emailRow != null) {
-            fillRow(emailRow, getString(R.string.user_email), userEmail);
+            fillRow(emailRow, getString(R.string.user_email), user.getEmail());
             emailRow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_SENDTO);
                     intent.setData(Uri.parse("mailto:"));
-                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{userEmail});
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{user.getEmail()});
 
                     startActivity(intent);
                 }

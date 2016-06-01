@@ -13,8 +13,9 @@ public class User {
     private final int quotecount;
     private final int reviewcount;
     private final boolean member;
+    private final String nickname;
 
-    public User(String name, int userID, String email, int quotecount, int reviewcount, boolean member) {
+    public User(String name, int userID, String email, int quotecount, int reviewcount, boolean member, String nickname) {
         super();
         this.name = name;
         this.userID = userID;
@@ -22,6 +23,7 @@ public class User {
         this.quotecount = quotecount;
         this.reviewcount = reviewcount;
         this.member = member;
+        this.nickname = nickname;
     }
 
     public String getName() {
@@ -46,5 +48,9 @@ public class User {
 
     public boolean isMember() {
         return member;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 }

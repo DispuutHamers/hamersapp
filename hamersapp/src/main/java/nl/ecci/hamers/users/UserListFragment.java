@@ -43,7 +43,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         setHasOptionsMenu(true);
 
-        adapter = new UserAdapter(this.getActivity(), dataSet);
+        adapter = new UserListAdapter(this.getActivity(), dataSet);
         user_list.setAdapter(adapter);
 
         initSwiper(view, user_list);
@@ -104,7 +104,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject temp;
                     temp = json.getJSONObject(i);
-                    User user = new User(temp.getString("name"), temp.getInt("id"), temp.getString("email"), temp.getInt("quotes"), temp.getInt("reviews"), temp.getBoolean("lid"));
+                    User user = new User(temp.getString("name"), temp.getInt("id"), temp.getString("email"), temp.getInt("quotes"), temp.getInt("reviews"), temp.getBoolean("lid"), temp.getString("nickname="));
 
                     if (exUser && !user.isMember()) {
                         dataSet.add(user);

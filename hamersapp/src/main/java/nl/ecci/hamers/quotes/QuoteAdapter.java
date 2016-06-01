@@ -55,13 +55,8 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
             public void onClick(View v) {
                 final int position = vh.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    User user = DataManager.getUser(MainActivity.prefs, filteredDataSet.get(vh.getAdapterPosition()).getUserID());
                     Intent intent = new Intent(context, SingleUserActivity.class);
-                    intent.putExtra(User.USER_NAME, user.getName());
-                    intent.putExtra(User.USER_ID, user.getUserID());
-                    intent.putExtra(User.USER_EMAIL, user.getEmail());
-                    intent.putExtra(User.USER_QUOTECOUNT, user.getQuotecount());
-                    intent.putExtra(User.USER_REVIEWCOUNT, user.getReviewcount());
+                    intent.putExtra(User.USER_ID, filteredDataSet.get(vh.getAdapterPosition()).getUserID());
                     context.startActivity(intent);
                 }
             }
@@ -73,7 +68,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.body.setText(filteredDataSet.get(position).getBody());
-        holder.user.setText(filteredDataSet.get(position).getUser());
+        holder.user.setText(filteredDataSet.get(position).getUsername());
 
         Date date = filteredDataSet.get(position).getDate();
         if (date != null) {
@@ -107,7 +102,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
                     ArrayList<Quote> filterResultsData = new ArrayList<>();
                     for (Quote quote : dataSet) {
                         if (quote.getBody().toLowerCase().contains(charSequence) ||
-                                quote.getUser().toLowerCase().contains(charSequence)) {
+                                quote.getUsername().toLowerCase().contains(charSequence)) {
                             filterResultsData.add(quote);
                         }
                     }

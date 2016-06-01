@@ -93,6 +93,20 @@
                         <include layout="@layout/divider" />
 
                         <include
+                            android:id="@+id/row_user_status"
+                            layout="@layout/row_detailview" />
+
+                        <include layout="@layout/divider" />
+
+                        <include
+                            android:id="@+id/row_user_nickname"
+                            layout="@layout/row_detailview" />
+
+                        <include
+                            android:id="@+id/user_nickname_divider"
+                            layout="@layout/divider" />
+
+                        <include
                             android:id="@+id/row_user_email"
                             layout="@layout/row_detailview" />
 
