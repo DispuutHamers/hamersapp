@@ -53,6 +53,7 @@
     <string name="description">Beschrijving</string>
     <string name="menu_upcoming">Aankomend</string>
     <string name="menu_all">Alle</string>
+    <string name="location_unknown">Locatie (nog) onbekend</string>
 
     <!-- Beers -->
     <string name="new_beer">Nieuw biertje</string>
@@ -67,8 +68,8 @@
     <string name="date_unknown">Datum niet bekend</string>
 
     <!-- News -->
-    <string name="new_news">Lekker roddeluh</string>
-    <string name="news_title">Wat moet erboven?</string>
+    <string name="new_news">Nieuw nieuwsitem</string>
+    <string name="news_title">Titel</string>
     <string name="news_body">Vertel dan..</string>
 
     <!-- Users -->

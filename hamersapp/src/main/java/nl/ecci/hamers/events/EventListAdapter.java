@@ -58,6 +58,8 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         Date date = dataSet.get(position).getDate();
         Date end_time = dataSet.get(position).getEnd_time();
+        holder.date.setText(MainActivity.appDF2.format(date));
+
         CardView card = (CardView) holder.view;
         if (dateChecker(date, true) && dateChecker(end_time, false)) {
             card.setCardBackgroundColor(Color.parseColor("#c5e1a5"));
@@ -67,10 +69,8 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
             card.setCardBackgroundColor(Color.WHITE);
         }
 
-        if (!dataSet.get(position).getLocation().equals("null") && !dataSet.get(position).getLocation().equals("")) {
+        if (!dataSet.get(position).getLocation().isEmpty()) {
             holder.location.setText(dataSet.get(position).getLocation());
-        } else {
-            holder.location.setVisibility(View.GONE);
         }
 
         try {
@@ -94,11 +94,8 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
             } else {
                 holder.thumbs.setImageResource(R.drawable.ic_questionmark);
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (JSONException ignored) {
         }
-
-        holder.date.setText(MainActivity.appDF2.format(date));
     }
 
     @Override

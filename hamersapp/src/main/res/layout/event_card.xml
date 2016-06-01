@@ -44,6 +44,7 @@
             android:ellipsize="marquee"
             android:gravity="center"
             android:singleLine="true"
+            android:text="@string/location_unknown"
             android:textColor="@android:color/tertiary_text_light"
             android:textSize="12sp" />
 
