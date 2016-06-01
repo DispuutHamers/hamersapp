@@ -4,34 +4,34 @@
     android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/scrollView"
         android:layout_above="@+id/buttonLayout">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:padding="20dp"
                 android:text="@string/motiontypetext"
-                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="22sp"
-                android:padding="20dp" />
+                android:textStyle="bold" />
 
             <RadioGroup
+                android:id="@+id/motionradiogroup"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="20dp"
-                android:paddingStart="20dp"
-                android:paddingRight="20dp"
                 android:paddingEnd="20dp"
-                android:id="@+id/motionradiogroup">
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingStart="20dp">
 
                 <RadioButton
                     android:id="@+id/radio_duurtlang"
@@ -56,24 +56,24 @@
                 android:id="@+id/motion_subject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="4dp"
-                android:inputType="textMultiLine"
+                android:layout_marginTop="20dp"
                 android:hint="@string/motion_hint"
+                android:inputType="textMultiLine"
                 android:padding="20dp" />
 
             <EditText
                 android:id="@+id/motion_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="4dp"
-                android:inputType="textMultiLine"
+                android:layout_marginTop="16dp"
                 android:hint="@string/motion_body"
+                android:inputType="textMultiLine"
                 android:padding="20dp" />
         </LinearLayout>
     </ScrollView>
