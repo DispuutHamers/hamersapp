@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
@@ -160,19 +159,38 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDrawer() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                hideKeyboard();
+            }
+        });
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        if (navigationView != null) {
-            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(MenuItem menuItem) {
-                    selectItem(menuItem.getItemId());
-                    menuItem.setChecked(true);
-                    drawerLayout.closeDrawers();
-                    return true;
-                }
-            });
-        }
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                selectItem(menuItem.getItemId());
+                menuItem.setChecked(true);
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
     }
 
     private void initToolbar() {
@@ -246,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
     private void selectItem(int id) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        hideSoftKeyboard();
+        hideKeyboard();
         switch (id) {
             case R.id.navigation_item_quotes:
                 transaction.replace(R.id.content_frame, QUOTE_FRAGMENT).commit();
@@ -325,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Hides the soft keyboard
      */
-    private void hideSoftKeyboard() {
+    private void hideKeyboard() {
         if (getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
