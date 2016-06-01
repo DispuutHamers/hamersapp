@@ -14,5 +14,6 @@
         android:layout_gravity="center_vertical|center_horizontal"
         android:layout_margin="0dp"
         android:scaleType="fitCenter"
+        android:transitionName="@string/transition_single_image"
         tools:ignore="ContentDescription" />
 </LinearLayout>

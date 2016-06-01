@@ -37,31 +37,33 @@ public class SingleImageActivity extends AppCompatActivity {
         // Universal Image Loader
         ImageLoader imageLoader = ImageLoader.getInstance();
 
-        imageLoader.displayImage(url, imageView, new ImageLoadingListener() {
+        if (imageView != null) {
+            imageLoader.displayImage(url, imageView, new ImageLoadingListener() {
 
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
 
-            }
-
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-            }
-
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                if (mAttacher != null) {
-                    mAttacher.update();
                 }
-            }
 
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
 
-            }
-        });
+                }
+
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    if (mAttacher != null) {
+                        mAttacher.update();
+                    }
+                }
+
+                @Override
+                public void onLoadingCancelled(String imageUri, View view) {
+
+                }
+            });
         mAttacher = new PhotoViewAttacher(imageView);
+        }
 
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
