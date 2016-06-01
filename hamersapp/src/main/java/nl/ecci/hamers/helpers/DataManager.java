@@ -160,6 +160,7 @@ public final class DataManager {
                 MainActivity.NEWS_FRAGMENT.populateList();
                 break;
             case USERURL:
+                MainActivity.USER_FRAGMENT_ALL.populateList();
                 MainActivity.USER_FRAGMENT_EX.populateList();
                 break;
         }

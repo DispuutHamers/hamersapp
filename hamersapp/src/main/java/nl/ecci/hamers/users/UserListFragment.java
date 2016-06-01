@@ -24,12 +24,11 @@ import java.util.Comparator;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.events.EventFragmentPagerAdapter;
 import nl.ecci.hamers.helpers.DataManager;
 
 public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private final ArrayList<User> listItems = new ArrayList<>();
+    private final ArrayList<User> dataSet = new ArrayList<>();
     private ArrayAdapter<User> adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean exUser;
@@ -39,12 +38,12 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.user_fragment, container, false);
+        View view = inflater.inflate(R.layout.user_list_fragment, container, false);
         ListView user_list = (ListView) view.findViewById(R.id.users_listView);
 
         setHasOptionsMenu(true);
 
-        adapter = new UserAdapter(this.getActivity(), listItems);
+        adapter = new UserAdapter(this.getActivity(), dataSet);
         user_list.setAdapter(adapter);
 
         initSwiper(view, user_list);
@@ -101,25 +100,20 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
         JSONArray json;
         try {
             if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERKEY)) != null) {
-                listItems.clear();
+                dataSet.clear();
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject temp;
                     temp = json.getJSONObject(i);
-                    User tempUser = new User(temp.getString("name"), temp.getInt("id"), temp.getString("email"), temp.getInt("quotes"), temp.getInt("reviews"), temp.getBoolean("lid"));
+                    User user = new User(temp.getString("name"), temp.getInt("id"), temp.getString("email"), temp.getInt("quotes"), temp.getInt("reviews"), temp.getBoolean("lid"));
 
-
-                    if (exUser) {
-
-                    } else {
-
+                    if (exUser && !user.isMember()) {
+                        dataSet.add(user);
+                    } else if (!exUser && user.isMember()) {
+                        dataSet.add(user);
                     }
 
-
-//                    if (temp.getInt("approved") == 1) {
-                    listItems.add(tempUser);
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
-//                        }
                     }
                 }
             }
@@ -179,7 +173,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
                 return user1.getName().compareToIgnoreCase(user2.getName());
             }
         };
-        Collections.sort(listItems, nameComperator);
+        Collections.sort(dataSet, nameComperator);
         adapter.notifyDataSetChanged();
     }
 
@@ -190,7 +184,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
                 return user2.getQuotecount() - user1.getQuotecount();
             }
         };
-        Collections.sort(listItems, quoteComperator);
+        Collections.sort(dataSet, quoteComperator);
         adapter.notifyDataSetChanged();
     }
 
@@ -201,7 +195,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
                 return user2.getReviewcount() - user1.getReviewcount();
             }
         };
-        Collections.sort(listItems, reviewComperator);
+        Collections.sort(dataSet, reviewComperator);
         adapter.notifyDataSetChanged();
     }
 }

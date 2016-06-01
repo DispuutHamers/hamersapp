@@ -32,16 +32,16 @@ public class UserFragmentPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 if (MainActivity.USER_FRAGMENT_ALL.getArguments() == null) {
-                    Bundle argUpcoming = new Bundle();
-                    argUpcoming.putBoolean(exUser, false);
-                    MainActivity.USER_FRAGMENT_ALL.setArguments(argUpcoming);
+                    Bundle argAll = new Bundle();
+                    argAll.putBoolean(exUser, false);
+                    MainActivity.USER_FRAGMENT_ALL.setArguments(argAll);
                 }
                 return MainActivity.USER_FRAGMENT_ALL;
             case 1:
                 if (MainActivity.USER_FRAGMENT_EX.getArguments() == null) {
-                    Bundle argAll = new Bundle();
-                    argAll.putBoolean(exUser, true);
-                    MainActivity.USER_FRAGMENT_EX.setArguments(argAll);
+                    Bundle argEx = new Bundle();
+                    argEx.putBoolean(exUser, true);
+                    MainActivity.USER_FRAGMENT_EX.setArguments(argEx);
                 }
                 return MainActivity.USER_FRAGMENT_EX;
         }

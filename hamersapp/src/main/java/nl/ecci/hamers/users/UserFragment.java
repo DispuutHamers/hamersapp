@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.events.EventFragmentPagerAdapter;
 
 public class UserFragment extends Fragment {
 
@@ -18,13 +17,13 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
 
-        View rootView = inflater.inflate(R.layout.event_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.user_fragment, container, false);
 
-        EventFragmentPagerAdapter adapter = new EventFragmentPagerAdapter(getActivity(), getChildFragmentManager());
-        ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.event_fragment_viewpager);
+        UserFragmentPagerAdapter adapter = new UserFragmentPagerAdapter(getActivity(), getChildFragmentManager());
+        ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.user_fragment_viewpager);
         viewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.event_fragment_sliding_tabs);
+        TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.user_fragment_sliding_tabs);
         tabLayout.setTabTextColors(ContextCompat.getColor(getContext(), R.color.sliding_tabs_text_normal), ContextCompat.getColor(getContext(), R.color.sliding_tabs_text_selected));
         tabLayout.setupWithViewPager(viewPager);
 
