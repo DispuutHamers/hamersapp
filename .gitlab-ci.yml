@@ -1,5 +1,8 @@
 before_script:
   - export ANDROID_HOME="/opt/android-sdk"
+  - export ANDROID_HOME=/opt/android-sdk
+  - export PATH=$PATH:/opt/android-sdk/tools
+  - export PATH=$PATH:/opt/android-sdk/platform-tools
   - chmod +x gradlew
 
 stages:
@@ -18,7 +21,7 @@ AndroidTest:
   stage: test
   script:
     - emulator -avd test -no-audio -no-window &
-    - ./android-wait-for-emulator
+    - /opt/android-sdk/android-wait-for-emulator
     - adb shell input keyevent 82 &
     - ./gradlew connectedAndroidTest
   tags:
