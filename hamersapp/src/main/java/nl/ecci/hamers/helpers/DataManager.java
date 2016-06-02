@@ -34,16 +34,21 @@ import nl.ecci.hamers.users.User;
 import static nl.ecci.hamers.MainActivity.parseDate;
 
 public final class DataManager {
-    public static final String QUOTEURL = "/quote.json";
-    public static final String USERURL = "/user.json";
-    public static final String EVENTURL = "/event.json";
-    public static final String NEWSURL = "/news.json";
-    public static final String BEERURL = "/beer.json";
-    public static final String REVIEWURL = "/review.json";
-    public static final String WHOAMIURL = "/whoami.json";
-    public static final String MOTIEURL = "/motion";
-    public static final String SIGNUPURL = "/signup";
-    public static final String GCMURL = "/register";
+    // URL
+//    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
+    public static final String baseURL = "http://192.168.100.100:3000/api/v2/";
+    // URL Appendices
+    public static final String QUOTEURL = "quotes";
+    public static final String USERURL = "users";
+    public static final String EVENTURL = "events";
+    public static final String NEWSURL = "news";
+    public static final String BEERURL = "beers";
+    public static final String REVIEWURL = "reviews";
+    public static final String WHOAMIURL = "whoami";
+    public static final String MOTIEURL = "motion";
+    public static final String SIGNUPURL = "signup";
+    public static final String GCMURL = "register";
+    // Data keys
     public static final String QUOTEKEY = "quoteData";
     public static final String USERKEY = "userData";
     public static final String EVENTKEY = "eventData";
@@ -55,7 +60,7 @@ public final class DataManager {
     public static final String SIGNUPKEY = "signupkey";
 
     public static void getData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
-        String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + dataURL;
+        String url = baseURL + dataURL;
 
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -70,12 +75,19 @@ public final class DataManager {
                     public void onErrorResponse(VolleyError error) {
                         handleErrorResponse(context, error);
                     }
-                });
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", "Token token=" + prefs.getString(APIKEYKEY, ""));
+                return params;
+            }
+        };
         Singleton.getInstance(context).addToRequestQueue(request);
     }
 
     public static void postData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY, final Map<String, String> urlParams) {
-        String url = MainActivity.baseURL + prefs.getString(DataManager.APIKEYKEY, "a") + dataURL;
+        String url = baseURL + dataURL;
 
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -104,6 +116,7 @@ public final class DataManager {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                params.put("Authorization", "Token token=" + prefs.getString(APIKEYKEY, ""));
                 params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }
@@ -168,15 +181,14 @@ public final class DataManager {
     }
 
     public static User getUser(SharedPreferences prefs, int id) {
-        User result = new User("Unknown", -1, "example@example.org", 0, 0, true, "");
+        User result = new User("Unknown", -1, "example@example.org", 0, 0, true, -1, "");
         JSONArray users;
         try {
             if ((users = getJsonArray(prefs, USERKEY)) != null) {
                 for (int i = 0; i < users.length(); i++) {
                     JSONObject user = users.getJSONObject(i);
                     if (user.getInt("id") == id) {
-                        result = new User(user.getString("name"), user.getInt("id"), user.getString("email"), user.getInt("quotes"), user.getInt("reviews"), user.getBoolean("lid"), user.getString("nickname="));
-                        return result;
+                        return new User(user.getString("name"), user.getInt("id"), user.getString("email"), user.getInt("quotes"), user.getInt("reviews"), user.getBoolean("lid"), user.getInt("batch"), user.getString("nickname="));
                     }
                 }
             }
@@ -190,11 +202,11 @@ public final class DataManager {
         try {
             if (whoami != null) {
                 JSONObject user = whoami.getJSONObject(0);
-                return new User(user.getString("name"), user.getInt("id"), user.getString("email"), user.getInt("quotes"), user.getInt("reviews"), user.getBoolean("lid"), user.getString("nickname="));
+                return new User(user.getString("name"), user.getInt("id"), user.getString("email"), user.getInt("quotes"), user.getInt("reviews"), user.getBoolean("lid"), user.getInt("batch"), user.getString("nickname="));
             }
         } catch (JSONException ignored) {
         }
-        return new User("Unknown", -1, "example@example.org", 0, 0, true, "");
+        return new User("Unknown", -1, "example@example.org", 0, 0, true, -1, "");
     }
 
     public static Event getEvent(SharedPreferences prefs, int id) {

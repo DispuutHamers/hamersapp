@@ -60,8 +60,6 @@ import nl.ecci.hamers.users.UserFragment;
 import nl.ecci.hamers.users.UserListFragment;
 
 public class MainActivity extends AppCompatActivity {
-    // URL
-    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
     // Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
     public static final UserFragment USER_FRAGMENT = new UserFragment();

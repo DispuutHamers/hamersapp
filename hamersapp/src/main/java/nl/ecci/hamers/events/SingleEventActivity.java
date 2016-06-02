@@ -69,7 +69,7 @@ public class SingleEventActivity extends AppCompatActivity {
         afwezigLayout = (ViewGroup) findViewById(R.id.afwezig_layout);
 
         final String title = event.getTitle();
-        final String description = event.getDescription();
+        final String description = event.getBeschrijving();
         final String location = event.getLocation();
 
         initSignups();
