@@ -74,7 +74,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
                     Intent intent = new Intent(context, SingleBeerActivity.class);
                     intent.putExtra(Beer.BEER_ID, beer.getId());
                     intent.putExtra(Beer.BEER_NAME, beer.getName());
-                    intent.putExtra(Beer.BEER_KIND, beer.getSoort());
+                    intent.putExtra(Beer.BEER_KIND, beer.getKind());
                     intent.putExtra(Beer.BEER_URL, beer.getImageURL());
                     intent.putExtra(Beer.BEER_PERCENTAGE, beer.getPercentage());
                     intent.putExtra(Beer.BEER_BREWER, beer.getBrewer());
@@ -115,7 +115,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(filteredDataSet.get(position).getName());
-        holder.soort.setText(String.format("Soort: %s", filteredDataSet.get(position).getSoort()));
+        holder.soort.setText(String.format("Soort: %s", filteredDataSet.get(position).getKind()));
         holder.brewer.setText(String.format("Brouwer: %s", filteredDataSet.get(position).getBrewer()));
         holder.rating.setText(String.format("Cijfer: %s", filteredDataSet.get(position).getRating()));
         holder.info.setText((String.format("%s - %s", filteredDataSet.get(position).getCountry(), filteredDataSet.get(position).getPercentage())));
@@ -164,7 +164,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
                     for (Beer beer : dataSet) {
                         if (beer.getName().toLowerCase().contains(charSequence) || beer.getBrewer().toLowerCase().contains(charSequence)
                                 || beer.getBrewer().toLowerCase().contains(charSequence) || beer.getPercentage().toLowerCase().contains(charSequence)
-                                || beer.getSoort().toLowerCase().contains(charSequence)) {
+                                || beer.getKind().toLowerCase().contains(charSequence)) {
                             filterResultsData.add(beer);
                         }
                     }

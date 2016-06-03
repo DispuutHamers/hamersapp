@@ -1,5 +1,8 @@
 package nl.ecci.hamers.beers;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.net.URL;
 import java.util.Date;
 
 public class Beer {
@@ -15,25 +18,31 @@ public class Beer {
 
     private final int id;
     private final String name;
-    private final String soort;
+    @SerializedName("soort")
+    private final String kind;
+    @SerializedName("picture")
     private final String imageURL;
     private final String percentage;
     private final String brewer;
     private final String country;
+    @SerializedName("cijfer")
     private final String rating;
+    private final String url;
+    @SerializedName("created_at")
     private final Date createdAt;
 
 
-    public Beer(int id, String name, String soort, String imageURL, String percentage, String brewer, String country, String rating, Date createdAt) {
+    public Beer(int id, String name, String kind, String imageURL, String percentage, String brewer, String country, String rating, String url, Date createdAt) {
         super();
         this.id = id;
         this.name = name;
-        this.soort = soort;
+        this.kind = kind;
         this.imageURL = imageURL;
         this.percentage = percentage;
         this.brewer = brewer;
         this.country = country;
         this.rating = rating;
+        this.url = url;
         this.createdAt = createdAt;
     }
 
@@ -45,8 +54,8 @@ public class Beer {
         return name;
     }
 
-    public String getSoort() {
-        return soort;
+    public String getKind() {
+        return kind;
     }
 
     public String getImageURL() {
@@ -67,6 +76,10 @@ public class Beer {
 
     public String getRating() {
         return rating;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public Date getCreatedAt() {

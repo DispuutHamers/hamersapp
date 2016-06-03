@@ -15,6 +15,8 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -252,28 +254,21 @@ public final class DataManager {
     }
 
     public static Beer getBeer(SharedPreferences prefs, int id) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
         JSONArray beers;
         try {
             if ((beers = getJsonArray(prefs, BEERKEY)) != null) {
                 for (int i = 0; i < beers.length(); i++) {
                     JSONObject temp = beers.getJSONObject(i);
                     if (temp.getInt("id") == id) {
-                        Beer result;
-                        String cijfer = temp.getString("cijfer");
-                        if (cijfer.equals("null")) {
-                            result = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
-                                    temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), "nog niet bekend", parseDate(temp.getString("created_at")));
-                        } else {
-                            result = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
-                                    temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), cijfer, parseDate(temp.getString("created_at")));
-                        }
-                        return result;
+                        return gson.fromJson(temp.toString(), Beer.class);
                     }
                 }
             }
         } catch (JSONException ignored) {
         }
-        return new Beer(-1, "Unknown", "Unknown", null, "Unknown", "Unknown", "Unknown", "Unknown", new Date());
+        return new Beer(-1, "Unknown", "Unknown", null, "Unknown", "Unknown", "Unknown", "Unknown", null, new Date());
     }
 
     public static JSONArray getJsonArray(SharedPreferences prefs, String key) {

@@ -17,10 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -33,6 +38,7 @@ import nl.ecci.hamers.events.Event;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
+import nl.ecci.hamers.quotes.Quote;
 
 import static nl.ecci.hamers.MainActivity.parseDate;
 
@@ -239,27 +245,16 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         @SafeVarargs
         @Override
         protected final ArrayList<Beer> doInBackground(ArrayList<Beer>... param) {
-            final ArrayList<Beer> dataSet = new ArrayList<>();
+            ArrayList<Beer> dataSet = new ArrayList<>();
             JSONArray json;
-            try {
-                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.BEERKEY)) != null) {
-                    for (int i = 0; i < json.length(); i++) {
-                        JSONObject temp;
-                        temp = json.getJSONObject(i);
-                        Beer tempBeer;
+            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.BEERKEY)) != null) {
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                Gson gson = gsonBuilder.create();
 
-                        String cijfer = temp.getString("cijfer");
-                        if (cijfer.equals("null")) {
-                            tempBeer = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
-                                    temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), "nog niet bekend", parseDate(temp.getString("created_at")));
-                        } else {
-                            tempBeer = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
-                                    temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), cijfer, parseDate(temp.getString("created_at")));
-                        }
-                        dataSet.add(tempBeer);
-                    }
-                }
-            } catch (JSONException ignored) {
+                Type type = new TypeToken<ArrayList<Beer>>() {
+                }.getType();
+                dataSet = gson.fromJson(json.toString(), type);
             }
             return dataSet;
         }
