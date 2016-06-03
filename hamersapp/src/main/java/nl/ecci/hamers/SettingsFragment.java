@@ -62,7 +62,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         refresh_app.setOnPreferenceClickListener(
                 new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference preference) {
-                        getActivity().recreate();
+                        getActivity().finish();
+                        startActivity(getActivity().getIntent());
                         return true;
                     }
                 }
