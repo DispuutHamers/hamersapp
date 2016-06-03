@@ -67,8 +67,8 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.body.setText(filteredDataSet.get(position).getBody());
-        holder.user.setText(filteredDataSet.get(position).getUsername());
+        holder.body.setText(filteredDataSet.get(position).getText());
+        holder.user.setText(DataManager.getUser(MainActivity.prefs, filteredDataSet.get(position).getUserID()).getName());
 
         Date date = filteredDataSet.get(position).getDate();
         if (date != null) {
@@ -101,8 +101,8 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
                 } else {
                     ArrayList<Quote> filterResultsData = new ArrayList<>();
                     for (Quote quote : dataSet) {
-                        if (quote.getBody().toLowerCase().contains(charSequence) ||
-                                quote.getUsername().toLowerCase().contains(charSequence)) {
+                        if (quote.getText().toLowerCase().contains(charSequence) ||
+                                DataManager.getUser(MainActivity.prefs , quote.getUserID()).getName().toLowerCase().contains(charSequence)) {
                             filterResultsData.add(quote);
                         }
                     }

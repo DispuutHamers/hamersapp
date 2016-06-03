@@ -126,28 +126,30 @@ public final class DataManager {
 
     private static void handleErrorResponse(@NonNull Context context, @NonNull VolleyError error) {
         System.out.println("--------------------\nError:\n" + error.toString());
-        if (error instanceof AuthFailureError) {
-            // Wrong API key
-            if (Utils.alertDialog == null) {
-                Utils.showApiKeyDialog(context);
-            } else if (!Utils.alertDialog.isShowing()) {
-                Utils.showApiKeyDialog(context);
+        if (context != null) {
+            if (error instanceof AuthFailureError) {
+                // Wrong API key
+                if (Utils.alertDialog == null) {
+                    Utils.showApiKeyDialog(context);
+                } else if (!Utils.alertDialog.isShowing()) {
+                    Utils.showApiKeyDialog(context);
+                }
+            } else if (error instanceof TimeoutError) {
+                // Timeout
+                Toast.makeText(context, context.getString(R.string.snackbar_timeout_error), Toast.LENGTH_SHORT).show();
+            } else if (error instanceof ServerError) {
+                // Server error (500)
+                Toast.makeText(context, context.getString(R.string.snackbar_server_error), Toast.LENGTH_SHORT).show();
+            } else if (error instanceof NoConnectionError) {
+                // No network connection
+                Toast.makeText(context, context.getString(R.string.snackbar_connection_error), Toast.LENGTH_SHORT).show();
+            } else if (error instanceof NetworkError) {
+                // No network connection
+                Toast.makeText(context, context.getString(R.string.snackbar_network_error), Toast.LENGTH_SHORT).show();
+            } else {
+                // Other error
+                Toast.makeText(context, context.getString(R.string.snackbar_volley_error), Toast.LENGTH_SHORT).show();
             }
-        } else if (error instanceof TimeoutError) {
-            // Timeout
-            Toast.makeText(context, context.getString(R.string.snackbar_timeout_error), Toast.LENGTH_SHORT).show();
-        } else if (error instanceof ServerError) {
-            // Server error (500)
-            Toast.makeText(context, context.getString(R.string.snackbar_server_error), Toast.LENGTH_SHORT).show();
-        } else if (error instanceof NoConnectionError) {
-            // No network connection
-            Toast.makeText(context, context.getString(R.string.snackbar_connection_error), Toast.LENGTH_SHORT).show();
-        } else if (error instanceof NetworkError) {
-            // No network connection
-            Toast.makeText(context, context.getString(R.string.snackbar_network_error), Toast.LENGTH_SHORT).show();
-        } else {
-            // Other error
-            Toast.makeText(context, context.getString(R.string.snackbar_volley_error), Toast.LENGTH_SHORT).show();
         }
     }
 

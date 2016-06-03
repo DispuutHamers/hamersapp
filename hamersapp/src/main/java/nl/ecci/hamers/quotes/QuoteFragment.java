@@ -16,11 +16,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.fitness.data.DataSet;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
@@ -145,32 +152,17 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         @SafeVarargs
         @Override
         protected final ArrayList<Quote> doInBackground(ArrayList<Quote>... param) {
-            final ArrayList<Quote> dataSet = new ArrayList<>();
+            ArrayList<Quote> dataSet = new ArrayList<>();
             JSONArray json;
-            try {
                 if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.QUOTEKEY)) != null) {
-                    for (int i = 0; i < json.length(); i++) {
-                        JSONObject quote = json.getJSONObject(i);
-                        User user;
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                    Gson gson = gsonBuilder.create();
 
-                        String username;
-                        int id;
-                        if ((user = DataManager.getUser(MainActivity.prefs, quote.getInt("user_id"))) != null) {
-                            username = user.getName();
-                            id = user.getUserID();
-                        } else {
-                            username = "unknown user";
-                            id = -1;
-                        }
-
-                        String tempDate = quote.getString("created_at");
-                        Date date = parseDate(tempDate);
-                        Quote tempQuote = new Quote(username, quote.getString("text"), date, id);
-                        dataSet.add(tempQuote);
-                    }
+                    Type type = new TypeToken<ArrayList<Quote>>() {
+                    }.getType();
+                    dataSet = gson.fromJson(json.toString(), type);
                 }
-            } catch (JSONException ignored) {
-            }
             return dataSet;
         }
 

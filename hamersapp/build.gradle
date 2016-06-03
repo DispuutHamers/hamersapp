@@ -67,7 +67,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.android.volley:volley:1.0.0'
     compile 'us.feras.mdv:markdownview:1.1.0'
-    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.google.code.gson:gson:2.6.2'
 
     // Testing
 //    testCompile 'junit:junit:4.12'

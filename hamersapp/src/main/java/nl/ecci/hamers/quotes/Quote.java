@@ -1,34 +1,39 @@
 package nl.ecci.hamers.quotes;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class Quote {
-    private final String username;
-    private final String body;
-    private final Date date;
+    private final int id;
+    private final String text;
+    @SerializedName("user_id")
     private final int userID;
+    @SerializedName("created_at")
+    private final Date date;
 
-    public Quote(String username, String body, Date date, int userID) {
+    public Quote(int id, String text, int userID, Date date) {
         super();
-        this.username = username;
-        this.body = body;
-        this.date = date;
+        this.id = id;
+        this.text = text;
         this.userID = userID;
+        this.date = date;
     }
 
-    public String getBody() {
-        return body;
+    public int getId() {
+        return id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    @SerializedName("user_id")
+    public int getUserID() {
+        return userID;
     }
 
     public Date getDate() {
         return date;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public int getUserID() {
-        return userID;
     }
 }
