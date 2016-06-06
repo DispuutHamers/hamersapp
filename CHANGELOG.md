@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.5.1](https://github.com/dexbleeker/hamersapp/tree/1.5.1) (2016-06-03)
+[Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.5.0...1.5.1)
+
+- Support for nicknames
+- Tabs in UserFragment (users / ex-users)
+- Setting to quickly reload app
+- Small interaction improvements
+- Small layout improvements
+
 ## [1.5.0](https://github.com/dexbleeker/hamersapp/tree/1.5.0) (2016-05-31)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.4.2...1.5.0)
 

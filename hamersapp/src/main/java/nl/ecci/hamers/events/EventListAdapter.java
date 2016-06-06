@@ -69,7 +69,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
             card.setCardBackgroundColor(Color.WHITE);
         }
 
-        if (!dataSet.get(position).getLocation().isEmpty()) {
+        if (dataSet.get(position).getLocation().isEmpty() || dataSet.get(position).getLocation().equals("null")) {
+            holder.location.setVisibility(View.GONE);
+        } else {
+
             holder.location.setText(dataSet.get(position).getLocation());
         }
 

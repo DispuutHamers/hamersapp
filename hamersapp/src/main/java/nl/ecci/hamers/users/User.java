@@ -1,10 +1,14 @@
 package nl.ecci.hamers.users;
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
     private final String name;
     private final int userID;
     private final String email;
+    @SerializedName("quotes")
     private final int quotecount;
+    @SerializedName("reviews")
     private final int reviewcount;
     private final boolean member;
     private final int batch;
