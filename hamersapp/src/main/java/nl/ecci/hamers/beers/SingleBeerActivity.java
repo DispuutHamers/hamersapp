@@ -210,8 +210,8 @@ public class SingleBeerActivity extends AppCompatActivity {
     }
 
     private String parseDate(String dateTemp) throws ParseException {
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", new Locale("nl"));
-        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("nl"));
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", MainActivity.locale);
+        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", MainActivity.locale);
         return outputFormat.format(inputFormat.parse(dateTemp));
     }
 

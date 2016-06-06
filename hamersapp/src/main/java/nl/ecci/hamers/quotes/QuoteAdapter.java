@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -21,7 +20,6 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.users.SingleUserActivity;
 import nl.ecci.hamers.users.User;
 
@@ -31,7 +29,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     private final ArrayList<Quote> dataSet;
     private final ImageLoader imageLoader;
     private final Context context;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss - dd MMM yyyy", MainActivity.locale);
     private ArrayList<Quote> filteredDataSet;
 
     public QuoteAdapter(ArrayList<Quote> itemsArrayList, Context context) {
@@ -72,13 +69,12 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
         Date date = filteredDataSet.get(position).getDate();
         if (date != null) {
-            holder.date.setText(dateFormat.format(date));
+            holder.date.setText(MainActivity.appDF.format(date));
         }
 
         User user = DataManager.getUser(MainActivity.prefs, filteredDataSet.get(position).getUserID());
         if (user != null) {
-            String url = "http://gravatar.com/avatar/" + Utils.md5Hex(user.getEmail()) + "?s=200";
-            imageLoader.displayImage(url, holder.userImage, animateFirstListener);
+            imageLoader.displayImage(DataManager.getGravatarURL(user.getEmail()), holder.userImage, animateFirstListener);
         }
     }
 
