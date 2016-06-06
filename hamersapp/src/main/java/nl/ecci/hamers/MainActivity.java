@@ -296,6 +296,11 @@ public class MainActivity extends AppCompatActivity {
                 setTitle(getResources().getString(R.string.navigation_item_motions));
                 break;
 
+            case R.id.navigation_item_meetings:
+                transaction.replace(R.id.content_frame, MEETING_FRAGMENT).commit();
+                setTitle(getResources().getString(R.string.navigation_item_meetings));
+                break;
+
             case R.id.navigation_item_settings:
                 transaction.replace(R.id.content_frame, SETTINGS_FRAGMENT).commit();
                 setTitle(getResources().getString(R.string.navigation_item_settings));

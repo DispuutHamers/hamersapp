@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_item_quotes"
             android:checked="true"
-            android:title="@string/navigation_item_quotes"
-            android:icon="@drawable/quotes" />
+            android:icon="@drawable/quotes"
+            android:title="@string/navigation_item_quotes" />
         <item
             android:id="@+id/navigation_item_events"
-            android:title="@string/navigation_item_events"
-            android:icon="@drawable/events" />
+            android:icon="@drawable/events"
+            android:title="@string/navigation_item_events" />
 
         <item
             android:id="@+id/navigation_item_beers"
-            android:title="@string/navigation_item_beers"
-            android:icon="@drawable/beers"/>
+            android:icon="@drawable/beers"
+            android:title="@string/navigation_item_beers" />
         <item
             android:id="@+id/navigation_item_news"
-            android:title="@string/navigation_item_news"
-            android:icon="@drawable/news" />
+            android:icon="@drawable/news"
+            android:title="@string/navigation_item_news" />
         <item
             android:id="@+id/navigation_item_users"
-            android:title="@string/navigation_item_users"
-            android:icon="@drawable/users"/>
+            android:icon="@drawable/users"
+            android:title="@string/navigation_item_users" />
         <item
             android:id="@+id/navigation_item_motions"
             android:icon="@drawable/motions"
             android:title="@string/navigation_item_motions" />
+        <item
+            android:id="@+id/navigation_item_meetings"
+            android:title="@string/navigation_item_meetings" />
     </group>
     <group
         android:id="@+id/menu_bottom"
         android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_item_settings"
-            android:title="@string/navigation_item_settings"
-            android:icon="@drawable/settings" />
+            android:icon="@drawable/settings"
+            android:title="@string/navigation_item_settings" />
         <item
             android:id="@+id/navigation_item_about"
-            android:title="@string/navigation_item_about"
-            android:icon="@drawable/about"/>
+            android:icon="@drawable/about"
+            android:title="@string/navigation_item_about" />
     </group>
 
 </menu>

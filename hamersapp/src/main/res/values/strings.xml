@@ -21,6 +21,7 @@
     <string name="navigation_item_news">Nieuws</string>
     <string name="navigation_item_users">Leden</string>
     <string name="navigation_item_motions">Moties</string>
+    <string name="navigation_item_meetings">Vergaderingen</string>
     <string name="navigation_item_settings">Instellingen</string>
     <string name="navigation_item_about">Over</string>
 
