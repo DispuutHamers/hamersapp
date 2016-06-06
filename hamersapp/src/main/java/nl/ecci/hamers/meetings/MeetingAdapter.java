@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHolder> {
@@ -24,7 +25,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.meeting_row, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.meetign_card, parent, false);
 
         final ViewHolder vh = new ViewHolder(view);
 
@@ -41,7 +42,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.subject.setText(dataSet.get(position).getSubject());
-        holder.date.setText(String.format("Date: %s", dataSet.get(position).getDate()));
+        holder.date.setText(MainActivity.appDF2.format(dataSet.get(position).getDate()));
     }
 
     @Override

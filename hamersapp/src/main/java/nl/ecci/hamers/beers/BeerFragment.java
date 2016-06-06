@@ -90,12 +90,12 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         setHasOptionsMenu(true);
 
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        beer_list.setLayoutManager(mLayoutManager);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        beer_list.setLayoutManager(layoutManager);
         beer_list.setItemAnimator(new DefaultItemAnimator());
         beer_list.addItemDecoration(new DividerItemDecoration(getActivity()));
 
-        initSwiper(view, beer_list, mLayoutManager);
+        initSwiper(view, beer_list, layoutManager);
 
         adapter = new BeerAdapter(dataSet, getActivity());
         beer_list.setAdapter(adapter);

@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.DividerItemDecoration;
 
 public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private final ArrayList<Meeting> dataSet = new ArrayList<>();
@@ -34,14 +33,12 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
         View view = inflater.inflate(R.layout.meeting_fragment, container, false);
         RecyclerView meeting_list = (RecyclerView) view.findViewById(R.id.meeting_recyclerview);
 
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
 
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        meeting_list.setLayoutManager(mLayoutManager);
-        meeting_list.setItemAnimator(new DefaultItemAnimator());
-        meeting_list.addItemDecoration(new DividerItemDecoration(getActivity()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        meeting_list.setLayoutManager(layoutManager);
 
-        initSwiper(view, meeting_list, mLayoutManager);
+        initSwiper(view, meeting_list, layoutManager);
 
         adapter = new MeetingAdapter(dataSet, getActivity());
         meeting_list.setAdapter(adapter);
