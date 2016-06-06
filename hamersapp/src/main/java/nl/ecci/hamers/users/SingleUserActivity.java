@@ -23,7 +23,6 @@ import nl.ecci.hamers.helpers.Utils;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class SingleUserActivity extends AppCompatActivity {
-    private String imageURL;
     private PhotoViewAttacher mAttacher;
 
     @Override
@@ -38,11 +37,10 @@ public class SingleUserActivity extends AppCompatActivity {
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
         final User user = DataManager.getUser(MainActivity.prefs, getIntent().getIntExtra(User.USER_ID, 1));
-        imageURL = "http://gravatar.com/avatar/" + Utils.md5Hex(user.getEmail()) + "?s=200";
 
         collapsingToolbar.setTitle(user.getName());
 
-        loadBackdrop();
+        loadBackdrop(user);
 
         fillRow(findViewById(R.id.row_user_name), getString(R.string.user_name), user.getName());
         fillRow(findViewById(R.id.row_user_quotecount), getString(R.string.user_quotecount), String.valueOf(user.getQuotecount()));
@@ -80,12 +78,12 @@ public class SingleUserActivity extends AppCompatActivity {
         }
     }
 
-    private void loadBackdrop() {
+    private void loadBackdrop(User user) {
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
 
         mAttacher = new PhotoViewAttacher(imageView);
 
-        ImageLoader.getInstance().displayImage(imageURL, imageView, new ImageLoadingListener() {
+        ImageLoader.getInstance().displayImage(DataManager.getGravatarURL(user.getEmail()), imageView, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
             }
