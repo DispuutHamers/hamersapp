@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
 
@@ -52,23 +51,23 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
         return view;
     }
 
-    private void initSwiper(View view, final RecyclerView beer_list, final LinearLayoutManager lm) {
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
+    private void initSwiper(View view, final RecyclerView meeting_list, final LinearLayoutManager lm) {
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.meeting_swipe_container);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        beer_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        meeting_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrolled(RecyclerView view, int dx, int dy) {
                 boolean enable = false;
-                if (beer_list != null && beer_list.getChildCount() > 0) {
+                if (meeting_list != null && meeting_list.getChildCount() > 0) {
                     // check if the first item of the list is visible
                     boolean firstItemVisible = lm.findFirstCompletelyVisibleItemPosition() == 0;
                     // check if the top of the first item is visible
-                    boolean topOfFirstItemVisible = beer_list.getChildAt(0).getTop() == 0;
+                    boolean topOfFirstItemVisible = meeting_list.getChildAt(0).getTop() == 0;
                     // enabling or disabling the refresh layout
                     enable = firstItemVisible && topOfFirstItemVisible;
                 }
@@ -115,7 +114,7 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
                 Gson gson = gsonBuilder.create();
 
-                Type type = new TypeToken<ArrayList<Beer>>() {
+                Type type = new TypeToken<ArrayList<Meeting>>() {
                 }.getType();
                 dataSet = gson.fromJson(json.toString(), type);
             }

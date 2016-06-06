@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:onClick="newBeer"
+        android:onClick="newMeeting"
         android:src="@drawable/action_add"
         app:backgroundTint="@color/material_red"
         app:layout_anchor="@id/meeting_recyclerview"

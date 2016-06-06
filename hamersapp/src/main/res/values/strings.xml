@@ -168,6 +168,8 @@
 
     <string name="press_back_again">Klik nog een keer op \'back\' om af te sluiten.</string>
 
+    <string name="functionality_added_later">Deze functionaliteit komt in een latere versie.</string>
+
     <!-- Beer images -->
     <string name="no_image">Dit biertje heeft geen afbeelding!</string>
     <string name="transition_single_image">transition_beer_image</string>

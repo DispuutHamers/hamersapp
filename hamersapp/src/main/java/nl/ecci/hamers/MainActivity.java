@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -268,47 +269,47 @@ public class MainActivity extends AppCompatActivity {
         switch (id) {
             case R.id.navigation_item_quotes:
                 transaction.replace(R.id.content_frame, QUOTE_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_quotes));
+                setTitle(getString(R.string.navigation_item_quotes));
                 break;
 
             case R.id.navigation_item_events:
                 transaction.replace(R.id.content_frame, EVENT_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_events));
+                setTitle(getString(R.string.navigation_item_events));
                 break;
 
             case R.id.navigation_item_beers:
                 transaction.replace(R.id.content_frame, BEER_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_beers));
+                setTitle(getString(R.string.navigation_item_beers));
                 break;
 
             case R.id.navigation_item_news:
                 transaction.replace(R.id.content_frame, NEWS_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_news));
+                setTitle(getString(R.string.navigation_item_news));
                 break;
 
             case R.id.navigation_item_users:
                 transaction.replace(R.id.content_frame, USER_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_users));
+                setTitle(getString(R.string.navigation_item_users));
                 break;
 
             case R.id.navigation_item_motions:
                 transaction.replace(R.id.content_frame, MOTION_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_motions));
+                setTitle(getString(R.string.navigation_item_motions));
                 break;
 
             case R.id.navigation_item_meetings:
                 transaction.replace(R.id.content_frame, MEETING_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_meetings));
+                setTitle(getString(R.string.navigation_item_meetings));
                 break;
 
             case R.id.navigation_item_settings:
                 transaction.replace(R.id.content_frame, SETTINGS_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_settings));
+                setTitle(getString(R.string.navigation_item_settings));
                 break;
 
             case R.id.navigation_item_about:
                 transaction.replace(R.id.content_frame, ABOUT_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_about));
+                setTitle(getString(R.string.navigation_item_about));
                 break;
         }
     }
@@ -346,6 +347,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * When user presses "+" in MeetingFragment, start new dialog with NewMeetingActivity
+     */
+    public void newMeeting(View view) {
+        Snackbar.make(view, getString(R.string.functionality_added_later), Snackbar.LENGTH_SHORT).show();
+    }
+
+    /**
      * Hides the soft keyboard
      */
     private void hideKeyboard() {
@@ -363,7 +371,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         this.backPressedOnce = true;
-        Toast.makeText(this, getResources().getString(R.string.press_back_again), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.press_back_again), Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
             @Override
