@@ -47,7 +47,8 @@ public final class DataManager {
     public static final String BEERURL = "beers";
     public static final String REVIEWURL = "reviews";
     public static final String WHOAMIURL = "whoami";
-    public static final String MOTIEURL = "motion";
+    public static final String MOTIEURL = "motions";
+    public static final String MEETINGURL = "meetings";
     public static final String SIGNUPURL = "signup";
     public static final String GCMURL = "register";
     // Data keys
@@ -57,6 +58,7 @@ public final class DataManager {
     public static final String NEWSKEY = "newsData";
     public static final String BEERKEY = "beerData";
     public static final String REVIEWKEY = "reviewdata";
+    public static final String MEETINGKEY= "meetingdata";
     public static final String APIKEYKEY = "apikey";
     public static final String WHOAMIKEY = "whoamikey";
     public static final String SIGNUPKEY = "signupkey";
@@ -181,6 +183,8 @@ public final class DataManager {
                 MainActivity.USER_FRAGMENT_ALL.populateList();
                 MainActivity.USER_FRAGMENT_EX.populateList();
                 break;
+            case MEETINGURL:
+                MainActivity.MEETING_FRAGMENT.populateList();
         }
     }
 

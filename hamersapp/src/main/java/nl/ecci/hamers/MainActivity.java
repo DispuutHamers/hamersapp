@@ -51,6 +51,7 @@ import nl.ecci.hamers.events.NewEventActivity;
 import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.Utils;
+import nl.ecci.hamers.meetings.MeetingFragment;
 import nl.ecci.hamers.news.NewNewsActivity;
 import nl.ecci.hamers.news.NewsFragment;
 import nl.ecci.hamers.quotes.NewQuoteFragment;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     public static final NewsFragment NEWS_FRAGMENT = new NewsFragment();
     public static final BeerFragment BEER_FRAGMENT = new BeerFragment();
     private static final MotionFragment MOTION_FRAGMENT = new MotionFragment();
+    public static final MeetingFragment MEETING_FRAGMENT = new MeetingFragment();
     private static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
     private static final AboutFragment ABOUT_FRAGMENT = new AboutFragment();
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
