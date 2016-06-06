@@ -1,30 +1,19 @@
 package nl.ecci.hamers.meetings;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.imageaware.ImageAware;
-import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.SingleImageActivity;
 
 import static nl.ecci.hamers.helpers.DataManager.getOwnUser;
 
@@ -73,14 +62,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        holder.title.setText(filteredDataSet.get(position).getName());
-//        holder.soort.setText(String.format("Soort: %s", filteredDataSet.get(position).getKind()));
-//        holder.brewer.setText(String.format("Brouwer: %s", filteredDataSet.get(position).getBrewer()));
-//        holder.rating.setText(String.format("Cijfer: %s", filteredDataSet.get(position).getRating()));
-//        holder.info.setText((String.format("%s - %s", filteredDataSet.get(position).getCountry(), filteredDataSet.get(position).getPercentage())));
-//
-//        String imageURL = filteredDataSet.get(position).getImageURL();
-
+        holder.subject.setText(filteredDataSet.get(position).getSubject());
+        holder.date.setText(String.format("Date: %s", filteredDataSet.get(position).getDate()));
     }
 
     @Override
@@ -91,25 +74,15 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;
-//        public final TextView title;
-//        public final TextView soort;
-//        public final TextView brewer;
-//        public final TextView rating;
-//        public final TextView info;
-//        public final ImageView picture;
-//        public final ImageView thumbs;
+        public final TextView subject;
+        public final TextView date;
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
 
-//            title = (TextView) view.findViewById(R.id.meeting_name);
-//            soort = (TextView) view.findViewById(R.id.meeting_soort);
-//            brewer = (TextView) view.findViewById(R.id.meeting_brewer);
-//            rating = (TextView) view.findViewById(R.id.row_meeting_rating);
-//            info = (TextView) view.findViewById(R.id.meeting_info);
-//            picture = (ImageView) view.findViewById(R.id.meeting_image);
-//            thumbs = (ImageView) view.findViewById(R.id.meeting_thumbs);
+            subject = (TextView) view.findViewById(R.id.meeting_subject);
+            date = (TextView) view.findViewById(R.id.meeting_date);
         }
     }
 }
