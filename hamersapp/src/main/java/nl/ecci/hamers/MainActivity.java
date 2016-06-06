@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
     private static final AboutFragment ABOUT_FRAGMENT = new AboutFragment();
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    public static final Locale locale = new Locale("nl_NL");
+    public static final Locale locale = new Locale("nl");
     public static final DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", locale);
     public static final DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", locale);
     public static final DateFormat appDF2 = new SimpleDateFormat("EEEE dd MMMM yyyy", locale);
