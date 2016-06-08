@@ -103,7 +103,7 @@ public class SingleEventActivity extends AppCompatActivity {
         }
 
         if (locationRow != null) {
-            if (!location.equals("null")) {
+            if (location != null) {
                 fillImageRow(locationRow, "Locatie", location, ContextCompat.getDrawable(this, R.drawable.location));
 
                 locationRow.setClickable(true);
