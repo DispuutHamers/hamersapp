@@ -220,17 +220,15 @@ public final class DataManager {
     }
 
     public static Event getEvent(SharedPreferences prefs, int id) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
         JSONArray events;
         try {
             if ((events = getJsonArray(prefs, EVENTKEY)) != null) {
                 for (int i = 0; i < events.length(); i++) {
                     JSONObject event = events.getJSONObject(i);
                     if (event.getInt("id") == id) {
-                        Date date = parseDate(event.getString("date"));
-                        Date end_time = parseDate(event.getString("end_time"));
-                        Date deadline = parseDate(event.getString("deadline"));
-
-                        return new Event(event.getInt("id"), event.getString("title"), event.getString("beschrijving"), event.getString("location"), date, end_time, deadline, event.getJSONArray("signups"));
+                        return gson.fromJson(event.toString(), Event.class);
                     }
                 }
             }
@@ -241,6 +239,8 @@ public final class DataManager {
     }
 
     public static Event getEvent(SharedPreferences prefs, String title, Date date) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
         JSONArray events;
         try {
             if ((events = getJsonArray(prefs, EVENTKEY)) != null) {
@@ -248,9 +248,7 @@ public final class DataManager {
                     JSONObject event = events.getJSONObject(i);
                     Date dbDatum = MainActivity.dbDF.parse(event.getString("date"));
                     if (dbDatum.equals(date) && event.getString("title").equals(title)) {
-                        Date end_time = parseDate(event.getString("end_time"));
-                        Date deadline = parseDate(event.getString("deadline"));
-                        return new Event(event.getInt("id"), event.getString("title"), event.getString("beschrijving"), event.getString("location"), date, end_time, deadline, event.getJSONArray("signups"));
+                        return gson.fromJson(event.toString(), Event.class);
                     }
                 }
             }
