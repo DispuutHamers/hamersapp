@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.6.0](https://github.com/dexbleeker/hamersapp/tree/1.6.0) (upcoming release)
+[Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.5.0...1.6.0)
+
+- (initial) Support for meetings
+- Support APIv2
+- Filter events
+- Support for nicknames
+- Improved user overview (image and layout)
+- Small layout improvements
+
 ## [1.5.1](https://github.com/dexbleeker/hamersapp/tree/1.5.1) (2016-06-03)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.5.0...1.5.1)
 
@@ -41,24 +51,24 @@
 ## [1.3.8](https://github.com/dexbleeker/hamersapp/tree/1.3.8) (2015-10-04)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.3.8...1.4.0)
 
-- Pushnotification fixes
+- Pushnotification improvements
 - Bugfixes
 
 ## [1.3.7](https://github.com/dexbleeker/hamersapp/tree/1.3.7) (2015-07-13)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.3.7...1.3.8)
 
-- Quotes zoekbaar
-- Google Maps + Calendar integratie activiteiten
+- Quotes filterable
+- Google Maps + Calendar integration events
 - Bugfix Android < Lollipop
 
 ## [1.3.6](https://github.com/dexbleeker/hamersapp/tree/1.3.6) (2015-07-09)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.3.6...1.3.7)
 
-- Uitvouwbare pushberichten
+- Extended pushnotifications
 - Uitgebreidere kleuren/iconen (bier)cijfers
 
 ## [1.3.5](https://github.com/dexbleeker/hamersapp/tree/1.3.5) (2015-07-02)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.3.6...1.3.7)
 
-- Redesign activiteit / bier
-- Push fixes
+- Redesign events / beers
+- Pushnotification improvements
