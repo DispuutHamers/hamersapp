@@ -59,7 +59,7 @@ class UserListAdapter extends ArrayAdapter<User> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, SingleUserActivity.class);
-                intent.putExtra(User.USER_ID, dataSet.get(position).getId());
+                intent.putExtra(User.USER_ID, dataSet.get(position).getUserID());
                 context.startActivity(intent);
             }
         });

@@ -7,7 +7,8 @@ import java.util.Date;
 
 public class User {
     private final String name;
-    private final int id;
+    @SerializedName("id")
+    private final int userID;
     private final String email;
     @SerializedName("quotes")
     private final int quoteCount;
@@ -21,10 +22,10 @@ public class User {
 
     public static final String USER_ID = "USER_ID";
 
-    public User(String name, int id, String email, int quoteCount, int reviewCount, boolean member, int batch, ArrayList<Nickname> nicknames, Date createdAt) {
+    public User(String name, int userID, String email, int quoteCount, int reviewCount, boolean member, int batch, ArrayList<Nickname> nicknames, Date createdAt) {
         super();
         this.name = name;
-        this.id = id;
+        this.userID = userID;
         this.email = email;
         this.quoteCount = quoteCount;
         this.reviewCount = reviewCount;
@@ -38,8 +39,8 @@ public class User {
         return name;
     }
 
-    public int getId() {
-        return id;
+    public int getUserID() {
+        return userID;
     }
 
     public String getEmail() {

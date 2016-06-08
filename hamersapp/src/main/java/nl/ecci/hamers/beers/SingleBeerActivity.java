@@ -132,7 +132,7 @@ public class SingleBeerActivity extends AppCompatActivity {
                     JSONObject review = reviews.getJSONObject(i);
                     if (review.getInt("beer_id") == id) {
                         hasReviews = true;
-                        if (review.getInt("user_id") == getOwnUser(MainActivity.prefs).getId()) {
+                        if (review.getInt("user_id") == getOwnUser(MainActivity.prefs).getUserID()) {
                             reviewButton.setVisibility(View.GONE);
                         }
                         Review tempReview = new Review(review.getInt("beer_id"), review.getInt("user_id"), review.getString("description"), review.getString("rating"), review.getString("created_at"), review.getString("proefdatum"));

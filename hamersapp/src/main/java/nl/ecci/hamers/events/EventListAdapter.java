@@ -78,7 +78,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         try {
             JSONArray signups = dataSet.get(position).getSignups();
-            int userID = DataManager.getOwnUser(MainActivity.prefs).getId();
+            int userID = DataManager.getOwnUser(MainActivity.prefs).getUserID();
             Boolean aanwezig = null;
             for (int i = 0; i < signups.length(); i++) {
                 JSONObject signup = signups.getJSONObject(i);
