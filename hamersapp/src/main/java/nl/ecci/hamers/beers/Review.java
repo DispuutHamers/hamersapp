@@ -7,7 +7,9 @@ import java.util.Date;
 class Review {
     @SerializedName("id")
     private final int reviewID;
+    @SerializedName("beer_id")
     private final int beerID;
+    @SerializedName("user_id")
     private final int userID;
     private final String description;
     private final int rating;

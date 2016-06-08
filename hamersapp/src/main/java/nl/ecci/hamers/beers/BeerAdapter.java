@@ -188,7 +188,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     private int getOwnRating(int id) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        int rating = -1;
+        int rating = 0;
         JSONArray reviews;
         try {
             if ((reviews = getJsonArray(MainActivity.prefs, DataManager.REVIEWKEY)) != null) {

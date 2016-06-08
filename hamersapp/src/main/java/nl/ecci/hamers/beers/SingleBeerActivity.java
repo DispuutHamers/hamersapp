@@ -176,17 +176,13 @@ public class SingleBeerActivity extends AppCompatActivity {
         TextView date = (TextView) view.findViewById(R.id.review_date);
         TextView ratingTV = (TextView) view.findViewById(R.id.review_rating);
 
-        String name = null;
-        try {
-            name = getUser(MainActivity.prefs, review.getUserID()).getName();
-        } catch (NullPointerException ignored) {
-        }
+        name = getUser(MainActivity.prefs, review.getUserID()).getName();
 
         Date datum = review.getProefdatum();
 
         title.setText(String.format("%s: ", name));
         body.setText(review.getDescription());
-        date.setText(MainActivity.appDF.format(datum));
+        date.setText(MainActivity.appDF2.format(datum));
         ratingTV.setText(String.format("Cijfer: %s", review.getRating()));
 
         // Insert into view
@@ -204,12 +200,6 @@ public class SingleBeerActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         refreshActivity();
-    }
-
-    private String parseDate(String dateTemp) throws ParseException {
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", MainActivity.locale);
-        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", MainActivity.locale);
-        return outputFormat.format(inputFormat.parse(dateTemp));
     }
 
     private void fillRow(View view, final String title, final String description) {
