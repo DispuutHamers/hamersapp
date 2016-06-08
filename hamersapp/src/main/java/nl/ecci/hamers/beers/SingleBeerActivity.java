@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONArray;
@@ -26,6 +28,7 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
@@ -124,19 +127,21 @@ public class SingleBeerActivity extends AppCompatActivity {
     }
 
     private void getReviews() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
         JSONArray reviews;
         boolean hasReviews = false;
         try {
             if ((reviews = getJsonArray(MainActivity.prefs, DataManager.REVIEWKEY)) != null) {
                 for (int i = 0; i < reviews.length(); i++) {
-                    JSONObject review = reviews.getJSONObject(i);
-                    if (review.getInt("beer_id") == id) {
+                    JSONObject jsonObject = reviews.getJSONObject(i);
+                    Review review = gson.fromJson(jsonObject.toString(), Review.class);
+                    if (review.getBeerID() == id) {
                         hasReviews = true;
-                        if (review.getInt("user_id") == getOwnUser(MainActivity.prefs).getUserID()) {
+                        if (review.getUserID() == getOwnUser(MainActivity.prefs).getUserID()) {
                             reviewButton.setVisibility(View.GONE);
                         }
-                        Review tempReview = new Review(review.getInt("beer_id"), review.getInt("user_id"), review.getString("description"), review.getString("rating"), review.getString("created_at"), review.getString("proefdatum"));
-                        insertReview(tempReview);
+                        insertReview(review);
                     }
                 }
                 if (!hasReviews) {
@@ -145,7 +150,6 @@ public class SingleBeerActivity extends AppCompatActivity {
             }
         } catch (JSONException e) {
             Toast.makeText(this, getString(R.string.snackbar_reviewloaderror), Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
         }
     }
 
@@ -174,20 +178,15 @@ public class SingleBeerActivity extends AppCompatActivity {
 
         String name = null;
         try {
-            name = getUser(MainActivity.prefs, review.getUser_id()).getName();
+            name = getUser(MainActivity.prefs, review.getUserID()).getName();
         } catch (NullPointerException ignored) {
         }
 
-        String datum = null;
-        try {
-            datum = parseDate(review.getProefdatum());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date datum = review.getProefdatum();
 
         title.setText(String.format("%s: ", name));
         body.setText(review.getDescription());
-        date.setText(datum);
+        date.setText(MainActivity.appDF.format(datum));
         ratingTV.setText(String.format("Cijfer: %s", review.getRating()));
 
         // Insert into view

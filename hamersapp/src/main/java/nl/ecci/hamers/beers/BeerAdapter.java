@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
@@ -129,7 +131,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         }
 
         try {
-            int rating = getRating(filteredDataSet.get(position).getId());
+            int rating = getOwnRating(filteredDataSet.get(position).getId());
             if (rating == 0) {
                 holder.thumbs.setImageResource(R.drawable.ic_questionmark);
             } else if (rating <= 4) {
@@ -183,15 +185,18 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         };
     }
 
-    private int getRating(int id) {
-        int rating = 0;
+    private int getOwnRating(int id) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        int rating = -1;
         JSONArray reviews;
         try {
             if ((reviews = getJsonArray(MainActivity.prefs, DataManager.REVIEWKEY)) != null) {
                 for (int i = 0; i < reviews.length(); i++) {
-                    JSONObject review = reviews.getJSONObject(i);
-                    if (review.getInt("beer_id") == id && review.getInt("user_id") == userID) {
-                        rating = review.getInt("rating");
+                    JSONObject jsonObject = reviews.getJSONObject(i);
+                    Review review = gson.fromJson(jsonObject.toString(), Review.class);
+                    if (review.getBeerID() == id && review.getUserID() == userID) {
+                        rating = review.getRating();
                     }
                 }
             }
