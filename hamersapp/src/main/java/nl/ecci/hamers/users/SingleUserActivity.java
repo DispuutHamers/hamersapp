@@ -19,7 +19,6 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.Utils;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class SingleUserActivity extends AppCompatActivity {
@@ -43,13 +42,13 @@ public class SingleUserActivity extends AppCompatActivity {
         loadBackdrop(user);
 
         fillRow(findViewById(R.id.row_user_name), getString(R.string.user_name), user.getName());
-        fillRow(findViewById(R.id.row_user_quotecount), getString(R.string.user_quotecount), String.valueOf(user.getQuotecount()));
-        fillRow(findViewById(R.id.row_user_reviewcount), getString(R.string.user_reviewcount), String.valueOf(user.getReviewcount()));
+        fillRow(findViewById(R.id.row_user_quotecount), getString(R.string.user_quotecount), String.valueOf(user.getQuoteCount()));
+        fillRow(findViewById(R.id.row_user_reviewcount), getString(R.string.user_reviewcount), String.valueOf(user.getReviewCount()));
 
         View nicknameRow = findViewById(R.id.row_user_nickname);
         View nicknameDivider = findViewById(R.id.user_nickname_divider);
-        if (!user.getNickname().isEmpty()) {
-            fillRow(nicknameRow, getString(R.string.user_nickname), user.getNickname());
+        if (user.getNicknames().size() > 0) {
+            fillRow(nicknameRow, getString(R.string.user_nickname), user.getNicknames().toString());
         } else if (nicknameRow != null) {
             nicknameRow.setVisibility(View.GONE);
             nicknameDivider.setVisibility(View.GONE);

@@ -78,7 +78,7 @@
     <string name="user_email">Email</string>
     <string name="user_quotecount">Aantal quotes</string>
     <string name="user_reviewcount">Aantal reviews</string>
-    <string name="user_nickname">Bijnaam</string>
+    <string name="user_nickname">Bijnamen</string>
     <string name="user_member">Lid</string>
     <string name="user_member_ex">Oud-lid</string>
     <string name="menu_users">Leden</string>

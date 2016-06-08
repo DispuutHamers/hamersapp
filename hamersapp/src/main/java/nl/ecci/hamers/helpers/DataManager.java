@@ -185,32 +185,35 @@ public final class DataManager {
     }
 
     public static User getUser(SharedPreferences prefs, int id) {
-        User result = new User("Unknown", -1, "example@example.org", 0, 0, true, -1, "");
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
         JSONArray users;
         try {
             if ((users = getJsonArray(prefs, USERKEY)) != null) {
                 for (int i = 0; i < users.length(); i++) {
                     JSONObject user = users.getJSONObject(i);
                     if (user.getInt("id") == id) {
-                        return new User(user.getString("name"), user.getInt("id"), user.getString("email"), user.getInt("quotes"), user.getInt("reviews"), user.getBoolean("lid"), user.getInt("batch"), user.getString("nickname="));
+                        return gson.fromJson(user.toString(), User.class);
                     }
                 }
             }
         } catch (JSONException ignored) {
         }
-        return result;
+        return new User("Unknown", -1, "example@example.org", 0, 0, true, -1, null, new Date());
     }
 
     public static User getOwnUser(SharedPreferences prefs) {
-        JSONArray whoami = DataManager.getJsonArray(prefs, DataManager.WHOAMIKEY);
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        JSONArray whoami;
         try {
-            if (whoami != null) {
+            if ((whoami = DataManager.getJsonArray(prefs, DataManager.WHOAMIKEY)) != null) {
                 JSONObject user = whoami.getJSONObject(0);
-                return new User(user.getString("name"), user.getInt("id"), user.getString("email"), user.getInt("quotes"), user.getInt("reviews"), user.getBoolean("lid"), user.getInt("batch"), user.getString("nickname="));
+                return gson.fromJson(user.toString(), User.class);
             }
         } catch (JSONException ignored) {
         }
-        return new User("Unknown", -1, "example@example.org", 0, 0, true, -1, "");
+        return new User("Unknown", -1, "example@example.org", 0, 0, true, -1, null, new Date());
     }
 
     public static Event getEvent(SharedPreferences prefs, int id) {

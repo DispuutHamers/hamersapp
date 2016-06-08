@@ -1,5 +1,6 @@
 package nl.ecci.hamers.users;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,12 +13,14 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,6 +28,7 @@ import java.util.Comparator;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.quotes.Quote;
 
 public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -96,31 +100,9 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.USERURL, DataManager.USERKEY);
     }
 
+    @SuppressWarnings("unchecked")
     public void populateList() {
-        JSONArray json;
-        try {
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERKEY)) != null) {
-                dataSet.clear();
-                for (int i = 0; i < json.length(); i++) {
-                    JSONObject temp;
-                    temp = json.getJSONObject(i);
-                    User user = new User(temp.getString("name"), temp.getInt("id"), temp.getString("email"), temp.getInt("quotes"), temp.getInt("reviews"), temp.getBoolean("lid"), temp.getInt("batch"), temp.getString("nickname="));
-
-                    if (exUser && !user.isMember()) {
-                        dataSet.add(user);
-                    } else if (!exUser && user.isMember()) {
-                        dataSet.add(user);
-                    }
-
-                    if (adapter != null) {
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
-        }
-        setRefreshing(false);
+        new populateList().execute(dataSet);
     }
 
     @Override
@@ -181,7 +163,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
         final Comparator<User> quoteComperator = new Comparator<User>() {
             @Override
             public int compare(User user1, User user2) {
-                return user2.getQuotecount() - user1.getQuotecount();
+                return user2.getQuoteCount() - user1.getQuoteCount();
             }
         };
         Collections.sort(dataSet, quoteComperator);
@@ -192,10 +174,46 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
         final Comparator<User> reviewComperator = new Comparator<User>() {
             @Override
             public int compare(User user1, User user2) {
-                return user2.getReviewcount() - user1.getReviewcount();
+                return user2.getReviewCount() - user1.getReviewCount();
             }
         };
         Collections.sort(dataSet, reviewComperator);
         adapter.notifyDataSetChanged();
+    }
+
+    public class populateList extends AsyncTask<ArrayList<User>, Void, ArrayList<User>> {
+        @SafeVarargs
+        @Override
+        protected final ArrayList<User> doInBackground(ArrayList<User>... param) {
+            ArrayList<User> dataSet = new ArrayList<>();
+            JSONArray json;
+            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERKEY)) != null) {
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                Gson gson = gsonBuilder.create();
+
+                Type type = new TypeToken<ArrayList<User>>() {
+                }.getType();
+                dataSet = gson.fromJson(json.toString(), type);
+            }
+            return dataSet;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<User> result) {
+            if (!result.isEmpty()) {
+                dataSet.clear();
+                dataSet.addAll(result);
+                if (UserListFragment.this.adapter != null) {
+                    UserListFragment.this.adapter.notifyDataSetChanged();
+                }
+            }
+            setRefreshing(false);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            setRefreshing(true);
+        }
     }
 }
