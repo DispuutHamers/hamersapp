@@ -47,9 +47,9 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     private final int userID;
     private ArrayList<Beer> filteredDataSet;
 
-    public BeerAdapter(ArrayList<Beer> itemsArrayList, Context context) {
-        this.dataSet = itemsArrayList;
-        this.filteredDataSet = itemsArrayList;
+    public BeerAdapter(ArrayList<Beer> dataSet, Context context) {
+        this.dataSet = dataSet;
+        this.filteredDataSet = dataSet;
         this.context = context;
         userID = getOwnUser(MainActivity.prefs).getUserID();
 

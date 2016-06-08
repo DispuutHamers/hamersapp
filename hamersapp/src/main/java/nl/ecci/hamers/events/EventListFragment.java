@@ -3,9 +3,11 @@ package nl.ecci.hamers.events;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -118,6 +120,23 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.event_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.event_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        if (searchView != null) {
+            searchView.setQueryHint(getString(R.string.search_hint));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    adapter.getFilter().filter(s.toLowerCase());
+                    return false;
+                }
+            });
+        }
     }
 
     private void setRefreshing(final Boolean bool) {

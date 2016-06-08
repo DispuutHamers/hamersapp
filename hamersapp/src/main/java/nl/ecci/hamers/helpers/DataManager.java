@@ -115,7 +115,6 @@ public final class DataManager {
             protected Map<String, String> getParams() {
                 return urlParams;
             }
-
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -283,19 +282,19 @@ public final class DataManager {
 
     public static int usernameToID(SharedPreferences prefs, String name) {
         JSONArray userJSON;
-        int returnv = -1;
+        int result = -1;
         try {
             if ((userJSON = getJsonArray(prefs, USERKEY)) != null) {
                 for (int i = 0; i < userJSON.length(); i++) {
                     if (userJSON.getJSONObject(i).getString("name").equals(name)) {
-                        returnv = userJSON.getJSONObject(i).getInt("id");
+                        result = userJSON.getJSONObject(i).getInt("id");
                     }
                 }
             }
         } catch (JSONException e) {
-            return returnv;
+            return result;
         }
-        return returnv;
+        return result;
     }
 
     public static String getGravatarURL(String email) {

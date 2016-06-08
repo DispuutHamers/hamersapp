@@ -52,7 +52,7 @@ public class Event {
         return date;
     }
 
-    public Date getEnd_time() {
+    public Date getEndTime() {
         return end_time;
     }
 
