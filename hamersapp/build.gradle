@@ -41,6 +41,9 @@ android {
     lintOptions {
         abortOnError false
     }
+    dexOptions {
+        javaMaxHeapSize "2g"
+    }
     testOptions {
         unitTests.all {
             jvmArgs '-XX:MaxPermSize=256m'
