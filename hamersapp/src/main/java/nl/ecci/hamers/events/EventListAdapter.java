@@ -11,10 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -54,7 +50,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(dataSet.get(position).getTitle());
-        holder.beschrijving.setText(dataSet.get(position).getBeschrijving());
+        holder.beschrijving.setText(dataSet.get(position).getDescription());
 
         Date date = dataSet.get(position).getDate();
         Date end_time = dataSet.get(position).getEnd_time();
@@ -69,35 +65,32 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
             card.setCardBackgroundColor(Color.WHITE);
         }
 
-        if (dataSet.get(position).getLocation().isEmpty() || dataSet.get(position).getLocation().equals("null")) {
+        if (dataSet.get(position).getLocation() == null || dataSet.get(position).getLocation().equals("null")) {
             holder.location.setVisibility(View.GONE);
         } else {
 
             holder.location.setText(dataSet.get(position).getLocation());
         }
 
-        try {
-            JSONArray signups = dataSet.get(position).getSignups();
-            int userID = DataManager.getOwnUser(MainActivity.prefs).getUserID();
-            Boolean aanwezig = null;
-            for (int i = 0; i < signups.length(); i++) {
-                JSONObject signup = signups.getJSONObject(i);
+        ArrayList signups = dataSet.get(position).getSignups();
+        int userID = DataManager.getOwnUser(MainActivity.prefs).getUserID();
+        Boolean aanwezig = null;
+        for (int i = 0; i < signups.size(); i++) {
+            Event.Signup signup = (Event.Signup) signups.get(i);
 
-                if (signup.getInt("user_id") == userID) {
-                    aanwezig = signup.getBoolean("status");
-                }
+            if (signup.getUserID() == userID) {
+                aanwezig = signup.isAttending();
             }
+        }
 
-            if (aanwezig != null) {
-                if (aanwezig) {
-                    holder.thumbs.setImageResource(R.drawable.ic_thumbs_up);
-                } else {
-                    holder.thumbs.setImageResource(R.drawable.ic_thumbs_down);
-                }
+        if (aanwezig != null) {
+            if (aanwezig) {
+                holder.thumbs.setImageResource(R.drawable.ic_thumbs_up);
             } else {
-                holder.thumbs.setImageResource(R.drawable.ic_questionmark);
+                holder.thumbs.setImageResource(R.drawable.ic_thumbs_down);
             }
-        } catch (JSONException ignored) {
+        } else {
+            holder.thumbs.setImageResource(R.drawable.ic_questionmark);
         }
     }
 

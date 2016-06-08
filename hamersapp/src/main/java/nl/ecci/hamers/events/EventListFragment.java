@@ -12,21 +12,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.helpers.DataManager;
-
-import static nl.ecci.hamers.MainActivity.parseDate;
 
 public class EventListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -84,7 +83,6 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onRefresh() {
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.SIGNUPURL, DataManager.SIGNUPKEY);
     }
 
     @SuppressWarnings("unchecked")
@@ -137,31 +135,16 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         @SafeVarargs
         @Override
         protected final ArrayList<Event> doInBackground(ArrayList<Event>... param) {
-            final ArrayList<Event> dataSet = new ArrayList<>();
+            ArrayList<Event> dataSet = new ArrayList<>();
             JSONArray json;
-            Date currentDate = Calendar.getInstance().getTime();
-            try {
-                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.EVENTKEY)) != null) {
-                    for (int i = json.length() - 1; i >= 0; i--) {
-                        JSONObject temp;
-                        temp = json.getJSONObject(i);
+            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.EVENTKEY)) != null) {
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                Gson gson = gsonBuilder.create();
 
-                        Date date = parseDate(temp.getString("date"));
-                        Date end_time = parseDate(temp.getString("end_time"));
-                        Date deadline = parseDate(temp.getString("deadline"));
-
-                        Event event = new Event(temp.getInt("id"), temp.getString("title"), temp.getString("beschrijving"), temp.getString("location"), date, end_time, deadline, temp.getJSONArray("signups"));
-
-                        if (upcoming) {
-                            if (date.after(currentDate)) {
-                                dataSet.add(event);
-                            }
-                        } else {
-                            dataSet.add(event);
-                        }
-                    }
-                }
-            } catch (JSONException ignored) {
+                Type type = new TypeToken<ArrayList<Event>>() {
+                }.getType();
+                dataSet = gson.fromJson(json.toString(), type);
             }
             return dataSet;
         }

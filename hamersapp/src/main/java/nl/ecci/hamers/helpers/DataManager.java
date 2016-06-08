@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,8 +33,7 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.events.Event;
 import nl.ecci.hamers.users.User;
-
-import static nl.ecci.hamers.MainActivity.parseDate;
+import nl.ecci.hamers.users.User.Nickname;
 
 public final class DataManager {
     // URL
@@ -49,7 +49,7 @@ public final class DataManager {
     public static final String WHOAMIURL = "whoami";
     public static final String MOTIEURL = "motions";
     public static final String MEETINGURL = "meetings";
-    public static final String SIGNUPURL = "signup";
+    public static final String SIGNUPURL = "signups";
     public static final String GCMURL = "register";
     // Data keys
     public static final String QUOTEKEY = "quoteData";
@@ -61,7 +61,6 @@ public final class DataManager {
     public static final String MEETINGKEY= "meetingdata";
     public static final String APIKEYKEY = "apikey";
     public static final String WHOAMIKEY = "whoamikey";
-    public static final String SIGNUPKEY = "signupkey";
 
     public static void getData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
         String url = baseURL + dataURL;
@@ -129,7 +128,6 @@ public final class DataManager {
     }
 
     private static void handleErrorResponse(@NonNull Context context, @NonNull VolleyError error) {
-        System.out.println("--------------------\nError:\n" + error.toString());
         if (context != null) {
             if (error instanceof AuthFailureError) {
                 // Wrong API key
@@ -172,10 +170,6 @@ public final class DataManager {
                 MainActivity.EVENT_FRAGMENT_ALL.populateList();
                 MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
                 break;
-            case SIGNUPURL:
-                MainActivity.EVENT_FRAGMENT_ALL.populateList();
-                MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
-                break;
             case NEWSURL:
                 MainActivity.NEWS_FRAGMENT.populateList();
                 break;
@@ -189,56 +183,54 @@ public final class DataManager {
     }
 
     public static User getUser(SharedPreferences prefs, int id) {
-        User result = new User("Unknown", -1, "example@example.org", 0, 0, true, -1, "");
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
         JSONArray users;
         try {
             if ((users = getJsonArray(prefs, USERKEY)) != null) {
                 for (int i = 0; i < users.length(); i++) {
                     JSONObject user = users.getJSONObject(i);
                     if (user.getInt("id") == id) {
-                        return new User(user.getString("name"), user.getInt("id"), user.getString("email"), user.getInt("quotes"), user.getInt("reviews"), user.getBoolean("lid"), user.getInt("batch"), user.getString("nickname="));
+                        return gson.fromJson(user.toString(), User.class);
                     }
                 }
             }
         } catch (JSONException ignored) {
         }
-        return result;
+        return new User("Unknown", -1, "example@example.org", 0, 0, null, -1, null, new Date());
     }
 
     public static User getOwnUser(SharedPreferences prefs) {
-        JSONArray whoami = DataManager.getJsonArray(prefs, DataManager.WHOAMIKEY);
-        try {
-            if (whoami != null) {
-                JSONObject user = whoami.getJSONObject(0);
-                return new User(user.getString("name"), user.getInt("id"), user.getString("email"), user.getInt("quotes"), user.getInt("reviews"), user.getBoolean("lid"), user.getInt("batch"), user.getString("nickname="));
-            }
-        } catch (JSONException ignored) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        JSONObject whoami;
+        if ((whoami = DataManager.getJsonObject(prefs, DataManager.WHOAMIKEY)) != null) {
+            return gson.fromJson(whoami.toString(), User.class);
         }
-        return new User("Unknown", -1, "example@example.org", 0, 0, true, -1, "");
+        return new User("Unknown", -1, "example@example.org", 0, 0, null, -1, null, new Date());
     }
 
     public static Event getEvent(SharedPreferences prefs, int id) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
         JSONArray events;
         try {
             if ((events = getJsonArray(prefs, EVENTKEY)) != null) {
                 for (int i = 0; i < events.length(); i++) {
                     JSONObject event = events.getJSONObject(i);
                     if (event.getInt("id") == id) {
-                        Date date = parseDate(event.getString("date"));
-                        Date end_time = parseDate(event.getString("end_time"));
-                        Date deadline = parseDate(event.getString("deadline"));
-
-                        return new Event(event.getInt("id"), event.getString("title"), event.getString("beschrijving"), event.getString("location"), date, end_time, deadline, event.getJSONArray("signups"));
+                        return gson.fromJson(event.toString(), Event.class);
                     }
                 }
             }
         } catch (JSONException ignored) {
-            ignored.printStackTrace();
         }
-        return new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), null);
+        return new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), null, new Date());
     }
 
     public static Event getEvent(SharedPreferences prefs, String title, Date date) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
         JSONArray events;
         try {
             if ((events = getJsonArray(prefs, EVENTKEY)) != null) {
@@ -246,15 +238,13 @@ public final class DataManager {
                     JSONObject event = events.getJSONObject(i);
                     Date dbDatum = MainActivity.dbDF.parse(event.getString("date"));
                     if (dbDatum.equals(date) && event.getString("title").equals(title)) {
-                        Date end_time = parseDate(event.getString("end_time"));
-                        Date deadline = parseDate(event.getString("deadline"));
-                        return new Event(event.getInt("id"), event.getString("title"), event.getString("beschrijving"), event.getString("location"), date, end_time, deadline, event.getJSONArray("signups"));
+                        return gson.fromJson(event.toString(), Event.class);
                     }
                 }
             }
         } catch (JSONException | ParseException ignored) {
         }
-        return new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), null);
+        return new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), null, new Date());
     }
 
     public static Beer getBeer(SharedPreferences prefs, int id) {
@@ -273,6 +263,14 @@ public final class DataManager {
         } catch (JSONException ignored) {
         }
         return new Beer(-1, "Unknown", "Unknown", null, "Unknown", "Unknown", "Unknown", "Unknown", null, new Date());
+    }
+
+    public static JSONObject getJsonObject(SharedPreferences prefs, String key) {
+        try {
+            return new JSONObject(prefs.getString(key, null));
+        } catch (JSONException | NullPointerException e) {
+            return null;
+        }
     }
 
     public static JSONArray getJsonArray(SharedPreferences prefs, String key) {
@@ -301,6 +299,15 @@ public final class DataManager {
     }
 
     public static String getGravatarURL(String email) {
-        return String.format("http://gravatar.com/avatar/%s/?s=200", Utils.md5Hex(email));
+        return String.format("http://gravatar.com/avatar/%s/?s=1920", Utils.md5Hex(email));
+    }
+
+    @NonNull
+    public static String convertNicknames(ArrayList<Nickname> nicknames) {
+        StringBuilder sb = new StringBuilder();
+        for (Nickname nickname : nicknames) {
+            sb.append(nickname.getNickname());
+        }
+        return sb.toString();
     }
 }

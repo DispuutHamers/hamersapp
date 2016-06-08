@@ -1,30 +1,35 @@
 package nl.ecci.hamers.events;
 
-import org.json.JSONArray;
+import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Event {
 
     private final int id;
     private final String title;
-    private final String beschrijving;
+    @SerializedName("beschrijving")
+    private final String description;
     private final String location;
     private final Date date;
     private final Date end_time;
     private final Date deadline;
-    private final JSONArray signups;
+    private final ArrayList<Signup> signups;
+    @SerializedName("created_at")
+    private final Date createdAt;
 
-    public Event(int id, String title, String beschrijving, String location, Date date, Date end_time, Date deadline, JSONArray signups) {
+    public Event(int id, String title, String description, String location, Date date, Date end_time, Date deadline, ArrayList<Signup> signups, Date createdAt) {
         super();
         this.id = id;
         this.title = title;
-        this.beschrijving = beschrijving;
+        this.description = description;
         this.location = location;
         this.date = date;
         this.end_time = end_time;
         this.deadline = deadline;
         this.signups = signups;
+        this.createdAt = createdAt;
     }
 
     public int getId() {
@@ -35,8 +40,8 @@ public class Event {
         return title;
     }
 
-    public String getBeschrijving() {
-        return beschrijving;
+    public String getDescription() {
+        return description;
     }
 
     public String getLocation() {
@@ -55,8 +60,55 @@ public class Event {
         return deadline;
     }
 
-    public JSONArray getSignups() {
+    public ArrayList<Signup> getSignups() {
         return signups;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public class Signup {
+
+        @SerializedName("id")
+        private final int signupID;
+        @SerializedName("event_id")
+        private final int eventID;
+        @SerializedName("user_id")
+        private final int userID;
+        @SerializedName("status")
+        private final boolean attending;
+        @SerializedName("created_at")
+        private final Date createdAt;
+
+        public Signup(int signupID, int eventID, int userID, boolean attending, Date createdAt) {
+            super();
+            this.signupID = signupID;
+            this.eventID = eventID;
+            this.userID = userID;
+            this.attending = attending;
+            this.createdAt = createdAt;
+        }
+
+        public int getSignupID() {
+            return signupID;
+        }
+
+        public int getEventID() {
+            return eventID;
+        }
+
+        public int getUserID() {
+            return userID;
+        }
+
+        public boolean isAttending() {
+            return attending;
+        }
+
+        public Date getCreatedAt() {
+            return createdAt;
+        }
     }
 
 }

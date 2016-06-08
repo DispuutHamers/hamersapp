@@ -3,7 +3,6 @@ package nl.ecci.hamers.beers;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
@@ -18,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONArray;
@@ -27,7 +28,7 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
+import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
@@ -126,19 +127,21 @@ public class SingleBeerActivity extends AppCompatActivity {
     }
 
     private void getReviews() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
         JSONArray reviews;
         boolean hasReviews = false;
         try {
             if ((reviews = getJsonArray(MainActivity.prefs, DataManager.REVIEWKEY)) != null) {
                 for (int i = 0; i < reviews.length(); i++) {
-                    JSONObject review = reviews.getJSONObject(i);
-                    if (review.getInt("beer_id") == id) {
+                    JSONObject jsonObject = reviews.getJSONObject(i);
+                    Review review = gson.fromJson(jsonObject.toString(), Review.class);
+                    if (review.getBeerID() == id) {
                         hasReviews = true;
-                        if (review.getInt("user_id") == getOwnUser(MainActivity.prefs).getUserID()) {
+                        if (review.getUserID() == getOwnUser(MainActivity.prefs).getUserID()) {
                             reviewButton.setVisibility(View.GONE);
                         }
-                        Review tempReview = new Review(review.getInt("beer_id"), review.getInt("user_id"), review.getString("description"), review.getString("rating"), review.getString("created_at"), review.getString("proefdatum"));
-                        insertReview(tempReview);
+                        insertReview(review);
                     }
                 }
                 if (!hasReviews) {
@@ -147,7 +150,6 @@ public class SingleBeerActivity extends AppCompatActivity {
             }
         } catch (JSONException e) {
             Toast.makeText(this, getString(R.string.snackbar_reviewloaderror), Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
         }
     }
 
@@ -174,22 +176,13 @@ public class SingleBeerActivity extends AppCompatActivity {
         TextView date = (TextView) view.findViewById(R.id.review_date);
         TextView ratingTV = (TextView) view.findViewById(R.id.review_rating);
 
-        String name = null;
-        try {
-            name = getUser(MainActivity.prefs, review.getUser_id()).getName();
-        } catch (NullPointerException ignored) {
-        }
+        name = getUser(MainActivity.prefs, review.getUserID()).getName();
 
-        String datum = null;
-        try {
-            datum = parseDate(review.getProefdatum());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date datum = review.getProefdatum();
 
         title.setText(String.format("%s: ", name));
         body.setText(review.getDescription());
-        date.setText(datum);
+        date.setText(MainActivity.appDF2.format(datum));
         ratingTV.setText(String.format("Cijfer: %s", review.getRating()));
 
         // Insert into view
@@ -207,12 +200,6 @@ public class SingleBeerActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         refreshActivity();
-    }
-
-    private String parseDate(String dateTemp) throws ParseException {
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", new Locale("nl"));
-        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("nl"));
-        return outputFormat.format(inputFormat.parse(dateTemp));
     }
 
     private void fillRow(View view, final String title, final String description) {

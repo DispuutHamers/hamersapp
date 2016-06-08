@@ -1,44 +1,58 @@
 package nl.ecci.hamers.beers;
 
-class Review {
-    private final int beer_id;
-    private final int user_id;
-    private final String description;
-    private final String rating;
-    private final String created_at;
-    private final String proefdatum;
+import com.google.gson.annotations.SerializedName;
 
-    public Review(int beer_id, int user_id, String description, String rating, String created_at, String proefdatum) {
+import java.util.Date;
+
+class Review {
+    @SerializedName("id")
+    private final int reviewID;
+    @SerializedName("beer_id")
+    private final int beerID;
+    @SerializedName("user_id")
+    private final int userID;
+    private final String description;
+    private final int rating;
+    private final Date proefdatum;
+    @SerializedName("created_at")
+    private final Date createdAt;
+
+    public Review(int reviewID, int beerID, int userID, String description, int rating, Date createdAt, Date proefdatum) {
         super();
-        this.beer_id = beer_id;
-        this.user_id = user_id;
+        this.reviewID = reviewID;
+        this.beerID = beerID;
+        this.userID = userID;
         this.description = description;
         this.rating = rating;
-        this.created_at = created_at;
+        this.createdAt = createdAt;
         this.proefdatum = proefdatum;
     }
 
-    public int getBeer_id() {
-        return beer_id;
+    public int getReviewID() {
+        return reviewID;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getBeerID() {
+        return beerID;
+    }
+
+    public int getUserID() {
+        return userID;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public String getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public String getProefdatum() {
+    public Date getProefdatum() {
         return proefdatum;
     }
 }

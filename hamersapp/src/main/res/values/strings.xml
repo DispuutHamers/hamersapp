@@ -79,11 +79,11 @@
     <string name="user_email">Email</string>
     <string name="user_quotecount">Aantal quotes</string>
     <string name="user_reviewcount">Aantal reviews</string>
-    <string name="user_nickname">Bijnaam</string>
+    <string name="user_nickname">Bijnamen</string>
     <string name="user_member">Lid</string>
     <string name="user_member_ex">Oud-lid</string>
-    <string name="menu_users">Leden</string>
-    <string name="menu_users_ex">Oud-leden</string>
+    <string name="menu_users">Huidig</string>
+    <string name="menu_users_ex">Overig</string>
 
     <!-- Motions -->
     <string name="motiontypetext">Motietype:</string>

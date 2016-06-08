@@ -19,11 +19,9 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.Utils;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class SingleUserActivity extends AppCompatActivity {
-    private String imageURL;
     private PhotoViewAttacher mAttacher;
 
     @Override
@@ -37,27 +35,26 @@ public class SingleUserActivity extends AppCompatActivity {
 
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
-        final User user = DataManager.getUser(MainActivity.prefs, getIntent().getIntExtra(User.USER_ID, 1));
-        imageURL = "http://gravatar.com/avatar/" + Utils.md5Hex(user.getEmail()) + "?s=200";
+        final User user = DataManager.getUser(MainActivity.prefs, getIntent().getIntExtra(User.USER_ID, -1));
 
         collapsingToolbar.setTitle(user.getName());
 
-        loadBackdrop();
+        loadBackdrop(user);
 
         fillRow(findViewById(R.id.row_user_name), getString(R.string.user_name), user.getName());
-        fillRow(findViewById(R.id.row_user_quotecount), getString(R.string.user_quotecount), String.valueOf(user.getQuotecount()));
-        fillRow(findViewById(R.id.row_user_reviewcount), getString(R.string.user_reviewcount), String.valueOf(user.getReviewcount()));
+        fillRow(findViewById(R.id.row_user_quotecount), getString(R.string.user_quotecount), String.valueOf(user.getQuoteCount()));
+        fillRow(findViewById(R.id.row_user_reviewcount), getString(R.string.user_reviewcount), String.valueOf(user.getReviewCount()));
 
         View nicknameRow = findViewById(R.id.row_user_nickname);
         View nicknameDivider = findViewById(R.id.user_nickname_divider);
-        if (!user.getNickname().isEmpty()) {
-            fillRow(nicknameRow, getString(R.string.user_nickname), user.getNickname());
+        if (user.getNicknames().size() > 0) {
+            fillRow(nicknameRow, getString(R.string.user_nickname), DataManager.convertNicknames(user.getNicknames()));
         } else if (nicknameRow != null) {
             nicknameRow.setVisibility(View.GONE);
             nicknameDivider.setVisibility(View.GONE);
         }
 
-        if (user.isMember()) {
+        if (user.getMember() == User.Member.LID) {
             fillRow(findViewById(R.id.row_user_status), getString(R.string.user_status), getString(R.string.user_member));
         } else {
             fillRow(findViewById(R.id.row_user_status), getString(R.string.user_status), getString(R.string.user_member_ex));
@@ -73,19 +70,18 @@ public class SingleUserActivity extends AppCompatActivity {
                     intent.setAction(Intent.ACTION_SENDTO);
                     intent.setData(Uri.parse("mailto:"));
                     intent.putExtra(Intent.EXTRA_EMAIL, new String[]{user.getEmail()});
-
                     startActivity(intent);
                 }
             });
         }
     }
 
-    private void loadBackdrop() {
+    private void loadBackdrop(User user) {
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
 
         mAttacher = new PhotoViewAttacher(imageView);
 
-        ImageLoader.getInstance().displayImage(imageURL, imageView, new ImageLoadingListener() {
+        ImageLoader.getInstance().displayImage(DataManager.getGravatarURL(user.getEmail()), imageView, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
             }

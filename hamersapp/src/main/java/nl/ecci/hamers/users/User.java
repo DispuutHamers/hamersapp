@@ -2,30 +2,45 @@ package nl.ecci.hamers.users;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 public class User {
+
+    public enum Member {
+        @SerializedName("lid") LID,
+        @SerializedName("alid") ALID,
+        @SerializedName("olid") OLID
+    }
+
     private final String name;
+    @SerializedName("id")
     private final int userID;
     private final String email;
     @SerializedName("quotes")
-    private final int quotecount;
+    private final int quoteCount;
     @SerializedName("reviews")
-    private final int reviewcount;
-    private final boolean member;
+    private final int reviewCount;
+    @SerializedName("lid")
+    private final Member member;
     private final int batch;
-    private final String nickname;
+    private final ArrayList<Nickname> nicknames;
+    @SerializedName("created_at")
+    private final Date createdAt;
 
     public static final String USER_ID = "USER_ID";
 
-    public User(String name, int userID, String email, int quotecount, int reviewcount, boolean member, int batch, String nickname) {
+    public User(String name, int userID, String email, int quoteCount, int reviewCount, Member member, int batch, ArrayList<Nickname> nicknames, Date createdAt) {
         super();
         this.name = name;
         this.userID = userID;
         this.email = email;
-        this.quotecount = quotecount;
-        this.reviewcount = reviewcount;
+        this.quoteCount = quoteCount;
+        this.reviewCount = reviewCount;
         this.member = member;
         this.batch = batch;
-        this.nickname = nickname;
+        this.nicknames = nicknames;
+        this.createdAt = createdAt;
     }
 
     public String getName() {
@@ -40,23 +55,40 @@ public class User {
         return email;
     }
 
-    public int getQuotecount() {
-        return quotecount;
+    public int getQuoteCount() {
+        return quoteCount;
     }
 
-    public int getReviewcount() {
-        return reviewcount;
+    public int getReviewCount() {
+        return reviewCount;
     }
 
-    public boolean isMember() {
+    public Member getMember() {
         return member;
-    }
-
-    public String getNickname() {
-        return nickname;
     }
 
     public int getBatch() {
         return batch;
+    }
+
+    public ArrayList<Nickname> getNicknames() {
+        return nicknames;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public class Nickname {
+        private final String nickname;
+
+        public Nickname(String nickname) {
+            super();
+            this.nickname = nickname;
+        }
+
+        public String getNickname() {
+            return nickname;
+        }
     }
 }
