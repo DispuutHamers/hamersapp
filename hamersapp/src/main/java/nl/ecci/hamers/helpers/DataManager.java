@@ -59,7 +59,6 @@ public final class DataManager {
     public static final String REVIEWKEY = "reviewdata";
     public static final String APIKEYKEY = "apikey";
     public static final String WHOAMIKEY = "whoamikey";
-    public static final String SIGNUPKEY = "signupkey";
 
     public static void getData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
         String url = baseURL + dataURL;
@@ -169,10 +168,6 @@ public final class DataManager {
                 MainActivity.EVENT_FRAGMENT_ALL.populateList();
                 MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
                 break;
-            case SIGNUPURL:
-                MainActivity.EVENT_FRAGMENT_ALL.populateList();
-                MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
-                break;
             case NEWSURL:
                 MainActivity.NEWS_FRAGMENT.populateList();
                 break;
@@ -197,7 +192,6 @@ public final class DataManager {
                 }
             }
         } catch (JSONException ignored) {
-            ignored.printStackTrace();
         }
         return new User("Unknown", -1, "example@example.org", 0, 0, true, -1, null, new Date());
     }
@@ -226,9 +220,8 @@ public final class DataManager {
                 }
             }
         } catch (JSONException ignored) {
-            ignored.printStackTrace();
         }
-        return new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), null);
+        return new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), null, new Date());
     }
 
     public static Event getEvent(SharedPreferences prefs, String title, Date date) {
@@ -247,7 +240,7 @@ public final class DataManager {
             }
         } catch (JSONException | ParseException ignored) {
         }
-        return new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), null);
+        return new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), null, new Date());
     }
 
     public static Beer getBeer(SharedPreferences prefs, int id) {

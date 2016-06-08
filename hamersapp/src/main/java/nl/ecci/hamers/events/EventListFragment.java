@@ -83,7 +83,6 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onRefresh() {
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.SIGNUPURL, DataManager.SIGNUPKEY);
     }
 
     @SuppressWarnings("unchecked")

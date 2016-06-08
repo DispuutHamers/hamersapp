@@ -47,7 +47,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                         prefs.edit().remove(DataManager.BEERKEY).apply();
                         prefs.edit().remove(DataManager.REVIEWKEY).apply();
                         prefs.edit().remove(DataManager.WHOAMIKEY).apply();
-                        prefs.edit().remove(DataManager.SIGNUPKEY).apply();
 
                         View view = getView();
                         if (view != null) {

@@ -21,10 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -69,7 +65,7 @@ public class SingleEventActivity extends AppCompatActivity {
         afwezigLayout = (ViewGroup) findViewById(R.id.afwezig_layout);
 
         final String title = event.getTitle();
-        final String description = event.getBeschrijving();
+        final String description = event.getDescription();
         final String location = event.getLocation();
 
         initSignups();
@@ -171,33 +167,26 @@ public class SingleEventActivity extends AppCompatActivity {
     private void initSignups() {
         Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
         Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
-        JSONArray signups = event.getSignups();
+        ArrayList<Event.Signup> signups = event.getSignups();
         ArrayList<String> aanwezig = new ArrayList<>();
         ArrayList<String> afwezig = new ArrayList<>();
-
-        if (signups != null) {
-            try {
-                for (int i = 0; i < signups.length(); i++) {
-                    JSONObject signup = signups.getJSONObject(i);
-                    if (signup.getBoolean("status")) {
-                        aanwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getName());
-                    } else {
-                        afwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getName());
-                    }
-                }
-
-                if (aanwezig.size() != 0) {
-                    for (String name : aanwezig) {
-                        View view = inflater.inflate(R.layout.row_singleview, null);
-                        fillSingleRow(view, name);
-                        aanwezigView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                    }
-                } else {
-                    eventLayout.removeView(aanwezigLayout);
-                }
-
-            } catch (JSONException ignored) {
+        for (int i = 0; i < signups.size(); i++) {
+            Event.Signup signup = signups.get(i);
+            if (signup.isAttending()) {
+                aanwezig.add(DataManager.getUser(MainActivity.prefs, signup.getUserID()).getName());
+            } else {
+                afwezig.add(DataManager.getUser(MainActivity.prefs, signup.getUserID()).getName());
             }
+        }
+
+        if (aanwezig.size() != 0) {
+            for (String name : aanwezig) {
+                View view = inflater.inflate(R.layout.row_singleview, null);
+                fillSingleRow(view, name);
+                aanwezigView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            }
+        } else {
+            eventLayout.removeView(aanwezigLayout);
         }
 
         if (afwezig.size() != 0) {
