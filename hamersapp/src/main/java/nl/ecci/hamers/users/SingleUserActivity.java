@@ -54,7 +54,7 @@ public class SingleUserActivity extends AppCompatActivity {
             nicknameDivider.setVisibility(View.GONE);
         }
 
-        if (user.isMember()) {
+        if (user.getMember() == User.Member.LID) {
             fillRow(findViewById(R.id.row_user_status), getString(R.string.user_status), getString(R.string.user_member));
         } else {
             fillRow(findViewById(R.id.row_user_status), getString(R.string.user_status), getString(R.string.user_member_ex));
@@ -70,7 +70,6 @@ public class SingleUserActivity extends AppCompatActivity {
                     intent.setAction(Intent.ACTION_SENDTO);
                     intent.setData(Uri.parse("mailto:"));
                     intent.putExtra(Intent.EXTRA_EMAIL, new String[]{user.getEmail()});
-
                     startActivity(intent);
                 }
             });

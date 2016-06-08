@@ -6,6 +6,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class User {
+
+    public enum Member {
+        @SerializedName("lid") LID,
+        @SerializedName("alid") ALID,
+        @SerializedName("olid") OLID
+    }
+
     private final String name;
     @SerializedName("id")
     private final int userID;
@@ -14,7 +21,8 @@ public class User {
     private final int quoteCount;
     @SerializedName("reviews")
     private final int reviewCount;
-    private final boolean member;
+    @SerializedName("lid")
+    private final Member member;
     private final int batch;
     private final ArrayList<Nickname> nicknames;
     @SerializedName("created_at")
@@ -22,7 +30,7 @@ public class User {
 
     public static final String USER_ID = "USER_ID";
 
-    public User(String name, int userID, String email, int quoteCount, int reviewCount, boolean member, int batch, ArrayList<Nickname> nicknames, Date createdAt) {
+    public User(String name, int userID, String email, int quoteCount, int reviewCount, Member member, int batch, ArrayList<Nickname> nicknames, Date createdAt) {
         super();
         this.name = name;
         this.userID = userID;
@@ -55,7 +63,7 @@ public class User {
         return reviewCount;
     }
 
-    public boolean isMember() {
+    public Member getMember() {
         return member;
     }
 

@@ -16,20 +16,18 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.quotes.Quote;
 
 public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -192,10 +190,19 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
                 GsonBuilder gsonBuilder = new GsonBuilder();
                 gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
                 Gson gson = gsonBuilder.create();
+                try {
+                    for (int i = 0; i < json.length(); i++) {
+                        JSONObject temp = json.getJSONObject(i);
+                        User user = gson.fromJson(temp.toString(), User.class);
 
-                Type type = new TypeToken<ArrayList<User>>() {
-                }.getType();
-                dataSet = gson.fromJson(json.toString(), type);
+                        if (exUser && user.getMember() != User.Member.LID) {
+                            dataSet.add(user);
+                        } else if (!exUser && user.getMember() == User.Member.LID) {
+                            dataSet.add(user);
+                        }
+                    }
+                } catch (JSONException ignored) {
+                }
             }
             return dataSet;
         }
