@@ -35,8 +35,6 @@ import nl.ecci.hamers.events.Event;
 import nl.ecci.hamers.users.User;
 import nl.ecci.hamers.users.User.Nickname;
 
-import static nl.ecci.hamers.MainActivity.parseDate;
-
 public final class DataManager {
     // URL
 //    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
@@ -129,7 +127,6 @@ public final class DataManager {
     }
 
     private static void handleErrorResponse(@NonNull Context context, @NonNull VolleyError error) {
-        System.out.println("--------------------\nError:\n" + error.toString());
         if (context != null) {
             if (error instanceof AuthFailureError) {
                 // Wrong API key
@@ -208,13 +205,9 @@ public final class DataManager {
     public static User getOwnUser(SharedPreferences prefs) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        JSONArray whoami;
-        try {
-            if ((whoami = DataManager.getJsonArray(prefs, DataManager.WHOAMIKEY)) != null) {
-                JSONObject user = whoami.getJSONObject(0);
-                return gson.fromJson(user.toString(), User.class);
-            }
-        } catch (JSONException ignored) {
+        JSONObject whoami;
+        if ((whoami = DataManager.getJsonObject(prefs, DataManager.WHOAMIKEY)) != null) {
+            return gson.fromJson(whoami.toString(), User.class);
         }
         return new User("Unknown", -1, "example@example.org", 0, 0, true, -1, null, new Date());
     }
@@ -273,6 +266,14 @@ public final class DataManager {
         } catch (JSONException ignored) {
         }
         return new Beer(-1, "Unknown", "Unknown", null, "Unknown", "Unknown", "Unknown", "Unknown", null, new Date());
+    }
+
+    public static JSONObject getJsonObject(SharedPreferences prefs, String key) {
+        try {
+            return new JSONObject(prefs.getString(key, null));
+        } catch (JSONException | NullPointerException e) {
+            return null;
+        }
     }
 
     public static JSONArray getJsonArray(SharedPreferences prefs, String key) {
