@@ -43,13 +43,13 @@ class UserListAdapter extends ArrayAdapter<User> {
 
         TextView username = (TextView) rowView.findViewById(R.id.username);
         TextView nickname = (TextView) rowView.findViewById(R.id.user_nickname);
-        TextView quotecount = (TextView) rowView.findViewById(R.id.user_quotecount);
-        TextView reviewcount = (TextView) rowView.findViewById(R.id.user_reviewcount);
+        TextView quoteCount = (TextView) rowView.findViewById(R.id.user_quotecount);
+        TextView reviewCount = (TextView) rowView.findViewById(R.id.user_reviewcount);
 
         username.setText(dataSet.get(position).getName());
-        nickname.setText(dataSet.get(position).getNicknames().toString());
-        quotecount.setText(String.format("Aantal quotes: %s", String.valueOf(dataSet.get(position).getQuoteCount())));
-        reviewcount.setText(String.format(MainActivity.locale, "Aantal reviews: %d", dataSet.get(position).getReviewCount()));
+        nickname.setText(DataManager.convertNicknames(dataSet.get(position).getNicknames()));
+        quoteCount.setText(String.format("Aantal quotes: %s", String.valueOf(dataSet.get(position).getQuoteCount())));
+        reviewCount.setText(String.format(MainActivity.locale, "Aantal reviews: %d", dataSet.get(position).getReviewCount()));
 
         final ImageView userImage = (ImageView) rowView.findViewById(R.id.user_image);
         String url = DataManager.getGravatarURL(dataSet.get(position).getEmail());
@@ -59,7 +59,7 @@ class UserListAdapter extends ArrayAdapter<User> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, SingleUserActivity.class);
-                intent.putExtra(User.USER_ID, dataSet.get(position).getUserID());
+                intent.putExtra(User.USER_ID, dataSet.get(position).getId());
                 context.startActivity(intent);
             }
         });

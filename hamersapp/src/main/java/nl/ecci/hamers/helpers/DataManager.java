@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,7 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.events.Event;
 import nl.ecci.hamers.users.User;
+import nl.ecci.hamers.users.User.Nickname;
 
 import static nl.ecci.hamers.MainActivity.parseDate;
 
@@ -198,6 +200,7 @@ public final class DataManager {
                 }
             }
         } catch (JSONException ignored) {
+            ignored.printStackTrace();
         }
         return new User("Unknown", -1, "example@example.org", 0, 0, true, -1, null, new Date());
     }
@@ -301,5 +304,14 @@ public final class DataManager {
 
     public static String getGravatarURL(String email) {
         return String.format("http://gravatar.com/avatar/%s/?s=1920", Utils.md5Hex(email));
+    }
+
+    @NonNull
+    public static String convertNicknames(ArrayList<Nickname> nicknames) {
+        StringBuilder sb = new StringBuilder();
+        for (Nickname nickname : nicknames) {
+            sb.append(nickname.getNickname());
+        }
+        return sb.toString();
     }
 }

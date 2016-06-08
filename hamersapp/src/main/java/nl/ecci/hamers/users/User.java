@@ -2,14 +2,12 @@ package nl.ecci.hamers.users;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 import java.util.Date;
 
 public class User {
     private final String name;
-    private final int userID;
+    private final int id;
     private final String email;
     @SerializedName("quotes")
     private final int quoteCount;
@@ -23,10 +21,10 @@ public class User {
 
     public static final String USER_ID = "USER_ID";
 
-    public User(String name, int userID, String email, int quoteCount, int reviewCount, boolean member, int batch, ArrayList<Nickname> nicknames, Date createdAt) {
+    public User(String name, int id, String email, int quoteCount, int reviewCount, boolean member, int batch, ArrayList<Nickname> nicknames, Date createdAt) {
         super();
         this.name = name;
-        this.userID = userID;
+        this.id = id;
         this.email = email;
         this.quoteCount = quoteCount;
         this.reviewCount = reviewCount;
@@ -40,8 +38,8 @@ public class User {
         return name;
     }
 
-    public int getUserID() {
-        return userID;
+    public int getId() {
+        return id;
     }
 
     public String getEmail() {

@@ -27,6 +27,7 @@ import java.util.Comparator;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.quotes.Quote;
 

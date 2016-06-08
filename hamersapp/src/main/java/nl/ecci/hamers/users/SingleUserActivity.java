@@ -35,7 +35,7 @@ public class SingleUserActivity extends AppCompatActivity {
 
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
-        final User user = DataManager.getUser(MainActivity.prefs, getIntent().getIntExtra(User.USER_ID, 1));
+        final User user = DataManager.getUser(MainActivity.prefs, getIntent().getIntExtra(User.USER_ID, -1));
 
         collapsingToolbar.setTitle(user.getName());
 
@@ -48,7 +48,7 @@ public class SingleUserActivity extends AppCompatActivity {
         View nicknameRow = findViewById(R.id.row_user_nickname);
         View nicknameDivider = findViewById(R.id.user_nickname_divider);
         if (user.getNicknames().size() > 0) {
-            fillRow(nicknameRow, getString(R.string.user_nickname), user.getNicknames().toString());
+            fillRow(nicknameRow, getString(R.string.user_nickname), DataManager.convertNicknames(user.getNicknames()));
         } else if (nicknameRow != null) {
             nicknameRow.setVisibility(View.GONE);
             nicknameDivider.setVisibility(View.GONE);
