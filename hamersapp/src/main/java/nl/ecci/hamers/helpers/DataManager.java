@@ -297,6 +297,6 @@ public final class DataManager {
     }
 
     public static String getGravatarURL(String email) {
-        return String.format("http://gravatar.com/avatar/%s/?s=200", Utils.md5Hex(email));
+        return String.format("http://gravatar.com/avatar/%s/?s=1920", Utils.md5Hex(email));
     }
 }
