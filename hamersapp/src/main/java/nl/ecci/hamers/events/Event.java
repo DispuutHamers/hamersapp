@@ -19,6 +19,7 @@ public class Event {
     @SerializedName("created_at")
     private final Date createdAt;
 
+    @SuppressWarnings("SameParameterValue")
     public Event(int id, String title, String description, String location, Date date, Date end_time, Date deadline, ArrayList<Signup> signups, Date createdAt) {
         super();
         this.id = id;

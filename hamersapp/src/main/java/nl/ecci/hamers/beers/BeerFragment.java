@@ -15,32 +15,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.events.Event;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
-import nl.ecci.hamers.quotes.Quote;
-
-import static nl.ecci.hamers.MainActivity.parseDate;
 
 public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -241,7 +232,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     }
 
-    public class populateList extends AsyncTask<ArrayList<Beer>, Void, ArrayList<Beer>> {
+    private class populateList extends AsyncTask<ArrayList<Beer>, Void, ArrayList<Beer>> {
         @SafeVarargs
         @Override
         protected final ArrayList<Beer> doInBackground(ArrayList<Beer>... param) {

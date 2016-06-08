@@ -180,7 +180,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
         adapter.notifyDataSetChanged();
     }
 
-    public class populateList extends AsyncTask<ArrayList<User>, Void, ArrayList<User>> {
+    private class populateList extends AsyncTask<ArrayList<User>, Void, ArrayList<User>> {
         @SafeVarargs
         @Override
         protected final ArrayList<User> doInBackground(ArrayList<User>... param) {

@@ -26,7 +26,6 @@ import java.util.ArrayList;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.helpers.DataManager;
 
 public class EventListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -150,7 +149,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         }
     }
 
-    public class populateList extends AsyncTask<ArrayList<Event>, Void, ArrayList<Event>> {
+    private class populateList extends AsyncTask<ArrayList<Event>, Void, ArrayList<Event>> {
         @SafeVarargs
         @Override
         protected final ArrayList<Event> doInBackground(ArrayList<Event>... param) {

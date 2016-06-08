@@ -96,7 +96,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
-                    android:gravity="left|center_vertical"
+                    android:gravity="start|center_vertical"
                     android:singleLine="true"
                     android:text="@string/date"
                     android:textSize="18sp" />

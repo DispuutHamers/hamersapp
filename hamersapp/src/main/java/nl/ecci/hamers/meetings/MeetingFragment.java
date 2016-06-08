@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -100,7 +99,7 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
         }
     }
 
-    public class populateList extends AsyncTask<ArrayList<Meeting>, Void, ArrayList<Meeting>> {
+    private class populateList extends AsyncTask<ArrayList<Meeting>, Void, ArrayList<Meeting>> {
         @SafeVarargs
         @Override
         protected final ArrayList<Meeting> doInBackground(ArrayList<Meeting>... param) {

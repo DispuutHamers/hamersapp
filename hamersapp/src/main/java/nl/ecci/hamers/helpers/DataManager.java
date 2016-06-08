@@ -38,7 +38,7 @@ import nl.ecci.hamers.users.User.Nickname;
 public final class DataManager {
     // URL
 //    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-    public static final String baseURL = "http://192.168.100.100:3000/api/v2/";
+    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
     // URL Appendices
     public static final String QUOTEURL = "quotes";
     public static final String USERURL = "users";
@@ -227,25 +227,6 @@ public final class DataManager {
         return new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), null, new Date());
     }
 
-    public static Event getEvent(SharedPreferences prefs, String title, Date date) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        JSONArray events;
-        try {
-            if ((events = getJsonArray(prefs, EVENTKEY)) != null) {
-                for (int i = 0; i < events.length(); i++) {
-                    JSONObject event = events.getJSONObject(i);
-                    Date dbDatum = MainActivity.dbDF.parse(event.getString("date"));
-                    if (dbDatum.equals(date) && event.getString("title").equals(title)) {
-                        return gson.fromJson(event.toString(), Event.class);
-                    }
-                }
-            }
-        } catch (JSONException | ParseException ignored) {
-        }
-        return new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), null, new Date());
-    }
-
     public static Beer getBeer(SharedPreferences prefs, int id) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
@@ -264,7 +245,7 @@ public final class DataManager {
         return new Beer(-1, "Unknown", "Unknown", null, "Unknown", "Unknown", "Unknown", "Unknown", null, new Date());
     }
 
-    public static JSONObject getJsonObject(SharedPreferences prefs, String key) {
+    private static JSONObject getJsonObject(SharedPreferences prefs, String key) {
         try {
             return new JSONObject(prefs.getString(key, null));
         } catch (JSONException | NullPointerException e) {

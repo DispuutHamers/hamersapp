@@ -14,29 +14,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.google.android.gms.fitness.data.DataSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
-import nl.ecci.hamers.users.User;
-
-import static nl.ecci.hamers.MainActivity.parseDate;
 
 public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -148,7 +139,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         }
     }
 
-    public class populateList extends AsyncTask<ArrayList<Quote>, Void, ArrayList<Quote>> {
+    private class populateList extends AsyncTask<ArrayList<Quote>, Void, ArrayList<Quote>> {
         @SafeVarargs
         @Override
         protected final ArrayList<Quote> doInBackground(ArrayList<Quote>... param) {

@@ -30,6 +30,7 @@ public class User {
 
     public static final String USER_ID = "USER_ID";
 
+    @SuppressWarnings("SameParameterValue")
     public User(String name, int userID, String email, int quoteCount, int reviewCount, Member member, int batch, ArrayList<Nickname> nicknames, Date createdAt) {
         super();
         this.name = name;

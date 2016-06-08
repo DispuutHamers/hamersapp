@@ -2,7 +2,6 @@ package nl.ecci.hamers.beers;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.net.URL;
 import java.util.Date;
 
 public class Beer {
@@ -31,7 +30,7 @@ public class Beer {
     @SerializedName("created_at")
     private final Date createdAt;
 
-
+    @SuppressWarnings("SameParameterValue")
     public Beer(int id, String name, String kind, String imageURL, String percentage, String brewer, String country, String rating, String url, Date createdAt) {
         super();
         this.id = id;

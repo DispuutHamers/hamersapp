@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 
-public class UserFragmentPagerAdapter extends FragmentPagerAdapter {
+class UserFragmentPagerAdapter extends FragmentPagerAdapter {
     public final static String exUser = "exUser";
     private static String[] tabTitles = null;
     private final int PAGE_COUNT = 2;

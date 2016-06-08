@@ -118,7 +118,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final View view;
         public final TextView body;
         public final TextView date;
         public final TextView user;
@@ -126,7 +125,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
         public ViewHolder(View view) {
             super(view);
-            this.view = view;
 
             body = (TextView) view.findViewById(R.id.quote_body);
             date = (TextView) view.findViewById(R.id.quote_date);

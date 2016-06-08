@@ -64,14 +64,14 @@ import nl.ecci.hamers.users.UserListFragment;
 public class MainActivity extends AppCompatActivity {
     // Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
-    public static final UserFragment USER_FRAGMENT = new UserFragment();
-    public static final UserListFragment USER_FRAGMENT_ALL = new UserListFragment();
-    public static final UserListFragment USER_FRAGMENT_EX = new UserListFragment();
-    public static final EventFragment EVENT_FRAGMENT = new EventFragment();
+    private static final EventFragment EVENT_FRAGMENT = new EventFragment();
     public static final EventListFragment EVENT_FRAGMENT_ALL = new EventListFragment();
     public static final EventListFragment EVENT_FRAGMENT_UPCOMING = new EventListFragment();
     public static final NewsFragment NEWS_FRAGMENT = new NewsFragment();
     public static final BeerFragment BEER_FRAGMENT = new BeerFragment();
+    private static final UserFragment USER_FRAGMENT = new UserFragment();
+    public static final UserListFragment USER_FRAGMENT_ALL = new UserListFragment();
+    public static final UserListFragment USER_FRAGMENT_EX = new UserListFragment();
     private static final MotionFragment MOTION_FRAGMENT = new MotionFragment();
     public static final MeetingFragment MEETING_FRAGMENT = new MeetingFragment();
     private static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
