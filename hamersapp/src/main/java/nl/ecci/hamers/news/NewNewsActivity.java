@@ -9,6 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,13 +41,17 @@ public class NewNewsActivity extends AppCompatActivity {
         EditText news_body = (EditText) findViewById(R.id.news_body);
 
         String title = news_title.getText().toString();
-        String body = news_body.getText().toString();
+        String newsBody = news_body.getText().toString();
 
-        Map<String, String> params = new HashMap<>();
-        params.put("news[title]", Uri.encode(title));
-        params.put("news[body]", Uri.encode(body));
+        // TODO: Implement category
+        JSONObject body = new JSONObject();
+        try {
+            body.put("title", title);
+            body.put("body", newsBody);
+        } catch (JSONException ignored) {
+        }
 
-        DataManager.postData(this, MainActivity.prefs, DataManager.NEWSURL, DataManager.NEWSKEY, params);
+        DataManager.postData(this, MainActivity.prefs, DataManager.NEWSURL, DataManager.NEWSKEY, body);
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {

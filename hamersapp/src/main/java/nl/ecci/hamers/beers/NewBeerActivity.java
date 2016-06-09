@@ -83,12 +83,4 @@ public class NewBeerActivity extends AppCompatActivity {
 
         DataManager.postData(this, prefs, DataManager.BEERURL, DataManager.BEERKEY, body);
     }
-
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
 }
