@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -89,13 +90,14 @@ public final class DataManager {
         Singleton.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void postData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY, final Map<String, String> urlParams) {
+    public static void postData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY, JSONObject body) {
         String url = baseURL + dataURL;
+        System.out.println("-----------------\n" + body.toString());
 
-        StringRequest request = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+        JsonObjectRequest request = new JsonObjectRequest(url, body,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
                         if (context != null) {
                             if (!(context instanceof MainActivity)) {
                                 ((Activity) context).finish();
@@ -112,14 +114,10 @@ public final class DataManager {
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() {
-                return urlParams;
-            }
-            @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("Authorization", "Token token=" + prefs.getString(APIKEYKEY, ""));
-                params.put("Content-Type", "application/x-www-form-urlencoded");
+                params.put("Content-Type", "Application/json");
                 return params;
             }
         };
