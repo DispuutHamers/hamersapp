@@ -98,7 +98,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
                     ArrayList<Quote> filterResultsData = new ArrayList<>();
                     for (Quote quote : dataSet) {
                         if (quote.getText().toLowerCase().contains(charSequence) ||
-                                DataManager.getUser(MainActivity.prefs , quote.getUserID()).getName().toLowerCase().contains(charSequence)) {
+                                DataManager.getUser(MainActivity.prefs, quote.getUserID()).getName().toLowerCase().contains(charSequence)) {
                             filterResultsData.add(quote);
                         }
                     }

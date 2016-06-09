@@ -62,7 +62,7 @@ public class SingleImageActivity extends AppCompatActivity {
 
                 }
             });
-        mAttacher = new PhotoViewAttacher(imageView);
+            mAttacher = new PhotoViewAttacher(imageView);
         }
 
         if (actionBar != null) {

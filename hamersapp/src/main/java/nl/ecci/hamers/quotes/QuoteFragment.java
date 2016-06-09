@@ -145,15 +145,15 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         protected final ArrayList<Quote> doInBackground(ArrayList<Quote>... param) {
             ArrayList<Quote> dataSet = new ArrayList<>();
             JSONArray json;
-                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.QUOTEKEY)) != null) {
-                    GsonBuilder gsonBuilder = new GsonBuilder();
-                    gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-                    Gson gson = gsonBuilder.create();
+            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.QUOTEKEY)) != null) {
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                Gson gson = gsonBuilder.create();
 
-                    Type type = new TypeToken<ArrayList<Quote>>() {
-                    }.getType();
-                    dataSet = gson.fromJson(json.toString(), type);
-                }
+                Type type = new TypeToken<ArrayList<Quote>>() {
+                }.getType();
+                dataSet = gson.fromJson(json.toString(), type);
+            }
             return dataSet;
         }
 

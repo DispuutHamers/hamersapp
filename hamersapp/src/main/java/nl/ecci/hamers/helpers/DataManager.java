@@ -23,7 +23,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -59,7 +58,7 @@ public final class DataManager {
     public static final String NEWSKEY = "newsData";
     public static final String BEERKEY = "beerData";
     public static final String REVIEWKEY = "reviewdata";
-    public static final String MEETINGKEY= "meetingdata";
+    public static final String MEETINGKEY = "meetingdata";
     public static final String APIKEYKEY = "apikey";
     public static final String WHOAMIKEY = "whoamikey";
 

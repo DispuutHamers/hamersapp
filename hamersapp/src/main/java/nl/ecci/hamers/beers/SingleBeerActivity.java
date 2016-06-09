@@ -33,8 +33,8 @@ import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.SingleImageActivity;
 
 import static nl.ecci.hamers.helpers.DataManager.getJsonArray;
-import static nl.ecci.hamers.helpers.DataManager.getUser;
 import static nl.ecci.hamers.helpers.DataManager.getOwnUser;
+import static nl.ecci.hamers.helpers.DataManager.getUser;
 
 public class SingleBeerActivity extends AppCompatActivity {
 

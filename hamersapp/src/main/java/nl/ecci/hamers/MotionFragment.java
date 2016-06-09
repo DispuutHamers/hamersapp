@@ -12,9 +12,6 @@ import android.widget.RadioGroup;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import nl.ecci.hamers.helpers.DataManager;
 
 public class MotionFragment extends Fragment {

@@ -7,9 +7,9 @@ import java.util.Date;
 class News {
 
     public enum Category {
-        @SerializedName("d") DISPUUT,
-        @SerializedName("e") EXTERN,
-        @SerializedName("l") LEDEN
+        @SerializedName("d")DISPUUT,
+        @SerializedName("e")EXTERN,
+        @SerializedName("l")LEDEN
     }
 
     @SerializedName("id")
