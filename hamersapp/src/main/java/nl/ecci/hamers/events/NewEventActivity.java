@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
@@ -117,34 +117,18 @@ public class NewEventActivity extends AppCompatActivity {
                 !deadlineDate.contains("Datum") &&
                 !deadlineTime.contains("Tijd")) {
 
-            String[] dateParts = eventDate.split("-");
-            String[] endDateParts = eventEndDate.split("-");
-            String[] timeParts = eventTime.split(":");
-            String[] endTimeParts = eventEndTime.split(":");
-            String[] deadlineTimeParts = deadlineTime.split(":");
-            String[] deadlineDateParts = deadlineDate.split("-");
+            JSONObject body = new JSONObject();
+            try {
+                body.put("title", title);
+                body.put("beschrijving", description);
+                body.put("location", location);
+                body.put("end_time", MainActivity.parseDate(eventEndDate + " " + eventEndTime));
+                body.put("deadline", MainActivity.parseDate(deadlineDate + " " + deadlineTime));
+                body.put("date", MainActivity.parseDate(eventDate + " " + eventTime));
+            } catch (JSONException ignored) {
+            }
 
-            Map<String, String> params = new HashMap<>();
-            params.put("event[title]", title);
-            params.put("event[beschrijving]", description);
-            params.put("event[location]", location);
-            params.put("event[end_time(5i)]", endTimeParts[1]);
-            params.put("event[end_time(4i)]", endTimeParts[0]);
-            params.put("event[end_time(3i)]", endDateParts[0]);
-            params.put("event[end_time(2i)]", endDateParts[1]);
-            params.put("event[end_time(1i)]", endDateParts[2]);
-            params.put("event[deadline(5i)]", deadlineTimeParts[1]);
-            params.put("event[deadline(4i)]", deadlineTimeParts[0]);
-            params.put("event[deadline(3i)]", deadlineDateParts[0]);
-            params.put("event[deadline(2i)]", deadlineDateParts[1]);
-            params.put("event[deadline(1i)]", deadlineDateParts[2]);
-            params.put("event[date(5i)]", timeParts[1]);
-            params.put("event[date(4i)]", timeParts[0]);
-            params.put("event[date(3i)]", dateParts[0]);
-            params.put("event[date(2i)]", dateParts[1]);
-            params.put("event[date(1i)]", dateParts[2]);
-
-//            DataManager.postData(this, MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY, params);
+            DataManager.postData(this, MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY, body);
         } else {
             Snackbar.make(parentLayout, getResources().getString(R.string.missing_fields), Snackbar.LENGTH_SHORT).show();
         }

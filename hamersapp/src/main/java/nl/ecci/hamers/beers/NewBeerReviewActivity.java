@@ -114,11 +114,6 @@ public class NewBeerReviewActivity extends AppCompatActivity {
         datePicker.show(getSupportFragmentManager(), "proefdatum");
     }
 
-    private String parseDate(String dateTemp) throws ParseException {
-        DateFormat inputFormat = new SimpleDateFormat("dd-mm-yyyy", MainActivity.locale);
-        return MainActivity.dbDF.format(inputFormat.parse(dateTemp));
-    }
-
     public void postReview(View view) {
         String review = review_body.getText().toString();
         String date = date_button.getText().toString();
@@ -129,8 +124,8 @@ public class NewBeerReviewActivity extends AppCompatActivity {
                 body.put("beer_id", id);
                 body.put("description", review);
                 body.put("rating", rating);
-                body.put("proefdatum", parseDate(date));
-            } catch (JSONException | ParseException ignored) {
+                body.put("proefdatum", MainActivity.parseDate(date));
+            } catch (JSONException ignored) {
             }
 
             DataManager.postData(this, prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY, body);

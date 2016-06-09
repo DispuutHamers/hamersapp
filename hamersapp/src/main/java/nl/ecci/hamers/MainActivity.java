@@ -410,10 +410,10 @@ public class MainActivity extends AppCompatActivity {
         try {
             // Event date
             if (!dateString.equals("null")) {
-                date = dbDF.parse(dateString);
+                DateFormat inputFormat = new SimpleDateFormat("dd-mm-yyyy HH:mm", MainActivity.locale);
+                date = inputFormat.parse(dateString);
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (ParseException ignored) {
         }
         return date;
     }
