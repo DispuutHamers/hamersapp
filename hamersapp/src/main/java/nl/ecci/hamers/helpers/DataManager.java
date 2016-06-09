@@ -92,7 +92,6 @@ public final class DataManager {
 
     public static void postData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY, JSONObject body) {
         String url = baseURL + dataURL;
-        System.out.println("-----------------\n" + body.toString());
 
         JsonObjectRequest request = new JsonObjectRequest(url, body,
                 new Response.Listener<JSONObject>() {

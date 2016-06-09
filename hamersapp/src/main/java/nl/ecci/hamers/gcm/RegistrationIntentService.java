@@ -27,6 +27,9 @@ import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -89,10 +92,14 @@ public class RegistrationIntentService extends IntentService {
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-        Map<String, String> params = new HashMap<>();
-        params.put("device[device_key]", token);
+        JSONObject body = new JSONObject();
+        try {
+            body.put("device_key", token);
 
-//        DataManager.postData(null, sharedPreferences, DataManager.GCMURL, DataManager.GCMURL, params);
+        } catch (JSONException ignored) {
+        }
+
+        DataManager.postData(null, sharedPreferences, DataManager.GCMURL, DataManager.GCMURL, body);
     }
 
     /**
