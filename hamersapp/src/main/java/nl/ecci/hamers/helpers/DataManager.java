@@ -192,7 +192,7 @@ public final class DataManager {
             }
         } catch (JSONException ignored) {
         }
-        return new User("Unknown", -1, "example@example.org", 0, 0, null, -1, null, new Date());
+        return new User("Unknown", -1, "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<Nickname>(), new Date());
     }
 
     public static User getOwnUser(SharedPreferences prefs) {
@@ -202,7 +202,7 @@ public final class DataManager {
         if ((whoami = DataManager.getJsonObject(prefs, DataManager.WHOAMIKEY)) != null) {
             return gson.fromJson(whoami.toString(), User.class);
         }
-        return new User("Unknown", -1, "example@example.org", 0, 0, null, -1, null, new Date());
+        return new User("Unknown", -1, "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<Nickname>(), new Date());
     }
 
     public static Event getEvent(SharedPreferences prefs, int id) {
@@ -220,7 +220,7 @@ public final class DataManager {
             }
         } catch (JSONException ignored) {
         }
-        return new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), null, new Date());
+        return new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), new ArrayList<Event.Signup>(), new Date());
     }
 
     public static Beer getBeer(SharedPreferences prefs, int id) {
@@ -238,7 +238,7 @@ public final class DataManager {
             }
         } catch (JSONException ignored) {
         }
-        return new Beer(-1, "Unknown", "Unknown", null, "Unknown", "Unknown", "Unknown", "Unknown", null, new Date());
+        return new Beer(-1, "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", new Date());
     }
 
     private static JSONObject getJsonObject(SharedPreferences prefs, String key) {
