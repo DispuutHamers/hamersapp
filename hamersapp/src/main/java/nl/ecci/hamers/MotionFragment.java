@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +21,7 @@ public class MotionFragment extends Fragment {
 
     private final String DUURTLANG = "duurt lang";
     private final String ARELAXED = "vet arelaxed";
-    private final String NIETCHILL = "niet chilll";
+    private final String NIETCHILL = "niet chill";
     private String type;
 
     @Override
@@ -63,11 +66,14 @@ public class MotionFragment extends Fragment {
         String subject = motion_subject.getText().toString();
         String content = motion_content.getText().toString();
 
-        Map<String, String> params = new HashMap<>();
-        params.put("motion[motion_type]", type);
-        params.put("motion[subject]", subject);
-        params.put("motion[content]", content);
+        JSONObject body = new JSONObject();
+        try {
+            body.put("motion_type", type);
+            body.put("subject", subject);
+            body.put("content", content);
+        } catch (JSONException ignored) {
+        }
 
-        DataManager.postData(this.getContext(), MainActivity.prefs, DataManager.MOTIEURL, null, params);
+        DataManager.postData(this.getContext(), MainActivity.prefs, DataManager.MOTIEURL, null, body);
     }
 }

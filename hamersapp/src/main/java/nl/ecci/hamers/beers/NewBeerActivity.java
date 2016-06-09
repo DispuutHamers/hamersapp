@@ -11,6 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,15 +70,18 @@ public class NewBeerActivity extends AppCompatActivity {
             percentage = percentage + "%";
         }
 
-        Map<String, String> params = new HashMap<>();
-        params.put("beer[name]", title);
-        params.put("beer[picture]", picture);
-        params.put("beer[percentage]", percentage);
-        params.put("beer[country]", country);
-        params.put("beer[brewer]", brewer);
-        params.put("beer[soort]", soort);
+        JSONObject body = new JSONObject();
+        try {
+            body.put("name", title);
+            body.put("picture", picture);
+            body.put("percentage", percentage);
+            body.put("country", country);
+            body.put("brewer", brewer);
+            body.put("soort", soort);
+        } catch (JSONException ignored) {
+        }
 
-        DataManager.postData(this, prefs, DataManager.BEERURL, DataManager.BEERKEY, params);
+        DataManager.postData(this, prefs, DataManager.BEERURL, DataManager.BEERKEY, body);
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {

@@ -16,6 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -30,7 +35,7 @@ public class NewBeerReviewActivity extends AppCompatActivity {
 
     private int id;
     private TextView progress;
-    private int cijfer;
+    private int rating;
     private LinearLayout parentLayout;
     private EditText review_body;
     private Button date_button;
@@ -69,15 +74,15 @@ public class NewBeerReviewActivity extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.review_title);
         title.setText(name);
 
-        cijfer = 1;
+        rating = 1;
 
         SeekBar sb = (SeekBar) findViewById(R.id.ratingseekbar);
         if (sb != null) {
             sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int rating, boolean fromUser) {
-                    cijfer = rating + 1;
-                    progress.setText(String.format("Cijfer: %s", cijfer));
+                    NewBeerReviewActivity.this.rating = rating + 1;
+                    progress.setText(String.format("Cijfer: %s", NewBeerReviewActivity.this.rating));
                 }
 
                 @Override
@@ -109,24 +114,26 @@ public class NewBeerReviewActivity extends AppCompatActivity {
         datePicker.show(getSupportFragmentManager(), "proefdatum");
     }
 
+    private String parseDate(String dateTemp) throws ParseException {
+        DateFormat inputFormat = new SimpleDateFormat("dd-mm-yyyy", MainActivity.locale);
+        return MainActivity.dbDF.format(inputFormat.parse(dateTemp));
+    }
+
     public void postReview(View view) {
         String review = review_body.getText().toString();
         String date = date_button.getText().toString();
 
         if (review.length() > 2) {
-            String[] dateParts = date.split("-");
+            JSONObject body = new JSONObject();
+            try {
+                body.put("beer_id", id);
+                body.put("description", review);
+                body.put("rating", rating);
+                body.put("proefdatum", parseDate(date));
+            } catch (JSONException | ParseException ignored) {
+            }
 
-            Map<String, String> params = new HashMap<>();
-            params.put("review[beer_id]", Integer.toString(id));
-            params.put("review[description]", review);
-            params.put("review[rating]", Integer.toString(cijfer));
-            params.put("review[proefdatum(1i)]", dateParts[2]);
-            params.put("review[proefdatum(2i)]", dateParts[1]);
-            params.put("review[proefdatum(3i)]", dateParts[0]);
-            params.put("review[proefdatum(4i)]", "20");
-            params.put("review[proefdatum(5i)]", "00");
-
-            DataManager.postData(this, prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY, params);
+            DataManager.postData(this, prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY, body);
         } else {
             Snackbar.make(parentLayout, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show();
         }

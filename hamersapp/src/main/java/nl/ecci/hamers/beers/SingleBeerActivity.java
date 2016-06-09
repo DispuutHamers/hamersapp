@@ -87,7 +87,7 @@ public class SingleBeerActivity extends AppCompatActivity {
 
         nameTV.setText(name);
 
-        if (rating.equals("null")) {
+        if (rating == null) {
             fillRow(ratingRow, getString(R.string.beer_rating), "Nog niet bekend");
         } else {
             fillRow(ratingRow, getString(R.string.beer_rating), rating);

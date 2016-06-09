@@ -92,7 +92,7 @@ public class RegistrationIntentService extends IntentService {
         Map<String, String> params = new HashMap<>();
         params.put("device[device_key]", token);
 
-        DataManager.postData(null, sharedPreferences, DataManager.GCMURL, DataManager.GCMURL, params);
+//        DataManager.postData(null, sharedPreferences, DataManager.GCMURL, DataManager.GCMURL, params);
     }
 
     /**

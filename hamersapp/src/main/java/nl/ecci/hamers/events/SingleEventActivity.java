@@ -149,7 +149,7 @@ public class SingleEventActivity extends AppCompatActivity {
         params.put("signup[event_id]", Integer.toString(eventid));
         params.put("signup[status]", status);
 
-        DataManager.postData(this, MainActivity.prefs, DataManager.SIGNUPURL, null, params);
+//        DataManager.postData(this, MainActivity.prefs, DataManager.SIGNUPURL, null, params);
         this.finish();
     }
 

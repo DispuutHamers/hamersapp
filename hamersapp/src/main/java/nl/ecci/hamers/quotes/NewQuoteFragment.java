@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,11 +75,14 @@ public class NewQuoteFragment extends DialogFragment {
 
     }
 
-    private void postQuote(String quote, int userid) {
-        Map<String, String> params = new HashMap<>();
-        params.put("quote[text]", quote);
-        params.put("quote[user_id]", Integer.toString(userid));
+    private void postQuote(String quote, int userID) {
+        JSONObject body = new JSONObject();
+        try {
+            body.put("text", quote);
+            body.put("user_id", userID);
+        } catch (JSONException ignored) {
+        }
 
-        DataManager.postData(this.getContext(), MainActivity.prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY, params);
+        DataManager.postData(this.getContext(), MainActivity.prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY, body);
     }
 }

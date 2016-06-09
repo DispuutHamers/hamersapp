@@ -144,7 +144,7 @@ public class NewEventActivity extends AppCompatActivity {
             params.put("event[date(2i)]", dateParts[1]);
             params.put("event[date(1i)]", dateParts[2]);
 
-            DataManager.postData(this, MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY, params);
+//            DataManager.postData(this, MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY, params);
         } else {
             Snackbar.make(parentLayout, getResources().getString(R.string.missing_fields), Snackbar.LENGTH_SHORT).show();
         }
