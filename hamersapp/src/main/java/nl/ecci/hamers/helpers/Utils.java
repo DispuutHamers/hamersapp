@@ -6,15 +6,23 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.users.User;
+
+import static nl.ecci.hamers.helpers.DataManager.getJsonArray;
 
 public class Utils {
     public static AlertDialog alertDialog;
@@ -98,5 +106,35 @@ public class Utils {
             versionName = "";
         }
         return versionName;
+    }
+
+    public static String getGravatarURL(String email) {
+        return String.format("http://gravatar.com/avatar/%s/?s=1920", Utils.md5Hex(email));
+    }
+
+    @NonNull
+    public static String convertNicknames(ArrayList<User.Nickname> nicknames) {
+        StringBuilder sb = new StringBuilder();
+        for (User.Nickname nickname : nicknames) {
+            sb.append(nickname.getNickname());
+        }
+        return sb.toString();
+    }
+
+    public static int usernameToID(SharedPreferences prefs, String name) {
+        JSONArray userJSON;
+        int result = -1;
+        try {
+            if ((userJSON = getJsonArray(prefs, DataManager.USERKEY)) != null) {
+                for (int i = 0; i < userJSON.length(); i++) {
+                    if (userJSON.getJSONObject(i).getString("name").equals(name)) {
+                        result = userJSON.getJSONObject(i).getInt("id");
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            return result;
+        }
+        return result;
     }
 }

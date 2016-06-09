@@ -18,6 +18,9 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DataManager;
 
+import static nl.ecci.hamers.helpers.Utils.convertNicknames;
+import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
+
 class UserListAdapter extends ArrayAdapter<User> {
 
     private static AnimateFirstDisplayListener animateFirstListener;
@@ -47,12 +50,12 @@ class UserListAdapter extends ArrayAdapter<User> {
         TextView reviewCount = (TextView) rowView.findViewById(R.id.user_reviewcount);
 
         username.setText(dataSet.get(position).getName());
-        nickname.setText(DataManager.convertNicknames(dataSet.get(position).getNicknames()));
+        nickname.setText(convertNicknames(dataSet.get(position).getNicknames()));
         quoteCount.setText(String.format("Aantal quotes: %s", String.valueOf(dataSet.get(position).getQuoteCount())));
         reviewCount.setText(String.format(MainActivity.locale, "Aantal reviews: %d", dataSet.get(position).getReviewCount()));
 
         final ImageView userImage = (ImageView) rowView.findViewById(R.id.user_image);
-        String url = DataManager.getGravatarURL(dataSet.get(position).getEmail());
+        String url = getGravatarURL(dataSet.get(position).getEmail());
         imageLoader.displayImage(url, userImage, animateFirstListener);
 
         rowView.setOnClickListener(new View.OnClickListener() {

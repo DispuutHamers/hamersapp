@@ -61,6 +61,8 @@ import nl.ecci.hamers.users.User;
 import nl.ecci.hamers.users.UserFragment;
 import nl.ecci.hamers.users.UserListFragment;
 
+import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
+
 public class MainActivity extends AppCompatActivity {
     // Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
@@ -394,7 +396,7 @@ public class MainActivity extends AppCompatActivity {
                 userEmail.setText(user.getEmail());
 
                 // Image
-                String url = DataManager.getGravatarURL(user.getEmail());
+                String url = getGravatarURL(user.getEmail());
                 ImageLoader.getInstance().displayImage(url, userImage);
             }
         } else {

@@ -23,6 +23,8 @@ import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.users.SingleUserActivity;
 import nl.ecci.hamers.users.User;
 
+import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
+
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> implements Filterable {
 
     private static AnimateFirstDisplayListener animateFirstListener;
@@ -74,7 +76,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
         User user = DataManager.getUser(MainActivity.prefs, filteredDataSet.get(position).getUserID());
         if (user != null) {
-            imageLoader.displayImage(DataManager.getGravatarURL(user.getEmail()), holder.userImage, animateFirstListener);
+            imageLoader.displayImage(getGravatarURL(user.getEmail()), holder.userImage, animateFirstListener);
         }
     }
 

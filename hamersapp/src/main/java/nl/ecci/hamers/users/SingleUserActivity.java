@@ -22,6 +22,9 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
+import static nl.ecci.hamers.helpers.Utils.convertNicknames;
+import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
+
 public class SingleUserActivity extends AppCompatActivity {
     private PhotoViewAttacher mAttacher;
 
@@ -47,7 +50,7 @@ public class SingleUserActivity extends AppCompatActivity {
         View nicknameRow = findViewById(R.id.row_user_nickname);
         View nicknameDivider = findViewById(R.id.user_nickname_divider);
         if (user.getNicknames().size() > 0) {
-            fillRow(nicknameRow, getString(R.string.user_nickname), DataManager.convertNicknames(user.getNicknames()));
+            fillRow(nicknameRow, getString(R.string.user_nickname), convertNicknames(user.getNicknames()));
         } else if (nicknameRow != null) {
             nicknameRow.setVisibility(View.GONE);
             nicknameDivider.setVisibility(View.GONE);
@@ -91,7 +94,7 @@ public class SingleUserActivity extends AppCompatActivity {
 
         mAttacher = new PhotoViewAttacher(imageView);
 
-        ImageLoader.getInstance().displayImage(DataManager.getGravatarURL(user.getEmail()), imageView, new ImageLoadingListener() {
+        ImageLoader.getInstance().displayImage(getGravatarURL(user.getEmail()), imageView, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
             }

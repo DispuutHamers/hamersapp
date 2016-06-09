@@ -23,6 +23,8 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 
+import static nl.ecci.hamers.helpers.Utils.usernameToID;
+
 public class NewQuoteFragment extends DialogFragment {
 
     private final ArrayList<String> users = new ArrayList<>();
@@ -44,7 +46,7 @@ public class NewQuoteFragment extends DialogFragment {
 
                                 // Get userID from spinner
                                 Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
-                                int userID = DataManager.usernameToID(MainActivity.prefs, userSpinner.getSelectedItem().toString());
+                                int userID = usernameToID(MainActivity.prefs, userSpinner.getSelectedItem().toString());
 
                                 // Post quote
                                 NewQuoteFragment.this.postQuote(quote, userID);

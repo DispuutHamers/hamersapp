@@ -261,33 +261,5 @@ public final class DataManager {
         }
     }
 
-    public static int usernameToID(SharedPreferences prefs, String name) {
-        JSONArray userJSON;
-        int result = -1;
-        try {
-            if ((userJSON = getJsonArray(prefs, USERKEY)) != null) {
-                for (int i = 0; i < userJSON.length(); i++) {
-                    if (userJSON.getJSONObject(i).getString("name").equals(name)) {
-                        result = userJSON.getJSONObject(i).getInt("id");
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            return result;
-        }
-        return result;
-    }
 
-    public static String getGravatarURL(String email) {
-        return String.format("http://gravatar.com/avatar/%s/?s=1920", Utils.md5Hex(email));
-    }
-
-    @NonNull
-    public static String convertNicknames(ArrayList<Nickname> nicknames) {
-        StringBuilder sb = new StringBuilder();
-        for (Nickname nickname : nicknames) {
-            sb.append(nickname.getNickname());
-        }
-        return sb.toString();
-    }
 }
