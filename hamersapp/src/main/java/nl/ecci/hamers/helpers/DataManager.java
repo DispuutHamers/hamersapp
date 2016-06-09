@@ -101,7 +101,11 @@ public final class DataManager {
                                 ((Activity) context).finish();
                             }
                             Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
-                            getData(context, prefs, dataURL, dataKEY);
+                            if (dataURL.equals(SIGNUPURL)) {
+                                getData(context, prefs, EVENTURL, EVENTURL);
+                            } else {
+                                getData(context, prefs, dataURL, dataKEY);
+                            }
                         }
                     }
                 },

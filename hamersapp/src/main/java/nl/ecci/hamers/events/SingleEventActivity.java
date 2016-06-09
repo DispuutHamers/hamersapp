@@ -21,6 +21,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -145,11 +148,14 @@ public class SingleEventActivity extends AppCompatActivity {
     }
 
     private void postSignup(int eventid, String status) {
-        Map<String, String> params = new HashMap<>();
-        params.put("signup[event_id]", Integer.toString(eventid));
-        params.put("signup[status]", status);
+        JSONObject body = new JSONObject();
+        try {
+            body.put("event_id", eventid);
+            body.put("status", status);
+        } catch (JSONException ignored) {
+        }
 
-//        DataManager.postData(this, MainActivity.prefs, DataManager.SIGNUPURL, null, params);
+        DataManager.postData(this, MainActivity.prefs, DataManager.SIGNUPURL, null, body);
         this.finish();
     }
 
