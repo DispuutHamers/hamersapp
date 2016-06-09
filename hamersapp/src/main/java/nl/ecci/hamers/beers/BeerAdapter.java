@@ -72,12 +72,11 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             @Override
             public void onClick(View v1) {
                 try {
-                    Beer beer = filteredDataSet.get(vh.getAdapterPosition());
                     Activity activity = (Activity) context;
                     String imageTransitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, imageTransitionName);
                     Intent intent = new Intent(context, SingleBeerActivity.class);
-                    intent.putExtra(Beer.BEER, gson.toJson(beer, Beer.class));
+                    intent.putExtra(Beer.BEER, gson.toJson(filteredDataSet.get(vh.getAdapterPosition()), Beer.class));
                     ActivityCompat.startActivity(activity, intent, options.toBundle());
                 } catch (NullPointerException ignored) {
                 }

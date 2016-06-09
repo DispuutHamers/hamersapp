@@ -13,11 +13,15 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.helpers.DataManager;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> implements Filterable {
@@ -25,11 +29,15 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
     private final Context context;
     private final ArrayList<Event> dataSet;
     private ArrayList<Event> filteredDataSet;
+    private final Gson gson;
 
     public EventListAdapter(Context context, ArrayList<Event> dataSet) {
         this.context = context;
         this.dataSet = dataSet;
         this.filteredDataSet = dataSet;
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gson = gsonBuilder.create();
     }
 
     @Override
@@ -43,7 +51,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
                 final int position = vh.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Intent intent = new Intent(context, SingleEventActivity.class);
-                    intent.putExtra("id", filteredDataSet.get(position).getId());
+                    intent.putExtra(Event.EVENT, gson.toJson(filteredDataSet.get(vh.getAdapterPosition()), Event.class));
                     context.startActivity(intent);
                 }
             }

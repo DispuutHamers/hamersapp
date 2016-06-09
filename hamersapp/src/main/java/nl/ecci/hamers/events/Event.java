@@ -7,7 +7,9 @@ import java.util.Date;
 
 public class Event {
 
-    private final int id;
+    public static final String EVENT = "EVENT";
+
+    private final int eventID;
     private final String title;
     @SerializedName("beschrijving")
     private final String description;
@@ -20,9 +22,9 @@ public class Event {
     private final Date createdAt;
 
     @SuppressWarnings("SameParameterValue")
-    public Event(int id, String title, String description, String location, Date date, Date end_time, Date deadline, ArrayList<Signup> signups, Date createdAt) {
+    public Event(int eventID, String title, String description, String location, Date date, Date end_time, Date deadline, ArrayList<Signup> signups, Date createdAt) {
         super();
-        this.id = id;
+        this.eventID = eventID;
         this.title = title;
         this.description = description;
         this.location = location;
@@ -33,8 +35,8 @@ public class Event {
         this.createdAt = createdAt;
     }
 
-    public int getId() {
-        return id;
+    public int getID() {
+        return eventID;
     }
 
     public String getTitle() {

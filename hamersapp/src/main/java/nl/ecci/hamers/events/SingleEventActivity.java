@@ -21,6 +21,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,10 +32,12 @@ import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.users.User;
 
 public class SingleEventActivity extends AppCompatActivity {
+
     private Event event;
     private LayoutInflater inflater;
     private ViewGroup presentView;
@@ -47,8 +52,6 @@ public class SingleEventActivity extends AppCompatActivity {
         this.setContentView(R.layout.single_event);
 
         inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        event = DataManager.getEvent(MainActivity.prefs, getIntent().getExtras().getInt("id"));
 
         initToolbar();
 
@@ -65,14 +68,14 @@ public class SingleEventActivity extends AppCompatActivity {
         presentLayout = (ViewGroup) findViewById(R.id.present_layout);
         absentLayout = (ViewGroup) findViewById(R.id.absent_layout);
 
-        final String title = event.getTitle();
-        final String description = event.getDescription();
-        final String location = event.getLocation();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        event = gson.fromJson(getIntent().getStringExtra(Event.EVENT), Event.class);
 
         initSignups();
 
-        titleTV.setText(title);
-        fillDetailRow(descriptionRow, description);
+        titleTV.setText(event.getTitle());
+        fillDetailRow(descriptionRow, event.getDescription());
 
         // Current date
         Date today = new Date();
@@ -104,15 +107,15 @@ public class SingleEventActivity extends AppCompatActivity {
         }
 
         if (locationRow != null) {
-            if (location != null) {
-                fillImageRow(locationRow, "Locatie", location, ContextCompat.getDrawable(this, R.drawable.location));
+            if (event.getLocation() != null) {
+                fillImageRow(locationRow, "Locatie", event.getLocation(), ContextCompat.getDrawable(this, R.drawable.location));
 
                 locationRow.setClickable(true);
                 locationRow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // Create a Uri from an intent string. Use the result to create an Intent.
-                        Uri uri = Uri.parse("geo:0,0?q=" + location);
+                        Uri uri = Uri.parse("geo:0,0?q=" + event.getLocation());
                         // Create an Intent from uri. Set the action to ACTION_VIEW
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         intent.setPackage("com.google.android.apps.maps");
@@ -138,11 +141,11 @@ public class SingleEventActivity extends AppCompatActivity {
     }
 
     public void setPresent(View view) {
-        postSignup(event.getId(), "true");
+        postSignup(event.getID(), "true");
     }
 
     public void setAbsent(View view) {
-        postSignup(event.getId(), "false");
+        postSignup(event.getID(), "false");
     }
 
     private void postSignup(int eventid, String status) {
