@@ -54,11 +54,9 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         this.context = context;
         userID = getOwnUser(MainActivity.prefs).getUserID();
 
-        // Universal Image Loader
         imageLoader = ImageLoader.getInstance();
         animateFirstListener = new AnimateFirstDisplayListener();
 
-        // Gson
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();
     }
@@ -74,7 +72,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             @Override
             public void onClick(View v1) {
                 try {
-                    Beer beer = DataManager.getBeer(MainActivity.prefs, filteredDataSet.get(vh.getAdapterPosition()).getID());
+                    Beer beer = filteredDataSet.get(vh.getAdapterPosition());
                     Activity activity = (Activity) context;
                     String imageTransitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, imageTransitionName);
@@ -90,7 +88,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             @Override
             public void onClick(View v) {
                 try {
-                    Beer beer = DataManager.getBeer(MainActivity.prefs, filteredDataSet.get(vh.getAdapterPosition()).getID());
+                    Beer beer = filteredDataSet.get(vh.getAdapterPosition());
                     Activity activity = (Activity) context;
                     String transitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, transitionName);
