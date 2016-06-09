@@ -13,9 +13,9 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
-    private final ArrayList<NewsItem> dataSet;
+    private final ArrayList<News> dataSet;
 
-    public NewsAdapter(ArrayList<NewsItem> itemsArrayList) {
+    public NewsAdapter(ArrayList<News> itemsArrayList) {
         this.dataSet = itemsArrayList;
     }
 

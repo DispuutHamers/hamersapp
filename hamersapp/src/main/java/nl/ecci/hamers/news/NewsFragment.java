@@ -1,5 +1,6 @@
 package nl.ecci.hamers.news;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,24 +9,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 
-import static nl.ecci.hamers.MainActivity.parseDate;
-
 public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private final ArrayList<NewsItem> listItems = new ArrayList<>();
+    private ArrayList<News> dataSet = new ArrayList<>();
     private NewsAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -42,7 +42,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         initSwiper(view, news_list, mLayoutManager);
 
-        adapter = new NewsAdapter(listItems);
+        adapter = new NewsAdapter(dataSet);
         news_list.setAdapter(adapter);
 
         onRefresh();
@@ -69,30 +69,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         DataManager.getData(getContext(), MainActivity.prefs, DataManager.NEWSURL, DataManager.NEWSKEY);
     }
 
-    public void populateList() {
-        listItems.clear();
-        JSONArray json;
-        try {
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.NEWSKEY)) != null) {
-                for (int i = json.length() - 1; i >= 0; i--) {
-                    JSONObject temp;
-                    temp = json.getJSONObject(i);
-
-                    Date date = parseDate(temp.getString("date"));
-
-                    NewsItem newsItem = new NewsItem(temp.getString("title"), temp.getString("body"), temp.getString("cat"), date);
-                    listItems.add(newsItem);
-                    if (adapter != null) {
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
-        }
-        setRefreshing(false);
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -107,6 +83,47 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     swipeRefreshLayout.setRefreshing(bool);
                 }
             });
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void populateList() {
+        new populateList().execute(dataSet);
+    }
+
+    private class populateList extends AsyncTask<ArrayList<News>, Void, ArrayList<News>> {
+        @SafeVarargs
+        @Override
+        protected final ArrayList<News> doInBackground(ArrayList<News>... param) {
+            ArrayList<News> dataSet = new ArrayList<>();
+            JSONArray json;
+            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.NEWSKEY)) != null) {
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                Gson gson = gsonBuilder.create();
+
+                Type type = new TypeToken<ArrayList<News>>() {
+                }.getType();
+                dataSet = gson.fromJson(json.toString(), type);
+            }
+            return dataSet;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<News> result) {
+            if (!result.isEmpty()) {
+                dataSet.clear();
+                dataSet.addAll(result);
+                if (NewsFragment.this.adapter != null) {
+                    NewsFragment.this.adapter.notifyDataSetChanged();
+                }
+            }
+            setRefreshing(false);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            setRefreshing(true);
         }
     }
 }
