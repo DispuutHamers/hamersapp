@@ -25,8 +25,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Date;
-
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
@@ -38,8 +36,8 @@ import static nl.ecci.hamers.helpers.DataManager.getUser;
 
 public class SingleBeerActivity extends AppCompatActivity {
 
-    private int id;
-    private String name;
+    private Gson gson;
+    private Beer beer;
     private Button reviewButton;
     private ViewGroup reviewViewGroup;
 
@@ -69,34 +67,27 @@ public class SingleBeerActivity extends AppCompatActivity {
         final ImageView beerImage = (ImageView) findViewById(R.id.beer_image);
         reviewButton = (Button) findViewById(R.id.sendreview_button);
 
-        Bundle extras = getIntent().getExtras();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gson = gsonBuilder.create();
+        beer = gson.fromJson(getIntent().getStringExtra(Beer.BEER), Beer.class);
 
-        id = extras.getInt(Beer.BEER_ID);
-        name = extras.getString(Beer.BEER_NAME);
-        final String kind = extras.getString(Beer.BEER_KIND);
-        final String url = extras.getString(Beer.BEER_URL);
-        final String percentage = extras.getString(Beer.BEER_PERCENTAGE);
-        final String brewer = extras.getString(Beer.BEER_BREWER);
-        final String country = extras.getString(Beer.BEER_COUNTRY);
-        final String rating = extras.getString(Beer.BEER_RATING);
+        fillRow(kindRow, getString(R.string.beer_soort), beer.getKind());
+        fillRow(alcRow, getString(R.string.beer_alc), beer.getPercentage());
+        fillRow(brewerRow, getString(R.string.beer_brewer), beer.getBrewer());
+        fillRow(countryRow, getString(R.string.beer_country), beer.getCountry());
 
-        fillRow(kindRow, getString(R.string.beer_soort), kind);
-        fillRow(alcRow, getString(R.string.beer_alc), percentage);
-        fillRow(brewerRow, getString(R.string.beer_brewer), brewer);
-        fillRow(countryRow, getString(R.string.beer_country), country);
+        nameTV.setText(beer.getName());
 
-        nameTV.setText(name);
-
-        if (rating == null) {
+        if (beer.getRating() == null) {
             fillRow(ratingRow, getString(R.string.beer_rating), "Nog niet bekend");
         } else {
-            fillRow(ratingRow, getString(R.string.beer_rating), rating);
+            fillRow(ratingRow, getString(R.string.beer_rating), beer.getRating());
         }
 
         // Universal Image Loader
         ImageLoader imageLoader = ImageLoader.getInstance();
 
-        imageLoader.displayImage(url, beerImage);
+        imageLoader.displayImage(beer.getImageURL(), beerImage);
 
         beerImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,8 +95,7 @@ public class SingleBeerActivity extends AppCompatActivity {
                 Intent intent = new Intent(SingleBeerActivity.this, SingleImageActivity.class);
                 String transitionName = getString(R.string.transition_single_image);
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(SingleBeerActivity.this, beerImage, transitionName);
-                intent.putExtra(Beer.BEER_NAME, name);
-                intent.putExtra(Beer.BEER_URL, url);
+                intent.putExtra(Beer.BEER, gson.toJson(beer, Beer.class));
                 ActivityCompat.startActivity(SingleBeerActivity.this, intent, options.toBundle());
             }
         });
@@ -133,7 +123,7 @@ public class SingleBeerActivity extends AppCompatActivity {
                 for (int i = 0; i < reviews.length(); i++) {
                     JSONObject jsonObject = reviews.getJSONObject(i);
                     Review review = gson.fromJson(jsonObject.toString(), Review.class);
-                    if (review.getBeerID() == id) {
+                    if (review.getBeerID() == beer.getID()) {
                         hasReviews = true;
                         if (review.getUserID() == getOwnUser(MainActivity.prefs).getUserID()) {
                             reviewButton.setVisibility(View.GONE);
@@ -156,8 +146,7 @@ public class SingleBeerActivity extends AppCompatActivity {
      */
     public void createReview(View view) {
         Intent intent = new Intent(this, NewBeerReviewActivity.class);
-        intent.putExtra("id", id);
-        intent.putExtra("name", name);
+        intent.putExtra(Beer.BEER, gson.toJson(beer, Beer.class));
 
         int requestCode = 1;
         startActivityForResult(intent, requestCode);
@@ -173,13 +162,9 @@ public class SingleBeerActivity extends AppCompatActivity {
         TextView date = (TextView) view.findViewById(R.id.review_date);
         TextView ratingTV = (TextView) view.findViewById(R.id.review_rating);
 
-        name = getUser(MainActivity.prefs, review.getUserID()).getName();
-
-        Date datum = review.getProefdatum();
-
-        title.setText(String.format("%s: ", name));
+        title.setText(String.format("%s: ", getUser(MainActivity.prefs, review.getUserID()).getName()));
         body.setText(review.getDescription());
-        date.setText(MainActivity.appDF2.format(datum));
+        date.setText(MainActivity.appDF2.format(review.getProefdatum()));
         ratingTV.setText(String.format("Cijfer: %s", review.getRating()));
 
         // Insert into view

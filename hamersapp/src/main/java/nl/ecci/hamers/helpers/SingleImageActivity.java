@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -31,14 +33,15 @@ public class SingleImageActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.beer_image);
 
-        String name = getIntent().getStringExtra(Beer.BEER_NAME);
-        String url = getIntent().getStringExtra(Beer.BEER_URL);
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        Beer beer = gson.fromJson(getIntent().getStringExtra(Beer.BEER), Beer.class);
 
         // Universal Image Loader
         ImageLoader imageLoader = ImageLoader.getInstance();
 
         if (imageView != null) {
-            imageLoader.displayImage(url, imageView, new ImageLoadingListener() {
+            imageLoader.displayImage(beer.getImageURL(), imageView, new ImageLoadingListener() {
 
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
@@ -68,7 +71,7 @@ public class SingleImageActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
-            actionBar.setTitle(name);
+            actionBar.setTitle(beer.getName());
         }
     }
 

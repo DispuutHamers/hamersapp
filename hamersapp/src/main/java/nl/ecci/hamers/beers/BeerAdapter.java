@@ -46,6 +46,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     private final ImageLoader imageLoader;
     private final int userID;
     private ArrayList<Beer> filteredDataSet;
+    private final Gson gson;
 
     public BeerAdapter(ArrayList<Beer> dataSet, Context context) {
         this.dataSet = dataSet;
@@ -56,6 +57,10 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         // Universal Image Loader
         imageLoader = ImageLoader.getInstance();
         animateFirstListener = new AnimateFirstDisplayListener();
+
+        // Gson
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gson = gsonBuilder.create();
     }
 
     @Override
@@ -69,19 +74,12 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             @Override
             public void onClick(View v1) {
                 try {
-                    Beer beer = DataManager.getBeer(MainActivity.prefs, filteredDataSet.get(vh.getAdapterPosition()).getId());
+                    Beer beer = DataManager.getBeer(MainActivity.prefs, filteredDataSet.get(vh.getAdapterPosition()).getID());
                     Activity activity = (Activity) context;
                     String imageTransitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, imageTransitionName);
                     Intent intent = new Intent(context, SingleBeerActivity.class);
-                    intent.putExtra(Beer.BEER_ID, beer.getId());
-                    intent.putExtra(Beer.BEER_NAME, beer.getName());
-                    intent.putExtra(Beer.BEER_KIND, beer.getKind());
-                    intent.putExtra(Beer.BEER_URL, beer.getImageURL());
-                    intent.putExtra(Beer.BEER_PERCENTAGE, beer.getPercentage());
-                    intent.putExtra(Beer.BEER_BREWER, beer.getBrewer());
-                    intent.putExtra(Beer.BEER_COUNTRY, beer.getCountry());
-                    intent.putExtra(Beer.BEER_RATING, beer.getRating());
+                    intent.putExtra(Beer.BEER, gson.toJson(beer, Beer.class));
                     ActivityCompat.startActivity(activity, intent, options.toBundle());
                 } catch (NullPointerException ignored) {
                 }
@@ -92,14 +90,13 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             @Override
             public void onClick(View v) {
                 try {
-                    Beer beer = DataManager.getBeer(MainActivity.prefs, filteredDataSet.get(vh.getAdapterPosition()).getId());
+                    Beer beer = DataManager.getBeer(MainActivity.prefs, filteredDataSet.get(vh.getAdapterPosition()).getID());
                     Activity activity = (Activity) context;
                     String transitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, transitionName);
                     if (!beer.getImageURL().equals("")) {
                         Intent intent = new Intent(context, SingleImageActivity.class);
-                        intent.putExtra(Beer.BEER_NAME, beer.getName());
-                        intent.putExtra(Beer.BEER_URL, beer.getImageURL());
+                        intent.putExtra(Beer.BEER, gson.toJson(beer, Beer.class));
                         ActivityCompat.startActivity(activity, intent, options.toBundle());
                     } else {
                         Toast.makeText(context, context.getString(R.string.no_image), Toast.LENGTH_SHORT).show();
@@ -131,7 +128,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         }
 
         try {
-            int rating = getOwnRating(filteredDataSet.get(position).getId());
+            int rating = getOwnRating(filteredDataSet.get(position).getID());
             if (rating == 0) {
                 holder.thumbs.setImageResource(R.drawable.ic_questionmark);
             } else if (rating <= 4) {

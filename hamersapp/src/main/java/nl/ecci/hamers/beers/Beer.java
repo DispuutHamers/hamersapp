@@ -6,16 +6,10 @@ import java.util.Date;
 
 public class Beer {
 
-    public static final String BEER_ID = "BEER_ID";
-    public static final String BEER_NAME = "BEER_NAME";
-    public static final String BEER_KIND = "BEER_KIND";
-    public static final String BEER_URL = "BEER_URL";
-    public static final String BEER_PERCENTAGE = "BEER_PERCENTAGE";
-    public static final String BEER_BREWER = "BEER_BREWER";
-    public static final String BEER_COUNTRY = "BEER_COUNTRY";
-    public static final String BEER_RATING = "BEER_RATING";
+    public static final String BEER = "BEER";
 
-    private final int id;
+    @SerializedName("id")
+    private final int beerID;
     private final String name;
     @SerializedName("soort")
     private final String kind;
@@ -31,9 +25,9 @@ public class Beer {
     private final Date createdAt;
 
     @SuppressWarnings("SameParameterValue")
-    public Beer(int id, String name, String kind, String imageURL, String percentage, String brewer, String country, String rating, String url, Date createdAt) {
+    public Beer(int beerID, String name, String kind, String imageURL, String percentage, String brewer, String country, String rating, String url, Date createdAt) {
         super();
-        this.id = id;
+        this.beerID = beerID;
         this.name = name;
         this.kind = kind;
         this.imageURL = imageURL;
@@ -45,8 +39,8 @@ public class Beer {
         this.createdAt = createdAt;
     }
 
-    public int getId() {
-        return id;
+    public int getID() {
+        return beerID;
     }
 
     public String getName() {

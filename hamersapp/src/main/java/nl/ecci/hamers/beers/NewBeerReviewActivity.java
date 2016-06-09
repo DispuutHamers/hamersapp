@@ -16,6 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +32,7 @@ import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
 
 public class NewBeerReviewActivity extends AppCompatActivity {
 
-    private int id;
+    private Beer beer;
     private TextView progress;
     private int rating;
     private LinearLayout parentLayout;
@@ -63,12 +66,13 @@ public class NewBeerReviewActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", MainActivity.locale);
         date_button.setText(dateFormat.format(calendar.getTime()));
 
-        Bundle extras = getIntent().getExtras();
-        id = extras.getInt("id");
-        String name = extras.getString("name");
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        beer = gson.fromJson(getIntent().getStringExtra(Beer.BEER), Beer.class);
+
 
         TextView title = (TextView) findViewById(R.id.review_title);
-        title.setText(name);
+        title.setText(beer.getName());
 
         rating = 1;
 
@@ -117,7 +121,7 @@ public class NewBeerReviewActivity extends AppCompatActivity {
         if (review.length() > 2) {
             JSONObject body = new JSONObject();
             try {
-                body.put("beer_id", id);
+                body.put("beer_id", beer.getID());
                 body.put("description", review);
                 body.put("rating", rating);
                 body.put("proefdatum", MainActivity.parseDate(date));
