@@ -26,8 +26,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
@@ -37,11 +35,11 @@ import nl.ecci.hamers.users.User;
 public class SingleEventActivity extends AppCompatActivity {
     private Event event;
     private LayoutInflater inflater;
-    private ViewGroup aanwezigView;
-    private ViewGroup afwezigView;
+    private ViewGroup presentView;
+    private ViewGroup absentView;
     private ViewGroup eventLayout;
-    private ViewGroup aanwezigLayout;
-    private ViewGroup afwezigLayout;
+    private ViewGroup presentLayout;
+    private ViewGroup absentLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,13 +57,13 @@ public class SingleEventActivity extends AppCompatActivity {
         View locationRow = findViewById(R.id.location_row);
         View descriptionRow = findViewById(R.id.description_row);
         LinearLayout button_layout = (LinearLayout) findViewById(R.id.button_layout);
-        aanwezigView = (ViewGroup) findViewById(R.id.aanwezig_insert_point);
-        afwezigView = (ViewGroup) findViewById(R.id.afwezig_insert_point);
+        presentView = (ViewGroup) findViewById(R.id.present_insert_point);
+        absentView = (ViewGroup) findViewById(R.id.absent_insert_point);
         LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
 
         eventLayout = (ViewGroup) findViewById(R.id.single_event_layout);
-        aanwezigLayout = (ViewGroup) findViewById(R.id.aanwezig_layout);
-        afwezigLayout = (ViewGroup) findViewById(R.id.afwezig_layout);
+        presentLayout = (ViewGroup) findViewById(R.id.present_layout);
+        absentLayout = (ViewGroup) findViewById(R.id.absent_layout);
 
         final String title = event.getTitle();
         final String description = event.getDescription();
@@ -139,11 +137,11 @@ public class SingleEventActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setAanwezig(View view) {
+    public void setPresent(View view) {
         postSignup(event.getId(), "true");
     }
 
-    public void setAfwezig(View view) {
+    public void setAbsent(View view) {
         postSignup(event.getId(), "false");
     }
 
@@ -171,45 +169,45 @@ public class SingleEventActivity extends AppCompatActivity {
     }
 
     private void initSignups() {
-        Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
-        Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
+        Button presentButton = (Button) findViewById(R.id.present_button);
+        Button absentButton = (Button) findViewById(R.id.absent_button);
         ArrayList<Event.Signup> signups = event.getSignups();
-        ArrayList<String> aanwezig = new ArrayList<>();
-        ArrayList<String> afwezig = new ArrayList<>();
+        ArrayList<String> present = new ArrayList<>();
+        ArrayList<String> absent = new ArrayList<>();
         for (int i = 0; i < signups.size(); i++) {
             Event.Signup signup = signups.get(i);
             if (signup.isAttending()) {
-                aanwezig.add(DataManager.getUser(MainActivity.prefs, signup.getUserID()).getName());
+                present.add(DataManager.getUser(MainActivity.prefs, signup.getUserID()).getName());
             } else {
-                afwezig.add(DataManager.getUser(MainActivity.prefs, signup.getUserID()).getName());
+                absent.add(DataManager.getUser(MainActivity.prefs, signup.getUserID()).getName());
             }
         }
 
-        if (aanwezig.size() != 0) {
-            for (String name : aanwezig) {
+        if (present.size() != 0) {
+            for (String name : present) {
                 View view = inflater.inflate(R.layout.row_singleview, null);
                 fillSingleRow(view, name);
-                aanwezigView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                presentView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             }
         } else {
-            eventLayout.removeView(aanwezigLayout);
+            eventLayout.removeView(presentLayout);
         }
 
-        if (afwezig.size() != 0) {
-            for (String name : afwezig) {
+        if (absent.size() != 0) {
+            for (String name : absent) {
                 View view = inflater.inflate(R.layout.row_singleview, null);
                 fillSingleRow(view, name);
-                afwezigView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                absentView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             }
         } else {
-            eventLayout.removeView(afwezigLayout);
+            eventLayout.removeView(absentLayout);
         }
 
         User ownUser = DataManager.getOwnUser(MainActivity.prefs);
-        if (aanwezig.contains(ownUser.getName()) && aanwezigButton != null) {
-            aanwezigButton.setVisibility(View.GONE);
-        } else if (afwezig.contains(ownUser.getName()) && afwezigButton != null) {
-            afwezigButton.setVisibility(View.GONE);
+        if (present.contains(ownUser.getName()) && presentButton != null) {
+            presentButton.setVisibility(View.GONE);
+        } else if (absent.contains(ownUser.getName()) && absentButton != null) {
+            absentButton.setVisibility(View.GONE);
         }
     }
 

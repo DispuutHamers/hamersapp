@@ -12,7 +12,6 @@ import nl.ecci.hamers.R;
 class EventFragmentPagerAdapter extends FragmentPagerAdapter {
     public final static String upcoming = "upcoming";
     private static String[] tabTitles = null;
-    private final int PAGE_COUNT = 2;
 
     public EventFragmentPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
@@ -24,7 +23,7 @@ class EventFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return PAGE_COUNT;
+        return 2;
     }
 
     @Override
