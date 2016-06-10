@@ -43,7 +43,7 @@ public class NewBeerReviewActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_beer_review_activity);
+        setContentView(R.layout.review_new_activity);
 
         review_body = (EditText) findViewById(R.id.review_body);
         date_button = (Button) findViewById(R.id.pick_date_button);

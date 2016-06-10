@@ -34,7 +34,7 @@ public class NewQuoteFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.new_quote_fragment, null);
+        final View view = inflater.inflate(R.layout.quote_new_fragment, null);
         builder.setView(view)
                 .setTitle(R.string.quote)
                 .setPositiveButton(R.string.send_quote, new DialogInterface.OnClickListener() {

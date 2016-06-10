@@ -29,7 +29,7 @@ public class NewEventActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_event_activity);
+        setContentView(R.layout.event_new_activity);
 
         parentLayout = (RelativeLayout) findViewById(R.id.new_event_parent);
 
