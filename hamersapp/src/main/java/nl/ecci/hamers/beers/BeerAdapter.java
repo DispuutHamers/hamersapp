@@ -52,7 +52,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         this.dataSet = dataSet;
         this.filteredDataSet = dataSet;
         this.context = context;
-        userID = getOwnUser(MainActivity.prefs).getUserID();
+        userID = getOwnUser(MainActivity.prefs).getID();
 
         imageLoader = ImageLoader.getInstance();
         animateFirstListener = new AnimateFirstDisplayListener();

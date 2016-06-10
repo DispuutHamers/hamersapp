@@ -20,7 +20,7 @@ class Quote {
         this.date = date;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 

@@ -9,7 +9,7 @@ public class Event {
 
     public static final String EVENT = "EVENT";
 
-    private final int eventID;
+    private final int id;
     private final String title;
     @SerializedName("beschrijving")
     private final String description;
@@ -22,9 +22,9 @@ public class Event {
     private final Date createdAt;
 
     @SuppressWarnings("SameParameterValue")
-    public Event(int eventID, String title, String description, String location, Date date, Date end_time, Date deadline, ArrayList<Signup> signups, Date createdAt) {
+    public Event(int id, String title, String description, String location, Date date, Date end_time, Date deadline, ArrayList<Signup> signups, Date createdAt) {
         super();
-        this.eventID = eventID;
+        this.id = id;
         this.title = title;
         this.description = description;
         this.location = location;
@@ -36,7 +36,7 @@ public class Event {
     }
 
     public int getID() {
-        return eventID;
+        return id;
     }
 
     public String getTitle() {
@@ -73,8 +73,7 @@ public class Event {
 
     public class Signup {
 
-        @SerializedName("id")
-        private final int signupID;
+        private final int id;
         @SerializedName("event_id")
         private final int eventID;
         @SerializedName("user_id")
@@ -84,17 +83,17 @@ public class Event {
         @SerializedName("created_at")
         private final Date createdAt;
 
-        public Signup(int signupID, int eventID, int userID, boolean attending, Date createdAt) {
+        public Signup(int id, int eventID, int userID, boolean attending, Date createdAt) {
             super();
-            this.signupID = signupID;
+            this.id = id;
             this.eventID = eventID;
             this.userID = userID;
             this.attending = attending;
             this.createdAt = createdAt;
         }
 
-        public int getSignupID() {
-            return signupID;
+        public int getID() {
+            return id;
         }
 
         public int getEventID() {

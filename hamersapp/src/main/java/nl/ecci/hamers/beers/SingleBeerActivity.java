@@ -125,7 +125,7 @@ public class SingleBeerActivity extends AppCompatActivity {
                     Review review = gson.fromJson(jsonObject.toString(), Review.class);
                     if (review.getBeerID() == beer.getID()) {
                         hasReviews = true;
-                        if (review.getUserID() == getOwnUser(MainActivity.prefs).getUserID()) {
+                        if (review.getUserID() == getOwnUser(MainActivity.prefs).getID()) {
                             reviewButton.setVisibility(View.GONE);
                         }
                         insertReview(review);

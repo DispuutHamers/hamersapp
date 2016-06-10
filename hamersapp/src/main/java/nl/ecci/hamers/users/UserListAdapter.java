@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
-import nl.ecci.hamers.helpers.DataManager;
 
 import static nl.ecci.hamers.helpers.Utils.convertNicknames;
 import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
@@ -62,7 +61,7 @@ class UserListAdapter extends ArrayAdapter<User> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, SingleUserActivity.class);
-                intent.putExtra(User.USER_ID, dataSet.get(position).getUserID());
+                intent.putExtra(User.USER_ID, dataSet.get(position).getID());
                 context.startActivity(intent);
             }
         });

@@ -30,7 +30,7 @@ class Meeting {
         this.updatedAt = updatedAt;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 

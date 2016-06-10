@@ -13,9 +13,8 @@ public class User {
         @SerializedName("olid")OLID
     }
 
+    private final int id;
     private final String name;
-    @SerializedName("id")
-    private final int userID;
     private final String email;
     @SerializedName("quotes")
     private final int quoteCount;
@@ -31,10 +30,10 @@ public class User {
     public static final String USER_ID = "USER_ID";
 
     @SuppressWarnings("SameParameterValue")
-    public User(String name, int userID, String email, int quoteCount, int reviewCount, Member member, int batch, ArrayList<Nickname> nicknames, Date createdAt) {
+    public User(int id, String name, String email, int quoteCount, int reviewCount, Member member, int batch, ArrayList<Nickname> nicknames, Date createdAt) {
         super();
+        this.id = id;
         this.name = name;
-        this.userID = userID;
         this.email = email;
         this.quoteCount = quoteCount;
         this.reviewCount = reviewCount;
@@ -44,12 +43,12 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public String getName() {
-        return name;
+    public int getID() {
+        return id;
     }
 
-    public int getUserID() {
-        return userID;
+    public String getName() {
+        return name;
     }
 
     public String getEmail() {

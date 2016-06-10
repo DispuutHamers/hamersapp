@@ -385,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void fillHeader() {
         User user = DataManager.getOwnUser(prefs);
-        if (user.getUserID() != -1) {
+        if (user.getID() != -1) {
             View headerLayout = navigationView.getHeaderView(0);
             TextView userName = (TextView) headerLayout.findViewById(R.id.header_user_name);
             TextView userEmail = (TextView) headerLayout.findViewById(R.id.header_user_email);

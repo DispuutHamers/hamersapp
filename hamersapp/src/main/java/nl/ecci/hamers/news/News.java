@@ -12,8 +12,7 @@ class News {
         @SerializedName("l")LEDEN
     }
 
-    @SerializedName("id")
-    private final int newsID;
+    private final int id;
     private final String title;
     private final String body;
     @SerializedName("cat")
@@ -22,9 +21,9 @@ class News {
     @SerializedName("created_at")
     private final Date createdAt;
 
-    public News(int newsID, String title, String body, String category, Date date, Date createdAt) {
+    public News(int id, String title, String body, String category, Date date, Date createdAt) {
         super();
-        this.newsID = newsID;
+        this.id = id;
         this.title = title;
         this.body = body;
         this.category = category;
@@ -32,8 +31,8 @@ class News {
         this.createdAt = createdAt;
     }
 
-    public int getNewsID() {
-        return newsID;
+    public int getID() {
+        return id;
     }
 
     public String getTitle() {

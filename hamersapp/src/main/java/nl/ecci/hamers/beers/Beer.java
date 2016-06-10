@@ -8,8 +8,7 @@ public class Beer {
 
     public static final String BEER = "BEER";
 
-    @SerializedName("id")
-    private final int beerID;
+    private final int id;
     private final String name;
     @SerializedName("soort")
     private final String kind;
@@ -25,9 +24,9 @@ public class Beer {
     private final Date createdAt;
 
     @SuppressWarnings("SameParameterValue")
-    public Beer(int beerID, String name, String kind, String imageURL, String percentage, String brewer, String country, String rating, String url, Date createdAt) {
+    public Beer(int id, String name, String kind, String imageURL, String percentage, String brewer, String country, String rating, String url, Date createdAt) {
         super();
-        this.beerID = beerID;
+        this.id = id;
         this.name = name;
         this.kind = kind;
         this.imageURL = imageURL;
@@ -40,7 +39,7 @@ public class Beer {
     }
 
     public int getID() {
-        return beerID;
+        return id;
     }
 
     public String getName() {

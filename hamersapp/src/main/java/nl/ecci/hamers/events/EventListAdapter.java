@@ -21,7 +21,6 @@ import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.helpers.DataManager;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> implements Filterable {
@@ -85,7 +84,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         }
 
         ArrayList signups = filteredDataSet.get(position).getSignups();
-        int userID = DataManager.getOwnUser(MainActivity.prefs).getUserID();
+        int userID = DataManager.getOwnUser(MainActivity.prefs).getID();
         Boolean aanwezig = null;
         for (int i = 0; i < signups.size(); i++) {
             Event.Signup signup = (Event.Signup) signups.get(i);
