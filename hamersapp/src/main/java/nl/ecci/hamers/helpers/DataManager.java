@@ -196,7 +196,7 @@ public final class DataManager {
             }
         } catch (JSONException ignored) {
         }
-        return new User("Unknown", -1, "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<Nickname>(), new Date());
+        return new User(-1, "Unknown", "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<Nickname>(), new Date());
     }
 
     public static User getOwnUser(SharedPreferences prefs) {
@@ -206,7 +206,7 @@ public final class DataManager {
         if ((whoami = DataManager.getJsonObject(prefs, DataManager.WHOAMIKEY)) != null) {
             return gson.fromJson(whoami.toString(), User.class);
         }
-        return new User("Unknown", -1, "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<Nickname>(), new Date());
+        return new User(-1, "Unknown", "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<Nickname>(), new Date());
     }
 
     public static Event getEvent(SharedPreferences prefs, int id) {
