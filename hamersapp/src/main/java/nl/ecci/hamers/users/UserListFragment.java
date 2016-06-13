@@ -111,11 +111,13 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
                 sortByUsername();
                 return true;
             case R.id.sort_quotes:
-                sortbyQuoteCount();
+                sortByQuoteCount();
                 return true;
             case R.id.sort_reviews:
-                sortbyReviewCount();
+                sortByReviewCount();
                 return true;
+            case R.id.sort_batch:
+                sortByBatch();
             default:
                 return false;
         }
@@ -128,10 +130,10 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
                 sortByUsername();
                 break;
             case "quotecount":
-                sortbyQuoteCount();
+                sortByQuoteCount();
                 break;
             case "reviewcount":
-                sortbyReviewCount();
+                sortByReviewCount();
                 break;
         }
     }
@@ -158,7 +160,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
         adapter.notifyDataSetChanged();
     }
 
-    private void sortbyQuoteCount() {
+    private void sortByQuoteCount() {
         final Comparator<User> quoteComperator = new Comparator<User>() {
             @Override
             public int compare(User user1, User user2) {
@@ -169,7 +171,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
         adapter.notifyDataSetChanged();
     }
 
-    private void sortbyReviewCount() {
+    private void sortByReviewCount() {
         final Comparator<User> reviewComperator = new Comparator<User>() {
             @Override
             public int compare(User user1, User user2) {
@@ -177,6 +179,17 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
             }
         };
         Collections.sort(dataSet, reviewComperator);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void sortByBatch() {
+        final Comparator<User> batchComperator = new Comparator<User>() {
+            @Override
+            public int compare(User user1, User user2) {
+                return user1.getBatch() - user2.getBatch();
+            }
+        };
+        Collections.sort(dataSet, batchComperator);
         adapter.notifyDataSetChanged();
     }
 
@@ -216,6 +229,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
                     UserListFragment.this.adapter.notifyDataSetChanged();
                 }
             }
+            sort();
             setRefreshing(false);
         }
 

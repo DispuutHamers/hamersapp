@@ -159,6 +159,7 @@
     <!-- Sorting -->
     <string name="sort_quotes">Sorteer op aantal quotes</string>
     <string name="sort_reviews">Sorteer op aantal reviews</string>
+    <string name="sort_batch">Sorteer op lichting</string>
     <string name="sort_rating">Sorteer op cijfer</string>
     <string name="sort_name">Sorteer op naam</string>
     <string name="sort_date_asc">Sorteer op datum (ASC)</string>

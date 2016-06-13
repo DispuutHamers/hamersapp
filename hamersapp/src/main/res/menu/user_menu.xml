@@ -6,5 +6,7 @@
               android:title="@string/sort_quotes"/>
         <item android:id="@+id/sort_reviews"
               android:title="@string/sort_reviews"/>
+        <item android:id="@+id/sort_batch"
+            android:title="@string/sort_batch"/>
     </group>
 </menu>
