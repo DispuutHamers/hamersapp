@@ -52,7 +52,7 @@ public class SingleUserActivity extends AppCompatActivity {
         View nicknameDivider = findViewById(R.id.user_nickname_divider);
         if (user.getNicknames().size() > 0) {
             fillRow(nicknameRow, getString(R.string.user_nickname), convertNicknames(user.getNicknames()));
-        } else if (nicknameRow != null) {
+        } else if (nicknameRow != null && nicknameDivider != null) {
             nicknameRow.setVisibility(View.GONE);
             nicknameDivider.setVisibility(View.GONE);
         }
@@ -91,7 +91,7 @@ public class SingleUserActivity extends AppCompatActivity {
     }
 
     private void loadBackdrop(User user) {
-        final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
+        final ImageView imageView = (ImageView) findViewById(R.id.user_backdrop);
 
         mAttacher = new PhotoViewAttacher(imageView);
 

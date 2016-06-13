@@ -32,7 +32,7 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
         View view = inflater.inflate(R.layout.meeting_fragment, container, false);
         RecyclerView meeting_list = (RecyclerView) view.findViewById(R.id.meeting_recyclerview);
 
-//        setHasOptionsMenu(true);
+        setHasOptionsMenu(false);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         meeting_list.setLayoutManager(layoutManager);

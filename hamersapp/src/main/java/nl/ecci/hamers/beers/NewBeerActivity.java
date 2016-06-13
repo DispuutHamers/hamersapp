@@ -77,6 +77,6 @@ public class NewBeerActivity extends AppCompatActivity {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postData(this, prefs, DataManager.BEERURL, DataManager.BEERKEY, body);
+        DataManager.postOrPatchData(this, prefs, DataManager.BEERURL, -1, DataManager.BEERKEY, body);
     }
 }

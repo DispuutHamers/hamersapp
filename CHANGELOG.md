@@ -3,10 +3,10 @@
 ## [1.6.0](https://github.com/dexbleeker/hamersapp/tree/1.6.0) (upcoming release)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.5.0...1.6.0)
 
-- (initial) Support for meetings
+- Support for meetings
 - Support APIv2
 - Filter events
-- Support for nicknames
+- Support for nicknames and batches
 - Improved user overview (image and layout)
 - Small layout improvements
 

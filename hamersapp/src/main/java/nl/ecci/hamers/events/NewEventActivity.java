@@ -128,7 +128,7 @@ public class NewEventActivity extends AppCompatActivity {
             } catch (JSONException ignored) {
             }
 
-            DataManager.postData(this, MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY, body);
+            DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.EVENTURL, -1, DataManager.EVENTKEY, body);
         } else {
             Snackbar.make(parentLayout, getResources().getString(R.string.missing_fields), Snackbar.LENGTH_SHORT).show();
         }

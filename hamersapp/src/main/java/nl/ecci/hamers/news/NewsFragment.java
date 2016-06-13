@@ -37,6 +37,8 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         View view = inflater.inflate(R.layout.news_fragment, container, false);
         RecyclerView news_list = (RecyclerView) view.findViewById(R.id.news_recyclerview);
 
+        setHasOptionsMenu(false);
+
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         news_list.setLayoutManager(mLayoutManager);
 

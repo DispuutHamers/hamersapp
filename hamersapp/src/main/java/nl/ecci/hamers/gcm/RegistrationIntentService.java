@@ -97,7 +97,7 @@ public class RegistrationIntentService extends IntentService {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postData(null, sharedPreferences, DataManager.GCMURL, DataManager.GCMURL, body);
+        DataManager.postOrPatchData(null, sharedPreferences, DataManager.GCMURL, -1, DataManager.GCMURL, body);
     }
 
     /**
