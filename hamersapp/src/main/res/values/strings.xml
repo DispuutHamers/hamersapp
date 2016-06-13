@@ -96,6 +96,10 @@
     <string name="motion_body">Huilie huilie in dit veld.</string>
     <string name="create_motion">Dien motie in</string>
 
+    <!-- Meetings -->
+    <string name="menu_meeting_notes">Notulen</string>
+    <string name="menu_meeting_agenda">Agenda</string>
+
     <!-- Settings -->
     <string name="general">Algemeen</string>
     <string name="push_title">Push notificaties</string>

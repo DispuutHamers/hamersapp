@@ -1,12 +1,18 @@
 package nl.ecci.hamers.meetings;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 
@@ -17,10 +23,14 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
 
     private final Context context;
     private final ArrayList<Meeting> dataSet;
+    private final Gson gson;
 
     public MeetingAdapter(ArrayList<Meeting> dataSet, Context context) {
         this.dataSet = dataSet;
         this.context = context;
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gson = gsonBuilder.create();
     }
 
     @Override
@@ -32,7 +42,12 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         vh.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v1) {
-                Snackbar.make(view, context.getString(R.string.functionality_added_later), Snackbar.LENGTH_SHORT).show();
+                try {
+                    Intent intent = new Intent(context, SingleMeetingActivity.class);
+                    intent.putExtra(Meeting.ID, dataSet.get(vh.getAdapterPosition()).getID());
+                    context.startActivity(intent);
+                } catch (NullPointerException ignored) {
+                }
             }
         });
 

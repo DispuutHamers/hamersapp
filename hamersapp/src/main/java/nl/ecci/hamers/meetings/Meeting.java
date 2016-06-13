@@ -4,7 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-class Meeting {
+public class Meeting {
+
+    public static final String ID = "ID";
+
     private final int id;
     private final String agenda;
     private final String notes;

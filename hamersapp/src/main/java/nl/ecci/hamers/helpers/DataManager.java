@@ -32,6 +32,7 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.events.Event;
+import nl.ecci.hamers.meetings.Meeting;
 import nl.ecci.hamers.users.User;
 import nl.ecci.hamers.users.User.Nickname;
 
@@ -243,6 +244,25 @@ public final class DataManager {
         } catch (JSONException ignored) {
         }
         return new Beer(-1, "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", new Date());
+    }
+
+    public static Meeting getMeeting(SharedPreferences prefs, int id) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        JSONArray meetings;
+        try {
+            if ((meetings = getJsonArray(prefs, MEETINGKEY)) != null) {
+                for (int i = 0; i < meetings.length(); i++) {
+                    JSONObject meeting = meetings.getJSONObject(i);
+                    if (meeting.getInt("id") == id) {
+                        return gson.fromJson(meeting.toString(), Meeting.class);
+                    }
+                }
+            }
+        } catch (JSONException ignored) {
+        }
+        Date date = new Date();
+        return new Meeting(-1, "Unknown", "Unknown", "Unknown", -1, date, date, date);
     }
 
     private static JSONObject getJsonObject(SharedPreferences prefs, String key) {

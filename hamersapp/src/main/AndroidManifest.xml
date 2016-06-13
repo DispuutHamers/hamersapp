@@ -126,7 +126,16 @@
         <activity android:name="nl.ecci.hamers.users.SingleUserActivity"
             android:parentActivityName="nl.ecci.hamers.MainActivity"
             android:screenOrientation="portrait"
-            android:label="Hamers">
+            android:label="Lid">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nl.ecci.hamers.MainActivity">
+            </meta-data>
+        </activity>
+        <activity android:name="nl.ecci.hamers.meetings.SingleMeetingActivity"
+            android:parentActivityName="nl.ecci.hamers.MainActivity"
+            android:screenOrientation="portrait"
+            android:label="Vergadering">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.ecci.hamers.MainActivity">
