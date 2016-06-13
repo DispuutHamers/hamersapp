@@ -37,7 +37,7 @@
     <string name="new_review">Nieuwe review</string>
     <string name="review_hint">Wat vond je er van?</string>
     <string name="rating">Cijfer: 1</string>
-    <string name="pick_date">Proefdatum :</string>
+    <string name="review_pick_date">Proefdatum :</string>
     <string name="pick_date_button">Datum</string>
     <string name="pick_time_button">Tijd</string>
 
@@ -99,6 +99,11 @@
     <!-- Meetings -->
     <string name="menu_meeting_notes">Notulen</string>
     <string name="menu_meeting_agenda">Agenda</string>
+    <string name="new_meeting">Nieuwe vergadering</string>
+    <string name="new_meeting_subject">Onderwerp</string>
+    <string name="new_meeting_agenda">Agenda</string>
+    <string name="new_meeting_notes">Notulen</string>
+    <string name="new_meeting_pick_date">Vergaderdatum :</string>
 
     <!-- Settings -->
     <string name="general">Algemeen</string>

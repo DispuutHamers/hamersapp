@@ -80,7 +80,7 @@
                         android:ellipsize="end"
                         android:gravity="start|center_vertical"
                         android:singleLine="true"
-                        android:text="@string/pick_date"
+                        android:text="@string/review_pick_date"
                         android:textSize="18sp" />
 
                     <Button

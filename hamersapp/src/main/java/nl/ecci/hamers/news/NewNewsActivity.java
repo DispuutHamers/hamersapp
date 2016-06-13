@@ -39,7 +39,6 @@ public class NewNewsActivity extends AppCompatActivity {
         String title = news_title.getText().toString();
         String newsBody = news_body.getText().toString();
 
-        // TODO: Implement category
         JSONObject body = new JSONObject();
         try {
             body.put("title", title);
@@ -48,14 +47,6 @@ public class NewNewsActivity extends AppCompatActivity {
         }
 
         DataManager.postData(this, MainActivity.prefs, DataManager.NEWSURL, DataManager.NEWSKEY, body);
-    }
-
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
