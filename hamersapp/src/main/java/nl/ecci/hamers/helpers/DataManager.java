@@ -42,7 +42,7 @@ public final class DataManager {
     // URL Appendices
     public static final String QUOTEURL = "quotes";
     public static final String USERURL = "users";
-    public static final String EVENTURL = "events";
+    public static final String EVENTURL = "events?sorted=date";
     public static final String NEWSURL = "news";
     public static final String BEERURL = "beers";
     public static final String REVIEWURL = "reviews";
