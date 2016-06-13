@@ -122,6 +122,12 @@
                         <include
                             android:id="@+id/row_user_reviewcount"
                             layout="@layout/row_detailview" />
+
+                        <include layout="@layout/divider" />
+
+                        <include
+                            android:id="@+id/row_user_batch"
+                            layout="@layout/row_detailview" />
                     </LinearLayout>
 
                 </LinearLayout>

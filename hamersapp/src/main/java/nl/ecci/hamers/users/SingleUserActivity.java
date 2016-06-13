@@ -46,6 +46,7 @@ public class SingleUserActivity extends AppCompatActivity {
         fillRow(findViewById(R.id.row_user_name), getString(R.string.user_name), user.getName());
         fillRow(findViewById(R.id.row_user_quotecount), getString(R.string.user_quotecount), String.valueOf(user.getQuoteCount()));
         fillRow(findViewById(R.id.row_user_reviewcount), getString(R.string.user_reviewcount), String.valueOf(user.getReviewCount()));
+        fillRow(findViewById(R.id.row_user_batch), getString(R.string.user_batch), String.valueOf(user.getBatch()));
 
         View nicknameRow = findViewById(R.id.row_user_nickname);
         View nicknameDivider = findViewById(R.id.user_nickname_divider);
