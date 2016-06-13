@@ -26,7 +26,7 @@ import static nl.ecci.hamers.helpers.Utils.usernameToID;
 
 public class NewQuoteFragment extends DialogFragment {
 
-    private final ArrayList<String> users = new ArrayList<>();
+    private ArrayList<String> users = new ArrayList<>();
 
     @NonNull
     @Override

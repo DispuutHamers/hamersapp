@@ -64,9 +64,9 @@
     <string name="new_review">Nieuwe review</string>
     <string name="review_hint">Wat vond je er van?</string>
     <string name="rating">Cijfer: 1</string>
-    <string name="pick_date">Proefdatum :</string>
-    <string name="pick_date_button">Datum</string>
-    <string name="pick_time_button">Tijd</string>
+    <string name="review_pick_date">Proefdatum :</string>
+    <string name="review_pick_date_button">Datum</string>
+    <string name="review_pick_time_button">Tijd</string>
     <string name="review_update">Wijzig review</string>
     <string name="review_delete">Verwijder review</string>
     <string name="review_delete_message">Weet je zeker dat je deze review wilt verwijderen?</string>

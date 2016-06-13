@@ -89,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:onClick="showDatePickerDialog"
-                        android:text="@string/pick_date_button" />
+                        android:text="@string/review_pick_date_button" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

@@ -84,7 +84,7 @@ public class NewMeetingActivity extends AppCompatActivity {
                 body.put("date", MainActivity.dbDF.parse(date));
             } catch (JSONException | ParseException ignored) {
             }
-            DataManager.postData(this, MainActivity.prefs, DataManager.MEETINGURL, DataManager.MEETINGKEY, body);
+            DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.MEETINGURL, -1, DataManager.MEETINGKEY, body);
         }
     }
 
