@@ -91,7 +91,7 @@ public class SingleUserActivity extends AppCompatActivity {
     }
 
     private void loadBackdrop(User user) {
-        final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
+        final ImageView imageView = (ImageView) findViewById(R.id.user_backdrop);
 
         mAttacher = new PhotoViewAttacher(imageView);
 
