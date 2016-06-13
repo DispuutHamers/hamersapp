@@ -54,6 +54,17 @@
                     <include layout="@layout/divider" />
 
                     <TextView
+                        android:id="@+id/meeting_user"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:padding="8dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/secondary_text_light" />
+
+                    <include layout="@layout/divider" />
+
+                    <TextView
                         android:id="@+id/meeting_agenda"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
