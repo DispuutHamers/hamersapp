@@ -104,6 +104,7 @@
     <string name="new_meeting_agenda">Agenda</string>
     <string name="new_meeting_notes">Notulen</string>
     <string name="new_meeting_pick_date">Vergaderdatum :</string>
+    <string name="new_meeting_user">Notulist :</string>
 
     <!-- Settings -->
     <string name="general">Algemeen</string>

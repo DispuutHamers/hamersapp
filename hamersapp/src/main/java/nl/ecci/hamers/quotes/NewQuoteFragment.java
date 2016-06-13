@@ -11,9 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,12 +20,13 @@ import java.util.ArrayList;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.Utils;
 
 import static nl.ecci.hamers.helpers.Utils.usernameToID;
 
 public class NewQuoteFragment extends DialogFragment {
 
-    private final ArrayList<String> users = new ArrayList<>();
+    private ArrayList<String> users = new ArrayList<>();
 
     @NonNull
     @Override
@@ -45,7 +44,7 @@ public class NewQuoteFragment extends DialogFragment {
                                 String quote = edit.getText().toString();
 
                                 // Get userID from spinner
-                                Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
+                                Spinner userSpinner = (Spinner) view.findViewById(R.id.quote_user_spinner);
                                 int userID = usernameToID(MainActivity.prefs, userSpinner.getSelectedItem().toString());
 
                                 // Post quote
@@ -53,26 +52,12 @@ public class NewQuoteFragment extends DialogFragment {
                             }
                         }
                 );
-        Spinner spinner = (Spinner) view.findViewById(R.id.user_spinner);
-        createUserList();
+        Spinner spinner = (Spinner) view.findViewById(R.id.quote_user_spinner);
+        users = Utils.createUserList(this.getContext());
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, users);
         spinner.setAdapter(adapter);
 
         return builder.create();
-    }
-
-    private void createUserList() {
-        JSONArray userJSON;
-        try {
-            if ((userJSON = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERKEY)) != null) {
-                for (int i = 0; i < userJSON.length(); i++) {
-                    users.add(userJSON.getJSONObject(i).getString("name"));
-                }
-            }
-        } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.snackbar_userloaderror), Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     private void postQuote(String quote, int userID) {

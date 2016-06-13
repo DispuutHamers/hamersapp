@@ -19,6 +19,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.users.User;
 
@@ -136,5 +137,20 @@ public class Utils {
             return result;
         }
         return result;
+    }
+
+    public static ArrayList<String> createUserList(Context context) {
+        ArrayList<String> users = new ArrayList<>();
+        JSONArray userJSON;
+        try {
+            if ((userJSON = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERKEY)) != null) {
+                for (int i = 0; i < userJSON.length(); i++) {
+                    users.add(userJSON.getJSONObject(i).getString("name"));
+                }
+            }
+        } catch (JSONException e) {
+            Toast.makeText(context, context.getString(R.string.snackbar_userloaderror), Toast.LENGTH_SHORT).show();
+        }
+        return users;
     }
 }
