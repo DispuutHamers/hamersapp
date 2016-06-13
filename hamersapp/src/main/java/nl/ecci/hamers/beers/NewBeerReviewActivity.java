@@ -33,8 +33,9 @@ import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
 public class NewBeerReviewActivity extends AppCompatActivity {
 
     private Beer beer;
+    private Review review;
     private TextView progress;
-    private int rating;
+    private int rating = 1;
     private LinearLayout parentLayout;
     private EditText review_body;
     private Button date_button;
@@ -59,22 +60,19 @@ public class NewBeerReviewActivity extends AppCompatActivity {
         }
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        progress = (TextView) findViewById(R.id.rating);
 
-        // Set date to current date
         Button date_button = (Button) findViewById(R.id.pick_date_button);
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", MainActivity.locale);
-        date_button.setText(dateFormat.format(calendar.getTime()));
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         beer = gson.fromJson(getIntent().getStringExtra(Beer.BEER), Beer.class);
-
+        review = gson.fromJson(getIntent().getStringExtra(Review.REVIEW), Review.class);
 
         TextView title = (TextView) findViewById(R.id.review_title);
         title.setText(beer.getName());
-
-        rating = 1;
 
         SeekBar sb = (SeekBar) findViewById(R.id.ratingseekbar);
         if (sb != null) {
@@ -96,7 +94,14 @@ public class NewBeerReviewActivity extends AppCompatActivity {
                 }
             });
         }
-        progress = (TextView) findViewById(R.id.rating);
+
+        if (review != null && sb != null) {
+            review_body.setText(review.getDescription());
+            sb.setProgress(review.getRating() - 1);
+            date_button.setText(dateFormat.format(review.getProefdatum()));
+        } else {
+            date_button.setText(dateFormat.format(calendar.getTime()));
+        }
     }
 
     @Override
@@ -115,20 +120,23 @@ public class NewBeerReviewActivity extends AppCompatActivity {
     }
 
     public void postReview(View view) {
-        String review = review_body.getText().toString();
+        String review_body = this.review_body.getText().toString();
         String date = date_button.getText().toString();
 
-        if (review.length() > 2) {
+        if (review_body.length() > 2) {
             JSONObject body = new JSONObject();
             try {
                 body.put("beer_id", beer.getID());
-                body.put("description", review);
+                body.put("description", review_body);
                 body.put("rating", rating);
                 body.put("proefdatum", MainActivity.parseDate(date));
+                if (review != null) {
+                    DataManager.postOrPatchData(this, prefs, DataManager.REVIEWURL, review.getID(), DataManager.REVIEWKEY, body);
+                } else {
+                    DataManager.postOrPatchData(this, prefs, DataManager.REVIEWURL, -1, DataManager.REVIEWKEY, body);
+                }
             } catch (JSONException ignored) {
             }
-
-            DataManager.postData(this, prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY, body);
         } else {
             Snackbar.make(parentLayout, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show();
         }

@@ -1,6 +1,8 @@
 package nl.ecci.hamers.beers;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -8,7 +10,9 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +44,7 @@ public class SingleBeerActivity extends AppCompatActivity {
     private Beer beer;
     private Button reviewButton;
     private ViewGroup reviewViewGroup;
+    private Review ownReview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +70,15 @@ public class SingleBeerActivity extends AppCompatActivity {
         reviewViewGroup = (ViewGroup) findViewById(R.id.reviews);
 
         final ImageView beerImage = (ImageView) findViewById(R.id.beer_image);
-        reviewButton = (Button) findViewById(R.id.sendreview_button);
+        reviewButton = (Button) findViewById(R.id.review_create_button);
+        if (reviewButton != null) {
+            reviewButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    createReview(ownReview);
+                }
+            });
+        }
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();
@@ -86,7 +99,6 @@ public class SingleBeerActivity extends AppCompatActivity {
 
         // Universal Image Loader
         ImageLoader imageLoader = ImageLoader.getInstance();
-
         imageLoader.displayImage(beer.getImageURL(), beerImage);
 
         beerImage.setOnClickListener(new View.OnClickListener() {
@@ -99,8 +111,6 @@ public class SingleBeerActivity extends AppCompatActivity {
                 ActivityCompat.startActivity(SingleBeerActivity.this, intent, options.toBundle());
             }
         });
-
-        getReviews();
     }
 
     @Override
@@ -127,6 +137,7 @@ public class SingleBeerActivity extends AppCompatActivity {
                         hasReviews = true;
                         if (review.getUserID() == getOwnUser(MainActivity.prefs).getID()) {
                             reviewButton.setVisibility(View.GONE);
+                            ownReview = review;
                         }
                         insertReview(review);
                     }
@@ -141,12 +152,16 @@ public class SingleBeerActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks the button to create a new beerreview,
+     * Called when the user clicks the button to create a new beer review,
      * starts NewBeerActivity.
      */
-    public void createReview(View view) {
+    public void createReview(Review review) {
         Intent intent = new Intent(this, NewBeerReviewActivity.class);
         intent.putExtra(Beer.BEER, gson.toJson(beer, Beer.class));
+
+        if (review != null) {
+            intent.putExtra(Review.REVIEW, gson.toJson(review, Review.class));
+        }
 
         int requestCode = 1;
         startActivityForResult(intent, requestCode);
@@ -173,6 +188,47 @@ public class SingleBeerActivity extends AppCompatActivity {
             insertPoint.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             insertPoint.addView(divider);
         }
+        if (getOwnUser(MainActivity.prefs).getID() == review.getUserID()) {
+            registerForContextMenu(view);
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.review_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.review_update:
+                createReview(ownReview);
+                return true;
+            case R.id.review_delete:
+                deleteReview();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private void deleteReview() {
+        new AlertDialog.Builder(SingleBeerActivity.this)
+                .setTitle(getString(R.string.review_delete))
+                .setMessage(getString(R.string.review_delete_message))
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .show();
     }
 
     private void refreshActivity() {
@@ -190,5 +246,11 @@ public class SingleBeerActivity extends AppCompatActivity {
 
         TextView descriptionView = (TextView) view.findViewById(R.id.row_description);
         descriptionView.setText(description);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        getReviews();
     }
 }

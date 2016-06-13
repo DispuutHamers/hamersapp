@@ -40,15 +40,12 @@ public class NewQuoteFragment extends DialogFragment {
                 .setPositiveButton(R.string.send_quote, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                // Get quote from editText
                                 EditText edit = (EditText) view.findViewById(R.id.quote_input);
                                 String quote = edit.getText().toString();
 
-                                // Get userID from spinner
                                 Spinner userSpinner = (Spinner) view.findViewById(R.id.user_spinner);
                                 int userID = usernameToID(MainActivity.prefs, userSpinner.getSelectedItem().toString());
 
-                                // Post quote
                                 NewQuoteFragment.this.postQuote(quote, userID);
                             }
                         }
@@ -83,6 +80,6 @@ public class NewQuoteFragment extends DialogFragment {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postData(this.getContext(), MainActivity.prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY, body);
+        DataManager.postOrPatchData(this.getContext(), MainActivity.prefs, DataManager.QUOTEURL, -1, DataManager.QUOTEKEY, body);
     }
 }

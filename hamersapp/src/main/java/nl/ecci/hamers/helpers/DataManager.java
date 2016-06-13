@@ -89,8 +89,11 @@ public final class DataManager {
         Singleton.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void postData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY, JSONObject body) {
+    public static void postOrPatchData(final Context context, final SharedPreferences prefs, final String dataURL, final int urlAppendix, final String dataKEY, JSONObject body) {
         String url = baseURL + dataURL;
+        if (urlAppendix != -1) {
+            url = baseURL + dataURL + "/" + urlAppendix;
+        }
 
         JsonObjectRequest request = new JsonObjectRequest(url, body,
                 new Response.Listener<JSONObject>() {
@@ -103,7 +106,7 @@ public final class DataManager {
                             Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
                             if (dataURL.equals(SIGNUPURL)) {
                                 getData(context, prefs, EVENTURL, EVENTURL);
-                            } else {
+                            } else if (urlAppendix != -1){
                                 getData(context, prefs, dataURL, dataKEY);
                             }
                         }
@@ -120,6 +123,9 @@ public final class DataManager {
                 Map<String, String> params = new HashMap<>();
                 params.put("Authorization", "Token token=" + prefs.getString(APIKEYKEY, ""));
                 params.put("Content-Type", "Application/json");
+                if (urlAppendix != -1) {
+                    params.put("X-HTTP-Method-Override", "PATCH");
+                }
                 return params;
             }
         };

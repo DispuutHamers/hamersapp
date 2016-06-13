@@ -155,7 +155,7 @@ public class SingleEventActivity extends AppCompatActivity {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postData(this, MainActivity.prefs, DataManager.SIGNUPURL, null, body);
+        DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.SIGNUPURL, -1, null, body);
         this.finish();
     }
 

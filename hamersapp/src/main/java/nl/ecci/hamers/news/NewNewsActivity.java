@@ -47,7 +47,7 @@ public class NewNewsActivity extends AppCompatActivity {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postData(this, MainActivity.prefs, DataManager.NEWSURL, DataManager.NEWSKEY, body);
+        DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.NEWSURL, -1, DataManager.NEWSKEY, body);
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {

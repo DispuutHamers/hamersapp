@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 class Review {
+
+    public static final String REVIEW = "REVIEW";
+
     private final int id;
     @SerializedName("beer_id")
     private final int beerID;

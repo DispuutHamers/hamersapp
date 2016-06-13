@@ -71,6 +71,6 @@ public class MotionFragment extends Fragment {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postData(this.getContext(), MainActivity.prefs, DataManager.MOTIEURL, null, body);
+        DataManager.postOrPatchData(this.getContext(), MainActivity.prefs, DataManager.MOTIEURL, -1, null, body);
     }
 }
