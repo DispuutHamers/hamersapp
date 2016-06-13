@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,6 +32,7 @@ import static nl.ecci.hamers.helpers.Utils.usernameToID;
 
 public class NewMeetingActivity extends AppCompatActivity {
 
+    private Meeting meeting;
     private Spinner spinner;
     private Button date_button;
 
@@ -46,6 +50,8 @@ public class NewMeetingActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
         }
 
+        EditText meeting_subject = (EditText) findViewById(R.id.meeting_subject);
+        EditText meeting_agenda = (EditText) findViewById(R.id.meeting_agenda);
         spinner = (Spinner) findViewById(R.id.meeting_user_spinner);
         ArrayList<String> users = Utils.createUserList(this);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, users);
@@ -53,11 +59,20 @@ public class NewMeetingActivity extends AppCompatActivity {
             spinner.setAdapter(adapter);
         }
 
-        // Set date to current date
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        meeting = gson.fromJson(getIntent().getStringExtra(Meeting.ID), Meeting.class);
+
         date_button = (Button) findViewById(R.id.meeting_date_button);
-        if (date_button != null) {
-            Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", MainActivity.locale);
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", MainActivity.locale);
+
+        if (meeting != null && meeting_subject != null && meeting_agenda != null) {
+            meeting_subject.setText(meeting.getSubject());
+            meeting_agenda.setText(meeting.getAgenda());
+            spinner.setSelection(meeting.getUserID());
+            date_button.setText(dateFormat.format(meeting.getDate()));
+        } else {
             date_button.setText(dateFormat.format(calendar.getTime()));
         }
     }
@@ -82,9 +97,13 @@ public class NewMeetingActivity extends AppCompatActivity {
                 body.put("notes", notes);
                 body.put("user_id", userID);
                 body.put("date", MainActivity.dbDF.parse(date));
+                if (meeting != null) {
+                    DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.MEETINGURL, meeting.getID(), DataManager.MEETINGKEY, body);
+                } else {
+                    DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.MEETINGURL, -1, DataManager.MEETINGKEY, body);
+                }
             } catch (JSONException | ParseException ignored) {
             }
-            DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.MEETINGURL, -1, DataManager.MEETINGKEY, body);
         }
     }
 
