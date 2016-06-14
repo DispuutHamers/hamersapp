@@ -3,135 +3,141 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="nl.ecci.hamers">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- Internet + sdcard access (for caching purposes) -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- Push notifications -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
-    <permission android:name="com.example.gcm.permission.C2D_MESSAGE"
-                android:protectionLevel="signature"/>
-    <uses-permission android:name="nl.ecci.hamers.gcm.permission.C2D_MESSAGE"/>
+    <permission
+        android:name="com.example.gcm.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="nl.ecci.hamers.gcm.permission.C2D_MESSAGE" />
 
-    <application android:label="@string/app_name"
-                 android:icon="@drawable/launcher_icon"
-                 android:theme="@style/AppTheme"
-                 android:hardwareAccelerated="true"
-                 android:allowBackup="false"
-                 tools:replace="android:allowBackup">
+    <application
+        android:name="android.support.multidex.MultiDexApplication"
+        android:allowBackup="false"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/launcher_icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
         <receiver
-                android:name="com.google.android.gms.gcm.GcmReceiver"
-                android:exported="true"
-                android:permission="com.google.android.c2dm.permission.SEND">
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-                <category android:name="gcm.play.android.samples.com.gcmquickstart"/>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="gcm.play.android.samples.com.gcmquickstart" />
             </intent-filter>
         </receiver>
+
         <service
-                android:name="nl.ecci.hamers.gcm.MyGcmListenerService"
-                android:exported="false">
+            android:name="nl.ecci.hamers.gcm.MyGcmListenerService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
         <service
-                android:name="nl.ecci.hamers.gcm.MyInstanceIDListenerService"
-                android:exported="false">
+            android:name="nl.ecci.hamers.gcm.MyInstanceIDListenerService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
         <!-- [END instanceId_listener] -->
         <service
-                android:name="nl.ecci.hamers.gcm.RegistrationIntentService"
-                android:exported="false">
-        </service>
+            android:name="nl.ecci.hamers.gcm.RegistrationIntentService"
+            android:exported="false"></service>
 
-        <activity android:name="nl.ecci.hamers.MainActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name="nl.ecci.hamers.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="nl.ecci.hamers.MainActivity"/>
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nl.ecci.hamers.MainActivity" />
         </activity>
-        <activity android:name="nl.ecci.hamers.beers.NewBeerReviewActivity"
-                  android:parentActivityName="nl.ecci.hamers.beers.SingleBeerActivity"
-                  android:screenOrientation="portrait"
-                  android:label="@string/new_review">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="nl.ecci.hamers.beers.SingleBeerActivity"/>
-        </activity>
-        <activity android:name="nl.ecci.hamers.beers.SingleBeerActivity"
-                  android:parentActivityName="nl.ecci.hamers.MainActivity"
-                  android:screenOrientation="portrait"
-                  android:label="Details">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="nl.ecci.hamers.MainActivity">
-            </meta-data>
-        </activity>
-        <activity android:name="nl.ecci.hamers.events.SingleEventActivity"
-                  android:parentActivityName="nl.ecci.hamers.MainActivity"
-                  android:screenOrientation="portrait">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="nl.ecci.hamers.MainActivity">
-            </meta-data>
-        </activity>
-        <activity android:name="nl.ecci.hamers.events.NewEventActivity"
-                  android:parentActivityName="nl.ecci.hamers.MainActivity"
-                  android:screenOrientation="portrait"
-                    android:label="@string/new_event">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="nl.ecci.hamers.MainActivity">
-            </meta-data>
-        </activity>
-        <activity android:name="nl.ecci.hamers.news.NewNewsActivity"
-                  android:parentActivityName="nl.ecci.hamers.MainActivity"
-                  android:screenOrientation="portrait"
-                  android:label="@string/new_news">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="nl.ecci.hamers.MainActivity">
-            </meta-data>
-        </activity>
-        <activity android:name="nl.ecci.hamers.beers.NewBeerActivity"
-                  android:parentActivityName="nl.ecci.hamers.MainActivity"
-                  android:screenOrientation="portrait"
-                android:label="@string/new_beer">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="nl.ecci.hamers.MainActivity">
-            </meta-data>
-        </activity>
-        <activity android:name="nl.ecci.hamers.helpers.SingleImageActivity"
-                  android:parentActivityName="nl.ecci.hamers.beers.SingleBeerActivity"
-                  android:screenOrientation="portrait"
-                  android:label="Hamers">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="nl.ecci.hamers.MainActivity">
-            </meta-data>
-        </activity>
-        <activity android:name="nl.ecci.hamers.users.SingleUserActivity"
-            android:parentActivityName="nl.ecci.hamers.MainActivity"
-            android:screenOrientation="portrait"
-            android:label="Hamers">
+        <activity
+            android:name="nl.ecci.hamers.beers.NewBeerReviewActivity"
+            android:label="@string/new_review"
+            android:parentActivityName="nl.ecci.hamers.beers.SingleBeerActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity">
-            </meta-data>
+                android:value="nl.ecci.hamers.beers.SingleBeerActivity" />
         </activity>
+        <activity
+            android:name="nl.ecci.hamers.beers.SingleBeerActivity"
+            android:label="Details"
+            android:parentActivityName="nl.ecci.hamers.MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nl.ecci.hamers.MainActivity"></meta-data>
+        </activity>
+        <activity
+            android:name="nl.ecci.hamers.events.SingleEventActivity"
+            android:parentActivityName="nl.ecci.hamers.MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nl.ecci.hamers.MainActivity"></meta-data>
+        </activity>
+        <activity
+            android:name="nl.ecci.hamers.events.NewEventActivity"
+            android:label="@string/new_event"
+            android:parentActivityName="nl.ecci.hamers.MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nl.ecci.hamers.MainActivity"></meta-data>
+        </activity>
+        <activity
+            android:name="nl.ecci.hamers.news.NewNewsActivity"
+            android:label="@string/new_news"
+            android:parentActivityName="nl.ecci.hamers.MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nl.ecci.hamers.MainActivity"></meta-data>
+        </activity>
+        <activity
+            android:name="nl.ecci.hamers.beers.NewBeerActivity"
+            android:label="@string/new_beer"
+            android:parentActivityName="nl.ecci.hamers.MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nl.ecci.hamers.MainActivity"></meta-data>
+        </activity>
+        <activity
+            android:name="nl.ecci.hamers.helpers.SingleImageActivity"
+            android:label="Hamers"
+            android:parentActivityName="nl.ecci.hamers.beers.SingleBeerActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nl.ecci.hamers.MainActivity"></meta-data>
+        </activity>
+        <activity
+            android:name="nl.ecci.hamers.users.SingleUserActivity"
+            android:label="Hamers"
+            android:parentActivityName="nl.ecci.hamers.MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nl.ecci.hamers.MainActivity"></meta-data>
+        </activity>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
