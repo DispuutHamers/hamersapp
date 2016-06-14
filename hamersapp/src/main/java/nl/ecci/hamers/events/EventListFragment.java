@@ -20,13 +20,17 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.users.User;
 
 public class EventListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -159,10 +163,21 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 GsonBuilder gsonBuilder = new GsonBuilder();
                 gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
                 Gson gson = gsonBuilder.create();
+                Date date = new Date();
 
-                Type type = new TypeToken<ArrayList<Event>>() {
-                }.getType();
-                dataSet = gson.fromJson(json.toString(), type);
+                try {
+                    for (int i = 0; i < json.length(); i++) {
+                        JSONObject temp = json.getJSONObject(i);
+                        Event event = gson.fromJson(temp.toString(), Event.class);
+
+                        if (upcoming && event.getDate().after(date)) {
+                            dataSet.add(event);
+                        } else {
+                            dataSet.add(event);
+                        }
+                    }
+                } catch (JSONException ignored) {
+                }
             }
             return dataSet;
         }
