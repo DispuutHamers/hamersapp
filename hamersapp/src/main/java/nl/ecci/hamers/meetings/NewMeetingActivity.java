@@ -33,7 +33,6 @@ import static nl.ecci.hamers.helpers.Utils.usernameToID;
 public class NewMeetingActivity extends AppCompatActivity {
 
     private Meeting meeting;
-    private Spinner spinner;
     private Button date_button;
 
     @Override
@@ -52,12 +51,6 @@ public class NewMeetingActivity extends AppCompatActivity {
 
         EditText meeting_subject = (EditText) findViewById(R.id.meeting_subject);
         EditText meeting_agenda = (EditText) findViewById(R.id.meeting_agenda);
-        spinner = (Spinner) findViewById(R.id.meeting_user_spinner);
-        ArrayList<String> users = Utils.createUserList(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, users);
-        if (spinner != null) {
-            spinner.setAdapter(adapter);
-        }
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
@@ -70,7 +63,6 @@ public class NewMeetingActivity extends AppCompatActivity {
         if (meeting != null && meeting_subject != null && meeting_agenda != null) {
             meeting_subject.setText(meeting.getSubject());
             meeting_agenda.setText(meeting.getAgenda());
-            spinner.setSelection(meeting.getUserID());
             date_button.setText(dateFormat.format(meeting.getDate()));
         } else {
             date_button.setText(dateFormat.format(calendar.getTime()));
@@ -88,21 +80,18 @@ public class NewMeetingActivity extends AppCompatActivity {
             String notes = meeting_notes.getText().toString();
             String date = date_button.getText().toString();
 
-            int userID = usernameToID(MainActivity.prefs, spinner.getSelectedItem().toString());
-
             JSONObject body = new JSONObject();
             try {
-                body.put("subject", subject);
+                body.put("onderwerp", subject);
                 body.put("agenda", agenda);
                 body.put("notes", notes);
-                body.put("user_id", userID);
-                body.put("date", MainActivity.dbDF.parse(date));
+                body.put("date", MainActivity.parseDate(date));
                 if (meeting != null) {
                     DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.MEETINGURL, meeting.getID(), DataManager.MEETINGKEY, body);
                 } else {
                     DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.MEETINGURL, -1, DataManager.MEETINGKEY, body);
                 }
-            } catch (JSONException | ParseException ignored) {
+            } catch (JSONException  ignored) {
             }
         }
     }
