@@ -42,6 +42,8 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         news_list.setLayoutManager(mLayoutManager);
 
+        setHasOptionsMenu(false);
+
         initSwiper(view, news_list, mLayoutManager);
 
         adapter = new NewsAdapter(dataSet);

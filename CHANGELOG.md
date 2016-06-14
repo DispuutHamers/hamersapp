@@ -10,6 +10,13 @@
 - Improved user overview (image and layout)
 - Small layout improvements
 
+## [1.5.2](https://github.com/dexbleeker/hamersapp/tree/1.5.2) (2016-06-15)
+[Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.5.1...1.5.2)
+
+- Use framework to fix Google's bug in SupportPreferenceFragment (settings)
+- Remove menu in NewsFragment
+- Minor date parse improvements
+
 ## [1.5.1](https://github.com/dexbleeker/hamersapp/tree/1.5.1) (2016-06-03)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.5.0...1.5.1)
 
