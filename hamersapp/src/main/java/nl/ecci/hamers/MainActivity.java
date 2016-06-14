@@ -53,6 +53,7 @@ import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.meetings.MeetingFragment;
+import nl.ecci.hamers.meetings.NewMeetingActivity;
 import nl.ecci.hamers.news.NewNewsActivity;
 import nl.ecci.hamers.news.NewsFragment;
 import nl.ecci.hamers.quotes.NewQuoteFragment;
@@ -352,7 +353,8 @@ public class MainActivity extends AppCompatActivity {
      * When user presses "+" in MeetingFragment, start new dialog with NewMeetingActivity
      */
     public void newMeeting(View view) {
-        Snackbar.make(view, getString(R.string.functionality_added_later), Snackbar.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, NewMeetingActivity.class);
+        startActivity(intent);
     }
 
     /**

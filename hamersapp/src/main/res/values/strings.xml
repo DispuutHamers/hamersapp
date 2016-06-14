@@ -64,9 +64,9 @@
     <string name="new_review">Nieuwe review</string>
     <string name="review_hint">Wat vond je er van?</string>
     <string name="rating">Cijfer: 1</string>
-    <string name="pick_date">Proefdatum :</string>
-    <string name="pick_date_button">Datum</string>
-    <string name="pick_time_button">Tijd</string>
+    <string name="review_pick_date">Proefdatum :</string>
+    <string name="review_pick_date_button">Datum</string>
+    <string name="review_pick_time_button">Tijd</string>
     <string name="review_update">Wijzig review</string>
     <string name="review_delete">Verwijder review</string>
     <string name="review_delete_message">Weet je zeker dat je deze review wilt verwijderen?</string>
@@ -98,6 +98,16 @@
     <string name="motion_hint">Wat is er stuk?</string>
     <string name="motion_body">Huilie huilie in dit veld.</string>
     <string name="create_motion">Dien motie in</string>
+
+    <!-- Meetings -->
+    <string name="menu_meeting_notes">Notulen</string>
+    <string name="menu_meeting_agenda">Agenda</string>
+    <string name="new_meeting">Nieuwe vergadering</string>
+    <string name="new_meeting_subject">Onderwerp</string>
+    <string name="new_meeting_agenda">Agenda</string>
+    <string name="new_meeting_notes">Notulen</string>
+    <string name="new_meeting_pick_date">Vergaderdatum :</string>
+    <string name="new_meeting_user">Notulist :</string>
 
     <!-- Settings -->
     <string name="general">Algemeen</string>
