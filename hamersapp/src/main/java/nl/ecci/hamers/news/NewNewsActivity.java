@@ -41,18 +41,10 @@ public class NewNewsActivity extends AppCompatActivity {
         String body = news_body.getText().toString();
 
         Map<String, String> params = new HashMap<>();
-        params.put("news[title]", Uri.encode(title));
-        params.put("news[body]", Uri.encode(body));
+        params.put("news[title]", title);
+        params.put("news[body]", body);
 
         DataManager.postData(this, MainActivity.prefs, DataManager.NEWSURL, DataManager.NEWSKEY, params);
-    }
-
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
