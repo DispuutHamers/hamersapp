@@ -1,21 +1,5 @@
 package nl.ecci.hamers.gcm;
 
-/**
- * Copyright 2015 Google Inc. All Rights Reserved.
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -86,7 +70,6 @@ public class MyGcmListenerService extends GcmListenerService {
      * @param data Data bundle containing message data as key/value pairs.
      *             For Set of keys use data.keySet().
      */
-    // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -117,7 +100,7 @@ public class MyGcmListenerService extends GcmListenerService {
                     message = "- user";
                 }
 
-                // Add quote to quotelist
+                // Add quote to quote list
                 if ((json = DataManager.getJsonArray(prefs, DataManager.QUOTEKEY)) != null) {
                     JSONArray quotes = new JSONArray();
                     quotes.put(quote);
@@ -127,8 +110,7 @@ public class MyGcmListenerService extends GcmListenerService {
                     prefs.edit().putString(DataManager.QUOTEKEY, quotes.toString()).apply();
                 }
             }
-        } catch (JSONException | NullPointerException e) {
-            e.printStackTrace();
+        } catch (JSONException | NullPointerException ignored) {
         }
 
         // EVENT
@@ -139,7 +121,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 title = event.getString(EVENTTITLE);
                 message = event.getString(EVENTDESCRIPTION);
 
-                // Add event to eventlist
+                // Add event to event list
                 if ((json = DataManager.getJsonArray(prefs, DataManager.EVENTKEY)) != null) {
                     JSONArray events = new JSONArray();
                     for (int i = 0; i < json.length(); i++) {
@@ -149,8 +131,7 @@ public class MyGcmListenerService extends GcmListenerService {
                     prefs.edit().putString(DataManager.EVENTKEY, events.toString()).apply();
                 }
             }
-        } catch (JSONException | NullPointerException e) {
-            e.printStackTrace();
+        } catch (JSONException | NullPointerException ignored) {
         }
 
         // BEER
@@ -161,18 +142,13 @@ public class MyGcmListenerService extends GcmListenerService {
                 title = "Biertje: " + beer.getString(BEERNAME);
                 message = "Is net toegevoegd aan de database!";
 
-                // Add beer to beerlist
+                // Add beer to beer list
                 if ((json = DataManager.getJsonArray(prefs, DataManager.BEERKEY)) != null) {
-                    JSONArray beers = new JSONArray();
-                    for (int i = 0; i < json.length(); i++) {
-                        beers.put(json.getJSONObject(i));
-                    }
-                    beers.put(beer);
-                    prefs.edit().putString(DataManager.BEERKEY, beers.toString()).apply();
+                    json.put(beer);
+                    prefs.edit().putString(DataManager.BEERKEY, json.toString()).apply();
                 }
             }
-        } catch (JSONException | NullPointerException e) {
-            e.printStackTrace();
+        } catch (JSONException | NullPointerException ignored) {
         }
 
         // REVIEW
@@ -193,16 +169,11 @@ public class MyGcmListenerService extends GcmListenerService {
 
                 // Add review to reviewlist
                 if ((json = DataManager.getJsonArray(prefs, DataManager.REVIEWKEY)) != null) {
-                    JSONArray reviews = new JSONArray();
-                    for (int i = 0; i < json.length(); i++) {
-                        reviews.put(json.getJSONObject(i));
-                    }
-                    reviews.put(review);
-                    prefs.edit().putString(DataManager.REVIEWKEY, reviews.toString()).apply();
+                    json.put(review);
+                    prefs.edit().putString(DataManager.REVIEWKEY, json.toString()).apply();
                 }
             }
-        } catch (JSONException | NullPointerException e) {
-            e.printStackTrace();
+        } catch (JSONException | NullPointerException ignored) {
         }
 
         // Show notification
@@ -222,8 +193,7 @@ public class MyGcmListenerService extends GcmListenerService {
     private void sendNotification(String title, String message, Type type) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.launcher_icon);
@@ -238,6 +208,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setContentIntent(pendingIntent);
 
         NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
+        notificationBuilder.setStyle(bigTextStyle);
 
         switch (type) {
             case QUOTE:
@@ -248,8 +219,7 @@ public class MyGcmListenerService extends GcmListenerService {
             case EVENT:
                 bigTextStyle.setBigContentTitle(title);
                 try {
-                    bigTextStyle.bigText("Locatie: " + event.getString(EVENTLOCATION) + "\n" +
-                            message);
+                    bigTextStyle.bigText("Locatie: " + event.getString(EVENTLOCATION) + "\n" + message);
                 } catch (JSONException ignored) {
                 }
                 break;
@@ -278,11 +248,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 break;
         }
 
-
-        notificationBuilder.setStyle(bigTextStyle);
-
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
         notificationManager.notify(0, notificationBuilder.build());
     }
 
