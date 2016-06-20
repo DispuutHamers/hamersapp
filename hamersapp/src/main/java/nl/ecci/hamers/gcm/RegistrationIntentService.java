@@ -92,8 +92,7 @@ public class RegistrationIntentService extends IntentService {
     private void sendRegistrationToServer(String token) {
         JSONObject body = new JSONObject();
         try {
-            body.put("device_key", token);
-
+            body.put("device", token);
         } catch (JSONException ignored) {
         }
 
