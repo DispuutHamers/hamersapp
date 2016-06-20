@@ -38,8 +38,8 @@ import nl.ecci.hamers.users.User.Nickname;
 
 public final class DataManager {
     // URL
-//    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
+    public static final String baseURL = "https://zondersikkel.nl/api/v2/";
+//    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
     // URL Appendices
     public static final String QUOTEURL = "quotes";
     public static final String USERURL = "users";
