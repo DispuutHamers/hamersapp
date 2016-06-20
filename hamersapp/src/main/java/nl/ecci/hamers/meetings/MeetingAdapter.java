@@ -51,7 +51,9 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.subject.setText(dataSet.get(position).getSubject());
-        holder.date.setText(MainActivity.appDF2.format(dataSet.get(position).getDate()));
+        if (dataSet.get(position).getDate() != null) {
+            holder.date.setText(MainActivity.appDF2.format(dataSet.get(position).getDate()));
+        }
 
         if (dataSet.get(position).getUserID() == ownID) {
             context.registerForContextMenu(holder.view);
