@@ -84,24 +84,26 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         }
 
         ArrayList signups = filteredDataSet.get(position).getSignups();
-        int userID = DataManager.getOwnUser(MainActivity.prefs).getID();
-        Boolean aanwezig = null;
-        for (int i = 0; i < signups.size(); i++) {
-            Event.Signup signup = (Event.Signup) signups.get(i);
+        if (signups != null) {
+            int userID = DataManager.getOwnUser(MainActivity.prefs).getID();
+            Boolean aanwezig = null;
+            for (int i = 0; i < signups.size(); i++) {
+                Event.Signup signup = (Event.Signup) signups.get(i);
 
-            if (signup.getUserID() == userID) {
-                aanwezig = signup.isAttending();
+                if (signup.getUserID() == userID) {
+                    aanwezig = signup.isAttending();
+                }
             }
-        }
 
-        if (aanwezig != null) {
-            if (aanwezig) {
-                holder.thumbs.setImageResource(R.drawable.ic_thumbs_up);
+            if (aanwezig != null) {
+                if (aanwezig) {
+                    holder.thumbs.setImageResource(R.drawable.ic_thumbs_up);
+                } else {
+                    holder.thumbs.setImageResource(R.drawable.ic_thumbs_down);
+                }
             } else {
-                holder.thumbs.setImageResource(R.drawable.ic_thumbs_down);
+                holder.thumbs.setImageResource(R.drawable.ic_questionmark);
             }
-        } else {
-            holder.thumbs.setImageResource(R.drawable.ic_questionmark);
         }
     }
 
