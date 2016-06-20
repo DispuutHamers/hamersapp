@@ -155,7 +155,7 @@ public class SingleBeerActivity extends AppCompatActivity {
      * Called when the user clicks the button to create a new beer review,
      * starts NewBeerActivity.
      */
-    public void createReview(Review review) {
+    private void createReview(Review review) {
         Intent intent = new Intent(this, NewBeerReviewActivity.class);
         intent.putExtra(Beer.BEER, gson.toJson(beer, Beer.class));
 

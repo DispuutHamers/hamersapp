@@ -25,7 +25,7 @@ import nl.ecci.hamers.helpers.DataManager;
 
 public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private ArrayList<News> dataSet = new ArrayList<>();
+    private final ArrayList<News> dataSet = new ArrayList<>();
     private NewsAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 

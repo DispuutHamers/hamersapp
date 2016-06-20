@@ -37,7 +37,7 @@ public class Utils {
         return sb.toString();
     }
 
-    public static String md5Hex(String message) {
+    private static String md5Hex(String message) {
         try {
             MessageDigest md =
                     MessageDigest.getInstance("MD5");
