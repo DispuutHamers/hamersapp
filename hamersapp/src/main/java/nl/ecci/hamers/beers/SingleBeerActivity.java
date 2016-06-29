@@ -155,7 +155,7 @@ public class SingleBeerActivity extends AppCompatActivity {
      */
     private void createReview(Review review) {
         Intent intent = new Intent(this, NewBeerReviewActivity.class);
-        intent.putExtra(Beer.BEER, gson.toJson(beer, Beer.class));
+        intent.putExtra(Beer.BEER, beer.getID());
 
         if (review != null) {
             intent.putExtra(Review.REVIEW, gson.toJson(review, Review.class));
