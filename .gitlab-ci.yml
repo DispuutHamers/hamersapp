@@ -1,6 +1,5 @@
 before_script:
   - export ANDROID_HOME=/opt/android-sdk
-  - export ANDROID_HOME=/opt/android-sdk
   - export PATH=$PATH:/opt/android-sdk/tools
   - export PATH=$PATH:/opt/android-sdk/platform-tools
   - chmod +x gradlew
