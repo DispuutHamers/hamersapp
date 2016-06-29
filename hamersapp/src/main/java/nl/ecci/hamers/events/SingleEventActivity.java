@@ -67,9 +67,7 @@ public class SingleEventActivity extends AppCompatActivity {
         presentLayout = (ViewGroup) findViewById(R.id.present_layout);
         absentLayout = (ViewGroup) findViewById(R.id.absent_layout);
 
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        event = gson.fromJson(getIntent().getStringExtra(Event.EVENT), Event.class);
+        event = DataManager.getEvent(MainActivity.prefs, getIntent().getIntExtra(Event.EVENT, 1));
 
         initSignups();
 

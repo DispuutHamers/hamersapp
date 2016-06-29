@@ -50,7 +50,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
                 final int position = vh.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Intent intent = new Intent(context, SingleEventActivity.class);
-                    intent.putExtra(Event.EVENT, gson.toJson(filteredDataSet.get(vh.getAdapterPosition()), Event.class));
+                    intent.putExtra(Event.EVENT, filteredDataSet.get(vh.getAdapterPosition()).getID());
                     context.startActivity(intent);
                 }
             }
