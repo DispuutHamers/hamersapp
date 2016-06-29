@@ -24,6 +24,7 @@ import java.util.Set;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.beers.Beer;
+import nl.ecci.hamers.beers.SingleBeerActivity;
 import nl.ecci.hamers.events.Event;
 import nl.ecci.hamers.events.SingleEventActivity;
 import nl.ecci.hamers.helpers.DataManager;
@@ -153,6 +154,11 @@ public class MyGcmListenerService extends GcmListenerService {
                     json.put(beer);
                     prefs.edit().putString(DataManager.BEERKEY, json.toString()).apply();
                 }
+
+                intent = new Intent(this, SingleBeerActivity.class);
+                intent.putExtra(Beer.BEER, beer.getInt("id"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
             }
         } catch (JSONException | NullPointerException ignored) {
         }

@@ -80,9 +80,7 @@ public class SingleBeerActivity extends AppCompatActivity {
             });
         }
 
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gson = gsonBuilder.create();
-        beer = gson.fromJson(getIntent().getStringExtra(Beer.BEER), Beer.class);
+        beer = DataManager.getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, 1));
 
         fillRow(kindRow, getString(R.string.beer_soort), beer.getKind());
         fillRow(alcRow, getString(R.string.beer_alc), beer.getPercentage());

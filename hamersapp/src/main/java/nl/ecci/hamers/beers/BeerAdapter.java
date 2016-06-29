@@ -76,7 +76,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
                     String imageTransitionName = context.getString(R.string.transition_single_image);
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, beerView, imageTransitionName);
                     Intent intent = new Intent(context, SingleBeerActivity.class);
-                    intent.putExtra(Beer.BEER, gson.toJson(filteredDataSet.get(vh.getAdapterPosition()), Beer.class));
+                    intent.putExtra(Beer.BEER, filteredDataSet.get(vh.getAdapterPosition()).getID());
                     ActivityCompat.startActivity(activity, intent, options.toBundle());
                 } catch (NullPointerException ignored) {
                 }
