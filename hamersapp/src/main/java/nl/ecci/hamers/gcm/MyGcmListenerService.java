@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
@@ -25,6 +24,7 @@ import java.util.Set;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.beers.Beer;
+import nl.ecci.hamers.events.Event;
 import nl.ecci.hamers.events.SingleEventActivity;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.users.User;
@@ -132,11 +132,10 @@ public class MyGcmListenerService extends GcmListenerService {
                     prefs.edit().putString(DataManager.EVENTKEY, json.toString()).apply();
                 }
 
-                Intent resultIntent = new Intent(this, SingleEventActivity.class);
-                TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-                stackBuilder.addParentStack(SingleEventActivity.class);
-                stackBuilder.addNextIntent(resultIntent);
-                pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                intent = new Intent(this, SingleEventActivity.class);
+                intent.putExtra(Event.EVENT, event.getInt("id"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
             }
         } catch (JSONException | NullPointerException ignored) {
         }
@@ -207,8 +206,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+                .setSound(defaultSoundUri);
 
         NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
         notificationBuilder.setStyle(bigTextStyle);
