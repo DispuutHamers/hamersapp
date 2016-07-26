@@ -57,10 +57,10 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 
         // If upcoming, reverse order
         upcoming = getArguments().getBoolean(EventFragmentPagerAdapter.upcoming, false);
-        if (upcoming) {
-            mLayoutManager.setReverseLayout(true);
-            mLayoutManager.setStackFromEnd(true);
-        }
+//        if (upcoming) {
+//            mLayoutManager.setReverseLayout(true);
+//            mLayoutManager.setStackFromEnd(true);
+//        }
 
         onRefresh();
 
@@ -84,7 +84,11 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
+        if (upcoming) {
+            DataManager.getData(getContext(), MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
+        } else {
+            DataManager.getData(getContext(), MainActivity.prefs, DataManager.UPCOMINGEVENTURL, DataManager.UPCOMINGEVENTKEY);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -110,11 +114,11 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     private void scrollTop() {
-        if (upcoming) {
-            event_list.smoothScrollToPosition(adapter.getItemCount() - 1);
-        } else {
+//        if (upcoming) {
+//            event_list.smoothScrollToPosition(adapter.getItemCount() - 1);
+//        } else {
             event_list.smoothScrollToPosition(0);
-        }
+//        }
     }
 
     @Override
@@ -156,22 +160,22 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         protected final ArrayList<Event> doInBackground(ArrayList<Event>... param) {
             ArrayList<Event> dataSet = new ArrayList<>();
             JSONArray json;
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.EVENTKEY)) != null) {
+
+            String key = DataManager.EVENTKEY;
+            if (upcoming) {
+                key = DataManager.UPCOMINGEVENTKEY;
+            }
+
+            if ((json = DataManager.getJsonArray(MainActivity.prefs, key)) != null) {
                 GsonBuilder gsonBuilder = new GsonBuilder();
                 gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
                 Gson gson = gsonBuilder.create();
-                Date date = new Date();
 
                 try {
                     for (int i = 0; i < json.length(); i++) {
                         JSONObject temp = json.getJSONObject(i);
                         Event event = gson.fromJson(temp.toString(), Event.class);
-
-                        if (upcoming && event.getDate().after(date)) {
-                            dataSet.add(event);
-                        } else {
-                            dataSet.add(event);
-                        }
+                        dataSet.add(event);
                     }
                 } catch (JSONException ignored) {
                 }

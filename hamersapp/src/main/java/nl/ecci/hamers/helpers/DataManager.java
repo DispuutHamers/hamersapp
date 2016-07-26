@@ -43,7 +43,8 @@ public final class DataManager {
     // URL Appendices
     public static final String QUOTEURL = "quotes";
     public static final String USERURL = "users";
-    public static final String EVENTURL = "events?sorted=date-asc";
+    public static final String EVENTURL = "events";
+    public static final String UPCOMINGEVENTURL = "events?sorted=date-asc";
     public static final String NEWSURL = "news";
     public static final String BEERURL = "beers";
     public static final String REVIEWURL = "reviews";
@@ -56,6 +57,7 @@ public final class DataManager {
     public static final String QUOTEKEY = "quoteData";
     public static final String USERKEY = "userData";
     public static final String EVENTKEY = "eventData";
+    public static final String UPCOMINGEVENTKEY = "upcomingEventData";
     public static final String NEWSKEY = "newsData";
     public static final String BEERKEY = "beerData";
     public static final String REVIEWKEY = "reviewdata";
