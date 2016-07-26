@@ -2,6 +2,7 @@ package nl.ecci.hamers.events;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -28,5 +29,11 @@ public class EventFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
 
         return rootView;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ActivityCompat.invalidateOptionsMenu(getActivity());
     }
 }

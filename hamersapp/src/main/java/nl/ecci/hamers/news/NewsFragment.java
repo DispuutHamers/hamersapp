@@ -7,6 +7,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -41,8 +43,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         news_list.setLayoutManager(mLayoutManager);
-
-        setHasOptionsMenu(false);
 
         initSwiper(view, news_list, mLayoutManager);
 
