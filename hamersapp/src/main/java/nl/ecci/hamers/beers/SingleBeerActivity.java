@@ -32,13 +32,14 @@ import org.json.JSONObject;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.SingleImageActivity;
 
 import static nl.ecci.hamers.helpers.DataManager.getJsonArray;
 import static nl.ecci.hamers.helpers.DataManager.getOwnUser;
 import static nl.ecci.hamers.helpers.DataManager.getUser;
 
-public class SingleBeerActivity extends AppCompatActivity {
+public class SingleBeerActivity extends HamersActivity {
 
     private Gson gson;
     private Beer beer;
@@ -111,16 +112,6 @@ public class SingleBeerActivity extends AppCompatActivity {
                 ActivityCompat.startActivity(SingleBeerActivity.this, intent, options.toBundle());
             }
         });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                supportFinishAfterTransition();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void getReviews() {

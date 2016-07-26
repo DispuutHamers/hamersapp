@@ -4,15 +4,17 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.HamersActivity;
 
 import static nl.ecci.hamers.helpers.DataManager.getMeeting;
 import static nl.ecci.hamers.helpers.DataManager.getUser;
 
-public class SingleMeetingActivity extends AppCompatActivity {
+public class SingleMeetingActivity extends HamersActivity {
 
     private Meeting meeting;
 

@@ -50,6 +50,7 @@ import nl.ecci.hamers.events.EventListFragment;
 import nl.ecci.hamers.events.NewEventActivity;
 import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.meetings.MeetingFragment;
 import nl.ecci.hamers.meetings.NewMeetingActivity;
@@ -63,7 +64,7 @@ import nl.ecci.hamers.users.UserListFragment;
 
 import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends HamersActivity {
     // Fragments
     public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
     private static final EventFragment EVENT_FRAGMENT = new EventFragment();

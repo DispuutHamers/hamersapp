@@ -19,7 +19,7 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.beers.Beer;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class SingleImageActivity extends AppCompatActivity {
+public class SingleImageActivity extends HamersActivity {
 
     private PhotoViewAttacher mAttacher;
 
@@ -73,15 +73,5 @@ public class SingleImageActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setTitle(beer.getName());
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                supportFinishAfterTransition();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -21,9 +21,10 @@ import java.util.Calendar;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
 
-public class NewMeetingActivity extends AppCompatActivity {
+public class NewMeetingActivity extends HamersActivity {
 
     private Meeting meeting;
     private Button date_button;

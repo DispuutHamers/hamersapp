@@ -33,9 +33,10 @@ import java.util.Date;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.users.User;
 
-public class SingleEventActivity extends AppCompatActivity {
+public class SingleEventActivity extends HamersActivity {
 
     private Event event;
     private LayoutInflater inflater;
@@ -127,16 +128,6 @@ public class SingleEventActivity extends AppCompatActivity {
                 locationRow.setVisibility(View.GONE);
             }
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void setPresent(View view) {

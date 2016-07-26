@@ -15,8 +15,9 @@ import org.json.JSONObject;
 
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.HamersActivity;
 
-public class NewBeerActivity extends AppCompatActivity {
+public class NewBeerActivity extends HamersActivity {
 
     private SharedPreferences prefs;
 
@@ -35,16 +36,6 @@ public class NewBeerActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void postBeer(View view) {

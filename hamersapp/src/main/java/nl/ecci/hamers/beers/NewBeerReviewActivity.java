@@ -28,9 +28,10 @@ import java.util.Calendar;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
 
-public class NewBeerReviewActivity extends AppCompatActivity {
+public class NewBeerReviewActivity extends HamersActivity {
 
     private Beer beer;
     private Review review;
@@ -102,16 +103,6 @@ public class NewBeerReviewActivity extends AppCompatActivity {
         } else {
             date_button.setText(dateFormat.format(calendar.getTime()));
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void showDatePickerDialog(View v) {

@@ -13,8 +13,9 @@ import org.json.JSONObject;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.HamersActivity;
 
-public class NewNewsActivity extends AppCompatActivity {
+public class NewNewsActivity extends HamersActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,15 +47,5 @@ public class NewNewsActivity extends AppCompatActivity {
         }
 
         DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.NEWSURL, -1, DataManager.NEWSKEY, body);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -9,6 +9,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,12 +21,13 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.HamersActivity;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 import static nl.ecci.hamers.helpers.Utils.convertNicknames;
 import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
 
-public class SingleUserActivity extends AppCompatActivity {
+public class SingleUserActivity extends HamersActivity {
     private PhotoViewAttacher mAttacher;
 
     @Override

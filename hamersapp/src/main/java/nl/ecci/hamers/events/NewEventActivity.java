@@ -19,10 +19,11 @@ import org.json.JSONObject;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
 import nl.ecci.hamers.helpers.fragments.TimePickerFragment;
 
-public class NewEventActivity extends AppCompatActivity {
+public class NewEventActivity extends HamersActivity {
     private final FragmentManager fragmanager = getSupportFragmentManager();
     private RelativeLayout parentLayout;
 
@@ -42,16 +43,6 @@ public class NewEventActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void showDatePickerDialog(View v) {
