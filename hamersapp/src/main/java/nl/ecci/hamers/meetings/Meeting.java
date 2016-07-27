@@ -22,7 +22,6 @@ public class Meeting {
     private final Date updatedAt;
 
     public Meeting(int id, String agenda, String notes, String subject, int userID, Date date, Date createdAt, Date updatedAt) {
-        super();
         this.id = id;
         this.agenda = agenda;
         this.notes = notes;

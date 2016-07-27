@@ -53,6 +53,7 @@ public final class DataManager {
     public static final String MEETINGURL = "meetings";
     public static final String SIGNUPURL = "signups";
     public static final String GCMURL = "register";
+    public static final String STICKERURL = "stickers";
     // Data keys
     public static final String QUOTEKEY = "quoteData";
     public static final String USERKEY = "userData";
@@ -64,6 +65,7 @@ public final class DataManager {
     public static final String MEETINGKEY = "meetingdata";
     public static final String APIKEYKEY = "apikey";
     public static final String WHOAMIKEY = "whoamikey";
+    public static final String STICKERKEY = "stickerkey";
 
     public static void getData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
         String url = baseURL + dataURL;
