@@ -32,8 +32,9 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
+import nl.ecci.hamers.helpers.HamersFragment;
 
-public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class BeerFragment extends HamersFragment {
 
     private static final Comparator<Beer> nameComparator = new Comparator<Beer>() {
         @Override
@@ -86,7 +87,8 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         beer_list.setItemAnimator(new DefaultItemAnimator());
         beer_list.addItemDecoration(new DividerItemDecoration(getActivity()));
 
-        initSwiper(view, beer_list, layoutManager);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
+        initSwiper(beer_list, layoutManager, swipeRefreshLayout);
 
         adapter = new BeerAdapter(dataSet, getActivity());
         beer_list.setAdapter(adapter);
@@ -96,31 +98,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         sortList();
 
         return view;
-    }
-
-    private void initSwiper(View view, final RecyclerView beer_list, final LinearLayoutManager lm) {
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
-
-        swipeRefreshLayout.setOnRefreshListener(this);
-
-        beer_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView view, int dx, int dy) {
-                boolean enable = false;
-                if (beer_list != null && beer_list.getChildCount() > 0) {
-                    // check if the first item of the list is visible
-                    boolean firstItemVisible = lm.findFirstCompletelyVisibleItemPosition() == 0;
-                    // check if the top of the first item is visible
-                    boolean topOfFirstItemVisible = beer_list.getChildAt(0).getTop() == 0;
-                    // enabling or disabling the refresh layout
-                    enable = firstItemVisible && topOfFirstItemVisible;
-                }
-                swipeRefreshLayout.setEnabled(enable);
-            }
-        });
     }
 
     @Override

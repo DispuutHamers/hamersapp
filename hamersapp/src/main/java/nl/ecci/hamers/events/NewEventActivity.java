@@ -5,9 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,8 +18,8 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.HamersActivity;
-import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
-import nl.ecci.hamers.helpers.fragments.TimePickerFragment;
+import nl.ecci.hamers.helpers.DatePickerFragment;
+import nl.ecci.hamers.helpers.TimePickerFragment;
 
 public class NewEventActivity extends HamersActivity {
     private final FragmentManager fragmanager = getSupportFragmentManager();
