@@ -123,20 +123,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             imageLoader.displayImage(imageURL, imageAware, animateFirstListener);
             holder.picture.setTag(imageURL);
         }
-
-        try {
-            int rating = getOwnRating(filteredDataSet.get(position).getID());
-            if (rating == 0) {
-                holder.thumbs.setImageResource(R.drawable.ic_questionmark);
-            } else if (rating <= 4) {
-                holder.thumbs.setImageResource(R.drawable.ic_thumbs_down);
-            } else if (rating >= 5 && rating <= 7) {
-                holder.thumbs.setImageResource(R.drawable.ic_thumbs_up_down);
-            } else if (rating >= 8) {
-                holder.thumbs.setImageResource(R.drawable.ic_thumbs_up);
-            }
-        } catch (NullPointerException ignored) {
-        }
     }
 
     @Override
@@ -207,7 +193,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         public final TextView rating;
         public final TextView info;
         public final ImageView picture;
-        public final ImageView thumbs;
 
         public ViewHolder(View view) {
             super(view);
@@ -219,7 +204,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
             rating = (TextView) view.findViewById(R.id.row_beer_rating);
             info = (TextView) view.findViewById(R.id.beer_info);
             picture = (ImageView) view.findViewById(R.id.beer_image);
-            thumbs = (ImageView) view.findViewById(R.id.beer_thumbs);
         }
     }
 }

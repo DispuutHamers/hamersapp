@@ -19,21 +19,6 @@
         android:padding="0dp"
         tools:ignore="ContentDescription" />
 
-    <ImageView
-        android:id="@+id/beer_thumbs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="8dp"
-        android:adjustViewBounds="true"
-        android:maxHeight="25dp"
-        android:maxWidth="25dp"
-        android:src="@drawable/ic_questionmark"
-        android:visibility="visible"
-        tools:ignore="ContentDescription" />
-
     <TextView
         android:id="@+id/beer_name"
         android:layout_width="wrap_content"
@@ -42,9 +27,7 @@
         android:layout_alignWithParentIfMissing="true"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@id/beer_image"
-        android:layout_toLeftOf="@+id/beer_thumbs"
         android:layout_toRightOf="@id/beer_image"
-        android:layout_toStartOf="@+id/beer_thumbs"
         android:gravity="start"
         android:textColor="@android:color/primary_text_light"
         android:textSize="18sp" />
@@ -55,9 +38,7 @@
         android:layout_height="16dp"
         android:layout_below="@id/beer_name"
         android:layout_toEndOf="@id/beer_image"
-        android:layout_toLeftOf="@+id/beer_thumbs"
         android:layout_toRightOf="@id/beer_image"
-        android:layout_toStartOf="@+id/beer_thumbs"
         android:ellipsize="marquee"
         android:gravity="start"
         android:singleLine="true"
@@ -70,9 +51,7 @@
         android:layout_height="16dp"
         android:layout_below="@id/beer_soort"
         android:layout_toEndOf="@+id/beer_image"
-        android:layout_toLeftOf="@+id/beer_thumbs"
         android:layout_toRightOf="@+id/beer_image"
-        android:layout_toStartOf="@+id/beer_thumbs"
         android:ellipsize="marquee"
         android:gravity="start"
         android:singleLine="true"
@@ -85,9 +64,7 @@
         android:layout_height="16dp"
         android:layout_below="@id/beer_brewer"
         android:layout_toEndOf="@+id/beer_image"
-        android:layout_toLeftOf="@+id/beer_thumbs"
         android:layout_toRightOf="@+id/beer_image"
-        android:layout_toStartOf="@+id/beer_thumbs"
         android:ellipsize="marquee"
         android:gravity="start"
         android:singleLine="true"
