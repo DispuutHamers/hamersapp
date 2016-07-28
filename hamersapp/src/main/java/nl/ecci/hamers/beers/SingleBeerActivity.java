@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -240,7 +239,7 @@ public class SingleBeerActivity extends HamersActivity {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         getReviews();
     }

@@ -23,20 +23,11 @@ import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
-import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
-import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.SingleImageActivity;
-
-import static nl.ecci.hamers.helpers.DataManager.getJsonArray;
-import static nl.ecci.hamers.helpers.DataManager.getOwnUser;
 
 public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implements Filterable {
 
@@ -44,15 +35,13 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     private final Context context;
     private final ArrayList<Beer> dataSet;
     private final ImageLoader imageLoader;
-    private final int userID;
-    private ArrayList<Beer> filteredDataSet;
     private final Gson gson;
+    private ArrayList<Beer> filteredDataSet;
 
     public BeerAdapter(ArrayList<Beer> dataSet, Context context) {
         this.dataSet = dataSet;
         this.filteredDataSet = dataSet;
         this.context = context;
-        userID = getOwnUser(MainActivity.prefs).getID();
 
         imageLoader = ImageLoader.getInstance();
         animateFirstListener = new AnimateFirstDisplayListener();
@@ -163,26 +152,6 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
                 notifyDataSetChanged();
             }
         };
-    }
-
-    private int getOwnRating(int id) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        int rating = 0;
-        JSONArray reviews;
-        try {
-            if ((reviews = getJsonArray(MainActivity.prefs, DataManager.REVIEWKEY)) != null) {
-                for (int i = 0; i < reviews.length(); i++) {
-                    JSONObject jsonObject = reviews.getJSONObject(i);
-                    Review review = gson.fromJson(jsonObject.toString(), Review.class);
-                    if (review.getBeerID() == id && review.getUserID() == userID) {
-                        rating = review.getRating();
-                    }
-                }
-            }
-        } catch (JSONException | NullPointerException ignored) {
-        }
-        return rating;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
