@@ -129,29 +129,13 @@ public class MainActivity extends HamersActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        if (savedInstanceState == null) {
-            // Set the local night mode to some value
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            // Now recreate for it to take effect
-            recreate();
-        }
-
-        int currentNightMode = getResources().getConfiguration().uiMode
-                & Configuration.UI_MODE_NIGHT_MASK;
-        switch (currentNightMode) {
-            case Configuration.UI_MODE_NIGHT_NO:
-                System.out.println("----------------------------------- DAY");
-            case Configuration.UI_MODE_NIGHT_YES:
-                System.out.println("----------------------------------- NIGHT");
-            case Configuration.UI_MODE_NIGHT_UNDEFINED:
-                System.out.println("----------------------------------- UNDEFINED");
-        }
-
         initDrawer();
         initToolbar();
 
         if (savedInstanceState == null) {
             selectItem(R.id.navigation_item_quotes);
+//            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+//            recreate();
         }
 
         configureDefaultImageLoader(this);

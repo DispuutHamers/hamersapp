@@ -10,6 +10,12 @@
             android:key="apikey"
             android:summary="@string/apikey_summary"
             android:title="API Key" />
+        <ListPreference
+            android:defaultValue="auto"
+            android:entries="@array/nightmode_array"
+            android:entryValues="@array/nightmode_array_values"
+            android:key="nightmode"
+            android:title="Nachtmodus" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="pushPref"

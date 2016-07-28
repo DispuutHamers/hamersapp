@@ -1,8 +1,11 @@
 package nl.ecci.hamers;
 
+import android.annotation.TargetApi;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.Preference.OnPreferenceClickListener;
 import android.support.v7.preference.PreferenceFragmentCompat;
@@ -16,6 +19,7 @@ import nl.ecci.hamers.helpers.DataManager;
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.preferences);
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -67,5 +71,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     }
                 }
         );
+
+        Preference nightmode = findPreference("nightmode");
+        nightmode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                AppCompatDelegate.setDefaultNightMode(App.getNightModeInt((String) newValue));
+                getActivity().recreate();
+                return true;
+            }
+        });
     }
 }

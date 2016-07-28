@@ -129,6 +129,18 @@
     <string name="refresh_app">Herlaad app</string>
     <string name="refresh_app_summary">Dit is veel sneller dan een herstart</string>
 
+    <array name="nightmode_array">
+        <item>Automatisch</item>
+        <item>Nachtmodus aan</item>
+        <item>Nachtmodus uit</item>
+    </array>
+
+    <array name="nightmode_array_values">
+        <item>auto</item>
+        <item>on</item>
+        <item>off</item>
+    </array>
+
     <string name="sorting_category">Sorteren</string>
 
     <array name="usersort_array_values">
