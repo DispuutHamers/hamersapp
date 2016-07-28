@@ -17,7 +17,7 @@
         android:layout_toEndOf="@id/beer_image"
         android:layout_toRightOf="@id/beer_image"
         android:gravity="start"
-        android:textColor="@android:color/secondary_text_light"
+        android:textColor="?android:attr/textColorSecondary"
         android:textSize="16sp" />
 
     <TextView
@@ -33,7 +33,7 @@
         android:ellipsize="marquee"
         android:gravity="end"
         android:singleLine="true"
-        android:textColor="@android:color/tertiary_text_light"
+        android:textColor="?android:attr/textColorTertiary"
         android:textSize="14sp"
         android:textStyle="italic" />
 
@@ -51,7 +51,7 @@
             android:gravity="start"
             android:paddingBottom="20dp"
             android:singleLine="false"
-            android:textColor="@android:color/tertiary_text_light"
+            android:textColor="?android:attr/textColorTertiary"
             android:textSize="12sp" />
 
         <TextView
@@ -63,7 +63,7 @@
             android:gravity="start|bottom"
             android:paddingBottom="2dp"
             android:singleLine="true"
-            android:textColor="@android:color/tertiary_text_light"
+            android:textColor="?android:attr/textColorTertiary"
             android:textSize="14sp"
             android:textStyle="italic" />
     </RelativeLayout>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -126,6 +128,24 @@ public class MainActivity extends HamersActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        if (savedInstanceState == null) {
+            // Set the local night mode to some value
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            // Now recreate for it to take effect
+            recreate();
+        }
+
+        int currentNightMode = getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                System.out.println("----------------------------------- DAY");
+            case Configuration.UI_MODE_NIGHT_YES:
+                System.out.println("----------------------------------- NIGHT");
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                System.out.println("----------------------------------- UNDEFINED");
+        }
 
         initDrawer();
         initToolbar();

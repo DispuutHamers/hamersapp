@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="@style/PreferenceFixTheme.Light.NoActionBar">
+    <style name="AppTheme" parent="@style/Theme.AppCompat.DayNight">
         <item name="colorPrimary">@color/material_red</item>
         <item name="colorPrimaryDark">@color/material_red_dark</item>
         <item name="colorAccent">@color/material_red_dark</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!-- Preference theme -->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>

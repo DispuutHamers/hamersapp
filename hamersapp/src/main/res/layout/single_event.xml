@@ -42,7 +42,7 @@
                         android:paddingRight="16dp"
                         android:paddingTop="8dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@android:color/primary_text_light"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="25sp" />
 
                     <include layout="@layout/divider" />
@@ -105,7 +105,7 @@
                         android:paddingTop="8dp"
                         android:text="Aanwezig"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@android:color/primary_text_light"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="20sp" />
 
                     <include layout="@layout/divider" />
@@ -145,7 +145,7 @@
                         android:paddingTop="8dp"
                         android:text="Afwezig"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@android:color/primary_text_light"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="20sp" />
 
                     <include layout="@layout/divider" />

@@ -44,7 +44,7 @@ public final class DataManager {
     public static final String QUOTEURL = "quotes";
     public static final String USERURL = "users";
     public static final String EVENTURL = "events";
-    public static final String UPCOMINGEVENTURL = "events?sorted=date-asc";
+    public static final String UPCOMINGEVENTURL = "events?sorted=date-desc";
     public static final String NEWSURL = "news";
     public static final String BEERURL = "beers";
     public static final String REVIEWURL = "reviews";
