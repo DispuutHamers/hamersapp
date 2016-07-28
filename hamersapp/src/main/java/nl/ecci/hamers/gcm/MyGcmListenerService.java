@@ -24,6 +24,9 @@ import java.util.Set;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.beers.Beer;
+import nl.ecci.hamers.beers.SingleBeerActivity;
+import nl.ecci.hamers.events.Event;
+import nl.ecci.hamers.events.SingleEventActivity;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.users.User;
 
@@ -63,6 +66,8 @@ public class MyGcmListenerService extends GcmListenerService {
 
     private Type type;
 
+    PendingIntent pendingIntent;
+
     /**
      * Called when message is received.
      *
@@ -73,6 +78,10 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
         String title = null;
         String message = null;
@@ -102,13 +111,10 @@ public class MyGcmListenerService extends GcmListenerService {
 
                 // Add quote to quote list
                 if ((json = DataManager.getJsonArray(prefs, DataManager.QUOTEKEY)) != null) {
-                    JSONArray quotes = new JSONArray();
-                    quotes.put(quote);
-                    for (int i = 0; i < json.length(); i++) {
-                        quotes.put(json.getJSONObject(i));
-                    }
-                    prefs.edit().putString(DataManager.QUOTEKEY, quotes.toString()).apply();
+                    json.put(quote);
+                    prefs.edit().putString(DataManager.QUOTEKEY, json.toString()).apply();
                 }
+
             }
         } catch (JSONException | NullPointerException ignored) {
         }
@@ -123,13 +129,14 @@ public class MyGcmListenerService extends GcmListenerService {
 
                 // Add event to event list
                 if ((json = DataManager.getJsonArray(prefs, DataManager.EVENTKEY)) != null) {
-                    JSONArray events = new JSONArray();
-                    for (int i = 0; i < json.length(); i++) {
-                        events.put(json.getJSONObject(i));
-                    }
-                    events.put(event);
-                    prefs.edit().putString(DataManager.EVENTKEY, events.toString()).apply();
+                    json.put(event);
+                    prefs.edit().putString(DataManager.EVENTKEY, json.toString()).apply();
                 }
+
+                intent = new Intent(this, SingleEventActivity.class);
+                intent.putExtra(Event.EVENT, event.getInt("id"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
             }
         } catch (JSONException | NullPointerException ignored) {
         }
@@ -147,6 +154,11 @@ public class MyGcmListenerService extends GcmListenerService {
                     json.put(beer);
                     prefs.edit().putString(DataManager.BEERKEY, json.toString()).apply();
                 }
+
+                intent = new Intent(this, SingleBeerActivity.class);
+                intent.putExtra(Beer.BEER, beer.getInt("id"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
             }
         } catch (JSONException | NullPointerException ignored) {
         }
@@ -172,6 +184,11 @@ public class MyGcmListenerService extends GcmListenerService {
                     json.put(review);
                     prefs.edit().putString(DataManager.REVIEWKEY, json.toString()).apply();
                 }
+
+                intent = new Intent(this, SingleBeerActivity.class);
+                intent.putExtra(Beer.BEER, review.getInt("beer_id"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
             }
         } catch (JSONException | NullPointerException ignored) {
         }
@@ -181,7 +198,7 @@ public class MyGcmListenerService extends GcmListenerService {
         Boolean push = settings.getBoolean("pushPref", true);
 
         if (push && title != null && message != null) {
-            sendNotification(title, message, type);
+            sendNotification(title, message, type, pendingIntent);
         }
     }
 
@@ -190,11 +207,7 @@ public class MyGcmListenerService extends GcmListenerService {
      *
      * @param message GCM message received.
      */
-    private void sendNotification(String title, String message, Type type) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-
+    private void sendNotification(String title, String message, Type type, PendingIntent pendingIntent) {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.launcher_icon);
 
@@ -204,11 +217,13 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+                .setSound(defaultSoundUri);
 
         NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
         notificationBuilder.setStyle(bigTextStyle);
+        if (pendingIntent != null) {
+            notificationBuilder.setContentIntent(pendingIntent);
+        }
 
         switch (type) {
             case QUOTE:

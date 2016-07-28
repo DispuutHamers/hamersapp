@@ -80,9 +80,7 @@ public class SingleBeerActivity extends HamersActivity {
             });
         }
 
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gson = gsonBuilder.create();
-        beer = gson.fromJson(getIntent().getStringExtra(Beer.BEER), Beer.class);
+        beer = DataManager.getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, 1));
 
         fillRow(kindRow, getString(R.string.beer_soort), beer.getKind());
         fillRow(alcRow, getString(R.string.beer_alc), beer.getPercentage());
@@ -147,7 +145,7 @@ public class SingleBeerActivity extends HamersActivity {
      */
     private void createReview(Review review) {
         Intent intent = new Intent(this, NewBeerReviewActivity.class);
-        intent.putExtra(Beer.BEER, gson.toJson(beer, Beer.class));
+        intent.putExtra(Beer.BEER, beer.getID());
 
         if (review != null) {
             intent.putExtra(Review.REVIEW, gson.toJson(review, Review.class));

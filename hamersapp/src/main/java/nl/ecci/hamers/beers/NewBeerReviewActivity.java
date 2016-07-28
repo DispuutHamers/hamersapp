@@ -67,7 +67,7 @@ public class NewBeerReviewActivity extends HamersActivity {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        beer = gson.fromJson(getIntent().getStringExtra(Beer.BEER), Beer.class);
+        beer = DataManager.getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, 1));
         review = gson.fromJson(getIntent().getStringExtra(Review.REVIEW), Review.class);
 
         TextView title = (TextView) findViewById(R.id.review_title);
