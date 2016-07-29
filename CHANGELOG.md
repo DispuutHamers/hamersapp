@@ -1,12 +1,13 @@
 # Changelog
 
-## [1.6.0](https://github.com/dexbleeker/hamersapp/tree/1.6.0) (upcoming release)
-[Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.5.0...1.6.0)
+## [2.0](https://github.com/dexbleeker/hamersapp/tree/2.0) (upcoming release)
+[Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.5.0...2.0)
 
-- (initial) Support for meetings
+- Support for meetings
 - Support APIv2
-- Filter events
 - Support for nicknames
+- Filter events
+- Nightmode
 - Improved user overview (image and layout)
 - Small layout improvements
 
