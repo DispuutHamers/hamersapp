@@ -132,14 +132,15 @@ public class MainActivity extends HamersActivity {
         initDrawer();
         initToolbar();
 
-        if (savedInstanceState == null) {
-            selectItem(R.id.navigation_item_quotes);
-//            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
-//            recreate();
-        }
-
         configureDefaultImageLoader(this);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (savedInstanceState == null) {
+            selectItem(R.id.navigation_item_quotes);
+            String nightmode = prefs.getString("nightmode", "auto");
+            AppCompatDelegate.setDefaultNightMode(getNightModeInt(nightmode));
+            recreate();
+        }
 
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -424,5 +425,17 @@ public class MainActivity extends HamersActivity {
         } catch (ParseException ignored) {
         }
         return date;
+    }
+
+    @AppCompatDelegate.NightMode
+    public static int getNightModeInt(String nightMode) {
+        switch (nightMode) {
+            case "auto":
+                return AppCompatDelegate.MODE_NIGHT_AUTO;
+            case "on":
+                return AppCompatDelegate.MODE_NIGHT_YES;
+            default:
+                return AppCompatDelegate.MODE_NIGHT_NO;
+        }
     }
 }

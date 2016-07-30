@@ -76,7 +76,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         nightmode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                AppCompatDelegate.setDefaultNightMode(App.getNightModeInt((String) newValue));
+                AppCompatDelegate.setDefaultNightMode(MainActivity.getNightModeInt((String) newValue));
                 getActivity().recreate();
                 return true;
             }

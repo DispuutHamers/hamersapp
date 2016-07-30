@@ -22,7 +22,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="@android:color/white"
                 card_view:cardCornerRadius="2dp">
 
                 <LinearLayout
@@ -86,7 +85,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="@android:color/white"
                 card_view:cardCornerRadius="2dp">
 
                 <LinearLayout
@@ -126,7 +124,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="@android:color/white"
                 card_view:cardCornerRadius="2dp">
 
                 <LinearLayout
