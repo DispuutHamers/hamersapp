@@ -52,7 +52,7 @@
         <!-- [END instanceId_listener] -->
         <service
             android:name="nl.ecci.hamers.gcm.RegistrationIntentService"
-            android:exported="false"/>
+            android:exported="false" />
 
         <activity
             android:name="nl.ecci.hamers.MainActivity"
@@ -82,7 +82,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity"/>
+                android:value="nl.ecci.hamers.MainActivity" />
         </activity>
         <activity
             android:name="nl.ecci.hamers.events.SingleEventActivity"
@@ -90,7 +90,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity"/>
+                android:value="nl.ecci.hamers.MainActivity" />
         </activity>
         <activity
             android:name="nl.ecci.hamers.events.NewEventActivity"
@@ -99,7 +99,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity"/>
+                android:value="nl.ecci.hamers.MainActivity" />
         </activity>
         <activity
             android:name="nl.ecci.hamers.news.NewNewsActivity"
@@ -108,7 +108,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity"/>
+                android:value="nl.ecci.hamers.MainActivity" />
         </activity>
         <activity
             android:name="nl.ecci.hamers.beers.NewBeerActivity"
@@ -117,7 +117,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity"/>
+                android:value="nl.ecci.hamers.MainActivity" />
         </activity>
         <activity
             android:name="nl.ecci.hamers.helpers.SingleImageActivity"
@@ -126,7 +126,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity"/>
+                android:value="nl.ecci.hamers.MainActivity" />
         </activity>
         <activity
             android:name="nl.ecci.hamers.users.SingleUserActivity"
@@ -135,7 +135,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity"/>
+                android:value="nl.ecci.hamers.MainActivity" />
         </activity>
         <activity
             android:name="nl.ecci.hamers.meetings.SingleMeetingActivity"
@@ -144,16 +144,20 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity"/>
+                android:value="nl.ecci.hamers.MainActivity" />
         </activity>
         <activity
             android:name="nl.ecci.hamers.meetings.NewMeetingActivity"
             android:label="Nieuwe vergadering"
             android:parentActivityName="nl.ecci.hamers.MainActivity"
             android:screenOrientation="portrait">
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            <meta-data
+                android:name="com.google.android.gms.version"
+                android:value="@integer/google_play_services_version" />
         </activity>
+
+        <meta-data
+            android:name="com.samsung.android.sdk.multiwindow.penwindow.enable"
+            android:value="true" />
     </application>
 </manifest>
