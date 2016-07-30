@@ -47,9 +47,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                         prefs.edit().remove(DataManager.QUOTEKEY).apply();
                         prefs.edit().remove(DataManager.USERKEY).apply();
                         prefs.edit().remove(DataManager.EVENTKEY).apply();
+                        prefs.edit().remove(DataManager.UPCOMINGEVENTKEY).apply();
                         prefs.edit().remove(DataManager.NEWSKEY).apply();
                         prefs.edit().remove(DataManager.BEERKEY).apply();
                         prefs.edit().remove(DataManager.REVIEWKEY).apply();
+                        prefs.edit().remove(DataManager.MEETINGKEY).apply();
                         prefs.edit().remove(DataManager.WHOAMIKEY).apply();
 
                         View view = getView();
