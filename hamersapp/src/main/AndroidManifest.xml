@@ -157,6 +157,9 @@
         </activity>
 
         <meta-data
+            android:name="com.samsung.android.sdk.multiwindow"
+            android:value="true" />
+        <meta-data
             android:name="com.samsung.android.sdk.multiwindow.penwindow.enable"
             android:value="true" />
     </application>
