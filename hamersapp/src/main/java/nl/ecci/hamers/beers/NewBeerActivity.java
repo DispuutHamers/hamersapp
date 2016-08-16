@@ -11,13 +11,21 @@ import android.widget.EditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.HamersActivity;
 
 public class NewBeerActivity extends HamersActivity {
 
+    private Beer beer;
     private SharedPreferences prefs;
+    private EditText beer_name;
+    private EditText beer_picture;
+    private EditText beer_soort;
+    private EditText beer_percentage;
+    private EditText beer_brewer;
+    private EditText beer_country;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,22 +42,28 @@ public class NewBeerActivity extends HamersActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }
+
+        beer_name = (EditText) findViewById(R.id.beer_name);
+        beer_picture = (EditText) findViewById(R.id.beer_picture);
+        beer_soort = (EditText) findViewById(R.id.beer_soort);
+        beer_percentage = (EditText) findViewById(R.id.beer_percentage);
+        beer_brewer = (EditText) findViewById(R.id.beer_brewer);
+        beer_country = (EditText) findViewById(R.id.beer_country);
+
+        int beerID = getIntent().getIntExtra(Beer.BEER, -1);
+        if (beerID != -1) {
+            beer = DataManager.getBeer(MainActivity.prefs, beerID);
+            beer_name.setText(beer.getName());
+            beer_picture.setText(beer.getImageURL());
+            beer_soort.setText(beer.getKind());
+            beer_percentage.setText(beer.getPercentage());
+            beer_brewer.setText(beer.getBrewer());
+            beer_country.setText(beer.getCountry());
+        }
     }
 
     public void postBeer(View view) {
-        EditText beer_title = (EditText) findViewById(R.id.beer_title_et);
-        EditText beer_picture = (EditText) findViewById(R.id.beer_picture_et);
-        EditText beer_soort = (EditText) findViewById(R.id.beer_soort_et);
-        EditText beer_percentage = (EditText) findViewById(R.id.beer_percentage_et);
-        EditText beer_brewer = (EditText) findViewById(R.id.beer_brewer_et);
-        EditText beer_country = (EditText) findViewById(R.id.beer_country_et);
-
-        String title = beer_title.getText().toString();
-        String picture = beer_picture.getText().toString();
-        String soort = beer_soort.getText().toString();
         String percentage = beer_percentage.getText().toString();
-        String brewer = beer_brewer.getText().toString();
-        String country = beer_country.getText().toString();
 
         if (!percentage.contains("%")) {
             percentage = percentage + "%";
@@ -57,12 +71,12 @@ public class NewBeerActivity extends HamersActivity {
 
         JSONObject body = new JSONObject();
         try {
-            body.put("name", title);
-            body.put("picture", picture);
+            body.put("name", beer_name.getText().toString());
+            body.put("picture", beer_picture.getText().toString());
             body.put("percentage", percentage);
-            body.put("country", country);
-            body.put("brewer", brewer);
-            body.put("soort", soort);
+            body.put("country", beer_country.getText().toString());
+            body.put("brewer", beer_brewer.getText().toString());
+            body.put("soort", beer_soort.getText().toString());
         } catch (JSONException ignored) {
         }
 
