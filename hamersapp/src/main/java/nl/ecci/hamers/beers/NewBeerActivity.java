@@ -19,6 +19,7 @@ import nl.ecci.hamers.helpers.HamersActivity;
 public class NewBeerActivity extends HamersActivity {
 
     private Beer beer;
+    private int beerID;
     private SharedPreferences prefs;
     private EditText beer_name;
     private EditText beer_picture;
@@ -50,7 +51,7 @@ public class NewBeerActivity extends HamersActivity {
         beer_brewer = (EditText) findViewById(R.id.beer_brewer);
         beer_country = (EditText) findViewById(R.id.beer_country);
 
-        int beerID = getIntent().getIntExtra(Beer.BEER, -1);
+        beerID = getIntent().getIntExtra(Beer.BEER, -1);
         if (beerID != -1) {
             beer = DataManager.getBeer(MainActivity.prefs, beerID);
             beer_name.setText(beer.getName());
@@ -80,6 +81,6 @@ public class NewBeerActivity extends HamersActivity {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postOrPatchData(this, prefs, DataManager.BEERURL, -1, DataManager.BEERKEY, body);
+        DataManager.postOrPatchData(this, prefs, DataManager.BEERURL, beerID, DataManager.BEERKEY, body);
     }
 }
