@@ -1,26 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/beer_search"
-          android:icon="@android:drawable/ic_menu_search"
-          android:title="@string/search_title"
-          app:showAsAction="ifRoom"
-          app:actionViewClass="android.support.v7.widget.SearchView"/>
-    <group android:checkableBehavior="none">
-        <item android:id="@+id/scroll_top"
-              android:title="@string/scroll_top"
-              android:icon="@drawable/action_up"
-              app:showAsAction="ifRoom"/>
-        <item android:id="@+id/sort_name"
-              android:title="@string/sort_name"
-              app:showAsAction="never"/>
-        <item android:id="@+id/sort_rating"
-              android:title="@string/sort_rating"
-              app:showAsAction="never"/>
-        <item android:id="@+id/sort_date_asc"
-              android:title="@string/sort_date_asc"
-              app:showAsAction="never"/>
-        <item android:id="@+id/sort_date_desc"
-              android:title="@string/sort_date_desc"
-              app:showAsAction="never"/>
-    </group>
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/edit_beer"
+        android:icon="@drawable/ic_create"
+        android:title="@string/edit_beer"
+        app:showAsAction="always"/>
 </menu>

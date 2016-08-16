@@ -339,14 +339,6 @@ public class MainActivity extends HamersActivity {
     }
 
     /**
-     * When user presses "+" in BeerFragment, start new dialog with NewBeerActivity
-     */
-    public void newBeer(View view) {
-        Intent intent = new Intent(this, NewBeerActivity.class);
-        startActivity(intent);
-    }
-
-    /**
      * When user presses "+" in NewsFragment, start new dialog with NewNewsActivity
      */
     public void newNews(View view) {

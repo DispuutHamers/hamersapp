@@ -50,6 +50,7 @@
 
     <!-- Beers -->
     <string name="new_beer">Nieuw biertje</string>
+    <string name="edit_beer">Wijzig biertje</string>
     <string name="beer_name">Naam</string>
     <string name="beer_picture">URL naar afbeelding</string>
     <string name="beer_soort">Soort</string>
@@ -62,6 +63,7 @@
 
     <!-- Reviews -->
     <string name="new_review">Nieuwe review</string>
+    <string name="edit_review">Wijzig review</string>
     <string name="review_hint">Wat vond je er van?</string>
     <string name="rating">Cijfer: 1</string>
     <string name="review_pick_date">Proefdatum :</string>

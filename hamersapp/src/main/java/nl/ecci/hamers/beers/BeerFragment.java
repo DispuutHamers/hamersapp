@@ -1,7 +1,9 @@
 package nl.ecci.hamers.beers;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -92,12 +94,33 @@ public class BeerFragment extends HamersFragment {
         adapter = new BeerAdapter(dataSet, getActivity());
         beer_list.setAdapter(adapter);
 
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.beer_create_button);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    createBeer(null);
+                }
+            });
+        }
+
         onRefresh();
 
         sortList();
 
         return view;
     }
+
+    public void createBeer(Beer beer) {
+        Intent intent = new Intent(getActivity(), NewBeerActivity.class);
+
+        if (beer != null) {
+            intent.putExtra(Beer.BEER, beer.getID());
+        }
+
+        startActivity(intent);
+    }
+
 
     @Override
     public void onRefresh() {
@@ -112,7 +135,7 @@ public class BeerFragment extends HamersFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.beer_menu, menu);
+        inflater.inflate(R.menu.beer_list_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.beer_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         if (searchView != null) {

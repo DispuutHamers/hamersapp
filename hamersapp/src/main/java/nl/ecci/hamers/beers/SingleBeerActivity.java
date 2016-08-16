@@ -1,7 +1,6 @@
 package nl.ecci.hamers.beers;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +10,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,7 +90,7 @@ public class SingleBeerActivity extends HamersActivity {
             });
         }
 
-        beer = DataManager.getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, 1));
+        beer = DataManager.getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, -1));
 
         fillRow(kindRow, getString(R.string.beer_soort), beer.getKind());
         fillRow(alcRow, getString(R.string.beer_alc), beer.getPercentage());
@@ -135,7 +136,7 @@ public class SingleBeerActivity extends HamersActivity {
                     if (review.getBeerID() == beer.getID()) {
                         hasReviews = true;
                         if (review.getUserID() == getOwnUser(MainActivity.prefs).getID()) {
-                            reviewButton.setVisibility(View.GONE);
+                            reviewButton.setText(R.string.edit_review);
                             ownReview = review;
                         }
                         insertReview(review);
@@ -155,7 +156,7 @@ public class SingleBeerActivity extends HamersActivity {
      * starts NewBeerActivity.
      */
     private void createReview(Review review) {
-        Intent intent = new Intent(this, NewBeerReviewActivity.class);
+        Intent intent = new Intent(this, NewReviewActivity.class);
         intent.putExtra(Beer.BEER, beer.getID());
 
         if (review != null) {
@@ -167,8 +168,9 @@ public class SingleBeerActivity extends HamersActivity {
     }
 
     private void insertReview(Review review) {
-        View view = inflater.inflate(R.layout.review_row, null);
-        View divider = inflater.inflate(R.layout.divider, null);
+        LinearLayout insertPoint = (LinearLayout) findViewById(R.id.review_insert_point);
+        View view = inflater.inflate(R.layout.review_row, insertPoint, false);
+        View divider = inflater.inflate(R.layout.divider, insertPoint, false);
 
         TextView title = (TextView) view.findViewById(R.id.review_title);
         TextView body = (TextView) view.findViewById(R.id.review_body);
@@ -181,7 +183,6 @@ public class SingleBeerActivity extends HamersActivity {
         ratingTV.setText(String.format("Cijfer: %s", review.getRating()));
 
         // Insert into view
-        ViewGroup insertPoint = (ViewGroup) findViewById(R.id.review_insert_point);
         if (insertPoint != null) {
             insertPoint.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             insertPoint.addView(divider);
@@ -210,6 +211,23 @@ public class SingleBeerActivity extends HamersActivity {
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.beer_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit_beer:
+                MainActivity.BEER_FRAGMENT.createBeer(beer);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void deleteReview() {
