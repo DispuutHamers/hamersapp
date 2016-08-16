@@ -28,6 +28,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.zip.Inflater;
+
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
@@ -40,8 +42,9 @@ import static nl.ecci.hamers.helpers.DataManager.getUser;
 
 public class SingleBeerActivity extends HamersActivity {
 
-    private Gson gson;
+    private LayoutInflater inflater;
     private Beer beer;
+    private Gson gson;
     private Button reviewButton;
     private ViewGroup reviewViewGroup;
     private Review ownReview;
@@ -49,7 +52,9 @@ public class SingleBeerActivity extends HamersActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.single_beer);
+        setContentView(R.layout.single_beer);
+
+        inflater = getLayoutInflater();
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -156,7 +161,6 @@ public class SingleBeerActivity extends HamersActivity {
     }
 
     private void insertReview(Review review) {
-        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.review_row, null);
         View divider = inflater.inflate(R.layout.divider, null);
 
