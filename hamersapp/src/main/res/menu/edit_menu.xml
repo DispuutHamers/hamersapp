@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/edit_beer"
+    <item android:id="@+id/edit_item"
         android:icon="@drawable/ic_create"
-        android:title="@string/edit_beer"
+        android:title="@string/edit_item"
         app:showAsAction="always"/>
 </menu>

@@ -15,21 +15,22 @@ public class Event {
     private final String description;
     private final String location;
     private final Date date;
-    private final Date end_time;
+    @SerializedName("end_time")
+    private final Date endDate;
     private final Date deadline;
     private final ArrayList<Signup> signups;
     @SerializedName("created_at")
     private final Date createdAt;
 
     @SuppressWarnings("SameParameterValue")
-    public Event(int id, String title, String description, String location, Date date, Date end_time, Date deadline, ArrayList<Signup> signups, Date createdAt) {
+    public Event(int id, String title, String description, String location, Date date, Date endDate, Date deadline, ArrayList<Signup> signups, Date createdAt) {
         super();
         this.id = id;
         this.title = title;
         this.description = description;
         this.location = location;
         this.date = date;
-        this.end_time = end_time;
+        this.endDate = endDate;
         this.deadline = deadline;
         this.signups = signups;
         this.createdAt = createdAt;
@@ -55,8 +56,8 @@ public class Event {
         return date;
     }
 
-    public Date getEndTime() {
-        return end_time;
+    public Date getEndDate() {
+        return endDate;
     }
 
     public Date getDeadline() {

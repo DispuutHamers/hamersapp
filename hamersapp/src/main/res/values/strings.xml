@@ -7,6 +7,7 @@
 
     <string name="search_title">Zoeken</string>
     <string name="search_hint">Zoek…</string>
+    <string name="edit_item">Wijzig unit</string>
 
     <string name="close">Sluiten</string>
 
@@ -41,7 +42,7 @@
     <string name="event_location">Waar is het?</string>
     <string name="event_description">Wat gaan we doen?</string>
     <string name="date">Datum:</string>
-    <string name="end_time">End time:</string>
+    <string name="endDate">End time:</string>
     <string name="deadline">Deadline:</string>
     <string name="description">Beschrijving</string>
     <string name="menu_upcoming">Aankomend</string>
@@ -50,7 +51,6 @@
 
     <!-- Beers -->
     <string name="new_beer">Nieuw biertje</string>
-    <string name="edit_beer">Wijzig biertje</string>
     <string name="beer_name">Naam</string>
     <string name="beer_picture">URL naar afbeelding</string>
     <string name="beer_soort">Soort</string>

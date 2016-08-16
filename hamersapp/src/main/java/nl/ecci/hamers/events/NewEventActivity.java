@@ -1,7 +1,6 @@
 package nl.ecci.hamers.events;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
@@ -9,10 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
@@ -22,16 +24,24 @@ import nl.ecci.hamers.helpers.DatePickerFragment;
 import nl.ecci.hamers.helpers.TimePickerFragment;
 
 public class NewEventActivity extends HamersActivity {
-    private final FragmentManager fragmanager = getSupportFragmentManager();
-    private RelativeLayout parentLayout;
+
+    private Event event;
+    private int eventID;
+    EditText event_title;
+    EditText event_location;
+    EditText event_description;
+    Button eventTimeButton;
+    Button eventEndTimeButton;
+    Button eventDateButton;
+    Button eventEndDateButton;
+    Button deadlineTimeButton;
+    Button deadlineDateButton;
+    private final FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_new_activity);
-
-        parentLayout = (RelativeLayout) findViewById(R.id.new_event_parent);
-
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,55 +51,72 @@ public class NewEventActivity extends HamersActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }
+
+        event_title = (EditText) findViewById(R.id.new_event_title);
+        event_location = (EditText) findViewById(R.id.event_location);
+        event_description = (EditText) findViewById(R.id.event_beschrijving);
+        eventTimeButton = (Button) findViewById(R.id.event_time_button);
+        eventEndTimeButton = (Button) findViewById(R.id.end_time_button);
+        eventDateButton = (Button) findViewById(R.id.event_date_button);
+        eventEndDateButton = (Button) findViewById(R.id.end_date_button);
+        deadlineTimeButton = (Button) findViewById(R.id.deadline_time_button);
+        deadlineDateButton = (Button) findViewById(R.id.deadline_date_button);
+
+        DateFormat timeFormat = new SimpleDateFormat("HH:mm", MainActivity.locale);
+        DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy", MainActivity.locale);
+
+        eventID = getIntent().getIntExtra(Event.EVENT, -1);
+        if (eventID != -1) {
+            event = DataManager.getEvent(MainActivity.prefs, eventID);
+            event_title.setText(event.getTitle());
+            event_location.setText(event.getLocation());
+            event_description.setText(event.getDescription());
+            eventTimeButton.setText(timeFormat.format(event.getDate()));
+            eventEndTimeButton.setText(timeFormat.format(event.getEndDate()));
+            eventDateButton.setText(dateFormat.format(event.getDate()));
+            eventEndDateButton.setText(dateFormat.format(event.getEndDate()));
+            deadlineTimeButton.setText(timeFormat.format(event.getDeadline()));
+            deadlineDateButton.setText(dateFormat.format(event.getDeadline()));
+        }
     }
 
     public void showDatePickerDialog(View v) {
         DialogFragment picker = new DatePickerFragment();
-        picker.show(fragmanager, "date");
+        picker.show(fragmentManager, "date");
     }
 
     public void showEndDatePickerDialog(View v) {
         DialogFragment picker = new DatePickerFragment();
-        picker.show(fragmanager, "end_date");
+        picker.show(fragmentManager, "end_date");
     }
 
     public void showTimePickerDialog(View v) {
         DialogFragment picker = new TimePickerFragment();
-        picker.show(fragmanager, "time");
+        picker.show(fragmentManager, "time");
     }
 
     public void showEndTimePickerDialog(View v) {
         DialogFragment picker = new TimePickerFragment();
-        picker.show(fragmanager, "end_time");
+        picker.show(fragmentManager, "end_time");
     }
 
     public void showDeadlineTimePickerDialog(View v) {
         DialogFragment picker = new TimePickerFragment();
-        picker.show(fragmanager, "deadline_time");
+        picker.show(fragmentManager, "deadline_time");
     }
 
     public void showDeadlineDatePickerDialog(View v) {
         DialogFragment picker = new DatePickerFragment();
-        picker.show(fragmanager, "deadline_date");
+        picker.show(fragmentManager, "deadline_date");
     }
 
     /**
      * Posts event
      */
     public void postEvent(View v) {
-        EditText event_title = (EditText) findViewById(R.id.new_event_title);
-        EditText event_location = (EditText) findViewById(R.id.event_location);
-        EditText event_beschrijving = (EditText) findViewById(R.id.event_beschrijving);
-        Button eventTimeButton = (Button) findViewById(R.id.event_time_button);
-        Button eventEndTimeButton = (Button) findViewById(R.id.end_time_button);
-        Button eventDateButton = (Button) findViewById(R.id.event_date_button);
-        Button eventEndDateButton = (Button) findViewById(R.id.end_date_button);
-        Button deadlineTimeButton = (Button) findViewById(R.id.deadline_time_button);
-        Button deadlineDateButton = (Button) findViewById(R.id.deadline_date_button);
-
         String title = event_title.getText().toString();
         String location = event_location.getText().toString();
-        String description = event_beschrijving.getText().toString();
+        String description = event_description.getText().toString();
         String eventTime = eventTimeButton.getText().toString();
         String eventEndTime = eventEndTimeButton.getText().toString();
         String eventDate = eventDateButton.getText().toString();
@@ -117,9 +144,9 @@ public class NewEventActivity extends HamersActivity {
             } catch (JSONException ignored) {
             }
 
-            DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.EVENTURL, -1, DataManager.EVENTKEY, body);
+            DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.EVENTURL, eventID, DataManager.EVENTKEY, body);
         } else {
-            Snackbar.make(parentLayout, getResources().getString(R.string.missing_fields), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.missing_fields, Toast.LENGTH_SHORT).show();
         }
     }
 }

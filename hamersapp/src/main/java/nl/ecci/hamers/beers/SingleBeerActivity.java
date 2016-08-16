@@ -29,8 +29,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.zip.Inflater;
-
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
@@ -216,14 +214,14 @@ public class SingleBeerActivity extends HamersActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.beer_menu, menu);
+        inflater.inflate(R.menu.edit_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.edit_beer:
+            case R.id.edit_item:
                 MainActivity.BEER_FRAGMENT.createBeer(beer);
                 return true;
         }

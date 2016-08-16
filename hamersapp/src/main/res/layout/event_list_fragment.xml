@@ -21,11 +21,11 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/event_create_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:onClick="newEvent"
         android:src="@drawable/action_add"
         app:backgroundTint="@color/material_red"
         app:layout_anchor="@id/events_recyclerview"

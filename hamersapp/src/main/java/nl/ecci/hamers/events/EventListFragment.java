@@ -1,7 +1,9 @@
 package nl.ecci.hamers.events;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -23,10 +25,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.helpers.DataManager;
 
 public class EventListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -62,6 +64,16 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 //            mLayoutManager.setStackFromEnd(true);
 //        }
 
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.event_create_button);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    createEvent(null);
+                }
+            });
+        }
+
         onRefresh();
 
         return view;
@@ -80,6 +92,16 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 swipeRefreshLayout.setEnabled(lm.findFirstCompletelyVisibleItemPosition() == 0);
             }
         });
+    }
+
+    public void createEvent(Event event) {
+        Intent intent = new Intent(getActivity(), NewEventActivity.class);
+
+        if (event != null) {
+            intent.putExtra(Event.EVENT, event.getID());
+        }
+
+        startActivity(intent);
     }
 
     @Override
