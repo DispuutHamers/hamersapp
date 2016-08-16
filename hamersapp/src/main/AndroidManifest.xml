@@ -67,7 +67,7 @@
                 android:value="nl.ecci.hamers.MainActivity" />
         </activity>
         <activity
-            android:name="nl.ecci.hamers.beers.NewBeerReviewActivity"
+            android:name=".beers.NewReviewActivity"
             android:label="@string/new_review"
             android:parentActivityName="nl.ecci.hamers.beers.SingleBeerActivity"
             android:screenOrientation="portrait">

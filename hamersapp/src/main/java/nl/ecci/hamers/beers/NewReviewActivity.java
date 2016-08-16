@@ -29,7 +29,7 @@ import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DatePickerFragment;
 import nl.ecci.hamers.helpers.HamersActivity;
 
-public class NewBeerReviewActivity extends HamersActivity {
+public class NewReviewActivity extends HamersActivity {
 
     private Beer beer;
     private Review review;
@@ -78,8 +78,8 @@ public class NewBeerReviewActivity extends HamersActivity {
             sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int rating, boolean fromUser) {
-                    NewBeerReviewActivity.this.rating = rating + 1;
-                    progress.setText(String.format("Cijfer: %s", NewBeerReviewActivity.this.rating));
+                    NewReviewActivity.this.rating = rating + 1;
+                    progress.setText(String.format("Cijfer: %s", NewReviewActivity.this.rating));
                 }
 
                 @Override
