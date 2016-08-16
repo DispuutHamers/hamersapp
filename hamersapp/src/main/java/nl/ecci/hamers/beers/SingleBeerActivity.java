@@ -65,6 +65,10 @@ public class SingleBeerActivity extends HamersActivity {
             actionBar.setHomeButtonEnabled(true);
         }
 
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        gson = gsonBuilder.create();
+
         TextView nameTV = (TextView) findViewById(R.id.beer_name);
 
         View kindRow = findViewById(R.id.row_kind);
@@ -114,6 +118,8 @@ public class SingleBeerActivity extends HamersActivity {
                 ActivityCompat.startActivity(SingleBeerActivity.this, intent, options.toBundle());
             }
         });
+
+        getReviews();
     }
 
     private void getReviews() {
@@ -238,11 +244,5 @@ public class SingleBeerActivity extends HamersActivity {
 
         TextView descriptionView = (TextView) view.findViewById(R.id.row_description);
         descriptionView.setText(description);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getReviews();
     }
 }
