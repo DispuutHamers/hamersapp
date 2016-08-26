@@ -18,7 +18,7 @@ repositories {
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         applicationId "nl.ecci.Hamers"
@@ -63,7 +63,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     // Other libraries
     compile 'us.feras.mdv:markdownview:1.1.0'
-    compile 'com.takisoft.fix:preference-v7:24.1.1.1'
+    compile 'com.takisoft.fix:preference-v7:24.2.0.0'
 
     // Testing
     // testCompile 'junit:junit:4.12'
