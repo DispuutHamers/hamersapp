@@ -1,23 +1,23 @@
 package nl.ecci.hamers.beers;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,8 +41,9 @@ import static nl.ecci.hamers.helpers.DataManager.getUser;
 
 public class SingleBeerActivity extends HamersActivity {
 
-    private Gson gson;
+    private LayoutInflater inflater;
     private Beer beer;
+    private Gson gson;
     private Button reviewButton;
     private ViewGroup reviewViewGroup;
     private Review ownReview;
@@ -50,7 +51,9 @@ public class SingleBeerActivity extends HamersActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.single_beer);
+        setContentView(R.layout.single_beer);
+
+        inflater = getLayoutInflater();
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,6 +63,10 @@ public class SingleBeerActivity extends HamersActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        gson = gsonBuilder.create();
 
         TextView nameTV = (TextView) findViewById(R.id.beer_name);
 
@@ -81,9 +88,7 @@ public class SingleBeerActivity extends HamersActivity {
             });
         }
 
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gson = gsonBuilder.create();
-        beer = gson.fromJson(getIntent().getStringExtra(Beer.BEER), Beer.class);
+        beer = DataManager.getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, -1));
 
         fillRow(kindRow, getString(R.string.beer_soort), beer.getKind());
         fillRow(alcRow, getString(R.string.beer_alc), beer.getPercentage());
@@ -112,6 +117,8 @@ public class SingleBeerActivity extends HamersActivity {
                 ActivityCompat.startActivity(SingleBeerActivity.this, intent, options.toBundle());
             }
         });
+
+        getReviews();
     }
 
     private void getReviews() {
@@ -127,7 +134,7 @@ public class SingleBeerActivity extends HamersActivity {
                     if (review.getBeerID() == beer.getID()) {
                         hasReviews = true;
                         if (review.getUserID() == getOwnUser(MainActivity.prefs).getID()) {
-                            reviewButton.setVisibility(View.GONE);
+                            reviewButton.setText(R.string.edit_review);
                             ownReview = review;
                         }
                         insertReview(review);
@@ -147,8 +154,8 @@ public class SingleBeerActivity extends HamersActivity {
      * starts NewBeerActivity.
      */
     private void createReview(Review review) {
-        Intent intent = new Intent(this, NewBeerReviewActivity.class);
-        intent.putExtra(Beer.BEER, gson.toJson(beer, Beer.class));
+        Intent intent = new Intent(this, NewReviewActivity.class);
+        intent.putExtra(Beer.BEER, beer.getID());
 
         if (review != null) {
             intent.putExtra(Review.REVIEW, gson.toJson(review, Review.class));
@@ -159,9 +166,9 @@ public class SingleBeerActivity extends HamersActivity {
     }
 
     private void insertReview(Review review) {
-        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.review_row, null);
-        View divider = inflater.inflate(R.layout.divider, null);
+        LinearLayout insertPoint = (LinearLayout) findViewById(R.id.review_insert_point);
+        View view = inflater.inflate(R.layout.review_row, insertPoint, false);
+        View divider = inflater.inflate(R.layout.divider, insertPoint, false);
 
         TextView title = (TextView) view.findViewById(R.id.review_title);
         TextView body = (TextView) view.findViewById(R.id.review_body);
@@ -174,7 +181,6 @@ public class SingleBeerActivity extends HamersActivity {
         ratingTV.setText(String.format("Cijfer: %s", review.getRating()));
 
         // Insert into view
-        ViewGroup insertPoint = (ViewGroup) findViewById(R.id.review_insert_point);
         if (insertPoint != null) {
             insertPoint.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             insertPoint.addView(divider);
@@ -203,6 +209,23 @@ public class SingleBeerActivity extends HamersActivity {
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.edit_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit_item:
+                MainActivity.BEER_FRAGMENT.createBeer(beer);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void deleteReview() {
@@ -237,11 +260,5 @@ public class SingleBeerActivity extends HamersActivity {
 
         TextView descriptionView = (TextView) view.findViewById(R.id.row_description);
         descriptionView.setText(description);
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        getReviews();
     }
 }

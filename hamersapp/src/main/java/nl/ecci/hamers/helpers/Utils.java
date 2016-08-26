@@ -117,7 +117,7 @@ public class Utils {
     public static String convertNicknames(ArrayList<User.Nickname> nicknames) {
         StringBuilder sb = new StringBuilder();
         for (User.Nickname nickname : nicknames) {
-            sb.append(nickname.getNickname());
+            sb.append(nickname.getNickname()).append(" ");
         }
         return sb.toString();
     }

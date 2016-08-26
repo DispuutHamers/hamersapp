@@ -9,9 +9,10 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,8 +38,8 @@ public class SingleEventActivity extends HamersActivity {
 
     private Event event;
     private LayoutInflater inflater;
-    private ViewGroup presentView;
-    private ViewGroup absentView;
+    private LinearLayout presentView;
+    private LinearLayout absentView;
     private ViewGroup eventLayout;
     private ViewGroup presentLayout;
     private ViewGroup absentLayout;
@@ -49,9 +47,9 @@ public class SingleEventActivity extends HamersActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.single_event);
+        setContentView(R.layout.single_event);
 
-        inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = getLayoutInflater();
 
         initToolbar();
 
@@ -60,17 +58,15 @@ public class SingleEventActivity extends HamersActivity {
         View locationRow = findViewById(R.id.location_row);
         View descriptionRow = findViewById(R.id.description_row);
         LinearLayout button_layout = (LinearLayout) findViewById(R.id.button_layout);
-        presentView = (ViewGroup) findViewById(R.id.present_insert_point);
-        absentView = (ViewGroup) findViewById(R.id.absent_insert_point);
+        presentView = (LinearLayout) findViewById(R.id.present_insert_point);
+        absentView = (LinearLayout) findViewById(R.id.absent_insert_point);
         LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
 
         eventLayout = (ViewGroup) findViewById(R.id.single_event_layout);
         presentLayout = (ViewGroup) findViewById(R.id.present_layout);
         absentLayout = (ViewGroup) findViewById(R.id.absent_layout);
 
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        event = gson.fromJson(getIntent().getStringExtra(Event.EVENT), Event.class);
+        event = DataManager.getEvent(MainActivity.prefs, getIntent().getIntExtra(Event.EVENT, 1));
 
         initSignups();
 
@@ -130,6 +126,23 @@ public class SingleEventActivity extends HamersActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.edit_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit_item:
+                MainActivity.EVENT_FRAGMENT_ALL.createEvent(event);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void setPresent(View view) {
         postSignup(event.getID(), "true");
     }
@@ -178,9 +191,7 @@ public class SingleEventActivity extends HamersActivity {
 
         if (present.size() != 0) {
             for (String name : present) {
-                View view = inflater.inflate(R.layout.row_singleview, null);
-                fillSingleRow(view, name);
-                presentView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                presentView.addView(newSingleRow(name, presentView), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             }
         } else {
             eventLayout.removeView(presentLayout);
@@ -188,9 +199,7 @@ public class SingleEventActivity extends HamersActivity {
 
         if (absent.size() != 0) {
             for (String name : absent) {
-                View view = inflater.inflate(R.layout.row_singleview, null);
-                fillSingleRow(view, name);
-                absentView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                absentView.addView(newSingleRow(name, absentView), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             }
         } else {
             eventLayout.removeView(absentLayout);
@@ -204,9 +213,13 @@ public class SingleEventActivity extends HamersActivity {
         }
     }
 
-    private void fillSingleRow(View view, final String title) {
+    private View newSingleRow(final String title, ViewGroup viewGroup) {
+        View view = inflater.inflate(R.layout.row_singleview, viewGroup, false);
+
         TextView titleView = (TextView) view.findViewById(R.id.row_title);
         titleView.setText(title);
+
+        return view;
     }
 
     private void fillDetailRow(View view, final String description) {

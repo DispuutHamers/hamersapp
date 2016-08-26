@@ -1,4 +1,4 @@
-package nl.ecci.hamers.helpers.fragments;
+package nl.ecci.hamers.helpers;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;

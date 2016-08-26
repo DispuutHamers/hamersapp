@@ -1,8 +1,9 @@
 package nl.ecci.hamers.beers;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -32,8 +33,9 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
+import nl.ecci.hamers.helpers.HamersFragment;
 
-public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class BeerFragment extends HamersFragment {
 
     private static final Comparator<Beer> nameComparator = new Comparator<Beer>() {
         @Override
@@ -86,10 +88,21 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         beer_list.setItemAnimator(new DefaultItemAnimator());
         beer_list.addItemDecoration(new DividerItemDecoration(getActivity()));
 
-        initSwiper(view, beer_list, layoutManager);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
+        initSwiper(beer_list, layoutManager, swipeRefreshLayout);
 
         adapter = new BeerAdapter(dataSet, getActivity());
         beer_list.setAdapter(adapter);
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.beer_create_button);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    createBeer(null);
+                }
+            });
+        }
 
         onRefresh();
 
@@ -98,30 +111,16 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return view;
     }
 
-    private void initSwiper(View view, final RecyclerView beer_list, final LinearLayoutManager lm) {
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
+    public void createBeer(Beer beer) {
+        Intent intent = new Intent(getActivity(), NewBeerActivity.class);
 
-        swipeRefreshLayout.setOnRefreshListener(this);
+        if (beer != null) {
+            intent.putExtra(Beer.BEER, beer.getID());
+        }
 
-        beer_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView view, int dx, int dy) {
-                boolean enable = false;
-                if (beer_list != null && beer_list.getChildCount() > 0) {
-                    // check if the first item of the list is visible
-                    boolean firstItemVisible = lm.findFirstCompletelyVisibleItemPosition() == 0;
-                    // check if the top of the first item is visible
-                    boolean topOfFirstItemVisible = beer_list.getChildAt(0).getTop() == 0;
-                    // enabling or disabling the refresh layout
-                    enable = firstItemVisible && topOfFirstItemVisible;
-                }
-                swipeRefreshLayout.setEnabled(enable);
-            }
-        });
+        startActivity(intent);
     }
+
 
     @Override
     public void onRefresh() {
@@ -136,7 +135,7 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.beer_menu, menu);
+        inflater.inflate(R.menu.beer_list_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.beer_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         if (searchView != null) {

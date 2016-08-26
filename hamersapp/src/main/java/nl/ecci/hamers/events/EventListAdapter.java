@@ -2,8 +2,6 @@ package nl.ecci.hamers.events;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +48,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
                 final int position = vh.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Intent intent = new Intent(context, SingleEventActivity.class);
-                    intent.putExtra(Event.EVENT, gson.toJson(filteredDataSet.get(vh.getAdapterPosition()), Event.class));
+                    intent.putExtra(Event.EVENT, filteredDataSet.get(vh.getAdapterPosition()).getID());
                     context.startActivity(intent);
                 }
             }
@@ -64,17 +62,17 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         holder.description.setText(filteredDataSet.get(position).getDescription());
 
         Date date = filteredDataSet.get(position).getDate();
-        Date end_time = filteredDataSet.get(position).getEndTime();
+        Date end_time = filteredDataSet.get(position).getEndDate();
         holder.date.setText(MainActivity.appDF2.format(date));
 
-        CardView card = (CardView) holder.view;
-        if (dateChecker(date, true) && dateChecker(end_time, false)) {
-            card.setCardBackgroundColor(Color.parseColor("#c5e1a5"));
-        } else if (dateChecker(date, true)) {
-            card.setCardBackgroundColor(Color.LTGRAY);
-        } else {
-            card.setCardBackgroundColor(Color.WHITE);
-        }
+//        CardView card = (CardView) holder.view;
+//        if (dateChecker(date, true) && dateChecker(end_time, false)) {
+//            card.setCardBackgroundColor(Color.parseColor("#c5e1a5"));
+//        } else if (dateChecker(date, true)) {
+//            card.setCardBackgroundColor(Color.LTGRAY);
+//        } else {
+//            card.setCardBackgroundColor(Color.WHITE);
+//        }
 
         if (filteredDataSet.get(position).getLocation() == null || filteredDataSet.get(position).getLocation().equals("null")) {
             holder.location.setVisibility(View.GONE);

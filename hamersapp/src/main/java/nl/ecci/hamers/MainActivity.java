@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -130,12 +132,15 @@ public class MainActivity extends HamersActivity {
         initDrawer();
         initToolbar();
 
-        if (savedInstanceState == null) {
-            selectItem(R.id.navigation_item_quotes);
-        }
-
         configureDefaultImageLoader(this);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (savedInstanceState == null) {
+            selectItem(R.id.navigation_item_quotes);
+            String nightmode = prefs.getString("nightmode", "auto");
+            AppCompatDelegate.setDefaultNightMode(getNightModeInt(nightmode));
+            recreate();
+        }
 
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -326,22 +331,6 @@ public class MainActivity extends HamersActivity {
     }
 
     /**
-     * When user presses "+" in EventFragment, start new dialog with NewEventActivity
-     */
-    public void newEvent(View view) {
-        Intent intent = new Intent(this, NewEventActivity.class);
-        startActivity(intent);
-    }
-
-    /**
-     * When user presses "+" in BeerFragment, start new dialog with NewBeerActivity
-     */
-    public void newBeer(View view) {
-        Intent intent = new Intent(this, NewBeerActivity.class);
-        startActivity(intent);
-    }
-
-    /**
      * When user presses "+" in NewsFragment, start new dialog with NewNewsActivity
      */
     public void newNews(View view) {
@@ -420,5 +409,17 @@ public class MainActivity extends HamersActivity {
         } catch (ParseException ignored) {
         }
         return date;
+    }
+
+    @AppCompatDelegate.NightMode
+    public static int getNightModeInt(String nightMode) {
+        switch (nightMode) {
+            case "auto":
+                return AppCompatDelegate.MODE_NIGHT_AUTO;
+            case "on":
+                return AppCompatDelegate.MODE_NIGHT_YES;
+            default:
+                return AppCompatDelegate.MODE_NIGHT_NO;
+        }
     }
 }

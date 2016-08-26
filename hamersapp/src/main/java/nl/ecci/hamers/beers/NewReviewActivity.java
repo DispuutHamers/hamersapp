@@ -6,9 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,10 +26,10 @@ import java.util.Calendar;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.DatePickerFragment;
 import nl.ecci.hamers.helpers.HamersActivity;
-import nl.ecci.hamers.helpers.fragments.DatePickerFragment;
 
-public class NewBeerReviewActivity extends HamersActivity {
+public class NewReviewActivity extends HamersActivity {
 
     private Beer beer;
     private Review review;
@@ -69,7 +67,7 @@ public class NewBeerReviewActivity extends HamersActivity {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        beer = gson.fromJson(getIntent().getStringExtra(Beer.BEER), Beer.class);
+        beer = DataManager.getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, 1));
         review = gson.fromJson(getIntent().getStringExtra(Review.REVIEW), Review.class);
 
         TextView title = (TextView) findViewById(R.id.review_title);
@@ -80,8 +78,8 @@ public class NewBeerReviewActivity extends HamersActivity {
             sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int rating, boolean fromUser) {
-                    NewBeerReviewActivity.this.rating = rating + 1;
-                    progress.setText(String.format("Cijfer: %s", NewBeerReviewActivity.this.rating));
+                    NewReviewActivity.this.rating = rating + 1;
+                    progress.setText(String.format("Cijfer: %s", NewReviewActivity.this.rating));
                 }
 
                 @Override
