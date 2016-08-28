@@ -137,8 +137,8 @@ public class MainActivity extends HamersActivity {
 
         if (savedInstanceState == null) {
             selectItem(R.id.navigation_item_quotes);
-            String nightmode = prefs.getString("nightmode", "auto");
-            AppCompatDelegate.setDefaultNightMode(getNightModeInt(nightmode));
+            String night_mode = prefs.getString("night_mode", "off");
+            AppCompatDelegate.setDefaultNightMode(getNightModeInt(night_mode));
             recreate();
         }
 
