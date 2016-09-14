@@ -11,6 +11,9 @@ import android.text.Editable;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -139,13 +142,18 @@ public class Utils {
         return result;
     }
 
-    public static ArrayList<String> createUserList(Context context) {
+    public static ArrayList<String> createActiveMemberList(Context context) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
         ArrayList<String> users = new ArrayList<>();
         JSONArray userJSON;
         try {
             if ((userJSON = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERKEY)) != null) {
                 for (int i = 0; i < userJSON.length(); i++) {
-                    users.add(userJSON.getJSONObject(i).getString("name"));
+                    User user = gson.fromJson(userJSON.getJSONObject(i).toString(), User.class);
+                    if (user.getMember() == User.Member.LID) {
+                        users.add(user.getName());
+                    }
                 }
             }
         } catch (JSONException e) {

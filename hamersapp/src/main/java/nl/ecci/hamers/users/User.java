@@ -8,9 +8,14 @@ import java.util.Date;
 public class User {
 
     public enum Member {
-        @SerializedName("Lid")LID,
-        @SerializedName("Alid")ALID,
-        @SerializedName("None")NONE
+        @SerializedName("Lid")
+        LID,
+        @SerializedName("a-lid")
+        ALID,
+        @SerializedName("o-lid")
+        OLID,
+        @SerializedName("none")
+        NONE
     }
 
     private final int id;
