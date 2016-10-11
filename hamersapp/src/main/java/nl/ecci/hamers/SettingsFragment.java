@@ -1,8 +1,6 @@
 package nl.ecci.hamers;
 
-import android.annotation.TargetApi;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatDelegate;
@@ -17,9 +15,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import nl.ecci.hamers.helpers.DataManager;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
+    public final static String KEY_PREF_NIGHT_MODE = "night_mode";
 
     @Override
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.preferences);
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -74,11 +72,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 }
         );
 
-        Preference nightmode = findPreference("nightmode");
-        nightmode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        Preference night_mode = findPreference("night_mode");
+        night_mode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 AppCompatDelegate.setDefaultNightMode(MainActivity.getNightModeInt((String) newValue));
+                prefs.edit().putString(KEY_PREF_NIGHT_MODE, (String) newValue).apply();
                 getActivity().recreate();
                 return true;
             }

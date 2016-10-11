@@ -1,7 +1,9 @@
 package nl.ecci.hamers.users;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -25,8 +27,15 @@ public class UserFragment extends Fragment {
 
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.user_fragment_sliding_tabs);
         tabLayout.setTabTextColors(ContextCompat.getColor(getContext(), R.color.sliding_tabs_text_normal), ContextCompat.getColor(getContext(), R.color.sliding_tabs_text_selected));
+        tabLayout.setSelectedTabIndicatorColor(Color.WHITE);
         tabLayout.setupWithViewPager(viewPager);
 
         return rootView;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ActivityCompat.invalidateOptionsMenu(getActivity());
     }
 }

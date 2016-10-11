@@ -28,7 +28,7 @@
         android:onClick="newNews"
         android:src="@drawable/action_add"
         app:backgroundTint="@color/material_red"
-        app:layout_anchor="@id/news_recyclerview"
+        app:layout_anchor="@id/news_swipe_container"
         app:layout_anchorGravity="bottom|right|end"
         app:layout_behavior="nl.ecci.hamers.helpers.ScrollAwareFABBehavior" />
 

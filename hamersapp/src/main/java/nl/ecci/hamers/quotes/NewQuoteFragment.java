@@ -50,7 +50,7 @@ public class NewQuoteFragment extends DialogFragment {
                         }
                 );
         Spinner spinner = (Spinner) view.findViewById(R.id.quote_user_spinner);
-        users = Utils.createUserList(this.getContext());
+        users = Utils.createActiveMemberList(this.getContext());
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, users);
         spinner.setAdapter(adapter);
 
