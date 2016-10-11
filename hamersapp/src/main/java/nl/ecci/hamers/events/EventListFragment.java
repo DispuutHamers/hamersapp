@@ -115,11 +115,6 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public void populateList() {
-        new populateList().execute(dataSet);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -134,7 +129,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onResume() {
         super.onResume();
-        populateList();
+        onRefresh();
     }
 
     private void scrollTop() {
