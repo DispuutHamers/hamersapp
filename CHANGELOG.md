@@ -11,6 +11,12 @@
 - Improved user overview (image and layout)
 - Small layout improvements
 
+## [1.5.3](https://github.com/dexbleeker/hamersapp/tree/1.5.3) (2016-10-11)
+[Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.5.2...1.5.3)
+
+- Fix encoding issue
+- Minor interface improvement
+
 ## [1.5.2](https://github.com/dexbleeker/hamersapp/tree/1.5.2) (2016-06-15)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.5.1...1.5.2)
 
