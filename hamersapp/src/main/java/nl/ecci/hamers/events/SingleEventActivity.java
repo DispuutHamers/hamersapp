@@ -137,7 +137,11 @@ public class SingleEventActivity extends HamersActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit_item:
-                MainActivity.EVENT_FRAGMENT_ALL.createEvent(event);
+                Intent intent = new Intent(this, NewEventActivity.class);
+                if (event != null) {
+                    intent.putExtra(Event.EVENT, event.getID());
+                }
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

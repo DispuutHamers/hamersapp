@@ -5,20 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -46,14 +46,13 @@ import java.util.Date;
 import java.util.Locale;
 
 import nl.ecci.hamers.beers.BeerFragment;
-import nl.ecci.hamers.beers.NewBeerActivity;
 import nl.ecci.hamers.events.EventFragment;
 import nl.ecci.hamers.events.EventListFragment;
-import nl.ecci.hamers.events.NewEventActivity;
 import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.Utils;
+import nl.ecci.hamers.helpers.VolleyCallback;
 import nl.ecci.hamers.meetings.MeetingFragment;
 import nl.ecci.hamers.meetings.NewMeetingActivity;
 import nl.ecci.hamers.news.NewNewsActivity;
@@ -67,20 +66,6 @@ import nl.ecci.hamers.users.UserListFragment;
 import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
 
 public class MainActivity extends HamersActivity {
-    // Fragments
-    public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
-    private static final EventFragment EVENT_FRAGMENT = new EventFragment();
-    public static final EventListFragment EVENT_FRAGMENT_ALL = new EventListFragment();
-    public static final EventListFragment EVENT_FRAGMENT_UPCOMING = new EventListFragment();
-    public static final NewsFragment NEWS_FRAGMENT = new NewsFragment();
-    public static final BeerFragment BEER_FRAGMENT = new BeerFragment();
-    private static final UserFragment USER_FRAGMENT = new UserFragment();
-    public static final UserListFragment USER_FRAGMENT_ALL = new UserListFragment();
-    public static final UserListFragment USER_FRAGMENT_EX = new UserListFragment();
-    private static final MotionFragment MOTION_FRAGMENT = new MotionFragment();
-    public static final MeetingFragment MEETING_FRAGMENT = new MeetingFragment();
-    private static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
-    private static final AboutFragment ABOUT_FRAGMENT = new AboutFragment();
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public static final Locale locale = new Locale("nl");
     public static final DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", locale);
@@ -136,7 +121,6 @@ public class MainActivity extends HamersActivity {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (savedInstanceState == null) {
-            selectItem(R.id.navigation_item_quotes);
             String night_mode = prefs.getString("night_mode", "off");
             AppCompatDelegate.setDefaultNightMode(getNightModeInt(night_mode));
             recreate();
@@ -194,7 +178,7 @@ public class MainActivity extends HamersActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                selectItem(menuItem.getItemId());
+                selectItem(menuItem);
                 menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
                 return true;
@@ -270,56 +254,50 @@ public class MainActivity extends HamersActivity {
     /**
      * Swaps fragments in the quote_menu content view
      */
-    private void selectItem(int id) {
+    private void selectItem(MenuItem menuItem) {
+        Fragment fragment = null;
+        Class fragmentClass;
+
+        switch (menuItem.getItemId()) {
+            case R.id.navigation_item_events:
+                fragmentClass = EventFragment.class;
+                break;
+            case R.id.navigation_item_beers:
+                fragmentClass = BeerFragment.class;
+                break;
+            case R.id.navigation_item_news:
+                fragmentClass = NewsFragment.class;
+                break;
+            case R.id.navigation_item_users:
+                fragmentClass = UserFragment.class;
+                break;
+            case R.id.navigation_item_motions:
+                fragmentClass = MotionFragment.class;
+                break;
+            case R.id.navigation_item_meetings:
+                fragmentClass = MeetingFragment.class;
+                break;
+            case R.id.navigation_item_settings:
+                fragmentClass = SettingsFragment.class;
+                break;
+            case R.id.navigation_item_about:
+                fragmentClass = AboutFragment.class;
+                break;
+            default:
+                fragmentClass = QuoteFragment.class;
+        }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.replace(R.id.content_frame, fragment).commit();
+        setTitle(menuItem.getTitle());
         hideKeyboard();
-        switch (id) {
-            case R.id.navigation_item_quotes:
-                transaction.replace(R.id.content_frame, QUOTE_FRAGMENT).commit();
-                setTitle(getString(R.string.navigation_item_quotes));
-                break;
-
-            case R.id.navigation_item_events:
-                transaction.replace(R.id.content_frame, EVENT_FRAGMENT).commit();
-                setTitle(getString(R.string.navigation_item_events));
-                break;
-
-            case R.id.navigation_item_beers:
-                transaction.replace(R.id.content_frame, BEER_FRAGMENT).commit();
-                setTitle(getString(R.string.navigation_item_beers));
-                break;
-
-            case R.id.navigation_item_news:
-                transaction.replace(R.id.content_frame, NEWS_FRAGMENT).commit();
-                setTitle(getString(R.string.navigation_item_news));
-                break;
-
-            case R.id.navigation_item_users:
-                transaction.replace(R.id.content_frame, USER_FRAGMENT).commit();
-                setTitle(getString(R.string.navigation_item_users));
-                break;
-
-            case R.id.navigation_item_motions:
-                transaction.replace(R.id.content_frame, MOTION_FRAGMENT).commit();
-                setTitle(getString(R.string.navigation_item_motions));
-                break;
-
-            case R.id.navigation_item_meetings:
-                transaction.replace(R.id.content_frame, MEETING_FRAGMENT).commit();
-                setTitle(getString(R.string.navigation_item_meetings));
-                break;
-
-            case R.id.navigation_item_settings:
-                transaction.replace(R.id.content_frame, SETTINGS_FRAGMENT).commit();
-                setTitle(getString(R.string.navigation_item_settings));
-                break;
-
-            case R.id.navigation_item_about:
-                transaction.replace(R.id.content_frame, ABOUT_FRAGMENT).commit();
-                setTitle(getString(R.string.navigation_item_about));
-                break;
-        }
     }
 
     /**
@@ -391,7 +369,12 @@ public class MainActivity extends HamersActivity {
                 ImageLoader.getInstance().displayImage(url, userImage);
             }
         } else {
-            DataManager.getData(this, prefs, DataManager.WHOAMIURL, DataManager.WHOAMIKEY);
+            DataManager.getData(new VolleyCallback() {
+                @Override
+                public void onSuccess() {
+                    fillHeader();
+                }
+            }, this, prefs, DataManager.WHOAMIURL, DataManager.WHOAMIKEY);
         }
     }
 

@@ -34,6 +34,7 @@ import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
 import nl.ecci.hamers.helpers.HamersFragment;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 public class BeerFragment extends HamersFragment {
 
@@ -99,7 +100,8 @@ public class BeerFragment extends HamersFragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    createBeer(null);
+                    Intent intent = new Intent(getActivity(), NewBeerActivity.class);
+                    startActivity(intent);
                 }
             });
         }
@@ -111,26 +113,21 @@ public class BeerFragment extends HamersFragment {
         return view;
     }
 
-    public void createBeer(Beer beer) {
-        Intent intent = new Intent(getActivity(), NewBeerActivity.class);
-
-        if (beer != null) {
-            intent.putExtra(Beer.BEER, beer.getID());
-        }
-
-        startActivity(intent);
-    }
-
-
     @Override
-    public void onRefresh() {
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.BEERURL, DataManager.BEERKEY);
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY);
-    }
-
     @SuppressWarnings("unchecked")
-    public void populateList() {
-        new populateList().execute(dataSet);
+    public void onRefresh() {
+        DataManager.getData(new VolleyCallback() {
+            @Override
+            public void onSuccess() {
+                new populateList().execute(dataSet);
+            }
+        }, getContext(), MainActivity.prefs, DataManager.BEERURL, DataManager.BEERKEY);
+        DataManager.getData(new VolleyCallback() {
+            @Override
+            public void onSuccess() {
+                new populateList().execute(dataSet);
+            }
+        }, getContext(), MainActivity.prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY);
     }
 
     @Override

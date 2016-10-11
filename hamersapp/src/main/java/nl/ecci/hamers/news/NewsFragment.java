@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -68,15 +69,21 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.NEWSURL, DataManager.NEWSKEY);
+        DataManager.getData(new VolleyCallback() {
+            @Override
+            public void onSuccess() {
+                new populateList().execute(dataSet);
+            }
+        }, getContext(), MainActivity.prefs, DataManager.NEWSURL, DataManager.NEWSKEY);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        populateList();
+        onRefresh();
     }
 
     private void setRefreshing(final Boolean bool) {
@@ -88,11 +95,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 }
             });
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    public void populateList() {
-        new populateList().execute(dataSet);
     }
 
     private class populateList extends AsyncTask<ArrayList<News>, Void, ArrayList<News>> {

@@ -65,7 +65,7 @@ public final class DataManager {
     public static final String APIKEYKEY = "apikey";
     public static final String WHOAMIKEY = "whoamikey";
 
-    public static void getData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
+    public static void getData(final VolleyCallback callback, final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
         String url = baseURL + dataURL;
 
         StringRequest request = new StringRequest(Request.Method.GET, url,
@@ -73,7 +73,7 @@ public final class DataManager {
                     @Override
                     public void onResponse(String response) {
                         prefs.edit().putString(dataKEY, response).apply();
-                        populateList(dataURL);
+                        callback.onSuccess();
                     }
                 },
                 new Response.ErrorListener() {
@@ -107,11 +107,11 @@ public final class DataManager {
                                 ((Activity) context).finish();
                             }
                             Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
-                            if (dataURL.equals(SIGNUPURL)) {
-                                getData(context, prefs, EVENTURL, EVENTURL);
-                            } else if (urlAppendix != -1){
-                                getData(context, prefs, dataURL, dataKEY);
-                            }
+//                            if (dataURL.equals(SIGNUPURL)) {
+//                                getData(context, prefs, EVENTURL, EVENTURL);
+//                            } else if (urlAppendix != -1){
+//                                getData(context, prefs, dataURL, dataKEY);
+//                            }
                         }
                     }
                 },
@@ -160,33 +160,6 @@ public final class DataManager {
                 // Other error
                 Toast.makeText(context, context.getString(R.string.snackbar_volley_error), Toast.LENGTH_SHORT).show();
             }
-        }
-    }
-
-    private static void populateList(String data) {
-        switch (data) {
-            case QUOTEURL:
-                MainActivity.QUOTE_FRAGMENT.populateList();
-                break;
-            case BEERURL:
-                MainActivity.BEER_FRAGMENT.populateList();
-                break;
-            case REVIEWURL:
-                MainActivity.BEER_FRAGMENT.populateList();
-                break;
-            case EVENTURL:
-                MainActivity.EVENT_FRAGMENT_ALL.populateList();
-                MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
-                break;
-            case NEWSURL:
-                MainActivity.NEWS_FRAGMENT.populateList();
-                break;
-            case USERURL:
-                MainActivity.USER_FRAGMENT_ALL.populateList();
-                MainActivity.USER_FRAGMENT_EX.populateList();
-                break;
-            case MEETINGURL:
-                MainActivity.MEETING_FRAGMENT.populateList();
         }
     }
 

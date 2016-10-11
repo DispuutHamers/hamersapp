@@ -28,6 +28,7 @@ import java.util.Comparator;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -94,14 +95,15 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.USERURL, DataManager.USERKEY);
-    }
-
-    @SuppressWarnings("unchecked")
-    public void populateList() {
-        new populateList().execute(dataSet);
+        DataManager.getData(new VolleyCallback() {
+            @Override
+            public void onSuccess() {
+                new populateList().execute(dataSet);
+            }
+        }, getContext(), MainActivity.prefs, DataManager.USERURL, DataManager.USERKEY);
     }
 
     @Override

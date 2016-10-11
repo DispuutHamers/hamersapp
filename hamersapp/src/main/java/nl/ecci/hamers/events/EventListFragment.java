@@ -28,8 +28,8 @@ import java.util.ArrayList;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 public class EventListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -69,7 +69,8 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    createEvent(null);
+                    Intent intent = new Intent(getActivity(), NewEventActivity.class);
+                    startActivity(intent);
                 }
             });
         }
@@ -94,22 +95,23 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         });
     }
 
-    public void createEvent(Event event) {
-        Intent intent = new Intent(getActivity(), NewEventActivity.class);
-
-        if (event != null) {
-            intent.putExtra(Event.EVENT, event.getID());
-        }
-
-        startActivity(intent);
-    }
-
     @Override
+    @SuppressWarnings("unchecked")
     public void onRefresh() {
         if (upcoming) {
-            DataManager.getData(getContext(), MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
+            DataManager.getData(new VolleyCallback() {
+                @Override
+                public void onSuccess() {
+                    new populateList().execute(dataSet);
+                }
+            }, getContext(), MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
         } else {
-            DataManager.getData(getContext(), MainActivity.prefs, DataManager.UPCOMINGEVENTURL, DataManager.UPCOMINGEVENTKEY);
+            DataManager.getData(new VolleyCallback() {
+                @Override
+                public void onSuccess() {
+                    new populateList().execute(dataSet);
+                }
+            }, getContext(), MainActivity.prefs, DataManager.UPCOMINGEVENTURL, DataManager.UPCOMINGEVENTKEY);
         }
     }
 
@@ -139,7 +141,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 //        if (upcoming) {
 //            event_list.smoothScrollToPosition(adapter.getItemCount() - 1);
 //        } else {
-            event_list.smoothScrollToPosition(0);
+        event_list.smoothScrollToPosition(0);
 //        }
     }
 

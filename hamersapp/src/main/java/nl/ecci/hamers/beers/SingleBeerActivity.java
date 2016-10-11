@@ -222,7 +222,11 @@ public class SingleBeerActivity extends HamersActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit_item:
-                MainActivity.BEER_FRAGMENT.createBeer(beer);
+                Intent intent = new Intent(this, NewBeerActivity.class);
+                if (beer != null) {
+                    intent.putExtra(Beer.BEER, beer.getID());
+                }
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

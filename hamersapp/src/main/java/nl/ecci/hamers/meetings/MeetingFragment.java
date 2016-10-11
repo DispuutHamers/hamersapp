@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private final ArrayList<Meeting> dataSet = new ArrayList<>();
@@ -73,13 +74,14 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     @Override
-    public void onRefresh() {
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.MEETINGURL, DataManager.MEETINGKEY);
-    }
-
     @SuppressWarnings("unchecked")
-    public void populateList() {
-        new populateList().execute(dataSet);
+    public void onRefresh() {
+        DataManager.getData(new VolleyCallback() {
+            @Override
+            public void onSuccess() {
+                new populateList().execute(dataSet);
+            }
+        }, getContext(), MainActivity.prefs, DataManager.MEETINGURL, DataManager.MEETINGKEY);
     }
 
     @Override
