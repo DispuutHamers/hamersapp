@@ -88,7 +88,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
                         Toast.makeText(context, context.getString(R.string.no_image), Toast.LENGTH_SHORT).show();
                     }
                 } catch (NullPointerException ignored) {
-                    Snackbar.make(view, context.getString(R.string.snackbar_error), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, context.getString(R.string.generic_error), Snackbar.LENGTH_LONG).show();
                 }
             }
 

@@ -67,9 +67,9 @@ public class Utils {
                 if (!key.toString().equals("")) {
                     // Store in memory
                     PreferenceManager.getDefaultSharedPreferences(context).edit().putString(DataManager.APIKEYKEY, key.toString()).apply();
-                    Toast.makeText(context, context.getResources().getString(R.string.snackbar_downloading), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.dowloading), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(context, context.getResources().getString(R.string.snackbar_storekeymemory), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.store_key_settings), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -157,7 +157,7 @@ public class Utils {
                 }
             }
         } catch (JSONException e) {
-            Toast.makeText(context, context.getString(R.string.snackbar_userloaderror), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getString(R.string.user_load_error), Toast.LENGTH_SHORT).show();
         }
         return users;
     }

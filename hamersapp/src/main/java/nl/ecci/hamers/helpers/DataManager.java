@@ -139,26 +139,22 @@ public final class DataManager {
         if (context != null) {
             if (error instanceof AuthFailureError) {
                 // Wrong API key
-                if (Utils.alertDialog == null) {
-                    Utils.showApiKeyDialog(context);
-                } else if (!Utils.alertDialog.isShowing()) {
-                    Utils.showApiKeyDialog(context);
-                }
+                Toast.makeText(context, context.getString(R.string.timeout_error), Toast.LENGTH_SHORT).show();
             } else if (error instanceof TimeoutError) {
                 // Timeout
-                Toast.makeText(context, context.getString(R.string.snackbar_timeout_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.timeout_error), Toast.LENGTH_SHORT).show();
             } else if (error instanceof ServerError) {
                 // Server error (500)
-                Toast.makeText(context, context.getString(R.string.snackbar_server_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.server_error), Toast.LENGTH_SHORT).show();
             } else if (error instanceof NoConnectionError) {
                 // No network connection
-                Toast.makeText(context, context.getString(R.string.snackbar_connection_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
             } else if (error instanceof NetworkError) {
-                // No network connection
-                Toast.makeText(context, context.getString(R.string.snackbar_network_error), Toast.LENGTH_SHORT).show();
+                // Network error
+                Toast.makeText(context, context.getString(R.string.network_error), Toast.LENGTH_SHORT).show();
             } else {
                 // Other error
-                Toast.makeText(context, context.getString(R.string.snackbar_volley_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.volley_error), Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -145,7 +145,7 @@ public class SingleBeerActivity extends HamersActivity {
                 }
             }
         } catch (JSONException e) {
-            Toast.makeText(this, getString(R.string.snackbar_reviewloaderror), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.review_load_error), Toast.LENGTH_SHORT).show();
         }
     }
 
