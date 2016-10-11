@@ -4,7 +4,7 @@ buildscript {
         maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath 'com.android.tools.build:gradle:2.2.1'
         classpath 'com.google.gms:google-services:3.0.0'
     }
 }
@@ -24,8 +24,8 @@ android {
         applicationId "nl.ecci.Hamers"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 40
-        versionName "1.5.2"
+        versionCode 41
+        versionName "1.5.3"
         multiDexEnabled true
     }
     buildTypes {
