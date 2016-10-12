@@ -20,6 +20,7 @@ import org.json.JSONArray;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
@@ -71,7 +72,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     @SuppressWarnings("unchecked")
     public void onRefresh() {
-        setRefreshing(true);
         DataManager.getData(new VolleyCallback() {
             @Override
             public void onSuccess() {
@@ -120,6 +120,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             if (!result.isEmpty()) {
                 dataSet.clear();
                 dataSet.addAll(result);
+                Collections.reverse(dataSet);
                 if (NewsFragment.this.adapter != null) {
                     NewsFragment.this.adapter.notifyDataSetChanged();
                 }

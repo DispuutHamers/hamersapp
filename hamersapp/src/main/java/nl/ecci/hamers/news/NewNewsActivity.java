@@ -43,6 +43,7 @@ public class NewNewsActivity extends HamersActivity {
         try {
             body.put("title", title);
             body.put("body", newsBody);
+            body.put("cat", "l");
         } catch (JSONException ignored) {
         }
 
