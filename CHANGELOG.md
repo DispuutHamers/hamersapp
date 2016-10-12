@@ -4,8 +4,9 @@
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.5.0...2.0)
 
 - Support for meetings
+- Support for stickers
 - Support APIv2
-- Filter events
+- Filter news and events
 - Support for nicknames and batches
 - Nightmode
 - Improved user overview (image and layout)
