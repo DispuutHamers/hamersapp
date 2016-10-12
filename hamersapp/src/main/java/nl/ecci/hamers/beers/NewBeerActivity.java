@@ -18,7 +18,6 @@ import nl.ecci.hamers.helpers.HamersActivity;
 
 public class NewBeerActivity extends HamersActivity {
 
-    private Beer beer;
     private int beerID;
     private SharedPreferences prefs;
     private EditText beer_name;
@@ -53,7 +52,7 @@ public class NewBeerActivity extends HamersActivity {
 
         beerID = getIntent().getIntExtra(Beer.BEER, -1);
         if (beerID != -1) {
-            beer = DataManager.getBeer(MainActivity.prefs, beerID);
+            Beer beer = DataManager.getBeer(MainActivity.prefs, beerID);
             beer_name.setText(beer.getName());
             beer_picture.setText(beer.getImageURL());
             beer_soort.setText(beer.getKind());

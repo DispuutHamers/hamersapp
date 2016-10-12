@@ -145,7 +145,7 @@ public class SingleBeerActivity extends HamersActivity {
                 }
             }
         } catch (JSONException e) {
-            Toast.makeText(this, getString(R.string.snackbar_reviewloaderror), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.review_load_error), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -222,7 +222,11 @@ public class SingleBeerActivity extends HamersActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit_item:
-                MainActivity.BEER_FRAGMENT.createBeer(beer);
+                Intent intent = new Intent(this, NewBeerActivity.class);
+                if (beer != null) {
+                    intent.putExtra(Beer.BEER, beer.getID());
+                }
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -251,6 +255,7 @@ public class SingleBeerActivity extends HamersActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        getReviews();
         refreshActivity();
     }
 

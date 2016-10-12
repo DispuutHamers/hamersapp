@@ -2,9 +2,7 @@ package nl.ecci.hamers.meetings;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import nl.ecci.hamers.MainActivity;
@@ -15,8 +13,6 @@ import static nl.ecci.hamers.helpers.DataManager.getMeeting;
 import static nl.ecci.hamers.helpers.DataManager.getUser;
 
 public class SingleMeetingActivity extends HamersActivity {
-
-    private Meeting meeting;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,7 +34,7 @@ public class SingleMeetingActivity extends HamersActivity {
         TextView agendaTV = (TextView) findViewById(R.id.meeting_agenda);
         TextView notesTV = (TextView) findViewById(R.id.meeting_notes);
 
-        meeting = getMeeting(MainActivity.prefs, getIntent().getIntExtra(Meeting.ID, -1));
+        Meeting meeting = getMeeting(MainActivity.prefs, getIntent().getIntExtra(Meeting.ID, -1));
 
         if (subjectTV != null && dateTV != null && userTV != null && agendaTV != null && notesTV != null) {
             subjectTV.setText(meeting.getSubject());

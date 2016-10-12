@@ -26,15 +26,11 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
     private final Context context;
     private final ArrayList<Event> dataSet;
     private ArrayList<Event> filteredDataSet;
-    private final Gson gson;
 
     public EventListAdapter(Context context, ArrayList<Event> dataSet) {
         this.context = context;
         this.dataSet = dataSet;
         this.filteredDataSet = dataSet;
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gson = gsonBuilder.create();
     }
 
     @Override
@@ -62,17 +58,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         holder.description.setText(filteredDataSet.get(position).getDescription());
 
         Date date = filteredDataSet.get(position).getDate();
-        Date end_time = filteredDataSet.get(position).getEndDate();
         holder.date.setText(MainActivity.appDF2.format(date));
-
-//        CardView card = (CardView) holder.view;
-//        if (dateChecker(date, true) && dateChecker(end_time, false)) {
-//            card.setCardBackgroundColor(Color.parseColor("#c5e1a5"));
-//        } else if (dateChecker(date, true)) {
-//            card.setCardBackgroundColor(Color.LTGRAY);
-//        } else {
-//            card.setCardBackgroundColor(Color.WHITE);
-//        }
 
         if (filteredDataSet.get(position).getLocation() == null || filteredDataSet.get(position).getLocation().equals("null")) {
             holder.location.setVisibility(View.GONE);

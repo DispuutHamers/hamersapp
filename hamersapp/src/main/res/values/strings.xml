@@ -171,17 +171,18 @@
     </array>
 
     <!-- Snackbar -->
-    <string name="snackbar_loaderror">Fout bij inladen</string>
-    <string name="snackbar_downloading">De gegevens worden gedownload</string>
-    <string name="snackbar_userloaderror">Fout bij het laden van de leden</string>
-    <string name="snackbar_reviewloaderror">Fout bij het laden van de reviews</string>
-    <string name="snackbar_storekeymemory">Een apikey kan ingevuld worden bij instellingen</string>
-    <string name="snackbar_error">Er is iets misgegaan, probeer het later opnieuw.</string>
-    <string name="snackbar_volley_error">Fout bij ophalen data van server.</string>
-    <string name="snackbar_server_error">Oh noes! De server verslikte zich!</string>
-    <string name="snackbar_connection_error">Oh noes! Je hebt geen verbinding!</string>
-    <string name="snackbar_network_error">Oh noes! De verbinding ging stuk!</string>
-    <string name="snackbar_timeout_error">Timeout bij ophalen data.</string>
+    <string name="load_error">Fout bij inladen</string>
+    <string name="dowloading">De gegevens worden gedownload</string>
+    <string name="user_load_error">Fout bij het laden van de leden</string>
+    <string name="review_load_error">Fout bij het laden van de reviews</string>
+    <string name="store_key_settings">Een apikey kan ingevuld worden bij instellingen</string>
+    <string name="generic_error">Er is iets misgegaan, probeer het later opnieuw.</string>
+    <string name="volley_error">Fout bij ophalen data van server.</string>
+    <string name="server_error">Oh noes! De server verslikte zich!</string>
+    <string name="connection_error">Oh noes! Je hebt geen verbinding!</string>
+    <string name="network_error">Oh noes! De verbinding ging stuk!</string>
+    <string name="timeout_error">Timeout bij ophalen data.</string>
+    <string name="auth_error">Authenticatie error. Probeer je API key opnieuw in te voeren.</string>
 
     <!-- Sorting -->
     <string name="sort_quotes">Sorteer op aantal quotes</string>

@@ -28,6 +28,7 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -75,14 +76,15 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY);
-    }
-
-    @SuppressWarnings("unchecked")
-    public void populateList() {
-        new populateList().execute(dataSet);
+        DataManager.getData(new VolleyCallback() {
+            @Override
+            public void onSuccess() {
+                new populateList().execute(dataSet);
+            }
+        }, getContext(), MainActivity.prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY);
     }
 
     @Override
@@ -110,7 +112,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onResume() {
         super.onResume();
-        populateList();
+        onRefresh();
     }
 
     @Override
@@ -167,11 +169,6 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
             }
             setRefreshing(false);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            setRefreshing(true);
         }
     }
 }

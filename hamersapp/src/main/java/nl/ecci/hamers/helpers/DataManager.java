@@ -37,9 +37,6 @@ import nl.ecci.hamers.users.User;
 import nl.ecci.hamers.users.User.Nickname;
 
 public final class DataManager {
-    // URL
-    public static final String baseURL = "https://zondersikkel.nl/api/v2/";
-//    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
     // URL Appendices
     public static final String QUOTEURL = "quotes";
     public static final String USERURL = "users";
@@ -63,11 +60,14 @@ public final class DataManager {
     public static final String BEERKEY = "beerData";
     public static final String REVIEWKEY = "reviewdata";
     public static final String MEETINGKEY = "meetingdata";
-    public static final String APIKEYKEY = "apikey";
+    static final String APIKEYKEY = "apikey";
     public static final String WHOAMIKEY = "whoamikey";
     public static final String STICKERKEY = "stickerkey";
+    // URL
+//    public static final String baseURL = "https://zondersikkel.nl/api/v2/";
+    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
 
-    public static void getData(final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
+    public static void getData(final VolleyCallback callback, final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
         String url = baseURL + dataURL;
 
         StringRequest request = new StringRequest(Request.Method.GET, url,
@@ -75,7 +75,9 @@ public final class DataManager {
                     @Override
                     public void onResponse(String response) {
                         prefs.edit().putString(dataKEY, response).apply();
-                        populateList(dataURL);
+                        if (callback != null) {
+                            callback.onSuccess();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -110,9 +112,11 @@ public final class DataManager {
                             }
                             Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
                             if (dataURL.equals(SIGNUPURL)) {
-                                getData(context, prefs, EVENTURL, EVENTURL);
-                            } else if (urlAppendix != -1){
-                                getData(context, prefs, dataURL, dataKEY);
+                                getData(null, context, prefs, EVENTURL, EVENTKEY);
+                            } else if (dataURL.equals(REVIEWURL)) {
+                                getData(null, context, prefs, REVIEWURL, REVIEWKEY);
+                            } else if (urlAppendix != -1) {
+                                getData(null, context, prefs, dataURL, dataKEY);
                             }
                         }
                     }
@@ -141,54 +145,23 @@ public final class DataManager {
         if (context != null) {
             if (error instanceof AuthFailureError) {
                 // Wrong API key
-                if (Utils.alertDialog == null) {
-                    Utils.showApiKeyDialog(context);
-                } else if (!Utils.alertDialog.isShowing()) {
-                    Utils.showApiKeyDialog(context);
-                }
+                Toast.makeText(context, context.getString(R.string.auth_error), Toast.LENGTH_SHORT).show();
             } else if (error instanceof TimeoutError) {
                 // Timeout
-                Toast.makeText(context, context.getString(R.string.snackbar_timeout_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.timeout_error), Toast.LENGTH_SHORT).show();
             } else if (error instanceof ServerError) {
                 // Server error (500)
-                Toast.makeText(context, context.getString(R.string.snackbar_server_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.server_error), Toast.LENGTH_SHORT).show();
             } else if (error instanceof NoConnectionError) {
                 // No network connection
-                Toast.makeText(context, context.getString(R.string.snackbar_connection_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
             } else if (error instanceof NetworkError) {
-                // No network connection
-                Toast.makeText(context, context.getString(R.string.snackbar_network_error), Toast.LENGTH_SHORT).show();
+                // Network error
+                Toast.makeText(context, context.getString(R.string.network_error), Toast.LENGTH_SHORT).show();
             } else {
                 // Other error
-                Toast.makeText(context, context.getString(R.string.snackbar_volley_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.volley_error), Toast.LENGTH_SHORT).show();
             }
-        }
-    }
-
-    private static void populateList(String data) {
-        switch (data) {
-            case QUOTEURL:
-                MainActivity.QUOTE_FRAGMENT.populateList();
-                break;
-            case BEERURL:
-                MainActivity.BEER_FRAGMENT.populateList();
-                break;
-            case REVIEWURL:
-                MainActivity.BEER_FRAGMENT.populateList();
-                break;
-            case EVENTURL:
-                MainActivity.EVENT_FRAGMENT_ALL.populateList();
-                MainActivity.EVENT_FRAGMENT_UPCOMING.populateList();
-                break;
-            case NEWSURL:
-                MainActivity.NEWS_FRAGMENT.populateList();
-                break;
-            case USERURL:
-                MainActivity.USER_FRAGMENT_ALL.populateList();
-                MainActivity.USER_FRAGMENT_EX.populateList();
-                break;
-            case MEETINGURL:
-                MainActivity.MEETING_FRAGMENT.populateList();
         }
     }
 
@@ -214,8 +187,11 @@ public final class DataManager {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         JSONObject whoami;
-        if ((whoami = DataManager.getJsonObject(prefs, DataManager.WHOAMIKEY)) != null) {
-            return gson.fromJson(whoami.toString(), User.class);
+        try {
+            if ((whoami = new JSONObject(prefs.getString(DataManager.WHOAMIKEY, null))) != null) {
+                return gson.fromJson(whoami.toString(), User.class);
+            }
+        } catch (JSONException | NullPointerException ignored) {
         }
         return new User(-1, "Unknown", "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<Nickname>(), new Date());
     }

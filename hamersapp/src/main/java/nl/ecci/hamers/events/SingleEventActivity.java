@@ -1,7 +1,6 @@
 package nl.ecci.hamers.events;
 
 import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -137,7 +136,11 @@ public class SingleEventActivity extends HamersActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit_item:
-                MainActivity.EVENT_FRAGMENT_ALL.createEvent(event);
+                Intent intent = new Intent(this, NewEventActivity.class);
+                if (event != null) {
+                    intent.putExtra(Event.EVENT, event.getID());
+                }
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -151,10 +154,10 @@ public class SingleEventActivity extends HamersActivity {
         postSignup(event.getID(), "false");
     }
 
-    private void postSignup(int eventid, String status) {
+    private void postSignup(int eventID, String status) {
         JSONObject body = new JSONObject();
         try {
-            body.put("event_id", eventid);
+            body.put("event_id", eventID);
             body.put("status", status);
         } catch (JSONException ignored) {
         }

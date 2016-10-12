@@ -3,12 +3,15 @@ package nl.ecci.hamers.news;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,15 +23,18 @@ import org.json.JSONArray;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private final ArrayList<News> dataSet = new ArrayList<>();
     private NewsAdapter adapter;
+    private RecyclerView news_list;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     public NewsFragment() {
@@ -37,9 +43,9 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.news_fragment, container, false);
-        RecyclerView news_list = (RecyclerView) view.findViewById(R.id.news_recyclerview);
+        news_list = (RecyclerView) view.findViewById(R.id.news_recyclerview);
 
-        setHasOptionsMenu(false);
+        setHasOptionsMenu(true);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         news_list.setLayoutManager(mLayoutManager);
@@ -68,15 +74,54 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.scroll_top:
+                news_list.smoothScrollToPosition(0);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.NEWSURL, DataManager.NEWSKEY);
+        DataManager.getData(new VolleyCallback() {
+            @Override
+            public void onSuccess() {
+                new populateList().execute(dataSet);
+            }
+        }, getContext(), MainActivity.prefs, DataManager.NEWSURL, DataManager.NEWSKEY);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        populateList();
+        onRefresh();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.news_event_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.event_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        if (searchView != null) {
+            searchView.setQueryHint(getString(R.string.search_hint));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    adapter.getFilter().filter(s.toLowerCase());
+                    return false;
+                }
+            });
+        }
     }
 
     private void setRefreshing(final Boolean bool) {
@@ -88,11 +133,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 }
             });
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    public void populateList() {
-        new populateList().execute(dataSet);
     }
 
     private class populateList extends AsyncTask<ArrayList<News>, Void, ArrayList<News>> {
@@ -118,16 +158,12 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             if (!result.isEmpty()) {
                 dataSet.clear();
                 dataSet.addAll(result);
+                Collections.reverse(dataSet);
                 if (NewsFragment.this.adapter != null) {
                     NewsFragment.this.adapter.notifyDataSetChanged();
                 }
             }
             setRefreshing(false);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            setRefreshing(true);
         }
     }
 }

@@ -29,7 +29,7 @@ import nl.ecci.hamers.users.User;
 import static nl.ecci.hamers.helpers.DataManager.getJsonArray;
 
 public class Utils {
-    public static AlertDialog alertDialog;
+    private static AlertDialog alertDialog;
 
     private static String hex(byte[] array) {
         StringBuilder sb = new StringBuilder();
@@ -53,7 +53,7 @@ public class Utils {
     /**
      * Show the dialog for entering the apikey on startup
      */
-    public static void showApiKeyDialog(final Context context) {
+    private static void showApiKeyDialog(final Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(context.getString(R.string.apikeydialogtitle));
         builder.setMessage(context.getString(R.string.apikeydialogmessage));
@@ -67,9 +67,9 @@ public class Utils {
                 if (!key.toString().equals("")) {
                     // Store in memory
                     PreferenceManager.getDefaultSharedPreferences(context).edit().putString(DataManager.APIKEYKEY, key.toString()).apply();
-                    Toast.makeText(context, context.getResources().getString(R.string.snackbar_downloading), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.dowloading), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(context, context.getResources().getString(R.string.snackbar_storekeymemory), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.store_key_settings), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -157,7 +157,7 @@ public class Utils {
                 }
             }
         } catch (JSONException e) {
-            Toast.makeText(context, context.getString(R.string.snackbar_userloaderror), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getString(R.string.user_load_error), Toast.LENGTH_SHORT).show();
         }
         return users;
     }

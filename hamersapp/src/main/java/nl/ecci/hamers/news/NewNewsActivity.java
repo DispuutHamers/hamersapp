@@ -2,8 +2,6 @@ package nl.ecci.hamers.news;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -43,6 +41,7 @@ public class NewNewsActivity extends HamersActivity {
         try {
             body.put("title", title);
             body.put("body", newsBody);
+            body.put("cat", "l");
         } catch (JSONException ignored) {
         }
 
