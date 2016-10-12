@@ -131,7 +131,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.event_menu, menu);
+        inflater.inflate(R.menu.news_event_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.event_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         if (searchView != null) {

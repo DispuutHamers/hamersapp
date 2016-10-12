@@ -31,9 +31,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         this.context = context;
         this.dataSet = dataSet;
         this.filteredDataSet = dataSet;
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
     }
 
     @Override
