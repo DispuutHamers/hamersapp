@@ -59,7 +59,7 @@ public final class DataManager {
     public static final String BEERKEY = "beerData";
     public static final String REVIEWKEY = "reviewdata";
     public static final String MEETINGKEY = "meetingdata";
-    public static final String APIKEYKEY = "apikey";
+    static final String APIKEYKEY = "apikey";
     public static final String WHOAMIKEY = "whoamikey";
     // URL
 //    public static final String baseURL = "https://zondersikkel.nl/api/v2/";
@@ -143,7 +143,7 @@ public final class DataManager {
         if (context != null) {
             if (error instanceof AuthFailureError) {
                 // Wrong API key
-                Toast.makeText(context, context.getString(R.string.timeout_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.auth_error), Toast.LENGTH_SHORT).show();
             } else if (error instanceof TimeoutError) {
                 // Timeout
                 Toast.makeText(context, context.getString(R.string.timeout_error), Toast.LENGTH_SHORT).show();
@@ -185,8 +185,11 @@ public final class DataManager {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         JSONObject whoami;
-        if ((whoami = DataManager.getJsonObject(prefs, DataManager.WHOAMIKEY)) != null) {
-            return gson.fromJson(whoami.toString(), User.class);
+        try {
+            if ((whoami = new JSONObject(prefs.getString(DataManager.WHOAMIKEY, null))) != null) {
+                return gson.fromJson(whoami.toString(), User.class);
+            }
+        } catch (JSONException | NullPointerException ignored) {
         }
         return new User(-1, "Unknown", "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<Nickname>(), new Date());
     }

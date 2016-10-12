@@ -26,16 +26,15 @@ import nl.ecci.hamers.helpers.TimePickerFragment;
 public class NewEventActivity extends HamersActivity {
 
     private final FragmentManager fragmentManager = getSupportFragmentManager();
-    EditText event_title;
-    EditText event_location;
-    EditText event_description;
-    Button eventTimeButton;
-    Button eventEndTimeButton;
-    Button eventDateButton;
-    Button eventEndDateButton;
-    Button deadlineTimeButton;
-    Button deadlineDateButton;
-    private Event event;
+    private EditText event_title;
+    private EditText event_location;
+    private EditText event_description;
+    private Button eventTimeButton;
+    private Button eventEndTimeButton;
+    private Button eventDateButton;
+    private Button eventEndDateButton;
+    private Button deadlineTimeButton;
+    private Button deadlineDateButton;
     private int eventID;
 
     @Override
@@ -67,7 +66,7 @@ public class NewEventActivity extends HamersActivity {
 
         eventID = getIntent().getIntExtra(Event.EVENT, -1);
         if (eventID != -1) {
-            event = DataManager.getEvent(MainActivity.prefs, eventID);
+            Event event = DataManager.getEvent(MainActivity.prefs, eventID);
             event_title.setText(event.getTitle());
             event_location.setText(event.getLocation());
             event_description.setText(event.getDescription());

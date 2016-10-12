@@ -29,7 +29,7 @@ import nl.ecci.hamers.users.User;
 import static nl.ecci.hamers.helpers.DataManager.getJsonArray;
 
 public class Utils {
-    public static AlertDialog alertDialog;
+    private static AlertDialog alertDialog;
 
     private static String hex(byte[] array) {
         StringBuilder sb = new StringBuilder();
@@ -53,7 +53,7 @@ public class Utils {
     /**
      * Show the dialog for entering the apikey on startup
      */
-    public static void showApiKeyDialog(final Context context) {
+    private static void showApiKeyDialog(final Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(context.getString(R.string.apikeydialogtitle));
         builder.setMessage(context.getString(R.string.apikeydialogmessage));

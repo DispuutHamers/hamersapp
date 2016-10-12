@@ -33,36 +33,10 @@ import nl.ecci.hamers.users.User;
 public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
-    // Quote
-    private final String QUOTETYPE = "quote";
-    private final String QUOTEBODY = "text";
     private final String QUOTEDATE = "created_at";
-    // Event
-    private final String EVENTTYPE = "event";
-    private final String EVENTTITLE = "title";
-    private final String EVENTLOCATION = "location";
-    private final String EVENTDESCRIPTION = "beschrijving";
-    // Beer
-    private final String BEERTYPE = "beer";
-    private final String BEERNAME = "name";
-    private final String BEERKIND = "soort";
-    private final String BEERPERCENTAGE = "percentage";
-    private final String BEERBREWER = "brewer";
-    private final String BEERCOUNTRY = "country";
-    // Review
-    private final String REVIEWTYPE = "review";
-    private final String REVIEWBEER = "beer_id";
-    private final String REVIEWDESCRIPTION = "description";
-    private final String REVIEWRATING = "rating";
-    // Common
-    private final String USERID = "user_id";
-    PendingIntent pendingIntent;
-    private JSONArray json;
-    private SharedPreferences prefs;
-    private JSONObject quote;
+    private PendingIntent pendingIntent;
     private JSONObject event;
     private JSONObject beer;
-    private JSONObject review;
     private Type type;
 
     /**
@@ -74,7 +48,7 @@ public class MyGcmListenerService extends GcmListenerService {
      */
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -93,10 +67,14 @@ public class MyGcmListenerService extends GcmListenerService {
         }
 
         // QUOTE
+        JSONArray json;
+        String USERID = "user_id";
         try {
-            quote = new JSONObject(object.getString(QUOTETYPE));
+            String QUOTETYPE = "quote";
+            JSONObject quote = new JSONObject(object.getString(QUOTETYPE));
             if (quote.length() != 0) {
                 type = Type.QUOTE;
+                String QUOTEBODY = "text";
                 title = quote.getString(QUOTEBODY);
 
                 User user = DataManager.getUser(prefs, Integer.valueOf(quote.getString(USERID)));
@@ -118,10 +96,13 @@ public class MyGcmListenerService extends GcmListenerService {
 
         // EVENT
         try {
+            String EVENTTYPE = "event";
             event = new JSONObject(object.getString(EVENTTYPE));
             if (event.length() != 0) {
                 type = Type.EVENT;
+                String EVENTTITLE = "title";
                 title = event.getString(EVENTTITLE);
+                String EVENTDESCRIPTION = "beschrijving";
                 message = event.getString(EVENTDESCRIPTION);
 
                 // Add event to event list
@@ -140,9 +121,11 @@ public class MyGcmListenerService extends GcmListenerService {
 
         // BEER
         try {
+            String BEERTYPE = "beer";
             beer = new JSONObject(object.getString(BEERTYPE));
             if (beer.length() != 0) {
                 type = Type.BEER;
+                String BEERNAME = "name";
                 title = "Biertje: " + beer.getString(BEERNAME);
                 message = "Is net toegevoegd aan de database!";
 
@@ -162,11 +145,14 @@ public class MyGcmListenerService extends GcmListenerService {
 
         // REVIEW
         try {
-            review = new JSONObject(object.getString(REVIEWTYPE));
+            String REVIEWTYPE = "review";
+            JSONObject review = new JSONObject(object.getString(REVIEWTYPE));
             if (review.length() != 0) {
                 type = Type.REVIEW;
                 User user = DataManager.getUser(prefs, review.getInt(USERID));
+                String REVIEWBEER = "beer_id";
                 Beer beer = DataManager.getBeer(prefs, review.getInt(REVIEWBEER));
+                String REVIEWRATING = "rating";
                 if (user != null && beer != null) {
                     title = user.getName() + " / " + beer.getName() + " / " + review.getString(REVIEWRATING);
                 } else if (user != null) {
@@ -174,6 +160,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 } else {
                     title = "Hamers";
                 }
+                String REVIEWDESCRIPTION = "description";
                 message = review.getString(REVIEWDESCRIPTION);
 
                 // Add review to reviewlist
@@ -231,6 +218,7 @@ public class MyGcmListenerService extends GcmListenerService {
             case EVENT:
                 bigTextStyle.setBigContentTitle(title);
                 try {
+                    String EVENTLOCATION = "location";
                     bigTextStyle.bigText("Locatie: " + event.getString(EVENTLOCATION) + "\n" + message);
                 } catch (JSONException ignored) {
                 }
@@ -240,6 +228,10 @@ public class MyGcmListenerService extends GcmListenerService {
                 bigTextStyle.setBigContentTitle(title);
 
                 try {
+                    String BEERCOUNTRY = "country";
+                    String BEERBREWER = "brewer";
+                    String BEERPERCENTAGE = "percentage";
+                    String BEERKIND = "soort";
                     bigTextStyle.bigText("Soort: " + beer.getString(BEERKIND) + "\n" +
                             "ALC: " + beer.getString(BEERPERCENTAGE) + "\n" +
                             "Brouwer: " + beer.getString(BEERBREWER) + "\n" +

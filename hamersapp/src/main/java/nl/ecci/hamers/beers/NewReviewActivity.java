@@ -119,11 +119,12 @@ public class NewReviewActivity extends HamersActivity {
                 body.put("description", review_body);
                 body.put("rating", rating);
                 body.put("proefdatum", MainActivity.parseDate(date));
+
+                int reviewID = -1;
                 if (review != null) {
-                    DataManager.postOrPatchData(this, prefs, DataManager.REVIEWURL, review.getID(), DataManager.REVIEWKEY, body);
-                } else {
-                    DataManager.postOrPatchData(this, prefs, DataManager.REVIEWURL, -1, DataManager.REVIEWKEY, body);
+                    reviewID = review.getID();
                 }
+                DataManager.postOrPatchData(this, prefs, DataManager.REVIEWURL, reviewID, DataManager.REVIEWKEY, body);
             } catch (JSONException ignored) {
             }
         } else {

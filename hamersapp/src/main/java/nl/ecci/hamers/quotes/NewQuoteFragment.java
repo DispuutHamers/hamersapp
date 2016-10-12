@@ -26,8 +26,6 @@ import static nl.ecci.hamers.helpers.Utils.usernameToID;
 
 public class NewQuoteFragment extends DialogFragment {
 
-    private ArrayList<String> users = new ArrayList<>();
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -50,7 +48,7 @@ public class NewQuoteFragment extends DialogFragment {
                         }
                 );
         Spinner spinner = (Spinner) view.findViewById(R.id.quote_user_spinner);
-        users = Utils.createActiveMemberList(this.getContext());
+        ArrayList<String> users = Utils.createActiveMemberList(this.getContext());
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, users);
         spinner.setAdapter(adapter);
 

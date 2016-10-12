@@ -182,6 +182,7 @@
     <string name="connection_error">Oh noes! Je hebt geen verbinding!</string>
     <string name="network_error">Oh noes! De verbinding ging stuk!</string>
     <string name="timeout_error">Timeout bij ophalen data.</string>
+    <string name="auth_error">Authenticatie error. Probeer je API key opnieuw in te voeren.</string>
 
     <!-- Sorting -->
     <string name="sort_quotes">Sorteer op aantal quotes</string>

@@ -15,7 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import nl.ecci.hamers.helpers.DataManager;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
-    public final static String KEY_PREF_NIGHT_MODE = "night_mode";
+    private final static String KEY_PREF_NIGHT_MODE = "night_mode";
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
