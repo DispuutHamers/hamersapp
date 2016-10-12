@@ -6,12 +6,6 @@ import java.util.Date;
 
 class News {
 
-    public enum Category {
-        @SerializedName("d")DISPUUT,
-        @SerializedName("e")EXTERN,
-        @SerializedName("l")LEDEN
-    }
-
     private final int id;
     private final String title;
     private final String body;
@@ -20,7 +14,6 @@ class News {
     private final Date date;
     @SerializedName("created_at")
     private final Date createdAt;
-
     public News(int id, String title, String body, String category, Date date, Date createdAt) {
         super();
         this.id = id;
@@ -53,5 +46,11 @@ class News {
 
     public Date getCreatedAt() {
         return createdAt;
+    }
+
+    public enum Category {
+        @SerializedName("d")DISPUUT,
+        @SerializedName("e")EXTERN,
+        @SerializedName("l")LEDEN
     }
 }

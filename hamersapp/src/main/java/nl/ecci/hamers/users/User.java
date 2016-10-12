@@ -7,17 +7,7 @@ import java.util.Date;
 
 public class User {
 
-    public enum Member {
-        @SerializedName("lid")
-        LID,
-        @SerializedName("a-lid")
-        ALID,
-        @SerializedName("o-lid")
-        OLID,
-        @SerializedName("none")
-        NONE
-    }
-
+    public static final String USER_ID = "USER_ID";
     private final int id;
     private final String name;
     private final String email;
@@ -31,8 +21,6 @@ public class User {
     private final ArrayList<Nickname> nicknames;
     @SerializedName("created_at")
     private final Date createdAt;
-
-    public static final String USER_ID = "USER_ID";
 
     @SuppressWarnings("SameParameterValue")
     public User(int id, String name, String email, int quoteCount, int reviewCount, Member member, int batch, ArrayList<Nickname> nicknames, Date createdAt) {
@@ -82,6 +70,17 @@ public class User {
 
     public Date getCreatedAt() {
         return createdAt;
+    }
+
+    public enum Member {
+        @SerializedName("lid")
+        LID,
+        @SerializedName("a-lid")
+        ALID,
+        @SerializedName("o-lid")
+        OLID,
+        @SerializedName("none")
+        NONE
     }
 
     public class Nickname {

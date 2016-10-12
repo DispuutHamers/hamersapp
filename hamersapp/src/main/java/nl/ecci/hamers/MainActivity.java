@@ -12,7 +12,6 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
@@ -47,7 +46,6 @@ import java.util.Locale;
 
 import nl.ecci.hamers.beers.BeerFragment;
 import nl.ecci.hamers.events.EventFragment;
-import nl.ecci.hamers.events.EventListFragment;
 import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.HamersActivity;
@@ -61,24 +59,23 @@ import nl.ecci.hamers.quotes.NewQuoteFragment;
 import nl.ecci.hamers.quotes.QuoteFragment;
 import nl.ecci.hamers.users.User;
 import nl.ecci.hamers.users.UserFragment;
-import nl.ecci.hamers.users.UserListFragment;
 
 import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
 
 public class MainActivity extends HamersActivity {
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public static final Locale locale = new Locale("nl");
     public static final DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", locale);
     public static final DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", locale);
     public static final DateFormat appDF2 = new SimpleDateFormat("EEEE dd MMMM yyyy", locale);
+    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
+    public static final String REGISTRATION_COMPLETE = "registrationComplete";
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public static SharedPreferences prefs;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private boolean backPressedOnce;
     // GCM
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
-    public static final String REGISTRATION_COMPLETE = "registrationComplete";
 
     /**
      * Setup of default ImageLoader configuration (Universal Image Loader)
@@ -107,6 +104,34 @@ public class MainActivity extends HamersActivity {
 
         // Initialize ImageLoader with configuration
         ImageLoader.getInstance().init(defaultConfiguration);
+    }
+
+    /**
+     * Parse date
+     */
+    public static Date parseDate(String dateString) {
+        Date date = null;
+        try {
+            // Event date
+            if (!dateString.equals("null")) {
+                DateFormat inputFormat = new SimpleDateFormat("dd-mm-yyyy HH:mm", MainActivity.locale);
+                date = inputFormat.parse(dateString);
+            }
+        } catch (ParseException ignored) {
+        }
+        return date;
+    }
+
+    @AppCompatDelegate.NightMode
+    public static int getNightModeInt(String nightMode) {
+        switch (nightMode) {
+            case "auto":
+                return AppCompatDelegate.MODE_NIGHT_AUTO;
+            case "on":
+                return AppCompatDelegate.MODE_NIGHT_YES;
+            default:
+                return AppCompatDelegate.MODE_NIGHT_NO;
+        }
     }
 
     @Override
@@ -375,34 +400,6 @@ public class MainActivity extends HamersActivity {
                     fillHeader();
                 }
             }, this, prefs, DataManager.WHOAMIURL, DataManager.WHOAMIKEY);
-        }
-    }
-
-    /**
-     * Parse date
-     */
-    public static Date parseDate(String dateString) {
-        Date date = null;
-        try {
-            // Event date
-            if (!dateString.equals("null")) {
-                DateFormat inputFormat = new SimpleDateFormat("dd-mm-yyyy HH:mm", MainActivity.locale);
-                date = inputFormat.parse(dateString);
-            }
-        } catch (ParseException ignored) {
-        }
-        return date;
-    }
-
-    @AppCompatDelegate.NightMode
-    public static int getNightModeInt(String nightMode) {
-        switch (nightMode) {
-            case "auto":
-                return AppCompatDelegate.MODE_NIGHT_AUTO;
-            case "on":
-                return AppCompatDelegate.MODE_NIGHT_YES;
-            default:
-                return AppCompatDelegate.MODE_NIGHT_NO;
         }
     }
 }

@@ -19,14 +19,13 @@ import java.text.SimpleDateFormat;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.DatePickerFragment;
+import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.TimePickerFragment;
 
 public class NewEventActivity extends HamersActivity {
 
-    private Event event;
-    private int eventID;
+    private final FragmentManager fragmentManager = getSupportFragmentManager();
     EditText event_title;
     EditText event_location;
     EditText event_description;
@@ -36,7 +35,8 @@ public class NewEventActivity extends HamersActivity {
     Button eventEndDateButton;
     Button deadlineTimeButton;
     Button deadlineDateButton;
-    private final FragmentManager fragmentManager = getSupportFragmentManager();
+    private Event event;
+    private int eventID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

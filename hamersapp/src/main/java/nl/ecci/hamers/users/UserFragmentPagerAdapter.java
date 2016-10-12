@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 
 class UserFragmentPagerAdapter extends FragmentPagerAdapter {

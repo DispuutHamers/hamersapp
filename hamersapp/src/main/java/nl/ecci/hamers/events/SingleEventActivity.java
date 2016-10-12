@@ -1,7 +1,6 @@
 package nl.ecci.hamers.events;
 
 import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;

@@ -25,8 +25,8 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
     private final Context context;
     private final ArrayList<Event> dataSet;
-    private ArrayList<Event> filteredDataSet;
     private final Gson gson;
+    private ArrayList<Event> filteredDataSet;
 
     public EventListAdapter(Context context, ArrayList<Event> dataSet) {
         this.context = context;

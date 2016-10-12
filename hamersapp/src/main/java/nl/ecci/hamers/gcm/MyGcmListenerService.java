@@ -56,17 +56,14 @@ public class MyGcmListenerService extends GcmListenerService {
     private final String REVIEWRATING = "rating";
     // Common
     private final String USERID = "user_id";
+    PendingIntent pendingIntent;
     private JSONArray json;
     private SharedPreferences prefs;
-
     private JSONObject quote;
     private JSONObject event;
     private JSONObject beer;
     private JSONObject review;
-
     private Type type;
-
-    PendingIntent pendingIntent;
 
     /**
      * Called when message is received.

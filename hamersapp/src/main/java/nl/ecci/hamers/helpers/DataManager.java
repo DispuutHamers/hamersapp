@@ -37,9 +37,6 @@ import nl.ecci.hamers.users.User;
 import nl.ecci.hamers.users.User.Nickname;
 
 public final class DataManager {
-    // URL
-    public static final String baseURL = "https://zondersikkel.nl/api/v2/";
-//    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
     // URL Appendices
     public static final String QUOTEURL = "quotes";
     public static final String USERURL = "users";
@@ -64,6 +61,9 @@ public final class DataManager {
     public static final String MEETINGKEY = "meetingdata";
     public static final String APIKEYKEY = "apikey";
     public static final String WHOAMIKEY = "whoamikey";
+    // URL
+//    public static final String baseURL = "https://zondersikkel.nl/api/v2/";
+    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
 
     public static void getData(final VolleyCallback callback, final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
         String url = baseURL + dataURL;
