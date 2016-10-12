@@ -94,6 +94,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     @SuppressWarnings("unchecked")
     public void onRefresh() {
+        setRefreshing(true);
         if (upcoming) {
             DataManager.getData(new VolleyCallback() {
                 @Override
@@ -209,11 +210,6 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 }
             }
             setRefreshing(false);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            setRefreshing(true);
         }
     }
 }

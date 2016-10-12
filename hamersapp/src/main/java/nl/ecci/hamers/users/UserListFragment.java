@@ -234,10 +234,5 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
             sort();
             setRefreshing(false);
         }
-
-        @Override
-        protected void onPreExecute() {
-            setRefreshing(true);
-        }
     }
 }

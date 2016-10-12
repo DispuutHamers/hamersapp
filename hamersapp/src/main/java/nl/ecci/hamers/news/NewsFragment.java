@@ -70,6 +70,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     @SuppressWarnings("unchecked")
     public void onRefresh() {
+        setRefreshing(true);
         DataManager.getData(new VolleyCallback() {
             @Override
             public void onSuccess() {
@@ -124,11 +125,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 }
             }
             setRefreshing(false);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            setRefreshing(true);
         }
     }
 }

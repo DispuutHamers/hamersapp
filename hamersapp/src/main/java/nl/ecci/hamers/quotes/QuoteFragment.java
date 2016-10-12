@@ -170,10 +170,5 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             }
             setRefreshing(false);
         }
-
-        @Override
-        protected void onPreExecute() {
-            setRefreshing(true);
-        }
     }
 }

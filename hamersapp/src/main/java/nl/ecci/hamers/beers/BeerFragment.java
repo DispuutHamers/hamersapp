@@ -116,6 +116,7 @@ public class BeerFragment extends HamersFragment {
     @Override
     @SuppressWarnings("unchecked")
     public void onRefresh() {
+        setRefreshing(true);
         DataManager.getData(new VolleyCallback() {
             @Override
             public void onSuccess() {
@@ -125,7 +126,9 @@ public class BeerFragment extends HamersFragment {
         DataManager.getData(new VolleyCallback() {
             @Override
             public void onSuccess() {
-                new populateList().execute(dataSet);
+                if (BeerFragment.this.adapter != null) {
+                    BeerFragment.this.adapter.notifyDataSetChanged();
+                }
             }
         }, getContext(), MainActivity.prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY);
     }
@@ -257,11 +260,6 @@ public class BeerFragment extends HamersFragment {
             }
             setRefreshing(false);
             sortList();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            setRefreshing(true);
         }
     }
 }

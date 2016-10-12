@@ -76,6 +76,7 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Override
     @SuppressWarnings("unchecked")
     public void onRefresh() {
+        setRefreshing(true);
         DataManager.getData(new VolleyCallback() {
             @Override
             public void onSuccess() {
@@ -129,11 +130,6 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 }
             }
             setRefreshing(false);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            setRefreshing(true);
         }
     }
 }
