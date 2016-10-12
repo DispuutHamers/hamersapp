@@ -154,10 +154,10 @@ public class SingleEventActivity extends HamersActivity {
         postSignup(event.getID(), "false");
     }
 
-    private void postSignup(int eventid, String status) {
+    private void postSignup(int eventID, String status) {
         JSONObject body = new JSONObject();
         try {
-            body.put("event_id", eventid);
+            body.put("event_id", eventID);
             body.put("status", status);
         } catch (JSONException ignored) {
         }

@@ -146,6 +146,7 @@ public class MainActivity extends HamersActivity {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (savedInstanceState == null) {
+            selectItem(navigationView.getMenu().getItem(0));
             String night_mode = prefs.getString("night_mode", "off");
             AppCompatDelegate.setDefaultNightMode(getNightModeInt(night_mode));
             recreate();
@@ -206,6 +207,7 @@ public class MainActivity extends HamersActivity {
                 selectItem(menuItem);
                 menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
+                hideKeyboard();
                 return true;
             }
         });
@@ -277,7 +279,7 @@ public class MainActivity extends HamersActivity {
     }
 
     /**
-     * Swaps fragments in the quote_menu content view
+     * Swaps fragments in the main content view
      */
     private void selectItem(MenuItem menuItem) {
         Fragment fragment = null;
@@ -322,7 +324,6 @@ public class MainActivity extends HamersActivity {
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.replace(R.id.content_frame, fragment).commit();
         setTitle(menuItem.getTitle());
-        hideKeyboard();
     }
 
     /**
