@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="nl.ecci.hamers">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Internet + sdcard access (for caching purposes) -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -152,8 +154,8 @@
             android:parentActivityName="nl.ecci.hamers.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
-                android:name="com.google.android.gms.version"
-                android:value="@integer/google_play_services_version" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nl.ecci.hamers.MainActivity" />
         </activity>
 
         <meta-data
@@ -162,5 +164,13 @@
         <meta-data
             android:name="com.samsung.android.sdk.multiwindow.penwindow.enable"
             android:value="true" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="***REMOVED***" />
     </application>
 </manifest>

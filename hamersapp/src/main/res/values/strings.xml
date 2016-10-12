@@ -23,6 +23,7 @@
     <string name="navigation_item_users">Leden</string>
     <string name="navigation_item_motions">Moties</string>
     <string name="navigation_item_meetings">Vergaderingen</string>
+    <string name="navigation_item_stickers">Stickers</string>
     <string name="navigation_item_settings">Instellingen</string>
     <string name="navigation_item_about">Over</string>
 
@@ -216,6 +217,6 @@
     </string>
 
     <!-- About -->
-    <string name="about_librariesTitle">Bibliotheken</string>
-    <string name="yourerunning">Je gebruikt</string>
+    <string name="about_libraries">Bibliotheken</string>
+    <string name="youre_running">Je gebruikt</string>
 </resources>

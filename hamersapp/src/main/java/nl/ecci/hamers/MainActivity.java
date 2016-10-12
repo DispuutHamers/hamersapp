@@ -57,6 +57,7 @@ import nl.ecci.hamers.news.NewNewsActivity;
 import nl.ecci.hamers.news.NewsFragment;
 import nl.ecci.hamers.quotes.NewQuoteFragment;
 import nl.ecci.hamers.quotes.QuoteFragment;
+import nl.ecci.hamers.stickers.StickerFragment;
 import nl.ecci.hamers.users.User;
 import nl.ecci.hamers.users.UserFragment;
 
@@ -304,6 +305,9 @@ public class MainActivity extends HamersActivity {
             case R.id.navigation_item_meetings:
                 fragmentClass = MeetingFragment.class;
                 break;
+            case R.id.navigation_item_stickers:
+                fragmentClass = StickerFragment.class;
+                break;
             case R.id.navigation_item_settings:
                 fragmentClass = SettingsFragment.class;
                 break;
@@ -316,8 +320,7 @@ public class MainActivity extends HamersActivity {
 
         try {
             fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
