@@ -3,7 +3,8 @@
     android:layout_height="wrap_content"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="8dp">
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/review_title"
@@ -33,7 +34,7 @@
         android:layout_marginTop="2dp"
         android:ellipsize="marquee"
         android:gravity="end"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="14sp"
@@ -52,7 +53,6 @@
             android:clickable="false"
             android:gravity="start"
             android:paddingBottom="20dp"
-            android:singleLine="false"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp" />
@@ -65,7 +65,7 @@
             android:ellipsize="marquee"
             android:gravity="start|bottom"
             android:paddingBottom="2dp"
-            android:singleLine="true"
+            android:maxLines="1"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="14sp"

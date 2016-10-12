@@ -41,7 +41,7 @@
         android:layout_toRightOf="@id/beer_image"
         android:ellipsize="marquee"
         android:gravity="start"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="12sp" />
 
@@ -54,7 +54,7 @@
         android:layout_toRightOf="@+id/beer_image"
         android:ellipsize="marquee"
         android:gravity="start"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="12sp" />
 
@@ -67,7 +67,7 @@
         android:layout_toRightOf="@+id/beer_image"
         android:ellipsize="marquee"
         android:gravity="start"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="12sp" />
 
@@ -83,7 +83,7 @@
         android:layout_marginRight="2dp"
         android:ellipsize="marquee"
         android:gravity="end"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textColor="?android:attr/textColorTertiary"
         android:textSize="14sp"
         android:textStyle="italic" />

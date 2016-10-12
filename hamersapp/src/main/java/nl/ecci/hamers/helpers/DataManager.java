@@ -73,7 +73,9 @@ public final class DataManager {
                     @Override
                     public void onResponse(String response) {
                         prefs.edit().putString(dataKEY, response).apply();
-                        callback.onSuccess();
+                        if (callback != null) {
+                            callback.onSuccess();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -107,11 +109,13 @@ public final class DataManager {
                                 ((Activity) context).finish();
                             }
                             Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
-//                            if (dataURL.equals(SIGNUPURL)) {
-//                                getData(context, prefs, EVENTURL, EVENTURL);
-//                            } else if (urlAppendix != -1){
-//                                getData(context, prefs, dataURL, dataKEY);
-//                            }
+                            if (dataURL.equals(SIGNUPURL)) {
+                                getData(null, context, prefs, EVENTURL, EVENTKEY);
+                            } else if (dataURL.equals(REVIEWURL)) {
+                                getData(null, context, prefs, REVIEWURL, REVIEWKEY);
+                            } else if (urlAppendix != -1) {
+                                getData(null, context, prefs, dataURL, dataKEY);
+                            }
                         }
                     }
                 },

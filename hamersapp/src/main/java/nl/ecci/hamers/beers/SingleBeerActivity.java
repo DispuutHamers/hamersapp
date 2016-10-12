@@ -255,6 +255,7 @@ public class SingleBeerActivity extends HamersActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        getReviews();
         refreshActivity();
     }
 
