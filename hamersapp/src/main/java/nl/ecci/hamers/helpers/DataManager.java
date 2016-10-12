@@ -52,20 +52,20 @@ public final class DataManager {
     public static final String GCMURL = "register";
     public static final String STICKERURL = "stickers";
     // Data keys
+    static final String APIKEYKEY = "apikey";
     public static final String QUOTEKEY = "quoteData";
     public static final String USERKEY = "userData";
     public static final String EVENTKEY = "eventData";
     public static final String UPCOMINGEVENTKEY = "upcomingEventData";
     public static final String NEWSKEY = "newsData";
     public static final String BEERKEY = "beerData";
-    public static final String REVIEWKEY = "reviewdata";
-    public static final String MEETINGKEY = "meetingdata";
-    static final String APIKEYKEY = "apikey";
-    public static final String WHOAMIKEY = "whoamikey";
-    public static final String STICKERKEY = "stickerkey";
+    public static final String REVIEWKEY = "reviewData";
+    public static final String MEETINGKEY = "meetingData";
+    public static final String WHOAMIKEY = "whoamiData";
+    public static final String STICKERKEY = "stickerData";
     // URL
-//    public static final String baseURL = "https://zondersikkel.nl/api/v2/";
-    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
+    private static final String baseURL = "https://zondersikkel.nl/api/v2/";
+//    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
 
     public static void getData(final VolleyCallback callback, final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
         String url = baseURL + dataURL;

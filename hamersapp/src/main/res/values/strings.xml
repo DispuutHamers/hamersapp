@@ -23,6 +23,7 @@
     <string name="navigation_item_users">Leden</string>
     <string name="navigation_item_motions">Moties</string>
     <string name="navigation_item_meetings">Vergaderingen</string>
+    <string name="navigation_item_stickers">Stickers</string>
     <string name="navigation_item_settings">Instellingen</string>
     <string name="navigation_item_about">Over</string>
 
@@ -218,4 +219,7 @@
     <!-- About -->
     <string name="about_librariesTitle">Bibliotheken</string>
     <string name="yourerunning">Je gebruikt</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
