@@ -24,17 +24,17 @@
             android:icon="@drawable/users"
             android:title="@string/navigation_item_users" />
         <item
-            android:id="@+id/navigation_item_motions"
-            android:icon="@drawable/motions"
-            android:title="@string/navigation_item_motions" />
+            android:id="@+id/navigation_item_stickers"
+            android:icon="@drawable/collections"
+            android:title="@string/navigation_item_stickers" />
         <item
             android:id="@+id/navigation_item_meetings"
             android:icon="@drawable/briefcase"
             android:title="@string/navigation_item_meetings" />
         <item
-            android:id="@+id/navigation_item_stickers"
-            android:icon="@drawable/collections"
-            android:title="@string/navigation_item_stickers" />
+            android:id="@+id/navigation_item_motions"
+            android:icon="@drawable/motions"
+            android:title="@string/navigation_item_motions" />
     </group>
     <group
         android:id="@+id/menu_bottom"
