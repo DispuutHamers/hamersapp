@@ -218,5 +218,5 @@
 
     <!-- About -->
     <string name="about_libraries">Bibliotheken</string>
-    <string name="youre_running">Je gebruikt</string>
+    <string name="you_are_running">Je gebruikt</string>
 </resources>
