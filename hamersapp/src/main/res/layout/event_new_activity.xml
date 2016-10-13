@@ -96,7 +96,7 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:gravity="start|center_vertical"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:text="@string/date"
                     android:textSize="18sp" />
 
@@ -137,7 +137,7 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:gravity="start|center_vertical"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:text="@string/endDate"
                     android:textSize="18sp" />
 
@@ -178,7 +178,7 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:gravity="start|center_vertical"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:text="@string/deadline"
                     android:textSize="18sp" />
 

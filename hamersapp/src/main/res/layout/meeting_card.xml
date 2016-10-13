@@ -36,7 +36,7 @@
             android:layout_below="@id/meeting_subject"
             android:ellipsize="marquee"
             android:gravity="center"
-            android:singleLine="true"
+            android:maxLines="1"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp" />
 

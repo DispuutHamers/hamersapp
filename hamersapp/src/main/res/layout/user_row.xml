@@ -49,7 +49,7 @@
         android:gravity="start"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="14sp" />
 
@@ -66,7 +66,7 @@
         android:gravity="end"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="14sp"
         android:textStyle="italic" />
@@ -83,7 +83,7 @@
         android:gravity="end"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="14sp"
         android:textStyle="italic" />
