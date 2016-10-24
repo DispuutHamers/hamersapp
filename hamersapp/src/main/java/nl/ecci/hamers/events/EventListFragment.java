@@ -186,7 +186,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                         JSONObject temp = json.getJSONObject(i);
                         Event event = gson.fromJson(temp.toString(), Event.class);
                         if (upcoming) {
-                            if (event.getDate().after(now)) {
+                            if (event.getEndDate().after(now)) {
                                 dataSet.add(event);
                             }
                         } else {
