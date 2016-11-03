@@ -28,7 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -39,7 +38,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -303,9 +302,6 @@ public class MainActivity extends HamersActivity {
             case R.id.navigation_item_users:
                 fragmentClass = UserFragment.class;
                 break;
-            case R.id.navigation_item_motions:
-                fragmentClass = MotionFragment.class;
-                break;
             case R.id.navigation_item_meetings:
                 fragmentClass = MeetingFragment.class;
                 break;
@@ -401,15 +397,16 @@ public class MainActivity extends HamersActivity {
                 String url = getGravatarURL(user.getEmail());
                 ImageLoader.getInstance().displayImage(url, userImage);
             }
-        } else {
+//        } else {
 //            DataManager.getData(new VolleyCallback() {
 //                @Override
 //                public void onSuccess(JSONArray response) {
 //                    fillHeader();
 //                }
+//
 //                @Override
 //                public void onError(VolleyError error) {
-//                     Nothing
+//                    // Nothing
 //                }
 //            }, this, prefs, DataManager.WHOAMIURL);
         }

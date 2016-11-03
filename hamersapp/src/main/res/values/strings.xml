@@ -21,7 +21,6 @@
     <string name="navigation_item_beers">Bieren</string>
     <string name="navigation_item_news">Nieuws</string>
     <string name="navigation_item_users">Leden</string>
-    <string name="navigation_item_motions">Moties</string>
     <string name="navigation_item_meetings">Vergaderingen</string>
     <string name="navigation_item_stickers">Stickers</string>
     <string name="navigation_item_settings">Instellingen</string>
@@ -91,16 +90,6 @@
     <string name="user_member_ex">Oud-lid</string>
     <string name="menu_users">Huidig</string>
     <string name="menu_users_ex">Overig</string>
-
-    <!-- Motions -->
-    <string name="motiontypetext">Motietype:</string>
-    <string name="motie_nietchill">Motie van niet chill</string>
-    <string name="motie_arelaxed">Motie van vet arelaxed</string>
-    <string name="motie_duurtlang">Motie van duurt lang</string>
-
-    <string name="motion_hint">Wat is er stuk?</string>
-    <string name="motion_body">Huilie huilie in dit veld.</string>
-    <string name="create_motion">Dien motie in</string>
 
     <!-- Meetings -->
     <string name="menu_meeting_notes">Notulen</string>

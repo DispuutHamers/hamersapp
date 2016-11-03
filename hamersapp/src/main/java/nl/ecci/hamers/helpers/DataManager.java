@@ -45,7 +45,6 @@ public final class DataManager {
     public static final String BEERURL = "beers";
     public static final String REVIEWURL = "reviews";
     public static final String WHOAMIURL = "whoami";
-    public static final String MOTIEURL = "motions";
     public static final String MEETINGURL = "meetings";
     public static final String SIGNUPURL = "signups";
     public static final String GCMURL = "register";
