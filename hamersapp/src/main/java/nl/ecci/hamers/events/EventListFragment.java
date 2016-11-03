@@ -20,11 +20,13 @@ import android.view.ViewGroup;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -100,8 +102,9 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
             DataManager.getData(new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONArray response) {
-                    new populateList().execute(dataSet);
+                    new populateList().execute(response);
                 }
+
                 @Override
                 public void onError(VolleyError error) {
                     // Nothing
@@ -111,8 +114,9 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
             DataManager.getData(new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONArray response) {
-                    new populateList().execute(dataSet);
+                    new populateList().execute(response);
                 }
+
                 @Override
                 public void onError(VolleyError error) {
                     // Nothing
@@ -171,41 +175,45 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         }
     }
 
-    private class populateList extends AsyncTask<ArrayList<Event>, Void, ArrayList<Event>> {
-        @SafeVarargs
+    private class populateList extends AsyncTask<JSONArray, Void, ArrayList<Event>> {
         @Override
-        protected final ArrayList<Event> doInBackground(ArrayList<Event>... param) {
-            ArrayList<Event> dataSet = new ArrayList<>();
-            JSONArray json;
-
+        protected final ArrayList<Event> doInBackground(JSONArray... params) {
+            ArrayList<Event> result = new ArrayList<>();
+            ArrayList<Event> tempList = new ArrayList<>();
+            Type type = new TypeToken<ArrayList<Event>>() {
+            }.getType();
             Date now = new Date();
 
-            String key = DataManager.EVENTKEY;
-            if (upcoming) {
-                key = DataManager.UPCOMINGEVENTKEY;
-            }
-
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, key)) != null) {
+            if (params.length > 0) {
                 GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
                 Gson gson = gsonBuilder.create();
+                tempList = gson.fromJson(params[0].toString(), type);
+            } else {
+                JSONArray json;
 
-                try {
-                    for (int i = 0; i < json.length(); i++) {
-                        JSONObject temp = json.getJSONObject(i);
-                        Event event = gson.fromJson(temp.toString(), Event.class);
-                        if (upcoming) {
-                            if (event.getEndDate().after(now)) {
-                                dataSet.add(event);
-                            }
-                        } else {
-                            dataSet.add(event);
-                        }
-                    }
-                } catch (JSONException ignored) {
+
+                String key = DataManager.EVENTKEY;
+                if (upcoming) {
+                    key = DataManager.UPCOMINGEVENTKEY;
+                }
+                if ((json = DataManager.getJsonArray(MainActivity.prefs, key)) != null) {
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+                    Gson gson = gsonBuilder.create();
+                    tempList = gson.fromJson(json.toString(), type);
                 }
             }
-            return dataSet;
+
+            for (Event event : tempList) {
+                if (upcoming && event.getEndDate() != null && event.getEndDate().after(now)) {
+                    result.add(event);
+                } else {
+                    result.add(event);
+                }
+            }
+
+            return result;
         }
 
         @Override

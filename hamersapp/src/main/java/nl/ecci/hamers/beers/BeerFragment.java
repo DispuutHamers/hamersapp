@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -37,6 +38,7 @@ import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
 import nl.ecci.hamers.helpers.HamersFragment;
 import nl.ecci.hamers.helpers.VolleyCallback;
+import nl.ecci.hamers.users.User;
 
 public class BeerFragment extends HamersFragment {
 
@@ -108,6 +110,7 @@ public class BeerFragment extends HamersFragment {
             });
         }
 
+        new populateList().execute();
         onRefresh();
 
         sortList();
@@ -122,7 +125,7 @@ public class BeerFragment extends HamersFragment {
         DataManager.getData(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray response) {
-                new populateList().execute(dataSet);
+                new populateList().execute(response);
             }
 
             @Override
@@ -133,9 +136,7 @@ public class BeerFragment extends HamersFragment {
         DataManager.getData(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray response) {
-                if (adapter != null) {
-                    adapter.notifyDataSetChanged();
-                }
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onError(VolleyError error) {
@@ -242,22 +243,28 @@ public class BeerFragment extends HamersFragment {
         }
     }
 
-    private class populateList extends AsyncTask<ArrayList<Beer>, Void, ArrayList<Beer>> {
-        @SafeVarargs
+    private class populateList extends AsyncTask<JSONArray, Void, ArrayList<Beer>> {
         @Override
-        protected final ArrayList<Beer> doInBackground(ArrayList<Beer>... param) {
-            ArrayList<Beer> dataSet = new ArrayList<>();
-            JSONArray json;
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.BEERKEY)) != null) {
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-                Gson gson = gsonBuilder.create();
+        protected final ArrayList<Beer> doInBackground(JSONArray... params) {
+            ArrayList<Beer> result = new ArrayList<>();
+            Type type = new TypeToken<ArrayList<Beer>>() {
+            }.getType();
 
-                Type type = new TypeToken<ArrayList<Beer>>() {
-                }.getType();
-                dataSet = gson.fromJson(json.toString(), type);
+            if (params.length > 0) {
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+                Gson gson = gsonBuilder.create();
+                result = gson.fromJson(params[0].toString(), type);
+            } else {
+                JSONArray json;
+                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.BEERKEY)) != null) {
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+                    Gson gson = gsonBuilder.create();
+                    result = gson.fromJson(json.toString(), type);
+                }
             }
-            return dataSet;
+            return result;
         }
 
         @Override
@@ -265,12 +272,12 @@ public class BeerFragment extends HamersFragment {
             if (!result.isEmpty()) {
                 dataSet.clear();
                 dataSet.addAll(result);
-                if (BeerFragment.this.adapter != null) {
-                    BeerFragment.this.adapter.notifyDataSetChanged();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
                 }
             }
             setRefreshing(false);
-            sortList();
+//            sortList();
         }
     }
 }

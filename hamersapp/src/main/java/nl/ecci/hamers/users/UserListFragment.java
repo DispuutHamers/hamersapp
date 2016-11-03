@@ -205,7 +205,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
     private class populateList extends AsyncTask<JSONArray, Void, ArrayList<User>> {
         @Override
         protected final ArrayList<User> doInBackground(JSONArray... params) {
-            ArrayList<User> dataSet = new ArrayList<>();
+            ArrayList<User> result = new ArrayList<>();
             ArrayList<User> tempList = new ArrayList<>();
             Type type = new TypeToken<ArrayList<User>>() {
             }.getType();
@@ -227,12 +227,12 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
             for (User user : tempList) {
                 if (exUser && user.getMember() != User.Member.LID) {
-                    dataSet.add(user);
+                    result.add(user);
                 } else if (!exUser && user.getMember() == User.Member.LID) {
-                    dataSet.add(user);
+                    result.add(user);
                 }
             }
-            return dataSet;
+            return result;
         }
 
         @Override

@@ -33,9 +33,9 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     private final Context context;
     private ArrayList<Quote> filteredDataSet;
 
-    public QuoteAdapter(ArrayList<Quote> itemsArrayList, Context context) {
-        this.dataSet = itemsArrayList;
-        this.filteredDataSet = itemsArrayList;
+    public QuoteAdapter(ArrayList<Quote> dataSet, Context context) {
+        this.dataSet = dataSet;
+        this.filteredDataSet = dataSet;
         this.context = context;
 
         // Universal Image Loader
