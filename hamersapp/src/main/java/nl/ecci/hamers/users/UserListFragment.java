@@ -17,11 +17,11 @@ import android.widget.ListView;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -57,6 +57,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         sort();
 
+        new populateList().execute();
         onRefresh();
 
         return view;
@@ -102,8 +103,9 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
         DataManager.getData(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray response) {
-                new populateList().execute(dataSet);
+                new populateList().execute(response);
             }
+
             @Override
             public void onError(VolleyError error) {
                 // Nothing
@@ -200,28 +202,34 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
         adapter.notifyDataSetChanged();
     }
 
-    private class populateList extends AsyncTask<ArrayList<User>, Void, ArrayList<User>> {
-        @SafeVarargs
+    private class populateList extends AsyncTask<JSONArray, Void, ArrayList<User>> {
         @Override
-        protected final ArrayList<User> doInBackground(ArrayList<User>... param) {
+        protected final ArrayList<User> doInBackground(JSONArray... params) {
             ArrayList<User> dataSet = new ArrayList<>();
-            JSONArray json;
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERKEY)) != null) {
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-                Gson gson = gsonBuilder.create();
-                try {
-                    for (int i = 0; i < json.length(); i++) {
-                        JSONObject temp = json.getJSONObject(i);
-                        User user = gson.fromJson(temp.toString(), User.class);
+            ArrayList<User> tempList = new ArrayList<>();
+            Type type = new TypeToken<ArrayList<User>>() {
+            }.getType();
 
-                        if (exUser && user.getMember() != User.Member.LID) {
-                            dataSet.add(user);
-                        } else if (!exUser && user.getMember() == User.Member.LID) {
-                            dataSet.add(user);
-                        }
-                    }
-                } catch (JSONException ignored) {
+            if (params.length > 0) {
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+                Gson gson = gsonBuilder.create();
+                tempList = gson.fromJson(params[0].toString(), type);
+            } else {
+                JSONArray json;
+                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERKEY)) != null) {
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+                    Gson gson = gsonBuilder.create();
+                    tempList = gson.fromJson(json.toString(), type);
+                }
+            }
+
+            for (User user : tempList) {
+                if (exUser && user.getMember() != User.Member.LID) {
+                    dataSet.add(user);
+                } else if (!exUser && user.getMember() == User.Member.LID) {
+                    dataSet.add(user);
                 }
             }
             return dataSet;

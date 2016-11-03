@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +21,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -32,8 +30,6 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
 import nl.ecci.hamers.helpers.VolleyCallback;
-
-import static nl.ecci.hamers.helpers.DataManager.handleErrorResponse;
 
 public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -61,6 +57,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         initSwiper(view, quote_list, mLayoutManager);
 
+        new populateList().execute();
         onRefresh();
 
         return view;
@@ -87,15 +84,12 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         DataManager.getData(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray response) {
-                new populateList().execute(dataSet);
+                new populateList().execute(response);
             }
 
             @Override
             public void onError(VolleyError error) {
-                Log.d("ERROOOOOOR", error.toString());
-                if (getActivity() != null) {
-                    handleErrorResponse(getActivity(), error);
-                }
+                // Nothing
             }
         }, getContext(), MainActivity.prefs, DataManager.QUOTEURL);
     }
@@ -154,22 +148,29 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         }
     }
 
-    private class populateList extends AsyncTask<ArrayList<Quote>, Void, ArrayList<Quote>> {
-        @SafeVarargs
-        @Override
-        protected final ArrayList<Quote> doInBackground(ArrayList<Quote>... param) {
-            ArrayList<Quote> dataSet = new ArrayList<>();
-            JSONArray json;
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.QUOTEKEY)) != null) {
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.setDateFormat(MainActivity.dbDF.toString());
-                Gson gson = gsonBuilder.create();
+    private class populateList extends AsyncTask<JSONArray, Void, ArrayList<Quote>> {
 
-                Type type = new TypeToken<ArrayList<Quote>>() {
-                }.getType();
-                dataSet = gson.fromJson(json.toString(), type);
+        @Override
+        protected final ArrayList<Quote> doInBackground(JSONArray... params) {
+            Type type = new TypeToken<ArrayList<Quote>>() {
+            }.getType();
+
+            if (params.length > 0) {
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+                Gson gson = gsonBuilder.create();
+                return gson.fromJson(params[0].toString(), type);
+            } else {
+                ArrayList<Quote> dataSet = new ArrayList<>();
+                JSONArray json;
+                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.QUOTEKEY)) != null) {
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    gsonBuilder.setDateFormat(MainActivity.dbDF.toString());
+                    Gson gson = gsonBuilder.create();
+                    dataSet = gson.fromJson(json.toString(), type);
+                }
+                return dataSet;
             }
-            return dataSet;
         }
 
         @Override

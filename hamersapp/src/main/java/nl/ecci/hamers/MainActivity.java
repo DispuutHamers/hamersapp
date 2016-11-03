@@ -69,9 +69,9 @@ import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
 
 public class MainActivity extends HamersActivity {
     public static final Locale locale = new Locale("nl");
-    public static final DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", locale);
-    public static final DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", locale);
-    public static final DateFormat appDF2 = new SimpleDateFormat("EEEE dd MMMM yyyy", locale);
+    public static final SimpleDateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", locale);
+    public static final SimpleDateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", locale);
+    public static final SimpleDateFormat appDF2 = new SimpleDateFormat("EEEE dd MMMM yyyy", locale);
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;

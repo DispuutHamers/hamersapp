@@ -84,6 +84,7 @@ public final class DataManager {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         callback.onError(error);
+                        handleErrorResponse(context, error);
                     }
                 }) {
             @Override
@@ -129,6 +130,7 @@ public final class DataManager {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         callback.onError(error);
+                        handleErrorResponse(context, error);
                     }
                 }) {
             @Override
