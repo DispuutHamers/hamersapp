@@ -18,7 +18,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,16 +52,7 @@ public final class DataManager {
     public static final String STICKERURL = "stickers";
     // Data keys
     static final String APIKEYKEY = "apikey";
-    public static final String QUOTEKEY = "quoteData";
-    public static final String USERKEY = "userData";
-    public static final String EVENTKEY = "eventData";
-    public static final String UPCOMINGEVENTKEY = "upcomingEventData";
-    public static final String NEWSKEY = "newsData";
-    public static final String BEERKEY = "beerData";
-    public static final String REVIEWKEY = "reviewData";
-    public static final String MEETINGKEY = "meetingData";
-    public static final String WHOAMIKEY = "whoamiData";
-    public static final String STICKERKEY = "stickerData";
+
     // URL
 //    private static final String baseURL = "https://zondersikkel.nl/api/v2/";
     private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
@@ -75,6 +65,7 @@ public final class DataManager {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d("Loader-response", response.toString());
+                        prefs.edit().putString(dataURL, response.toString()).apply();
                         if (callback != null) {
                             callback.onSuccess(response);
                         }
@@ -110,16 +101,16 @@ public final class DataManager {
                     @Override
                     public void onResponse(JSONObject response) {
                         callback.onSuccess(null);
-
+                        prefs.edit().putString(dataURL, response.toString()).apply();
 //                        if (context != null) {
 //                            if (!(context instanceof MainActivity)) {
 //                                ((Activity) context).finish();
 //                            }
 //                            Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
 //                            if (dataURL.equals(SIGNUPURL)) {
-//                                getData(null, context, prefs, EVENTURL, EVENTKEY);
+//                                getData(null, context, prefs, EVENTURL, EVENTURL);
 //                            } else if (dataURL.equals(REVIEWURL)) {
-//                                getData(null, context, prefs, REVIEWURL, REVIEWKEY);
+//                                getData(null, context, prefs, REVIEWURL, REVIEWURL);
 //                            } else if (urlAppendix != -1) {
 //                                getData(null, context, prefs, dataURL, dataKEY);
 //                            }
@@ -174,7 +165,7 @@ public final class DataManager {
         Gson gson = gsonBuilder.create();
         JSONArray users;
         try {
-            if ((users = getJsonArray(prefs, USERKEY)) != null) {
+            if ((users = getJsonArray(prefs, USERURL)) != null) {
                 for (int i = 0; i < users.length(); i++) {
                     JSONObject user = users.getJSONObject(i);
                     if (user.getInt("id") == id) {
@@ -192,7 +183,7 @@ public final class DataManager {
         Gson gson = gsonBuilder.create();
         JSONObject whoami;
         try {
-            if ((whoami = new JSONObject(prefs.getString(DataManager.WHOAMIKEY, null))) != null) {
+            if ((whoami = new JSONObject(prefs.getString(DataManager.WHOAMIURL, null))) != null) {
                 return gson.fromJson(whoami.toString(), User.class);
             }
         } catch (JSONException | NullPointerException ignored) {
@@ -205,7 +196,7 @@ public final class DataManager {
         Gson gson = gsonBuilder.create();
         JSONArray events;
         try {
-            if ((events = getJsonArray(prefs, EVENTKEY)) != null) {
+            if ((events = getJsonArray(prefs, EVENTURL)) != null) {
                 for (int i = 0; i < events.length(); i++) {
                     JSONObject event = events.getJSONObject(i);
                     if (event.getInt("id") == id) {
@@ -223,7 +214,7 @@ public final class DataManager {
         Gson gson = gsonBuilder.create();
         JSONArray beers;
         try {
-            if ((beers = getJsonArray(prefs, BEERKEY)) != null) {
+            if ((beers = getJsonArray(prefs, BEERURL)) != null) {
                 for (int i = 0; i < beers.length(); i++) {
                     JSONObject temp = beers.getJSONObject(i);
                     if (temp.getInt("id") == id) {
@@ -241,7 +232,7 @@ public final class DataManager {
         Gson gson = gsonBuilder.create();
         JSONArray meetings;
         try {
-            if ((meetings = getJsonArray(prefs, MEETINGKEY)) != null) {
+            if ((meetings = getJsonArray(prefs, MEETINGURL)) != null) {
                 for (int i = 0; i < meetings.length(); i++) {
                     JSONObject meeting = meetings.getJSONObject(i);
                     if (meeting.getInt("id") == id) {

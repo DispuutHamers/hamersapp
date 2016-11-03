@@ -21,7 +21,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -93,8 +92,9 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         DataManager.getData(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray response) {
-                new populateList().execute(dataSet);
+                new populateList().execute(response);
             }
+
             @Override
             public void onError(VolleyError error) {
                 // Nothing
@@ -141,22 +141,28 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     }
 
-    private class populateList extends AsyncTask<ArrayList<News>, Void, ArrayList<News>> {
-        @SafeVarargs
+    private class populateList extends AsyncTask<JSONArray, Void, ArrayList<News>> {
         @Override
-        protected final ArrayList<News> doInBackground(ArrayList<News>... param) {
-            ArrayList<News> dataSet = new ArrayList<>();
-            JSONArray json;
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.NEWSKEY)) != null) {
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-                Gson gson = gsonBuilder.create();
+        protected final ArrayList<News> doInBackground(JSONArray... params) {
+            ArrayList<News> result = new ArrayList<>();
+            Type type = new TypeToken<ArrayList<News>>() {
+            }.getType();
 
-                Type type = new TypeToken<ArrayList<News>>() {
-                }.getType();
-                dataSet = gson.fromJson(json.toString(), type);
+            if (params.length > 0) {
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+                Gson gson = gsonBuilder.create();
+                result = gson.fromJson(params[0].toString(), type);
+            } else {
+                JSONArray json;
+                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.NEWSURL)) != null) {
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+                    Gson gson = gsonBuilder.create();
+                    result = gson.fromJson(json.toString(), type);
+                }
             }
-            return dataSet;
+            return result;
         }
 
         @Override

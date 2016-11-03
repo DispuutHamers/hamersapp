@@ -42,15 +42,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         clear_storage.setOnPreferenceClickListener(
                 new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference preference) {
-                        prefs.edit().remove(DataManager.QUOTEKEY).apply();
-                        prefs.edit().remove(DataManager.USERKEY).apply();
-                        prefs.edit().remove(DataManager.EVENTKEY).apply();
-                        prefs.edit().remove(DataManager.UPCOMINGEVENTKEY).apply();
-                        prefs.edit().remove(DataManager.NEWSKEY).apply();
-                        prefs.edit().remove(DataManager.BEERKEY).apply();
-                        prefs.edit().remove(DataManager.REVIEWKEY).apply();
-                        prefs.edit().remove(DataManager.MEETINGKEY).apply();
-                        prefs.edit().remove(DataManager.WHOAMIKEY).apply();
+                        prefs.edit().remove(DataManager.QUOTEURL).apply();
+                        prefs.edit().remove(DataManager.USERURL).apply();
+                        prefs.edit().remove(DataManager.EVENTURL).apply();
+                        prefs.edit().remove(DataManager.UPCOMINGEVENTURL).apply();
+                        prefs.edit().remove(DataManager.NEWSURL).apply();
+                        prefs.edit().remove(DataManager.BEERURL).apply();
+                        prefs.edit().remove(DataManager.REVIEWURL).apply();
+                        prefs.edit().remove(DataManager.MEETINGURL).apply();
+                        prefs.edit().remove(DataManager.WHOAMIURL).apply();
 
                         View view = getView();
                         if (view != null) {

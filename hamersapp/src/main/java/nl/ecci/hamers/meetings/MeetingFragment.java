@@ -114,7 +114,7 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
         protected final ArrayList<Meeting> doInBackground(ArrayList<Meeting>... param) {
             ArrayList<Meeting> dataSet = new ArrayList<>();
             JSONArray json;
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.MEETINGKEY)) != null) {
+            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.MEETINGURL)) != null) {
                 GsonBuilder gsonBuilder = new GsonBuilder();
                 gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
                 Gson gson = gsonBuilder.create();

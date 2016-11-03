@@ -217,7 +217,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
                 tempList = gson.fromJson(params[0].toString(), type);
             } else {
                 JSONArray json;
-                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERKEY)) != null) {
+                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERURL)) != null) {
                     GsonBuilder gsonBuilder = new GsonBuilder();
                     gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
                     Gson gson = gsonBuilder.create();

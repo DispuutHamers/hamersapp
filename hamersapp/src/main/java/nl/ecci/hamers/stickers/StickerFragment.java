@@ -115,7 +115,7 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
         protected final ArrayList<Sticker> doInBackground(ArrayList<Sticker>... param) {
             ArrayList<Sticker> dataSet = new ArrayList<>();
             JSONArray json;
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.STICKERKEY)) != null) {
+            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.STICKERURL)) != null) {
                 Gson gson = new GsonBuilder().create();
 
                 Type type = new TypeToken<ArrayList<Sticker>>() {

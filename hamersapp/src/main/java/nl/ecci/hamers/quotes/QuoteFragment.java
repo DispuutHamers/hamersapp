@@ -163,9 +163,9 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             } else {
                 ArrayList<Quote> dataSet = new ArrayList<>();
                 JSONArray json;
-                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.QUOTEKEY)) != null) {
+                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.QUOTEURL)) != null) {
                     GsonBuilder gsonBuilder = new GsonBuilder();
-                    gsonBuilder.setDateFormat(MainActivity.dbDF.toString());
+                    gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
                     Gson gson = gsonBuilder.create();
                     dataSet = gson.fromJson(json.toString(), type);
                 }

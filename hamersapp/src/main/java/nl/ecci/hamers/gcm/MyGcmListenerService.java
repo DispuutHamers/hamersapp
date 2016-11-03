@@ -85,9 +85,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 }
 
                 // Add quote to quote list
-                if ((json = DataManager.getJsonArray(prefs, DataManager.QUOTEKEY)) != null) {
+                if ((json = DataManager.getJsonArray(prefs, DataManager.QUOTEURL)) != null) {
                     json.put(quote);
-                    prefs.edit().putString(DataManager.QUOTEKEY, json.toString()).apply();
+                    prefs.edit().putString(DataManager.QUOTEURL, json.toString()).apply();
                 }
 
             }
@@ -106,9 +106,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 message = event.getString(EVENTDESCRIPTION);
 
                 // Add event to event list
-                if ((json = DataManager.getJsonArray(prefs, DataManager.EVENTKEY)) != null) {
+                if ((json = DataManager.getJsonArray(prefs, DataManager.EVENTURL)) != null) {
                     json.put(event);
-                    prefs.edit().putString(DataManager.EVENTKEY, json.toString()).apply();
+                    prefs.edit().putString(DataManager.EVENTURL, json.toString()).apply();
                 }
 
                 intent = new Intent(this, SingleEventActivity.class);
@@ -130,9 +130,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 message = "Is net toegevoegd aan de database!";
 
                 // Add beer to beer list
-                if ((json = DataManager.getJsonArray(prefs, DataManager.BEERKEY)) != null) {
+                if ((json = DataManager.getJsonArray(prefs, DataManager.BEERURL)) != null) {
                     json.put(beer);
-                    prefs.edit().putString(DataManager.BEERKEY, json.toString()).apply();
+                    prefs.edit().putString(DataManager.BEERURL, json.toString()).apply();
                 }
 
                 intent = new Intent(this, SingleBeerActivity.class);
@@ -164,9 +164,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 message = review.getString(REVIEWDESCRIPTION);
 
                 // Add review to reviewlist
-                if ((json = DataManager.getJsonArray(prefs, DataManager.REVIEWKEY)) != null) {
+                if ((json = DataManager.getJsonArray(prefs, DataManager.REVIEWURL)) != null) {
                     json.put(review);
-                    prefs.edit().putString(DataManager.REVIEWKEY, json.toString()).apply();
+                    prefs.edit().putString(DataManager.REVIEWURL, json.toString()).apply();
                 }
 
                 intent = new Intent(this, SingleBeerActivity.class);

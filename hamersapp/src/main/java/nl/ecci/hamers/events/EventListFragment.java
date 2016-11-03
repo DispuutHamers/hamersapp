@@ -193,9 +193,9 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 JSONArray json;
 
 
-                String key = DataManager.EVENTKEY;
+                String key = DataManager.EVENTURL;
                 if (upcoming) {
-                    key = DataManager.UPCOMINGEVENTKEY;
+                    key = DataManager.UPCOMINGEVENTURL;
                 }
                 if ((json = DataManager.getJsonArray(MainActivity.prefs, key)) != null) {
                     GsonBuilder gsonBuilder = new GsonBuilder();

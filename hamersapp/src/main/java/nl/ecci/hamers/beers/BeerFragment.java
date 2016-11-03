@@ -257,7 +257,7 @@ public class BeerFragment extends HamersFragment {
                 result = gson.fromJson(params[0].toString(), type);
             } else {
                 JSONArray json;
-                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.BEERKEY)) != null) {
+                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.BEERURL)) != null) {
                     GsonBuilder gsonBuilder = new GsonBuilder();
                     gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
                     Gson gson = gsonBuilder.create();

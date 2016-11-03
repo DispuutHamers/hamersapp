@@ -129,7 +129,7 @@ public class Utils {
         JSONArray userJSON;
         int result = -1;
         try {
-            if ((userJSON = getJsonArray(prefs, DataManager.USERKEY)) != null) {
+            if ((userJSON = getJsonArray(prefs, DataManager.USERURL)) != null) {
                 for (int i = 0; i < userJSON.length(); i++) {
                     if (userJSON.getJSONObject(i).getString("name").equals(name)) {
                         result = userJSON.getJSONObject(i).getInt("id");
@@ -148,7 +148,7 @@ public class Utils {
         ArrayList<String> users = new ArrayList<>();
         JSONArray userJSON;
         try {
-            if ((userJSON = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERKEY)) != null) {
+            if ((userJSON = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERURL)) != null) {
                 for (int i = 0; i < userJSON.length(); i++) {
                     User user = gson.fromJson(userJSON.getJSONObject(i).toString(), User.class);
                     if (user.getMember() == User.Member.LID) {

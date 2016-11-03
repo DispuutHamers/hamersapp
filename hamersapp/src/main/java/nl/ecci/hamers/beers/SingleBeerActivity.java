@@ -127,7 +127,7 @@ public class SingleBeerActivity extends HamersActivity {
         JSONArray reviews;
         boolean hasReviews = false;
         try {
-            if ((reviews = getJsonArray(MainActivity.prefs, DataManager.REVIEWKEY)) != null) {
+            if ((reviews = getJsonArray(MainActivity.prefs, DataManager.REVIEWURL)) != null) {
                 for (int i = 0; i < reviews.length(); i++) {
                     JSONObject jsonObject = reviews.getJSONObject(i);
                     Review review = gson.fromJson(jsonObject.toString(), Review.class);
