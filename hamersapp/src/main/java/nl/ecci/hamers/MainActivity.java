@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -37,6 +38,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -401,14 +404,14 @@ public class MainActivity extends HamersActivity {
         } else {
             DataManager.getData(new VolleyCallback() {
                 @Override
-                public void onSuccess() {
+                public void onSuccess(JSONObject response) {
                     fillHeader();
                 }
                 @Override
                 public void onError(VolleyError error) {
                     // Nothing
                 }
-            }, this, prefs, DataManager.WHOAMIURL, DataManager.WHOAMIKEY);
+            }, this, prefs, DataManager.WHOAMIURL);
         }
     }
 }

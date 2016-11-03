@@ -21,6 +21,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -30,6 +31,8 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
 import nl.ecci.hamers.helpers.VolleyCallback;
+
+import static nl.ecci.hamers.helpers.DataManager.handleErrorResponse;
 
 public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -82,14 +85,15 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         setRefreshing(true);
         DataManager.getData(new VolleyCallback() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(JSONObject response) {
                 new populateList().execute(dataSet);
             }
+
             @Override
             public void onError(VolleyError error) {
-                // Nothing
+                handleErrorResponse(getActivity(), error);
             }
-        }, getContext(), MainActivity.prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY);
+        }, getContext(), MainActivity.prefs, DataManager.QUOTEURL);
     }
 
     @Override
@@ -154,7 +158,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             JSONArray json;
             if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.QUOTEKEY)) != null) {
                 GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                gsonBuilder.setDateFormat(MainActivity.dbDF.toString());
                 Gson gson = gsonBuilder.create();
 
                 Type type = new TypeToken<ArrayList<Quote>>() {
@@ -169,8 +173,8 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             if (!result.isEmpty()) {
                 dataSet.clear();
                 dataSet.addAll(result);
-                if (QuoteFragment.this.adapter != null) {
-                    QuoteFragment.this.adapter.notifyDataSetChanged();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
                 }
             }
             setRefreshing(false);

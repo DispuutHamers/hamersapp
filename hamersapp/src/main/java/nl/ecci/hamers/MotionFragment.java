@@ -76,7 +76,7 @@ public class MotionFragment extends Fragment {
 
         DataManager.postOrPatchData(new VolleyCallback() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(JSONObject response) {
 
             }
 

@@ -99,25 +99,25 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         if (upcoming) {
             DataManager.getData(new VolleyCallback() {
                 @Override
-                public void onSuccess() {
+                public void onSuccess(JSONObject response) {
                     new populateList().execute(dataSet);
                 }
                 @Override
                 public void onError(VolleyError error) {
                     // Nothing
                 }
-            }, getContext(), MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
+            }, getContext(), MainActivity.prefs, DataManager.EVENTURL);
         } else {
             DataManager.getData(new VolleyCallback() {
                 @Override
-                public void onSuccess() {
+                public void onSuccess(JSONObject response) {
                     new populateList().execute(dataSet);
                 }
                 @Override
                 public void onError(VolleyError error) {
                     // Nothing
                 }
-            }, getContext(), MainActivity.prefs, DataManager.UPCOMINGEVENTURL, DataManager.UPCOMINGEVENTKEY);
+            }, getContext(), MainActivity.prefs, DataManager.UPCOMINGEVENTURL);
         }
     }
 

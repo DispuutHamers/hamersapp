@@ -1,9 +1,9 @@
 package nl.ecci.hamers.helpers;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -15,7 +15,6 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -28,7 +27,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.events.Event;
@@ -64,19 +62,19 @@ public final class DataManager {
     public static final String WHOAMIKEY = "whoamiData";
     public static final String STICKERKEY = "stickerData";
     // URL
-    private static final String baseURL = "https://zondersikkel.nl/api/v2/";
-//    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
+//    private static final String baseURL = "https://zondersikkel.nl/api/v2/";
+    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
 
-    public static void getData(final VolleyCallback callback, final Context context, final SharedPreferences prefs, final String dataURL, final String dataKEY) {
+    public static void getData(final VolleyCallback callback, final Context context, final SharedPreferences prefs, final String dataURL) {
         String url = baseURL + dataURL;
 
-        StringRequest request = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        prefs.edit().putString(dataKEY, response).apply();
+                    public void onResponse(JSONObject response) {
+                        Log.d("Loader-response", response.toString());
                         if (callback != null) {
-                            callback.onSuccess();
+                            callback.onSuccess(response);
                         }
                     }
                 },
@@ -106,7 +104,7 @@ public final class DataManager {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        callback.onSuccess();
+                        callback.onSuccess(response);
 
 
 //                        if (context != null) {
@@ -142,6 +140,28 @@ public final class DataManager {
             }
         };
         Singleton.getInstance(context).addToRequestQueue(request);
+    }
+
+    public static void handleErrorResponse(@NonNull Context context, @NonNull VolleyError error) {
+        if (error instanceof AuthFailureError) {
+            // Wrong API key
+            Toast.makeText(context, context.getString(R.string.auth_error), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof TimeoutError) {
+            // Timeout
+            Toast.makeText(context, context.getString(R.string.timeout_error), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof ServerError) {
+            // Server error (500)
+            Toast.makeText(context, context.getString(R.string.server_error), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof NoConnectionError) {
+            // No network connection
+            Toast.makeText(context, context.getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof NetworkError) {
+            // Network error
+            Toast.makeText(context, context.getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+        } else {
+            // Other error
+            Toast.makeText(context, context.getString(R.string.volley_error), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static User getUser(SharedPreferences prefs, int id) {

@@ -23,6 +23,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -120,7 +121,7 @@ public class BeerFragment extends HamersFragment {
         setRefreshing(true);
         DataManager.getData(new VolleyCallback() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(JSONObject response) {
                 new populateList().execute(dataSet);
             }
 
@@ -128,10 +129,10 @@ public class BeerFragment extends HamersFragment {
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, DataManager.BEERURL, DataManager.BEERKEY);
+        }, getContext(), MainActivity.prefs, DataManager.BEERURL);
         DataManager.getData(new VolleyCallback() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(JSONObject response) {
                 if (adapter != null) {
                     adapter.notifyDataSetChanged();
                 }
@@ -140,7 +141,7 @@ public class BeerFragment extends HamersFragment {
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY);
+        }, getContext(), MainActivity.prefs, DataManager.REVIEWURL);
     }
 
     @Override

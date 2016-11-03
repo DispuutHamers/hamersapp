@@ -128,7 +128,7 @@ public class NewReviewActivity extends HamersActivity {
                 }
                 DataManager.postOrPatchData(new VolleyCallback() {
                     @Override
-                    public void onSuccess() {
+                    public void onSuccess(JSONObject response) {
                     }
 
                     @Override

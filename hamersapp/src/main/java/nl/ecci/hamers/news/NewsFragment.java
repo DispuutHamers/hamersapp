@@ -21,6 +21,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -91,14 +92,14 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         setRefreshing(true);
         DataManager.getData(new VolleyCallback() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(JSONObject response) {
                 new populateList().execute(dataSet);
             }
             @Override
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, DataManager.NEWSURL, DataManager.NEWSKEY);
+        }, getContext(), MainActivity.prefs, DataManager.NEWSURL);
     }
 
     @Override

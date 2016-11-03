@@ -21,6 +21,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -65,14 +66,14 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
     public void onRefresh() {
         DataManager.getData(new VolleyCallback() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(JSONObject response) {
                 new populateMap().execute(dataSet);
             }
             @Override
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, DataManager.STICKERURL, DataManager.STICKERKEY);
+        }, getContext(), MainActivity.prefs, DataManager.STICKERURL);
     }
 
     public void addMarkers() {
