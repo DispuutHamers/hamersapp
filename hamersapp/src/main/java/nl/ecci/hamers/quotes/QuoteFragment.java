@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -83,6 +84,10 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             @Override
             public void onSuccess() {
                 new populateList().execute(dataSet);
+            }
+            @Override
+            public void onError(VolleyError error) {
+                // Nothing
             }
         }, getContext(), MainActivity.prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY);
     }

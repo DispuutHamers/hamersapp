@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.android.volley.VolleyError;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,6 +23,7 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.Utils;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 import static nl.ecci.hamers.helpers.Utils.usernameToID;
 
@@ -63,6 +66,16 @@ public class NewQuoteFragment extends DialogFragment {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postOrPatchData(this.getContext(), MainActivity.prefs, DataManager.QUOTEURL, -1, DataManager.QUOTEKEY, body);
+        DataManager.postOrPatchData(new VolleyCallback() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        }, getContext(), MainActivity.prefs, DataManager.QUOTEURL, -1, body);
     }
 }

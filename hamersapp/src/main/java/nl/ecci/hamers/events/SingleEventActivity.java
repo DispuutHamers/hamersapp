@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +33,7 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.helpers.VolleyCallback;
 import nl.ecci.hamers.users.User;
 
 public class SingleEventActivity extends HamersActivity {
@@ -162,7 +165,17 @@ public class SingleEventActivity extends HamersActivity {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.SIGNUPURL, -1, null, body);
+        DataManager.postOrPatchData(new VolleyCallback() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        }, this, MainActivity.prefs, DataManager.SIGNUPURL, -1, body);
         this.finish();
     }
 

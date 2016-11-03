@@ -83,7 +83,7 @@ public final class DataManager {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        handleErrorResponse(context, error);
+                        callback.onError(error);
                     }
                 }) {
             @Override
@@ -96,7 +96,7 @@ public final class DataManager {
         Singleton.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void postOrPatchData(final Context context, final SharedPreferences prefs, final String dataURL, final int urlAppendix, final String dataKEY, JSONObject body) {
+    public static void postOrPatchData(final VolleyCallback callback, final Context context, final SharedPreferences prefs, final String dataURL, final int urlAppendix, JSONObject body) {
         String url = baseURL + dataURL;
         if (urlAppendix != -1) {
             url = baseURL + dataURL + "/" + urlAppendix;
@@ -106,25 +106,28 @@ public final class DataManager {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        if (context != null) {
-                            if (!(context instanceof MainActivity)) {
-                                ((Activity) context).finish();
-                            }
-                            Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
-                            if (dataURL.equals(SIGNUPURL)) {
-                                getData(null, context, prefs, EVENTURL, EVENTKEY);
-                            } else if (dataURL.equals(REVIEWURL)) {
-                                getData(null, context, prefs, REVIEWURL, REVIEWKEY);
-                            } else if (urlAppendix != -1) {
-                                getData(null, context, prefs, dataURL, dataKEY);
-                            }
-                        }
+                        callback.onSuccess();
+
+
+//                        if (context != null) {
+//                            if (!(context instanceof MainActivity)) {
+//                                ((Activity) context).finish();
+//                            }
+//                            Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
+//                            if (dataURL.equals(SIGNUPURL)) {
+//                                getData(null, context, prefs, EVENTURL, EVENTKEY);
+//                            } else if (dataURL.equals(REVIEWURL)) {
+//                                getData(null, context, prefs, REVIEWURL, REVIEWKEY);
+//                            } else if (urlAppendix != -1) {
+//                                getData(null, context, prefs, dataURL, dataKEY);
+//                            }
+//                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        handleErrorResponse(context, error);
+                        callback.onError(error);
                     }
                 }) {
             @Override
@@ -139,30 +142,6 @@ public final class DataManager {
             }
         };
         Singleton.getInstance(context).addToRequestQueue(request);
-    }
-
-    private static void handleErrorResponse(@NonNull Context context, @NonNull VolleyError error) {
-        if (context != null) {
-            if (error instanceof AuthFailureError) {
-                // Wrong API key
-                Toast.makeText(context, context.getString(R.string.auth_error), Toast.LENGTH_SHORT).show();
-            } else if (error instanceof TimeoutError) {
-                // Timeout
-                Toast.makeText(context, context.getString(R.string.timeout_error), Toast.LENGTH_SHORT).show();
-            } else if (error instanceof ServerError) {
-                // Server error (500)
-                Toast.makeText(context, context.getString(R.string.server_error), Toast.LENGTH_SHORT).show();
-            } else if (error instanceof NoConnectionError) {
-                // No network connection
-                Toast.makeText(context, context.getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
-            } else if (error instanceof NetworkError) {
-                // Network error
-                Toast.makeText(context, context.getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-            } else {
-                // Other error
-                Toast.makeText(context, context.getString(R.string.volley_error), Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     public static User getUser(SharedPreferences prefs, int id) {

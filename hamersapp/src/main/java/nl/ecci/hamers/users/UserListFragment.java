@@ -14,6 +14,7 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -102,6 +103,10 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
             @Override
             public void onSuccess() {
                 new populateList().execute(dataSet);
+            }
+            @Override
+            public void onError(VolleyError error) {
+                // Nothing
             }
         }, getContext(), MainActivity.prefs, DataManager.USERURL, DataManager.USERKEY);
     }

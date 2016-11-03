@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
+import com.android.volley.VolleyError;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,6 +17,7 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 public class NewBeerActivity extends HamersActivity {
 
@@ -80,6 +83,16 @@ public class NewBeerActivity extends HamersActivity {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postOrPatchData(this, prefs, DataManager.BEERURL, beerID, DataManager.BEERKEY, body);
+        DataManager.postOrPatchData(new VolleyCallback() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        }, this, prefs, DataManager.BEERURL, beerID, body);
     }
 }

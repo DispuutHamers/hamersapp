@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,6 +24,7 @@ import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DatePickerFragment;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.TimePickerFragment;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 public class NewEventActivity extends HamersActivity {
 
@@ -143,7 +146,17 @@ public class NewEventActivity extends HamersActivity {
             } catch (JSONException ignored) {
             }
 
-            DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.EVENTURL, eventID, DataManager.EVENTKEY, body);
+            DataManager.postOrPatchData(new VolleyCallback() {
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+
+                }
+            }, this, MainActivity.prefs, DataManager.EVENTURL, eventID, body);
         } else {
             Toast.makeText(this, R.string.missing_fields, Toast.LENGTH_SHORT).show();
         }

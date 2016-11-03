@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -28,6 +29,7 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DatePickerFragment;
 import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 public class NewReviewActivity extends HamersActivity {
 
@@ -124,7 +126,15 @@ public class NewReviewActivity extends HamersActivity {
                 if (review != null) {
                     reviewID = review.getID();
                 }
-                DataManager.postOrPatchData(this, prefs, DataManager.REVIEWURL, reviewID, DataManager.REVIEWKEY, body);
+                DataManager.postOrPatchData(new VolleyCallback() {
+                    @Override
+                    public void onSuccess() {
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+                    }
+                }, this, prefs, DataManager.REVIEWURL, reviewID, body);
             } catch (JSONException ignored) {
             }
         } else {

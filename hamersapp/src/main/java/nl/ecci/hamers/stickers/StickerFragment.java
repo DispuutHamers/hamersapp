@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.VolleyError;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -66,6 +67,10 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onSuccess() {
                 new populateMap().execute(dataSet);
+            }
+            @Override
+            public void onError(VolleyError error) {
+                // Nothing
             }
         }, getContext(), MainActivity.prefs, DataManager.STICKERURL, DataManager.STICKERKEY);
     }

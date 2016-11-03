@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -101,12 +102,20 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 public void onSuccess() {
                     new populateList().execute(dataSet);
                 }
+                @Override
+                public void onError(VolleyError error) {
+                    // Nothing
+                }
             }, getContext(), MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
         } else {
             DataManager.getData(new VolleyCallback() {
                 @Override
                 public void onSuccess() {
                     new populateList().execute(dataSet);
+                }
+                @Override
+                public void onError(VolleyError error) {
+                    // Nothing
                 }
             }, getContext(), MainActivity.prefs, DataManager.UPCOMINGEVENTURL, DataManager.UPCOMINGEVENTKEY);
         }

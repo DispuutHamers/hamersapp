@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.EditText;
 
+import com.android.volley.VolleyError;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,6 +14,7 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 public class NewNewsActivity extends HamersActivity {
 
@@ -45,6 +48,16 @@ public class NewNewsActivity extends HamersActivity {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.NEWSURL, -1, DataManager.NEWSKEY, body);
+        DataManager.postOrPatchData(new VolleyCallback() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        }, this, MainActivity.prefs, DataManager.NEWSURL, -1, body);
     }
 }

@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -122,13 +123,22 @@ public class BeerFragment extends HamersFragment {
             public void onSuccess() {
                 new populateList().execute(dataSet);
             }
+
+            @Override
+            public void onError(VolleyError error) {
+                // Nothing
+            }
         }, getContext(), MainActivity.prefs, DataManager.BEERURL, DataManager.BEERKEY);
         DataManager.getData(new VolleyCallback() {
             @Override
             public void onSuccess() {
-                if (BeerFragment.this.adapter != null) {
-                    BeerFragment.this.adapter.notifyDataSetChanged();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
                 }
+            }
+            @Override
+            public void onError(VolleyError error) {
+                // Nothing
             }
         }, getContext(), MainActivity.prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY);
     }

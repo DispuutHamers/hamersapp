@@ -9,10 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import com.android.volley.VolleyError;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 public class MotionFragment extends Fragment {
 
@@ -71,6 +74,16 @@ public class MotionFragment extends Fragment {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postOrPatchData(this.getContext(), MainActivity.prefs, DataManager.MOTIEURL, -1, null, body);
+        DataManager.postOrPatchData(new VolleyCallback() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        }, getContext(), MainActivity.prefs, DataManager.MOTIEURL, -1, body);
     }
 }

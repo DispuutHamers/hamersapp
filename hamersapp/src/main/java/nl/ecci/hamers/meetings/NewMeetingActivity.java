@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -22,6 +23,7 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DatePickerFragment;
 import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 public class NewMeetingActivity extends HamersActivity {
 
@@ -80,9 +82,29 @@ public class NewMeetingActivity extends HamersActivity {
                 body.put("notes", notes);
                 body.put("date", MainActivity.parseDate(date));
                 if (meeting != null) {
-                    DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.MEETINGURL, meeting.getID(), DataManager.MEETINGKEY, body);
+                    DataManager.postOrPatchData(new VolleyCallback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError(VolleyError error) {
+
+                        }
+                    }, this, MainActivity.prefs, DataManager.MEETINGURL, meeting.getID(), body);
                 } else {
-                    DataManager.postOrPatchData(this, MainActivity.prefs, DataManager.MEETINGURL, -1, DataManager.MEETINGKEY, body);
+                    DataManager.postOrPatchData(new VolleyCallback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError(VolleyError error) {
+
+                        }
+                    }, this, MainActivity.prefs, DataManager.MEETINGURL, -1, body);
                 }
             } catch (JSONException ignored) {
             }

@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -402,6 +403,10 @@ public class MainActivity extends HamersActivity {
                 @Override
                 public void onSuccess() {
                     fillHeader();
+                }
+                @Override
+                public void onError(VolleyError error) {
+                    // Nothing
                 }
             }, this, prefs, DataManager.WHOAMIURL, DataManager.WHOAMIKEY);
         }

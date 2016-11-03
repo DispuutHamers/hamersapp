@@ -23,6 +23,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.android.volley.VolleyError;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
@@ -35,6 +36,7 @@ import java.io.IOException;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.VolleyCallback;
 
 public class RegistrationIntentService extends IntentService {
 
@@ -96,7 +98,17 @@ public class RegistrationIntentService extends IntentService {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postOrPatchData(null, sharedPreferences, DataManager.GCMURL, -1, DataManager.GCMURL, body);
+        DataManager.postOrPatchData(new VolleyCallback() {
+            @Override
+            public void onSuccess() {
+                // Nothing
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                // Nothing
+            }
+        }, null, sharedPreferences, DataManager.GCMURL, -1, body);
     }
 
     /**
