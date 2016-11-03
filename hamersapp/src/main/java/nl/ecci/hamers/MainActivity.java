@@ -27,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -37,8 +36,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
-
-import org.json.JSONArray;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -50,10 +47,9 @@ import java.util.Locale;
 import nl.ecci.hamers.beers.BeerFragment;
 import nl.ecci.hamers.events.EventFragment;
 import nl.ecci.hamers.gcm.RegistrationIntentService;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.Utils;
-import nl.ecci.hamers.helpers.VolleyCallback;
 import nl.ecci.hamers.meetings.MeetingFragment;
 import nl.ecci.hamers.meetings.NewMeetingActivity;
 import nl.ecci.hamers.news.NewNewsActivity;
@@ -65,6 +61,7 @@ import nl.ecci.hamers.users.User;
 import nl.ecci.hamers.users.UserFragment;
 
 import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
+import static nl.ecci.hamers.helpers.Utils.getOwnUser;
 
 public class MainActivity extends HamersActivity {
     public static final Locale locale = new Locale("nl");
@@ -382,7 +379,7 @@ public class MainActivity extends HamersActivity {
     }
 
     private void fillHeader() {
-        User user = DataManager.getOwnUser(prefs);
+        User user = getOwnUser(prefs);
         if (user.getID() != -1) {
             View headerLayout = navigationView.getHeaderView(0);
             TextView userName = (TextView) headerLayout.findViewById(R.id.header_user_name);
@@ -398,7 +395,7 @@ public class MainActivity extends HamersActivity {
                 ImageLoader.getInstance().displayImage(url, userImage);
             }
 //        } else {
-//            DataManager.getData(new VolleyCallback() {
+//            Loader.getData(new VolleyCallback() {
 //                @Override
 //                public void onSuccess(JSONArray response) {
 //                    fillHeader();
@@ -408,7 +405,7 @@ public class MainActivity extends HamersActivity {
 //                public void onError(VolleyError error) {
 //                    // Nothing
 //                }
-//            }, this, prefs, DataManager.WHOAMIURL);
+//            }, this, prefs, Loader.WHOAMIURL);
         }
     }
 }

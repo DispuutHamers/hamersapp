@@ -12,7 +12,9 @@ import java.util.ArrayList;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
+
+import static nl.ecci.hamers.helpers.Utils.getOwnUser;
 
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHolder> {
 
@@ -24,7 +26,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         this.dataSet = dataSet;
         this.context = context;
 
-        ownID = DataManager.getOwnUser(MainActivity.prefs).getID();
+        ownID = getOwnUser(MainActivity.prefs).getID();
     }
 
     @Override

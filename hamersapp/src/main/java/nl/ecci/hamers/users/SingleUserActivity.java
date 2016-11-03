@@ -18,12 +18,12 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.HamersActivity;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 import static nl.ecci.hamers.helpers.Utils.convertNicknames;
 import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
+import static nl.ecci.hamers.helpers.Utils.getUser;
 
 public class SingleUserActivity extends HamersActivity {
     private PhotoViewAttacher mAttacher;
@@ -37,7 +37,7 @@ public class SingleUserActivity extends HamersActivity {
 
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
-        final User user = DataManager.getUser(MainActivity.prefs, getIntent().getIntExtra(User.USER_ID, -1));
+        final User user = getUser(MainActivity.prefs, getIntent().getIntExtra(User.USER_ID, -1));
 
         collapsingToolbar.setTitle(user.getName());
 

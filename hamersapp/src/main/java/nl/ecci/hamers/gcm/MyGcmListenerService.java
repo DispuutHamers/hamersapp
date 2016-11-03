@@ -27,8 +27,12 @@ import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.beers.SingleBeerActivity;
 import nl.ecci.hamers.events.Event;
 import nl.ecci.hamers.events.SingleEventActivity;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.users.User;
+
+import static nl.ecci.hamers.helpers.Utils.getBeer;
+import static nl.ecci.hamers.helpers.Utils.getJsonArray;
+import static nl.ecci.hamers.helpers.Utils.getUser;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -77,7 +81,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 String QUOTEBODY = "text";
                 title = quote.getString(QUOTEBODY);
 
-                User user = DataManager.getUser(prefs, Integer.valueOf(quote.getString(USERID)));
+                User user = getUser(prefs, Integer.valueOf(quote.getString(USERID)));
                 if (user != null) {
                     message = user.getName();
                 } else {
@@ -85,9 +89,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 }
 
                 // Add quote to quote list
-                if ((json = DataManager.getJsonArray(prefs, DataManager.QUOTEURL)) != null) {
+                if ((json = getJsonArray(prefs, Loader.QUOTEURL)) != null) {
                     json.put(quote);
-                    prefs.edit().putString(DataManager.QUOTEURL, json.toString()).apply();
+                    prefs.edit().putString(Loader.QUOTEURL, json.toString()).apply();
                 }
 
             }
@@ -106,9 +110,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 message = event.getString(EVENTDESCRIPTION);
 
                 // Add event to event list
-                if ((json = DataManager.getJsonArray(prefs, DataManager.EVENTURL)) != null) {
+                if ((json = getJsonArray(prefs, Loader.EVENTURL)) != null) {
                     json.put(event);
-                    prefs.edit().putString(DataManager.EVENTURL, json.toString()).apply();
+                    prefs.edit().putString(Loader.EVENTURL, json.toString()).apply();
                 }
 
                 intent = new Intent(this, SingleEventActivity.class);
@@ -130,9 +134,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 message = "Is net toegevoegd aan de database!";
 
                 // Add beer to beer list
-                if ((json = DataManager.getJsonArray(prefs, DataManager.BEERURL)) != null) {
+                if ((json = getJsonArray(prefs, Loader.BEERURL)) != null) {
                     json.put(beer);
-                    prefs.edit().putString(DataManager.BEERURL, json.toString()).apply();
+                    prefs.edit().putString(Loader.BEERURL, json.toString()).apply();
                 }
 
                 intent = new Intent(this, SingleBeerActivity.class);
@@ -149,9 +153,9 @@ public class MyGcmListenerService extends GcmListenerService {
             JSONObject review = new JSONObject(object.getString(REVIEWTYPE));
             if (review.length() != 0) {
                 type = Type.REVIEW;
-                User user = DataManager.getUser(prefs, review.getInt(USERID));
+                User user = getUser(prefs, review.getInt(USERID));
                 String REVIEWBEER = "beer_id";
-                Beer beer = DataManager.getBeer(prefs, review.getInt(REVIEWBEER));
+                Beer beer = getBeer(prefs, review.getInt(REVIEWBEER));
                 String REVIEWRATING = "rating";
                 if (user != null && beer != null) {
                     title = user.getName() + " / " + beer.getName() + " / " + review.getString(REVIEWRATING);
@@ -164,9 +168,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 message = review.getString(REVIEWDESCRIPTION);
 
                 // Add review to reviewlist
-                if ((json = DataManager.getJsonArray(prefs, DataManager.REVIEWURL)) != null) {
+                if ((json = getJsonArray(prefs, Loader.REVIEWURL)) != null) {
                     json.put(review);
-                    prefs.edit().putString(DataManager.REVIEWURL, json.toString()).apply();
+                    prefs.edit().putString(Loader.REVIEWURL, json.toString()).apply();
                 }
 
                 intent = new Intent(this, SingleBeerActivity.class);

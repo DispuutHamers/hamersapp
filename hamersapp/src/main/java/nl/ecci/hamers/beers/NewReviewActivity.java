@@ -27,10 +27,12 @@ import java.util.Calendar;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.DatePickerFragment;
 import nl.ecci.hamers.helpers.HamersActivity;
-import nl.ecci.hamers.helpers.VolleyCallback;
+import nl.ecci.hamers.loader.VolleyCallback;
+
+import static nl.ecci.hamers.helpers.Utils.getBeer;
 
 public class NewReviewActivity extends HamersActivity {
 
@@ -70,7 +72,7 @@ public class NewReviewActivity extends HamersActivity {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        beer = DataManager.getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, 1));
+        beer = getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, 1));
         review = gson.fromJson(getIntent().getStringExtra(Review.REVIEW), Review.class);
 
         TextView title = (TextView) findViewById(R.id.review_title);
@@ -127,7 +129,7 @@ public class NewReviewActivity extends HamersActivity {
                 if (review != null) {
                     reviewID = review.getID();
                 }
-                DataManager.postOrPatchData(new VolleyCallback() {
+                Loader.postOrPatchData(new VolleyCallback() {
                     @Override
                     public void onSuccess(JSONArray response) {
                     }
@@ -135,7 +137,7 @@ public class NewReviewActivity extends HamersActivity {
                     @Override
                     public void onError(VolleyError error) {
                     }
-                }, this, prefs, DataManager.REVIEWURL, reviewID, body);
+                }, this, prefs, Loader.REVIEWURL, reviewID, body);
             } catch (JSONException ignored) {
             }
         } else {

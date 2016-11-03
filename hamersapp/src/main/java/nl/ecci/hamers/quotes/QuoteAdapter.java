@@ -19,11 +19,12 @@ import java.util.Date;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.users.SingleUserActivity;
 import nl.ecci.hamers.users.User;
 
 import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
+import static nl.ecci.hamers.helpers.Utils.getUser;
 
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> implements Filterable {
 
@@ -67,14 +68,14 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.body.setText(filteredDataSet.get(position).getText());
-        holder.user.setText(DataManager.getUser(MainActivity.prefs, filteredDataSet.get(position).getUserID()).getName());
+        holder.user.setText(getUser(MainActivity.prefs, filteredDataSet.get(position).getUserID()).getName());
 
         Date date = filteredDataSet.get(position).getDate();
         if (date != null) {
             holder.date.setText(MainActivity.appDF.format(date));
         }
 
-        User user = DataManager.getUser(MainActivity.prefs, filteredDataSet.get(position).getUserID());
+        User user = getUser(MainActivity.prefs, filteredDataSet.get(position).getUserID());
         if (user != null) {
             imageLoader.displayImage(getGravatarURL(user.getEmail()), holder.userImage, animateFirstListener);
         }
@@ -100,7 +101,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
                     ArrayList<Quote> filterResultsData = new ArrayList<>();
                     for (Quote quote : dataSet) {
                         if (quote.getText().toLowerCase().contains(charSequence) ||
-                                DataManager.getUser(MainActivity.prefs, quote.getUserID()).getName().toLowerCase().contains(charSequence)) {
+                                getUser(MainActivity.prefs, quote.getUserID()).getName().toLowerCase().contains(charSequence)) {
                             filterResultsData.add(quote);
                         }
                     }

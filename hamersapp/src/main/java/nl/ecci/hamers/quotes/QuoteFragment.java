@@ -27,9 +27,11 @@ import java.util.ArrayList;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
-import nl.ecci.hamers.helpers.VolleyCallback;
+import nl.ecci.hamers.loader.VolleyCallback;
+
+import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
 public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -81,7 +83,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
-        DataManager.getData(new VolleyCallback() {
+        Loader.getData(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray response) {
                 new populateList().execute(response);
@@ -91,7 +93,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, DataManager.QUOTEURL);
+        }, getContext(), MainActivity.prefs, Loader.QUOTEURL);
     }
 
     @Override
@@ -163,7 +165,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             } else {
                 ArrayList<Quote> dataSet = new ArrayList<>();
                 JSONArray json;
-                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.QUOTEURL)) != null) {
+                if ((json = getJsonArray(MainActivity.prefs, Loader.QUOTEURL)) != null) {
                     GsonBuilder gsonBuilder = new GsonBuilder();
                     gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
                     Gson gson = gsonBuilder.create();

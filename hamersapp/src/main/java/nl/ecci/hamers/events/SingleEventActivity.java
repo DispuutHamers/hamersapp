@@ -32,10 +32,14 @@ import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.HamersActivity;
-import nl.ecci.hamers.helpers.VolleyCallback;
+import nl.ecci.hamers.loader.Loader;
+import nl.ecci.hamers.loader.VolleyCallback;
 import nl.ecci.hamers.users.User;
+
+import static nl.ecci.hamers.helpers.Utils.getEvent;
+import static nl.ecci.hamers.helpers.Utils.getOwnUser;
+import static nl.ecci.hamers.helpers.Utils.getUser;
 
 public class SingleEventActivity extends HamersActivity {
 
@@ -69,7 +73,7 @@ public class SingleEventActivity extends HamersActivity {
         presentLayout = (ViewGroup) findViewById(R.id.present_layout);
         absentLayout = (ViewGroup) findViewById(R.id.absent_layout);
 
-        event = DataManager.getEvent(MainActivity.prefs, getIntent().getIntExtra(Event.EVENT, 1));
+        event = getEvent(MainActivity.prefs, getIntent().getIntExtra(Event.EVENT, 1));
 
         initSignups();
 
@@ -166,7 +170,7 @@ public class SingleEventActivity extends HamersActivity {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postOrPatchData(new VolleyCallback() {
+        Loader.postOrPatchData(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray response) {
 
@@ -176,7 +180,7 @@ public class SingleEventActivity extends HamersActivity {
             public void onError(VolleyError error) {
 
             }
-        }, this, MainActivity.prefs, DataManager.SIGNUPURL, -1, body);
+        }, this, MainActivity.prefs, Loader.SIGNUPURL, -1, body);
         this.finish();
     }
 
@@ -200,9 +204,9 @@ public class SingleEventActivity extends HamersActivity {
         for (int i = 0; i < signups.size(); i++) {
             Event.Signup signup = signups.get(i);
             if (signup.isAttending()) {
-                present.add(DataManager.getUser(MainActivity.prefs, signup.getUserID()).getName());
+                present.add(getUser(MainActivity.prefs, signup.getUserID()).getName());
             } else {
-                absent.add(DataManager.getUser(MainActivity.prefs, signup.getUserID()).getName());
+                absent.add(getUser(MainActivity.prefs, signup.getUserID()).getName());
             }
         }
 
@@ -222,7 +226,7 @@ public class SingleEventActivity extends HamersActivity {
             eventLayout.removeView(absentLayout);
         }
 
-        User ownUser = DataManager.getOwnUser(MainActivity.prefs);
+        User ownUser = getOwnUser(MainActivity.prefs);
         if (present.contains(ownUser.getName()) && presentButton != null) {
             presentButton.setVisibility(View.GONE);
         } else if (absent.contains(ownUser.getName()) && absentButton != null) {

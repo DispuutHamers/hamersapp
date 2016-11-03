@@ -12,7 +12,7 @@ import android.view.View;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
     private final static String KEY_PREF_NIGHT_MODE = "night_mode";
@@ -42,15 +42,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         clear_storage.setOnPreferenceClickListener(
                 new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference preference) {
-                        prefs.edit().remove(DataManager.QUOTEURL).apply();
-                        prefs.edit().remove(DataManager.USERURL).apply();
-                        prefs.edit().remove(DataManager.EVENTURL).apply();
-                        prefs.edit().remove(DataManager.UPCOMINGEVENTURL).apply();
-                        prefs.edit().remove(DataManager.NEWSURL).apply();
-                        prefs.edit().remove(DataManager.BEERURL).apply();
-                        prefs.edit().remove(DataManager.REVIEWURL).apply();
-                        prefs.edit().remove(DataManager.MEETINGURL).apply();
-                        prefs.edit().remove(DataManager.WHOAMIURL).apply();
+                        prefs.edit().remove(Loader.QUOTEURL).apply();
+                        prefs.edit().remove(Loader.USERURL).apply();
+                        prefs.edit().remove(Loader.EVENTURL).apply();
+                        prefs.edit().remove(Loader.UPCOMINGEVENTURL).apply();
+                        prefs.edit().remove(Loader.NEWSURL).apply();
+                        prefs.edit().remove(Loader.BEERURL).apply();
+                        prefs.edit().remove(Loader.REVIEWURL).apply();
+                        prefs.edit().remove(Loader.MEETINGURL).apply();
+                        prefs.edit().remove(Loader.WHOAMIURL).apply();
 
                         View view = getView();
                         if (view != null) {

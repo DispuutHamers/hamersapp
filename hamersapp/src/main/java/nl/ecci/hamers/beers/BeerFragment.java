@@ -20,11 +20,9 @@ import android.view.ViewGroup;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -34,11 +32,12 @@ import java.util.Comparator;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
 import nl.ecci.hamers.helpers.HamersFragment;
-import nl.ecci.hamers.helpers.VolleyCallback;
-import nl.ecci.hamers.users.User;
+import nl.ecci.hamers.loader.VolleyCallback;
+
+import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
 public class BeerFragment extends HamersFragment {
 
@@ -122,7 +121,7 @@ public class BeerFragment extends HamersFragment {
     @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
-        DataManager.getData(new VolleyCallback() {
+        Loader.getData(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray response) {
                 new populateList().execute(response);
@@ -132,8 +131,8 @@ public class BeerFragment extends HamersFragment {
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, DataManager.BEERURL);
-        DataManager.getData(new VolleyCallback() {
+        }, getContext(), MainActivity.prefs, Loader.BEERURL);
+        Loader.getData(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray response) {
                 adapter.notifyDataSetChanged();
@@ -142,7 +141,7 @@ public class BeerFragment extends HamersFragment {
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, DataManager.REVIEWURL);
+        }, getContext(), MainActivity.prefs, Loader.REVIEWURL);
     }
 
     @Override
@@ -257,7 +256,7 @@ public class BeerFragment extends HamersFragment {
                 result = gson.fromJson(params[0].toString(), type);
             } else {
                 JSONArray json;
-                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.BEERURL)) != null) {
+                if ((json = getJsonArray(MainActivity.prefs, Loader.BEERURL)) != null) {
                     GsonBuilder gsonBuilder = new GsonBuilder();
                     gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
                     Gson gson = gsonBuilder.create();

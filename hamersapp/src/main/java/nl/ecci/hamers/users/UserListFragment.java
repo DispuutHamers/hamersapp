@@ -28,8 +28,10 @@ import java.util.Comparator;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.VolleyCallback;
+import nl.ecci.hamers.loader.Loader;
+import nl.ecci.hamers.loader.VolleyCallback;
+
+import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
 public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -100,7 +102,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
-        DataManager.getData(new VolleyCallback() {
+        Loader.getData(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray response) {
                 new populateList().execute(response);
@@ -110,7 +112,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, DataManager.USERURL);
+        }, getContext(), MainActivity.prefs, Loader.USERURL);
     }
 
     @Override
@@ -217,7 +219,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
                 tempList = gson.fromJson(params[0].toString(), type);
             } else {
                 JSONArray json;
-                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERURL)) != null) {
+                if ((json = getJsonArray(MainActivity.prefs, Loader.USERURL)) != null) {
                     GsonBuilder gsonBuilder = new GsonBuilder();
                     gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
                     Gson gson = gsonBuilder.create();

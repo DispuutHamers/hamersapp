@@ -13,9 +13,9 @@ import org.json.JSONObject;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.HamersActivity;
-import nl.ecci.hamers.helpers.VolleyCallback;
+import nl.ecci.hamers.loader.VolleyCallback;
 
 public class NewNewsActivity extends HamersActivity {
 
@@ -49,7 +49,7 @@ public class NewNewsActivity extends HamersActivity {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postOrPatchData(new VolleyCallback() {
+        Loader.postOrPatchData(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray response) {
 
@@ -59,6 +59,6 @@ public class NewNewsActivity extends HamersActivity {
             public void onError(VolleyError error) {
 
             }
-        }, this, MainActivity.prefs, DataManager.NEWSURL, -1, body);
+        }, this, MainActivity.prefs, Loader.NEWSURL, -1, body);
     }
 }

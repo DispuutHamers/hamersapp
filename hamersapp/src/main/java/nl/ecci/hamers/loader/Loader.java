@@ -1,4 +1,4 @@
-package nl.ecci.hamers.helpers;
+package nl.ecci.hamers.loader;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,26 +16,16 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.beers.Beer;
-import nl.ecci.hamers.events.Event;
-import nl.ecci.hamers.meetings.Meeting;
-import nl.ecci.hamers.users.User;
-import nl.ecci.hamers.users.User.Nickname;
 
-public final class DataManager {
+public final class Loader {
     // URL Appendices
     public static final String QUOTEURL = "quotes";
     public static final String USERURL = "users";
@@ -50,7 +40,7 @@ public final class DataManager {
     public static final String GCMURL = "register";
     public static final String STICKERURL = "stickers";
     // Data keys
-    static final String APIKEYKEY = "apikey";
+    public static final String APIKEYKEY = "apikey";
 
     // URL
 //    private static final String baseURL = "https://zondersikkel.nl/api/v2/";
@@ -158,108 +148,4 @@ public final class DataManager {
             Toast.makeText(context, context.getString(R.string.volley_error), Toast.LENGTH_SHORT).show();
         }
     }
-
-    public static User getUser(SharedPreferences prefs, int id) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        JSONArray users;
-        try {
-            if ((users = getJsonArray(prefs, USERURL)) != null) {
-                for (int i = 0; i < users.length(); i++) {
-                    JSONObject user = users.getJSONObject(i);
-                    if (user.getInt("id") == id) {
-                        return gson.fromJson(user.toString(), User.class);
-                    }
-                }
-            }
-        } catch (JSONException ignored) {
-        }
-        return new User(-1, "Unknown", "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<Nickname>(), new Date());
-    }
-
-    public static User getOwnUser(SharedPreferences prefs) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        JSONObject whoami;
-        try {
-            if ((whoami = new JSONObject(prefs.getString(DataManager.WHOAMIURL, null))) != null) {
-                return gson.fromJson(whoami.toString(), User.class);
-            }
-        } catch (JSONException | NullPointerException ignored) {
-        }
-        return new User(-1, "Unknown", "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<Nickname>(), new Date());
-    }
-
-    public static Event getEvent(SharedPreferences prefs, int id) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        JSONArray events;
-        try {
-            if ((events = getJsonArray(prefs, EVENTURL)) != null) {
-                for (int i = 0; i < events.length(); i++) {
-                    JSONObject event = events.getJSONObject(i);
-                    if (event.getInt("id") == id) {
-                        return gson.fromJson(event.toString(), Event.class);
-                    }
-                }
-            }
-        } catch (JSONException ignored) {
-        }
-        return new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), new ArrayList<Event.Signup>(), new Date());
-    }
-
-    public static Beer getBeer(SharedPreferences prefs, int id) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        JSONArray beers;
-        try {
-            if ((beers = getJsonArray(prefs, BEERURL)) != null) {
-                for (int i = 0; i < beers.length(); i++) {
-                    JSONObject temp = beers.getJSONObject(i);
-                    if (temp.getInt("id") == id) {
-                        return gson.fromJson(temp.toString(), Beer.class);
-                    }
-                }
-            }
-        } catch (JSONException ignored) {
-        }
-        return new Beer(-1, "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", new Date());
-    }
-
-    public static Meeting getMeeting(SharedPreferences prefs, int id) {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        JSONArray meetings;
-        try {
-            if ((meetings = getJsonArray(prefs, MEETINGURL)) != null) {
-                for (int i = 0; i < meetings.length(); i++) {
-                    JSONObject meeting = meetings.getJSONObject(i);
-                    if (meeting.getInt("id") == id) {
-                        return gson.fromJson(meeting.toString(), Meeting.class);
-                    }
-                }
-            }
-        } catch (JSONException ignored) {
-        }
-        Date date = new Date();
-        return new Meeting(-1, "Unknown", "Unknown", "Unknown", -1, date, date, date);
-    }
-
-    private static JSONObject getJsonObject(SharedPreferences prefs, String key) {
-        try {
-            return new JSONObject(prefs.getString(key, null));
-        } catch (JSONException | NullPointerException e) {
-            return null;
-        }
-    }
-
-    public static JSONArray getJsonArray(SharedPreferences prefs, String key) {
-        try {
-            return new JSONArray(prefs.getString(key, null));
-        } catch (JSONException | NullPointerException e) {
-            return null;
-        }
-    }
-
-
 }

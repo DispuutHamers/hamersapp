@@ -21,15 +21,16 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.VolleyCallback;
+import nl.ecci.hamers.loader.Loader;
+import nl.ecci.hamers.loader.VolleyCallback;
+
+import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
 public class StickerFragment extends Fragment implements OnMapReadyCallback {
 
@@ -64,7 +65,7 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
 
     @SuppressWarnings("unchecked")
     public void onRefresh() {
-        DataManager.getData(new VolleyCallback() {
+        Loader.getData(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray response) {
                 new populateMap().execute(dataSet);
@@ -73,7 +74,7 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, DataManager.STICKERURL);
+        }, getContext(), MainActivity.prefs, Loader.STICKERURL);
     }
 
     public void addMarkers() {
@@ -115,7 +116,7 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
         protected final ArrayList<Sticker> doInBackground(ArrayList<Sticker>... param) {
             ArrayList<Sticker> dataSet = new ArrayList<>();
             JSONArray json;
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.STICKERURL)) != null) {
+            if ((json = getJsonArray(MainActivity.prefs, Loader.STICKERURL)) != null) {
                 Gson gson = new GsonBuilder().create();
 
                 Type type = new TypeToken<ArrayList<Sticker>>() {

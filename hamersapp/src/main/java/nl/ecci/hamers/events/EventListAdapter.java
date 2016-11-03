@@ -11,15 +11,14 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.util.ArrayList;
 import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
+
+import static nl.ecci.hamers.helpers.Utils.getOwnUser;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> implements Filterable {
 
@@ -69,7 +68,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         ArrayList signups = filteredDataSet.get(position).getSignups();
         if (signups != null) {
-            int userID = DataManager.getOwnUser(MainActivity.prefs).getID();
+            int userID = getOwnUser(MainActivity.prefs).getID();
             Boolean aanwezig = null;
             for (int i = 0; i < signups.size(); i++) {
                 Event.Signup signup = (Event.Signup) signups.get(i);

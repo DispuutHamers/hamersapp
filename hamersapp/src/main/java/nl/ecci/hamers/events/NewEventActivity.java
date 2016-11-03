@@ -21,11 +21,13 @@ import java.text.SimpleDateFormat;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.DatePickerFragment;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.TimePickerFragment;
-import nl.ecci.hamers.helpers.VolleyCallback;
+import nl.ecci.hamers.loader.VolleyCallback;
+
+import static nl.ecci.hamers.helpers.Utils.getEvent;
 
 public class NewEventActivity extends HamersActivity {
 
@@ -70,7 +72,7 @@ public class NewEventActivity extends HamersActivity {
 
         eventID = getIntent().getIntExtra(Event.EVENT, -1);
         if (eventID != -1) {
-            Event event = DataManager.getEvent(MainActivity.prefs, eventID);
+            Event event = getEvent(MainActivity.prefs, eventID);
             event_title.setText(event.getTitle());
             event_location.setText(event.getLocation());
             event_description.setText(event.getDescription());
@@ -147,7 +149,7 @@ public class NewEventActivity extends HamersActivity {
             } catch (JSONException ignored) {
             }
 
-            DataManager.postOrPatchData(new VolleyCallback() {
+            Loader.postOrPatchData(new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONArray response) {
 
@@ -157,7 +159,7 @@ public class NewEventActivity extends HamersActivity {
                 public void onError(VolleyError error) {
 
                 }
-            }, this, MainActivity.prefs, DataManager.EVENTURL, eventID, body);
+            }, this, MainActivity.prefs, Loader.EVENTURL, eventID, body);
         } else {
             Toast.makeText(this, R.string.missing_fields, Toast.LENGTH_SHORT).show();
         }

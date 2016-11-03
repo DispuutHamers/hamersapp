@@ -22,9 +22,9 @@ import java.util.ArrayList;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.Utils;
-import nl.ecci.hamers.helpers.VolleyCallback;
+import nl.ecci.hamers.loader.VolleyCallback;
 
 import static nl.ecci.hamers.helpers.Utils.usernameToID;
 
@@ -67,7 +67,7 @@ public class NewQuoteFragment extends DialogFragment {
         } catch (JSONException ignored) {
         }
 
-        DataManager.postOrPatchData(new VolleyCallback() {
+        Loader.postOrPatchData(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray response) {
 
@@ -77,6 +77,6 @@ public class NewQuoteFragment extends DialogFragment {
             public void onError(VolleyError error) {
 
             }
-        }, getContext(), MainActivity.prefs, DataManager.QUOTEURL, -1, body);
+        }, getContext(), MainActivity.prefs, Loader.QUOTEURL, -1, body);
     }
 }

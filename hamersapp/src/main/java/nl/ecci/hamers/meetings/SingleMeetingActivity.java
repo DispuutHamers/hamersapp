@@ -9,8 +9,8 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.HamersActivity;
 
-import static nl.ecci.hamers.helpers.DataManager.getMeeting;
-import static nl.ecci.hamers.helpers.DataManager.getUser;
+import static nl.ecci.hamers.helpers.Utils.getMeeting;
+import static nl.ecci.hamers.helpers.Utils.getUser;
 
 public class SingleMeetingActivity extends HamersActivity {
 

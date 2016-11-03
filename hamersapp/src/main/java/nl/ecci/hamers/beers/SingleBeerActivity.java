@@ -31,13 +31,14 @@ import org.json.JSONObject;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.SingleImageActivity;
 
-import static nl.ecci.hamers.helpers.DataManager.getJsonArray;
-import static nl.ecci.hamers.helpers.DataManager.getOwnUser;
-import static nl.ecci.hamers.helpers.DataManager.getUser;
+import static nl.ecci.hamers.helpers.Utils.getBeer;
+import static nl.ecci.hamers.helpers.Utils.getJsonArray;
+import static nl.ecci.hamers.helpers.Utils.getOwnUser;
+import static nl.ecci.hamers.helpers.Utils.getUser;
 
 public class SingleBeerActivity extends HamersActivity {
 
@@ -88,7 +89,7 @@ public class SingleBeerActivity extends HamersActivity {
             });
         }
 
-        beer = DataManager.getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, -1));
+        beer = getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, -1));
 
         fillRow(kindRow, getString(R.string.beer_soort), beer.getKind());
         fillRow(alcRow, getString(R.string.beer_alc), beer.getPercentage());
@@ -127,7 +128,7 @@ public class SingleBeerActivity extends HamersActivity {
         JSONArray reviews;
         boolean hasReviews = false;
         try {
-            if ((reviews = getJsonArray(MainActivity.prefs, DataManager.REVIEWURL)) != null) {
+            if ((reviews = getJsonArray(MainActivity.prefs, Loader.REVIEWURL)) != null) {
                 for (int i = 0; i < reviews.length(); i++) {
                     JSONObject jsonObject = reviews.getJSONObject(i);
                     Review review = gson.fromJson(jsonObject.toString(), Review.class);

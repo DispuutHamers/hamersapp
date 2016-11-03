@@ -23,8 +23,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -33,8 +31,10 @@ import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.VolleyCallback;
+import nl.ecci.hamers.loader.Loader;
+import nl.ecci.hamers.loader.VolleyCallback;
+
+import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
 public class EventListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -99,7 +99,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     public void onRefresh() {
         setRefreshing(true);
         if (upcoming) {
-            DataManager.getData(new VolleyCallback() {
+            Loader.getData(new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONArray response) {
                     new populateList().execute(response);
@@ -109,9 +109,9 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 public void onError(VolleyError error) {
                     // Nothing
                 }
-            }, getContext(), MainActivity.prefs, DataManager.EVENTURL);
+            }, getContext(), MainActivity.prefs, Loader.EVENTURL);
         } else {
-            DataManager.getData(new VolleyCallback() {
+            Loader.getData(new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONArray response) {
                     new populateList().execute(response);
@@ -121,7 +121,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 public void onError(VolleyError error) {
                     // Nothing
                 }
-            }, getContext(), MainActivity.prefs, DataManager.UPCOMINGEVENTURL);
+            }, getContext(), MainActivity.prefs, Loader.UPCOMINGEVENTURL);
         }
     }
 
@@ -193,11 +193,11 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 JSONArray json;
 
 
-                String key = DataManager.EVENTURL;
+                String key = Loader.EVENTURL;
                 if (upcoming) {
-                    key = DataManager.UPCOMINGEVENTURL;
+                    key = Loader.UPCOMINGEVENTURL;
                 }
-                if ((json = DataManager.getJsonArray(MainActivity.prefs, key)) != null) {
+                if ((json = getJsonArray(MainActivity.prefs, key)) != null) {
                     GsonBuilder gsonBuilder = new GsonBuilder();
                     gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
                     Gson gson = gsonBuilder.create();

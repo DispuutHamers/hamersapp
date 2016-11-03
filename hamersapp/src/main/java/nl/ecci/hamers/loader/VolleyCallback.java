@@ -1,4 +1,4 @@
-package nl.ecci.hamers.helpers;
+package nl.ecci.hamers.loader;
 
 import com.android.volley.VolleyError;
 

@@ -16,15 +16,16 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
-import nl.ecci.hamers.helpers.VolleyCallback;
+import nl.ecci.hamers.loader.Loader;
+import nl.ecci.hamers.loader.VolleyCallback;
+
+import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
 public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private final ArrayList<Meeting> dataSet = new ArrayList<>();
@@ -79,16 +80,17 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
-        DataManager.getData(new VolleyCallback() {
+        Loader.getData(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray response) {
                 new populateList().execute(dataSet);
             }
+
             @Override
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, DataManager.MEETINGURL);
+        }, getContext(), MainActivity.prefs, Loader.MEETINGURL);
     }
 
     @Override
@@ -114,7 +116,7 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
         protected final ArrayList<Meeting> doInBackground(ArrayList<Meeting>... param) {
             ArrayList<Meeting> dataSet = new ArrayList<>();
             JSONArray json;
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.MEETINGURL)) != null) {
+            if ((json = getJsonArray(MainActivity.prefs, Loader.MEETINGURL)) != null) {
                 GsonBuilder gsonBuilder = new GsonBuilder();
                 gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
                 Gson gson = gsonBuilder.create();

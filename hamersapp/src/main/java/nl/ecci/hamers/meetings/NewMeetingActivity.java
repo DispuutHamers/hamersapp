@@ -21,10 +21,10 @@ import java.util.Calendar;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.DatePickerFragment;
 import nl.ecci.hamers.helpers.HamersActivity;
-import nl.ecci.hamers.helpers.VolleyCallback;
+import nl.ecci.hamers.loader.VolleyCallback;
 
 public class NewMeetingActivity extends HamersActivity {
 
@@ -83,7 +83,7 @@ public class NewMeetingActivity extends HamersActivity {
                 body.put("notes", notes);
                 body.put("date", MainActivity.parseDate(date));
                 if (meeting != null) {
-                    DataManager.postOrPatchData(new VolleyCallback() {
+                    Loader.postOrPatchData(new VolleyCallback() {
                         @Override
                         public void onSuccess(JSONArray response) {
 
@@ -93,9 +93,9 @@ public class NewMeetingActivity extends HamersActivity {
                         public void onError(VolleyError error) {
 
                         }
-                    }, this, MainActivity.prefs, DataManager.MEETINGURL, meeting.getID(), body);
+                    }, this, MainActivity.prefs, Loader.MEETINGURL, meeting.getID(), body);
                 } else {
-                    DataManager.postOrPatchData(new VolleyCallback() {
+                    Loader.postOrPatchData(new VolleyCallback() {
                         @Override
                         public void onSuccess(JSONArray response) {
 
@@ -105,7 +105,7 @@ public class NewMeetingActivity extends HamersActivity {
                         public void onError(VolleyError error) {
 
                         }
-                    }, this, MainActivity.prefs, DataManager.MEETINGURL, -1, body);
+                    }, this, MainActivity.prefs, Loader.MEETINGURL, -1, body);
                 }
             } catch (JSONException ignored) {
             }
