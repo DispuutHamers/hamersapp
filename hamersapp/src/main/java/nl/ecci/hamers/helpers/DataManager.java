@@ -14,9 +14,11 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,10 +70,10 @@ public final class DataManager {
     public static void getData(final VolleyCallback callback, final Context context, final SharedPreferences prefs, final String dataURL) {
         String url = baseURL + dataURL;
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         Log.d("Loader-response", response.toString());
                         if (callback != null) {
                             callback.onSuccess(response);
@@ -91,6 +93,8 @@ public final class DataManager {
                 return params;
             }
         };
+
+        Log.d("Request", request.toString());
         Singleton.getInstance(context).addToRequestQueue(request);
     }
 
@@ -104,8 +108,7 @@ public final class DataManager {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        callback.onSuccess(response);
-
+                        callback.onSuccess(null);
 
 //                        if (context != null) {
 //                            if (!(context instanceof MainActivity)) {

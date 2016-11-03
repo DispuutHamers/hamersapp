@@ -7,6 +7,7 @@ import android.widget.EditText;
 
 import com.android.volley.VolleyError;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,7 +51,7 @@ public class NewNewsActivity extends HamersActivity {
 
         DataManager.postOrPatchData(new VolleyCallback() {
             @Override
-            public void onSuccess(JSONObject response) {
+            public void onSuccess(JSONArray response) {
 
             }
 

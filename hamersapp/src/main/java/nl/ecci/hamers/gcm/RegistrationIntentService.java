@@ -28,6 +28,7 @@ import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -100,7 +101,7 @@ public class RegistrationIntentService extends IntentService {
 
         DataManager.postOrPatchData(new VolleyCallback() {
             @Override
-            public void onSuccess(JSONObject response) {
+            public void onSuccess(JSONArray response) {
                 // Nothing
             }
 

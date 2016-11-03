@@ -101,7 +101,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
         setRefreshing(true);
         DataManager.getData(new VolleyCallback() {
             @Override
-            public void onSuccess(JSONObject response) {
+            public void onSuccess(JSONArray response) {
                 new populateList().execute(dataSet);
             }
             @Override

@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -167,7 +168,7 @@ public class SingleEventActivity extends HamersActivity {
 
         DataManager.postOrPatchData(new VolleyCallback() {
             @Override
-            public void onSuccess(JSONObject response) {
+            public void onSuccess(JSONArray response) {
 
             }
 

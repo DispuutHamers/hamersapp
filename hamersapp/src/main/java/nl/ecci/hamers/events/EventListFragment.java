@@ -99,7 +99,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         if (upcoming) {
             DataManager.getData(new VolleyCallback() {
                 @Override
-                public void onSuccess(JSONObject response) {
+                public void onSuccess(JSONArray response) {
                     new populateList().execute(dataSet);
                 }
                 @Override
@@ -110,7 +110,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         } else {
             DataManager.getData(new VolleyCallback() {
                 @Override
-                public void onSuccess(JSONObject response) {
+                public void onSuccess(JSONArray response) {
                     new populateList().execute(dataSet);
                 }
                 @Override

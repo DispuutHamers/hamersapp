@@ -92,7 +92,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         setRefreshing(true);
         DataManager.getData(new VolleyCallback() {
             @Override
-            public void onSuccess(JSONObject response) {
+            public void onSuccess(JSONArray response) {
                 new populateList().execute(dataSet);
             }
             @Override

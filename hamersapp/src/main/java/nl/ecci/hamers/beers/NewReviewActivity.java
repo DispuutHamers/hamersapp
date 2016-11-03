@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -128,7 +129,7 @@ public class NewReviewActivity extends HamersActivity {
                 }
                 DataManager.postOrPatchData(new VolleyCallback() {
                     @Override
-                    public void onSuccess(JSONObject response) {
+                    public void onSuccess(JSONArray response) {
                     }
 
                     @Override

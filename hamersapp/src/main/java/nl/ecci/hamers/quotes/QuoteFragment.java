@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -85,13 +86,16 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         setRefreshing(true);
         DataManager.getData(new VolleyCallback() {
             @Override
-            public void onSuccess(JSONObject response) {
+            public void onSuccess(JSONArray response) {
                 new populateList().execute(dataSet);
             }
 
             @Override
             public void onError(VolleyError error) {
-                handleErrorResponse(getActivity(), error);
+                Log.d("ERROOOOOOR", error.toString());
+                if (getActivity() != null) {
+                    handleErrorResponse(getActivity(), error);
+                }
             }
         }, getContext(), MainActivity.prefs, DataManager.QUOTEURL);
     }

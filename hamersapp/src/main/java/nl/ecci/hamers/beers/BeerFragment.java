@@ -121,7 +121,7 @@ public class BeerFragment extends HamersFragment {
         setRefreshing(true);
         DataManager.getData(new VolleyCallback() {
             @Override
-            public void onSuccess(JSONObject response) {
+            public void onSuccess(JSONArray response) {
                 new populateList().execute(dataSet);
             }
 
@@ -132,7 +132,7 @@ public class BeerFragment extends HamersFragment {
         }, getContext(), MainActivity.prefs, DataManager.BEERURL);
         DataManager.getData(new VolleyCallback() {
             @Override
-            public void onSuccess(JSONObject response) {
+            public void onSuccess(JSONArray response) {
                 if (adapter != null) {
                     adapter.notifyDataSetChanged();
                 }

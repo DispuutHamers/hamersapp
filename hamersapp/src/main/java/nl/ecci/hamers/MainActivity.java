@@ -402,16 +402,16 @@ public class MainActivity extends HamersActivity {
                 ImageLoader.getInstance().displayImage(url, userImage);
             }
         } else {
-            DataManager.getData(new VolleyCallback() {
-                @Override
-                public void onSuccess(JSONObject response) {
-                    fillHeader();
-                }
-                @Override
-                public void onError(VolleyError error) {
-                    // Nothing
-                }
-            }, this, prefs, DataManager.WHOAMIURL);
+//            DataManager.getData(new VolleyCallback() {
+//                @Override
+//                public void onSuccess(JSONArray response) {
+//                    fillHeader();
+//                }
+//                @Override
+//                public void onError(VolleyError error) {
+//                     Nothing
+//                }
+//            }, this, prefs, DataManager.WHOAMIURL);
         }
     }
 }
