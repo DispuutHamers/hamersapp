@@ -13,8 +13,8 @@ import org.json.JSONObject;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.VolleyCallback;
 
 public class NewNewsActivity extends HamersActivity {

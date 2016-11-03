@@ -19,7 +19,6 @@ import java.util.Date;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
-import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.users.SingleUserActivity;
 import nl.ecci.hamers.users.User;
 

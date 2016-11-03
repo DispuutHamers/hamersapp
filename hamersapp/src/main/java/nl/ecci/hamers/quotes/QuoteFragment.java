@@ -27,8 +27,8 @@ import java.util.ArrayList;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.VolleyCallback;
 
 import static nl.ecci.hamers.helpers.Utils.getJsonArray;

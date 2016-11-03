@@ -14,6 +14,7 @@ class News {
     private final Date date;
     @SerializedName("created_at")
     private final Date createdAt;
+
     public News(int id, String title, String body, String category, Date date, Date createdAt) {
         super();
         this.id = id;

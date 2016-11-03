@@ -14,7 +14,7 @@ public class Sticker {
         this.id = id;
         this.notes = notes;
         this.lat = lat;
-        this .lon = lon;
+        this.lon = lon;
     }
 
     public int getID() {

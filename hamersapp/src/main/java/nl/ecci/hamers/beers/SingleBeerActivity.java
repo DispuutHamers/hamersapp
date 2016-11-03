@@ -31,9 +31,9 @@ import org.json.JSONObject;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.SingleImageActivity;
+import nl.ecci.hamers.loader.Loader;
 
 import static nl.ecci.hamers.helpers.Utils.getBeer;
 import static nl.ecci.hamers.helpers.Utils.getJsonArray;

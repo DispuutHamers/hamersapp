@@ -21,10 +21,10 @@ import java.text.SimpleDateFormat;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.DatePickerFragment;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.TimePickerFragment;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.VolleyCallback;
 
 import static nl.ecci.hamers.helpers.Utils.getEvent;

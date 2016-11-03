@@ -32,9 +32,9 @@ import java.util.Comparator;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
-import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
 import nl.ecci.hamers.helpers.HamersFragment;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.VolleyCallback;
 
 import static nl.ecci.hamers.helpers.Utils.getJsonArray;
@@ -137,6 +137,7 @@ public class BeerFragment extends HamersFragment {
             public void onSuccess(JSONArray response) {
                 adapter.notifyDataSetChanged();
             }
+
             @Override
             public void onError(VolleyError error) {
                 // Nothing

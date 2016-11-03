@@ -21,9 +21,9 @@ import java.util.Calendar;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.helpers.DatePickerFragment;
 import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.VolleyCallback;
 
 public class NewMeetingActivity extends HamersActivity {

@@ -70,6 +70,7 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
             public void onSuccess(JSONArray response) {
                 new populateMap().execute(dataSet);
             }
+
             @Override
             public void onError(VolleyError error) {
                 // Nothing
@@ -79,7 +80,7 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
 
     public void addMarkers() {
         if (map != null && !dataSet.isEmpty()) {
-            for(Sticker sticker : dataSet) {
+            for (Sticker sticker : dataSet) {
                 map.addMarker(new MarkerOptions().position(new LatLng(sticker.getLat(), sticker.getLon())));
             }
         }
