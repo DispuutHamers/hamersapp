@@ -326,14 +326,6 @@ public class MainActivity extends HamersActivity {
     }
 
     /**
-     * When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment
-     */
-    public void newQuote(View view) {
-        DialogFragment newQuoteFragment = new NewQuoteFragment();
-        newQuoteFragment.show(getSupportFragmentManager(), "quotes");
-    }
-
-    /**
      * When user presses "+" in NewsFragment, start new dialog with NewNewsActivity
      */
     public void newNews(View view) {
@@ -394,9 +386,9 @@ public class MainActivity extends HamersActivity {
                 ImageLoader.getInstance().displayImage(url, userImage);
             }
 //        } else {
-//            Loader.getData(new VolleyCallback() {
+//            Loader.getData(new GetCallback() {
 //                @Override
-//                public void onSuccess(JSONArray response) {
+//                public void callback(JSONArray response) {
 //                    fillHeader();
 //                }
 //

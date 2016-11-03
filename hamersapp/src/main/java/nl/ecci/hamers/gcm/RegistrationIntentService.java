@@ -36,8 +36,9 @@ import java.io.IOException;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
-import nl.ecci.hamers.loader.VolleyCallback;
+import nl.ecci.hamers.loader.PostCallback;
 
 public class RegistrationIntentService extends IntentService {
 
@@ -99,9 +100,9 @@ public class RegistrationIntentService extends IntentService {
         } catch (JSONException ignored) {
         }
 
-        Loader.postOrPatchData(new VolleyCallback() {
+        Loader.postOrPatchData(new PostCallback() {
             @Override
-            public void onSuccess(JSONArray response) {
+            public void onSuccess(JSONObject response) {
                 // Nothing
             }
 

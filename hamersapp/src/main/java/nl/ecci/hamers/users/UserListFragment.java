@@ -28,8 +28,8 @@ import java.util.Comparator;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
-import nl.ecci.hamers.loader.VolleyCallback;
 
 import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
@@ -102,7 +102,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
-        Loader.getData(new VolleyCallback() {
+        Loader.getData(new GetCallback() {
             @Override
             public void onSuccess(JSONArray response) {
                 new populateList().execute(response);

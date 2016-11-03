@@ -34,8 +34,8 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
 import nl.ecci.hamers.helpers.HamersFragment;
+import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
-import nl.ecci.hamers.loader.VolleyCallback;
 
 import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
@@ -121,7 +121,7 @@ public class BeerFragment extends HamersFragment {
     @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
-        Loader.getData(new VolleyCallback() {
+        Loader.getData(new GetCallback() {
             @Override
             public void onSuccess(JSONArray response) {
                 new populateList().execute(response);
@@ -132,7 +132,7 @@ public class BeerFragment extends HamersFragment {
                 // Nothing
             }
         }, getContext(), MainActivity.prefs, Loader.BEERURL);
-        Loader.getData(new VolleyCallback() {
+        Loader.getData(new GetCallback() {
             @Override
             public void onSuccess(JSONArray response) {
                 adapter.notifyDataSetChanged();

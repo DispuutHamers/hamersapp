@@ -18,11 +18,11 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/new_quote_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:onClick="newQuote"
         android:src="@drawable/action_add"
         app:backgroundTint="@color/material_red"
         app:layout_anchor="@id/quotes_swipe_container"

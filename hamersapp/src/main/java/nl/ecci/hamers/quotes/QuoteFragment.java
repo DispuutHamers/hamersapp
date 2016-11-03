@@ -1,13 +1,16 @@
 package nl.ecci.hamers.quotes;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +24,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -28,12 +32,12 @@ import java.util.ArrayList;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
+import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
-import nl.ecci.hamers.loader.VolleyCallback;
 
 import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
-public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnDismissListener {
 
     private final ArrayList<Quote> dataSet = new ArrayList<>();
     private QuoteAdapter adapter;
@@ -59,6 +63,16 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         initSwiper(view, quote_list, mLayoutManager);
 
+        // When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment
+        final FloatingActionButton newQuoteButton = (FloatingActionButton) view.findViewById(R.id.new_quote_button);
+        newQuoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NewQuoteFragment newQuoteFragment = new NewQuoteFragment();
+                newQuoteFragment.show(getChildFragmentManager(), "quotes");
+            }
+        });
+
         new populateList().execute();
         onRefresh();
 
@@ -83,7 +97,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
-        Loader.getData(new VolleyCallback() {
+        Loader.getData(new GetCallback() {
             @Override
             public void onSuccess(JSONArray response) {
                 new populateList().execute(response);
@@ -148,6 +162,12 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
             });
         }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+        System.out.println("----------- ONDISMISS");
+        onRefresh();
     }
 
     private class populateList extends AsyncTask<JSONArray, Void, ArrayList<Quote>> {

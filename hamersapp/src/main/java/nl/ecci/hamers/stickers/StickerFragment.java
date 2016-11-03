@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.loader.Loader;
-import nl.ecci.hamers.loader.VolleyCallback;
+import nl.ecci.hamers.loader.GetCallback;
 
 import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
@@ -65,7 +65,7 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
 
     @SuppressWarnings("unchecked")
     public void onRefresh() {
-        Loader.getData(new VolleyCallback() {
+        Loader.getData(new GetCallback() {
             @Override
             public void onSuccess(JSONArray response) {
                 new populateMap().execute(dataSet);

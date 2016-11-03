@@ -25,7 +25,8 @@ import nl.ecci.hamers.helpers.DatePickerFragment;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.TimePickerFragment;
 import nl.ecci.hamers.loader.Loader;
-import nl.ecci.hamers.loader.VolleyCallback;
+import nl.ecci.hamers.loader.GetCallback;
+import nl.ecci.hamers.loader.PostCallback;
 
 import static nl.ecci.hamers.helpers.Utils.getEvent;
 
@@ -149,9 +150,9 @@ public class NewEventActivity extends HamersActivity {
             } catch (JSONException ignored) {
             }
 
-            Loader.postOrPatchData(new VolleyCallback() {
+            Loader.postOrPatchData(new PostCallback() {
                 @Override
-                public void onSuccess(JSONArray response) {
+                public void onSuccess(JSONObject response) {
 
                 }
 

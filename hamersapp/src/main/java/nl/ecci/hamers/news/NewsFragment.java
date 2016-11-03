@@ -29,7 +29,7 @@ import java.util.Collections;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.loader.Loader;
-import nl.ecci.hamers.loader.VolleyCallback;
+import nl.ecci.hamers.loader.GetCallback;
 
 import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
@@ -91,7 +91,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
-        Loader.getData(new VolleyCallback() {
+        Loader.getData(new GetCallback() {
             @Override
             public void onSuccess(JSONArray response) {
                 new populateList().execute(response);

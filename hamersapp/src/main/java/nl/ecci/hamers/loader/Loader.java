@@ -46,7 +46,7 @@ public final class Loader {
 //    private static final String baseURL = "https://zondersikkel.nl/api/v2/";
     private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
 
-    public static void getData(final VolleyCallback callback, final Context context, final SharedPreferences prefs, final String dataURL) {
+    public static void getData(final GetCallback callback, final Context context, final SharedPreferences prefs, final String dataURL) {
         String url = baseURL + dataURL;
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -79,7 +79,7 @@ public final class Loader {
         Singleton.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void postOrPatchData(final VolleyCallback callback, final Context context, final SharedPreferences prefs, final String dataURL, final int urlAppendix, JSONObject body) {
+    public static void postOrPatchData(final PostCallback callback, final Context context, final SharedPreferences prefs, final String dataURL, final int urlAppendix, JSONObject body) {
         String url = baseURL + dataURL;
         if (urlAppendix != -1) {
             url = baseURL + dataURL + "/" + urlAppendix;
@@ -89,8 +89,8 @@ public final class Loader {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        callback.onSuccess(null);
-                        prefs.edit().putString(dataURL, response.toString()).apply();
+                        callback.onSuccess(response);
+                        Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
 //                        if (context != null) {
 //                            if (!(context instanceof MainActivity)) {
 //                                ((Activity) context).finish();

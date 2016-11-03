@@ -34,7 +34,8 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.loader.Loader;
-import nl.ecci.hamers.loader.VolleyCallback;
+import nl.ecci.hamers.loader.GetCallback;
+import nl.ecci.hamers.loader.PostCallback;
 import nl.ecci.hamers.users.User;
 
 import static nl.ecci.hamers.helpers.Utils.getEvent;
@@ -170,9 +171,9 @@ public class SingleEventActivity extends HamersActivity {
         } catch (JSONException ignored) {
         }
 
-        Loader.postOrPatchData(new VolleyCallback() {
+        Loader.postOrPatchData(new PostCallback() {
             @Override
-            public void onSuccess(JSONArray response) {
+            public void onSuccess(JSONObject response) {
 
             }
 

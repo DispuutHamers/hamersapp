@@ -32,7 +32,7 @@ import java.util.Date;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.loader.Loader;
-import nl.ecci.hamers.loader.VolleyCallback;
+import nl.ecci.hamers.loader.GetCallback;
 
 import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
@@ -99,7 +99,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     public void onRefresh() {
         setRefreshing(true);
         if (upcoming) {
-            Loader.getData(new VolleyCallback() {
+            Loader.getData(new GetCallback() {
                 @Override
                 public void onSuccess(JSONArray response) {
                     new populateList().execute(response);
@@ -111,7 +111,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 }
             }, getContext(), MainActivity.prefs, Loader.EVENTURL);
         } else {
-            Loader.getData(new VolleyCallback() {
+            Loader.getData(new GetCallback() {
                 @Override
                 public void onSuccess(JSONArray response) {
                     new populateList().execute(response);
