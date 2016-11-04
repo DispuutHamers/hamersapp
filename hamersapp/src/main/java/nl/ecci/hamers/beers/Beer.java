@@ -1,43 +1,44 @@
 package nl.ecci.hamers.beers;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class Beer {
 
-    public static final String BEER_ID = "BEER_ID";
-    public static final String BEER_NAME = "BEER_NAME";
-    public static final String BEER_KIND = "BEER_KIND";
-    public static final String BEER_URL = "BEER_URL";
-    public static final String BEER_PERCENTAGE = "BEER_PERCENTAGE";
-    public static final String BEER_BREWER = "BEER_BREWER";
-    public static final String BEER_COUNTRY = "BEER_COUNTRY";
-    public static final String BEER_RATING = "BEER_RATING";
+    public static final String BEER = "BEER";
 
     private final int id;
     private final String name;
-    private final String soort;
+    @SerializedName("soort")
+    private final String kind;
+    @SerializedName("picture")
     private final String imageURL;
     private final String percentage;
     private final String brewer;
     private final String country;
+    @SerializedName("cijfer")
     private final String rating;
+    private final String url;
+    @SerializedName("created_at")
     private final Date createdAt;
 
-
-    public Beer(int id, String name, String soort, String imageURL, String percentage, String brewer, String country, String rating, Date createdAt) {
+    @SuppressWarnings("SameParameterValue")
+    public Beer(int id, String name, String kind, String imageURL, String percentage, String brewer, String country, String rating, String url, Date createdAt) {
         super();
         this.id = id;
         this.name = name;
-        this.soort = soort;
+        this.kind = kind;
         this.imageURL = imageURL;
         this.percentage = percentage;
         this.brewer = brewer;
         this.country = country;
         this.rating = rating;
+        this.url = url;
         this.createdAt = createdAt;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 
@@ -45,8 +46,8 @@ public class Beer {
         return name;
     }
 
-    public String getSoort() {
-        return soort;
+    public String getKind() {
+        return kind;
     }
 
     public String getImageURL() {
@@ -67,6 +68,10 @@ public class Beer {
 
     public String getRating() {
         return rating;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public Date getCreatedAt() {

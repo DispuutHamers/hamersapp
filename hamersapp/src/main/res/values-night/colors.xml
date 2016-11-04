@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="material_red">#b71c1c</color>
+    <color name="material_red_dark">#9C1818</color>
+
+    <color name="line_seperator">#DADADA</color>
+
+    <color name="sliding_tabs_text_normal">#bdbdbd</color>
+    <color name="sliding_tabs_text_selected">#ffffff</color>
+
+</resources>

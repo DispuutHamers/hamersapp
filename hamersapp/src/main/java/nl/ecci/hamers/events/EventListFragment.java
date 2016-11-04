@@ -1,32 +1,40 @@
 package nl.ecci.hamers.events;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.GetCallback;
+import nl.ecci.hamers.loader.Loader;
 
-import static nl.ecci.hamers.MainActivity.parseDate;
+import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
 public class EventListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -54,20 +62,26 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         adapter = new EventListAdapter(getActivity(), dataSet);
         event_list.setAdapter(adapter);
 
-        // If upcoming, reverse order
         upcoming = getArguments().getBoolean(EventFragmentPagerAdapter.upcoming, false);
-        if (upcoming) {
-            mLayoutManager.setReverseLayout(true);
-            mLayoutManager.setStackFromEnd(true);
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.event_create_button);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), NewEventActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
 
+        new populateList().execute();
         onRefresh();
 
         return view;
     }
 
     private void initSwiper(View view, final RecyclerView event_list, final LinearLayoutManager lm) {
-        // SwipeRefreshLayout
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.events_swipe_container);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
@@ -82,21 +96,41 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     @Override
-    public void onRefresh() {
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.EVENTURL, DataManager.EVENTKEY);
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.SIGNUPURL, DataManager.SIGNUPKEY);
-    }
-
     @SuppressWarnings("unchecked")
-    public void populateList() {
-        new populateList().execute(dataSet);
+    public void onRefresh() {
+        setRefreshing(true);
+        if (upcoming) {
+            Loader.getData(new GetCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    new populateList().execute(response);
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    // Nothing
+                }
+            }, getContext(), MainActivity.prefs, Loader.EVENTURL);
+        } else {
+            Loader.getData(new GetCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    new populateList().execute(response);
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    // Nothing
+                }
+            }, getContext(), MainActivity.prefs, Loader.UPCOMINGEVENTURL);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.scroll_top:
-                scrollTop();
+                event_list.smoothScrollToPosition(0);
                 return true;
             default:
                 return false;
@@ -106,20 +140,29 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onResume() {
         super.onResume();
-        populateList();
-    }
-
-    private void scrollTop() {
-        if (upcoming) {
-            event_list.smoothScrollToPosition(adapter.getItemCount() - 1);
-        } else {
-            event_list.smoothScrollToPosition(0);
-        }
+        onRefresh();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.event_menu, menu);
+        inflater.inflate(R.menu.news_event_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.event_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        if (searchView != null) {
+            searchView.setQueryHint(getString(R.string.search_hint));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    adapter.getFilter().filter(s.toLowerCase());
+                    return false;
+                }
+            });
+        }
     }
 
     private void setRefreshing(final Boolean bool) {
@@ -133,37 +176,45 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         }
     }
 
-    public class populateList extends AsyncTask<ArrayList<Event>, Void, ArrayList<Event>> {
-        @SafeVarargs
+    private class populateList extends AsyncTask<String, Void, ArrayList<Event>> {
         @Override
-        protected final ArrayList<Event> doInBackground(ArrayList<Event>... param) {
-            final ArrayList<Event> dataSet = new ArrayList<>();
-            JSONArray json;
-            Date currentDate = Calendar.getInstance().getTime();
-            try {
-                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.EVENTKEY)) != null) {
-                    for (int i = json.length() - 1; i >= 0; i--) {
-                        JSONObject temp;
-                        temp = json.getJSONObject(i);
+        protected final ArrayList<Event> doInBackground(String... params) {
+            ArrayList<Event> result = new ArrayList<>();
+            ArrayList<Event> tempList = new ArrayList<>();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+            Gson gson = gsonBuilder.create();
+            Type type = new TypeToken<ArrayList<Event>>() {
+            }.getType();
+            Date now = new Date();
 
-                        Date date = parseDate(temp.getString("date"));
-                        Date end_time = parseDate(temp.getString("end_time"));
-                        Date deadline = parseDate(temp.getString("deadline"));
-
-                        Event event = new Event(temp.getInt("id"), temp.getString("title"), temp.getString("beschrijving"), temp.getString("location"), date, end_time, deadline, temp.getJSONArray("signups"));
-
-                        if (upcoming) {
-                            if (date.after(currentDate)) {
-                                dataSet.add(event);
-                            }
-                        } else {
-                            dataSet.add(event);
-                        }
-                    }
+            if (params.length > 0) {
+                tempList = gson.fromJson(params[0], type);
+                if (!upcoming) {
+                    Collections.reverse(tempList);
                 }
-            } catch (JSONException ignored) {
+            } else {
+                JSONArray json;
+                String key = Loader.EVENTURL;
+                if (upcoming) {
+                    key = Loader.UPCOMINGEVENTURL;
+                }
+                if ((json = getJsonArray(MainActivity.prefs, key)) != null) {
+                    tempList = gson.fromJson(json.toString(), type);
+                }
             }
-            return dataSet;
+
+            for (Event event : tempList) {
+                if (upcoming) {
+                    if (event.getEndDate() != null && event.getEndDate().after(now)) {
+                        result.add(event);
+                    }
+                } else {
+                    result.add(event);
+                }
+            }
+
+            return result;
         }
 
         @Override
@@ -171,16 +222,12 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
             if (!result.isEmpty()) {
                 dataSet.clear();
                 dataSet.addAll(result);
+                Collections.reverse(dataSet);
                 if (EventListFragment.this.adapter != null) {
                     EventListFragment.this.adapter.notifyDataSetChanged();
                 }
             }
             setRefreshing(false);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            setRefreshing(true);
         }
     }
 }

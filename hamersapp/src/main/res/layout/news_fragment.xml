@@ -13,7 +13,10 @@
             android:id="@+id/news_recyclerview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:clickable="false" />
+            android:clickable="false"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -25,7 +28,7 @@
         android:onClick="newNews"
         android:src="@drawable/action_add"
         app:backgroundTint="@color/material_red"
-        app:layout_anchor="@id/news_recyclerview"
+        app:layout_anchor="@id/news_swipe_container"
         app:layout_anchorGravity="bottom|right|end"
         app:layout_behavior="nl.ecci.hamers.helpers.ScrollAwareFABBehavior" />
 

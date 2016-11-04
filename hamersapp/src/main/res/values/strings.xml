@@ -7,6 +7,7 @@
 
     <string name="search_title">Zoeken</string>
     <string name="search_hint">Zoek…</string>
+    <string name="edit_item">Wijzig unit</string>
 
     <string name="close">Sluiten</string>
 
@@ -20,7 +21,8 @@
     <string name="navigation_item_beers">Bieren</string>
     <string name="navigation_item_news">Nieuws</string>
     <string name="navigation_item_users">Leden</string>
-    <string name="navigation_item_motions">Moties</string>
+    <string name="navigation_item_meetings">Vergaderingen</string>
+    <string name="navigation_item_stickers">Stickers</string>
     <string name="navigation_item_settings">Instellingen</string>
     <string name="navigation_item_about">Over</string>
 
@@ -32,14 +34,6 @@
     <string name="apikeydialogmessage">Deze kan bemachtigd worden op www.zondersikkel.nl</string>
     <string name="dialog_positive">Oké</string>
 
-    <!-- Reviews -->
-    <string name="new_review">Nieuwe review</string>
-    <string name="review_hint">Wat vond je er van?</string>
-    <string name="rating">Cijfer: 1</string>
-    <string name="pick_date">Proefdatum :</string>
-    <string name="pick_date_button">Datum</string>
-    <string name="pick_time_button">Tijd</string>
-
     <!-- Events -->
     <string name="event_aanwezig_button">Ik ben aanwezig!</string>
     <string name="event_afwezig_button">Ik ben afwezig.</string>
@@ -48,7 +42,7 @@
     <string name="event_location">Waar is het?</string>
     <string name="event_description">Wat gaan we doen?</string>
     <string name="date">Datum:</string>
-    <string name="end_time">End time:</string>
+    <string name="endDate">End time:</string>
     <string name="deadline">Deadline:</string>
     <string name="description">Beschrijving</string>
     <string name="menu_upcoming">Aankomend</string>
@@ -67,6 +61,18 @@
     <string name="beer_rating">Gemiddelde cijfer</string>
     <string name="date_unknown">Datum niet bekend</string>
 
+    <!-- Reviews -->
+    <string name="new_review">Nieuwe review</string>
+    <string name="edit_review">Wijzig review</string>
+    <string name="review_hint">Wat vond je er van?</string>
+    <string name="rating">Cijfer: 1</string>
+    <string name="review_pick_date">Proefdatum :</string>
+    <string name="review_pick_date_button">Datum</string>
+    <string name="review_pick_time_button">Tijd</string>
+    <string name="review_update">Wijzig review</string>
+    <string name="review_delete">Verwijder review</string>
+    <string name="review_delete_message">Weet je zeker dat je deze review wilt verwijderen?</string>
+
     <!-- News -->
     <string name="new_news">Nieuw nieuwsitem</string>
     <string name="news_title">Titel</string>
@@ -78,21 +84,22 @@
     <string name="user_email">Email</string>
     <string name="user_quotecount">Aantal quotes</string>
     <string name="user_reviewcount">Aantal reviews</string>
-    <string name="user_nickname">Bijnaam</string>
+    <string name="user_batch">Lichting</string>
+    <string name="user_nickname">Bijnamen</string>
     <string name="user_member">Lid</string>
     <string name="user_member_ex">Oud-lid</string>
-    <string name="menu_users">Leden</string>
-    <string name="menu_users_ex">Oud-leden</string>
+    <string name="menu_users">Huidig</string>
+    <string name="menu_users_ex">Overig</string>
 
-    <!-- Motions -->
-    <string name="motiontypetext">Motietype:</string>
-    <string name="motie_nietchill">Motie van niet chill</string>
-    <string name="motie_arelaxed">Motie van vet arelaxed</string>
-    <string name="motie_duurtlang">Motie van duurt lang</string>
-
-    <string name="motion_hint">Wat is er stuk?</string>
-    <string name="motion_body">Huilie huilie in dit veld.</string>
-    <string name="create_motion">Dien motie in</string>
+    <!-- Meetings -->
+    <string name="menu_meeting_notes">Notulen</string>
+    <string name="menu_meeting_agenda">Agenda</string>
+    <string name="new_meeting">Nieuwe vergadering</string>
+    <string name="new_meeting_subject">Onderwerp</string>
+    <string name="new_meeting_agenda">Agenda</string>
+    <string name="new_meeting_notes">Notulen</string>
+    <string name="new_meeting_pick_date">Vergaderdatum :</string>
+    <string name="new_meeting_user">Notulist :</string>
 
     <!-- Settings -->
     <string name="general">Algemeen</string>
@@ -113,6 +120,18 @@
     <string name="clear_storage_summary">Does not clear your API-key</string>
     <string name="refresh_app">Herlaad app</string>
     <string name="refresh_app_summary">Dit is veel sneller dan een herstart</string>
+
+    <array name="night_mode_array">
+        <item>Automatisch</item>
+        <item>Nachtmodus aan</item>
+        <item>Nachtmodus uit</item>
+    </array>
+
+    <array name="night_mode_array_values">
+        <item>auto</item>
+        <item>on</item>
+        <item>off</item>
+    </array>
 
     <string name="sorting_category">Sorteren</string>
 
@@ -142,21 +161,23 @@
     </array>
 
     <!-- Snackbar -->
-    <string name="snackbar_loaderror">Fout bij inladen</string>
-    <string name="snackbar_downloading">De gegevens worden gedownload</string>
-    <string name="snackbar_userloaderror">Fout bij het laden van de leden</string>
-    <string name="snackbar_reviewloaderror">Fout bij het laden van de reviews</string>
-    <string name="snackbar_storekeymemory">Een apikey kan ingevuld worden bij instellingen</string>
-    <string name="snackbar_error">Er is iets misgegaan, probeer het later opnieuw.</string>
-    <string name="snackbar_volley_error">Fout bij ophalen data van server.</string>
-    <string name="snackbar_server_error">Oh noes! De server verslikte zich!</string>
-    <string name="snackbar_connection_error">Oh noes! Je hebt geen verbinding!</string>
-    <string name="snackbar_network_error">Oh noes! De verbinding ging stuk!</string>
-    <string name="snackbar_timeout_error">Timeout bij ophalen data.</string>
+    <string name="load_error">Fout bij inladen</string>
+    <string name="dowloading">De gegevens worden gedownload</string>
+    <string name="user_load_error">Fout bij het laden van de leden</string>
+    <string name="review_load_error">Fout bij het laden van de reviews</string>
+    <string name="store_key_settings">Een apikey kan ingevuld worden bij instellingen</string>
+    <string name="generic_error">Er is iets misgegaan, probeer het later opnieuw.</string>
+    <string name="volley_error">Fout bij ophalen data van server.</string>
+    <string name="server_error">Oh noes! De server verslikte zich!</string>
+    <string name="connection_error">Oh noes! Je hebt geen verbinding!</string>
+    <string name="network_error">Oh noes! De verbinding ging stuk!</string>
+    <string name="timeout_error">Timeout bij ophalen data.</string>
+    <string name="auth_error">Authenticatie error. Probeer je API key opnieuw in te voeren.</string>
 
     <!-- Sorting -->
     <string name="sort_quotes">Sorteer op aantal quotes</string>
     <string name="sort_reviews">Sorteer op aantal reviews</string>
+    <string name="sort_batch">Sorteer op lichting</string>
     <string name="sort_rating">Sorteer op cijfer</string>
     <string name="sort_name">Sorteer op naam</string>
     <string name="sort_date_asc">Sorteer op datum (ASC)</string>
@@ -166,6 +187,8 @@
     <string name="missing_fields">Vul alle velden in!</string>
 
     <string name="press_back_again">Klik nog een keer op \'back\' om af te sluiten.</string>
+
+    <string name="functionality_added_later">Deze functionaliteit komt in een latere versie.</string>
 
     <!-- Beer images -->
     <string name="no_image">Dit biertje heeft geen afbeelding!</string>
@@ -183,6 +206,6 @@
     </string>
 
     <!-- About -->
-    <string name="about_librariesTitle">Bibliotheken</string>
-    <string name="yourerunning">Je gebruikt</string>
+    <string name="about_libraries">Bibliotheken</string>
+    <string name="you_are_running">Je gebruikt</string>
 </resources>

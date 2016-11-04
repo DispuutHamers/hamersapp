@@ -1,5 +1,6 @@
 package nl.ecci.hamers.users;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,19 +13,25 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.GetCallback;
+import nl.ecci.hamers.loader.Loader;
+
+import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
 public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -52,6 +59,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         sort();
 
+        new populateList().execute();
         onRefresh();
 
         return view;
@@ -91,36 +99,20 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.USERURL, DataManager.USERKEY);
-    }
-
-    public void populateList() {
-        JSONArray json;
-        try {
-            if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.USERKEY)) != null) {
-                dataSet.clear();
-                for (int i = 0; i < json.length(); i++) {
-                    JSONObject temp;
-                    temp = json.getJSONObject(i);
-                    User user = new User(temp.getString("name"), temp.getInt("id"), temp.getString("email"), temp.getInt("quotes"), temp.getInt("reviews"), temp.getBoolean("lid"), temp.getString("nickname="));
-
-                    if (exUser && !user.isMember()) {
-                        dataSet.add(user);
-                    } else if (!exUser && user.isMember()) {
-                        dataSet.add(user);
-                    }
-
-                    if (adapter != null) {
-                        adapter.notifyDataSetChanged();
-                    }
-                }
+        Loader.getData(new GetCallback() {
+            @Override
+            public void onSuccess(String response) {
+                new populateList().execute(response);
             }
-        } catch (JSONException e) {
-            Toast.makeText(getActivity(), getString(R.string.snackbar_loaderror), Toast.LENGTH_SHORT).show();
-        }
-        setRefreshing(false);
+
+            @Override
+            public void onError(VolleyError error) {
+                // Nothing
+            }
+        }, getContext(), MainActivity.prefs, Loader.USERURL);
     }
 
     @Override
@@ -130,11 +122,13 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
                 sortByUsername();
                 return true;
             case R.id.sort_quotes:
-                sortbyQuoteCount();
+                sortByQuoteCount();
                 return true;
             case R.id.sort_reviews:
-                sortbyReviewCount();
+                sortByReviewCount();
                 return true;
+            case R.id.sort_batch:
+                sortByBatch();
             default:
                 return false;
         }
@@ -147,10 +141,10 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
                 sortByUsername();
                 break;
             case "quotecount":
-                sortbyQuoteCount();
+                sortByQuoteCount();
                 break;
             case "reviewcount":
-                sortbyReviewCount();
+                sortByReviewCount();
                 break;
         }
     }
@@ -177,25 +171,80 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
         adapter.notifyDataSetChanged();
     }
 
-    private void sortbyQuoteCount() {
+    private void sortByQuoteCount() {
         final Comparator<User> quoteComperator = new Comparator<User>() {
             @Override
             public int compare(User user1, User user2) {
-                return user2.getQuotecount() - user1.getQuotecount();
+                return user2.getQuoteCount() - user1.getQuoteCount();
             }
         };
         Collections.sort(dataSet, quoteComperator);
         adapter.notifyDataSetChanged();
     }
 
-    private void sortbyReviewCount() {
+    private void sortByReviewCount() {
         final Comparator<User> reviewComperator = new Comparator<User>() {
             @Override
             public int compare(User user1, User user2) {
-                return user2.getReviewcount() - user1.getReviewcount();
+                return user2.getReviewCount() - user1.getReviewCount();
             }
         };
         Collections.sort(dataSet, reviewComperator);
         adapter.notifyDataSetChanged();
+    }
+
+    private void sortByBatch() {
+        final Comparator<User> batchComperator = new Comparator<User>() {
+            @Override
+            public int compare(User user1, User user2) {
+                return user1.getBatch() - user2.getBatch();
+            }
+        };
+        Collections.sort(dataSet, batchComperator);
+        adapter.notifyDataSetChanged();
+    }
+
+    private class populateList extends AsyncTask<String, Void, ArrayList<User>> {
+        @Override
+        protected final ArrayList<User> doInBackground(String... params) {
+            ArrayList<User> result = new ArrayList<>();
+            ArrayList<User> tempList = new ArrayList<>();
+            Type type = new TypeToken<ArrayList<User>>() {
+            }.getType();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+            Gson gson = gsonBuilder.create();
+
+            if (params.length > 0) {
+                tempList = gson.fromJson(params[0], type);
+            } else {
+                JSONArray json;
+                if ((json = getJsonArray(MainActivity.prefs, Loader.USERURL)) != null) {
+                    tempList = gson.fromJson(json.toString(), type);
+                }
+            }
+
+            for (User user : tempList) {
+                if (exUser && user.getMember() != User.Member.LID) {
+                    result.add(user);
+                } else if (!exUser && user.getMember() == User.Member.LID) {
+                    result.add(user);
+                }
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<User> result) {
+            if (!result.isEmpty()) {
+                dataSet.clear();
+                dataSet.addAll(result);
+                if (UserListFragment.this.adapter != null) {
+                    UserListFragment.this.adapter.notifyDataSetChanged();
+                }
+            }
+            sort();
+            setRefreshing(false);
+        }
     }
 }

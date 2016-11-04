@@ -19,9 +19,11 @@ import java.util.Date;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
-import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.users.SingleUserActivity;
 import nl.ecci.hamers.users.User;
+
+import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
+import static nl.ecci.hamers.helpers.Utils.getUser;
 
 public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> implements Filterable {
 
@@ -31,9 +33,9 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     private final Context context;
     private ArrayList<Quote> filteredDataSet;
 
-    public QuoteAdapter(ArrayList<Quote> itemsArrayList, Context context) {
-        this.dataSet = itemsArrayList;
-        this.filteredDataSet = itemsArrayList;
+    public QuoteAdapter(ArrayList<Quote> dataSet, Context context) {
+        this.dataSet = dataSet;
+        this.filteredDataSet = dataSet;
         this.context = context;
 
         // Universal Image Loader
@@ -64,17 +66,17 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.body.setText(filteredDataSet.get(position).getBody());
-        holder.user.setText(filteredDataSet.get(position).getUsername());
+        holder.body.setText(filteredDataSet.get(position).getText());
+        holder.user.setText(getUser(MainActivity.prefs, filteredDataSet.get(position).getUserID()).getName());
 
         Date date = filteredDataSet.get(position).getDate();
         if (date != null) {
             holder.date.setText(MainActivity.appDF.format(date));
         }
 
-        User user = DataManager.getUser(MainActivity.prefs, filteredDataSet.get(position).getUserID());
+        User user = getUser(MainActivity.prefs, filteredDataSet.get(position).getUserID());
         if (user != null) {
-            imageLoader.displayImage(DataManager.getGravatarURL(user.getEmail()), holder.userImage, animateFirstListener);
+            imageLoader.displayImage(getGravatarURL(user.getEmail()), holder.userImage, animateFirstListener);
         }
     }
 
@@ -97,8 +99,8 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
                 } else {
                     ArrayList<Quote> filterResultsData = new ArrayList<>();
                     for (Quote quote : dataSet) {
-                        if (quote.getBody().toLowerCase().contains(charSequence) ||
-                                quote.getUsername().toLowerCase().contains(charSequence)) {
+                        if (quote.getText().toLowerCase().contains(charSequence) ||
+                                getUser(MainActivity.prefs, quote.getUserID()).getName().toLowerCase().contains(charSequence)) {
                             filterResultsData.add(quote);
                         }
                     }
@@ -118,7 +120,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final View view;
         public final TextView body;
         public final TextView date;
         public final TextView user;
@@ -126,7 +127,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
 
         public ViewHolder(View view) {
             super(view);
-            this.view = view;
 
             body = (TextView) view.findViewById(R.id.quote_body);
             date = (TextView) view.findViewById(R.id.quote_date);

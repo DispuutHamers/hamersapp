@@ -76,7 +76,7 @@ public class AboutFragment extends Fragment {
         CharSequence[] libs = Utils.stringArrayToCharSequenceArray(libraries.keySet().toArray());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(R.string.about_librariesTitle)
+        builder.setTitle(R.string.about_libraries)
                 .setNeutralButton(R.string.close, null)
                 .setItems(libs, new DialogInterface.OnClickListener() {
                     @Override

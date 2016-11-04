@@ -1,8 +1,9 @@
 package nl.ecci.hamers.beers;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,28 +16,30 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.events.Event;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
-import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
+import nl.ecci.hamers.helpers.HamersFragment;
+import nl.ecci.hamers.loader.GetCallback;
+import nl.ecci.hamers.loader.Loader;
 
-import static nl.ecci.hamers.MainActivity.parseDate;
+import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
-public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class BeerFragment extends HamersFragment {
 
     private static final Comparator<Beer> nameComparator = new Comparator<Beer>() {
         @Override
@@ -84,16 +87,29 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         setHasOptionsMenu(true);
 
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        beer_list.setLayoutManager(mLayoutManager);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        beer_list.setLayoutManager(layoutManager);
         beer_list.setItemAnimator(new DefaultItemAnimator());
         beer_list.addItemDecoration(new DividerItemDecoration(getActivity()));
 
-        initSwiper(view, beer_list, mLayoutManager);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
+        initSwiper(beer_list, layoutManager, swipeRefreshLayout);
 
         adapter = new BeerAdapter(dataSet, getActivity());
         beer_list.setAdapter(adapter);
 
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.beer_create_button);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), NewBeerActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        new populateList().execute();
         onRefresh();
 
         sortList();
@@ -101,45 +117,37 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return view;
     }
 
-    private void initSwiper(View view, final RecyclerView beer_list, final LinearLayoutManager lm) {
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
-
-        swipeRefreshLayout.setOnRefreshListener(this);
-
-        beer_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+    @Override
+    @SuppressWarnings("unchecked")
+    public void onRefresh() {
+        setRefreshing(true);
+        Loader.getData(new GetCallback() {
+            @Override
+            public void onSuccess(String response) {
+                new populateList().execute(response);
+            }
 
             @Override
-            public void onScrolled(RecyclerView view, int dx, int dy) {
-                boolean enable = false;
-                if (beer_list != null && beer_list.getChildCount() > 0) {
-                    // check if the first item of the list is visible
-                    boolean firstItemVisible = lm.findFirstCompletelyVisibleItemPosition() == 0;
-                    // check if the top of the first item is visible
-                    boolean topOfFirstItemVisible = beer_list.getChildAt(0).getTop() == 0;
-                    // enabling or disabling the refresh layout
-                    enable = firstItemVisible && topOfFirstItemVisible;
-                }
-                swipeRefreshLayout.setEnabled(enable);
+            public void onError(VolleyError error) {
+                // Nothing
             }
-        });
-    }
+        }, getContext(), MainActivity.prefs, Loader.BEERURL);
+        Loader.getData(new GetCallback() {
+            @Override
+            public void onSuccess(String response) {
+                adapter.notifyDataSetChanged();
+            }
 
-    @Override
-    public void onRefresh() {
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.BEERURL, DataManager.BEERKEY);
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.REVIEWURL, DataManager.REVIEWKEY);
-    }
-
-    @SuppressWarnings("unchecked")
-    public void populateList() {
-        new populateList().execute(dataSet);
+            @Override
+            public void onError(VolleyError error) {
+                // Nothing
+            }
+        }, getContext(), MainActivity.prefs, Loader.REVIEWURL);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.beer_menu, menu);
+        inflater.inflate(R.menu.beer_list_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.beer_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         if (searchView != null) {
@@ -197,9 +205,6 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             if (MainActivity.prefs != null) {
                 String sortPref = MainActivity.prefs.getString("beerSort", "");
                 switch (sortPref) {
-                    case "name":
-                        sort(nameComparator);
-                        break;
                     case "rating":
                         sort(ratingComparator);
                         break;
@@ -209,6 +214,8 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     case "datumDESC":
                         sort(dateDESCComperator);
                         break;
+                    default:
+                        sort(nameComparator);
                 }
             }
     }
@@ -235,33 +242,25 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     }
 
-    public class populateList extends AsyncTask<ArrayList<Beer>, Void, ArrayList<Beer>> {
-        @SafeVarargs
+    private class populateList extends AsyncTask<String, Void, ArrayList<Beer>> {
         @Override
-        protected final ArrayList<Beer> doInBackground(ArrayList<Beer>... param) {
-            final ArrayList<Beer> dataSet = new ArrayList<>();
-            JSONArray json;
-            try {
-                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.BEERKEY)) != null) {
-                    for (int i = 0; i < json.length(); i++) {
-                        JSONObject temp;
-                        temp = json.getJSONObject(i);
-                        Beer tempBeer;
+        protected final ArrayList<Beer> doInBackground(String... params) {
+            ArrayList<Beer> result = new ArrayList<>();
+            Type type = new TypeToken<ArrayList<Beer>>() {
+            }.getType();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+            Gson gson = gsonBuilder.create();
 
-                        String cijfer = temp.getString("cijfer");
-                        if (cijfer.equals("null")) {
-                            tempBeer = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
-                                    temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), "nog niet bekend", parseDate(temp.getString("created_at")));
-                        } else {
-                            tempBeer = new Beer(temp.getInt("id"), temp.getString("name"), temp.getString("soort"),
-                                    temp.getString("picture"), temp.getString("percentage"), temp.getString("brewer"), temp.getString("country"), cijfer, parseDate(temp.getString("created_at")));
-                        }
-                        dataSet.add(tempBeer);
-                    }
+            if (params.length > 0) {
+                result = gson.fromJson(params[0], type);
+            } else {
+                JSONArray json;
+                if ((json = getJsonArray(MainActivity.prefs, Loader.BEERURL)) != null) {
+                    result = gson.fromJson(json.toString(), type);
                 }
-            } catch (JSONException ignored) {
             }
-            return dataSet;
+            return result;
         }
 
         @Override
@@ -269,17 +268,12 @@ public class BeerFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             if (!result.isEmpty()) {
                 dataSet.clear();
                 dataSet.addAll(result);
-                if (BeerFragment.this.adapter != null) {
-                    BeerFragment.this.adapter.notifyDataSetChanged();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
                 }
             }
             setRefreshing(false);
-            sortList();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            setRefreshing(true);
+//            sortList();
         }
     }
 }

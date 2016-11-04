@@ -3,6 +3,7 @@ package nl.ecci.hamers;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.Preference.OnPreferenceClickListener;
 import android.support.v7.preference.PreferenceFragmentCompat;
@@ -11,9 +12,10 @@ import android.view.View;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
+    private final static String KEY_PREF_NIGHT_MODE = "night_mode";
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
@@ -40,14 +42,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         clear_storage.setOnPreferenceClickListener(
                 new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference preference) {
-                        prefs.edit().remove(DataManager.QUOTEKEY).apply();
-                        prefs.edit().remove(DataManager.USERKEY).apply();
-                        prefs.edit().remove(DataManager.EVENTKEY).apply();
-                        prefs.edit().remove(DataManager.NEWSKEY).apply();
-                        prefs.edit().remove(DataManager.BEERKEY).apply();
-                        prefs.edit().remove(DataManager.REVIEWKEY).apply();
-                        prefs.edit().remove(DataManager.WHOAMIKEY).apply();
-                        prefs.edit().remove(DataManager.SIGNUPKEY).apply();
+                        prefs.edit().remove(Loader.QUOTEURL).apply();
+                        prefs.edit().remove(Loader.USERURL).apply();
+                        prefs.edit().remove(Loader.EVENTURL).apply();
+                        prefs.edit().remove(Loader.UPCOMINGEVENTURL).apply();
+                        prefs.edit().remove(Loader.NEWSURL).apply();
+                        prefs.edit().remove(Loader.BEERURL).apply();
+                        prefs.edit().remove(Loader.REVIEWURL).apply();
+                        prefs.edit().remove(Loader.MEETINGURL).apply();
+                        prefs.edit().remove(Loader.WHOAMIURL).apply();
 
                         View view = getView();
                         if (view != null) {
@@ -68,5 +71,16 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     }
                 }
         );
+
+        Preference night_mode = findPreference("night_mode");
+        night_mode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                AppCompatDelegate.setDefaultNightMode(MainActivity.getNightModeInt((String) newValue));
+                prefs.edit().putString(KEY_PREF_NIGHT_MODE, (String) newValue).apply();
+                getActivity().recreate();
+                return true;
+            }
+        });
     }
 }

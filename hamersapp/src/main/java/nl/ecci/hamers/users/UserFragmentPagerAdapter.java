@@ -6,15 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 
-public class UserFragmentPagerAdapter extends FragmentPagerAdapter {
-    public final static String exUser = "exUser";
+class UserFragmentPagerAdapter extends FragmentPagerAdapter {
+    final static String exUser = "exUser";
     private static String[] tabTitles = null;
-    private final int PAGE_COUNT = 2;
 
-    public UserFragmentPagerAdapter(Context context, FragmentManager fm) {
+    private UserListFragment userFragmentAll;
+    private UserListFragment userFragmentEx;
+
+    UserFragmentPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         tabTitles = new String[]{
                 context.getResources().getString(R.string.menu_users),
@@ -24,26 +25,28 @@ public class UserFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return PAGE_COUNT;
+        return 2;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                if (MainActivity.USER_FRAGMENT_ALL.getArguments() == null) {
+                if (userFragmentAll == null) {
+                    userFragmentAll = new UserListFragment();
                     Bundle argAll = new Bundle();
                     argAll.putBoolean(exUser, false);
-                    MainActivity.USER_FRAGMENT_ALL.setArguments(argAll);
+                    userFragmentAll.setArguments(argAll);
                 }
-                return MainActivity.USER_FRAGMENT_ALL;
+                return userFragmentAll;
             case 1:
-                if (MainActivity.USER_FRAGMENT_EX.getArguments() == null) {
+                if (userFragmentEx == null) {
+                    userFragmentEx = new UserListFragment();
                     Bundle argEx = new Bundle();
                     argEx.putBoolean(exUser, true);
-                    MainActivity.USER_FRAGMENT_EX.setArguments(argEx);
+                    userFragmentEx.setArguments(argEx);
                 }
-                return MainActivity.USER_FRAGMENT_EX;
+                return userFragmentEx;
         }
         return null;
     }

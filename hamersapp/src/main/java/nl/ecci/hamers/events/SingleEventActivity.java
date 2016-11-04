@@ -1,7 +1,6 @@
 package nl.ecci.hamers.events;
 
 import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -9,9 +8,10 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,37 +21,41 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
+import com.android.volley.VolleyError;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.loader.Loader;
+import nl.ecci.hamers.loader.PostCallback;
 import nl.ecci.hamers.users.User;
 
-public class SingleEventActivity extends AppCompatActivity {
+import static nl.ecci.hamers.helpers.Utils.getEvent;
+import static nl.ecci.hamers.helpers.Utils.getOwnUser;
+import static nl.ecci.hamers.helpers.Utils.getUser;
+
+public class SingleEventActivity extends HamersActivity {
+
     private Event event;
     private LayoutInflater inflater;
-    private ViewGroup aanwezigView;
-    private ViewGroup afwezigView;
+    private LinearLayout presentView;
+    private LinearLayout absentView;
     private ViewGroup eventLayout;
-    private ViewGroup aanwezigLayout;
-    private ViewGroup afwezigLayout;
+    private ViewGroup presentLayout;
+    private ViewGroup absentLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.single_event);
+        setContentView(R.layout.single_event);
 
-        inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        event = DataManager.getEvent(MainActivity.prefs, getIntent().getExtras().getInt("id"));
+        inflater = getLayoutInflater();
 
         initToolbar();
 
@@ -60,22 +64,20 @@ public class SingleEventActivity extends AppCompatActivity {
         View locationRow = findViewById(R.id.location_row);
         View descriptionRow = findViewById(R.id.description_row);
         LinearLayout button_layout = (LinearLayout) findViewById(R.id.button_layout);
-        aanwezigView = (ViewGroup) findViewById(R.id.aanwezig_insert_point);
-        afwezigView = (ViewGroup) findViewById(R.id.afwezig_insert_point);
+        presentView = (LinearLayout) findViewById(R.id.present_insert_point);
+        absentView = (LinearLayout) findViewById(R.id.absent_insert_point);
         LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
 
         eventLayout = (ViewGroup) findViewById(R.id.single_event_layout);
-        aanwezigLayout = (ViewGroup) findViewById(R.id.aanwezig_layout);
-        afwezigLayout = (ViewGroup) findViewById(R.id.afwezig_layout);
+        presentLayout = (ViewGroup) findViewById(R.id.present_layout);
+        absentLayout = (ViewGroup) findViewById(R.id.absent_layout);
 
-        final String title = event.getTitle();
-        final String description = event.getDescription();
-        final String location = event.getLocation();
+        event = getEvent(MainActivity.prefs, getIntent().getIntExtra(Event.EVENT, 1));
 
         initSignups();
 
-        titleTV.setText(title);
-        fillDetailRow(descriptionRow, description);
+        titleTV.setText(event.getTitle());
+        fillDetailRow(descriptionRow, event.getDescription());
 
         // Current date
         Date today = new Date();
@@ -107,15 +109,15 @@ public class SingleEventActivity extends AppCompatActivity {
         }
 
         if (locationRow != null) {
-            if (!location.equals("null")) {
-                fillImageRow(locationRow, "Locatie", location, ContextCompat.getDrawable(this, R.drawable.location));
+            if (event.getLocation() != null) {
+                fillImageRow(locationRow, "Locatie", event.getLocation(), ContextCompat.getDrawable(this, R.drawable.location));
 
                 locationRow.setClickable(true);
                 locationRow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // Create a Uri from an intent string. Use the result to create an Intent.
-                        Uri uri = Uri.parse("geo:0,0?q=" + location);
+                        Uri uri = Uri.parse("geo:0,0?q=" + event.getLocation());
                         // Create an Intent from uri. Set the action to ACTION_VIEW
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         intent.setPackage("com.google.android.apps.maps");
@@ -131,29 +133,53 @@ public class SingleEventActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.edit_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
+            case R.id.edit_item:
+                Intent intent = new Intent(this, NewEventActivity.class);
+                if (event != null) {
+                    intent.putExtra(Event.EVENT, event.getID());
+                }
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void setAanwezig(View view) {
-        postSignup(event.getId(), "true");
+    public void setPresent(View view) {
+        postSignup(event.getID(), "true");
     }
 
-    public void setAfwezig(View view) {
-        postSignup(event.getId(), "false");
+    public void setAbsent(View view) {
+        postSignup(event.getID(), "false");
     }
 
-    private void postSignup(int eventid, String status) {
-        Map<String, String> params = new HashMap<>();
-        params.put("signup[event_id]", Integer.toString(eventid));
-        params.put("signup[status]", status);
+    private void postSignup(int eventID, String status) {
+        JSONObject body = new JSONObject();
+        try {
+            body.put("event_id", eventID);
+            body.put("status", status);
+        } catch (JSONException ignored) {
+        }
 
-        DataManager.postData(this, MainActivity.prefs, DataManager.SIGNUPURL, null, params);
+        Loader.postOrPatchData(new PostCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        }, this, MainActivity.prefs, Loader.SIGNUPURL, -1, body);
         this.finish();
     }
 
@@ -169,58 +195,51 @@ public class SingleEventActivity extends AppCompatActivity {
     }
 
     private void initSignups() {
-        Button aanwezigButton = (Button) findViewById(R.id.aanwezig_button);
-        Button afwezigButton = (Button) findViewById(R.id.afwezig_button);
-        JSONArray signups = event.getSignups();
-        ArrayList<String> aanwezig = new ArrayList<>();
-        ArrayList<String> afwezig = new ArrayList<>();
-
-        if (signups != null) {
-            try {
-                for (int i = 0; i < signups.length(); i++) {
-                    JSONObject signup = signups.getJSONObject(i);
-                    if (signup.getBoolean("status")) {
-                        aanwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getName());
-                    } else {
-                        afwezig.add(DataManager.getUser(MainActivity.prefs, signup.getInt("user_id")).getName());
-                    }
-                }
-
-                if (aanwezig.size() != 0) {
-                    for (String name : aanwezig) {
-                        View view = inflater.inflate(R.layout.row_singleview, null);
-                        fillSingleRow(view, name);
-                        aanwezigView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                    }
-                } else {
-                    eventLayout.removeView(aanwezigLayout);
-                }
-
-            } catch (JSONException ignored) {
+        Button presentButton = (Button) findViewById(R.id.present_button);
+        Button absentButton = (Button) findViewById(R.id.absent_button);
+        ArrayList<Event.Signup> signups = event.getSignups();
+        ArrayList<String> present = new ArrayList<>();
+        ArrayList<String> absent = new ArrayList<>();
+        for (int i = 0; i < signups.size(); i++) {
+            Event.Signup signup = signups.get(i);
+            if (signup.isAttending()) {
+                present.add(getUser(MainActivity.prefs, signup.getUserID()).getName());
+            } else {
+                absent.add(getUser(MainActivity.prefs, signup.getUserID()).getName());
             }
         }
 
-        if (afwezig.size() != 0) {
-            for (String name : afwezig) {
-                View view = inflater.inflate(R.layout.row_singleview, null);
-                fillSingleRow(view, name);
-                afwezigView.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        if (present.size() != 0) {
+            for (String name : present) {
+                presentView.addView(newSingleRow(name, presentView), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             }
         } else {
-            eventLayout.removeView(afwezigLayout);
+            eventLayout.removeView(presentLayout);
         }
 
-        User ownUser = DataManager.getOwnUser(MainActivity.prefs);
-        if (aanwezig.contains(ownUser.getName()) && aanwezigButton != null) {
-            aanwezigButton.setVisibility(View.GONE);
-        } else if (afwezig.contains(ownUser.getName()) && afwezigButton != null) {
-            afwezigButton.setVisibility(View.GONE);
+        if (absent.size() != 0) {
+            for (String name : absent) {
+                absentView.addView(newSingleRow(name, absentView), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            }
+        } else {
+            eventLayout.removeView(absentLayout);
+        }
+
+        User ownUser = getOwnUser(MainActivity.prefs);
+        if (present.contains(ownUser.getName()) && presentButton != null) {
+            presentButton.setVisibility(View.GONE);
+        } else if (absent.contains(ownUser.getName()) && absentButton != null) {
+            absentButton.setVisibility(View.GONE);
         }
     }
 
-    private void fillSingleRow(View view, final String title) {
+    private View newSingleRow(final String title, ViewGroup viewGroup) {
+        View view = inflater.inflate(R.layout.row_singleview, viewGroup, false);
+
         TextView titleView = (TextView) view.findViewById(R.id.row_title);
         titleView.setText(title);
+
+        return view;
     }
 
     private void fillDetailRow(View view, final String description) {

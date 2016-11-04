@@ -1,12 +1,12 @@
 /**
  * Copyright 2015 Google Inc. All Rights Reserved.
- * <p>
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,17 +23,20 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.android.volley.VolleyError;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.loader.Loader;
+import nl.ecci.hamers.loader.PostCallback;
 
 public class RegistrationIntentService extends IntentService {
 
@@ -82,17 +85,30 @@ public class RegistrationIntentService extends IntentService {
 
     /**
      * Persist registration to third-party servers.
-     *
+     * <p>
      * Modify this method to associate the user's GCM registration token with any server-side account
      * maintained by your application.
      *
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-        Map<String, String> params = new HashMap<>();
-        params.put("device[device_key]", token);
+        JSONObject body = new JSONObject();
+        try {
+            body.put("device", token);
+        } catch (JSONException ignored) {
+        }
 
-        DataManager.postData(null, sharedPreferences, DataManager.GCMURL, DataManager.GCMURL, params);
+        Loader.postOrPatchData(new PostCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                // Nothing
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                // Nothing
+            }
+        }, null, sharedPreferences, Loader.GCMURL, -1, body);
     }
 
     /**

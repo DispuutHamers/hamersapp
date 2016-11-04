@@ -10,6 +10,12 @@
             android:key="apikey"
             android:summary="@string/apikey_summary"
             android:title="API Key" />
+        <ListPreference
+            android:defaultValue="auto"
+            android:entries="@array/night_mode_array"
+            android:entryValues="@array/night_mode_array_values"
+            android:key="night_mode"
+            android:title="Nachtmodus" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="pushPref"
@@ -18,19 +24,19 @@
             android:title="@string/push_title" />
         <Preference
             android:key="refresh_app"
-            android:title="@string/refresh_app"
-            android:summary="@string/refresh_app_summary" />
+            android:summary="@string/refresh_app_summary"
+            android:title="@string/refresh_app" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/data_category">
         <Preference
             android:key="clear_image_cache"
-            android:title="@string/clear_image_cache_setting"
-            android:summary="@string/clear_image_cache_summary"/>
+            android:summary="@string/clear_image_cache_summary"
+            android:title="@string/clear_image_cache_setting" />
         <Preference
             android:key="clear_storage"
-            android:title="@string/clear_storage_setting"
-            android:summary="@string/clear_storage_summary" />
+            android:summary="@string/clear_storage_summary"
+            android:title="@string/clear_storage_setting" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/sorting_category">
@@ -41,7 +47,7 @@
             android:key="userSort"
             android:title="Leden sorteren" />
         <ListPreference
-            android:defaultValue="datumASC"
+            android:defaultValue="name"
             android:entries="@array/beersort_array"
             android:entryValues="@array/beersort_array_values"
             android:key="beerSort"

@@ -1,27 +1,27 @@
 package nl.ecci.hamers.news;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.android.volley.VolleyError;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.loader.Loader;
+import nl.ecci.hamers.loader.PostCallback;
 
-public class NewNewsActivity extends AppCompatActivity {
+public class NewNewsActivity extends HamersActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_news_acitivity);
+        setContentView(R.layout.news_new_acitivity);
 
         final android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -38,30 +38,26 @@ public class NewNewsActivity extends AppCompatActivity {
         EditText news_body = (EditText) findViewById(R.id.news_body);
 
         String title = news_title.getText().toString();
-        String body = news_body.getText().toString();
+        String newsBody = news_body.getText().toString();
 
-        Map<String, String> params = new HashMap<>();
-        params.put("news[title]", title);
-        params.put("news[body]", body);
-
-        DataManager.postData(this, MainActivity.prefs, DataManager.NEWSURL, DataManager.NEWSKEY, params);
-    }
-
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
+        JSONObject body = new JSONObject();
+        try {
+            body.put("title", title);
+            body.put("body", newsBody);
+            body.put("cat", "l");
+        } catch (JSONException ignored) {
         }
-        return super.onOptionsItemSelected(item);
+
+        Loader.postOrPatchData(new PostCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        }, this, MainActivity.prefs, Loader.NEWSURL, -1, body);
     }
 }

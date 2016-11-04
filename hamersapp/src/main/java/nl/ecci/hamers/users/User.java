@@ -1,56 +1,98 @@
 package nl.ecci.hamers.users;
 
-public class User {
-    public static final String USER_NAME = "USER_NAME";
-    public static final String USER_ID = "USER_ID";
-    public static final String USER_EMAIL = "USER_EMAIL";
-    public static final String USER_QUOTECOUNT = "USER_QUOTECOUNT";
-    public static final String USER_REVIEWCOUNT = "USER_REVIEWCOUNT";
-    public static final String USER_IMAGE_URL = "USER_IMAGE_URL";
-    private final String name;
-    private final int userID;
-    private final String email;
-    private final int quotecount;
-    private final int reviewcount;
-    private final boolean member;
-    private final String nickname;
+import com.google.gson.annotations.SerializedName;
 
-    public User(String name, int userID, String email, int quotecount, int reviewcount, boolean member, String nickname) {
+import java.util.ArrayList;
+import java.util.Date;
+
+public class User {
+
+    public static final String USER_ID = "USER_ID";
+    private final int id;
+    private final String name;
+    private final String email;
+    @SerializedName("quotes")
+    private final int quoteCount;
+    @SerializedName("reviews")
+    private final int reviewCount;
+    @SerializedName("lid")
+    private final Member member;
+    private final int batch;
+    private final ArrayList<Nickname> nicknames;
+    @SerializedName("created_at")
+    private final Date createdAt;
+
+    @SuppressWarnings("SameParameterValue")
+    public User(int id, String name, String email, int quoteCount, int reviewCount, Member member, int batch, ArrayList<Nickname> nicknames, Date createdAt) {
         super();
+        this.id = id;
         this.name = name;
-        this.userID = userID;
         this.email = email;
-        this.quotecount = quotecount;
-        this.reviewcount = reviewcount;
+        this.quoteCount = quoteCount;
+        this.reviewCount = reviewCount;
         this.member = member;
-        this.nickname = nickname;
+        this.batch = batch;
+        this.nicknames = nicknames;
+        this.createdAt = createdAt;
+    }
+
+    public int getID() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getUserID() {
-        return userID;
-    }
-
     public String getEmail() {
         return email;
     }
 
-    public int getQuotecount() {
-        return quotecount;
+    public int getQuoteCount() {
+        return quoteCount;
     }
 
-    public int getReviewcount() {
-        return reviewcount;
+    public int getReviewCount() {
+        return reviewCount;
     }
 
-    public boolean isMember() {
+    public Member getMember() {
         return member;
     }
 
-    public String getNickname() {
-        return nickname;
+    public int getBatch() {
+        return batch;
+    }
+
+    public ArrayList<Nickname> getNicknames() {
+        return nicknames;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public enum Member {
+        @SerializedName("lid")
+        LID,
+        @SerializedName("a-lid")
+        ALID,
+        @SerializedName("o-lid")
+        OLID,
+        @SerializedName("none")
+        NONE
+    }
+
+    public class Nickname {
+        private final String nickname;
+
+        public Nickname(String nickname) {
+            super();
+            this.nickname = nickname;
+        }
+
+        public String getNickname() {
+            return nickname;
+        }
     }
 }

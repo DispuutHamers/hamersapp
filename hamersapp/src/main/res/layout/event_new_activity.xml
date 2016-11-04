@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/new_event_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -96,8 +95,8 @@
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
-                    android:gravity="left|center_vertical"
-                    android:singleLine="true"
+                    android:gravity="start|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/date"
                     android:textSize="18sp" />
 
@@ -110,7 +109,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="16dp"
                     android:onClick="showTimePickerDialog"
-                    android:text="@string/pick_time_button" />
+                    android:text="@string/review_pick_time_button" />
 
                 <Button
                     android:id="@+id/event_date_button"
@@ -121,7 +120,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="16dp"
                     android:onClick="showDatePickerDialog"
-                    android:text="@string/pick_date_button" />
+                    android:text="@string/review_pick_date_button" />
             </LinearLayout>
 
             <LinearLayout
@@ -138,8 +137,8 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:gravity="start|center_vertical"
-                    android:singleLine="true"
-                    android:text="@string/end_time"
+                    android:maxLines="1"
+                    android:text="@string/endDate"
                     android:textSize="18sp" />
 
                 <Button
@@ -151,7 +150,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="16dp"
                     android:onClick="showEndTimePickerDialog"
-                    android:text="@string/pick_time_button" />
+                    android:text="@string/review_pick_time_button" />
 
                 <Button
                     android:id="@+id/end_date_button"
@@ -162,7 +161,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="16dp"
                     android:onClick="showEndDatePickerDialog"
-                    android:text="@string/pick_date_button" />
+                    android:text="@string/review_pick_date_button" />
             </LinearLayout>
 
             <LinearLayout
@@ -179,7 +178,7 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:gravity="start|center_vertical"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:text="@string/deadline"
                     android:textSize="18sp" />
 
@@ -192,7 +191,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="16dp"
                     android:onClick="showDeadlineTimePickerDialog"
-                    android:text="@string/pick_time_button" />
+                    android:text="@string/review_pick_time_button" />
 
                 <Button
                     android:id="@+id/deadline_date_button"
@@ -203,7 +202,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="16dp"
                     android:onClick="showDeadlineDatePickerDialog"
-                    android:text="@string/pick_date_button" />
+                    android:text="@string/review_pick_date_button" />
             </LinearLayout>
 
             <Button

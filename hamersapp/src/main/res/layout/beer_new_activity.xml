@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/beer_title_et"
+                    android:id="@+id/beer_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/beer_name"
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/beer_picture_et"
+                    android:id="@+id/beer_picture"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/beer_picture"
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/beer_soort_et"
+                    android:id="@+id/beer_soort"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/beer_soort"
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/beer_percentage_et"
+                    android:id="@+id/beer_percentage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/beer_percentage"
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/beer_brewer_et"
+                    android:id="@+id/beer_brewer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/beer_brewer"
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/beer_country_et"
+                    android:id="@+id/beer_country"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/beer_country"

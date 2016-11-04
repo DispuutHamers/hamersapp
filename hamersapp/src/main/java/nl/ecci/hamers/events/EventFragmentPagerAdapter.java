@@ -6,15 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 
-public class EventFragmentPagerAdapter extends FragmentPagerAdapter {
-    public final static String upcoming = "upcoming";
+class EventFragmentPagerAdapter extends FragmentPagerAdapter {
+    final static String upcoming = "upcoming";
     private static String[] tabTitles = null;
-    private final int PAGE_COUNT = 2;
 
-    public EventFragmentPagerAdapter(Context context, FragmentManager fm) {
+    private EventListFragment eventFragmentUpcoming;
+    private EventListFragment eventFragmentAll;
+
+    EventFragmentPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         tabTitles = new String[]{
                 context.getResources().getString(R.string.menu_upcoming),
@@ -24,26 +25,28 @@ public class EventFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return PAGE_COUNT;
+        return 2;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                if (MainActivity.EVENT_FRAGMENT_UPCOMING.getArguments() == null) {
+                if (eventFragmentUpcoming == null) {
+                    eventFragmentUpcoming = new EventListFragment();
                     Bundle argUpcoming = new Bundle();
                     argUpcoming.putBoolean(upcoming, true);
-                    MainActivity.EVENT_FRAGMENT_UPCOMING.setArguments(argUpcoming);
+                    eventFragmentUpcoming.setArguments(argUpcoming);
                 }
-                return MainActivity.EVENT_FRAGMENT_UPCOMING;
+                return eventFragmentUpcoming;
             case 1:
-                if (MainActivity.EVENT_FRAGMENT_ALL.getArguments() == null) {
+                if (eventFragmentAll == null) {
+                    eventFragmentAll = new EventListFragment();
                     Bundle argAll = new Bundle();
                     argAll.putBoolean(upcoming, false);
-                    MainActivity.EVENT_FRAGMENT_ALL.setArguments(argAll);
+                    eventFragmentAll.setArguments(argAll);
                 }
-                return MainActivity.EVENT_FRAGMENT_ALL;
+                return eventFragmentAll;
         }
         return null;
     }

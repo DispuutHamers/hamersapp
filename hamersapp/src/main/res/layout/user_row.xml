@@ -32,7 +32,7 @@
         android:layout_toEndOf="@id/user_image"
         android:layout_toRightOf="@id/user_image"
         android:gravity="start"
-        android:textColor="@android:color/primary_text_light"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -49,8 +49,8 @@
         android:gravity="start"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
-        android:singleLine="true"
-        android:textColor="@android:color/secondary_text_light"
+        android:maxLines="1"
+        android:textColor="?android:attr/textColorSecondary"
         android:textSize="14sp" />
 
     <TextView
@@ -66,8 +66,8 @@
         android:gravity="end"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
-        android:singleLine="true"
-        android:textColor="@android:color/secondary_text_light"
+        android:maxLines="1"
+        android:textColor="?android:attr/textColorSecondary"
         android:textSize="14sp"
         android:textStyle="italic" />
 
@@ -83,8 +83,8 @@
         android:gravity="end"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
-        android:singleLine="true"
-        android:textColor="@android:color/secondary_text_light"
+        android:maxLines="1"
+        android:textColor="?android:attr/textColorSecondary"
         android:textSize="14sp"
         android:textStyle="italic" />
 

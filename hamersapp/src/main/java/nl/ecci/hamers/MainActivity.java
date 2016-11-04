@@ -10,14 +10,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -44,50 +45,38 @@ import java.util.Date;
 import java.util.Locale;
 
 import nl.ecci.hamers.beers.BeerFragment;
-import nl.ecci.hamers.beers.NewBeerActivity;
 import nl.ecci.hamers.events.EventFragment;
-import nl.ecci.hamers.events.EventListFragment;
-import nl.ecci.hamers.events.NewEventActivity;
 import nl.ecci.hamers.gcm.RegistrationIntentService;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.Utils;
+import nl.ecci.hamers.loader.GetCallback;
+import nl.ecci.hamers.loader.Loader;
+import nl.ecci.hamers.meetings.MeetingFragment;
+import nl.ecci.hamers.meetings.NewMeetingActivity;
 import nl.ecci.hamers.news.NewNewsActivity;
 import nl.ecci.hamers.news.NewsFragment;
-import nl.ecci.hamers.quotes.NewQuoteFragment;
 import nl.ecci.hamers.quotes.QuoteFragment;
+import nl.ecci.hamers.stickers.StickerFragment;
 import nl.ecci.hamers.users.User;
 import nl.ecci.hamers.users.UserFragment;
-import nl.ecci.hamers.users.UserListFragment;
 
-public class MainActivity extends AppCompatActivity {
-    // URL
-    public static final String baseURL = "https://zondersikkel.nl/api/v1/";
-    // Fragments
-    public static final QuoteFragment QUOTE_FRAGMENT = new QuoteFragment();
-    public static final UserFragment USER_FRAGMENT = new UserFragment();
-    public static final UserListFragment USER_FRAGMENT_ALL = new UserListFragment();
-    public static final UserListFragment USER_FRAGMENT_EX = new UserListFragment();
-    public static final EventFragment EVENT_FRAGMENT = new EventFragment();
-    public static final EventListFragment EVENT_FRAGMENT_ALL = new EventListFragment();
-    public static final EventListFragment EVENT_FRAGMENT_UPCOMING = new EventListFragment();
-    public static final NewsFragment NEWS_FRAGMENT = new NewsFragment();
-    public static final BeerFragment BEER_FRAGMENT = new BeerFragment();
-    private static final MotionFragment MOTION_FRAGMENT = new MotionFragment();
-    private static final SettingsFragment SETTINGS_FRAGMENT = new SettingsFragment();
-    private static final AboutFragment ABOUT_FRAGMENT = new AboutFragment();
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
+import static nl.ecci.hamers.helpers.Utils.getOwnUser;
+
+public class MainActivity extends HamersActivity {
     public static final Locale locale = new Locale("nl");
-    public static final DateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", locale);
-    public static final DateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", locale);
-    public static final DateFormat appDF2 = new SimpleDateFormat("EEEE dd MMMM yyyy", locale);
+    public static final SimpleDateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", locale);
+    public static final SimpleDateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", locale);
+    public static final SimpleDateFormat appDF2 = new SimpleDateFormat("EEEE dd MMMM yyyy", locale);
+    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
+    public static final String REGISTRATION_COMPLETE = "registrationComplete";
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public static SharedPreferences prefs;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private boolean backPressedOnce;
     // GCM
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
-    public static final String REGISTRATION_COMPLETE = "registrationComplete";
 
     /**
      * Setup of default ImageLoader configuration (Universal Image Loader)
@@ -118,6 +107,34 @@ public class MainActivity extends AppCompatActivity {
         ImageLoader.getInstance().init(defaultConfiguration);
     }
 
+    /**
+     * Parse date
+     */
+    public static Date parseDate(String dateString) {
+        Date date = null;
+        try {
+            // Event date
+            if (!dateString.equals("null")) {
+                DateFormat inputFormat = new SimpleDateFormat("dd-mm-yyyy HH:mm", MainActivity.locale);
+                date = inputFormat.parse(dateString);
+            }
+        } catch (ParseException ignored) {
+        }
+        return date;
+    }
+
+    @AppCompatDelegate.NightMode
+    public static int getNightModeInt(String nightMode) {
+        switch (nightMode) {
+            case "auto":
+                return AppCompatDelegate.MODE_NIGHT_AUTO;
+            case "on":
+                return AppCompatDelegate.MODE_NIGHT_YES;
+            default:
+                return AppCompatDelegate.MODE_NIGHT_NO;
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,12 +143,15 @@ public class MainActivity extends AppCompatActivity {
         initDrawer();
         initToolbar();
 
-        if (savedInstanceState == null) {
-            selectItem(R.id.navigation_item_quotes);
-        }
-
         configureDefaultImageLoader(this);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (savedInstanceState == null) {
+            selectItem(navigationView.getMenu().getItem(0));
+            String night_mode = prefs.getString("night_mode", "off");
+            AppCompatDelegate.setDefaultNightMode(getNightModeInt(night_mode));
+            recreate();
+        }
 
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -185,9 +205,10 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                selectItem(menuItem.getItemId());
+                selectItem(menuItem);
                 menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
+                hideKeyboard();
                 return true;
             }
         });
@@ -259,77 +280,50 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Swaps fragments in the quote_menu content view
+     * Swaps fragments in the main content view
      */
-    private void selectItem(int id) {
+    private void selectItem(MenuItem menuItem) {
+        Fragment fragment = null;
+        Class fragmentClass;
+
+        switch (menuItem.getItemId()) {
+            case R.id.navigation_item_events:
+                fragmentClass = EventFragment.class;
+                break;
+            case R.id.navigation_item_beers:
+                fragmentClass = BeerFragment.class;
+                break;
+            case R.id.navigation_item_news:
+                fragmentClass = NewsFragment.class;
+                break;
+            case R.id.navigation_item_users:
+                fragmentClass = UserFragment.class;
+                break;
+            case R.id.navigation_item_meetings:
+                fragmentClass = MeetingFragment.class;
+                break;
+            case R.id.navigation_item_stickers:
+                fragmentClass = StickerFragment.class;
+                break;
+            case R.id.navigation_item_settings:
+                fragmentClass = SettingsFragment.class;
+                break;
+            case R.id.navigation_item_about:
+                fragmentClass = AboutFragment.class;
+                break;
+            default:
+                fragmentClass = QuoteFragment.class;
+        }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception ignored) {
+        }
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        hideKeyboard();
-        switch (id) {
-            case R.id.navigation_item_quotes:
-                transaction.replace(R.id.content_frame, QUOTE_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_quotes));
-                break;
-
-            case R.id.navigation_item_events:
-                transaction.replace(R.id.content_frame, EVENT_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_events));
-                break;
-
-            case R.id.navigation_item_beers:
-                transaction.replace(R.id.content_frame, BEER_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_beers));
-                break;
-
-            case R.id.navigation_item_news:
-                transaction.replace(R.id.content_frame, NEWS_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_news));
-                break;
-
-            case R.id.navigation_item_users:
-                transaction.replace(R.id.content_frame, USER_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_users));
-                break;
-
-            case R.id.navigation_item_motions:
-                transaction.replace(R.id.content_frame, MOTION_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_motions));
-                break;
-
-            case R.id.navigation_item_settings:
-                transaction.replace(R.id.content_frame, SETTINGS_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_settings));
-                break;
-
-            case R.id.navigation_item_about:
-                transaction.replace(R.id.content_frame, ABOUT_FRAGMENT).commit();
-                setTitle(getResources().getString(R.string.navigation_item_about));
-                break;
-        }
-    }
-
-    /**
-     * When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment
-     */
-    public void newQuote(View view) {
-        DialogFragment newQuoteFragment = new NewQuoteFragment();
-        newQuoteFragment.show(getSupportFragmentManager(), "quotes");
-    }
-
-    /**
-     * When user presses "+" in EventFragment, start new dialog with NewEventActivity
-     */
-    public void newEvent(View view) {
-        Intent intent = new Intent(this, NewEventActivity.class);
-        startActivity(intent);
-    }
-
-    /**
-     * When user presses "+" in BeerFragment, start new dialog with NewBeerActivity
-     */
-    public void newBeer(View view) {
-        Intent intent = new Intent(this, NewBeerActivity.class);
-        startActivity(intent);
+        transaction.replace(R.id.content_frame, fragment).commit();
+        setTitle(menuItem.getTitle());
     }
 
     /**
@@ -337,6 +331,14 @@ public class MainActivity extends AppCompatActivity {
      */
     public void newNews(View view) {
         Intent intent = new Intent(this, NewNewsActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * When user presses "+" in MeetingFragment, start new dialog with NewMeetingActivity
+     */
+    public void newMeeting(View view) {
+        Intent intent = new Intent(this, NewMeetingActivity.class);
         startActivity(intent);
     }
 
@@ -358,7 +360,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         this.backPressedOnce = true;
-        Toast.makeText(this, getResources().getString(R.string.press_back_again), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.press_back_again), Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -369,8 +371,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fillHeader() {
-        User user = DataManager.getOwnUser(prefs);
-        if (user.getUserID() != -1) {
+        User user = getOwnUser(prefs);
+        if (user.getID() != -1) {
             View headerLayout = navigationView.getHeaderView(0);
             TextView userName = (TextView) headerLayout.findViewById(R.id.header_user_name);
             TextView userEmail = (TextView) headerLayout.findViewById(R.id.header_user_email);
@@ -381,27 +383,21 @@ public class MainActivity extends AppCompatActivity {
                 userEmail.setText(user.getEmail());
 
                 // Image
-                String url = DataManager.getGravatarURL(user.getEmail());
+                String url = getGravatarURL(user.getEmail());
                 ImageLoader.getInstance().displayImage(url, userImage);
             }
         } else {
-            DataManager.getData(this, prefs, DataManager.WHOAMIURL, DataManager.WHOAMIKEY);
-        }
-    }
+            Loader.getData(new GetCallback() {
+                @Override
+                public void onSuccess(String response) {
+//                    fillHeader();
+                }
 
-    /**
-     * Parse date
-     */
-    public static Date parseDate(String dateString) {
-        Date date = null;
-        try {
-            // Event date
-            if (!dateString.equals("null")) {
-                date = dbDF.parse(dateString);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+                @Override
+                public void onError(VolleyError error) {
+                    // Nothing
+                }
+            }, this, prefs, Loader.WHOAMIURL);
         }
-        return date;
     }
 }

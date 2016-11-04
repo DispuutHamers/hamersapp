@@ -1,21 +1,5 @@
 package nl.ecci.hamers.gcm;
 
-/**
- * Copyright 2015 Google Inc. All Rights Reserved.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -40,43 +24,23 @@ import java.util.Set;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.beers.Beer;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.beers.SingleBeerActivity;
+import nl.ecci.hamers.events.Event;
+import nl.ecci.hamers.events.SingleEventActivity;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.users.User;
+
+import static nl.ecci.hamers.helpers.Utils.getBeer;
+import static nl.ecci.hamers.helpers.Utils.getJsonArray;
+import static nl.ecci.hamers.helpers.Utils.getUser;
 
 public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
-    // Quote
-    private final String QUOTETYPE = "quote";
-    private final String QUOTEBODY = "text";
     private final String QUOTEDATE = "created_at";
-    // Event
-    private final String EVENTTYPE = "event";
-    private final String EVENTTITLE = "title";
-    private final String EVENTLOCATION = "location";
-    private final String EVENTDESCRIPTION = "beschrijving";
-    // Beer
-    private final String BEERTYPE = "beer";
-    private final String BEERNAME = "name";
-    private final String BEERKIND = "soort";
-    private final String BEERPERCENTAGE = "percentage";
-    private final String BEERBREWER = "brewer";
-    private final String BEERCOUNTRY = "country";
-    // Review
-    private final String REVIEWTYPE = "review";
-    private final String REVIEWBEER = "beer_id";
-    private final String REVIEWDESCRIPTION = "description";
-    private final String REVIEWRATING = "rating";
-    // Common
-    private final String USERID = "user_id";
-    private JSONArray json;
-    private SharedPreferences prefs;
-
-    private JSONObject quote;
+    private PendingIntent pendingIntent;
     private JSONObject event;
     private JSONObject beer;
-    private JSONObject review;
-
     private Type type;
 
     /**
@@ -86,10 +50,13 @@ public class MyGcmListenerService extends GcmListenerService {
      * @param data Data bundle containing message data as key/value pairs.
      *             For Set of keys use data.keySet().
      */
-    // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
         String title = null;
         String message = null;
@@ -104,84 +71,92 @@ public class MyGcmListenerService extends GcmListenerService {
         }
 
         // QUOTE
+        JSONArray json;
+        String USERID = "user_id";
         try {
-            quote = new JSONObject(object.getString(QUOTETYPE));
+            String QUOTETYPE = "quote";
+            JSONObject quote = new JSONObject(object.getString(QUOTETYPE));
             if (quote.length() != 0) {
                 type = Type.QUOTE;
+                String QUOTEBODY = "text";
                 title = quote.getString(QUOTEBODY);
 
-                User user = DataManager.getUser(prefs, Integer.valueOf(quote.getString(USERID)));
+                User user = getUser(prefs, Integer.valueOf(quote.getString(USERID)));
                 if (user != null) {
                     message = user.getName();
                 } else {
                     message = "- user";
                 }
 
-                // Add quote to quotelist
-                if ((json = DataManager.getJsonArray(prefs, DataManager.QUOTEKEY)) != null) {
-                    JSONArray quotes = new JSONArray();
-                    quotes.put(quote);
-                    for (int i = 0; i < json.length(); i++) {
-                        quotes.put(json.getJSONObject(i));
-                    }
-                    prefs.edit().putString(DataManager.QUOTEKEY, quotes.toString()).apply();
+                // Add quote to quote list
+                if ((json = getJsonArray(prefs, Loader.QUOTEURL)) != null) {
+                    json.put(quote);
+                    prefs.edit().putString(Loader.QUOTEURL, json.toString()).apply();
                 }
+
             }
-        } catch (JSONException | NullPointerException e) {
-            e.printStackTrace();
+        } catch (JSONException | NullPointerException ignored) {
         }
 
         // EVENT
         try {
+            String EVENTTYPE = "event";
             event = new JSONObject(object.getString(EVENTTYPE));
             if (event.length() != 0) {
                 type = Type.EVENT;
+                String EVENTTITLE = "title";
                 title = event.getString(EVENTTITLE);
+                String EVENTDESCRIPTION = "beschrijving";
                 message = event.getString(EVENTDESCRIPTION);
 
-                // Add event to eventlist
-                if ((json = DataManager.getJsonArray(prefs, DataManager.EVENTKEY)) != null) {
-                    JSONArray events = new JSONArray();
-                    for (int i = 0; i < json.length(); i++) {
-                        events.put(json.getJSONObject(i));
-                    }
-                    events.put(event);
-                    prefs.edit().putString(DataManager.EVENTKEY, events.toString()).apply();
+                // Add event to event list
+                if ((json = getJsonArray(prefs, Loader.EVENTURL)) != null) {
+                    json.put(event);
+                    prefs.edit().putString(Loader.EVENTURL, json.toString()).apply();
                 }
+
+                intent = new Intent(this, SingleEventActivity.class);
+                intent.putExtra(Event.EVENT, event.getInt("id"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
             }
-        } catch (JSONException | NullPointerException e) {
-            e.printStackTrace();
+        } catch (JSONException | NullPointerException ignored) {
         }
 
         // BEER
         try {
+            String BEERTYPE = "beer";
             beer = new JSONObject(object.getString(BEERTYPE));
             if (beer.length() != 0) {
                 type = Type.BEER;
+                String BEERNAME = "name";
                 title = "Biertje: " + beer.getString(BEERNAME);
                 message = "Is net toegevoegd aan de database!";
 
-                // Add beer to beerlist
-                if ((json = DataManager.getJsonArray(prefs, DataManager.BEERKEY)) != null) {
-                    JSONArray beers = new JSONArray();
-                    for (int i = 0; i < json.length(); i++) {
-                        beers.put(json.getJSONObject(i));
-                    }
-                    beers.put(beer);
-                    prefs.edit().putString(DataManager.BEERKEY, beers.toString()).apply();
+                // Add beer to beer list
+                if ((json = getJsonArray(prefs, Loader.BEERURL)) != null) {
+                    json.put(beer);
+                    prefs.edit().putString(Loader.BEERURL, json.toString()).apply();
                 }
+
+                intent = new Intent(this, SingleBeerActivity.class);
+                intent.putExtra(Beer.BEER, beer.getInt("id"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
             }
-        } catch (JSONException | NullPointerException e) {
-            e.printStackTrace();
+        } catch (JSONException | NullPointerException ignored) {
         }
 
         // REVIEW
         try {
-            review = new JSONObject(object.getString(REVIEWTYPE));
+            String REVIEWTYPE = "review";
+            JSONObject review = new JSONObject(object.getString(REVIEWTYPE));
             if (review.length() != 0) {
                 type = Type.REVIEW;
-                User user = DataManager.getUser(prefs, review.getInt(USERID));
-                Beer beer = DataManager.getBeer(prefs, review.getInt(REVIEWBEER));
+                User user = getUser(prefs, review.getInt(USERID));
+                String REVIEWBEER = "beer_id";
+                Beer beer = getBeer(prefs, review.getInt(REVIEWBEER));
+                String REVIEWRATING = "rating";
                 if (user != null && beer != null) {
                     title = user.getName() + " / " + beer.getName() + " / " + review.getString(REVIEWRATING);
                 } else if (user != null) {
@@ -189,20 +164,21 @@ public class MyGcmListenerService extends GcmListenerService {
                 } else {
                     title = "Hamers";
                 }
+                String REVIEWDESCRIPTION = "description";
                 message = review.getString(REVIEWDESCRIPTION);
 
                 // Add review to reviewlist
-                if ((json = DataManager.getJsonArray(prefs, DataManager.REVIEWKEY)) != null) {
-                    JSONArray reviews = new JSONArray();
-                    for (int i = 0; i < json.length(); i++) {
-                        reviews.put(json.getJSONObject(i));
-                    }
-                    reviews.put(review);
-                    prefs.edit().putString(DataManager.REVIEWKEY, reviews.toString()).apply();
+                if ((json = getJsonArray(prefs, Loader.REVIEWURL)) != null) {
+                    json.put(review);
+                    prefs.edit().putString(Loader.REVIEWURL, json.toString()).apply();
                 }
+
+                intent = new Intent(this, SingleBeerActivity.class);
+                intent.putExtra(Beer.BEER, review.getInt("beer_id"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
             }
-        } catch (JSONException | NullPointerException e) {
-            e.printStackTrace();
+        } catch (JSONException | NullPointerException ignored) {
         }
 
         // Show notification
@@ -210,7 +186,7 @@ public class MyGcmListenerService extends GcmListenerService {
         Boolean push = settings.getBoolean("pushPref", true);
 
         if (push && title != null && message != null) {
-            sendNotification(title, message, type);
+            sendNotification(title, message, type, pendingIntent);
         }
     }
 
@@ -219,12 +195,7 @@ public class MyGcmListenerService extends GcmListenerService {
      *
      * @param message GCM message received.
      */
-    private void sendNotification(String title, String message, Type type) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
+    private void sendNotification(String title, String message, Type type, PendingIntent pendingIntent) {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.launcher_icon);
 
@@ -234,10 +205,13 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+                .setSound(defaultSoundUri);
 
         NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
+        notificationBuilder.setStyle(bigTextStyle);
+        if (pendingIntent != null) {
+            notificationBuilder.setContentIntent(pendingIntent);
+        }
 
         switch (type) {
             case QUOTE:
@@ -248,8 +222,8 @@ public class MyGcmListenerService extends GcmListenerService {
             case EVENT:
                 bigTextStyle.setBigContentTitle(title);
                 try {
-                    bigTextStyle.bigText("Locatie: " + event.getString(EVENTLOCATION) + "\n" +
-                            message);
+                    String EVENTLOCATION = "location";
+                    bigTextStyle.bigText("Locatie: " + event.getString(EVENTLOCATION) + "\n" + message);
                 } catch (JSONException ignored) {
                 }
                 break;
@@ -258,6 +232,10 @@ public class MyGcmListenerService extends GcmListenerService {
                 bigTextStyle.setBigContentTitle(title);
 
                 try {
+                    String BEERCOUNTRY = "country";
+                    String BEERBREWER = "brewer";
+                    String BEERPERCENTAGE = "percentage";
+                    String BEERKIND = "soort";
                     bigTextStyle.bigText("Soort: " + beer.getString(BEERKIND) + "\n" +
                             "ALC: " + beer.getString(BEERPERCENTAGE) + "\n" +
                             "Brouwer: " + beer.getString(BEERBREWER) + "\n" +
@@ -278,11 +256,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 break;
         }
 
-
-        notificationBuilder.setStyle(bigTextStyle);
-
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
         notificationManager.notify(0, notificationBuilder.build());
     }
 

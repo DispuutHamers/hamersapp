@@ -3,28 +3,39 @@ package nl.ecci.hamers.beers;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.android.volley.VolleyError;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
+import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.loader.Loader;
+import nl.ecci.hamers.loader.PostCallback;
 
-public class NewBeerActivity extends AppCompatActivity {
+import static nl.ecci.hamers.helpers.Utils.getBeer;
 
+public class NewBeerActivity extends HamersActivity {
+
+    private int beerID;
     private SharedPreferences prefs;
+    private EditText beer_name;
+    private EditText beer_picture;
+    private EditText beer_soort;
+    private EditText beer_percentage;
+    private EditText beer_brewer;
+    private EditText beer_country;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_beer_activity);
+        setContentView(R.layout.beer_new_activity);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -36,53 +47,54 @@ public class NewBeerActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
+        beer_name = (EditText) findViewById(R.id.beer_name);
+        beer_picture = (EditText) findViewById(R.id.beer_picture);
+        beer_soort = (EditText) findViewById(R.id.beer_soort);
+        beer_percentage = (EditText) findViewById(R.id.beer_percentage);
+        beer_brewer = (EditText) findViewById(R.id.beer_brewer);
+        beer_country = (EditText) findViewById(R.id.beer_country);
+
+        beerID = getIntent().getIntExtra(Beer.BEER, -1);
+        if (beerID != -1) {
+            Beer beer = getBeer(MainActivity.prefs, beerID);
+            beer_name.setText(beer.getName());
+            beer_picture.setText(beer.getImageURL());
+            beer_soort.setText(beer.getKind());
+            beer_percentage.setText(beer.getPercentage());
+            beer_brewer.setText(beer.getBrewer());
+            beer_country.setText(beer.getCountry());
         }
-        return super.onOptionsItemSelected(item);
     }
 
     public void postBeer(View view) {
-        EditText beer_title = (EditText) findViewById(R.id.beer_title_et);
-        EditText beer_picture = (EditText) findViewById(R.id.beer_picture_et);
-        EditText beer_soort = (EditText) findViewById(R.id.beer_soort_et);
-        EditText beer_percentage = (EditText) findViewById(R.id.beer_percentage_et);
-        EditText beer_brewer = (EditText) findViewById(R.id.beer_brewer_et);
-        EditText beer_country = (EditText) findViewById(R.id.beer_country_et);
-
-        String title = beer_title.getText().toString();
-        String picture = beer_picture.getText().toString();
-        String soort = beer_soort.getText().toString();
         String percentage = beer_percentage.getText().toString();
-        String brewer = beer_brewer.getText().toString();
-        String country = beer_country.getText().toString();
 
         if (!percentage.contains("%")) {
             percentage = percentage + "%";
         }
 
-        Map<String, String> params = new HashMap<>();
-        params.put("beer[name]", title);
-        params.put("beer[picture]", picture);
-        params.put("beer[percentage]", percentage);
-        params.put("beer[country]", country);
-        params.put("beer[brewer]", brewer);
-        params.put("beer[soort]", soort);
+        JSONObject body = new JSONObject();
+        try {
+            body.put("name", beer_name.getText().toString());
+            body.put("picture", beer_picture.getText().toString());
+            body.put("percentage", percentage);
+            body.put("country", beer_country.getText().toString());
+            body.put("brewer", beer_brewer.getText().toString());
+            body.put("soort", beer_soort.getText().toString());
+        } catch (JSONException ignored) {
+        }
 
-        DataManager.postData(this, prefs, DataManager.BEERURL, DataManager.BEERKEY, params);
-    }
+        Loader.postOrPatchData(new PostCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
 
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-    }
+            }
 
-    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        }, this, prefs, Loader.BEERURL, beerID, body);
     }
 }

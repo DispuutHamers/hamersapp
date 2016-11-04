@@ -1,7 +1,9 @@
 package nl.ecci.hamers.quotes;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,24 +16,26 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.DataManager;
 import nl.ecci.hamers.helpers.DividerItemDecoration;
-import nl.ecci.hamers.users.User;
+import nl.ecci.hamers.loader.GetCallback;
+import nl.ecci.hamers.loader.Loader;
 
-import static nl.ecci.hamers.MainActivity.parseDate;
+import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
-public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnDismissListener {
 
     private final ArrayList<Quote> dataSet = new ArrayList<>();
     private QuoteAdapter adapter;
@@ -57,6 +61,17 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         initSwiper(view, quote_list, mLayoutManager);
 
+        // When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment
+        final FloatingActionButton newQuoteButton = (FloatingActionButton) view.findViewById(R.id.new_quote_button);
+        newQuoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NewQuoteFragment newQuoteFragment = new NewQuoteFragment();
+                newQuoteFragment.show(getChildFragmentManager(), "quotes");
+            }
+        });
+
+        new populateList().execute();
         onRefresh();
 
         return view;
@@ -77,14 +92,20 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
-        DataManager.getData(getContext(), MainActivity.prefs, DataManager.QUOTEURL, DataManager.QUOTEKEY);
-    }
+        Loader.getData(new GetCallback() {
+            @Override
+            public void onSuccess(String response) {
+                new populateList().execute(response);
+            }
 
-    @SuppressWarnings("unchecked")
-    public void populateList() {
-        new populateList().execute(dataSet);
+            @Override
+            public void onError(VolleyError error) {
+                // Nothing
+            }
+        }, getContext(), MainActivity.prefs, Loader.QUOTEURL);
     }
 
     @Override
@@ -112,7 +133,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onResume() {
         super.onResume();
-        populateList();
+        onRefresh();
     }
 
     @Override
@@ -141,37 +162,31 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         }
     }
 
-    public class populateList extends AsyncTask<ArrayList<Quote>, Void, ArrayList<Quote>> {
-        @SafeVarargs
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+        onRefresh();
+    }
+
+    private class populateList extends AsyncTask<String, Void, ArrayList<Quote>> {
+
         @Override
-        protected final ArrayList<Quote> doInBackground(ArrayList<Quote>... param) {
-            final ArrayList<Quote> dataSet = new ArrayList<>();
-            JSONArray json;
-            try {
-                if ((json = DataManager.getJsonArray(MainActivity.prefs, DataManager.QUOTEKEY)) != null) {
-                    for (int i = 0; i < json.length(); i++) {
-                        JSONObject quote = json.getJSONObject(i);
-                        User user;
+        protected final ArrayList<Quote> doInBackground(String... params) {
+            ArrayList<Quote> result = new ArrayList<>();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+            Gson gson = gsonBuilder.create();
+            Type type = new TypeToken<ArrayList<Quote>>() {
+            }.getType();
 
-                        String username;
-                        int id;
-                        if ((user = DataManager.getUser(MainActivity.prefs, quote.getInt("user_id"))) != null) {
-                            username = user.getName();
-                            id = user.getUserID();
-                        } else {
-                            username = "unknown user";
-                            id = -1;
-                        }
-
-                        String tempDate = quote.getString("created_at");
-                        Date date = parseDate(tempDate);
-                        Quote tempQuote = new Quote(username, quote.getString("text"), date, id);
-                        dataSet.add(tempQuote);
-                    }
+            if (params.length > 0) {
+                result = gson.fromJson(params[0], type);
+            } else {
+                JSONArray json;
+                if ((json = getJsonArray(MainActivity.prefs, Loader.QUOTEURL)) != null) {
+                    result = gson.fromJson(json.toString(), type);
                 }
-            } catch (JSONException ignored) {
             }
-            return dataSet;
+            return result;
         }
 
         @Override
@@ -179,16 +194,11 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             if (!result.isEmpty()) {
                 dataSet.clear();
                 dataSet.addAll(result);
-                if (QuoteFragment.this.adapter != null) {
-                    QuoteFragment.this.adapter.notifyDataSetChanged();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
                 }
             }
             setRefreshing(false);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            setRefreshing(true);
         }
     }
 }

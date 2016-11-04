@@ -1,9 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:paddingTop="10dp">
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/review_title"
@@ -17,7 +18,8 @@
         android:layout_toEndOf="@id/beer_image"
         android:layout_toRightOf="@id/beer_image"
         android:gravity="start"
-        android:textColor="@android:color/secondary_text_light"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="16sp" />
 
     <TextView
@@ -32,8 +34,9 @@
         android:layout_marginTop="2dp"
         android:ellipsize="marquee"
         android:gravity="end"
-        android:singleLine="true"
-        android:textColor="@android:color/tertiary_text_light"
+        android:maxLines="1"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="?android:attr/textColorSecondary"
         android:textSize="14sp"
         android:textStyle="italic" />
 
@@ -50,8 +53,8 @@
             android:clickable="false"
             android:gravity="start"
             android:paddingBottom="20dp"
-            android:singleLine="false"
-            android:textColor="@android:color/tertiary_text_light"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp" />
 
         <TextView
@@ -62,8 +65,9 @@
             android:ellipsize="marquee"
             android:gravity="start|bottom"
             android:paddingBottom="2dp"
-            android:singleLine="true"
-            android:textColor="@android:color/tertiary_text_light"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="14sp"
             android:textStyle="italic" />
     </RelativeLayout>

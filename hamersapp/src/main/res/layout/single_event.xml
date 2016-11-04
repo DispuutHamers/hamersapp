@@ -22,7 +22,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="@android:color/white"
                 card_view:cardCornerRadius="2dp">
 
                 <LinearLayout
@@ -42,7 +41,7 @@
                         android:paddingRight="16dp"
                         android:paddingTop="8dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@android:color/primary_text_light"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="25sp" />
 
                     <include layout="@layout/divider" />
@@ -82,11 +81,10 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/aanwezig_layout"
+                android:id="@+id/present_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="@android:color/white"
                 card_view:cardCornerRadius="2dp">
 
                 <LinearLayout
@@ -105,13 +103,13 @@
                         android:paddingTop="8dp"
                         android:text="Aanwezig"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@android:color/primary_text_light"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="20sp" />
 
                     <include layout="@layout/divider" />
 
                     <LinearLayout
-                        android:id="@+id/aanwezig_insert_point"
+                        android:id="@+id/present_insert_point"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -122,11 +120,10 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/afwezig_layout"
+                android:id="@+id/absent_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:background="@android:color/white"
                 card_view:cardCornerRadius="2dp">
 
                 <LinearLayout
@@ -145,13 +142,13 @@
                         android:paddingTop="8dp"
                         android:text="Afwezig"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@android:color/primary_text_light"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="20sp" />
 
                     <include layout="@layout/divider" />
 
                     <LinearLayout
-                        android:id="@+id/afwezig_insert_point"
+                        android:id="@+id/absent_insert_point"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -170,21 +167,21 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/aanwezig_button"
+                    android:id="@+id/present_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_weight="1"
-                    android:onClick="setAanwezig"
+                    android:onClick="setPresent"
                     android:text="@string/event_aanwezig_button" />
 
                 <Button
-                    android:id="@+id/afwezig_button"
+                    android:id="@+id/absent_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_weight="1"
-                    android:onClick="setAfwezig"
+                    android:onClick="setAbsent"
                     android:text="@string/event_afwezig_button" />
             </LinearLayout>
         </LinearLayout>
