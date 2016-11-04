@@ -116,7 +116,7 @@ public class MainActivity extends HamersActivity {
         try {
             // Event date
             if (!dateString.equals("null")) {
-                DateFormat inputFormat = new SimpleDateFormat("dd-mm-yyyy HH:mm", MainActivity.locale);
+                DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm", MainActivity.locale);
                 date = inputFormat.parse(dateString);
             }
         } catch (ParseException ignored) {

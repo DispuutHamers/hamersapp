@@ -108,7 +108,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 public void onError(VolleyError error) {
                     // Nothing
                 }
-            }, getContext(), MainActivity.prefs, Loader.EVENTURL);
+            }, getContext(), MainActivity.prefs, Loader.UPCOMINGEVENTURL);
         } else {
             Loader.getData(new GetCallback() {
                 @Override
@@ -120,7 +120,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 public void onError(VolleyError error) {
                     // Nothing
                 }
-            }, getContext(), MainActivity.prefs, Loader.UPCOMINGEVENTURL);
+            }, getContext(), MainActivity.prefs, Loader.EVENTURL);
         }
     }
 
@@ -188,9 +188,6 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 
             if (params.length > 0) {
                 tempList = gson.fromJson(params[0], type);
-                if (!upcoming) {
-                    Collections.reverse(tempList);
-                }
             } else {
                 String key = Loader.EVENTURL;
                 if (upcoming) {
@@ -216,6 +213,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 
         @Override
         protected void onPostExecute(ArrayList<Event> result) {
+            setRefreshing(false);
             if (!result.isEmpty()) {
                 dataSet.clear();
                 dataSet.addAll(result);
@@ -224,7 +222,6 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                     adapter.notifyDataSetChanged();
                 }
             }
-            setRefreshing(false);
         }
     }
 }

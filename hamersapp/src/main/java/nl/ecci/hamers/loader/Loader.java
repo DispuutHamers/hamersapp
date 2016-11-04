@@ -42,8 +42,8 @@ public final class Loader {
     public static final String APIKEYKEY = "apikey";
 
     // URL
-    private static final String baseURL = "https://zondersikkel.nl/api/v2/";
-//    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
+//    private static final String baseURL = "https://zondersikkel.nl/api/v2/";
+    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
 
     public static void getData(final GetCallback callback, final Context context, final SharedPreferences prefs, final String dataURL) {
         String url = baseURL + dataURL;
@@ -84,12 +84,14 @@ public final class Loader {
             url = baseURL + dataURL + "/" + urlAppendix;
         }
 
+        Log.d("PostRequest: ", body.toString());
+
         JsonObjectRequest request = new JsonObjectRequest(url, body,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        callback.onSuccess(response);
                         Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
+                        callback.onSuccess(response);
 //                        if (context != null) {
 //                            if (!(context instanceof MainActivity)) {
 //                                ((Activity) context).finish();
