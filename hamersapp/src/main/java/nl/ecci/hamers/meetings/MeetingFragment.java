@@ -22,8 +22,8 @@ import java.util.ArrayList;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.GetCallback;
+import nl.ecci.hamers.loader.Loader;
 
 import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
@@ -82,8 +82,8 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
         setRefreshing(true);
         Loader.getData(new GetCallback() {
             @Override
-            public void onSuccess(JSONArray response) {
-                new populateList().execute(dataSet);
+            public void onSuccess(String response) {
+                new populateList().execute(response);
             }
 
             @Override
@@ -110,22 +110,25 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
         }
     }
 
-    private class populateList extends AsyncTask<ArrayList<Meeting>, Void, ArrayList<Meeting>> {
-        @SafeVarargs
+    private class populateList extends AsyncTask<String, Void, ArrayList<Meeting>> {
         @Override
-        protected final ArrayList<Meeting> doInBackground(ArrayList<Meeting>... param) {
-            ArrayList<Meeting> dataSet = new ArrayList<>();
-            JSONArray json;
-            if ((json = getJsonArray(MainActivity.prefs, Loader.MEETINGURL)) != null) {
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-                Gson gson = gsonBuilder.create();
+        protected final ArrayList<Meeting> doInBackground(String... params) {
+            ArrayList<Meeting> result = new ArrayList<>();
+            Type type = new TypeToken<ArrayList<Meeting>>() {
+            }.getType();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+            Gson gson = gsonBuilder.create();
 
-                Type type = new TypeToken<ArrayList<Meeting>>() {
-                }.getType();
-                dataSet = gson.fromJson(json.toString(), type);
+            if (params.length > 0) {
+                result = gson.fromJson(params[0], type);
+            } else {
+                JSONArray json;
+                if ((json = getJsonArray(MainActivity.prefs, Loader.MEETINGURL)) != null) {
+                    result = gson.fromJson(json.toString(), type);
+                }
             }
-            return dataSet;
+            return result;
         }
 
         @Override

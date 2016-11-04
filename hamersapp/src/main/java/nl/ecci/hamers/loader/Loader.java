@@ -14,10 +14,9 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -49,12 +48,12 @@ public final class Loader {
     public static void getData(final GetCallback callback, final Context context, final SharedPreferences prefs, final String dataURL) {
         String url = baseURL + dataURL;
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d("Loader-response", response.toString());
-                        prefs.edit().putString(dataURL, response.toString()).apply();
+                    public void onResponse(String response) {
+                        Log.d("Loader-response", response);
+                        prefs.edit().putString(dataURL, response).apply();
                         if (callback != null) {
                             callback.onSuccess(response);
                         }

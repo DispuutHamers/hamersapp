@@ -28,8 +28,8 @@ import java.util.Collections;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.GetCallback;
+import nl.ecci.hamers.loader.Loader;
 
 import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
@@ -93,7 +93,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         setRefreshing(true);
         Loader.getData(new GetCallback() {
             @Override
-            public void onSuccess(JSONArray response) {
+            public void onSuccess(String response) {
                 new populateList().execute(response);
             }
 
@@ -143,24 +143,21 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     }
 
-    private class populateList extends AsyncTask<JSONArray, Void, ArrayList<News>> {
+    private class populateList extends AsyncTask<String, Void, ArrayList<News>> {
         @Override
-        protected final ArrayList<News> doInBackground(JSONArray... params) {
+        protected final ArrayList<News> doInBackground(String... params) {
             ArrayList<News> result = new ArrayList<>();
             Type type = new TypeToken<ArrayList<News>>() {
             }.getType();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+            Gson gson = gsonBuilder.create();
 
             if (params.length > 0) {
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
-                Gson gson = gsonBuilder.create();
-                result = gson.fromJson(params[0].toString(), type);
+                result = gson.fromJson(params[0], type);
             } else {
                 JSONArray json;
                 if ((json = getJsonArray(MainActivity.prefs, Loader.NEWSURL)) != null) {
-                    GsonBuilder gsonBuilder = new GsonBuilder();
-                    gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
-                    Gson gson = gsonBuilder.create();
                     result = gson.fromJson(json.toString(), type);
                 }
             }

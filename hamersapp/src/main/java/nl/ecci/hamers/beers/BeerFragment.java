@@ -123,7 +123,7 @@ public class BeerFragment extends HamersFragment {
         setRefreshing(true);
         Loader.getData(new GetCallback() {
             @Override
-            public void onSuccess(JSONArray response) {
+            public void onSuccess(String response) {
                 new populateList().execute(response);
             }
 
@@ -134,7 +134,7 @@ public class BeerFragment extends HamersFragment {
         }, getContext(), MainActivity.prefs, Loader.BEERURL);
         Loader.getData(new GetCallback() {
             @Override
-            public void onSuccess(JSONArray response) {
+            public void onSuccess(String response) {
                 adapter.notifyDataSetChanged();
             }
 
@@ -205,9 +205,6 @@ public class BeerFragment extends HamersFragment {
             if (MainActivity.prefs != null) {
                 String sortPref = MainActivity.prefs.getString("beerSort", "");
                 switch (sortPref) {
-                    case "name":
-                        sort(nameComparator);
-                        break;
                     case "rating":
                         sort(ratingComparator);
                         break;
@@ -217,6 +214,8 @@ public class BeerFragment extends HamersFragment {
                     case "datumDESC":
                         sort(dateDESCComperator);
                         break;
+                    default:
+                        sort(nameComparator);
                 }
             }
     }
@@ -243,24 +242,21 @@ public class BeerFragment extends HamersFragment {
         }
     }
 
-    private class populateList extends AsyncTask<JSONArray, Void, ArrayList<Beer>> {
+    private class populateList extends AsyncTask<String, Void, ArrayList<Beer>> {
         @Override
-        protected final ArrayList<Beer> doInBackground(JSONArray... params) {
+        protected final ArrayList<Beer> doInBackground(String... params) {
             ArrayList<Beer> result = new ArrayList<>();
             Type type = new TypeToken<ArrayList<Beer>>() {
             }.getType();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+            Gson gson = gsonBuilder.create();
 
             if (params.length > 0) {
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
-                Gson gson = gsonBuilder.create();
-                result = gson.fromJson(params[0].toString(), type);
+                result = gson.fromJson(params[0], type);
             } else {
                 JSONArray json;
                 if ((json = getJsonArray(MainActivity.prefs, Loader.BEERURL)) != null) {
-                    GsonBuilder gsonBuilder = new GsonBuilder();
-                    gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
-                    Gson gson = gsonBuilder.create();
                     result = gson.fromJson(json.toString(), type);
                 }
             }

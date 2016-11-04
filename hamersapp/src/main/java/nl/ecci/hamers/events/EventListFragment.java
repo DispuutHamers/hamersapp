@@ -31,8 +31,8 @@ import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.GetCallback;
+import nl.ecci.hamers.loader.Loader;
 
 import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 
@@ -75,6 +75,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
             });
         }
 
+        new populateList().execute();
         onRefresh();
 
         return view;
@@ -101,7 +102,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         if (upcoming) {
             Loader.getData(new GetCallback() {
                 @Override
-                public void onSuccess(JSONArray response) {
+                public void onSuccess(String response) {
                     new populateList().execute(response);
                 }
 
@@ -113,7 +114,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         } else {
             Loader.getData(new GetCallback() {
                 @Override
-                public void onSuccess(JSONArray response) {
+                public void onSuccess(String response) {
                     new populateList().execute(response);
                 }
 
@@ -175,39 +176,39 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         }
     }
 
-    private class populateList extends AsyncTask<JSONArray, Void, ArrayList<Event>> {
+    private class populateList extends AsyncTask<String, Void, ArrayList<Event>> {
         @Override
-        protected final ArrayList<Event> doInBackground(JSONArray... params) {
+        protected final ArrayList<Event> doInBackground(String... params) {
             ArrayList<Event> result = new ArrayList<>();
             ArrayList<Event> tempList = new ArrayList<>();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+            Gson gson = gsonBuilder.create();
             Type type = new TypeToken<ArrayList<Event>>() {
             }.getType();
             Date now = new Date();
 
             if (params.length > 0) {
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
-                Gson gson = gsonBuilder.create();
-                tempList = gson.fromJson(params[0].toString(), type);
+                tempList = gson.fromJson(params[0], type);
+                if (!upcoming) {
+                    Collections.reverse(tempList);
+                }
             } else {
                 JSONArray json;
-
-
                 String key = Loader.EVENTURL;
                 if (upcoming) {
                     key = Loader.UPCOMINGEVENTURL;
                 }
                 if ((json = getJsonArray(MainActivity.prefs, key)) != null) {
-                    GsonBuilder gsonBuilder = new GsonBuilder();
-                    gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
-                    Gson gson = gsonBuilder.create();
                     tempList = gson.fromJson(json.toString(), type);
                 }
             }
 
             for (Event event : tempList) {
-                if (upcoming && event.getEndDate() != null && event.getEndDate().after(now)) {
-                    result.add(event);
+                if (upcoming) {
+                    if (event.getEndDate() != null && event.getEndDate().after(now)) {
+                        result.add(event);
+                    }
                 } else {
                     result.add(event);
                 }

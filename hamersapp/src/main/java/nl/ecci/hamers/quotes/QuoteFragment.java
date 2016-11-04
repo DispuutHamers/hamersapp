@@ -10,7 +10,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,7 +23,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -99,7 +97,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         setRefreshing(true);
         Loader.getData(new GetCallback() {
             @Override
-            public void onSuccess(JSONArray response) {
+            public void onSuccess(String response) {
                 new populateList().execute(response);
             }
 
@@ -166,33 +164,29 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public void onDismiss(DialogInterface dialogInterface) {
-        System.out.println("----------- ONDISMISS");
         onRefresh();
     }
 
-    private class populateList extends AsyncTask<JSONArray, Void, ArrayList<Quote>> {
+    private class populateList extends AsyncTask<String, Void, ArrayList<Quote>> {
 
         @Override
-        protected final ArrayList<Quote> doInBackground(JSONArray... params) {
+        protected final ArrayList<Quote> doInBackground(String... params) {
+            ArrayList<Quote> result = new ArrayList<>();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+            Gson gson = gsonBuilder.create();
             Type type = new TypeToken<ArrayList<Quote>>() {
             }.getType();
 
             if (params.length > 0) {
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
-                Gson gson = gsonBuilder.create();
-                return gson.fromJson(params[0].toString(), type);
+                result = gson.fromJson(params[0], type);
             } else {
-                ArrayList<Quote> dataSet = new ArrayList<>();
                 JSONArray json;
                 if ((json = getJsonArray(MainActivity.prefs, Loader.QUOTEURL)) != null) {
-                    GsonBuilder gsonBuilder = new GsonBuilder();
-                    gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
-                    Gson gson = gsonBuilder.create();
-                    dataSet = gson.fromJson(json.toString(), type);
+                    result = gson.fromJson(json.toString(), type);
                 }
-                return dataSet;
             }
+            return result;
         }
 
         @Override

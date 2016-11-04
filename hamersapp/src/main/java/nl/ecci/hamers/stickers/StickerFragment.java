@@ -67,7 +67,7 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
     public void onRefresh() {
         Loader.getData(new GetCallback() {
             @Override
-            public void onSuccess(JSONArray response) {
+            public void onSuccess(String response) {
                 new populateMap().execute(dataSet);
             }
 

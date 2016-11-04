@@ -104,7 +104,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
         setRefreshing(true);
         Loader.getData(new GetCallback() {
             @Override
-            public void onSuccess(JSONArray response) {
+            public void onSuccess(String response) {
                 new populateList().execute(response);
             }
 
@@ -204,25 +204,22 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
         adapter.notifyDataSetChanged();
     }
 
-    private class populateList extends AsyncTask<JSONArray, Void, ArrayList<User>> {
+    private class populateList extends AsyncTask<String, Void, ArrayList<User>> {
         @Override
-        protected final ArrayList<User> doInBackground(JSONArray... params) {
+        protected final ArrayList<User> doInBackground(String... params) {
             ArrayList<User> result = new ArrayList<>();
             ArrayList<User> tempList = new ArrayList<>();
             Type type = new TypeToken<ArrayList<User>>() {
             }.getType();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
+            Gson gson = gsonBuilder.create();
 
             if (params.length > 0) {
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
-                Gson gson = gsonBuilder.create();
-                tempList = gson.fromJson(params[0].toString(), type);
+                tempList = gson.fromJson(params[0], type);
             } else {
                 JSONArray json;
                 if ((json = getJsonArray(MainActivity.prefs, Loader.USERURL)) != null) {
-                    GsonBuilder gsonBuilder = new GsonBuilder();
-                    gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
-                    Gson gson = gsonBuilder.create();
                     tempList = gson.fromJson(json.toString(), type);
                 }
             }
