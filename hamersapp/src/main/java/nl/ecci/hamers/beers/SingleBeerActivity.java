@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -36,7 +35,6 @@ import nl.ecci.hamers.helpers.SingleImageActivity;
 import nl.ecci.hamers.loader.Loader;
 
 import static nl.ecci.hamers.MainActivity.prefs;
-import static nl.ecci.hamers.R.id.rating;
 import static nl.ecci.hamers.R.id.review_body;
 import static nl.ecci.hamers.R.id.review_rating;
 import static nl.ecci.hamers.helpers.Utils.getBeer;
@@ -52,7 +50,19 @@ public class SingleBeerActivity extends HamersActivity {
     private Button reviewButton;
     private ViewGroup reviewViewGroup;
     private Review ownReview;
-    private int reviewTag = 1234;
+
+    // Activity for result
+    // Review
+    int reviewRequestCode = 1;
+    public static final String reviewRating = "reviewRating";
+    public static final String reviewBody = "reviewBody";
+    // Beer
+    int beerRequestCode = 2;
+    public static final String beerName = "beerName";
+    public static final String beerKind = "beerKind";
+    public static final String beerPercentage = "beerPercentage";
+    public static final String beerBrewer = "beerBrewer";
+    public static final String beerCountry = "beerCountry";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,13 +84,6 @@ public class SingleBeerActivity extends HamersActivity {
         gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
         gson = gsonBuilder.create();
 
-        TextView nameTV = (TextView) findViewById(R.id.beer_name);
-
-        View kindRow = findViewById(R.id.row_kind);
-        View alcRow = findViewById(R.id.row_alc);
-        View brewerRow = findViewById(R.id.row_brewer);
-        View countryRow = findViewById(R.id.row_country);
-        View ratingRow = findViewById(R.id.row_rating);
         reviewViewGroup = (ViewGroup) findViewById(R.id.reviews);
 
         final ImageView beerImage = (ImageView) findViewById(R.id.beer_image);
@@ -96,18 +99,7 @@ public class SingleBeerActivity extends HamersActivity {
 
         beer = getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, -1));
 
-        fillRow(kindRow, getString(R.string.beer_soort), beer.getKind());
-        fillRow(alcRow, getString(R.string.beer_alc), beer.getPercentage());
-        fillRow(brewerRow, getString(R.string.beer_brewer), beer.getBrewer());
-        fillRow(countryRow, getString(R.string.beer_country), beer.getCountry());
-
-        nameTV.setText(beer.getName());
-
-        if (beer.getRating() == null) {
-            fillRow(ratingRow, getString(R.string.beer_rating), "Nog niet bekend");
-        } else {
-            fillRow(ratingRow, getString(R.string.beer_rating), beer.getRating());
-        }
+        setValues();
 
         // Universal Image Loader
         ImageLoader imageLoader = ImageLoader.getInstance();
@@ -125,6 +117,24 @@ public class SingleBeerActivity extends HamersActivity {
         });
 
         getReviews();
+    }
+
+    private void setValues() {
+        TextView nameTV = (TextView) findViewById(R.id.beer_name);
+        View ratingRow = findViewById(R.id.row_rating);
+
+        fillRow(findViewById(R.id.row_kind), getString(R.string.beer_soort), beer.getKind());
+        fillRow(findViewById(R.id.row_alc), getString(R.string.beer_alc), beer.getPercentage());
+        fillRow(findViewById(R.id.row_brewer), getString(R.string.beer_brewer), beer.getBrewer());
+        fillRow(findViewById(R.id.row_country), getString(R.string.beer_country), beer.getCountry());
+
+        nameTV.setText(beer.getName());
+
+        if (beer.getRating() == null) {
+            fillRow(ratingRow, getString(R.string.beer_rating), "Nog niet bekend");
+        } else {
+            fillRow(ratingRow, getString(R.string.beer_rating), beer.getRating());
+        }
     }
 
     private void getReviews() {
@@ -165,8 +175,8 @@ public class SingleBeerActivity extends HamersActivity {
             intent.putExtra(Review.REVIEW, gson.toJson(review, Review.class));
         }
 
-        int requestCode = 1;
-        startActivityForResult(intent, requestCode);
+
+        startActivityForResult(intent, reviewRequestCode);
     }
 
     private void insertReview(Review review) {
@@ -183,10 +193,6 @@ public class SingleBeerActivity extends HamersActivity {
         body.setText(review.getDescription());
         date.setText(MainActivity.appDF2.format(review.getProefdatum()));
         ratingTV.setText(String.format("Cijfer: %s", review.getRating()));
-
-        if (review == ownReview) {
-            view.setTag(reviewTag);
-        }
 
         // Insert into view
         if (insertPoint != null) {
@@ -234,7 +240,7 @@ public class SingleBeerActivity extends HamersActivity {
                 if (beer != null) {
                     intent.putExtra(Beer.BEER, beer.getID());
                 }
-                startActivity(intent);
+                startActivityForResult(intent, beerRequestCode);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -258,20 +264,34 @@ public class SingleBeerActivity extends HamersActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String newBody = data.getStringExtra(NewReviewActivity.reviewBody);
-        int newRating = data.getIntExtra(NewReviewActivity.reviewRating, -1);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == reviewRequestCode) {
+                String newBody = data.getStringExtra(reviewBody);
+                int newRating = data.getIntExtra(reviewRating, -1);
 
-        if (ownReview != null) {
-            for (int i = 0; i < insertPoint.getChildCount(); i++) {
-                View view = insertPoint.getChildAt(i);
-                TextView bodyTextView = (TextView) view.findViewById(review_body);
-                TextView ratingTextView = (TextView) view.findViewById(review_rating);
-                if (bodyTextView != null && ratingTextView != null) {
-                    if (bodyTextView.getText() == ownReview.getDescription()) {
-                        bodyTextView.setText(newBody);
-                        ratingTextView.setText(String.format("Cijfer: %s", newRating));
+                if (ownReview != null) {
+                    for (int i = 0; i < insertPoint.getChildCount(); i++) {
+                        View view = insertPoint.getChildAt(i);
+                        TextView bodyTextView = (TextView) view.findViewById(review_body);
+                        TextView ratingTextView = (TextView) view.findViewById(review_rating);
+                        if (bodyTextView != null && ratingTextView != null) {
+                            if (bodyTextView.getText() == ownReview.getDescription()) {
+                                bodyTextView.setText(newBody);
+                                ratingTextView.setText(String.format("Cijfer: %s", newRating));
+                            }
+                        }
                     }
                 }
+            } else if (requestCode == beerRequestCode) {
+                beer.setName(data.getStringExtra(beerName));
+                beer.setKind(data.getStringExtra(beerKind));
+                beer.setPercentage(data.getStringExtra(beerPercentage));
+                beer.setPercentage(data.getStringExtra(beerPercentage));
+                beer.setBrewer(data.getStringExtra(beerBrewer));
+                beer.setCountry(data.getStringExtra(beerCountry));
+                beer.setRating(beer.getRating() + " (Nog niet bijgewerkt)");
+
+                setValues();
             }
         }
     }

@@ -33,6 +33,8 @@ import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.PostCallback;
 
+import static nl.ecci.hamers.beers.SingleBeerActivity.reviewBody;
+import static nl.ecci.hamers.beers.SingleBeerActivity.reviewRating;
 import static nl.ecci.hamers.helpers.Utils.getBeer;
 
 public class NewReviewActivity extends HamersActivity {
@@ -45,9 +47,6 @@ public class NewReviewActivity extends HamersActivity {
     private EditText review_body;
     private Button date_button;
     private SharedPreferences prefs;
-
-    public static final String reviewRating = "reviewRating";
-    public static final String reviewBody = "reviewBody";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -1,5 +1,7 @@
 package nl.ecci.hamers.beers;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -25,12 +27,12 @@ public class NewBeerActivity extends HamersActivity {
 
     private int beerID;
     private SharedPreferences prefs;
-    private EditText beer_name;
-    private EditText beer_picture;
-    private EditText beer_soort;
-    private EditText beer_percentage;
-    private EditText beer_brewer;
-    private EditText beer_country;
+    private EditText beerName;
+    private EditText beerPicture;
+    private EditText beerKind;
+    private EditText beerPercentage;
+    private EditText beerBrewer;
+    private EditText beerCountry;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,27 +50,27 @@ public class NewBeerActivity extends HamersActivity {
             actionBar.setHomeButtonEnabled(true);
         }
 
-        beer_name = (EditText) findViewById(R.id.beer_name);
-        beer_picture = (EditText) findViewById(R.id.beer_picture);
-        beer_soort = (EditText) findViewById(R.id.beer_soort);
-        beer_percentage = (EditText) findViewById(R.id.beer_percentage);
-        beer_brewer = (EditText) findViewById(R.id.beer_brewer);
-        beer_country = (EditText) findViewById(R.id.beer_country);
+        beerName = (EditText) findViewById(R.id.beer_name);
+        beerPicture = (EditText) findViewById(R.id.beer_picture);
+        beerKind = (EditText) findViewById(R.id.beer_soort);
+        beerPercentage = (EditText) findViewById(R.id.beer_percentage);
+        beerBrewer = (EditText) findViewById(R.id.beer_brewer);
+        beerCountry = (EditText) findViewById(R.id.beer_country);
 
         beerID = getIntent().getIntExtra(Beer.BEER, -1);
         if (beerID != -1) {
             Beer beer = getBeer(MainActivity.prefs, beerID);
-            beer_name.setText(beer.getName());
-            beer_picture.setText(beer.getImageURL());
-            beer_soort.setText(beer.getKind());
-            beer_percentage.setText(beer.getPercentage());
-            beer_brewer.setText(beer.getBrewer());
-            beer_country.setText(beer.getCountry());
+            beerName.setText(beer.getName());
+            beerPicture.setText(beer.getImageURL());
+            beerKind.setText(beer.getKind());
+            beerPercentage.setText(beer.getPercentage());
+            beerBrewer.setText(beer.getBrewer());
+            beerCountry.setText(beer.getCountry());
         }
     }
 
     public void postBeer(View view) {
-        String percentage = beer_percentage.getText().toString();
+        String percentage = beerPercentage.getText().toString();
 
         if (!percentage.contains("%")) {
             percentage = percentage + "%";
@@ -76,18 +78,25 @@ public class NewBeerActivity extends HamersActivity {
 
         JSONObject body = new JSONObject();
         try {
-            body.put("name", beer_name.getText().toString());
-            body.put("picture", beer_picture.getText().toString());
+            body.put("name", beerName.getText().toString());
+            body.put("picture", beerPicture.getText().toString());
             body.put("percentage", percentage);
-            body.put("country", beer_country.getText().toString());
-            body.put("brewer", beer_brewer.getText().toString());
-            body.put("soort", beer_soort.getText().toString());
+            body.put("country", beerCountry.getText().toString());
+            body.put("brewer", beerBrewer.getText().toString());
+            body.put("soort", beerKind.getText().toString());
         } catch (JSONException ignored) {
         }
 
         Loader.postOrPatchData(new PostCallback() {
             @Override
             public void onSuccess(JSONObject response) {
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra(SingleBeerActivity.beerName, beerName.getText().toString());
+                returnIntent.putExtra(SingleBeerActivity.beerKind, beerKind.getText().toString());
+                returnIntent.putExtra(SingleBeerActivity.beerPercentage, beerPercentage.getText().toString());
+                returnIntent.putExtra(SingleBeerActivity.beerBrewer, beerBrewer.getText().toString());
+                returnIntent.putExtra(SingleBeerActivity.beerCountry, beerCountry.getText().toString());
+                setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
 

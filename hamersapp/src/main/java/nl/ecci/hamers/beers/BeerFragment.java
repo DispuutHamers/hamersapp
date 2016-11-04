@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -36,6 +37,8 @@ import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
 
 import static nl.ecci.hamers.MainActivity.prefs;
+import static nl.ecci.hamers.R.id.review_body;
+import static nl.ecci.hamers.R.id.review_rating;
 
 public class BeerFragment extends HamersFragment {
 
@@ -102,7 +105,8 @@ public class BeerFragment extends HamersFragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getActivity(), NewBeerActivity.class);
-                    startActivity(intent);
+                    int requestCode = 1;
+                    startActivityForResult(intent, requestCode);
                 }
             });
         }

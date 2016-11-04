@@ -9,16 +9,16 @@ public class Beer {
     public static final String BEER = "BEER";
 
     private final int id;
-    private final String name;
+    private String name;
     @SerializedName("soort")
-    private final String kind;
+    private String kind;
     @SerializedName("picture")
     private final String imageURL;
-    private final String percentage;
-    private final String brewer;
-    private final String country;
+    private String percentage;
+    private String brewer;
+    private String country;
     @SerializedName("cijfer")
-    private final String rating;
+    private String rating;
     private final String url;
     @SerializedName("created_at")
     private final Date createdAt;
@@ -76,5 +76,29 @@ public class Beer {
 
     public Date getCreatedAt() {
         return createdAt;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
+
+    public void setPercentage(String percentage) {
+        this.percentage = percentage;
+    }
+
+    public void setBrewer(String brewer) {
+        this.brewer = brewer;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 }
