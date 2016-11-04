@@ -1,5 +1,7 @@
 package nl.ecci.hamers.beers;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -43,6 +45,9 @@ public class NewReviewActivity extends HamersActivity {
     private EditText review_body;
     private Button date_button;
     private SharedPreferences prefs;
+
+    public static final String reviewRating = "reviewRating";
+    public static final String reviewBody = "reviewBody";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,7 +118,7 @@ public class NewReviewActivity extends HamersActivity {
     }
 
     public void postReview(View view) {
-        String review_body = this.review_body.getText().toString();
+        final String review_body = this.review_body.getText().toString();
         String date = date_button.getText().toString();
 
         if (review_body.length() > 2) {
@@ -131,6 +136,11 @@ public class NewReviewActivity extends HamersActivity {
                 Loader.postOrPatchData(new PostCallback() {
                     @Override
                     public void onSuccess(JSONObject response) {
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra(reviewBody, review_body);
+                        returnIntent.putExtra(reviewRating, rating);
+                        setResult(Activity.RESULT_OK, returnIntent);
+                        finish();
                     }
 
                     @Override

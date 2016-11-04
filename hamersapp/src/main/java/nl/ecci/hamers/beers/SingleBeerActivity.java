@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -35,6 +36,9 @@ import nl.ecci.hamers.helpers.SingleImageActivity;
 import nl.ecci.hamers.loader.Loader;
 
 import static nl.ecci.hamers.MainActivity.prefs;
+import static nl.ecci.hamers.R.id.rating;
+import static nl.ecci.hamers.R.id.review_body;
+import static nl.ecci.hamers.R.id.review_rating;
 import static nl.ecci.hamers.helpers.Utils.getBeer;
 import static nl.ecci.hamers.helpers.Utils.getOwnUser;
 import static nl.ecci.hamers.helpers.Utils.getUser;
@@ -44,9 +48,11 @@ public class SingleBeerActivity extends HamersActivity {
     private LayoutInflater inflater;
     private Beer beer;
     private Gson gson;
+    private LinearLayout insertPoint;
     private Button reviewButton;
     private ViewGroup reviewViewGroup;
     private Review ownReview;
+    private int reviewTag = 1234;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +71,7 @@ public class SingleBeerActivity extends HamersActivity {
         }
 
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
         gson = gsonBuilder.create();
 
         TextView nameTV = (TextView) findViewById(R.id.beer_name);
@@ -83,7 +89,7 @@ public class SingleBeerActivity extends HamersActivity {
             reviewButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    createReview(ownReview);
+                    updateReview(ownReview);
                 }
             });
         }
@@ -151,7 +157,7 @@ public class SingleBeerActivity extends HamersActivity {
      * Called when the user clicks the button to create a new beer review,
      * starts NewBeerActivity.
      */
-    private void createReview(Review review) {
+    private void updateReview(Review review) {
         Intent intent = new Intent(this, NewReviewActivity.class);
         intent.putExtra(Beer.BEER, beer.getID());
 
@@ -164,12 +170,12 @@ public class SingleBeerActivity extends HamersActivity {
     }
 
     private void insertReview(Review review) {
-        LinearLayout insertPoint = (LinearLayout) findViewById(R.id.review_insert_point);
+        insertPoint = (LinearLayout) findViewById(R.id.review_insert_point);
         View view = inflater.inflate(R.layout.review_row, insertPoint, false);
         View divider = inflater.inflate(R.layout.divider, insertPoint, false);
 
         TextView title = (TextView) view.findViewById(R.id.review_title);
-        TextView body = (TextView) view.findViewById(R.id.review_body);
+        TextView body = (TextView) view.findViewById(review_body);
         TextView date = (TextView) view.findViewById(R.id.review_date);
         TextView ratingTV = (TextView) view.findViewById(R.id.review_rating);
 
@@ -177,6 +183,10 @@ public class SingleBeerActivity extends HamersActivity {
         body.setText(review.getDescription());
         date.setText(MainActivity.appDF2.format(review.getProefdatum()));
         ratingTV.setText(String.format("Cijfer: %s", review.getRating()));
+
+        if (review == ownReview) {
+            view.setTag(reviewTag);
+        }
 
         // Insert into view
         if (insertPoint != null) {
@@ -199,7 +209,7 @@ public class SingleBeerActivity extends HamersActivity {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.review_update:
-                createReview(ownReview);
+                updateReview(ownReview);
                 return true;
             case R.id.review_delete:
                 deleteReview();
@@ -247,14 +257,23 @@ public class SingleBeerActivity extends HamersActivity {
                 .show();
     }
 
-    private void refreshActivity() {
-        finish();
-        startActivity(getIntent());
-    }
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        getReviews();
-        refreshActivity();
+        String newBody = data.getStringExtra(NewReviewActivity.reviewBody);
+        int newRating = data.getIntExtra(NewReviewActivity.reviewRating, -1);
+
+        if (ownReview != null) {
+            for (int i = 0; i < insertPoint.getChildCount(); i++) {
+                View view = insertPoint.getChildAt(i);
+                TextView bodyTextView = (TextView) view.findViewById(review_body);
+                TextView ratingTextView = (TextView) view.findViewById(review_rating);
+                if (bodyTextView != null && ratingTextView != null) {
+                    if (bodyTextView.getText() == ownReview.getDescription()) {
+                        bodyTextView.setText(newBody);
+                        ratingTextView.setText(String.format("Cijfer: %s", newRating));
+                    }
+                }
+            }
+        }
     }
 
     private void fillRow(View view, final String title, final String description) {

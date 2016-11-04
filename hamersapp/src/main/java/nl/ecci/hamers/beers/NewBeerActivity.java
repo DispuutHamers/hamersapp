@@ -88,7 +88,7 @@ public class NewBeerActivity extends HamersActivity {
         Loader.postOrPatchData(new PostCallback() {
             @Override
             public void onSuccess(JSONObject response) {
-
+                finish();
             }
 
             @Override
