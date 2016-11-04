@@ -186,7 +186,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         @Override
         protected void onPostExecute(ArrayList<Quote> result) {
-            if (!result.isEmpty()) {
+            if (result != null) {
                 dataSet.clear();
                 dataSet.addAll(result);
                 if (adapter != null) {

@@ -261,7 +261,7 @@ public class BeerFragment extends HamersFragment {
 
         @Override
         protected void onPostExecute(ArrayList<Beer> result) {
-            if (!result.isEmpty()) {
+            if (result != null) {
                 dataSet.clear();
                 dataSet.addAll(result);
                 if (adapter != null) {

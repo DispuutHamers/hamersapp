@@ -178,7 +178,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         @Override
         protected final ArrayList<Event> doInBackground(String... params) {
             ArrayList<Event> result = new ArrayList<>();
-            ArrayList<Event> tempList = new ArrayList<>();
+            ArrayList<Event> tempList;
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
             Gson gson = gsonBuilder.create();
@@ -199,13 +199,15 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 tempList = gson.fromJson(prefs.getString(key, null), type);
             }
 
-            for (Event event : tempList) {
-                if (upcoming) {
-                    if (event.getEndDate() != null && event.getEndDate().after(now)) {
+            if (tempList != null) {
+                for (Event event : tempList) {
+                    if (upcoming) {
+                        if (event.getEndDate() != null && event.getEndDate().after(now)) {
+                            result.add(event);
+                        }
+                    } else {
                         result.add(event);
                     }
-                } else {
-                    result.add(event);
                 }
             }
 
@@ -218,8 +220,8 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 dataSet.clear();
                 dataSet.addAll(result);
                 Collections.reverse(dataSet);
-                if (EventListFragment.this.adapter != null) {
-                    EventListFragment.this.adapter.notifyDataSetChanged();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
                 }
             }
             setRefreshing(false);

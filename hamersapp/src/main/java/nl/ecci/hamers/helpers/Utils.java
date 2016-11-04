@@ -161,16 +161,20 @@ public class Utils {
     }
 
     public static User getUser(SharedPreferences prefs, int id) {
+        ArrayList<User> userList;
         User result = new User(-1, "Unknown", "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<User.Nickname>(), new Date());
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         Type type = new TypeToken<ArrayList<User>>() {
         }.getType();
-        ArrayList<User> userList = gson.fromJson(prefs.getString(Loader.USERURL, null), type);
 
-        for (User user : userList) {
-            if (user.getID() == id) {
-                result = user;
+        userList = gson.fromJson(prefs.getString(Loader.USERURL, null), type);
+
+        if (userList != null) {
+            for (User user : userList) {
+                if (user.getID() == id) {
+                    result = user;
+                }
             }
         }
 
@@ -196,9 +200,11 @@ public class Utils {
         }.getType();
         ArrayList<Event> eventList = gson.fromJson(prefs.getString(Loader.EVENTURL, null), type);
 
-        for (Event event : eventList) {
-            if (event.getID() == id) {
-                result = event;
+        if (eventList != null) {
+            for (Event event : eventList) {
+                if (event.getID() == id) {
+                    result = event;
+                }
             }
         }
 
@@ -213,9 +219,11 @@ public class Utils {
         }.getType();
         ArrayList<Beer> beerList = gson.fromJson(prefs.getString(Loader.BEERURL, null), type);
 
-        for (Beer beer : beerList) {
-            if (beer.getID() == id) {
-                result = beer;
+        if (beerList != null) {
+            for (Beer beer : beerList) {
+                if (beer.getID() == id) {
+                    result = beer;
+                }
             }
         }
 
@@ -231,9 +239,11 @@ public class Utils {
         }.getType();
         ArrayList<Meeting> meetingList = gson.fromJson(prefs.getString(Loader.MEETINGURL, null), type);
 
-        for (Meeting meeting : meetingList) {
-            if (meeting.getID() == id) {
-                result = meeting;
+        if (meetingList != null) {
+            for (Meeting meeting : meetingList) {
+                if (meeting.getID() == id) {
+                    result = meeting;
+                }
             }
         }
 

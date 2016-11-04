@@ -219,11 +219,13 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
                 tempList = gson.fromJson(prefs.getString(Loader.USERURL, null), type);
             }
 
-            for (User user : tempList) {
-                if (exUser && user.getMember() != User.Member.LID) {
-                    result.add(user);
-                } else if (!exUser && user.getMember() == User.Member.LID) {
-                    result.add(user);
+            if (tempList != null) {
+                for (User user : tempList) {
+                    if (exUser && user.getMember() != User.Member.LID) {
+                        result.add(user);
+                    } else if (!exUser && user.getMember() == User.Member.LID) {
+                        result.add(user);
+                    }
                 }
             }
             return result;
@@ -231,7 +233,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         @Override
         protected void onPostExecute(ArrayList<User> result) {
-            if (!result.isEmpty()) {
+            if (result != null) {
                 dataSet.clear();
                 dataSet.addAll(result);
                 if (UserListFragment.this.adapter != null) {
