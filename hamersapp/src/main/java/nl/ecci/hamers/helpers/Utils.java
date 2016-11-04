@@ -185,16 +185,14 @@ public class Utils {
     }
 
     public static User getOwnUser(SharedPreferences prefs) {
+        User user;
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        JSONObject whoami;
-        try {
-            if ((whoami = new JSONObject(prefs.getString(Loader.WHOAMIURL, null))) != null) {
-                return gson.fromJson(whoami.toString(), User.class);
-            }
-        } catch (JSONException | NullPointerException ignored) {
+        user = gson.fromJson(prefs.getString(Loader.WHOAMIURL, null), User.class);
+        if (user == null) {
+            user = new User(-1, "Unknown", "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<User.Nickname>(), new Date());
         }
-        return new User(-1, "Unknown", "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<User.Nickname>(), new Date());
+        return user;
     }
 
     public static Event getEvent(SharedPreferences prefs, int id) {

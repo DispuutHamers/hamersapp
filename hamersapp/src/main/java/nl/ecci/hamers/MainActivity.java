@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -27,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -49,11 +49,12 @@ import nl.ecci.hamers.events.EventFragment;
 import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.Utils;
+import nl.ecci.hamers.loader.GetCallback;
+import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.meetings.MeetingFragment;
 import nl.ecci.hamers.meetings.NewMeetingActivity;
 import nl.ecci.hamers.news.NewNewsActivity;
 import nl.ecci.hamers.news.NewsFragment;
-import nl.ecci.hamers.quotes.NewQuoteFragment;
 import nl.ecci.hamers.quotes.QuoteFragment;
 import nl.ecci.hamers.stickers.StickerFragment;
 import nl.ecci.hamers.users.User;
@@ -385,18 +386,18 @@ public class MainActivity extends HamersActivity {
                 String url = getGravatarURL(user.getEmail());
                 ImageLoader.getInstance().displayImage(url, userImage);
             }
-//        } else {
-//            Loader.getData(new GetCallback() {
-//                @Override
-//                public void callback(JSONArray response) {
+        } else {
+            Loader.getData(new GetCallback() {
+                @Override
+                public void onSuccess(String response) {
 //                    fillHeader();
-//                }
-//
-//                @Override
-//                public void onError(VolleyError error) {
-//                    // Nothing
-//                }
-//            }, this, prefs, Loader.WHOAMIURL);
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    // Nothing
+                }
+            }, this, prefs, Loader.WHOAMIURL);
         }
     }
 }
