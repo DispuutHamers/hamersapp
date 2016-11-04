@@ -37,7 +37,6 @@ public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
     private final String QUOTEDATE = "created_at";
-    private PendingIntent pendingIntent;
     private JSONObject event;
     private JSONObject beer;
     private Type type;
@@ -55,7 +54,7 @@ public class MyGcmListenerService extends GcmListenerService {
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
         String title = null;
         String message = null;

@@ -62,7 +62,7 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @SuppressWarnings("unchecked")
-    public void onRefresh() {
+    private void onRefresh() {
         Loader.getData(new GetCallback() {
             @Override
             public void onSuccess(String response) {
@@ -76,7 +76,7 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
         }, getContext(), MainActivity.prefs, Loader.STICKERURL);
     }
 
-    public void addMarkers() {
+    private void addMarkers() {
         if (map != null && !dataSet.isEmpty()) {
             for (Sticker sticker : dataSet) {
                 map.addMarker(new MarkerOptions().position(new LatLng(sticker.getLat(), sticker.getLon())));

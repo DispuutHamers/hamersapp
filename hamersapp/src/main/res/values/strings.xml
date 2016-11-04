@@ -47,7 +47,6 @@
     <string name="description">Beschrijving</string>
     <string name="menu_upcoming">Aankomend</string>
     <string name="menu_all">Alle</string>
-    <string name="location_unknown">Locatie (nog) onbekend</string>
 
     <!-- Beers -->
     <string name="new_beer">Nieuw biertje</string>
@@ -107,7 +106,6 @@
     <string name="pref_summaryOn">Push notifications ontvangen</string>
     <string name="pref_summaryOff">Push notifications niet ontvangen</string>
 
-    <string name="apikey_category">API-key</string>
     <string name="apikey_summary">Deze vind je op de website</string>
     <string name="apikey_hint">Plak je key hier..</string>
 
@@ -161,10 +159,7 @@
     </array>
 
     <!-- Snackbar -->
-    <string name="load_error">Fout bij inladen</string>
     <string name="dowloading">De gegevens worden gedownload</string>
-    <string name="user_load_error">Fout bij het laden van de leden</string>
-    <string name="review_load_error">Fout bij het laden van de reviews</string>
     <string name="store_key_settings">Een apikey kan ingevuld worden bij instellingen</string>
     <string name="generic_error">Er is iets misgegaan, probeer het later opnieuw.</string>
     <string name="volley_error">Fout bij ophalen data van server.</string>
@@ -187,8 +182,6 @@
     <string name="missing_fields">Vul alle velden in!</string>
 
     <string name="press_back_again">Klik nog een keer op \'back\' om af te sluiten.</string>
-
-    <string name="functionality_added_later">Deze functionaliteit komt in een latere versie.</string>
 
     <!-- Beer images -->
     <string name="no_image">Dit biertje heeft geen afbeelding!</string>

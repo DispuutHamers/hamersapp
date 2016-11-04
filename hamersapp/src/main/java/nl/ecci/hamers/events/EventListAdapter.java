@@ -19,13 +19,13 @@ import nl.ecci.hamers.R;
 
 import static nl.ecci.hamers.helpers.Utils.getOwnUser;
 
-public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> implements Filterable {
+class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> implements Filterable {
 
     private final Context context;
     private final ArrayList<Event> dataSet;
     private ArrayList<Event> filteredDataSet;
 
-    public EventListAdapter(Context context, ArrayList<Event> dataSet) {
+    EventListAdapter(Context context, ArrayList<Event> dataSet) {
         this.context = context;
         this.dataSet = dataSet;
         this.filteredDataSet = dataSet;
@@ -89,17 +89,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         }
     }
 
-    private boolean dateChecker(Date date, boolean beginDate) {
-        if (date != null && beginDate) {
-            if (System.currentTimeMillis() > date.getTime()) {
-                return true;
-            }
-        } else if (date != null && System.currentTimeMillis() < date.getTime()) {
-            return true;
-        }
-        return false;
-    }
-
     @Override
     public int getItemCount() {
         return filteredDataSet.size();
@@ -138,15 +127,15 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         };
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;
         public final TextView title;
         public final TextView description;
         public final TextView date;
-        public final TextView location;
-        public final ImageView thumbs;
+        final TextView location;
+        final ImageView thumbs;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             this.view = view;
 

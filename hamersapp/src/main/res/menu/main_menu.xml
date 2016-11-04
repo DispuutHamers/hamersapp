@@ -2,7 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navigation_item_quotes"
             android:checked="true"
             android:icon="@drawable/quotes"
             android:title="@string/navigation_item_quotes" />
@@ -32,9 +31,7 @@
             android:icon="@drawable/briefcase"
             android:title="@string/navigation_item_meetings" />
     </group>
-    <group
-        android:id="@+id/menu_bottom"
-        android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_item_settings"
             android:icon="@drawable/settings"

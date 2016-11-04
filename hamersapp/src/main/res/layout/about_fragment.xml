@@ -18,7 +18,6 @@
             android:paddingTop="@dimen/activity_vertical_margin">
 
             <ImageView
-                android:id="@+id/appIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/launcher_icon" />
@@ -29,7 +28,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/about_txt1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/you_are_running"

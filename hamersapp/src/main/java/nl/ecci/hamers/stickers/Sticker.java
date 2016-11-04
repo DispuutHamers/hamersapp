@@ -1,6 +1,6 @@
 package nl.ecci.hamers.stickers;
 
-public class Sticker {
+class Sticker {
 
     public static final String ID = "ID";
 

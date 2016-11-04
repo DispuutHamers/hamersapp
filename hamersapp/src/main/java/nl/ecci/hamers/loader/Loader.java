@@ -42,8 +42,8 @@ public final class Loader {
     public static final String APIKEYKEY = "apikey";
 
     // URL
-//    private static final String baseURL = "https://zondersikkel.nl/api/v2/";
-    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
+    private static final String baseURL = "https://zondersikkel.nl/api/v2/";
+//    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
 
     public static void getData(final GetCallback callback, final Context context, final SharedPreferences prefs, final String dataURL) {
         String url = baseURL + dataURL;
