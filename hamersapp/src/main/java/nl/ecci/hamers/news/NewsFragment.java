@@ -143,7 +143,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private class populateList extends AsyncTask<String, Void, ArrayList<News>> {
         @Override
         protected final ArrayList<News> doInBackground(String... params) {
-            ArrayList<News> result = new ArrayList<>();
+            ArrayList<News> result;
             Type type = new TypeToken<ArrayList<News>>() {
             }.getType();
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -160,12 +160,12 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         @Override
         protected void onPostExecute(ArrayList<News> result) {
-            if (!result.isEmpty()) {
+            if (result != null) {
                 dataSet.clear();
                 dataSet.addAll(result);
                 Collections.reverse(dataSet);
-                if (NewsFragment.this.adapter != null) {
-                    NewsFragment.this.adapter.notifyDataSetChanged();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
                 }
             }
             setRefreshing(false);
