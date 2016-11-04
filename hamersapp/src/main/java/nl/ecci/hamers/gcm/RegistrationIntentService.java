@@ -108,7 +108,7 @@ public class RegistrationIntentService extends IntentService {
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, null, sharedPreferences, Loader.GCMURL, -1, body);
+        }, getApplicationContext(), sharedPreferences, Loader.GCMURL, -1, body);
     }
 
     /**
