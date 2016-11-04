@@ -49,6 +49,7 @@ public class SingleEventActivity extends HamersActivity {
     private ViewGroup eventLayout;
     private ViewGroup presentLayout;
     private ViewGroup absentLayout;
+    private User ownUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class SingleEventActivity extends HamersActivity {
         absentLayout = (ViewGroup) findViewById(R.id.absent_layout);
 
         event = getEvent(MainActivity.prefs, getIntent().getIntExtra(Event.EVENT, 1));
+        ownUser = getOwnUser(MainActivity.prefs);
 
         initSignups();
 
@@ -134,6 +136,9 @@ public class SingleEventActivity extends HamersActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if (ownUser.getID() != event.getUserID()) {
+            return false;
+        }
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.edit_menu, menu);
         return true;
@@ -209,7 +214,7 @@ public class SingleEventActivity extends HamersActivity {
             }
         }
 
-        if (present.size() != 0) {
+        if (present.size() > 0) {
             for (String name : present) {
                 presentView.addView(newSingleRow(name, presentView), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             }
@@ -217,7 +222,7 @@ public class SingleEventActivity extends HamersActivity {
             eventLayout.removeView(presentLayout);
         }
 
-        if (absent.size() != 0) {
+        if (absent.size() > 0) {
             for (String name : absent) {
                 absentView.addView(newSingleRow(name, absentView), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             }
@@ -225,7 +230,6 @@ public class SingleEventActivity extends HamersActivity {
             eventLayout.removeView(absentLayout);
         }
 
-        User ownUser = getOwnUser(MainActivity.prefs);
         if (present.contains(ownUser.getName()) && presentButton != null) {
             presentButton.setVisibility(View.GONE);
         } else if (absent.contains(ownUser.getName()) && absentButton != null) {

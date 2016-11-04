@@ -18,6 +18,8 @@ public class Event {
     @SerializedName("end_time")
     private final Date endDate;
     private final Date deadline;
+    @SerializedName("user_id")
+    private int userID;
     private final ArrayList<Signup> signups;
     @SerializedName("created_at")
     private final Date createdAt;
@@ -62,6 +64,10 @@ public class Event {
 
     public Date getDeadline() {
         return deadline;
+    }
+
+    public int getUserID() {
+        return userID;
     }
 
     public ArrayList<Signup> getSignups() {

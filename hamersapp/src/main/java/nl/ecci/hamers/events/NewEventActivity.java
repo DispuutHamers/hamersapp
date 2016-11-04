@@ -151,7 +151,7 @@ public class NewEventActivity extends HamersActivity {
             Loader.postOrPatchData(new PostCallback() {
                 @Override
                 public void onSuccess(JSONObject response) {
-                    NewEventActivity.this.finish();
+                    finish();
                 }
 
                 @Override

@@ -62,6 +62,7 @@ public final class Loader {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Log.d("Loader-error", error.toString());
                         callback.onError(error);
                         handleErrorResponse(context, error);
                     }
@@ -110,6 +111,7 @@ public final class Loader {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Log.d("Loader-error", error.toString());
                         callback.onError(error);
                         handleErrorResponse(context, error);
                     }
