@@ -37,8 +37,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
-import org.json.JSONArray;
-
 import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;

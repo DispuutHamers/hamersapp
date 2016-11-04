@@ -15,10 +15,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.security.MessageDigest;
@@ -26,7 +22,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.events.Event;
@@ -201,7 +196,7 @@ public class Utils {
         }.getType();
         ArrayList<Event> eventList = gson.fromJson(prefs.getString(Loader.EVENTURL, null), type);
 
-        for (Event event: eventList) {
+        for (Event event : eventList) {
             if (event.getID() == id) {
                 result = event;
             }
