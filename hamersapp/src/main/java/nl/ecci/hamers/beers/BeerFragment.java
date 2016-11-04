@@ -22,8 +22,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,7 +35,7 @@ import nl.ecci.hamers.helpers.HamersFragment;
 import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
 
-import static nl.ecci.hamers.helpers.Utils.getJsonArray;
+import static nl.ecci.hamers.MainActivity.prefs;
 
 public class BeerFragment extends HamersFragment {
 
@@ -131,7 +129,7 @@ public class BeerFragment extends HamersFragment {
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, Loader.BEERURL);
+        }, getContext(), prefs, Loader.BEERURL);
         Loader.getData(new GetCallback() {
             @Override
             public void onSuccess(String response) {
@@ -142,7 +140,7 @@ public class BeerFragment extends HamersFragment {
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, Loader.REVIEWURL);
+        }, getContext(), prefs, Loader.REVIEWURL);
     }
 
     @Override
@@ -202,8 +200,8 @@ public class BeerFragment extends HamersFragment {
 
     private void sortList() {
         if (getActivity() != null)
-            if (MainActivity.prefs != null) {
-                String sortPref = MainActivity.prefs.getString("beerSort", "");
+            if (prefs != null) {
+                String sortPref = prefs.getString("beerSort", "");
                 switch (sortPref) {
                     case "rating":
                         sort(ratingComparator);
@@ -245,7 +243,7 @@ public class BeerFragment extends HamersFragment {
     private class populateList extends AsyncTask<String, Void, ArrayList<Beer>> {
         @Override
         protected final ArrayList<Beer> doInBackground(String... params) {
-            ArrayList<Beer> result = new ArrayList<>();
+            ArrayList<Beer> result;
             Type type = new TypeToken<ArrayList<Beer>>() {
             }.getType();
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -255,10 +253,8 @@ public class BeerFragment extends HamersFragment {
             if (params.length > 0) {
                 result = gson.fromJson(params[0], type);
             } else {
-                JSONArray json;
-                if ((json = getJsonArray(MainActivity.prefs, Loader.BEERURL)) != null) {
-                    result = gson.fromJson(json.toString(), type);
-                }
+                result = gson.fromJson(prefs.getString(Loader.BEERURL, null), type);
+
             }
             return result;
         }
@@ -273,7 +269,7 @@ public class BeerFragment extends HamersFragment {
                 }
             }
             setRefreshing(false);
-//            sortList();
+            sortList();
         }
     }
 }

@@ -31,7 +31,6 @@ import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.users.User;
 
 import static nl.ecci.hamers.helpers.Utils.getBeer;
-import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 import static nl.ecci.hamers.helpers.Utils.getUser;
 
 public class MyGcmListenerService extends GcmListenerService {
@@ -89,11 +88,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 }
 
                 // Add quote to quote list
-                if ((json = getJsonArray(prefs, Loader.QUOTEURL)) != null) {
-                    json.put(quote);
-                    prefs.edit().putString(Loader.QUOTEURL, json.toString()).apply();
-                }
-
+                json = new JSONArray(prefs.getString(Loader.QUOTEURL, null));
+                json.put(quote);
+                prefs.edit().putString(Loader.QUOTEURL, json.toString()).apply();
             }
         } catch (JSONException | NullPointerException ignored) {
         }
@@ -110,10 +107,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 message = event.getString(EVENTDESCRIPTION);
 
                 // Add event to event list
-                if ((json = getJsonArray(prefs, Loader.EVENTURL)) != null) {
-                    json.put(event);
-                    prefs.edit().putString(Loader.EVENTURL, json.toString()).apply();
-                }
+                json = new JSONArray(prefs.getString(Loader.EVENTURL, null));
+                json.put(event);
+                prefs.edit().putString(Loader.EVENTURL, json.toString()).apply();
 
                 intent = new Intent(this, SingleEventActivity.class);
                 intent.putExtra(Event.EVENT, event.getInt("id"));
@@ -134,10 +130,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 message = "Is net toegevoegd aan de database!";
 
                 // Add beer to beer list
-                if ((json = getJsonArray(prefs, Loader.BEERURL)) != null) {
-                    json.put(beer);
-                    prefs.edit().putString(Loader.BEERURL, json.toString()).apply();
-                }
+                json = new JSONArray(prefs.getString(Loader.BEERURL, null));
+                json.put(beer);
+                prefs.edit().putString(Loader.BEERURL, json.toString()).apply();
 
                 intent = new Intent(this, SingleBeerActivity.class);
                 intent.putExtra(Beer.BEER, beer.getInt("id"));
@@ -167,11 +162,10 @@ public class MyGcmListenerService extends GcmListenerService {
                 String REVIEWDESCRIPTION = "description";
                 message = review.getString(REVIEWDESCRIPTION);
 
-                // Add review to reviewlist
-                if ((json = getJsonArray(prefs, Loader.REVIEWURL)) != null) {
-                    json.put(review);
-                    prefs.edit().putString(Loader.REVIEWURL, json.toString()).apply();
-                }
+                // Add review to review list
+                json = new JSONArray(prefs.getString(Loader.REVIEWURL, null));
+                json.put(review);
+                prefs.edit().putString(Loader.REVIEWURL, json.toString()).apply();
 
                 intent = new Intent(this, SingleBeerActivity.class);
                 intent.putExtra(Beer.BEER, review.getInt("beer_id"));

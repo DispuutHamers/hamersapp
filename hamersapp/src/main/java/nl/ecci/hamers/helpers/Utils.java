@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ import nl.ecci.hamers.events.Event;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.meetings.Meeting;
 import nl.ecci.hamers.users.User;
+
+import static nl.ecci.hamers.MainActivity.prefs;
 
 public class Utils {
     private static AlertDialog alertDialog;
@@ -130,58 +134,52 @@ public class Utils {
     }
 
     public static int usernameToID(SharedPreferences prefs, String name) {
-        JSONArray userJSON;
         int result = -1;
-        try {
-            if ((userJSON = getJsonArray(prefs, Loader.USERURL)) != null) {
-                for (int i = 0; i < userJSON.length(); i++) {
-                    if (userJSON.getJSONObject(i).getString("name").equals(name)) {
-                        result = userJSON.getJSONObject(i).getInt("id");
-                    }
-                }
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        Type type = new TypeToken<ArrayList<User>>() {
+        }.getType();
+        ArrayList<User> userList = gson.fromJson(prefs.getString(Loader.USERURL, null), type);
+
+        for (User user : userList) {
+            if (user.getName().equals(name)) {
+                result = user.getID();
             }
-        } catch (JSONException e) {
-            return result;
         }
         return result;
     }
 
-    public static ArrayList<String> createActiveMemberList(Context context) {
+    public static ArrayList<User> createActiveMemberList() {
+        ArrayList<User> result = new ArrayList<>();
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        ArrayList<String> users = new ArrayList<>();
-        JSONArray userJSON;
-        try {
-            if ((userJSON = getJsonArray(MainActivity.prefs, Loader.USERURL)) != null) {
-                for (int i = 0; i < userJSON.length(); i++) {
-                    User user = gson.fromJson(userJSON.getJSONObject(i).toString(), User.class);
-                    if (user.getMember() == User.Member.LID) {
-                        users.add(user.getName());
-                    }
-                }
+        Type type = new TypeToken<ArrayList<User>>() {
+        }.getType();
+        ArrayList<User> userList = gson.fromJson(prefs.getString(Loader.USERURL, null), type);
+
+        for (User user : userList) {
+            if (user.getMember() == User.Member.LID) {
+                result.add(user);
             }
-        } catch (JSONException e) {
-            Toast.makeText(context, context.getString(R.string.user_load_error), Toast.LENGTH_SHORT).show();
         }
-        return users;
+        return result;
     }
 
     public static User getUser(SharedPreferences prefs, int id) {
+        User result = new User(-1, "Unknown", "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<User.Nickname>(), new Date());
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        JSONArray users;
-        try {
-            if ((users = getJsonArray(prefs, Loader.USERURL)) != null) {
-                for (int i = 0; i < users.length(); i++) {
-                    JSONObject user = users.getJSONObject(i);
-                    if (user.getInt("id") == id) {
-                        return gson.fromJson(user.toString(), User.class);
-                    }
-                }
+        Type type = new TypeToken<ArrayList<User>>() {
+        }.getType();
+        ArrayList<User> userList = gson.fromJson(prefs.getString(Loader.USERURL, null), type);
+
+        for (User user : userList) {
+            if (user.getID() == id) {
+                result = user;
             }
-        } catch (JSONException ignored) {
         }
-        return new User(-1, "Unknown", "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<User.Nickname>(), new Date());
+
+        return result;
     }
 
     public static User getOwnUser(SharedPreferences prefs) {
@@ -196,73 +194,54 @@ public class Utils {
     }
 
     public static Event getEvent(SharedPreferences prefs, int id) {
+        Event result = new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), new ArrayList<Event.Signup>(), new Date());
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        JSONArray events;
-        try {
-            if ((events = getJsonArray(prefs, Loader.EVENTURL)) != null) {
-                for (int i = 0; i < events.length(); i++) {
-                    JSONObject event = events.getJSONObject(i);
-                    if (event.getInt("id") == id) {
-                        return gson.fromJson(event.toString(), Event.class);
-                    }
-                }
+        Type type = new TypeToken<ArrayList<Event>>() {
+        }.getType();
+        ArrayList<Event> eventList = gson.fromJson(prefs.getString(Loader.EVENTURL, null), type);
+
+        for (Event event: eventList) {
+            if (event.getID() == id) {
+                result = event;
             }
-        } catch (JSONException ignored) {
         }
-        return new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), new ArrayList<Event.Signup>(), new Date());
+
+        return result;
     }
 
     public static Beer getBeer(SharedPreferences prefs, int id) {
+        Beer result = new Beer(-1, "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", new Date());
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        JSONArray beers;
-        try {
-            if ((beers = getJsonArray(prefs, Loader.BEERURL)) != null) {
-                for (int i = 0; i < beers.length(); i++) {
-                    JSONObject temp = beers.getJSONObject(i);
-                    if (temp.getInt("id") == id) {
-                        return gson.fromJson(temp.toString(), Beer.class);
-                    }
-                }
+        Type type = new TypeToken<ArrayList<Beer>>() {
+        }.getType();
+        ArrayList<Beer> beerList = gson.fromJson(prefs.getString(Loader.BEERURL, null), type);
+
+        for (Beer beer : beerList) {
+            if (beer.getID() == id) {
+                result = beer;
             }
-        } catch (JSONException ignored) {
         }
-        return new Beer(-1, "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", new Date());
+
+        return result;
     }
 
     public static Meeting getMeeting(SharedPreferences prefs, int id) {
+        Date date = new Date();
+        Meeting result = new Meeting(-1, "Unknown", "Unknown", "Unknown", -1, date, date, date);
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        JSONArray meetings;
-        try {
-            if ((meetings = getJsonArray(prefs, Loader.MEETINGURL)) != null) {
-                for (int i = 0; i < meetings.length(); i++) {
-                    JSONObject meeting = meetings.getJSONObject(i);
-                    if (meeting.getInt("id") == id) {
-                        return gson.fromJson(meeting.toString(), Meeting.class);
-                    }
-                }
+        Type type = new TypeToken<ArrayList<Meeting>>() {
+        }.getType();
+        ArrayList<Meeting> meetingList = gson.fromJson(prefs.getString(Loader.MEETINGURL, null), type);
+
+        for (Meeting meeting : meetingList) {
+            if (meeting.getID() == id) {
+                result = meeting;
             }
-        } catch (JSONException ignored) {
         }
-        Date date = new Date();
-        return new Meeting(-1, "Unknown", "Unknown", "Unknown", -1, date, date, date);
-    }
 
-    private static JSONObject getJsonObject(SharedPreferences prefs, String key) {
-        try {
-            return new JSONObject(prefs.getString(key, null));
-        } catch (JSONException | NullPointerException e) {
-            return null;
-        }
-    }
-
-    public static JSONArray getJsonArray(SharedPreferences prefs, String key) {
-        try {
-            return new JSONArray(prefs.getString(key, null));
-        } catch (JSONException | NullPointerException e) {
-            return null;
-        }
+        return result;
     }
 }

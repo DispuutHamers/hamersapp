@@ -25,7 +25,7 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
 
-import static nl.ecci.hamers.helpers.Utils.getJsonArray;
+import static nl.ecci.hamers.MainActivity.prefs;
 
 public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private final ArrayList<Meeting> dataSet = new ArrayList<>();
@@ -113,7 +113,7 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private class populateList extends AsyncTask<String, Void, ArrayList<Meeting>> {
         @Override
         protected final ArrayList<Meeting> doInBackground(String... params) {
-            ArrayList<Meeting> result = new ArrayList<>();
+            ArrayList<Meeting> result;
             Type type = new TypeToken<ArrayList<Meeting>>() {
             }.getType();
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -123,10 +123,7 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
             if (params.length > 0) {
                 result = gson.fromJson(params[0], type);
             } else {
-                JSONArray json;
-                if ((json = getJsonArray(MainActivity.prefs, Loader.MEETINGURL)) != null) {
-                    result = gson.fromJson(json.toString(), type);
-                }
+                result = gson.fromJson(prefs.getString(Loader.MEETINGURL, null), type);
             }
             return result;
         }

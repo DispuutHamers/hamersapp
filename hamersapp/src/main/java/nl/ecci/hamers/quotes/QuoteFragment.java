@@ -33,7 +33,7 @@ import nl.ecci.hamers.helpers.DividerItemDecoration;
 import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
 
-import static nl.ecci.hamers.helpers.Utils.getJsonArray;
+import static nl.ecci.hamers.MainActivity.prefs;
 
 public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnDismissListener {
 
@@ -171,7 +171,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         @Override
         protected final ArrayList<Quote> doInBackground(String... params) {
-            ArrayList<Quote> result = new ArrayList<>();
+            ArrayList<Quote> result;
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
             Gson gson = gsonBuilder.create();
@@ -181,10 +181,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             if (params.length > 0) {
                 result = gson.fromJson(params[0], type);
             } else {
-                JSONArray json;
-                if ((json = getJsonArray(MainActivity.prefs, Loader.QUOTEURL)) != null) {
-                    result = gson.fromJson(json.toString(), type);
-                }
+                result = gson.fromJson(prefs.getString(Loader.QUOTEURL, null), type);
             }
             return result;
         }

@@ -126,7 +126,7 @@ public final class Loader {
         Singleton.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void handleErrorResponse(@NonNull Context context, @NonNull VolleyError error) {
+    private static void handleErrorResponse(@NonNull Context context, @NonNull VolleyError error) {
         if (error instanceof AuthFailureError) {
             // Wrong API key
             Toast.makeText(context, context.getString(R.string.auth_error), Toast.LENGTH_SHORT).show();

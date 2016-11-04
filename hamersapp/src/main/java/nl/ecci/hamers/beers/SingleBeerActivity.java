@@ -19,15 +19,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
@@ -35,8 +34,8 @@ import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.SingleImageActivity;
 import nl.ecci.hamers.loader.Loader;
 
+import static nl.ecci.hamers.MainActivity.prefs;
 import static nl.ecci.hamers.helpers.Utils.getBeer;
-import static nl.ecci.hamers.helpers.Utils.getJsonArray;
 import static nl.ecci.hamers.helpers.Utils.getOwnUser;
 import static nl.ecci.hamers.helpers.Utils.getUser;
 
@@ -123,30 +122,28 @@ public class SingleBeerActivity extends HamersActivity {
     }
 
     private void getReviews() {
+        ArrayList<Review> reviewList;
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        JSONArray reviews;
+        Type type = new TypeToken<ArrayList<Review>>() {
+        }.getType();
+
         boolean hasReviews = false;
-        try {
-            if ((reviews = getJsonArray(MainActivity.prefs, Loader.REVIEWURL)) != null) {
-                for (int i = 0; i < reviews.length(); i++) {
-                    JSONObject jsonObject = reviews.getJSONObject(i);
-                    Review review = gson.fromJson(jsonObject.toString(), Review.class);
-                    if (review.getBeerID() == beer.getID()) {
-                        hasReviews = true;
-                        if (review.getUserID() == getOwnUser(MainActivity.prefs).getID()) {
-                            reviewButton.setText(R.string.edit_review);
-                            ownReview = review;
-                        }
-                        insertReview(review);
-                    }
+        reviewList = gson.fromJson(prefs.getString(Loader.REVIEWURL, null), type);
+
+        for (Review review : reviewList) {
+            if (review.getBeerID() == beer.getID()) {
+                hasReviews = true;
+                if (review.getUserID() == getOwnUser(MainActivity.prefs).getID()) {
+                    reviewButton.setText(R.string.edit_review);
+                    ownReview = review;
                 }
-                if (!hasReviews) {
-                    reviewViewGroup.removeAllViews();
-                }
+                insertReview(review);
             }
-        } catch (JSONException e) {
-            Toast.makeText(this, getString(R.string.review_load_error), Toast.LENGTH_SHORT).show();
+        }
+
+        if (!hasReviews) {
+            reviewViewGroup.removeAllViews();
         }
     }
 

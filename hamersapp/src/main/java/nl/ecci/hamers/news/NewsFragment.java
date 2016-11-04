@@ -31,7 +31,7 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
 
-import static nl.ecci.hamers.helpers.Utils.getJsonArray;
+import static nl.ecci.hamers.MainActivity.prefs;
 
 public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -156,10 +156,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             if (params.length > 0) {
                 result = gson.fromJson(params[0], type);
             } else {
-                JSONArray json;
-                if ((json = getJsonArray(MainActivity.prefs, Loader.NEWSURL)) != null) {
-                    result = gson.fromJson(json.toString(), type);
-                }
+                result = gson.fromJson(prefs.getString(Loader.NEWSURL, null), type);
             }
             return result;
         }

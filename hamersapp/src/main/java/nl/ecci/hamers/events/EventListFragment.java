@@ -22,8 +22,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,7 +32,7 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
 
-import static nl.ecci.hamers.helpers.Utils.getJsonArray;
+import static nl.ecci.hamers.MainActivity.prefs;
 
 public class EventListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -194,14 +192,11 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                     Collections.reverse(tempList);
                 }
             } else {
-                JSONArray json;
                 String key = Loader.EVENTURL;
                 if (upcoming) {
                     key = Loader.UPCOMINGEVENTURL;
                 }
-                if ((json = getJsonArray(MainActivity.prefs, key)) != null) {
-                    tempList = gson.fromJson(json.toString(), type);
-                }
+                tempList = gson.fromJson(prefs.getString(key, null), type);
             }
 
             for (Event event : tempList) {

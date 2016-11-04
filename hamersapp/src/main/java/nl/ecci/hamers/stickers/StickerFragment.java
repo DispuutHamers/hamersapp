@@ -20,17 +20,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.GetCallback;
+import nl.ecci.hamers.loader.Loader;
 
-import static nl.ecci.hamers.helpers.Utils.getJsonArray;
+import static nl.ecci.hamers.MainActivity.prefs;
 
 public class StickerFragment extends Fragment implements OnMapReadyCallback {
 
@@ -115,16 +113,11 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
         @SafeVarargs
         @Override
         protected final ArrayList<Sticker> doInBackground(ArrayList<Sticker>... param) {
-            ArrayList<Sticker> dataSet = new ArrayList<>();
-            JSONArray json;
-            if ((json = getJsonArray(MainActivity.prefs, Loader.STICKERURL)) != null) {
-                Gson gson = new GsonBuilder().create();
+            Gson gson = new GsonBuilder().create();
+            Type type = new TypeToken<ArrayList<Sticker>>() {
+            }.getType();
 
-                Type type = new TypeToken<ArrayList<Sticker>>() {
-                }.getType();
-                dataSet = gson.fromJson(json.toString(), type);
-            }
-            return dataSet;
+            return gson.fromJson(prefs.getString(Loader.STICKERURL, null), type);
         }
 
         @Override

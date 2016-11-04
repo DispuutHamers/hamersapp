@@ -25,6 +25,7 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.PostCallback;
+import nl.ecci.hamers.users.User;
 
 import static nl.ecci.hamers.helpers.Utils.usernameToID;
 
@@ -52,8 +53,12 @@ public class NewQuoteFragment extends DialogFragment {
                         }
                 );
         Spinner spinner = (Spinner) view.findViewById(R.id.quote_user_spinner);
-        ArrayList<String> users = Utils.createActiveMemberList(this.getContext());
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, users);
+        ArrayList<User> users = Utils.createActiveMemberList();
+        ArrayList<String> names = new ArrayList<>();
+        for (User user : users) {
+            names.add(user.getName());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, names);
         spinner.setAdapter(adapter);
 
         return builder.create();
