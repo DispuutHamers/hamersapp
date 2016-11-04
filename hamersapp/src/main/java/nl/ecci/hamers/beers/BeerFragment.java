@@ -116,7 +116,6 @@ public class BeerFragment extends HamersFragment {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
         Loader.getData(new GetCallback() {

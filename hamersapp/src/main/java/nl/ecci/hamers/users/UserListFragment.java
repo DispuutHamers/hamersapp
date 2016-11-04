@@ -97,7 +97,6 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
         Loader.getData(new GetCallback() {

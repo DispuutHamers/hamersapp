@@ -90,7 +90,6 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
         Loader.getData(new GetCallback() {

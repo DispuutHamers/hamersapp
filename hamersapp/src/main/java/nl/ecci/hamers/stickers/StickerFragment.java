@@ -61,10 +61,10 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
         addMarkers();
     }
 
-    @SuppressWarnings("unchecked")
     private void onRefresh() {
         Loader.getData(new GetCallback() {
             @Override
+            // TODO
             public void onSuccess(String response) {
                 new populateMap().execute(dataSet);
             }

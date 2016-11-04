@@ -75,7 +75,6 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
         Loader.getData(new GetCallback() {

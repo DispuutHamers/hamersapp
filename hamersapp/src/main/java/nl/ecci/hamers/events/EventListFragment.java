@@ -94,7 +94,6 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
         if (upcoming) {

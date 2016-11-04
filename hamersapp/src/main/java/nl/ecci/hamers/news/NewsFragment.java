@@ -86,7 +86,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void onRefresh() {
         setRefreshing(true);
         Loader.getData(new GetCallback() {
