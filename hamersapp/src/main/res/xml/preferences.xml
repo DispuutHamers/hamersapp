@@ -47,7 +47,7 @@
             android:key="userSort"
             android:title="Leden sorteren" />
         <ListPreference
-            android:defaultValue="datumASC"
+            android:defaultValue="name"
             android:entries="@array/beersort_array"
             android:entryValues="@array/beersort_array_values"
             android:key="beerSort"
