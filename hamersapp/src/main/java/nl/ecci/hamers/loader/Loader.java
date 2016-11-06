@@ -93,19 +93,6 @@ public final class Loader {
                     public void onResponse(JSONObject response) {
                         Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
                         callback.onSuccess(response);
-//                        if (context != null) {
-//                            if (!(context instanceof MainActivity)) {
-//                                ((Activity) context).finish();
-//                            }
-//                            Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
-//                            if (dataURL.equals(SIGNUPURL)) {
-//                                getData(null, context, prefs, EVENTURL, EVENTURL);
-//                            } else if (dataURL.equals(REVIEWURL)) {
-//                                getData(null, context, prefs, REVIEWURL, REVIEWURL);
-//                            } else if (urlAppendix != -1) {
-//                                getData(null, context, prefs, dataURL, dataKEY);
-//                            }
-//                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -127,6 +114,7 @@ public final class Loader {
                 return params;
             }
         };
+        Log.d("PostRequest: ", request.toString());
         Singleton.getInstance(context).addToRequestQueue(request);
     }
 

@@ -16,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -37,8 +36,6 @@ import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
 
 import static nl.ecci.hamers.MainActivity.prefs;
-import static nl.ecci.hamers.R.id.review_body;
-import static nl.ecci.hamers.R.id.review_rating;
 
 public class BeerFragment extends HamersFragment {
 
@@ -62,13 +59,13 @@ public class BeerFragment extends HamersFragment {
             return rating2.compareToIgnoreCase(rating1);
         }
     };
-    private static final Comparator<Beer> dateASCComperator = new Comparator<Beer>() {
+    private static final Comparator<Beer> dateASCComparator = new Comparator<Beer>() {
         @Override
         public int compare(Beer beer1, Beer beer2) {
             return beer1.getCreatedAt().compareTo(beer2.getCreatedAt());
         }
     };
-    private static final Comparator<Beer> dateDESCComperator = new Comparator<Beer>() {
+    private static final Comparator<Beer> dateDESCComparator = new Comparator<Beer>() {
         @Override
         public int compare(Beer beer1, Beer beer2) {
             return beer2.getCreatedAt().compareTo(beer1.getCreatedAt());
@@ -104,9 +101,7 @@ public class BeerFragment extends HamersFragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), NewBeerActivity.class);
-                    int requestCode = 1;
-                    startActivityForResult(intent, requestCode);
+                    startActivity(new Intent(getActivity(), NewBeerActivity.class));
                 }
             });
         }
@@ -136,7 +131,7 @@ public class BeerFragment extends HamersFragment {
         Loader.getData(new GetCallback() {
             @Override
             public void onSuccess(String response) {
-                adapter.notifyDataSetChanged();
+                // Nothing
             }
 
             @Override
@@ -181,10 +176,10 @@ public class BeerFragment extends HamersFragment {
                 sort(ratingComparator);
                 return true;
             case R.id.sort_date_asc:
-                sort(dateASCComperator);
+                sort(dateASCComparator);
                 return true;
             case R.id.sort_date_desc:
-                sort(dateDESCComperator);
+                sort(dateDESCComparator);
                 return true;
             default:
                 return false;
@@ -210,10 +205,10 @@ public class BeerFragment extends HamersFragment {
                         sort(ratingComparator);
                         break;
                     case "datumASC":
-                        sort(dateASCComperator);
+                        sort(dateASCComparator);
                         break;
                     case "datumDESC":
-                        sort(dateDESCComperator);
+                        sort(dateDESCComparator);
                         break;
                     default:
                         sort(nameComparator);
@@ -221,8 +216,8 @@ public class BeerFragment extends HamersFragment {
             }
     }
 
-    private void sort(Comparator<Beer> comperator) {
-        Collections.sort(dataSet, comperator);
+    private void sort(Comparator<Beer> comparator) {
+        Collections.sort(dataSet, comparator);
         adapter.notifyDataSetChanged();
     }
 
