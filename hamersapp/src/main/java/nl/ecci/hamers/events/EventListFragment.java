@@ -68,7 +68,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getActivity(), NewEventActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, -1);
                 }
             });
         }
@@ -171,6 +171,10 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 }
             });
         }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        onRefresh();
     }
 
     private class populateList extends AsyncTask<String, Void, ArrayList<Event>> {
