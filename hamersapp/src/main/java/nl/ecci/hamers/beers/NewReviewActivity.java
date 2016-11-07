@@ -103,6 +103,7 @@ public class NewReviewActivity extends HamersActivity {
         }
 
         if (review != null && sb != null) {
+            setTitle(R.string.review_update);
             review_body.setText(review.getDescription());
             sb.setProgress(review.getRating() - 1);
             date_button.setText(dateFormat.format(review.getProefdatum()));

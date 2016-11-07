@@ -66,6 +66,8 @@ public class NewBeerActivity extends HamersActivity {
             beerPercentage.setText(beer.getPercentage());
             beerBrewer.setText(beer.getBrewer());
             beerCountry.setText(beer.getCountry());
+
+            setTitle("Wijzig " + beer.getName());
         }
     }
 
