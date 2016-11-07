@@ -118,6 +118,9 @@
     <string name="clear_storage_summary">Does not clear your API-key</string>
     <string name="refresh_app">Herlaad app</string>
     <string name="refresh_app_summary">Dit is veel sneller dan een herstart</string>
+    <string name="get_all_data">Download all data</string>
+    <string name="get_all_data_summary">This overwrites local caches of quotes, events etc.</string>
+    <string name="get_all_data_snackbar">Job in queue! This should be finished shortly.</string>
 
     <array name="night_mode_array">
         <item>Automatisch</item>
