@@ -9,6 +9,7 @@
 - Filter news and events
 - Night mode
 - Improved user overview (image and layout)
+- Landscape mode
 - Small layout improvements
 
 ## [1.5.3](https://github.com/dexbleeker/hamersapp/tree/1.5.3) (2016-10-11)
