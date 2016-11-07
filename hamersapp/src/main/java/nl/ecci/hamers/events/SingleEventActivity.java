@@ -136,17 +136,20 @@ public class SingleEventActivity extends HamersActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (ownUser.getID() != event.getUserID()) {
-            return false;
-        }
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.edit_menu, menu);
+        if (ownUser.getID() != event.getUserID()) {
+            menu.removeItem(R.id.edit_item);
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.edit_item:
                 Intent intent = new Intent(this, NewEventActivity.class);
                 if (event != null) {
