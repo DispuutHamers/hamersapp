@@ -63,7 +63,9 @@ public final class Loader {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("Loader-error", error.toString());
-                        callback.onError(error);
+                        if (callback != null) {
+                            callback.onError(error);
+                        }
                         handleErrorResponse(context, error);
                     }
                 }) {
@@ -92,14 +94,18 @@ public final class Loader {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
-                        callback.onSuccess(response);
+                        if (callback != null) {
+                            callback.onSuccess(response);
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("Loader-error", error.toString());
-                        callback.onError(error);
+                        if (callback != null) {
+                            callback.onError(error);
+                        }
                         handleErrorResponse(context, error);
                     }
                 }) {
