@@ -40,8 +40,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
                     android:hint="@string/event_title"
                     android:padding="20dp" />
@@ -56,8 +56,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
                     android:hint="@string/event_location"
                     android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
@@ -73,8 +73,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
                     android:hint="@string/event_description"
                     android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
@@ -90,8 +90,8 @@
                     android:id="@+id/event_date"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
@@ -105,8 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:onClick="showTimePickerDialog"
                     android:text="@string/review_pick_time_button" />
@@ -116,8 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="16dp"
                     android:onClick="showDatePickerDialog"
                     android:text="@string/review_pick_date_button" />
@@ -131,8 +129,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
@@ -146,8 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:onClick="showEndTimePickerDialog"
                     android:text="@string/review_pick_time_button" />
@@ -157,8 +154,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="16dp"
                     android:onClick="showEndDatePickerDialog"
                     android:text="@string/review_pick_date_button" />
@@ -172,8 +168,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
@@ -187,8 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:onClick="showDeadlineTimePickerDialog"
                     android:text="@string/review_pick_time_button" />
@@ -198,20 +193,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="16dp"
                     android:onClick="showDeadlineDatePickerDialog"
                     android:text="@string/review_pick_date_button" />
             </LinearLayout>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:onClick="postEvent"
-                android:text="@string/send" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

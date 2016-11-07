@@ -1,13 +1,21 @@
 package nl.ecci.hamers.events;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -41,6 +49,7 @@ public class NewEventActivity extends HamersActivity {
     private Button deadlineTimeButton;
     private Button deadlineDateButton;
     private int eventID;
+    private MenuItem refreshItem;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,6 +93,35 @@ public class NewEventActivity extends HamersActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.new_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.done_button:
+                refreshItem = item;
+
+                /* Attach a rotating ImageView to the refresh item as an ActionView */
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                ImageView iv = (ImageView) inflater.inflate(R.layout.refresh_action_view, null);
+
+                Animation rotation = AnimationUtils.loadAnimation(this, R.anim.clockwise_refresh);
+                rotation.setRepeatCount(Animation.INFINITE);
+                iv.startAnimation(rotation);
+
+                refreshItem.setActionView(iv);
+
+                postEvent();
+                return true;
+            default:
+                return false;
+        }
+    }
+
     public void showDatePickerDialog(View v) {
         DialogFragment picker = new DatePickerFragment();
         picker.show(fragmentManager, "date");
@@ -117,7 +155,7 @@ public class NewEventActivity extends HamersActivity {
     /**
      * Posts event
      */
-    public void postEvent(View v) {
+    public void postEvent() {
         String title = event_title.getText().toString();
         String location = event_location.getText().toString();
         String description = event_description.getText().toString();
@@ -160,6 +198,10 @@ public class NewEventActivity extends HamersActivity {
                 }
             });
         } else {
+            if (refreshItem != null && refreshItem.getActionView() != null) {
+                refreshItem.getActionView().clearAnimation();
+                refreshItem.setActionView(null);
+            }
             Toast.makeText(this, R.string.missing_fields, Toast.LENGTH_SHORT).show();
         }
     }
