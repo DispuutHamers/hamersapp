@@ -133,9 +133,9 @@ public class BeerFragment extends HamersFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.beer_list_menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.beer_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        inflater.inflate(R.menu.beer_menu, menu);
+        MenuItem searchMenuItem = menu.findItem(R.id.beer_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
         if (searchView != null) {
             searchView.setQueryHint(getString(R.string.search_hint));
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
