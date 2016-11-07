@@ -132,7 +132,7 @@ public class NewReviewActivity extends HamersActivity {
                 if (review != null) {
                     reviewID = review.getID();
                 }
-                Loader.postOrPatchData(new PostCallback() {
+                Loader.postOrPatchData(Loader.REVIEWURL, body, reviewID, this, prefs, new PostCallback() {
                     @Override
                     public void onSuccess(JSONObject response) {
                         Intent returnIntent = new Intent();
@@ -145,7 +145,7 @@ public class NewReviewActivity extends HamersActivity {
                     @Override
                     public void onError(VolleyError error) {
                     }
-                }, this, prefs, Loader.REVIEWURL, reviewID, body);
+                });
             } catch (JSONException ignored) {
             }
         } else {

@@ -81,7 +81,7 @@ public class NewQuoteFragment extends DialogFragment {
         } catch (JSONException ignored) {
         }
 
-        Loader.postOrPatchData(new PostCallback() {
+        Loader.postOrPatchData(Loader.QUOTEURL, body, -1, getContext(), MainActivity.prefs, new PostCallback() {
             @Override
             public void onSuccess(JSONObject response) {
 
@@ -91,6 +91,6 @@ public class NewQuoteFragment extends DialogFragment {
             public void onError(VolleyError error) {
 
             }
-        }, getContext(), MainActivity.prefs, Loader.QUOTEURL, -1, body);
+        });
     }
 }

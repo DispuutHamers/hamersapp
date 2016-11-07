@@ -99,7 +99,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onRefresh() {
         setRefreshing(true);
-        Loader.getData(new GetCallback() {
+        Loader.getData(Loader.USERURL, getContext(), MainActivity.prefs, new GetCallback() {
             @Override
             public void onSuccess(String response) {
                 new populateList().execute(response);
@@ -109,7 +109,7 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, Loader.USERURL);
+        });
     }
 
     @Override

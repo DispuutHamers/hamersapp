@@ -87,7 +87,7 @@ public class NewBeerActivity extends HamersActivity {
         } catch (JSONException ignored) {
         }
 
-        Loader.postOrPatchData(new PostCallback() {
+        Loader.postOrPatchData(Loader.BEERURL, body, beerID, this, prefs, new PostCallback() {
             @Override
             public void onSuccess(JSONObject response) {
                 Intent returnIntent = new Intent();
@@ -104,6 +104,6 @@ public class NewBeerActivity extends HamersActivity {
             public void onError(VolleyError error) {
 
             }
-        }, this, prefs, Loader.BEERURL, beerID, body);
+        });
     }
 }

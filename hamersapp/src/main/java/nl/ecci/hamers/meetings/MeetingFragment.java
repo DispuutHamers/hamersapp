@@ -77,7 +77,7 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Override
     public void onRefresh() {
         setRefreshing(true);
-        Loader.getData(new GetCallback() {
+        Loader.getData(Loader.MEETINGURL, getContext(), MainActivity.prefs, new GetCallback() {
             @Override
             public void onSuccess(String response) {
                 new populateList().execute(response);
@@ -87,7 +87,7 @@ public class MeetingFragment extends Fragment implements SwipeRefreshLayout.OnRe
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, Loader.MEETINGURL);
+        });
     }
 
     @Override

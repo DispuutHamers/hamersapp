@@ -23,7 +23,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.android.volley.VolleyError;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
@@ -36,7 +35,6 @@ import java.io.IOException;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.loader.Loader;
-import nl.ecci.hamers.loader.PostCallback;
 
 public class RegistrationIntentService extends IntentService {
 
@@ -98,17 +96,7 @@ public class RegistrationIntentService extends IntentService {
         } catch (JSONException ignored) {
         }
 
-        Loader.postOrPatchData(new PostCallback() {
-            @Override
-            public void onSuccess(JSONObject response) {
-                // Nothing
-            }
-
-            @Override
-            public void onError(VolleyError error) {
-                // Nothing
-            }
-        }, getApplicationContext(), sharedPreferences, Loader.GCMURL, -1, body);
+        Loader.postOrPatchData(Loader.GCMURL, body, -1, getApplicationContext(), sharedPreferences, null);
     }
 
     /**

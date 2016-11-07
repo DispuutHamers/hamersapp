@@ -148,7 +148,7 @@ public class NewEventActivity extends HamersActivity {
             } catch (JSONException ignored) {
             }
 
-            Loader.postOrPatchData(new PostCallback() {
+            Loader.postOrPatchData(Loader.EVENTURL, body, eventID, this, MainActivity.prefs, new PostCallback() {
                 @Override
                 public void onSuccess(JSONObject response) {
                     finish();
@@ -158,7 +158,7 @@ public class NewEventActivity extends HamersActivity {
                 public void onError(VolleyError error) {
 
                 }
-            }, this, MainActivity.prefs, Loader.EVENTURL, eventID, body);
+            });
         } else {
             Toast.makeText(this, R.string.missing_fields, Toast.LENGTH_SHORT).show();
         }

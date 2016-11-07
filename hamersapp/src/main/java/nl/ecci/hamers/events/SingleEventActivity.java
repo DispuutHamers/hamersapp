@@ -174,7 +174,7 @@ public class SingleEventActivity extends HamersActivity {
         } catch (JSONException ignored) {
         }
 
-        Loader.postOrPatchData(new PostCallback() {
+        Loader.postOrPatchData(Loader.SIGNUPURL, body, -1, this, MainActivity.prefs, new PostCallback() {
             @Override
             public void onSuccess(JSONObject response) {
 
@@ -184,7 +184,7 @@ public class SingleEventActivity extends HamersActivity {
             public void onError(VolleyError error) {
 
             }
-        }, this, MainActivity.prefs, Loader.SIGNUPURL, -1, body);
+        });
         this.finish();
     }
 

@@ -16,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -36,10 +35,7 @@ import nl.ecci.hamers.helpers.HamersFragment;
 import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
 
-import static android.app.Activity.RESULT_OK;
 import static nl.ecci.hamers.MainActivity.prefs;
-import static nl.ecci.hamers.R.id.review_body;
-import static nl.ecci.hamers.R.id.review_rating;
 
 public class BeerFragment extends HamersFragment {
 
@@ -121,7 +117,7 @@ public class BeerFragment extends HamersFragment {
     @Override
     public void onRefresh() {
         setRefreshing(true);
-        Loader.getData(new GetCallback() {
+        Loader.getData(Loader.BEERURL, getContext(), prefs, new GetCallback() {
             @Override
             public void onSuccess(String response) {
                 new populateList().execute(response);
@@ -131,18 +127,8 @@ public class BeerFragment extends HamersFragment {
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), prefs, Loader.BEERURL);
-        Loader.getData(new GetCallback() {
-            @Override
-            public void onSuccess(String response) {
-                // Nothing
-            }
-
-            @Override
-            public void onError(VolleyError error) {
-                // Nothing
-            }
-        }, getContext(), prefs, Loader.REVIEWURL);
+        });
+        Loader.getData(Loader.REVIEWURL, getContext(), prefs, null);
     }
 
     @Override

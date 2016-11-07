@@ -62,7 +62,7 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void onRefresh() {
-        Loader.getData(new GetCallback() {
+        Loader.getData(Loader.STICKERURL, getContext(), MainActivity.prefs, new GetCallback() {
             @Override
             // TODO
             public void onSuccess(String response) {
@@ -73,7 +73,7 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, Loader.STICKERURL);
+        });
     }
 
     private void addMarkers() {

@@ -97,7 +97,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
     public void onRefresh() {
         setRefreshing(true);
         if (upcoming) {
-            Loader.getData(new GetCallback() {
+            Loader.getData(Loader.UPCOMINGEVENTURL, getContext(), MainActivity.prefs, new GetCallback() {
                 @Override
                 public void onSuccess(String response) {
                     new populateList().execute(response);
@@ -107,9 +107,9 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 public void onError(VolleyError error) {
                     // Nothing
                 }
-            }, getContext(), MainActivity.prefs, Loader.UPCOMINGEVENTURL);
+            });
         } else {
-            Loader.getData(new GetCallback() {
+            Loader.getData(Loader.EVENTURL, getContext(), MainActivity.prefs, new GetCallback() {
                 @Override
                 public void onSuccess(String response) {
                     new populateList().execute(response);
@@ -119,7 +119,7 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 public void onError(VolleyError error) {
                     // Nothing
                 }
-            }, getContext(), MainActivity.prefs, Loader.EVENTURL);
+            });
         }
     }
 

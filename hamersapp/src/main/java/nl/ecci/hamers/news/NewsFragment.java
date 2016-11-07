@@ -88,7 +88,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onRefresh() {
         setRefreshing(true);
-        Loader.getData(new GetCallback() {
+        Loader.getData(Loader.NEWSURL, getContext(), MainActivity.prefs, new GetCallback() {
             @Override
             public void onSuccess(String response) {
                 new populateList().execute(response);
@@ -98,7 +98,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, Loader.NEWSURL);
+        });
     }
 
     @Override

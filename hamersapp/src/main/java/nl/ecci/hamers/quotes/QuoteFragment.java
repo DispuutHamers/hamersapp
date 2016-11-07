@@ -92,7 +92,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onRefresh() {
         setRefreshing(true);
-        Loader.getData(new GetCallback() {
+        Loader.getData(Loader.QUOTEURL, getContext(), MainActivity.prefs, new GetCallback() {
             @Override
             public void onSuccess(String response) {
                 new populateList().execute(response);
@@ -102,7 +102,7 @@ public class QuoteFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             public void onError(VolleyError error) {
                 // Nothing
             }
-        }, getContext(), MainActivity.prefs, Loader.QUOTEURL);
+        });
     }
 
     @Override

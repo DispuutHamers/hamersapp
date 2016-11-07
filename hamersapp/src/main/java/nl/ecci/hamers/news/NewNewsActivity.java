@@ -48,7 +48,7 @@ public class NewNewsActivity extends HamersActivity {
         } catch (JSONException ignored) {
         }
 
-        Loader.postOrPatchData(new PostCallback() {
+        Loader.postOrPatchData(Loader.NEWSURL, body, -1, this, MainActivity.prefs, new PostCallback() {
             @Override
             public void onSuccess(JSONObject response) {
                 finish();
@@ -58,6 +58,6 @@ public class NewNewsActivity extends HamersActivity {
             public void onError(VolleyError error) {
 
             }
-        }, this, MainActivity.prefs, Loader.NEWSURL, -1, body);
+        });
     }
 }

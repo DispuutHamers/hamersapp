@@ -82,7 +82,7 @@ public class NewMeetingActivity extends HamersActivity {
                 body.put("notes", notes);
                 body.put("date", MainActivity.parseDate(date));
                 if (meeting != null) {
-                    Loader.postOrPatchData(new PostCallback() {
+                    Loader.postOrPatchData(Loader.MEETINGURL, body, meeting.getID(), this, MainActivity.prefs, new PostCallback() {
                         @Override
                         public void onSuccess(JSONObject response) {
 
@@ -92,9 +92,9 @@ public class NewMeetingActivity extends HamersActivity {
                         public void onError(VolleyError error) {
 
                         }
-                    }, this, MainActivity.prefs, Loader.MEETINGURL, meeting.getID(), body);
+                    });
                 } else {
-                    Loader.postOrPatchData(new PostCallback() {
+                    Loader.postOrPatchData(Loader.MEETINGURL, body, -1, this, MainActivity.prefs, new PostCallback() {
                         @Override
                         public void onSuccess(JSONObject response) {
 
@@ -104,7 +104,7 @@ public class NewMeetingActivity extends HamersActivity {
                         public void onError(VolleyError error) {
 
                         }
-                    }, this, MainActivity.prefs, Loader.MEETINGURL, -1, body);
+                    });
                 }
             } catch (JSONException ignored) {
             }

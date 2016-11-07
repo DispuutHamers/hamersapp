@@ -390,7 +390,7 @@ public class MainActivity extends HamersActivity {
                 ImageLoader.getInstance().displayImage(url, userImage);
             }
         } else {
-            Loader.getData(new GetCallback() {
+            Loader.getData(Loader.WHOAMIURL, this, prefs, new GetCallback() {
                 @Override
                 public void onSuccess(String response) {
 //                    fillHeader();
@@ -400,7 +400,7 @@ public class MainActivity extends HamersActivity {
                 public void onError(VolleyError error) {
                     // Nothing
                 }
-            }, this, prefs, Loader.WHOAMIURL);
+            });
         }
     }
 }
