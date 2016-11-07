@@ -4,6 +4,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,15 +29,17 @@ import java.util.Comparator;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.DividerItemDecoration;
+import nl.ecci.hamers.helpers.HamersFragment;
 import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
 
 import static nl.ecci.hamers.MainActivity.prefs;
 
-public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class UserListFragment extends HamersFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private final ArrayList<User> dataSet = new ArrayList<>();
-    private ArrayAdapter<User> adapter;
+    private UserListAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean exUser;
 
@@ -44,14 +49,20 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_list_fragment, container, false);
-        ListView user_list = (ListView) view.findViewById(R.id.users_listView);
+        RecyclerView user_list = (RecyclerView) view.findViewById(R.id.user_list);
 
         setHasOptionsMenu(true);
 
-        adapter = new UserListAdapter(this.getActivity(), dataSet);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        user_list.setLayoutManager(layoutManager);
+        user_list.setItemAnimator(new DefaultItemAnimator());
+        user_list.addItemDecoration(new DividerItemDecoration(getActivity()));
+
+        adapter = new UserListAdapter(dataSet, getActivity());
         user_list.setAdapter(adapter);
 
-        initSwiper(view, user_list);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.users_swipe_container);
+        initSwiper(user_list, layoutManager, swipeRefreshLayout);
 
         exUser = getArguments().getBoolean(UserFragmentPagerAdapter.exUser, false);
 
@@ -61,34 +72,6 @@ public class UserListFragment extends Fragment implements SwipeRefreshLayout.OnR
         onRefresh();
 
         return view;
-    }
-
-    private void initSwiper(View view, final ListView user_list) {
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.users_swipe_container);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
-
-        swipeRefreshLayout.setOnRefreshListener(this);
-
-        user_list.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                boolean enable = false;
-                if (user_list != null && user_list.getChildCount() > 0) {
-                    // check if the first item of the list is visible
-                    boolean firstItemVisible = user_list.getFirstVisiblePosition() == 0;
-                    // check if the top of the first item is visible
-                    boolean topOfFirstItemVisible = user_list.getChildAt(0).getTop() == 0;
-                    // enabling or disabling the refresh layout
-                    enable = firstItemVisible && topOfFirstItemVisible;
-                }
-                swipeRefreshLayout.setEnabled(enable);
-            }
-        });
     }
 
     @Override

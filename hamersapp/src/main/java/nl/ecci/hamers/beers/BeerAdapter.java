@@ -29,7 +29,7 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.SingleImageActivity;
 
-public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implements Filterable {
+class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implements Filterable {
 
     private static ImageLoadingListener animateFirstListener;
     private final Context context;
@@ -38,7 +38,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
     private final Gson gson;
     private ArrayList<Beer> filteredDataSet;
 
-    public BeerAdapter(ArrayList<Beer> dataSet, Context context) {
+    BeerAdapter(ArrayList<Beer> dataSet, Context context) {
         this.dataSet = dataSet;
         this.filteredDataSet = dataSet;
         this.context = context;
@@ -57,7 +57,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         final ViewHolder vh = new ViewHolder(view);
         final View beerView = view.findViewById(R.id.beer_image);
 
-        vh.view.setOnClickListener(new View.OnClickListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v1) {
                 try {
@@ -154,16 +154,16 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> im
         };
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;
         public final TextView title;
-        public final TextView soort;
-        public final TextView brewer;
-        public final TextView rating;
+        final TextView soort;
+        final TextView brewer;
+        final TextView rating;
         public final TextView info;
-        public final ImageView picture;
+        final ImageView picture;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             this.view = view;
 

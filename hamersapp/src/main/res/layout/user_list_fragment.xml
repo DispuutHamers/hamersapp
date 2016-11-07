@@ -9,8 +9,8 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/users_listView"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/user_list"
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_gravity="center_vertical"

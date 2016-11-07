@@ -2,14 +2,15 @@ package nl.ecci.hamers.users;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -21,53 +22,75 @@ import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import static nl.ecci.hamers.helpers.Utils.convertNicknames;
 import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
 
-class UserListAdapter extends ArrayAdapter<User> {
+class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
     private static AnimateFirstDisplayListener animateFirstListener;
     private final Context context;
     private final ArrayList<User> dataSet;
     private final ImageLoader imageLoader;
+    private final Gson gson;
 
-    public UserListAdapter(Context context, ArrayList<User> dataSet) {
-        super(context, R.layout.user_row, dataSet);
-
-        this.context = context;
+    UserListAdapter(ArrayList<User> dataSet, Context context) {
         this.dataSet = dataSet;
+        this.context = context;
 
         imageLoader = ImageLoader.getInstance();
         animateFirstListener = new AnimateFirstDisplayListener();
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gson = gsonBuilder.create();
     }
 
-    @NonNull
     @Override
-    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public UserListAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_row, parent, false);
+        final UserListAdapter.ViewHolder vh = new UserListAdapter.ViewHolder(view);
 
-        View rowView = inflater.inflate(R.layout.user_row, parent, false);
-
-        TextView username = (TextView) rowView.findViewById(R.id.username);
-        TextView nickname = (TextView) rowView.findViewById(R.id.user_nickname);
-        TextView quoteCount = (TextView) rowView.findViewById(R.id.user_quotecount);
-        TextView reviewCount = (TextView) rowView.findViewById(R.id.user_reviewcount);
-
-        username.setText(dataSet.get(position).getName());
-        nickname.setText(convertNicknames(dataSet.get(position).getNicknames()));
-        quoteCount.setText(String.format("Aantal quotes: %s", String.valueOf(dataSet.get(position).getQuoteCount())));
-        reviewCount.setText(String.format(MainActivity.locale, "Aantal reviews: %d", dataSet.get(position).getReviewCount()));
-
-        final ImageView userImage = (ImageView) rowView.findViewById(R.id.user_image);
-        String url = getGravatarURL(dataSet.get(position).getEmail());
-        imageLoader.displayImage(url, userImage, animateFirstListener);
-
-        rowView.setOnClickListener(new View.OnClickListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent intent = new Intent(context, SingleUserActivity.class);
-                intent.putExtra(User.USER_ID, dataSet.get(position).getID());
+                intent.putExtra(User.USER_ID, dataSet.get(vh.getAdapterPosition()).getID());
                 context.startActivity(intent);
             }
         });
 
-        return rowView;
+        return vh;
+    }
+
+    @Override
+    public void onBindViewHolder(UserListAdapter.ViewHolder holder, final int position) {
+        holder.userName.setText(dataSet.get(position).getName());
+        holder.userNickname.setText(convertNicknames(dataSet.get(position).getNicknames()));
+        holder.userQuoteCount.setText(String.format("Aantal quotes: %s", String.valueOf(dataSet.get(position).getQuoteCount())));
+        holder.userReviewCount.setText(String.format(MainActivity.locale, "Aantal reviews: %d", dataSet.get(position).getReviewCount()));
+
+        String url = getGravatarURL(dataSet.get(position).getEmail());
+        imageLoader.displayImage(url, holder.userImage, animateFirstListener);
+    }
+
+    @Override
+    public int getItemCount() {
+        return dataSet.size();
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        public final View view;
+        final ImageView userImage;
+        final TextView userName;
+        final TextView userNickname;
+        final TextView userQuoteCount;
+        final TextView userReviewCount;
+
+        ViewHolder(View view) {
+            super(view);
+            this.view = view;
+
+            userImage = (ImageView) view.findViewById(R.id.user_image);
+            userName = (TextView) view.findViewById(R.id.username);
+            userNickname = (TextView) view.findViewById(R.id.user_nickname);
+            userQuoteCount = (TextView) view.findViewById(R.id.user_quotecount);
+            userReviewCount = (TextView) view.findViewById(R.id.user_reviewcount);
+        }
     }
 }
