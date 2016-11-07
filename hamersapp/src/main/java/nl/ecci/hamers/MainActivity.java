@@ -63,6 +63,7 @@ import nl.ecci.hamers.users.UserFragment;
 
 import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
 import static nl.ecci.hamers.helpers.Utils.getOwnUser;
+import static nl.ecci.hamers.loader.Loader.getAllData;
 
 public class MainActivity extends HamersActivity {
     public static final Locale locale = new Locale("nl");
@@ -272,6 +273,7 @@ public class MainActivity extends HamersActivity {
         super.onResume();
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(REGISTRATION_COMPLETE));
+        getAllData(this);
     }
 
     @Override

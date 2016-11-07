@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 
 public final class Loader {
@@ -144,5 +145,16 @@ public final class Loader {
             // Other error
             Toast.makeText(context, context.getString(R.string.volley_error), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static void getAllData(@NonNull Context context) {
+        Loader.getData(null, context, MainActivity.prefs, Loader.QUOTEURL);
+        Loader.getData(null, context, MainActivity.prefs, Loader.EVENTURL);
+        Loader.getData(null, context, MainActivity.prefs, Loader.UPCOMINGEVENTURL);
+        Loader.getData(null, context, MainActivity.prefs, Loader.NEWSURL);
+        Loader.getData(null, context, MainActivity.prefs, Loader.BEERURL);
+        Loader.getData(null, context, MainActivity.prefs, Loader.REVIEWURL);
+        Loader.getData(null, context, MainActivity.prefs, Loader.WHOAMIURL);
+        Loader.getData(null, context, MainActivity.prefs, Loader.MEETINGURL);
     }
 }
