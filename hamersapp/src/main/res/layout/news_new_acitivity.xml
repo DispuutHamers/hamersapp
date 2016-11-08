@@ -67,24 +67,5 @@
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
         </ScrollView>
-
-        <LinearLayout
-            android:id="@+id/buttonLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:onClick="postNews"
-                android:text="@string/send" />
-        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

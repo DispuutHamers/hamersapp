@@ -13,10 +13,11 @@ import org.json.JSONObject;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.helpers.NewItemActivity;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.PostCallback;
 
-public class NewNewsActivity extends HamersActivity {
+public class NewNewsActivity extends NewItemActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class NewNewsActivity extends HamersActivity {
         }
     }
 
-    public void postNews(View view) {
+    public void postItem() {
         EditText news_title = (EditText) findViewById(R.id.news_title);
         EditText news_body = (EditText) findViewById(R.id.news_body);
 
