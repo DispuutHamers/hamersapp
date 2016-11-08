@@ -21,11 +21,11 @@ import java.util.Calendar;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DatePickerFragment;
-import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.helpers.NewItemActivity;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.PostCallback;
 
-public class NewMeetingActivity extends HamersActivity {
+public class NewMeetingActivity extends NewItemActivity {
 
     private Meeting meeting;
     private Button date_button;
@@ -64,7 +64,7 @@ public class NewMeetingActivity extends HamersActivity {
         }
     }
 
-    public void postMeeting(View view) {
+    public void postItem() {
         EditText meeting_subject = (EditText) findViewById(R.id.meeting_subject);
         EditText meeting_agenda = (EditText) findViewById(R.id.meeting_agenda);
         EditText meeting_notes = (EditText) findViewById(R.id.meeting_notes);
@@ -85,24 +85,30 @@ public class NewMeetingActivity extends HamersActivity {
                     Loader.postOrPatchData(Loader.MEETINGURL, body, meeting.getID(), this, MainActivity.prefs, new PostCallback() {
                         @Override
                         public void onSuccess(JSONObject response) {
-
+                            finish();
                         }
 
                         @Override
                         public void onError(VolleyError error) {
-
+                            if (refreshItem != null && refreshItem.getActionView() != null) {
+                                refreshItem.getActionView().clearAnimation();
+                                refreshItem.setActionView(null);
+                            }
                         }
                     });
                 } else {
                     Loader.postOrPatchData(Loader.MEETINGURL, body, -1, this, MainActivity.prefs, new PostCallback() {
                         @Override
                         public void onSuccess(JSONObject response) {
-
+                            finish();
                         }
 
                         @Override
                         public void onError(VolleyError error) {
-
+                            if (refreshItem != null && refreshItem.getActionView() != null) {
+                                refreshItem.getActionView().clearAnimation();
+                                refreshItem.setActionView(null);
+                            }
                         }
                     });
                 }
