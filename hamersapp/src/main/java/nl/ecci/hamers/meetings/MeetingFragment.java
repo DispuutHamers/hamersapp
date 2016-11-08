@@ -1,7 +1,9 @@
 package nl.ecci.hamers.meetings;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +45,16 @@ public class MeetingFragment extends HamersFragment {
 
         adapter = new MeetingAdapter(dataSet, getActivity());
         meetingList.setAdapter(adapter);
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.hamers_fab);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivityForResult(new Intent(getActivity(), NewMeetingActivity.class), 1);
+                }
+            });
+        }
 
         onRefresh();
 

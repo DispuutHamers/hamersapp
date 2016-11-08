@@ -1,7 +1,9 @@
 package nl.ecci.hamers.news;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,6 +54,16 @@ public class NewsFragment extends HamersFragment {
 
         adapter = new NewsAdapter(dataSet);
         news_list.setAdapter(adapter);
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.hamers_fab);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivityForResult(new Intent(getActivity(), NewNewsActivity.class), 1);
+                }
+            });
+        }
 
         onRefresh();
 

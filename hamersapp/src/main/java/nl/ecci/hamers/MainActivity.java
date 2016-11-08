@@ -53,8 +53,6 @@ import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.meetings.MeetingFragment;
-import nl.ecci.hamers.meetings.NewMeetingActivity;
-import nl.ecci.hamers.news.NewNewsActivity;
 import nl.ecci.hamers.news.NewsFragment;
 import nl.ecci.hamers.quotes.QuoteFragment;
 import nl.ecci.hamers.stickers.StickerFragment;
@@ -327,22 +325,6 @@ public class MainActivity extends HamersActivity {
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.replace(R.id.content_frame, fragment).commit();
         setTitle(menuItem.getTitle());
-    }
-
-    /**
-     * When user presses "+" in NewsFragment, start new dialog with NewNewsActivity
-     */
-    public void newNews(View view) {
-        Intent intent = new Intent(this, NewNewsActivity.class);
-        startActivity(intent);
-    }
-
-    /**
-     * When user presses "+" in MeetingFragment, start new dialog with NewMeetingActivity
-     */
-    public void newMeeting(View view) {
-        Intent intent = new Intent(this, NewMeetingActivity.class);
-        startActivity(intent);
     }
 
     /**
