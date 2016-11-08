@@ -29,12 +29,13 @@ import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.HamersFragment;
 import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
 
 import static nl.ecci.hamers.MainActivity.prefs;
 
-public class EventListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class EventListFragment extends HamersFragment {
 
     private final ArrayList<Event> dataSet = new ArrayList<>();
     private EventListAdapter adapter;
@@ -47,22 +48,23 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.event_list_fragment, container, false);
-        event_list = (RecyclerView) view.findViewById(R.id.events_recyclerview);
+        View view = inflater.inflate(R.layout.hamers_fragment, container, false);
+        event_list = (RecyclerView) view.findViewById(R.id.hamers_recyclerview);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         event_list.setLayoutManager(mLayoutManager);
 
         setHasOptionsMenu(true);
 
-        initSwiper(view, event_list, mLayoutManager);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.hamers_swipe_container);
+        initSwiper(event_list, mLayoutManager, swipeRefreshLayout);
 
         adapter = new EventListAdapter(getActivity(), dataSet);
         event_list.setAdapter(adapter);
 
         upcoming = getArguments().getBoolean(EventFragmentPagerAdapter.upcoming, false);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.event_create_button);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.hamers_fab);
         if (fab != null) {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -77,20 +79,6 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
         onRefresh();
 
         return view;
-    }
-
-    private void initSwiper(View view, final RecyclerView event_list, final LinearLayoutManager lm) {
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.events_swipe_container);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
-
-        event_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView view, int dx, int dy) {
-                swipeRefreshLayout.setEnabled(lm.findFirstCompletelyVisibleItemPosition() == 0);
-            }
-        });
     }
 
     @Override
@@ -157,17 +145,6 @@ public class EventListFragment extends Fragment implements SwipeRefreshLayout.On
                 public boolean onQueryTextChange(String s) {
                     adapter.getFilter().filter(s.toLowerCase());
                     return false;
-                }
-            });
-        }
-    }
-
-    private void setRefreshing(final Boolean bool) {
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    swipeRefreshLayout.setRefreshing(bool);
                 }
             });
         }

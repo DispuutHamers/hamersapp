@@ -236,9 +236,6 @@ public class MainActivity extends HamersActivity {
         }
 
         mDrawerToggle.syncState();
-
-        // Set title manually
-        setTitle(R.string.navigation_item_quotes);
     }
 
     @Override

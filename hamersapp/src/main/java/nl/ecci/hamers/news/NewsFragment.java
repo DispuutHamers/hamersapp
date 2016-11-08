@@ -2,7 +2,6 @@ package nl.ecci.hamers.news;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,32 +25,30 @@ import java.util.Collections;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.helpers.HamersFragment;
 import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
 
 import static nl.ecci.hamers.MainActivity.prefs;
 
-public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class NewsFragment extends HamersFragment {
 
     private final ArrayList<News> dataSet = new ArrayList<>();
     private NewsAdapter adapter;
     private RecyclerView news_list;
-    private SwipeRefreshLayout swipeRefreshLayout;
-
-    public NewsFragment() {
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.news_fragment, container, false);
-        news_list = (RecyclerView) view.findViewById(R.id.news_recyclerview);
+        View view = inflater.inflate(R.layout.hamers_fragment, container, false);
+        news_list = (RecyclerView) view.findViewById(R.id.hamers_recyclerview);
 
         setHasOptionsMenu(true);
 
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        news_list.setLayoutManager(mLayoutManager);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        news_list.setLayoutManager(layoutManager);
 
-        initSwiper(view, news_list, mLayoutManager);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.hamers_swipe_container);
+        initSwiper(news_list, layoutManager, swipeRefreshLayout);
 
         adapter = new NewsAdapter(dataSet);
         news_list.setAdapter(adapter);
@@ -59,19 +56,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         onRefresh();
 
         return view;
-    }
-
-    private void initSwiper(View view, final RecyclerView news_list, final LinearLayoutManager lm) {
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.news_swipe_container);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
-
-        news_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView view, int dx, int dy) {
-                swipeRefreshLayout.setEnabled(lm.findFirstCompletelyVisibleItemPosition() == 0);
-            }
-        });
     }
 
     @Override
@@ -124,17 +108,6 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 public boolean onQueryTextChange(String s) {
                     adapter.getFilter().filter(s.toLowerCase());
                     return false;
-                }
-            });
-        }
-    }
-
-    private void setRefreshing(final Boolean bool) {
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    swipeRefreshLayout.setRefreshing(bool);
                 }
             });
         }

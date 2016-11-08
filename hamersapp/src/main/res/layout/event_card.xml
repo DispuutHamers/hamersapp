@@ -5,8 +5,6 @@
     android:layout_gravity="center"
     android:layout_marginBottom="@dimen/card_margin_bottom"
     android:layout_marginEnd="@dimen/card_margin_right"
-    android:layout_marginLeft="@dimen/card_margin_left"
-    android:layout_marginRight="@dimen/card_margin_right"
     android:layout_marginStart="@dimen/card_margin_left"
     android:layout_marginTop="@dimen/card_margin_top"
     android:clickable="true"

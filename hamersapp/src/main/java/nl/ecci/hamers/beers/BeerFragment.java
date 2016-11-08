@@ -73,15 +73,11 @@ public class BeerFragment extends HamersFragment {
     };
     private final ArrayList<Beer> dataSet = new ArrayList<>();
     private BeerAdapter adapter;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView beer_list;
 
-    public BeerFragment() {
-    }
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.beer_fragment, container, false);
-        beer_list = (RecyclerView) view.findViewById(R.id.beer_recyclerview);
+        View view = inflater.inflate(R.layout.hamers_fragment, container, false);
+        beer_list = (RecyclerView) view.findViewById(R.id.hamers_recyclerview);
 
         setHasOptionsMenu(true);
 
@@ -90,13 +86,13 @@ public class BeerFragment extends HamersFragment {
         beer_list.setItemAnimator(new DefaultItemAnimator());
         beer_list.addItemDecoration(new DividerItemDecoration(getActivity()));
 
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.beer_swipe_container);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.hamers_swipe_container);
         initSwiper(beer_list, layoutManager, swipeRefreshLayout);
 
         adapter = new BeerAdapter(dataSet, getActivity());
         beer_list.setAdapter(adapter);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.beer_create_button);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.hamers_fab);
         if (fab != null) {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -219,17 +215,6 @@ public class BeerFragment extends HamersFragment {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         onRefresh();
-    }
-
-    private void setRefreshing(final Boolean bool) {
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    swipeRefreshLayout.setRefreshing(bool);
-                }
-            });
-        }
     }
 
     private class populateList extends AsyncTask<String, Void, ArrayList<Beer>> {

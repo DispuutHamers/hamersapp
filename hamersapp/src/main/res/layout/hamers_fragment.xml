@@ -5,27 +5,30 @@
     android:layout_height="match_parent">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/quotes_swipe_container"
+        android:id="@+id/hamers_swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/quotes_recyclerview"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:clickable="false" />
+            android:id="@+id/hamers_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:scrollbars="vertical" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/new_quote_button"
+        android:id="@+id/hamers_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
         android:src="@drawable/action_add"
         app:backgroundTint="@color/material_red"
-        app:layout_anchor="@id/quotes_swipe_container"
+        app:layout_anchor="@id/hamers_swipe_container"
         app:layout_anchorGravity="bottom|right|end"
         app:layout_behavior="nl.ecci.hamers.helpers.ScrollAwareFABBehavior" />
 

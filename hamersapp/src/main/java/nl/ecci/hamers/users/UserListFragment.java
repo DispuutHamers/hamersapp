@@ -129,17 +129,6 @@ public class UserListFragment extends HamersFragment implements SwipeRefreshLayo
         }
     }
 
-    private void setRefreshing(final Boolean bool) {
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    swipeRefreshLayout.setRefreshing(bool);
-                }
-            });
-        }
-    }
-
     private void sortByUsername() {
         final Comparator<User> nameComperator = new Comparator<User>() {
             @Override
