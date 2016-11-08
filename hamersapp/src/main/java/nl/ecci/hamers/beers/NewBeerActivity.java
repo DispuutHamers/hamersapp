@@ -1,22 +1,13 @@
 package nl.ecci.hamers.beers;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.android.volley.VolleyError;
 
@@ -25,13 +16,13 @@ import org.json.JSONObject;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.helpers.NewItemActivity;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.PostCallback;
 
 import static nl.ecci.hamers.helpers.Utils.getBeer;
 
-public class NewBeerActivity extends HamersActivity {
+public class NewBeerActivity extends NewItemActivity {
 
     private int beerID;
     private SharedPreferences prefs;
@@ -41,7 +32,7 @@ public class NewBeerActivity extends HamersActivity {
     private EditText beerPercentage;
     private EditText beerBrewer;
     private EditText beerCountry;
-    private MenuItem refreshItem;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,36 +71,7 @@ public class NewBeerActivity extends HamersActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.new_menu, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.done_button:
-                refreshItem = item;
-
-                /* Attach a rotating ImageView to the refresh item as an ActionView */
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                ImageView iv = (ImageView) inflater.inflate(R.layout.refresh_action_view, null);
-
-                Animation rotation = AnimationUtils.loadAnimation(this, R.anim.clockwise_refresh);
-                rotation.setRepeatCount(Animation.INFINITE);
-                iv.startAnimation(rotation);
-
-                refreshItem.setActionView(iv);
-
-                postBeer();
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    public void postBeer() {
+    public void postItem() {
         String percentage = beerPercentage.getText().toString();
 
         if (!percentage.contains("%")) {
