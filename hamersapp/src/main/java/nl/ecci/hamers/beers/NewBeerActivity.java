@@ -104,10 +104,7 @@ public class NewBeerActivity extends NewItemActivity {
 
             @Override
             public void onError(VolleyError error) {
-                if (refreshItem != null && refreshItem.getActionView() != null) {
-                    refreshItem.getActionView().clearAnimation();
-                    refreshItem.setActionView(null);
-                }
+                disableLoadingAnimation();
             }
         });
     }

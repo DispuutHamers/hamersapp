@@ -156,14 +156,11 @@ public class NewEventActivity extends NewItemActivity {
 
                 @Override
                 public void onError(VolleyError error) {
-
+                    disableLoadingAnimation();
                 }
             });
         } else {
-            if (refreshItem != null && refreshItem.getActionView() != null) {
-                refreshItem.getActionView().clearAnimation();
-                refreshItem.setActionView(null);
-            }
+            disableLoadingAnimation();
             Toast.makeText(this, R.string.missing_fields, Toast.LENGTH_SHORT).show();
         }
     }

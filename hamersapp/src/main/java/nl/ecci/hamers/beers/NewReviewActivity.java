@@ -29,7 +29,7 @@ import java.util.Calendar;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DatePickerFragment;
-import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.helpers.NewItemActivity;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.PostCallback;
 
@@ -37,7 +37,7 @@ import static nl.ecci.hamers.beers.SingleBeerActivity.reviewBody;
 import static nl.ecci.hamers.beers.SingleBeerActivity.reviewRating;
 import static nl.ecci.hamers.helpers.Utils.getBeer;
 
-public class NewReviewActivity extends HamersActivity {
+public class NewReviewActivity extends NewItemActivity {
 
     private Beer beer;
     private Review review;
@@ -117,7 +117,7 @@ public class NewReviewActivity extends HamersActivity {
         datePicker.show(getSupportFragmentManager(), "proefdatum");
     }
 
-    public void postReview(View view) {
+    public void postItem() {
         final String review_body = this.review_body.getText().toString();
         String date = date_button.getText().toString();
 
@@ -145,11 +145,13 @@ public class NewReviewActivity extends HamersActivity {
 
                     @Override
                     public void onError(VolleyError error) {
+                        disableLoadingAnimation();
                     }
                 });
             } catch (JSONException ignored) {
             }
         } else {
+            disableLoadingAnimation();
             Snackbar.make(parentLayout, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show();
         }
     }

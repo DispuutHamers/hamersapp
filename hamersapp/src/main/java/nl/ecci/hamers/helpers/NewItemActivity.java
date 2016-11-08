@@ -45,6 +45,13 @@ public abstract class NewItemActivity extends HamersActivity {
         }
     }
 
+    public void disableLoadingAnimation() {
+        if (refreshItem != null && refreshItem.getActionView() != null) {
+            refreshItem.getActionView().clearAnimation();
+            refreshItem.setActionView(null);
+        }
+    }
+
     public abstract void postItem();
 
 }
