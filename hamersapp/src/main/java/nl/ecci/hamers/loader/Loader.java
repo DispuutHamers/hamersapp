@@ -27,24 +27,24 @@ import nl.ecci.hamers.R;
 
 public final class Loader {
     // URL Appendices
-    public static final String QUOTEURL = "quotes";
-    public static final String USERURL = "users";
-    public static final String EVENTURL = "events";
+    public static final String QUOTEURL = "quotes.json";
+    public static final String USERURL = "users.json";
+    public static final String EVENTURL = "events.json";
     public static final String UPCOMINGEVENTURL = "events?sorted=date-desc";
-    public static final String NEWSURL = "news";
-    public static final String BEERURL = "beers";
-    public static final String REVIEWURL = "reviews";
+    public static final String NEWSURL = "news.json";
+    public static final String BEERURL = "beers.json";
+    public static final String REVIEWURL = "reviews.json";
     public static final String WHOAMIURL = "whoami";
-    public static final String MEETINGURL = "meetings";
-    public static final String SIGNUPURL = "signups";
+    public static final String MEETINGURL = "meetings.json";
+    public static final String SIGNUPURL = "signups.json";
     public static final String GCMURL = "register";
     public static final String STICKERURL = "stickers";
     // Data keys
     public static final String APIKEYKEY = "apikey";
 
     // URL
-//    private static final String baseURL = "https://zondersikkel.nl/api/v2/";
-    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
+    private static final String baseURL = "https://zondersikkel.nl/api/v2/";
+//    private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
 
     public static void getData(final String dataURL, @NonNull final Context context, final SharedPreferences prefs, final GetCallback callback) {
         String url = baseURL + dataURL;
