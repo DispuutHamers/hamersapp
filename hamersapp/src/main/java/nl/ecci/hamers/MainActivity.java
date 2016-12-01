@@ -375,7 +375,7 @@ public class MainActivity extends HamersActivity {
             Loader.getData(Loader.WHOAMIURL, this, prefs, new GetCallback() {
                 @Override
                 public void onSuccess(String response) {
-//                    fillHeader();
+                    fillHeader();
                 }
 
                 @Override
