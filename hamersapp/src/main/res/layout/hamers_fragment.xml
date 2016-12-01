@@ -12,10 +12,10 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/hamers_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:clipToPadding="false"
             android:paddingBottom="8dp"
-            android:paddingTop="8dp"
+            android:paddingTop="0dp"
             android:scrollbars="vertical" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
