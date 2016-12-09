@@ -157,38 +157,21 @@ public class EventListFragment extends HamersFragment {
     private class populateList extends AsyncTask<String, Void, ArrayList<Event>> {
         @Override
         protected final ArrayList<Event> doInBackground(String... params) {
-            ArrayList<Event> result = new ArrayList<>();
-            ArrayList<Event> tempList;
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern());
             Gson gson = gsonBuilder.create();
             Type type = new TypeToken<ArrayList<Event>>() {
             }.getType();
-            Date now = new Date();
 
             if (params.length > 0) {
-                tempList = gson.fromJson(params[0], type);
+                return gson.fromJson(params[0], type);
             } else {
                 String key = Loader.EVENTURL;
                 if (upcoming) {
                     key = Loader.UPCOMINGEVENTURL;
                 }
-                tempList = gson.fromJson(prefs.getString(key, null), type);
+                return gson.fromJson(prefs.getString(key, null), type);
             }
-
-            if (tempList != null) {
-                for (Event event : tempList) {
-                    if (upcoming) {
-                        if (event.getEndDate() != null && event.getEndDate().after(now)) {
-                            result.add(event);
-                        }
-                    } else {
-                        result.add(event);
-                    }
-                }
-            }
-
-            return result;
         }
 
         @Override
