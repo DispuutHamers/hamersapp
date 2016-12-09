@@ -1,6 +1,12 @@
 # Changelog
 
-## [2.0](https://github.com/dexbleeker/hamersapp/tree/2.0) (2016-11-30
+## [2.1](https://github.com/dexbleeker/hamersapp/tree/2.1) (2016-12-09)
+[Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.0..2.1)
+
+- API improvements
+- Bugfixes
+
+## [2.0](https://github.com/dexbleeker/hamersapp/tree/2.0) (2016-11-30)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/1.5.3...2.0)
 
 - Support for meetings and stickers
