@@ -27,12 +27,12 @@ import nl.ecci.hamers.R;
 
 public final class Loader {
     // URL Appendices
-    public static final String QUOTEURL = "quotes.json";
+    public static final String QUOTEURL = "quotes";
     public static final String USERURL = "users";
     public static final String EVENTURL = "events";
-    public static final String UPCOMINGEVENTURL = "events?sorted=date-desc";
+    public static final String UPCOMINGEVENTURL = "events?sorted=date-desc?future=true";
     public static final String NEWSURL = "news";
-    public static final String BEERURL = "beers.json";
+    public static final String BEERURL = "beers";
     public static final String REVIEWURL = "reviews";
     public static final String WHOAMIURL = "whoami";
     public static final String MEETINGURL = "meetings";
@@ -53,7 +53,7 @@ public final class Loader {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("Loader-response", response);
+                        Log.d("GET-response", response);
                         prefs.edit().putString(dataURL, response).apply();
                         if (callback != null) {
                             callback.onSuccess(response);
@@ -63,7 +63,7 @@ public final class Loader {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Loader-error", error.toString());
+                        Log.d("GET-error", error.toString());
                         if (callback != null) {
                             callback.onError(error);
                         }
@@ -94,6 +94,7 @@ public final class Loader {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.d("POST-response", response.toString());
                         Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
                         if (callback != null) {
                             callback.onSuccess(response);
@@ -103,7 +104,7 @@ public final class Loader {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Loader-error", error.toString());
+                        Log.d("POST-error", error.toString());
                         if (callback != null) {
                             callback.onError(error);
                         }
