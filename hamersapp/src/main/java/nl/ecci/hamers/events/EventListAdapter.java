@@ -16,6 +16,7 @@ import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
+import nl.ecci.hamers.users.User;
 
 import static nl.ecci.hamers.helpers.Utils.getOwnUser;
 

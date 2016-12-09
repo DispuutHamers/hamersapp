@@ -152,9 +152,11 @@ public class Utils {
         }.getType();
         ArrayList<User> userList = gson.fromJson(prefs.getString(Loader.USERURL, null), type);
 
-        for (User user : userList) {
-            if (user.getMember() == User.Member.LID) {
-                result.add(user);
+        if (userList != null) {
+            for (User user : userList) {
+                if (user.getMember() == User.Member.LID) {
+                    result.add(user);
+                }
             }
         }
         return result;

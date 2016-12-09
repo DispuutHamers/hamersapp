@@ -15,6 +15,17 @@
 -dontwarn android.support.design.**
 # Android-Iconics library
 -keep class .R
--keep class **.R$* {
-    <fields>;
-}
+-keep class **.R$* { <fields>; }
+-dontobfuscate
+
+##---------------Begin: proguard configuration for Gson ----------
+-keep public class com.google.gson.**
+-keep public class com.google.gson.** { public private protected *; }
+-keepattributes *Annotation*,Signature
+-keep class com.mypackage.ActivityMonitor.ClassMultiPoints.** { *; }
+-keep public class nl.ecci.hamers.users.ActivityMonitor$ClassMultiPoints     { public protected *; }
+-keep public class nl.ecci.hamers.users.ActivityMonitor$ClassMultiPoints$ClassPoints { public protected *; }
+-keep public class nl.ecci.hamers.users.ActivityMonitor$ClassMultiPoints$ClassPoints$ClassPoint { public protected *; }
+# To support Enum type of class members
+-keepclassmembers enum * { *; }
+##---------------End: proguard configuration for Gson ----------
