@@ -162,17 +162,17 @@ public class SingleEventActivity extends HamersActivity {
     }
 
     public void setPresent(View view) {
-        postSignup(event.getID(), "true");
+        postSignup("true");
     }
 
     public void setAbsent(View view) {
-        postSignup(event.getID(), "false");
+        postSignup("false");
     }
 
-    private void postSignup(int eventID, String status) {
+    private void postSignup(String status) {
         JSONObject body = new JSONObject();
         try {
-            body.put("event_id", eventID);
+            body.put("event_id", event.getID());
             body.put("status", status);
         } catch (JSONException ignored) {
         }
@@ -180,7 +180,7 @@ public class SingleEventActivity extends HamersActivity {
         Loader.postOrPatchData(Loader.SIGNUPURL, body, -1, this, MainActivity.prefs, new PostCallback() {
             @Override
             public void onSuccess(JSONObject response) {
-
+                finish();
             }
 
             @Override
@@ -188,7 +188,7 @@ public class SingleEventActivity extends HamersActivity {
 
             }
         });
-        this.finish();
+
     }
 
     private void initToolbar() {
