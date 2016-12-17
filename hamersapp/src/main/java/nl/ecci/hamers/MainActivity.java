@@ -357,7 +357,7 @@ public class MainActivity extends HamersActivity {
 
     private void fillHeader() {
         User user = getOwnUser(prefs);
-        if (user.getID() != -1) {
+        if (user != null && user.getID() != -1) {
             View headerLayout = navigationView.getHeaderView(0);
             TextView userName = (TextView) headerLayout.findViewById(R.id.header_user_name);
             TextView userEmail = (TextView) headerLayout.findViewById(R.id.header_user_email);

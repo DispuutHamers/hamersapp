@@ -3,10 +3,10 @@ before_script:
   - export PATH=$PATH:/opt/android-sdk/tools
   - export PATH=$PATH:/opt/android-sdk/platform-tools
   - chmod +x gradlew
-  - echo y | android --silent update sdk --no-ui --all --filter android-24
+  - echo y | android --silent update sdk --no-ui --all --filter android-25
   - echo y | android --silent update sdk --no-ui --all --filter tools
   - echo y | android --silent update sdk --no-ui --all --filter platform-tools
-  - echo y | android --silent update sdk --no-ui --all --filter build-tools-24.0.2
+  - echo y | android --silent update sdk --no-ui --all --filter build-tools-25.0.2
   - echo y | android --silent update sdk --no-ui --all --filter extra-android-m2repository
   - echo y | android --silent update sdk --no-ui --all --filter extra-google-google_play_services
   - echo y | android --silent update sdk --no-ui --all --filter extra-google-m2repository
