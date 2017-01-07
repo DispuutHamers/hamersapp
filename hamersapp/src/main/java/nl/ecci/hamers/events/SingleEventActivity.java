@@ -258,10 +258,10 @@ public class SingleEventActivity extends HamersActivity {
     }
 
     private void fillImageRow(View view, final String title, final String description, final Drawable image) {
-        TextView titleView = (TextView) view.findViewById(R.id.row_title);
+        TextView titleView = (TextView) view.findViewById(R.id.title_textview);
         titleView.setText(title);
 
-        TextView descriptionView = (TextView) view.findViewById(R.id.row_description);
+        TextView descriptionView = (TextView) view.findViewById(R.id.subtitle_textview);
         descriptionView.setText(description);
 
         ImageView iconView = (ImageView) view.findViewById(R.id.icon);

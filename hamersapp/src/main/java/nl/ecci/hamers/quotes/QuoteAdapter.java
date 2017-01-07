@@ -16,6 +16,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 import java.util.Date;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
@@ -25,7 +26,7 @@ import nl.ecci.hamers.users.User;
 import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
 import static nl.ecci.hamers.helpers.Utils.getUser;
 
-public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> implements Filterable {
+class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> implements Filterable {
 
     private static AnimateFirstDisplayListener animateFirstListener;
     private final ArrayList<Quote> dataSet;
@@ -33,7 +34,7 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     private final Context context;
     private ArrayList<Quote> filteredDataSet;
 
-    public QuoteAdapter(ArrayList<Quote> dataSet, Context context) {
+    QuoteAdapter(ArrayList<Quote> dataSet, Context context) {
         this.dataSet = dataSet;
         this.filteredDataSet = dataSet;
         this.context = context;
@@ -67,7 +68,6 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.body.setText(filteredDataSet.get(position).getText());
-        holder.user.setText(getUser(MainActivity.prefs, filteredDataSet.get(position).getUserID()).getName());
 
         Date date = filteredDataSet.get(position).getDate();
         if (date != null) {
@@ -119,19 +119,17 @@ public class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> 
         };
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView body;
         public final TextView date;
-        public final TextView user;
-        public final ImageView userImage;
+        final CircleImageView userImage;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
 
             body = (TextView) view.findViewById(R.id.quote_body);
             date = (TextView) view.findViewById(R.id.quote_date);
-            user = (TextView) view.findViewById(R.id.quote_user);
-            userImage = (ImageView) view.findViewById(R.id.quote_image);
+            userImage = (CircleImageView) view.findViewById(R.id.quote_image);
         }
     }
 }
