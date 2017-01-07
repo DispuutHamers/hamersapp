@@ -1,5 +1,6 @@
 package nl.ecci.hamers.helpers;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.text.Editable;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.meetings.Meeting;
 import nl.ecci.hamers.users.User;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
 import static nl.ecci.hamers.MainActivity.prefs;
 
 public class Utils {
@@ -249,5 +252,15 @@ public class Utils {
         }
 
         return result;
+    }
+
+    /**
+     * Hides the soft keyboard
+     */
+    public static void hideKeyboard(Activity activity) {
+        if (activity.getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+        }
     }
 }

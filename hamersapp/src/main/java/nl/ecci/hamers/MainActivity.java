@@ -1,5 +1,6 @@
 package nl.ecci.hamers;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -197,7 +198,7 @@ public class MainActivity extends HamersActivity {
 
             @Override
             public void onDrawerStateChanged(int newState) {
-                hideKeyboard();
+                Utils.hideKeyboard(getParent());
             }
         });
 
@@ -208,7 +209,7 @@ public class MainActivity extends HamersActivity {
                 selectItem(menuItem);
                 menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
-                hideKeyboard();
+                Utils.hideKeyboard(getParent());
                 return true;
             }
         });
@@ -325,16 +326,6 @@ public class MainActivity extends HamersActivity {
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.replace(R.id.content_frame, fragment).commit();
         setTitle(menuItem.getTitle());
-    }
-
-    /**
-     * Hides the soft keyboard
-     */
-    private void hideKeyboard() {
-        if (getCurrentFocus() != null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
     }
 
     @Override
