@@ -29,8 +29,8 @@ public final class Loader {
     // URL Appendices
     public static final String QUOTEURL = "quotes";
     public static final String USERURL = "users";
-    public static final String EVENTURL = "events";
-    public static final String UPCOMINGEVENTURL = "events?sorted=date-desc?future=true";
+    public static final String EVENTURL = "events?sorted=date-asc";
+    public static final String UPCOMINGEVENTURL = "events?sorted=date-desc&future=true";
     public static final String NEWSURL = "news";
     public static final String BEERURL = "beers";
     public static final String REVIEWURL = "reviews";
@@ -54,7 +54,8 @@ public final class Loader {
                     @Override
                     public void onResponse(String response) {
                         Log.d("GET-response", response);
-                        prefs.edit().putString(dataURL, response).apply();
+                        if (!dataURL.equals(SIGNUPURL))
+                            prefs.edit().putString(dataURL, response).apply();
                         if (callback != null) {
                             callback.onSuccess(response);
                         }
@@ -95,7 +96,10 @@ public final class Loader {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("POST-response", response.toString());
+
+                        if (!dataURL.equals(GCMURL))
                         Toast.makeText(context, context.getString(R.string.posted), Toast.LENGTH_SHORT).show();
+
                         if (callback != null) {
                             callback.onSuccess(response);
                         }
