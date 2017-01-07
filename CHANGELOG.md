@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.1.1](https://github.com/dexbleeker/hamersapp/tree/2.1) (2017-01-07)
+[Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.1..2.1.1)
+
+- Remove deprecated permission
+
 ## [2.1](https://github.com/dexbleeker/hamersapp/tree/2.1) (2016-12-09)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.0..2.1)
 
