@@ -36,8 +36,8 @@
     <string name="dialog_positive">Oké</string>
 
     <!-- Events -->
-    <string name="event_aanwezig_button">Ik ben aanwezig!</string>
-    <string name="event_afwezig_button">Ik ben afwezig.</string>
+    <string name="event_aanwezig_button">aanwezig</string>
+    <string name="event_afwezig_button">afwezig</string>
     <string name="new_event">Nieuwe activiteit</string>
     <string name="event_title">Naam</string>
     <string name="event_location">Waar is het?</string>

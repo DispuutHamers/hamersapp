@@ -54,7 +54,7 @@ public class SingleEventActivity extends HamersActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.single_event);
+        setContentView(R.layout.event_detail);
 
         inflater = getLayoutInflater();
 
