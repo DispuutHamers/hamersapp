@@ -84,7 +84,6 @@ public class BeerFragment extends HamersFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         beer_list.setLayoutManager(layoutManager);
         beer_list.setItemAnimator(new DefaultItemAnimator());
-        beer_list.addItemDecoration(new DividerItemDecoration(getActivity()));
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.hamers_swipe_container);
         initSwiper(beer_list, layoutManager, swipeRefreshLayout);

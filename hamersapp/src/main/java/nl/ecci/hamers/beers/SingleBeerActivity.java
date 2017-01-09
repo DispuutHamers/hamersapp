@@ -67,7 +67,7 @@ public class SingleBeerActivity extends HamersActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.single_beer);
+        setContentView(R.layout.beer_detail);
 
         inflater = getLayoutInflater();
 

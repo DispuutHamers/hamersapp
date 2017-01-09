@@ -100,18 +100,17 @@ class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implement
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.title.setText(filteredDataSet.get(position).getName());
-        holder.soort.setText(String.format("Soort: %s", filteredDataSet.get(position).getKind()));
-        holder.brewer.setText(String.format("Brouwer: %s", filteredDataSet.get(position).getBrewer()));
-        holder.rating.setText(String.format("Cijfer: %s", filteredDataSet.get(position).getRating()));
-        holder.info.setText((String.format("%s - %s", filteredDataSet.get(position).getCountry(), filteredDataSet.get(position).getPercentage())));
+        holder.name.setText(filteredDataSet.get(position).getName());
+        holder.kind.setText(String.format("%s (%s)", filteredDataSet.get(position).getKind(), filteredDataSet.get(position).getPercentage()));
+        holder.brewer.setText(filteredDataSet.get(position).getBrewer());
+        holder.country.setText(filteredDataSet.get(position).getCountry());
 
         String imageURL = filteredDataSet.get(position).getImageURL();
 
-        if (holder.picture.getTag() == null || !holder.picture.getTag().equals(imageURL) && imageURL != null) {
-            ImageAware imageAware = new ImageViewAware(holder.picture, false);
+        if (holder.image.getTag() == null || !holder.image.getTag().equals(imageURL) && imageURL != null) {
+            ImageAware imageAware = new ImageViewAware(holder.image, false);
             imageLoader.displayImage(imageURL, imageAware, animateFirstListener);
-            holder.picture.setTag(imageURL);
+            holder.image.setTag(imageURL);
         }
     }
 
@@ -157,23 +156,21 @@ class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implement
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;
-        public final TextView title;
-        final TextView soort;
+        public final TextView name;
+        final TextView kind;
         final TextView brewer;
-        final TextView rating;
-        public final TextView info;
-        final ImageView picture;
+        final TextView country;
+        final ImageView image;
 
         ViewHolder(View view) {
             super(view);
             this.view = view;
 
-            title = (TextView) view.findViewById(R.id.beer_name);
-            soort = (TextView) view.findViewById(R.id.beer_soort);
-            brewer = (TextView) view.findViewById(R.id.beer_brewer);
-            rating = (TextView) view.findViewById(R.id.row_beer_rating);
-            info = (TextView) view.findViewById(R.id.beer_info);
-            picture = (ImageView) view.findViewById(R.id.beer_image);
+            name = (TextView) view.findViewById(R.id.name_textview);
+            kind = (TextView) view.findViewById(R.id.kind_textview);
+            brewer = (TextView) view.findViewById(R.id.brewer_textview);
+            country = (TextView) view.findViewById(R.id.country_textview);
+            image = (ImageView) view.findViewById(R.id.beer_image);
         }
     }
 }
