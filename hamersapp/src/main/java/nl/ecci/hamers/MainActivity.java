@@ -1,6 +1,5 @@
 package nl.ecci.hamers;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,7 +22,6 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -176,6 +174,8 @@ public class MainActivity extends HamersActivity {
         Utils.hasApiKey(this, prefs);
 
         fillHeader();
+
+        getAllData(this);
     }
 
     private void initDrawer() {
@@ -272,7 +272,6 @@ public class MainActivity extends HamersActivity {
         super.onResume();
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(REGISTRATION_COMPLETE));
-        getAllData(this);
     }
 
     @Override
@@ -363,7 +362,7 @@ public class MainActivity extends HamersActivity {
                 ImageLoader.getInstance().displayImage(url, userImage);
             }
         } else {
-            Loader.getData(Loader.WHOAMIURL, this, prefs, new GetCallback() {
+            Loader.getData(this, Loader.WHOAMIURL, new GetCallback() {
                 @Override
                 public void onSuccess(String response) {
                     fillHeader();
@@ -373,7 +372,7 @@ public class MainActivity extends HamersActivity {
                 public void onError(VolleyError error) {
                     // Nothing
                 }
-            });
+            }, null);
         }
     }
 }

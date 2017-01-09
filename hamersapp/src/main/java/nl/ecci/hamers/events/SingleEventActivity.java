@@ -177,7 +177,7 @@ public class SingleEventActivity extends HamersActivity {
         } catch (JSONException ignored) {
         }
 
-        Loader.postOrPatchData(Loader.SIGNUPURL, body, -1, this, MainActivity.prefs, new PostCallback() {
+        Loader.postOrPatchData(this, Loader.SIGNUPURL, body, -1, new PostCallback() {
             @Override
             public void onSuccess(JSONObject response) {
                 finish();

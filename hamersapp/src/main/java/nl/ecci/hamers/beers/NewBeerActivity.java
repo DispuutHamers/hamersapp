@@ -89,7 +89,7 @@ public class NewBeerActivity extends NewItemActivity {
         } catch (JSONException ignored) {
         }
 
-        Loader.postOrPatchData(Loader.BEERURL, body, beerID, this, prefs, new PostCallback() {
+        Loader.postOrPatchData(this, Loader.BEERURL, body, beerID, new PostCallback() {
             @Override
             public void onSuccess(JSONObject response) {
                 Intent returnIntent = new Intent();

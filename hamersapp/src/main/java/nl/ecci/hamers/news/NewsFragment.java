@@ -84,7 +84,7 @@ public class NewsFragment extends HamersFragment {
     @Override
     public void onRefresh() {
         setRefreshing(true);
-        Loader.getData(Loader.NEWSURL, getContext(), MainActivity.prefs, new GetCallback() {
+        Loader.getData(getContext(), Loader.NEWSURL, new GetCallback() {
             @Override
             public void onSuccess(String response) {
                 new populateList().execute(response);
@@ -94,7 +94,7 @@ public class NewsFragment extends HamersFragment {
             public void onError(VolleyError error) {
                 // Nothing
             }
-        });
+        }, null);
     }
 
     @Override

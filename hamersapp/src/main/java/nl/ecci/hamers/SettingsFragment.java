@@ -51,7 +51,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                         prefs.edit().remove(Loader.QUOTEURL).apply();
                         prefs.edit().remove(Loader.USERURL).apply();
                         prefs.edit().remove(Loader.EVENTURL).apply();
-                        prefs.edit().remove(Loader.UPCOMINGEVENTURL).apply();
                         prefs.edit().remove(Loader.NEWSURL).apply();
                         prefs.edit().remove(Loader.BEERURL).apply();
                         prefs.edit().remove(Loader.REVIEWURL).apply();

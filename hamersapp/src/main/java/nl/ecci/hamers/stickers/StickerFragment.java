@@ -23,7 +23,6 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
@@ -62,7 +61,7 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void onRefresh() {
-        Loader.getData(Loader.STICKERURL, getContext(), MainActivity.prefs, new GetCallback() {
+        Loader.getData(getContext(), Loader.STICKERURL, new GetCallback() {
             @Override
             // TODO
             public void onSuccess(String response) {
@@ -73,7 +72,7 @@ public class StickerFragment extends Fragment implements OnMapReadyCallback {
             public void onError(VolleyError error) {
                 // Nothing
             }
-        });
+        }, null);
     }
 
     private void addMarkers() {

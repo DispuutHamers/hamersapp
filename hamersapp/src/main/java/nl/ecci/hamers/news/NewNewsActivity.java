@@ -2,7 +2,6 @@ package nl.ecci.hamers.news;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.view.View;
 import android.widget.EditText;
 
 import com.android.volley.VolleyError;
@@ -10,9 +9,7 @@ import com.android.volley.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.NewItemActivity;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.PostCallback;
@@ -49,7 +46,7 @@ public class NewNewsActivity extends NewItemActivity {
         } catch (JSONException ignored) {
         }
 
-        Loader.postOrPatchData(Loader.NEWSURL, body, -1, this, MainActivity.prefs, new PostCallback() {
+        Loader.postOrPatchData(this, Loader.NEWSURL, body, -1, new PostCallback() {
             @Override
             public void onSuccess(JSONObject response) {
                 finish();

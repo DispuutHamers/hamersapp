@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +25,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
@@ -39,7 +40,6 @@ public class EventListFragment extends HamersFragment {
 
     private final ArrayList<Event> dataSet = new ArrayList<>();
     private EventListAdapter adapter;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView event_list;
     private boolean upcoming;
 
@@ -84,8 +84,11 @@ public class EventListFragment extends HamersFragment {
     @Override
     public void onRefresh() {
         setRefreshing(true);
+        Map<String, String> params = new HashMap<>();
         if (upcoming) {
-            Loader.getData(Loader.UPCOMINGEVENTURL, getContext(), MainActivity.prefs, new GetCallback() {
+            params.put("sorted", "date-desc");
+            params.put("future", "true");
+            Loader.getData(getContext(), Loader.EVENTURL, new GetCallback() {
                 @Override
                 public void onSuccess(String response) {
                     new populateList().execute(response);
@@ -95,11 +98,14 @@ public class EventListFragment extends HamersFragment {
                 public void onError(VolleyError error) {
                     // Nothing
                 }
-            });
+            }, params);
         } else {
-            Loader.getData(Loader.EVENTURL, getContext(), MainActivity.prefs, new GetCallback() {
+            params.put("sorted", "date-asc");
+            Loader.getData(getContext(), Loader.EVENTURL, new GetCallback() {
                 @Override
                 public void onSuccess(String response) {
+                    // Only save normal event list
+                    prefs.edit().putString(Loader.EVENTURL, response).apply();
                     new populateList().execute(response);
                 }
 
@@ -107,7 +113,7 @@ public class EventListFragment extends HamersFragment {
                 public void onError(VolleyError error) {
                     // Nothing
                 }
-            });
+            }, params);
         }
     }
 
@@ -166,11 +172,24 @@ public class EventListFragment extends HamersFragment {
             if (params.length > 0) {
                 return gson.fromJson(params[0], type);
             } else {
-                String key = Loader.EVENTURL;
+                ArrayList<Event> tempList = gson.fromJson(prefs.getString(Loader.EVENTURL, null), type);
                 if (upcoming) {
-                    key = Loader.UPCOMINGEVENTURL;
+                    // Only 'future' elements
+                    ArrayList<Event> result = new ArrayList<>();
+                    Date now = new Date();
+
+                    if (tempList != null) {
+                        for (Event event : tempList) {
+                            if (now.before(event.getDate())) {
+                                result.add(event);
+                            }
+                        }
+                    }
+                    Collections.reverse(result);
+                    return result;
+                } else {
+                    return tempList;
                 }
-                return gson.fromJson(prefs.getString(key, null), type);
             }
         }
 

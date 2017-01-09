@@ -148,7 +148,7 @@ public class NewEventActivity extends NewItemActivity {
             } catch (JSONException ignored) {
             }
 
-            Loader.postOrPatchData(Loader.EVENTURL, body, eventID, this, MainActivity.prefs, new PostCallback() {
+            Loader.postOrPatchData(this, Loader.EVENTURL, body, eventID, new PostCallback() {
                 @Override
                 public void onSuccess(JSONObject response) {
                     finish();

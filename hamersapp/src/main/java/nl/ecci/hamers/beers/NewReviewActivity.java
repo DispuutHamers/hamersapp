@@ -133,7 +133,7 @@ public class NewReviewActivity extends NewItemActivity {
                 if (review != null) {
                     reviewID = review.getID();
                 }
-                Loader.postOrPatchData(Loader.REVIEWURL, body, reviewID, this, prefs, new PostCallback() {
+                Loader.postOrPatchData(this, Loader.REVIEWURL, body, reviewID, new PostCallback() {
                     @Override
                     public void onSuccess(JSONObject response) {
                         Intent returnIntent = new Intent();

@@ -2,7 +2,6 @@ package nl.ecci.hamers.users;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,9 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -82,7 +78,7 @@ public class UserListFragment extends HamersFragment implements SwipeRefreshLayo
     @Override
     public void onRefresh() {
         setRefreshing(true);
-        Loader.getData(Loader.USERURL, getContext(), MainActivity.prefs, new GetCallback() {
+        Loader.getData(getContext(), Loader.USERURL, new GetCallback() {
             @Override
             public void onSuccess(String response) {
                 new populateList().execute(response);
@@ -92,7 +88,7 @@ public class UserListFragment extends HamersFragment implements SwipeRefreshLayo
             public void onError(VolleyError error) {
                 // Nothing
             }
-        });
+        }, null);
     }
 
     @Override

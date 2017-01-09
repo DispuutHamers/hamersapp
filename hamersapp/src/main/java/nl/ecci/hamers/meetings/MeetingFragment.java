@@ -64,7 +64,7 @@ public class MeetingFragment extends HamersFragment {
     @Override
     public void onRefresh() {
         setRefreshing(true);
-        Loader.getData(Loader.MEETINGURL, getContext(), MainActivity.prefs, new GetCallback() {
+        Loader.getData(getContext(), Loader.MEETINGURL, new GetCallback() {
             @Override
             public void onSuccess(String response) {
                 new populateList().execute(response);
@@ -74,7 +74,7 @@ public class MeetingFragment extends HamersFragment {
             public void onError(VolleyError error) {
                 // Nothing
             }
-        });
+        }, null);
     }
 
     @Override

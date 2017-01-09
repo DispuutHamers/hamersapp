@@ -82,7 +82,7 @@ public class NewMeetingActivity extends NewItemActivity {
                 body.put("notes", notes);
                 body.put("date", MainActivity.parseDate(date));
                 if (meeting != null) {
-                    Loader.postOrPatchData(Loader.MEETINGURL, body, meeting.getID(), this, MainActivity.prefs, new PostCallback() {
+                    Loader.postOrPatchData(this, Loader.MEETINGURL, body, meeting.getID(), new PostCallback() {
                         @Override
                         public void onSuccess(JSONObject response) {
                             finish();
@@ -94,7 +94,7 @@ public class NewMeetingActivity extends NewItemActivity {
                         }
                     });
                 } else {
-                    Loader.postOrPatchData(Loader.MEETINGURL, body, -1, this, MainActivity.prefs, new PostCallback() {
+                    Loader.postOrPatchData(this, Loader.MEETINGURL, body, -1, new PostCallback() {
                         @Override
                         public void onSuccess(JSONObject response) {
                             finish();

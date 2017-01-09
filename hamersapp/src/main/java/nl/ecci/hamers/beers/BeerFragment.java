@@ -113,7 +113,7 @@ public class BeerFragment extends HamersFragment {
     @Override
     public void onRefresh() {
         setRefreshing(true);
-        Loader.getData(Loader.BEERURL, getContext(), prefs, new GetCallback() {
+        Loader.getData(getContext(), Loader.BEERURL, new GetCallback() {
             @Override
             public void onSuccess(String response) {
                 new populateList().execute(response);
@@ -123,8 +123,8 @@ public class BeerFragment extends HamersFragment {
             public void onError(VolleyError error) {
                 // Nothing
             }
-        });
-        Loader.getData(Loader.REVIEWURL, getContext(), prefs, null);
+        }, null);
+        Loader.getData(getContext(), Loader.REVIEWURL, null, null);
     }
 
     @Override

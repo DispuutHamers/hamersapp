@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -76,7 +75,7 @@ public class QuoteFragment extends HamersFragment implements DialogInterface.OnD
     @Override
     public void onRefresh() {
         setRefreshing(true);
-        Loader.getData(Loader.QUOTEURL, getContext(), MainActivity.prefs, new GetCallback() {
+        Loader.getData(getContext(), Loader.QUOTEURL, new GetCallback() {
             @Override
             public void onSuccess(String response) {
                 new populateList().execute(response);
@@ -86,7 +85,7 @@ public class QuoteFragment extends HamersFragment implements DialogInterface.OnD
             public void onError(VolleyError error) {
                 // Nothing
             }
-        });
+        }, null);
     }
 
     @Override

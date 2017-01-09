@@ -81,7 +81,7 @@ public class NewQuoteFragment extends DialogFragment {
         } catch (JSONException ignored) {
         }
 
-        Loader.postOrPatchData(Loader.QUOTEURL, body, -1, getContext(), MainActivity.prefs, new PostCallback() {
+        Loader.postOrPatchData(getContext(), Loader.QUOTEURL, body, -1, new PostCallback() {
             @Override
             public void onSuccess(JSONObject response) {
 
