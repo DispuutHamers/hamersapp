@@ -36,6 +36,7 @@ import static nl.ecci.hamers.MainActivity.prefs;
 
 public class Utils {
     private static AlertDialog alertDialog;
+    private static final String unknown = "Unknown";
 
     private static String hex(byte[] array) {
         StringBuilder sb = new StringBuilder();
@@ -72,9 +73,9 @@ public class Utils {
                 if (!key.toString().equals("")) {
                     // Store in memory
                     PreferenceManager.getDefaultSharedPreferences(context).edit().putString(Loader.APIKEYKEY, key.toString()).apply();
-                    Toast.makeText(context, context.getResources().getString(R.string.dowloading), Toast.LENGTH_SHORT).show();
+                    showToast(context, context.getResources().getString(R.string.dowloading), Toast.LENGTH_SHORT);
                 } else {
-                    Toast.makeText(context, context.getResources().getString(R.string.store_key_settings), Toast.LENGTH_SHORT).show();
+                    showToast(context, context.getResources().getString(R.string.store_key_settings), Toast.LENGTH_SHORT);
                 }
             }
         });
@@ -166,7 +167,7 @@ public class Utils {
 
     public static User getUser(SharedPreferences prefs, int id) {
         ArrayList<User> userList;
-        User result = new User(-1, "Unknown", "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<User.Nickname>(), new Date());
+        User result = new User(-1, unknown, "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<User.Nickname>(), new Date());
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         Type type = new TypeToken<ArrayList<User>>() {
@@ -191,13 +192,13 @@ public class Utils {
         Gson gson = gsonBuilder.create();
         user = gson.fromJson(prefs.getString(Loader.WHOAMIURL, null), User.class);
         if (user == null) {
-            user = new User(-1, "Unknown", "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<User.Nickname>(), new Date());
+            user = new User(-1, unknown, "example@example.org", 0, 0, User.Member.LID, -1, new ArrayList<User.Nickname>(), new Date());
         }
         return user;
     }
 
     public static Event getEvent(SharedPreferences prefs, int id) {
-        Event result = new Event(1, "Unknown", "Unknown", "Unknown", new Date(), new Date(), new Date(), new ArrayList<Event.Signup>(), new Date());
+        Event result = new Event(1, unknown, unknown, unknown, new Date(), new Date(), new Date(), new ArrayList<Event.Signup>(), new Date());
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         Type type = new TypeToken<ArrayList<Event>>() {
@@ -216,7 +217,7 @@ public class Utils {
     }
 
     public static Beer getBeer(SharedPreferences prefs, int id) {
-        Beer result = new Beer(-1, "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", "Unknown", new Date());
+        Beer result = new Beer(-1, unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, new Date());
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         Type type = new TypeToken<ArrayList<Beer>>() {
@@ -236,7 +237,7 @@ public class Utils {
 
     public static Meeting getMeeting(SharedPreferences prefs, int id) {
         Date date = new Date();
-        Meeting result = new Meeting(-1, "Unknown", "Unknown", "Unknown", -1, date, date, date);
+        Meeting result = new Meeting(-1, unknown, unknown, unknown, -1, date, date, date);
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         Type type = new TypeToken<ArrayList<Meeting>>() {
@@ -264,5 +265,12 @@ public class Utils {
                 inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
             }
         }
+    }
+
+    private static Toast mToast;
+    public static void showToast(Context context, String text, int duration) {
+        if (mToast != null) mToast.cancel();
+        mToast = Toast.makeText(context, text, duration);
+        mToast.show();
     }
 }

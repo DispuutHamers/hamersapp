@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
 import nl.ecci.hamers.helpers.SingleImageActivity;
+import nl.ecci.hamers.helpers.Utils;
 
 class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implements Filterable {
 
@@ -85,7 +86,7 @@ class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implement
                         intent.putExtra(Beer.BEER, gson.toJson(beer, Beer.class));
                         ActivityCompat.startActivity(activity, intent, options.toBundle());
                     } else {
-                        Toast.makeText(context, context.getString(R.string.no_image), Toast.LENGTH_SHORT).show();
+                        Utils.showToast(context, context.getString(R.string.no_image), Toast.LENGTH_SHORT);
                     }
                 } catch (NullPointerException ignored) {
                     Snackbar.make(view, context.getString(R.string.generic_error), Snackbar.LENGTH_LONG).show();

@@ -23,6 +23,7 @@ import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DatePickerFragment;
 import nl.ecci.hamers.helpers.NewItemActivity;
 import nl.ecci.hamers.helpers.TimePickerFragment;
+import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.PostCallback;
 
@@ -161,7 +162,7 @@ public class NewEventActivity extends NewItemActivity {
             });
         } else {
             disableLoadingAnimation();
-            Toast.makeText(this, R.string.missing_fields, Toast.LENGTH_SHORT).show();
+            Utils.showToast(this, getString(R.string.missing_fields), Toast.LENGTH_SHORT);
         }
     }
 }

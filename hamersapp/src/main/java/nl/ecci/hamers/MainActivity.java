@@ -259,7 +259,7 @@ public class MainActivity extends HamersActivity {
                 GoogleApiAvailability.getInstance().getErrorDialog(this, resultCode,
                         PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
-                Toast.makeText(this, getResources().getString(R.string.gps_missing), Toast.LENGTH_SHORT).show();
+                Utils.showToast(this, getResources().getString(R.string.gps_missing), Toast.LENGTH_SHORT);
                 finish();
             }
             return false;
@@ -335,7 +335,7 @@ public class MainActivity extends HamersActivity {
         }
 
         this.backPressedOnce = true;
-        Toast.makeText(this, getString(R.string.press_back_again), Toast.LENGTH_SHORT).show();
+        Utils.showToast(this, getString(R.string.press_back_again), Toast.LENGTH_SHORT);
 
         new Handler().postDelayed(new Runnable() {
             @Override
