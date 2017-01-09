@@ -40,7 +40,7 @@ public class NewNewsActivity extends NewItemActivity {
 
         JSONObject body = new JSONObject();
         try {
-            body.put("title", title);
+            body.put("name", title);
             body.put("body", newsBody);
             body.put("cat", "l");
         } catch (JSONException ignored) {

@@ -5,13 +5,11 @@
     android:layout_gravity="center"
     android:layout_marginBottom="@dimen/card_margin_bottom"
     android:layout_marginEnd="@dimen/card_margin_right"
-    android:layout_marginLeft="@dimen/card_margin_left"
-    android:layout_marginRight="@dimen/card_margin_right"
     android:layout_marginStart="@dimen/card_margin_left"
     android:layout_marginTop="@dimen/card_margin_top"
     android:clickable="false"
     android:focusable="false"
-    card_view:cardCornerRadius="2dp">
+    card_view:cardCornerRadius="@dimen/card_corner_radius">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,7 +18,7 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/newsitem_title"
+            android:id="@+id/newsItem_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignWithParentIfMissing="true"
@@ -29,10 +27,10 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/newsitem_date"
+            android:id="@+id/newsItem_date"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/newsitem_title"
+            android:layout_below="@id/newsItem_title"
             android:ellipsize="marquee"
             android:gravity="center"
             android:maxLines="1"
@@ -42,20 +40,18 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/newsitem_date"
+            android:layout_below="@id/newsItem_date"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/newsitem_body"
+                android:id="@+id/newsItem_body"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignWithParentIfMissing="true"
                 android:gravity="center"
-                android:paddingTop="-2dp"
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="14sp" />
         </RelativeLayout>

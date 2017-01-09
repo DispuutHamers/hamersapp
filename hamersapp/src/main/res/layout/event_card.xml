@@ -7,10 +7,10 @@
     android:layout_marginEnd="@dimen/card_margin_right"
     android:layout_marginStart="@dimen/card_margin_left"
     android:layout_marginTop="@dimen/card_margin_top"
+    android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:background="?android:attr/selectableItemBackground"
-    card_view:cardCornerRadius="2dp">
+    card_view:cardCornerRadius="@dimen/card_corner_radius">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignWithParentIfMissing="true"
-            android:gravity="center"
+            android:layout_marginBottom="2dp"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="20sp" />
 
@@ -31,8 +31,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/event_title"
+            android:layout_marginBottom="2dp"
             android:ellipsize="marquee"
-            android:gravity="center"
             android:maxLines="1"
             android:textColor="?android:attr/textColorTertiary"
             android:textSize="12sp" />
@@ -42,32 +42,28 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/event_date"
+            android:layout_marginBottom="2dp"
             android:ellipsize="marquee"
-            android:gravity="center"
             android:maxLines="1"
             android:textColor="?android:attr/textColorTertiary"
             android:textSize="12sp" />
 
         <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/event_location"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/event_beschrijving"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignWithParentIfMissing="true"
-                android:layout_toLeftOf="@+id/thumbs"
                 android:layout_toStartOf="@+id/thumbs"
-                android:gravity="center"
-                android:paddingTop="-2dp"
                 android:textColor="?android:attr/textColorSecondary"
-                android:textSize="14sp"
-                android:textStyle="italic" />
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/thumbs"
@@ -75,10 +71,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:adjustViewBounds="true"
-                android:maxHeight="15dp"
-                android:maxWidth="15dp"
+                android:maxHeight="16dp"
+                android:maxWidth="16dp"
                 android:src="@drawable/ic_questionmark" />
         </RelativeLayout>
     </RelativeLayout>

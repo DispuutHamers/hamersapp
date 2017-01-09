@@ -28,7 +28,6 @@ class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
     private final Context context;
     private final ArrayList<User> dataSet;
     private final ImageLoader imageLoader;
-    private final Gson gson;
 
     UserListAdapter(ArrayList<User> dataSet, Context context) {
         this.dataSet = dataSet;
@@ -36,9 +35,6 @@ class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
         imageLoader = ImageLoader.getInstance();
         animateFirstListener = new AnimateFirstDisplayListener();
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gson = gsonBuilder.create();
     }
 
     @Override
@@ -61,9 +57,6 @@ class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(UserListAdapter.ViewHolder holder, final int position) {
         holder.userName.setText(dataSet.get(position).getName());
-        holder.userNickname.setText(convertNicknames(dataSet.get(position).getNicknames()));
-        holder.userQuoteCount.setText(String.format("Aantal quotes: %s", String.valueOf(dataSet.get(position).getQuoteCount())));
-        holder.userReviewCount.setText(String.format(MainActivity.locale, "Aantal reviews: %d", dataSet.get(position).getReviewCount()));
 
         String url = getGravatarURL(dataSet.get(position).getEmail());
         imageLoader.displayImage(url, holder.userImage, animateFirstListener);
@@ -78,9 +71,6 @@ class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
         public final View view;
         final ImageView userImage;
         final TextView userName;
-        final TextView userNickname;
-        final TextView userQuoteCount;
-        final TextView userReviewCount;
 
         ViewHolder(View view) {
             super(view);
@@ -88,9 +78,6 @@ class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
             userImage = (ImageView) view.findViewById(R.id.user_image);
             userName = (TextView) view.findViewById(R.id.username);
-            userNickname = (TextView) view.findViewById(R.id.user_nickname);
-            userQuoteCount = (TextView) view.findViewById(R.id.user_quotecount);
-            userReviewCount = (TextView) view.findViewById(R.id.user_reviewcount);
         }
     }
 }

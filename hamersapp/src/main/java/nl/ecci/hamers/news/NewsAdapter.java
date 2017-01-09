@@ -92,9 +92,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
             super(view);
             this.view = view;
 
-            title = (TextView) view.findViewById(R.id.newsitem_title);
-            body = (TextView) view.findViewById(R.id.newsitem_body);
-            date = (TextView) view.findViewById(R.id.newsitem_date);
+            title = (TextView) view.findViewById(R.id.newsItem_title);
+            body = (TextView) view.findViewById(R.id.newsItem_body);
+            date = (TextView) view.findViewById(R.id.newsItem_date);
         }
     }
 }

@@ -15,7 +15,7 @@
 
     <LinearLayout
         android:id="@+id/textview_container"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
         android:layout_centerVertical="true"
@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/quote_body"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:textColor="?android:attr/textColorPrimary"
@@ -36,10 +36,10 @@
 
         <TextView
             android:id="@+id/quote_date"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
-            android:gravity="end"
+            android:gravity="center_vertical"
             android:maxLines="1"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="12sp" />
