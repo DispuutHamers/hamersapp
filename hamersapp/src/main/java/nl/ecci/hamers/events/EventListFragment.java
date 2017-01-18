@@ -195,8 +195,7 @@ public class EventListFragment extends HamersFragment {
 
         @Override
         protected void onPostExecute(ArrayList<Event> result) {
-            setRefreshing(false);
-            if (!result.isEmpty()) {
+            if (result != null) {
                 dataSet.clear();
                 dataSet.addAll(result);
                 Collections.reverse(dataSet);
@@ -204,6 +203,7 @@ public class EventListFragment extends HamersFragment {
                     adapter.notifyDataSetChanged();
                 }
             }
+            setRefreshing(false);
         }
     }
 }
