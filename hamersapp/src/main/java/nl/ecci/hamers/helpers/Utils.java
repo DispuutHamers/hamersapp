@@ -203,7 +203,10 @@ public class Utils {
         Gson gson = gsonBuilder.create();
         Type type = new TypeToken<ArrayList<Event>>() {
         }.getType();
-        ArrayList<Event> eventList = gson.fromJson(prefs.getString(Loader.EVENTURL, null), type);
+        ArrayList<Event> eventList = null;
+        if (prefs != null) {
+            eventList = gson.fromJson(prefs.getString(Loader.EVENTURL, null), type);
+        }
 
         if (eventList != null) {
             for (Event event : eventList) {
@@ -268,6 +271,7 @@ public class Utils {
     }
 
     private static Toast mToast;
+
     public static void showToast(Context context, String text, int duration) {
         if (mToast != null) mToast.cancel();
         mToast = Toast.makeText(context, text, duration);
