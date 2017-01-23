@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.1.4](https://github.com/dexbleeker/hamersapp/tree/2.1.4) (2017-01-23)
+[Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.1.3..2.1.4)
+
+- Bug fixes
+
+## [2.1.3](https://github.com/dexbleeker/hamersapp/tree/2.1.3) (2017-01-18)
+[Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.1.2..2.1.3)
+
+- Bug fixes
+
 ## [2.1.2](https://github.com/dexbleeker/hamersapp/tree/2.1.2) (2017-01-09)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.1.1..2.1.2)
 
