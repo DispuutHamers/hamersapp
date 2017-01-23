@@ -104,6 +104,7 @@ class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implement
         holder.kind.setText(String.format("%s (%s)", filteredDataSet.get(position).getKind(), filteredDataSet.get(position).getPercentage()));
         holder.brewer.setText(filteredDataSet.get(position).getBrewer());
         holder.country.setText(filteredDataSet.get(position).getCountry());
+        holder.rating.setText(filteredDataSet.get(position).getRating());
 
         String imageURL = filteredDataSet.get(position).getImageURL();
 
@@ -160,6 +161,7 @@ class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implement
         final TextView kind;
         final TextView brewer;
         final TextView country;
+        final TextView rating;
         final ImageView image;
 
         ViewHolder(View view) {
@@ -170,6 +172,7 @@ class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implement
             kind = (TextView) view.findViewById(R.id.kind_textview);
             brewer = (TextView) view.findViewById(R.id.brewer_textview);
             country = (TextView) view.findViewById(R.id.country_textview);
+            rating = (TextView) view.findViewById(R.id.rating_textview);
             image = (ImageView) view.findViewById(R.id.beer_image);
         }
     }

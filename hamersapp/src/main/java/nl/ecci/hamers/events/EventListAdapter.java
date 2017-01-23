@@ -16,7 +16,6 @@ import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.users.User;
 
 import static nl.ecci.hamers.helpers.Utils.getOwnUser;
 
@@ -34,7 +33,7 @@ class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder>
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_row, parent, false);
         final ViewHolder vh = new ViewHolder(view);
 
         view.setOnClickListener(new View.OnClickListener() {
