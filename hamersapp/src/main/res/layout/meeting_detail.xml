@@ -107,7 +107,7 @@
 
                     <include layout="@layout/divider" />
 
-                    <TextView
+                    <us.feras.mdv.MarkdownView
                         android:id="@+id/meeting_notes"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -115,9 +115,7 @@
                         android:paddingBottom="8dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
-                        android:paddingTop="8dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="?android:attr/textColorSecondary" />
+                        android:paddingTop="8dp" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
