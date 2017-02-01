@@ -66,7 +66,7 @@
 
                     <include layout="@layout/divider" />
 
-                    <TextView
+                    <us.feras.mdv.MarkdownView
                         android:id="@+id/meeting_agenda"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"

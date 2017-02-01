@@ -32,16 +32,16 @@ public class SingleMeetingActivity extends HamersActivity {
         TextView subjectTV = (TextView) findViewById(R.id.meeting_subject);
         TextView dateTV = (TextView) findViewById(R.id.meeting_date);
         TextView userTV = (TextView) findViewById(R.id.meeting_user);
-        TextView agendaTV = (TextView) findViewById(R.id.meeting_agenda);
+        MarkdownView agendaMV = (MarkdownView) findViewById(R.id.meeting_agenda);
         MarkdownView notesMV = (MarkdownView) findViewById(R.id.meeting_notes);
 
         Meeting meeting = getMeeting(MainActivity.prefs, getIntent().getIntExtra(Meeting.ID, -1));
 
-        if (subjectTV != null && dateTV != null && userTV != null && agendaTV != null && notesMV != null) {
+        if (subjectTV != null && dateTV != null && userTV != null && agendaMV != null && notesMV != null) {
             subjectTV.setText(meeting.getSubject());
             dateTV.setText(MainActivity.appDF.format(meeting.getDate()));
             userTV.setText(String.format("Genotuleerd door: %s", getUser(MainActivity.prefs, meeting.getUserID()).getName()));
-            agendaTV.setText(meeting.getAgenda());
+            agendaMV.loadMarkdown(meeting.getAgenda());
             notesMV.loadMarkdown(meeting.getNotes());
         }
     }
