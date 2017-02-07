@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.1.5](https://github.com/dexbleeker/hamersapp/tree/2.1.5) (2017-02-06)
+[Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.1.4..2.1.5)
+
+- Use markdown for meetings (agenda's + notes)
+
 ## [2.1.4](https://github.com/dexbleeker/hamersapp/tree/2.1.4) (2017-01-23)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.1.3..2.1.4)
 
