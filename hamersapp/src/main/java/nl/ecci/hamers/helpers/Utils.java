@@ -141,7 +141,7 @@ public class Utils {
 
         for (User user : userList) {
             if (user.getName().equals(name)) {
-                result = user.getID();
+                result = user.getId();
             }
         }
         return result;
@@ -177,7 +177,7 @@ public class Utils {
 
         if (userList != null) {
             for (User user : userList) {
-                if (user.getID() == id) {
+                if (user.getId() == id) {
                     result = user;
                 }
             }

@@ -67,7 +67,7 @@ class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder>
 
         ArrayList signups = filteredDataSet.get(position).getSignups();
         if (signups != null) {
-            int userID = getOwnUser(MainActivity.prefs).getID();
+            int userID = getOwnUser(MainActivity.prefs).getId();
             Boolean aanwezig = null;
             for (int i = 0; i < signups.size(); i++) {
                 Event.Signup signup = (Event.Signup) signups.get(i);

@@ -56,7 +56,7 @@ class QuoteAdapter extends RecyclerView.Adapter<QuoteAdapter.ViewHolder> impleme
                 final int position = vh.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Intent intent = new Intent(context, SingleUserActivity.class);
-                    intent.putExtra(User.USER_ID, filteredDataSet.get(vh.getAdapterPosition()).getUserID());
+                    intent.putExtra(User.Companion.getUSER_ID(), filteredDataSet.get(vh.getAdapterPosition()).getUserID());
                     context.startActivity(intent);
                 }
             }

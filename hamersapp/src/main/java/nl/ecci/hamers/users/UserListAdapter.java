@@ -46,7 +46,7 @@ class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, SingleUserActivity.class);
-                intent.putExtra(User.USER_ID, dataSet.get(vh.getAdapterPosition()).getID());
+                intent.putExtra(User.Companion.getUSER_ID(), dataSet.get(vh.getAdapterPosition()).getId());
                 context.startActivity(intent);
             }
         });

@@ -138,7 +138,7 @@ public class SingleEventActivity extends HamersActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.edit_menu, menu);
-        if (ownUser.getID() != event.getUserID()) {
+        if (ownUser.getId() != event.getUserID()) {
             menu.removeItem(R.id.edit_item);
         }
         return true;

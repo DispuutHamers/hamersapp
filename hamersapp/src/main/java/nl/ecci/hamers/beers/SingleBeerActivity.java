@@ -150,7 +150,7 @@ public class SingleBeerActivity extends HamersActivity {
         for (Review review : reviewList) {
             if (review.getBeerID() == beer.getID()) {
                 hasReviews = true;
-                if (review.getUserID() == getOwnUser(MainActivity.prefs).getID()) {
+                if (review.getUserID() == getOwnUser(MainActivity.prefs).getId()) {
                     reviewButton.setText(R.string.edit_review);
                     ownReview = review;
                 }
@@ -199,7 +199,7 @@ public class SingleBeerActivity extends HamersActivity {
             insertPoint.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             insertPoint.addView(divider);
         }
-        if (getOwnUser(MainActivity.prefs).getID() == review.getUserID()) {
+        if (getOwnUser(MainActivity.prefs).getId() == review.getUserID()) {
             registerForContextMenu(view);
         }
     }

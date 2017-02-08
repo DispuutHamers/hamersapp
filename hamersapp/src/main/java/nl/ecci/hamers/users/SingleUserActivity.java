@@ -37,7 +37,7 @@ public class SingleUserActivity extends HamersActivity {
 
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
-        final User user = getUser(MainActivity.prefs, getIntent().getIntExtra(User.USER_ID, -1));
+        final User user = getUser(MainActivity.prefs, getIntent().getIntExtra(User.Companion.getUSER_ID(), -1));
 
         collapsingToolbar.setTitle(user.getName());
 

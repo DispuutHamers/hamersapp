@@ -25,7 +25,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         this.dataSet = dataSet;
         this.context = context;
 
-        ownID = getOwnUser(MainActivity.prefs).getID();
+        ownID = getOwnUser(MainActivity.prefs).getId();
     }
 
     @Override
