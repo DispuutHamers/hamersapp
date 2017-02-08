@@ -63,7 +63,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     // Other libraries
     compile 'us.feras.mdv:markdownview:1.1.0'
-    compile 'com.takisoft.fix:preference-v7:25.0.1.0'
+    compile 'com.takisoft.fix:preference-v7:25.1.1.0'
 
     // Testing
     // testCompile 'junit:junit:4.12'
