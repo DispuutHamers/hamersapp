@@ -111,7 +111,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 prefs.edit().putString(Loader.EVENTURL, json.toString()).apply();
 
                 intent = new Intent(this, SingleEventActivity.class);
-                intent.putExtra(Event.EVENT, event.getInt("id"));
+                intent.putExtra(Event.Companion.getEVENT(), event.getInt("id"));
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
             }

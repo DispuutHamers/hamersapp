@@ -198,7 +198,7 @@ public class Utils {
     }
 
     public static Event getEvent(SharedPreferences prefs, int id) {
-        Event result = new Event(1, unknown, unknown, unknown, new Date(), new Date(), new Date(), new ArrayList<Event.Signup>(), new Date());
+        Event result = new Event(1, unknown, unknown, unknown, new Date(), new Date(), new Date(), new ArrayList<Event.SignUp>(), new Date());
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         Type type = new TypeToken<ArrayList<Event>>() {
@@ -210,7 +210,7 @@ public class Utils {
 
         if (eventList != null) {
             for (Event event : eventList) {
-                if (event.getID() == id) {
+                if (event.getId() == id) {
                     result = event;
                 }
             }

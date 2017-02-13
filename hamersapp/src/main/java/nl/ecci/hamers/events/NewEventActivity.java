@@ -70,7 +70,7 @@ public class NewEventActivity extends NewItemActivity {
         DateFormat timeFormat = new SimpleDateFormat("HH:mm", MainActivity.locale);
         DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy", MainActivity.locale);
 
-        eventID = getIntent().getIntExtra(Event.EVENT, -1);
+        eventID = getIntent().getIntExtra(Event.Companion.getEVENT(), -1);
         if (eventID != -1) {
             Event event = getEvent(MainActivity.prefs, eventID);
             event_title.setText(event.getTitle());

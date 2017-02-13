@@ -153,7 +153,7 @@ public class SingleEventActivity extends HamersActivity {
             case R.id.edit_item:
                 Intent intent = new Intent(this, NewEventActivity.class);
                 if (event != null) {
-                    intent.putExtra(Event.EVENT, event.getID());
+                    intent.putExtra(Event.EVENT, event.getId());
                 }
                 startActivity(intent);
                 return true;
@@ -162,17 +162,17 @@ public class SingleEventActivity extends HamersActivity {
     }
 
     public void setPresent(View view) {
-        postSignup("true");
+        postSignup(true);
     }
 
     public void setAbsent(View view) {
-        postSignup("false");
+        postSignup(false);
     }
 
-    private void postSignup(String status) {
+    private void postSignup(Boolean status) {
         JSONObject body = new JSONObject();
         try {
-            body.put("event_id", event.getID());
+            body.put("event_id", event.getId());
             body.put("status", status);
         } catch (JSONException ignored) {
         }
@@ -188,7 +188,6 @@ public class SingleEventActivity extends HamersActivity {
 
             }
         });
-
     }
 
     private void initToolbar() {
@@ -205,15 +204,15 @@ public class SingleEventActivity extends HamersActivity {
     private void initSignups() {
         Button presentButton = (Button) findViewById(R.id.present_button);
         Button absentButton = (Button) findViewById(R.id.absent_button);
-        ArrayList<Event.Signup> signups = event.getSignups();
+        ArrayList<Event.SignUp> signUps = event.getSignUps();
         ArrayList<String> present = new ArrayList<>();
         ArrayList<String> absent = new ArrayList<>();
-        for (int i = 0; i < signups.size(); i++) {
-            Event.Signup signup = signups.get(i);
-            if (signup.isAttending()) {
-                present.add(getUser(MainActivity.prefs, signup.getUserID()).getName());
+        for (int i = 0; i < signUps.size(); i++) {
+            Event.SignUp signUp = signUps.get(i);
+            if (signUp.isAttending()) {
+                present.add(getUser(MainActivity.prefs, signUp.getUserID()).getName());
             } else {
-                absent.add(getUser(MainActivity.prefs, signup.getUserID()).getName());
+                absent.add(getUser(MainActivity.prefs, signUp.getUserID()).getName());
             }
         }
 

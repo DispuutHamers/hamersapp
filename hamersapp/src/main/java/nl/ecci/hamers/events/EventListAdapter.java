@@ -42,7 +42,7 @@ class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder>
                 final int position = vh.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Intent intent = new Intent(context, SingleEventActivity.class);
-                    intent.putExtra(Event.EVENT, filteredDataSet.get(vh.getAdapterPosition()).getID());
+                    intent.putExtra(Event.Companion.getEVENT(), filteredDataSet.get(vh.getAdapterPosition()).getId());
                     context.startActivity(intent);
                 }
             }
@@ -65,15 +65,15 @@ class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder>
             holder.location.setText(filteredDataSet.get(position).getLocation());
         }
 
-        ArrayList signups = filteredDataSet.get(position).getSignups();
+        ArrayList signups = filteredDataSet.get(position).getSignUps();
         if (signups != null) {
             int userID = getOwnUser(MainActivity.prefs).getId();
             Boolean aanwezig = null;
             for (int i = 0; i < signups.size(); i++) {
-                Event.Signup signup = (Event.Signup) signups.get(i);
+                Event.SignUp signUp = (Event.SignUp) signups.get(i);
 
-                if (signup.getUserID() == userID) {
-                    aanwezig = signup.isAttending();
+                if (signUp.getUserID() == userID) {
+                    aanwezig = signUp.isAttending();
                 }
             }
 
