@@ -27,8 +27,6 @@ import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.PostCallback;
 
-import static nl.ecci.hamers.helpers.Utils.getEvent;
-
 public class NewEventActivity extends NewItemActivity {
 
     private final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -70,9 +68,9 @@ public class NewEventActivity extends NewItemActivity {
         DateFormat timeFormat = new SimpleDateFormat("HH:mm", MainActivity.locale);
         DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy", MainActivity.locale);
 
-        eventID = getIntent().getIntExtra(Event.Companion.getEVENT(), -1);
+        eventID = getIntent().getIntExtra(Event.EVENT, -1);
         if (eventID != -1) {
-            Event event = getEvent(MainActivity.prefs, eventID);
+            Event event = Utils.INSTANCE.getEvent(MainActivity.prefs, eventID);
             event_title.setText(event.getTitle());
             event_location.setText(event.getLocation());
             event_description.setText(event.getDescription());
@@ -162,7 +160,7 @@ public class NewEventActivity extends NewItemActivity {
             });
         } else {
             disableLoadingAnimation();
-            Utils.showToast(this, getString(R.string.missing_fields), Toast.LENGTH_SHORT);
+            Utils.INSTANCE.showToast(this, getString(R.string.missing_fields), Toast.LENGTH_SHORT);
         }
     }
 }

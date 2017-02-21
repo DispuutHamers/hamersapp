@@ -86,7 +86,7 @@ class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> implement
                         intent.putExtra(Beer.BEER, gson.toJson(beer, Beer.class));
                         ActivityCompat.startActivity(activity, intent, options.toBundle());
                     } else {
-                        Utils.showToast(context, context.getString(R.string.no_image), Toast.LENGTH_SHORT);
+                        Utils.INSTANCE.showToast(context, context.getString(R.string.no_image), Toast.LENGTH_SHORT);
                     }
                 } catch (NullPointerException ignored) {
                     Snackbar.make(view, context.getString(R.string.generic_error), Snackbar.LENGTH_LONG).show();

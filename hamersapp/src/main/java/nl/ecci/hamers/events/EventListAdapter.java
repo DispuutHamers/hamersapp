@@ -16,8 +16,7 @@ import java.util.Date;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-
-import static nl.ecci.hamers.helpers.Utils.getOwnUser;
+import nl.ecci.hamers.helpers.Utils;
 
 class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> implements Filterable {
 
@@ -42,7 +41,7 @@ class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder>
                 final int position = vh.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Intent intent = new Intent(context, SingleEventActivity.class);
-                    intent.putExtra(Event.Companion.getEVENT(), filteredDataSet.get(vh.getAdapterPosition()).getId());
+                    intent.putExtra(Event.EVENT, filteredDataSet.get(vh.getAdapterPosition()).getId());
                     context.startActivity(intent);
                 }
             }
@@ -67,7 +66,7 @@ class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder>
 
         ArrayList signups = filteredDataSet.get(position).getSignUps();
         if (signups != null) {
-            int userID = getOwnUser(MainActivity.prefs).getId();
+            int userID = Utils.INSTANCE.getOwnUser(MainActivity.prefs).getId();
             Boolean aanwezig = null;
             for (int i = 0; i < signups.size(); i++) {
                 Event.SignUp signUp = (Event.SignUp) signups.get(i);

@@ -105,7 +105,7 @@ public final class Loader {
                         Log.d("POST-response", response.toString());
 
                         if (!dataURL.equals(GCMURL))
-                            Utils.showToast(context, context.getString(R.string.posted), Toast.LENGTH_SHORT);
+                            Utils.INSTANCE.showToast(context, context.getString(R.string.posted), Toast.LENGTH_SHORT);
 
                         if (callback != null) {
                             callback.onSuccess(response);
@@ -166,22 +166,22 @@ public final class Loader {
     private static void handleErrorResponse(@NonNull Context context, @NonNull VolleyError error) {
         if (error instanceof AuthFailureError) {
             // Wrong API key
-            Utils.showToast(context, context.getString(R.string.auth_error), Toast.LENGTH_SHORT);
+            Utils.INSTANCE.showToast(context, context.getString(R.string.auth_error), Toast.LENGTH_SHORT);
         } else if (error instanceof TimeoutError) {
             // Timeout
-            Utils.showToast(context, context.getString(R.string.timeout_error), Toast.LENGTH_SHORT);
+            Utils.INSTANCE.showToast(context, context.getString(R.string.timeout_error), Toast.LENGTH_SHORT);
         } else if (error instanceof ServerError) {
             // Server error (500)
-            Utils.showToast(context, context.getString(R.string.server_error), Toast.LENGTH_SHORT);
+            Utils.INSTANCE.showToast(context, context.getString(R.string.server_error), Toast.LENGTH_SHORT);
         } else if (error instanceof NoConnectionError) {
             // No network connection
-            Utils.showToast(context, context.getString(R.string.connection_error), Toast.LENGTH_SHORT);
+            Utils.INSTANCE.showToast(context, context.getString(R.string.connection_error), Toast.LENGTH_SHORT);
         } else if (error instanceof NetworkError) {
             // Network error
-            Utils.showToast(context, context.getString(R.string.network_error), Toast.LENGTH_SHORT);
+            Utils.INSTANCE.showToast(context, context.getString(R.string.network_error), Toast.LENGTH_SHORT);
         } else {
             // Other error
-            Utils.showToast(context, context.getString(R.string.volley_error), Toast.LENGTH_SHORT);
+            Utils.INSTANCE.showToast(context, context.getString(R.string.volley_error), Toast.LENGTH_SHORT);
         }
     }
 

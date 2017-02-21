@@ -1,24 +1,26 @@
 package nl.ecci.hamers.events
 
 import com.google.gson.annotations.SerializedName
+import nl.ecci.hamers.helpers.Utils
 
 import java.util.ArrayList
 import java.util.Date
 
 class Event(val id: Int,
-            val title: String,
+            val title: String = Utils.unknown,
             @SerializedName("beschrijving")
-            val description: String,
-            val location: String,
-            val date: Date,
+            val description: String = Utils.unknown,
+            val location: String = Utils.unknown,
+            val date: Date = Date(),
             @SerializedName("end_time")
-            val endDate: Date,
-            val deadline: Date,
-            val signUps: ArrayList<Event.SignUp>,
+            val endDate: Date = Date(),
+            val deadline: Date = Date(),
+            @SerializedName("signups")
+            val signUps: ArrayList<Event.SignUp> = ArrayList<Event.SignUp>(),
             @SerializedName("created_at")
-            val createdAt: Date,
+            val createdAt: Date = Date(),
             @SerializedName("attendance")
-            val signupMandatory: Boolean?) {
+            val signupMandatory: Boolean? = false) {
     @SerializedName("user_id")
     val userID: Int = 0
 

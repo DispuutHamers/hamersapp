@@ -2,9 +2,7 @@ package nl.ecci.hamers.beers;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
@@ -30,12 +28,12 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.DatePickerFragment;
 import nl.ecci.hamers.helpers.NewItemActivity;
+import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.PostCallback;
 
 import static nl.ecci.hamers.beers.SingleBeerActivity.reviewBody;
 import static nl.ecci.hamers.beers.SingleBeerActivity.reviewRating;
-import static nl.ecci.hamers.helpers.Utils.getBeer;
 
 public class NewReviewActivity extends NewItemActivity {
 
@@ -46,7 +44,6 @@ public class NewReviewActivity extends NewItemActivity {
     private LinearLayout parentLayout;
     private EditText review_body;
     private Button date_button;
-    private SharedPreferences prefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +63,6 @@ public class NewReviewActivity extends NewItemActivity {
             actionBar.setHomeButtonEnabled(true);
         }
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         progress = (TextView) findViewById(R.id.rating);
 
         Button date_button = (Button) findViewById(R.id.pick_date_button);
@@ -75,7 +71,7 @@ public class NewReviewActivity extends NewItemActivity {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        beer = getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, 1));
+        beer = Utils.INSTANCE.getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, 1));
         review = gson.fromJson(getIntent().getStringExtra(Review.REVIEW), Review.class);
 
         TextView title = (TextView) findViewById(R.id.review_title);

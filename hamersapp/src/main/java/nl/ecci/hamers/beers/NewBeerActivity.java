@@ -2,9 +2,7 @@ package nl.ecci.hamers.beers;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
@@ -17,15 +15,13 @@ import org.json.JSONObject;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.NewItemActivity;
+import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.PostCallback;
-
-import static nl.ecci.hamers.helpers.Utils.getBeer;
 
 public class NewBeerActivity extends NewItemActivity {
 
     private int beerID;
-    private SharedPreferences prefs;
     private EditText beerName;
     private EditText beerPicture;
     private EditText beerKind;
@@ -43,8 +39,6 @@ public class NewBeerActivity extends NewItemActivity {
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
@@ -59,7 +53,7 @@ public class NewBeerActivity extends NewItemActivity {
 
         beerID = getIntent().getIntExtra(Beer.BEER, -1);
         if (beerID != -1) {
-            Beer beer = getBeer(MainActivity.prefs, beerID);
+            Beer beer = Utils.INSTANCE.getBeer(MainActivity.prefs, beerID);
             beerName.setText(beer.getName());
             beerPicture.setText(beer.getImageURL());
             beerKind.setText(beer.getKind());

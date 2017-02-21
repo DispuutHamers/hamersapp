@@ -32,14 +32,12 @@ import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.SingleImageActivity;
+import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.loader.Loader;
 
 import static nl.ecci.hamers.MainActivity.prefs;
 import static nl.ecci.hamers.R.id.review_body;
 import static nl.ecci.hamers.R.id.review_rating;
-import static nl.ecci.hamers.helpers.Utils.getBeer;
-import static nl.ecci.hamers.helpers.Utils.getOwnUser;
-import static nl.ecci.hamers.helpers.Utils.getUser;
 
 public class SingleBeerActivity extends HamersActivity {
 
@@ -97,7 +95,7 @@ public class SingleBeerActivity extends HamersActivity {
             });
         }
 
-        beer = getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, -1));
+        beer = Utils.INSTANCE.getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, -1));
 
         setValues();
 
@@ -150,7 +148,7 @@ public class SingleBeerActivity extends HamersActivity {
         for (Review review : reviewList) {
             if (review.getBeerID() == beer.getID()) {
                 hasReviews = true;
-                if (review.getUserID() == getOwnUser(MainActivity.prefs).getId()) {
+                if (review.getUserID() == Utils.INSTANCE.getOwnUser(MainActivity.prefs).getId()) {
                     reviewButton.setText(R.string.edit_review);
                     ownReview = review;
                 }
@@ -189,7 +187,7 @@ public class SingleBeerActivity extends HamersActivity {
         TextView date = (TextView) view.findViewById(R.id.review_date);
         TextView ratingTV = (TextView) view.findViewById(R.id.review_rating);
 
-        title.setText(String.format("%s: ", getUser(MainActivity.prefs, review.getUserID()).getName()));
+        title.setText(String.format("%s: ", Utils.INSTANCE.getUser(MainActivity.prefs, review.getUserID()).getName()));
         body.setText(review.getDescription());
         date.setText(MainActivity.appDF2.format(review.getProefdatum()));
         ratingTV.setText(String.format("Cijfer: %s", review.getRating()));
@@ -199,7 +197,7 @@ public class SingleBeerActivity extends HamersActivity {
             insertPoint.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             insertPoint.addView(divider);
         }
-        if (getOwnUser(MainActivity.prefs).getId() == review.getUserID()) {
+        if (Utils.INSTANCE.getOwnUser(MainActivity.prefs).getId() == review.getUserID()) {
             registerForContextMenu(view);
         }
     }

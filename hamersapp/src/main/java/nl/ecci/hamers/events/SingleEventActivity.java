@@ -32,13 +32,10 @@ import java.util.Date;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.HamersActivity;
+import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.loader.PostCallback;
 import nl.ecci.hamers.users.User;
-
-import static nl.ecci.hamers.helpers.Utils.getEvent;
-import static nl.ecci.hamers.helpers.Utils.getOwnUser;
-import static nl.ecci.hamers.helpers.Utils.getUser;
 
 public class SingleEventActivity extends HamersActivity {
 
@@ -73,8 +70,8 @@ public class SingleEventActivity extends HamersActivity {
         presentLayout = (ViewGroup) findViewById(R.id.present_layout);
         absentLayout = (ViewGroup) findViewById(R.id.absent_layout);
 
-        event = getEvent(MainActivity.prefs, getIntent().getIntExtra(Event.EVENT, 1));
-        ownUser = getOwnUser(MainActivity.prefs);
+        event = Utils.INSTANCE.getEvent(MainActivity.prefs, getIntent().getIntExtra(Event.EVENT, 1));
+        ownUser = Utils.INSTANCE.getOwnUser(MainActivity.prefs);
 
         initSignups();
 
@@ -210,9 +207,9 @@ public class SingleEventActivity extends HamersActivity {
         for (int i = 0; i < signUps.size(); i++) {
             Event.SignUp signUp = signUps.get(i);
             if (signUp.isAttending()) {
-                present.add(getUser(MainActivity.prefs, signUp.getUserID()).getName());
+                present.add(Utils.INSTANCE.getUser(MainActivity.prefs, signUp.getUserID()).getName());
             } else {
-                absent.add(getUser(MainActivity.prefs, signUp.getUserID()).getName());
+                absent.add(Utils.INSTANCE.getUser(MainActivity.prefs, signUp.getUserID()).getName());
             }
         }
 

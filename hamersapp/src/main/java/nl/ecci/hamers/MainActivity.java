@@ -46,7 +46,6 @@ import java.util.Locale;
 
 import nl.ecci.hamers.beers.BeerFragment;
 import nl.ecci.hamers.events.EventFragment;
-import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.loader.GetCallback;
@@ -58,8 +57,6 @@ import nl.ecci.hamers.stickers.StickerFragment;
 import nl.ecci.hamers.users.User;
 import nl.ecci.hamers.users.UserFragment;
 
-import static nl.ecci.hamers.helpers.Utils.getGravatarURL;
-import static nl.ecci.hamers.helpers.Utils.getOwnUser;
 import static nl.ecci.hamers.loader.Loader.getAllData;
 
 public class MainActivity extends HamersActivity {
@@ -171,7 +168,7 @@ public class MainActivity extends HamersActivity {
 //            startService(intent);
 //        }
 
-        Utils.hasApiKey(this, prefs);
+        Utils.INSTANCE.hasApiKey(this, prefs);
 
         fillHeader();
 
@@ -198,7 +195,7 @@ public class MainActivity extends HamersActivity {
 
             @Override
             public void onDrawerStateChanged(int newState) {
-                Utils.hideKeyboard(getParent());
+                Utils.INSTANCE.hideKeyboard(getParent());
             }
         });
 
@@ -209,7 +206,7 @@ public class MainActivity extends HamersActivity {
                 selectItem(menuItem);
                 menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
-                Utils.hideKeyboard(getParent());
+                Utils.INSTANCE.hideKeyboard(getParent());
                 return true;
             }
         });
@@ -259,7 +256,7 @@ public class MainActivity extends HamersActivity {
                 GoogleApiAvailability.getInstance().getErrorDialog(this, resultCode,
                         PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
-                Utils.showToast(this, getResources().getString(R.string.gps_missing), Toast.LENGTH_SHORT);
+                Utils.INSTANCE.showToast(this, getResources().getString(R.string.gps_missing), Toast.LENGTH_SHORT);
                 finish();
             }
             return false;
@@ -335,7 +332,7 @@ public class MainActivity extends HamersActivity {
         }
 
         this.backPressedOnce = true;
-        Utils.showToast(this, getString(R.string.press_back_again), Toast.LENGTH_SHORT);
+        Utils.INSTANCE.showToast(this, getString(R.string.press_back_again), Toast.LENGTH_SHORT);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -346,7 +343,7 @@ public class MainActivity extends HamersActivity {
     }
 
     private void fillHeader() {
-        User user = getOwnUser(prefs);
+        User user = Utils.INSTANCE.getOwnUser(prefs);
         if (user != null && user.getId() != -1) {
             View headerLayout = navigationView.getHeaderView(0);
             TextView userName = (TextView) headerLayout.findViewById(R.id.header_user_name);
@@ -358,7 +355,7 @@ public class MainActivity extends HamersActivity {
                 userEmail.setText(user.getEmail());
 
                 // Image
-                String url = getGravatarURL(user.getEmail());
+                String url = Utils.INSTANCE.getGravatarURL(user.getEmail());
                 ImageLoader.getInstance().displayImage(url, userImage);
             }
         } else {

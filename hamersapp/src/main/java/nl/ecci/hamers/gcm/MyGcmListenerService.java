@@ -27,11 +27,9 @@ import nl.ecci.hamers.beers.Beer;
 import nl.ecci.hamers.beers.SingleBeerActivity;
 import nl.ecci.hamers.events.Event;
 import nl.ecci.hamers.events.SingleEventActivity;
+import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.loader.Loader;
 import nl.ecci.hamers.users.User;
-
-import static nl.ecci.hamers.helpers.Utils.getBeer;
-import static nl.ecci.hamers.helpers.Utils.getUser;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -79,7 +77,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 String QUOTEBODY = "text";
                 title = quote.getString(QUOTEBODY);
 
-                User user = getUser(prefs, Integer.valueOf(quote.getString(USERID)));
+                User user = Utils.INSTANCE.getUser(prefs, Integer.valueOf(quote.getString(USERID)));
                 if (user != null) {
                     message = user.getName();
                 } else {
@@ -111,7 +109,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 prefs.edit().putString(Loader.EVENTURL, json.toString()).apply();
 
                 intent = new Intent(this, SingleEventActivity.class);
-                intent.putExtra(Event.Companion.getEVENT(), event.getInt("id"));
+                intent.putExtra(Event.EVENT, event.getInt("id"));
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
             }
@@ -147,9 +145,9 @@ public class MyGcmListenerService extends GcmListenerService {
             JSONObject review = new JSONObject(object.getString(REVIEWTYPE));
             if (review.length() != 0) {
                 type = Type.REVIEW;
-                User user = getUser(prefs, review.getInt(USERID));
+                User user = Utils.INSTANCE.getUser(prefs, review.getInt(USERID));
                 String REVIEWBEER = "beer_id";
-                Beer beer = getBeer(prefs, review.getInt(REVIEWBEER));
+                Beer beer = Utils.INSTANCE.getBeer(prefs, review.getInt(REVIEWBEER));
                 String REVIEWRATING = "rating";
                 if (user != null && beer != null) {
                     title = user.getName() + " / " + beer.getName() + " / " + review.getString(REVIEWRATING);
