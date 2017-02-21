@@ -66,115 +66,117 @@ public class MyGcmListenerService extends GcmListenerService {
             }
         }
 
-        // QUOTE
-        JSONArray json;
-        String USERID = "user_id";
-        try {
-            String QUOTETYPE = "quote";
-            JSONObject quote = new JSONObject(object.getString(QUOTETYPE));
-            if (quote.length() != 0) {
-                type = Type.QUOTE;
-                String QUOTEBODY = "text";
-                title = quote.getString(QUOTEBODY);
+        System.out.println(data.toString());
 
-                User user = Utils.INSTANCE.getUser(prefs, Integer.valueOf(quote.getString(USERID)));
-                if (user != null) {
-                    message = user.getName();
-                } else {
-                    message = "- user";
-                }
-
-                // Add quote to quote list
-                json = new JSONArray(prefs.getString(Loader.QUOTEURL, null));
-                json.put(quote);
-                prefs.edit().putString(Loader.QUOTEURL, json.toString()).apply();
-            }
-        } catch (JSONException | NullPointerException ignored) {
-        }
-
-        // EVENT
-        try {
-            String EVENTTYPE = "event";
-            event = new JSONObject(object.getString(EVENTTYPE));
-            if (event.length() != 0) {
-                type = Type.EVENT;
-                String EVENTTITLE = "title";
-                title = event.getString(EVENTTITLE);
-                String EVENTDESCRIPTION = "beschrijving";
-                message = event.getString(EVENTDESCRIPTION);
-
-                // Add event to event list
-                json = new JSONArray(prefs.getString(Loader.EVENTURL, null));
-                json.put(event);
-                prefs.edit().putString(Loader.EVENTURL, json.toString()).apply();
-
-                intent = new Intent(this, SingleEventActivity.class);
-                intent.putExtra(Event.EVENT, event.getInt("id"));
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-            }
-        } catch (JSONException | NullPointerException ignored) {
-        }
-
-        // BEER
-        try {
-            String BEERTYPE = "beer";
-            beer = new JSONObject(object.getString(BEERTYPE));
-            if (beer.length() != 0) {
-                type = Type.BEER;
-                String BEERNAME = "name";
-                title = "Biertje: " + beer.getString(BEERNAME);
-                message = "Is net toegevoegd aan de database!";
-
-                // Add beer to beer list
-                json = new JSONArray(prefs.getString(Loader.BEERURL, null));
-                json.put(beer);
-                prefs.edit().putString(Loader.BEERURL, json.toString()).apply();
-
-                intent = new Intent(this, SingleBeerActivity.class);
-                intent.putExtra(Beer.BEER, beer.getInt("id"));
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-            }
-        } catch (JSONException | NullPointerException ignored) {
-        }
-
-        // REVIEW
-        try {
-            String REVIEWTYPE = "review";
-            JSONObject review = new JSONObject(object.getString(REVIEWTYPE));
-            if (review.length() != 0) {
-                type = Type.REVIEW;
-                User user = Utils.INSTANCE.getUser(prefs, review.getInt(USERID));
-                String REVIEWBEER = "beer_id";
-                Beer beer = Utils.INSTANCE.getBeer(prefs, review.getInt(REVIEWBEER));
-                String REVIEWRATING = "rating";
-                if (user != null && beer != null) {
-                    title = user.getName() + " / " + beer.getName() + " / " + review.getString(REVIEWRATING);
-                } else if (user != null) {
-                    title = user.getName() + " / onbekend / " + review.getString(REVIEWRATING);
-                } else {
-                    title = "Hamers";
-                }
-                String REVIEWDESCRIPTION = "description";
-                message = review.getString(REVIEWDESCRIPTION);
-
-                // Add review to review list
-                json = new JSONArray(prefs.getString(Loader.REVIEWURL, null));
-                json.put(review);
-                prefs.edit().putString(Loader.REVIEWURL, json.toString()).apply();
-
-                intent = new Intent(this, SingleBeerActivity.class);
-                intent.putExtra(Beer.BEER, review.getInt("beer_id"));
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-            }
-        } catch (JSONException | NullPointerException ignored) {
-        }
-
-        if (title != null && message != null) {
-            sendNotification(title, message, type, pendingIntent);
-        }
+//        // QUOTE
+//        JSONArray json;
+//        String USERID = "user_id";
+//        try {
+//            String QUOTETYPE = "quote";
+//            JSONObject quote = new JSONObject(object.getString(QUOTETYPE));
+//            if (quote.length() != 0) {
+//                type = Type.QUOTE;
+//                String QUOTEBODY = "text";
+//                title = quote.getString(QUOTEBODY);
+//
+//                User user = Utils.INSTANCE.getUser(prefs, Integer.valueOf(quote.getString(USERID)));
+//                if (user != null) {
+//                    message = user.getName();
+//                } else {
+//                    message = "- user";
+//                }
+//
+//                // Add quote to quote list
+//                json = new JSONArray(prefs.getString(Loader.QUOTEURL, null));
+//                json.put(quote);
+//                prefs.edit().putString(Loader.QUOTEURL, json.toString()).apply();
+//            }
+//        } catch (JSONException | NullPointerException ignored) {
+//        }
+//
+//        // EVENT
+//        try {
+//            String EVENTTYPE = "event";
+//            event = new JSONObject(object.getString(EVENTTYPE));
+//            if (event.length() != 0) {
+//                type = Type.EVENT;
+//                String EVENTTITLE = "title";
+//                title = event.getString(EVENTTITLE);
+//                String EVENTDESCRIPTION = "beschrijving";
+//                message = event.getString(EVENTDESCRIPTION);
+//
+//                // Add event to event list
+//                json = new JSONArray(prefs.getString(Loader.EVENTURL, null));
+//                json.put(event);
+//                prefs.edit().putString(Loader.EVENTURL, json.toString()).apply();
+//
+//                intent = new Intent(this, SingleEventActivity.class);
+//                intent.putExtra(Event.EVENT, event.getInt("id"));
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+//            }
+//        } catch (JSONException | NullPointerException ignored) {
+//        }
+//
+//        // BEER
+//        try {
+//            String BEERTYPE = "beer";
+//            beer = new JSONObject(object.getString(BEERTYPE));
+//            if (beer.length() != 0) {
+//                type = Type.BEER;
+//                String BEERNAME = "name";
+//                title = "Biertje: " + beer.getString(BEERNAME);
+//                message = "Is net toegevoegd aan de database!";
+//
+//                // Add beer to beer list
+//                json = new JSONArray(prefs.getString(Loader.BEERURL, null));
+//                json.put(beer);
+//                prefs.edit().putString(Loader.BEERURL, json.toString()).apply();
+//
+//                intent = new Intent(this, SingleBeerActivity.class);
+//                intent.putExtra(Beer.BEER, beer.getInt("id"));
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+//            }
+//        } catch (JSONException | NullPointerException ignored) {
+//        }
+//
+//        // REVIEW
+//        try {
+//            String REVIEWTYPE = "review";
+//            JSONObject review = new JSONObject(object.getString(REVIEWTYPE));
+//            if (review.length() != 0) {
+//                type = Type.REVIEW;
+//                User user = Utils.INSTANCE.getUser(prefs, review.getInt(USERID));
+//                String REVIEWBEER = "beer_id";
+//                Beer beer = Utils.INSTANCE.getBeer(prefs, review.getInt(REVIEWBEER));
+//                String REVIEWRATING = "rating";
+//                if (user != null && beer != null) {
+//                    title = user.getName() + " / " + beer.getName() + " / " + review.getString(REVIEWRATING);
+//                } else if (user != null) {
+//                    title = user.getName() + " / onbekend / " + review.getString(REVIEWRATING);
+//                } else {
+//                    title = "Hamers";
+//                }
+//                String REVIEWDESCRIPTION = "description";
+//                message = review.getString(REVIEWDESCRIPTION);
+//
+//                // Add review to review list
+//                json = new JSONArray(prefs.getString(Loader.REVIEWURL, null));
+//                json.put(review);
+//                prefs.edit().putString(Loader.REVIEWURL, json.toString()).apply();
+//
+//                intent = new Intent(this, SingleBeerActivity.class);
+//                intent.putExtra(Beer.BEER, review.getInt("beer_id"));
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+//            }
+//        } catch (JSONException | NullPointerException ignored) {
+//        }
+//
+//        if (title != null && message != null) {
+//            sendNotification(title, message, type, pendingIntent);
+//        }
     }
 
     /**

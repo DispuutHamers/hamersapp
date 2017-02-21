@@ -46,6 +46,7 @@ import java.util.Locale;
 
 import nl.ecci.hamers.beers.BeerFragment;
 import nl.ecci.hamers.events.EventFragment;
+import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.loader.GetCallback;
@@ -162,11 +163,11 @@ public class MainActivity extends HamersActivity {
             }
         };
 
-//        if (checkPlayServices()) {
-//            // Start IntentService to register this application with GCM.
-//            Intent intent = new Intent(this, RegistrationIntentService.class);
-//            startService(intent);
-//        }
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
 
         Utils.INSTANCE.hasApiKey(this, prefs);
 
