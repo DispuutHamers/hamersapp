@@ -41,15 +41,13 @@ public class RegistrationIntentService extends IntentService {
     private static final String TAG = "RegIntentService";
     private static final String[] TOPICS = {"global"};
 
-    private SharedPreferences sharedPreferences;
-
     public RegistrationIntentService() {
         super(TAG);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         try {
             // Initially this call goes out to the network to retrieve the token, subsequent calls
@@ -111,5 +109,4 @@ public class RegistrationIntentService extends IntentService {
             pubSub.subscribe(token, "/topics/" + topic, null);
         }
     }
-
 }

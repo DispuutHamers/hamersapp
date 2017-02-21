@@ -16,12 +16,6 @@
             android:entryValues="@array/night_mode_array_values"
             android:key="night_mode"
             android:title="Nachtmodus" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="pushPref"
-            android:summaryOff="@string/pref_summaryOff"
-            android:summaryOn="@string/pref_summaryOn"
-            android:title="@string/push_title" />
         <Preference
             android:key="refresh_app"
             android:summary="@string/refresh_app_summary"

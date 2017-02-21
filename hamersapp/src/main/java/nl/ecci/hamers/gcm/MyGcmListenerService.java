@@ -172,11 +172,7 @@ public class MyGcmListenerService extends GcmListenerService {
         } catch (JSONException | NullPointerException ignored) {
         }
 
-        // Show notification
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        Boolean push = settings.getBoolean("pushPref", true);
-
-        if (push && title != null && message != null) {
+        if (title != null && message != null) {
             sendNotification(title, message, type, pendingIntent);
         }
     }
