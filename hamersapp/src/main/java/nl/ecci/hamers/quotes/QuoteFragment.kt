@@ -125,7 +125,7 @@ class QuoteFragment : HamersFragment(), DialogInterface.OnDismissListener {
     private inner class populateList : AsyncTask<String, Void, ArrayList<Quote>>() {
 
         override fun doInBackground(vararg params: String): ArrayList<Quote> {
-            val result: ArrayList<Quote>
+            val result: ArrayList<Quote> = ArrayList()
             val gsonBuilder = GsonBuilder()
             gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
             val gson = gsonBuilder.create()
@@ -133,10 +133,12 @@ class QuoteFragment : HamersFragment(), DialogInterface.OnDismissListener {
 
             }.type
 
+            val quotes = prefs.getString(Loader.QUOTEURL, null)
+
             if (params.isNotEmpty()) {
-                result = gson.fromJson<ArrayList<Quote>>(params[0], type)
-            } else {
-                result = gson.fromJson<ArrayList<Quote>>(prefs.getString(Loader.QUOTEURL, null), type)
+                result.addAll(gson.fromJson<ArrayList<Quote>>(params[0], type))
+            } else if (quotes != null) {
+                result.addAll(gson.fromJson<ArrayList<Quote>>(prefs.getString(Loader.QUOTEURL, null), type))
             }
             return result
         }

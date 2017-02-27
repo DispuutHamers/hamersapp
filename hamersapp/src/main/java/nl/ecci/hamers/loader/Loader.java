@@ -38,7 +38,7 @@ public final class Loader {
     public static final String REVIEWURL = "reviews";
     public static final String WHOAMIURL = "whoami";
     public static final String MEETINGURL = "meetings";
-    public static final String SIGNUPURL = "signUps";
+    public static final String SIGNUPURL = "signups";
     public static final String GCMURL = "register";
     public static final String STICKERURL = "stickers";
     // Data keys

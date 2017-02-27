@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -20,10 +21,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 
@@ -133,6 +136,25 @@ public class SingleEventActivity extends HamersActivity {
                 locationRow.setVisibility(View.GONE);
             }
         }
+
+        Button presentButton = (Button) findViewById(R.id.present_button);
+        Button absentButton = (Button) findViewById(R.id.absent_button);
+
+        if (presentButton != null && absentButton != null) {
+            presentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    postSignup(true, null);
+                }
+            });
+
+            absentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    askForReason();
+                }
+            });
+        }
     }
 
     @Override
@@ -162,25 +184,17 @@ public class SingleEventActivity extends HamersActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setPresent(View view) {
-        postSignup(true);
-    }
-
-    public void setAbsent(View view) {
-        postSignup(false);
-    }
-
-    private void postSignup(Boolean status) {
+    private void postSignup(Boolean status, @Nullable String reason) {
         JSONObject body = new JSONObject();
         try {
             body.put("event_id", event.getId());
-            body.put("status", status);
+            body.put("status", status.toString());
+
+            // Attendance is mandatory, so ask for the reason for absence!
+            if (!status && event.getSignupMandatory() && reason != null) {
+                 body.put("reason", reason);
+            }
         } catch (JSONException ignored) {
-        }
-
-        // Attendance is mandatory, so ask for the reason for absence!
-        if (!status) {
-
         }
 
         Loader.postOrPatchData(this, Loader.SIGNUPURL, body, -1, new PostCallback() {
@@ -248,17 +262,20 @@ public class SingleEventActivity extends HamersActivity {
     private void askForReason() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        final EditText readonField = new EditText(this);
+        final EditText reasonField = new EditText(this);
         alert.setTitle(R.string.attendance_reason_title);
-        alert.setMessage(R.string.attendance_reason_message);
+        reasonField.setHint(R.string.attendance_reason_message);
 
-
-        alert.setView(readonField);
+        alert.setView(reasonField);
 
         alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                //What ever you want to do with the value
-                String reason= readonField.getText().toString();
+                String reason = reasonField.getText().toString();
+                if (reason.length() > 5) {
+                    postSignup(false, reason);
+                } else {
+                    Toast.makeText(SingleEventActivity.this, R.string.attendance_reason_size, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -269,6 +286,9 @@ public class SingleEventActivity extends HamersActivity {
         });
 
         alert.show();
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(16, FrameLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(16, 16, 16, 16);
+        reasonField.setLayoutParams(layoutParams);
     }
 
     private View newSingleRow(final String title, ViewGroup viewGroup) {
