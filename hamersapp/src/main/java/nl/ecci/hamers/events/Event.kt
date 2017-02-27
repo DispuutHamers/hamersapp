@@ -20,7 +20,7 @@ class Event(val id: Int,
             @SerializedName("created_at")
             val createdAt: Date = Date(),
             @SerializedName("attendance")
-            val signupMandatory: Boolean? = false) {
+            val signupMandatory: Boolean = false) {
     @SerializedName("user_id")
     val userID: Int = 0
 

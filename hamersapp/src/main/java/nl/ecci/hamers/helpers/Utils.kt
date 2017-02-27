@@ -61,8 +61,8 @@ object Utils {
                 showToast(context, context.resources.getString(R.string.store_key_settings), Toast.LENGTH_SHORT)
             }
         }
-        alertDialog = builder.create()
-        alertDialog!!.show()
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 
     /**

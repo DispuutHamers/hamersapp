@@ -46,6 +46,9 @@
     <string name="endDate">End time:</string>
     <string name="deadline">Deadline:</string>
     <string name="description">Beschrijving</string>
+    <string name="attendance_reason_title">Afwezigheid</string>
+    <string name="attendance_reason_message">De reden van afwezigheid</string>
+    <string name="attendance_reason_size">Je reden is kut! (te kort)</string>
     <string name="menu_upcoming">Aankomend</string>
     <string name="menu_all">Alle</string>
 

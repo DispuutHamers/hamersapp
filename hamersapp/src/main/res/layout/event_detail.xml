@@ -174,7 +174,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_weight="1"
-                    android:onClick="setPresent"
                     android:text="@string/event_aanwezig_button" />
 
                 <Button
@@ -184,7 +183,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_weight="1"
-                    android:onClick="setAbsent"
                     android:text="@string/event_afwezig_button" />
             </android.support.v7.widget.ButtonBarLayout>
         </LinearLayout>
