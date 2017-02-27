@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.1.6](https://github.com/dexbleeker/hamersapp/tree/2.1.6) (2017-02-27)
+[Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.1.5..2.1.6)
+
+- Dialog to ask reason you are not attending a manditory activity
+
 ## [2.1.5](https://github.com/dexbleeker/hamersapp/tree/2.1.5) (2017-02-06)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.1.4..2.1.5)
 
