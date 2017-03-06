@@ -81,6 +81,7 @@ public class MeetingFragment extends HamersFragment {
     public void onResume() {
         super.onResume();
         onRefresh();
+        getActivity().setTitle(getResources().getString(R.string.navigation_item_meetings));
     }
 
     private class populateList extends AsyncTask<String, Void, ArrayList<Meeting>> {

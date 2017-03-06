@@ -101,6 +101,7 @@ public class NewsFragment extends HamersFragment {
     public void onResume() {
         super.onResume();
         onRefresh();
+        getActivity().setTitle(getResources().getString(R.string.navigation_item_news));
     }
 
     @Override

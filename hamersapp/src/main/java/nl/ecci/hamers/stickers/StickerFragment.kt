@@ -81,6 +81,7 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
         mapView!!.onResume()
         super.onResume()
         onRefresh()
+        activity.title = resources.getString(R.string.navigation_item_stickers)
     }
 
     override fun onPause() {

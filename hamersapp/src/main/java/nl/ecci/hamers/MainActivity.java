@@ -322,7 +322,6 @@ public class MainActivity extends HamersActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.replace(R.id.content_frame, fragment).commit();
-        setTitle(menuItem.getTitle());
     }
 
     @Override

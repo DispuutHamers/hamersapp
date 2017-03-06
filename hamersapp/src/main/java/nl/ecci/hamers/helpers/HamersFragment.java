@@ -8,7 +8,10 @@ import android.support.v7.widget.RecyclerView;
 public abstract class HamersFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     public SwipeRefreshLayout swipeRefreshLayout;
 
-    protected void initSwiper(final RecyclerView recyclerView, final LinearLayoutManager lm, final SwipeRefreshLayout swipeRefreshLayout) {
+    protected void initSwiper(final RecyclerView recyclerView, final LinearLayoutManager lm, final SwipeRefreshLayout swl) {
+        recyclerView.setLayoutManager(lm);
+
+        swipeRefreshLayout = swl;
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
         swipeRefreshLayout.setOnRefreshListener(this);
 

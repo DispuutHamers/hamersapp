@@ -38,4 +38,10 @@ public class EventFragment extends Fragment {
         super.onPause();
         ActivityCompat.invalidateOptionsMenu(getActivity());
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle(getResources().getString(R.string.navigation_item_events));
+    }
 }

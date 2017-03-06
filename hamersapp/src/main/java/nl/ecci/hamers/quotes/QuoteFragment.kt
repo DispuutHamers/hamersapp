@@ -3,69 +3,54 @@ package nl.ecci.hamers.quotes
 import android.content.DialogInterface
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.view.MenuItemCompat
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-
+import android.view.*
 import com.android.volley.VolleyError
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-
-import java.lang.reflect.Type
-import java.util.ArrayList
-
+import kotlinx.android.synthetic.main.hamers_fragment.*
+import kotlinx.android.synthetic.main.hamers_fragment.view.*
 import nl.ecci.hamers.MainActivity
+import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DividerItemDecoration
 import nl.ecci.hamers.helpers.HamersFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
+import java.util.*
 
-import nl.ecci.hamers.MainActivity.prefs
 
 class QuoteFragment : HamersFragment(), DialogInterface.OnDismissListener {
 
     private val dataSet = ArrayList<Quote>()
-    private var adapter: QuoteAdapter? = null
-    private var quoteList: RecyclerView? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.hamers_fragment, container, false)
-        quoteList = view.findViewById(R.id.hamers_recyclerview) as RecyclerView
-
         setHasOptionsMenu(true)
+        return inflater?.inflate(R.layout.hamers_fragment, container, false)
+    }
 
-        val mLayoutManager = LinearLayoutManager(activity)
-        quoteList!!.layoutManager = mLayoutManager
-        quoteList!!.addItemDecoration(DividerItemDecoration(activity))
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        adapter = QuoteAdapter(dataSet, context)
-        quoteList!!.adapter = adapter
+        initSwiper(hamers_recyclerview, LinearLayoutManager(activity), hamers_swipe_container)
 
-        swipeRefreshLayout = view.findViewById(R.id.hamers_swipe_container) as SwipeRefreshLayout
-        initSwiper(quoteList, mLayoutManager, swipeRefreshLayout)
+        hamers_recyclerview.addItemDecoration(DividerItemDecoration(activity))
+        hamers_recyclerview.adapter = QuoteAdapter(dataSet, context)
 
         // When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment
-        val newQuoteButton = view.findViewById(R.id.hamers_fab) as FloatingActionButton
-        newQuoteButton.setOnClickListener {
-            val newQuoteFragment = NewQuoteFragment()
-            newQuoteFragment.show(childFragmentManager, "quotes")
+        hamers_fab.setOnClickListener {
+            NewQuoteFragment().show(childFragmentManager, "quotes")
         }
 
         populateList().execute()
         onRefresh()
-
-        return view
     }
 
     override fun onRefresh() {
@@ -81,9 +66,9 @@ class QuoteFragment : HamersFragment(), DialogInterface.OnDismissListener {
         }, null)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.quote_menu, menu)
-        val menuItem = menu!!.findItem(R.id.quote_search)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.quote_menu, menu)
+        val menuItem = menu.findItem(R.id.quote_search)
         val searchView = MenuItemCompat.getActionView(menuItem) as SearchView
         searchView.queryHint = getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -92,7 +77,7 @@ class QuoteFragment : HamersFragment(), DialogInterface.OnDismissListener {
             }
 
             override fun onQueryTextChange(s: String): Boolean {
-                adapter!!.filter.filter(s.toLowerCase())
+                (hamers_recyclerview.adapter as QuoteAdapter).filter.filter(s.toLowerCase())
                 return false
             }
         })
@@ -102,10 +87,11 @@ class QuoteFragment : HamersFragment(), DialogInterface.OnDismissListener {
     override fun onResume() {
         super.onResume()
         onRefresh()
+        activity.title = resources.getString(R.string.navigation_item_quotes)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.scroll_top -> {
                 scrollTop()
                 return true
@@ -115,7 +101,7 @@ class QuoteFragment : HamersFragment(), DialogInterface.OnDismissListener {
     }
 
     private fun scrollTop() {
-        quoteList!!.smoothScrollToPosition(0)
+        view?.hamers_recyclerview?.smoothScrollToPosition(0)
     }
 
     override fun onDismiss(dialogInterface: DialogInterface) {
@@ -147,9 +133,7 @@ class QuoteFragment : HamersFragment(), DialogInterface.OnDismissListener {
             if (result != null) {
                 dataSet.clear()
                 dataSet.addAll(result)
-                if (adapter != null) {
-                    adapter!!.notifyDataSetChanged()
-                }
+                hamers_recyclerview.adapter.notifyDataSetChanged()
             }
             setRefreshing(false)
         }

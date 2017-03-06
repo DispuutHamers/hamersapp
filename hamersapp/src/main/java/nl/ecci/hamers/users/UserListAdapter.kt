@@ -9,14 +9,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.nostra13.universalimageloader.core.ImageLoader
+import kotlinx.android.synthetic.main.user_row.view.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener
 import nl.ecci.hamers.helpers.Utils.getGravatarURL
 import java.util.*
 
 internal class UserListAdapter(private val dataSet: ArrayList<User>, private val context: Context) : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
-    private val imageLoader: ImageLoader = ImageLoader.getInstance()
-    private var animateFirstListener: AnimateFirstDisplayListener = AnimateFirstDisplayListener()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.user_row, parent, false)
@@ -32,10 +31,7 @@ internal class UserListAdapter(private val dataSet: ArrayList<User>, private val
     }
 
     override fun onBindViewHolder(holder: UserListAdapter.ViewHolder, position: Int) {
-        holder.userName.text = dataSet[position].name
-
-        val url = getGravatarURL(dataSet[position].email)
-        imageLoader.displayImage(url, holder.userImage, animateFirstListener)
+        holder.bindUser(dataSet[position])
     }
 
     override fun getItemCount(): Int {
@@ -43,7 +39,11 @@ internal class UserListAdapter(private val dataSet: ArrayList<User>, private val
     }
 
     internal class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val userImage: ImageView = view.findViewById(R.id.user_image) as ImageView
-        val userName: TextView = view.findViewById(R.id.username) as TextView
+        fun bindUser(user: User) {
+            with(user) {
+                itemView.username.text = user.name
+                ImageLoader.getInstance().displayImage(getGravatarURL(user.email), itemView.user_image, AnimateFirstDisplayListener())
+            }
+        }
     }
 }
