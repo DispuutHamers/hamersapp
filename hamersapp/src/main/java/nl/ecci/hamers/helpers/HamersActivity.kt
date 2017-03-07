@@ -19,6 +19,7 @@ import nl.ecci.hamers.R
 
 @SuppressLint("Registered")
 open class HamersActivity : AppCompatActivity() {
+
     var prefs: SharedPreferences? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {

@@ -51,7 +51,7 @@ public class NewBeerActivity extends NewItemActivity {
         beerBrewer = (EditText) findViewById(R.id.beer_brewer);
         beerCountry = (EditText) findViewById(R.id.beer_country);
 
-        beerID = getIntent().getIntExtra(Beer.BEER, -1);
+        beerID = getIntent().getIntExtra(Beer.Companion.getBEER(), -1);
         if (beerID != -1) {
             Beer beer = Utils.INSTANCE.getBeer(MainActivity.prefs, beerID);
             beerName.setText(beer.getName());
@@ -87,11 +87,11 @@ public class NewBeerActivity extends NewItemActivity {
             @Override
             public void onSuccess(JSONObject response) {
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra(SingleBeerActivity.beerName, beerName.getText().toString());
-                returnIntent.putExtra(SingleBeerActivity.beerKind, beerKind.getText().toString());
-                returnIntent.putExtra(SingleBeerActivity.beerPercentage, beerPercentage.getText().toString());
-                returnIntent.putExtra(SingleBeerActivity.beerBrewer, beerBrewer.getText().toString());
-                returnIntent.putExtra(SingleBeerActivity.beerCountry, beerCountry.getText().toString());
+                returnIntent.putExtra(SingleBeerActivity.Companion.getBeerName(), beerName.getText().toString());
+                returnIntent.putExtra(SingleBeerActivity.Companion.getBeerKind(), beerKind.getText().toString());
+                returnIntent.putExtra(SingleBeerActivity.Companion.getBeerPercentage(), beerPercentage.getText().toString());
+                returnIntent.putExtra(SingleBeerActivity.Companion.getBeerBrewer(), beerBrewer.getText().toString());
+                returnIntent.putExtra(SingleBeerActivity.Companion.getBeerCountry(), beerCountry.getText().toString());
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }

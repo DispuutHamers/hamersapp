@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -45,7 +47,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <TextView
-                android:id="@+id/rating"
+                android:id="@+id/review_rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
