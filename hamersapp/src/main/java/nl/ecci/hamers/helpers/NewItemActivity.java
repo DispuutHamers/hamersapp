@@ -2,6 +2,7 @@ package nl.ecci.hamers.helpers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +24,7 @@ public abstract class NewItemActivity extends HamersActivity {
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.done_button:
                 refreshItem = item;

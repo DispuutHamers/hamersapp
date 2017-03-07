@@ -3,35 +3,25 @@ package nl.ecci.hamers.helpers
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.preference.PreferenceManager
-import android.text.Editable
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
-
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-
-import org.apache.commons.codec.binary.Hex
-import org.apache.commons.codec.digest.DigestUtils
-
-import java.lang.reflect.Type
-import java.util.ArrayList
-import java.util.Date
-
+import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
 import nl.ecci.hamers.beers.Beer
 import nl.ecci.hamers.events.Event
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.meetings.Meeting
 import nl.ecci.hamers.users.User
-
-import android.content.Context.INPUT_METHOD_SERVICE
-import nl.ecci.hamers.MainActivity.prefs
+import org.apache.commons.codec.binary.Hex
+import org.apache.commons.codec.digest.DigestUtils
+import java.util.*
 
 object Utils {
     private var alertDialog: AlertDialog? = null
@@ -122,11 +112,8 @@ object Utils {
         }.type
         val userList = gson.fromJson<ArrayList<User>>(prefs.getString(Loader.USERURL, null), type)
 
-        for (user in userList) {
-            if (user.name == name) {
-                result = user.id
-            }
-        }
+        userList.filter { it.name == name }
+                .forEach { result = it.id }
         return result
     }
 
@@ -137,19 +124,12 @@ object Utils {
         val type = object : TypeToken<ArrayList<User>>() {
 
         }.type
-        val userList = gson.fromJson<ArrayList<User>>(prefs.getString(Loader.USERURL, null), type)
 
-        if (userList != null) {
-            for (user in userList) {
-                if (user.member === User.Member.LID) {
-                    result.add(user)
-                }
-            }
-        }
+        gson.fromJson<ArrayList<User>>(prefs.getString(Loader.USERURL, null), type)?.filterTo(result) { it.member === User.Member.LID }
         return result
     }
 
-    fun getUser(prefs: SharedPreferences, id: Int): User {
+    fun getUser(prefs: SharedPreferences?, id: Int): User {
         val userList: ArrayList<User>?
         var result = User(-1, unknown, "example@example.org", 0, 0, User.Member.LID, -1, ArrayList<User.Nickname>(), Date())
         val gsonBuilder = GsonBuilder()
@@ -158,14 +138,11 @@ object Utils {
 
         }.type
 
-        userList = gson.fromJson<ArrayList<User>>(prefs.getString(Loader.USERURL, null), type)
+        userList = gson.fromJson<ArrayList<User>>(prefs?.getString(Loader.USERURL, null), type)
 
         if (userList != null) {
-            for (user in userList) {
-                if (user.id == id) {
-                    result = user
-                }
-            }
+            userList.filter { it.id == id }
+                    .forEach { result = it }
         }
 
         return result
@@ -195,11 +172,8 @@ object Utils {
         }
 
         if (eventList != null) {
-            for (event in eventList) {
-                if (event.id == id) {
-                    result = event
-                }
-            }
+            eventList.filter { it.id == id }
+                     .forEach { result = it }
         }
 
         return result
@@ -215,11 +189,8 @@ object Utils {
         val beerList = gson.fromJson<ArrayList<Beer>>(prefs.getString(Loader.BEERURL, null), type)
 
         if (beerList != null) {
-            for (beer in beerList) {
-                if (beer.id == id) {
-                    result = beer
-                }
-            }
+            beerList.filter { it.id == id }
+                    .forEach { result = it }
         }
 
         return result
@@ -236,11 +207,9 @@ object Utils {
         val meetingList = gson.fromJson<ArrayList<Meeting>>(prefs.getString(Loader.MEETINGURL, null), type)
 
         if (meetingList != null) {
-            for (meeting in meetingList) {
-                if (meeting.id == id) {
-                    result = meeting
-                }
-            }
+            meetingList
+                    .filter { it.id == id }
+                    .forEach { result = it }
         }
 
         return result

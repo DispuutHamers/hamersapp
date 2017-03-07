@@ -3,13 +3,14 @@ package nl.ecci.hamers.beers;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,13 +36,12 @@ import nl.ecci.hamers.helpers.SingleImageActivity;
 import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.loader.Loader;
 
-import static nl.ecci.hamers.MainActivity.prefs;
 import static nl.ecci.hamers.R.id.review_body;
 import static nl.ecci.hamers.R.id.review_rating;
 
 public class SingleBeerActivity extends HamersActivity {
 
-    private LayoutInflater inflater;
+    private SharedPreferences prefs;
     private Beer beer;
     private Gson gson;
     private LinearLayout insertPoint;
@@ -67,7 +67,7 @@ public class SingleBeerActivity extends HamersActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beer_detail);
 
-        inflater = getLayoutInflater();
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -95,7 +95,7 @@ public class SingleBeerActivity extends HamersActivity {
             });
         }
 
-        beer = Utils.INSTANCE.getBeer(MainActivity.prefs, getIntent().getIntExtra(Beer.BEER, -1));
+        beer = Utils.INSTANCE.getBeer(prefs, getIntent().getIntExtra(Beer.BEER, -1));
 
         setValues();
 
@@ -121,17 +121,17 @@ public class SingleBeerActivity extends HamersActivity {
         TextView nameTV = (TextView) findViewById(R.id.beer_name);
         View ratingRow = findViewById(R.id.row_rating);
 
-        fillRow(findViewById(R.id.row_kind), getString(R.string.beer_soort), beer.getKind());
-        fillRow(findViewById(R.id.row_alc), getString(R.string.beer_alc), beer.getPercentage());
-        fillRow(findViewById(R.id.row_brewer), getString(R.string.beer_brewer), beer.getBrewer());
-        fillRow(findViewById(R.id.row_country), getString(R.string.beer_country), beer.getCountry());
+        fillDetailRow(findViewById(R.id.row_kind), getString(R.string.beer_soort), beer.getKind());
+        fillDetailRow(findViewById(R.id.row_alc), getString(R.string.beer_alc), beer.getPercentage());
+        fillDetailRow(findViewById(R.id.row_brewer), getString(R.string.beer_brewer), beer.getBrewer());
+        fillDetailRow(findViewById(R.id.row_country), getString(R.string.beer_country), beer.getCountry());
 
         nameTV.setText(beer.getName());
 
         if (beer.getRating() == null) {
-            fillRow(ratingRow, getString(R.string.beer_rating), "Nog niet bekend");
+            fillDetailRow(ratingRow, getString(R.string.beer_rating), "Nog niet bekend");
         } else {
-            fillRow(ratingRow, getString(R.string.beer_rating), beer.getRating());
+            fillDetailRow(ratingRow, getString(R.string.beer_rating), beer.getRating());
         }
     }
 
@@ -148,7 +148,7 @@ public class SingleBeerActivity extends HamersActivity {
         for (Review review : reviewList) {
             if (review.getBeerID() == beer.getID()) {
                 hasReviews = true;
-                if (review.getUserID() == Utils.INSTANCE.getOwnUser(MainActivity.prefs).getId()) {
+                if (review.getUserID() == Utils.INSTANCE.getOwnUser(prefs).getId()) {
                     reviewButton.setText(R.string.edit_review);
                     ownReview = review;
                 }
@@ -179,15 +179,15 @@ public class SingleBeerActivity extends HamersActivity {
 
     private void insertReview(Review review) {
         insertPoint = (LinearLayout) findViewById(R.id.review_insert_point);
-        View view = inflater.inflate(R.layout.review_row, insertPoint, false);
-        View divider = inflater.inflate(R.layout.divider, insertPoint, false);
+        View view = getLayoutInflater().inflate(R.layout.review_row, insertPoint, false);
+        View divider = getLayoutInflater().inflate(R.layout.divider, insertPoint, false);
 
         TextView title = (TextView) view.findViewById(R.id.review_title);
         TextView body = (TextView) view.findViewById(review_body);
         TextView date = (TextView) view.findViewById(R.id.review_date);
         TextView ratingTV = (TextView) view.findViewById(R.id.review_rating);
 
-        title.setText(String.format("%s: ", Utils.INSTANCE.getUser(MainActivity.prefs, review.getUserID()).getName()));
+        title.setText(String.format("%s: ", Utils.INSTANCE.getUser(prefs, review.getUserID()).getName()));
         body.setText(review.getDescription());
         date.setText(MainActivity.appDF2.format(review.getProefdatum()));
         ratingTV.setText(String.format("Cijfer: %s", review.getRating()));
@@ -197,7 +197,7 @@ public class SingleBeerActivity extends HamersActivity {
             insertPoint.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             insertPoint.addView(divider);
         }
-        if (Utils.INSTANCE.getOwnUser(MainActivity.prefs).getId() == review.getUserID()) {
+        if (Utils.INSTANCE.getOwnUser(prefs).getId() == review.getUserID()) {
             registerForContextMenu(view);
         }
     }
@@ -292,13 +292,5 @@ public class SingleBeerActivity extends HamersActivity {
                 setValues();
             }
         }
-    }
-
-    private void fillRow(View view, final String title, final String description) {
-        TextView titleView = (TextView) view.findViewById(R.id.row_title);
-        titleView.setText(title);
-
-        TextView descriptionView = (TextView) view.findViewById(R.id.row_description);
-        descriptionView.setText(description);
     }
 }

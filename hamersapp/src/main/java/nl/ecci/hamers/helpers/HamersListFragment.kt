@@ -15,7 +15,7 @@ abstract class HamersListFragment : Fragment(), SwipeRefreshLayout.OnRefreshList
         initSwiper()
     }
 
-    protected fun initSwiper() {
+    private fun initSwiper() {
         val lm = LinearLayoutManager(activity)
         hamers_recyclerview.layoutManager = lm
         hamers_recyclerview.itemAnimator = DefaultItemAnimator()

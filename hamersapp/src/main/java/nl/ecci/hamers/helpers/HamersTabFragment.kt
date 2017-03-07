@@ -9,7 +9,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.hamers_tab_fragment.*
 import nl.ecci.hamers.R
 
-abstract class HamersTabFragment : Fragment() {
+open class HamersTabFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

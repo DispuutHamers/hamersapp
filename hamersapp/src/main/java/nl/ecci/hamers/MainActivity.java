@@ -213,7 +213,7 @@ public class MainActivity extends HamersActivity {
         });
     }
 
-    private void initToolbar() {
+    public void initToolbar() {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
