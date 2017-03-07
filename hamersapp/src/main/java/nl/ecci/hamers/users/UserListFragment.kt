@@ -7,16 +7,16 @@ import android.view.*
 import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.hamers_fragment.*
+import kotlinx.android.synthetic.main.hamers_list_fragment.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
-import nl.ecci.hamers.helpers.HamersFragment
+import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
 import java.util.*
 
-class UserListFragment : HamersFragment(), SwipeRefreshLayout.OnRefreshListener {
+class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private val dataSet = ArrayList<User>()
     private var exUser: Boolean = false
@@ -28,7 +28,7 @@ class UserListFragment : HamersFragment(), SwipeRefreshLayout.OnRefreshListener 
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.hamers_fragment, container, false)
+        return inflater?.inflate(R.layout.hamers_list_fragment, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -36,7 +36,7 @@ class UserListFragment : HamersFragment(), SwipeRefreshLayout.OnRefreshListener 
 
         hamers_recyclerview.adapter = UserListAdapter(dataSet, activity)
 
-        exUser = arguments.getBoolean(UserFragmentPagerAdapter.exUser, false)
+        exUser = arguments.getBoolean(UserFragmentAdapter.exUser, false)
 
         sort()
 

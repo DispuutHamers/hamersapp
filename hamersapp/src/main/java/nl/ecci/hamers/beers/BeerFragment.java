@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
@@ -31,14 +28,13 @@ import java.util.Comparator;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener;
-import nl.ecci.hamers.helpers.DividerItemDecoration;
-import nl.ecci.hamers.helpers.HamersFragment;
+import nl.ecci.hamers.helpers.HamersListFragment;
 import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
 
 import static nl.ecci.hamers.MainActivity.prefs;
 
-public class BeerFragment extends HamersFragment {
+public class BeerFragment extends HamersListFragment {
 
     private static final Comparator<Beer> nameComparator = new Comparator<Beer>() {
         @Override
@@ -77,7 +73,7 @@ public class BeerFragment extends HamersFragment {
     private RecyclerView beer_list;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.hamers_fragment, container, false);
+        View view = inflater.inflate(R.layout.hamers_list_fragment, container, false);
         beer_list = (RecyclerView) view.findViewById(R.id.hamers_recyclerview);
 
         setHasOptionsMenu(true);

@@ -8,11 +8,11 @@ import android.support.v4.app.FragmentPagerAdapter
 
 import nl.ecci.hamers.R
 
-internal class UserFragmentPagerAdapter(context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
+internal class UserFragmentAdapter(context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     private var userFragmentAll: UserListFragment? = null
     private var userFragmentEx: UserListFragment? = null
-    private var tabTitles: Array<String>? = arrayOf(context.resources.getString(R.string.menu_users), context.resources.getString(R.string.menu_users_ex))
+    private var tabTitles: Array<String> = arrayOf(context.resources.getString(R.string.menu_users), context.resources.getString(R.string.menu_users_ex))
 
     override fun getCount(): Int {
         return 2
@@ -43,7 +43,7 @@ internal class UserFragmentPagerAdapter(context: Context, fm: FragmentManager) :
     }
 
     override fun getPageTitle(position: Int): CharSequence {
-        return tabTitles!![position]
+        return tabTitles[position]
     }
 
     companion object {

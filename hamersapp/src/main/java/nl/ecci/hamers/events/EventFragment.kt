@@ -1,4 +1,4 @@
-package nl.ecci.hamers.users
+package nl.ecci.hamers.events
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.hamers_tab_fragment.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.HamersTabFragment
 
-class UserFragment : HamersTabFragment() {
+class EventFragment : HamersTabFragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.hamers_tab_fragment, container, false)
@@ -16,11 +16,11 @@ class UserFragment : HamersTabFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tab_fragment_viewpager.adapter = UserFragmentAdapter(activity, childFragmentManager)
+        tab_fragment_viewpager.adapter = EventFragmentAdapter(activity, childFragmentManager)
     }
 
     override fun onResume() {
         super.onResume()
-        activity.title = resources.getString(R.string.navigation_item_users)
+        activity.title = resources.getString(R.string.navigation_item_events)
     }
 }

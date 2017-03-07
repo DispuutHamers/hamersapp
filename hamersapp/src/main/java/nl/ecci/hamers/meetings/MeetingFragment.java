@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,18 +19,18 @@ import java.util.ArrayList;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.helpers.HamersFragment;
+import nl.ecci.hamers.helpers.HamersListFragment;
 import nl.ecci.hamers.loader.GetCallback;
 import nl.ecci.hamers.loader.Loader;
 
 import static nl.ecci.hamers.MainActivity.prefs;
 
-public class MeetingFragment extends HamersFragment {
+public class MeetingFragment extends HamersListFragment {
     private final ArrayList<Meeting> dataSet = new ArrayList<>();
     private MeetingAdapter adapter;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.hamers_fragment, container, false);
+        View view = inflater.inflate(R.layout.hamers_list_fragment, container, false);
         RecyclerView meetingList = (RecyclerView) view.findViewById(R.id.hamers_recyclerview);
 
         setHasOptionsMenu(false);

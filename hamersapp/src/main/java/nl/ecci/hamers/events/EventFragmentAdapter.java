@@ -8,14 +8,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import nl.ecci.hamers.R;
 
-class EventFragmentPagerAdapter extends FragmentPagerAdapter {
+class EventFragmentAdapter extends FragmentPagerAdapter {
     final static String upcoming = "upcoming";
     private static String[] tabTitles = null;
 
     private EventListFragment eventFragmentUpcoming;
     private EventListFragment eventFragmentAll;
 
-    EventFragmentPagerAdapter(Context context, FragmentManager fm) {
+    EventFragmentAdapter(Context context, FragmentManager fm) {
         super(fm);
         tabTitles = new String[]{
                 context.getResources().getString(R.string.menu_upcoming),

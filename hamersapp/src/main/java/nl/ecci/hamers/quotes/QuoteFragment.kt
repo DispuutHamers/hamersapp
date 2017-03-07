@@ -9,19 +9,19 @@ import android.view.*
 import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.hamers_fragment.*
-import kotlinx.android.synthetic.main.hamers_fragment.view.*
+import kotlinx.android.synthetic.main.hamers_list_fragment.*
+import kotlinx.android.synthetic.main.hamers_list_fragment.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DividerItemDecoration
-import nl.ecci.hamers.helpers.HamersFragment
+import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
 import java.util.*
 
 
-class QuoteFragment : HamersFragment(), DialogInterface.OnDismissListener {
+class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
 
     private val dataSet = ArrayList<Quote>()
 
@@ -32,7 +32,7 @@ class QuoteFragment : HamersFragment(), DialogInterface.OnDismissListener {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        return inflater?.inflate(R.layout.hamers_fragment, container, false)
+        return inflater?.inflate(R.layout.hamers_list_fragment, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
