@@ -14,10 +14,6 @@ internal class UserFragmentAdapter(context: Context, fm: FragmentManager) : Frag
     private var userFragmentEx: UserListFragment? = null
     private var tabTitles: Array<String> = arrayOf(context.resources.getString(R.string.menu_users), context.resources.getString(R.string.menu_users_ex))
 
-    override fun getCount(): Int {
-        return 2
-    }
-
     override fun getItem(position: Int): Fragment? {
         when (position) {
             0 -> {
@@ -44,6 +40,10 @@ internal class UserFragmentAdapter(context: Context, fm: FragmentManager) : Frag
 
     override fun getPageTitle(position: Int): CharSequence {
         return tabTitles[position]
+    }
+
+    override fun getCount(): Int {
+        return tabTitles.size
     }
 
     companion object {

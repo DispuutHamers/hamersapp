@@ -1,0 +1,106 @@
+package nl.ecci.hamers.events
+
+import android.content.Context
+import android.content.Intent
+import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
+import kotlinx.android.synthetic.main.event_row.view.*
+import nl.ecci.hamers.MainActivity
+import nl.ecci.hamers.R
+import nl.ecci.hamers.helpers.Utils
+import java.util.*
+
+internal class EventListAdapter(private val context: Context, private val dataSet: ArrayList<Event>) : RecyclerView.Adapter<EventListAdapter.ViewHolder>(), Filterable {
+
+    private var filteredDataSet: ArrayList<Event> = dataSet
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.event_row, parent, false)
+        val vh = ViewHolder(view)
+
+        view.setOnClickListener {
+            val position = vh.adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                val intent = Intent(context, SingleEventActivity::class.java)
+                intent.putExtra(Event.EVENT, filteredDataSet[vh.adapterPosition].id)
+                context.startActivity(intent)
+            }
+        }
+        return vh
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bindEvent(filteredDataSet[position])
+    }
+
+    override fun getItemCount(): Int {
+        return filteredDataSet.size
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(charSequence: CharSequence?): Filter.FilterResults {
+                val results = Filter.FilterResults()
+
+                //If there's nothing to filter on, return the original data for your list
+                if (charSequence == null || charSequence.isEmpty()) {
+                    results.values = dataSet
+                    results.count = dataSet.size
+                } else {
+                    val filterResultsData = ArrayList<Event>()
+                    for (event in dataSet) {
+                        if (event.title.toLowerCase().contains(charSequence) || event.description.toLowerCase().contains(charSequence)) {
+                            filterResultsData.add(event)
+                        }
+                    }
+                    results.values = filterResultsData
+                    results.count = filterResultsData.size
+                }
+                return results
+            }
+
+            override fun publishResults(charSequence: CharSequence, filterResults: Filter.FilterResults) {
+                filteredDataSet = filterResults.values as ArrayList<Event>
+                notifyDataSetChanged()
+            }
+        }
+    }
+
+    internal inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+
+        fun bindEvent(event: Event) {
+            with(event) {
+                itemView.event_title.text = event.title
+                itemView.event_beschrijving.text = event.description
+                itemView.event_date.text = MainActivity.appDF2.format(event.date)
+                if (event.location.isNullOrEmpty()) {
+                    itemView.event_location.visibility = View.GONE
+                } else {
+                    itemView.event_location.text = event.location
+                }
+            }
+
+            val signups = event.signUps
+            val userID = Utils.getOwnUser(MainActivity.prefs).id
+            var aanwezig: Boolean? = null
+            signups.indices
+                    .map { signups[it] }
+                    .filter { it.userID == userID }
+                    .forEach { aanwezig = it.isAttending }
+
+            if (aanwezig != null) {
+                if (aanwezig as Boolean) {
+                    itemView.thumbs.setImageResource(R.drawable.ic_thumbs_up)
+                } else {
+                    itemView.thumbs.setImageResource(R.drawable.ic_thumbs_down)
+                }
+            } else {
+                itemView.thumbs.setImageResource(R.drawable.ic_questionmark)
+            }
+        }
+    }
+}
