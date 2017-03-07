@@ -46,9 +46,6 @@ public class NewsFragment extends HamersFragment {
 
         setHasOptionsMenu(true);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        news_list.setLayoutManager(layoutManager);
-
         adapter = new NewsAdapter(dataSet);
         news_list.setAdapter(adapter);
 

@@ -130,7 +130,7 @@ class QuoteFragment : HamersFragment(), DialogInterface.OnDismissListener {
             if (result != null) {
                 dataSet.clear()
                 dataSet.addAll(result)
-                hamers_recyclerview.adapter.notifyDataSetChanged()
+                notifyAdapter()
             }
             setRefreshing(false)
         }

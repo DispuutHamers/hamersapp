@@ -3,6 +3,7 @@ package nl.ecci.hamers.helpers
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -17,6 +18,7 @@ abstract class HamersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener
     protected fun initSwiper() {
         val lm = LinearLayoutManager(activity)
         hamers_recyclerview.layoutManager = lm
+        hamers_recyclerview.itemAnimator = DefaultItemAnimator()
 
         hamers_swipe_container.setColorSchemeResources(android.R.color.holo_red_light)
         hamers_swipe_container.setOnRefreshListener(this)
@@ -30,5 +32,9 @@ abstract class HamersFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener
 
     fun setRefreshing(bool: Boolean) {
         hamers_swipe_container?.post { hamers_swipe_container?.isRefreshing = bool }
+    }
+
+    fun notifyAdapter() {
+        hamers_recyclerview?.adapter?.notifyDataSetChanged()
     }
 }

@@ -3,17 +3,14 @@ package nl.ecci.hamers.users
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.user_list_fragment.*
+import kotlinx.android.synthetic.main.hamers_fragment.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
-import nl.ecci.hamers.helpers.DividerItemDecoration
 import nl.ecci.hamers.helpers.HamersFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
@@ -27,19 +24,17 @@ class UserListFragment : HamersFragment(), SwipeRefreshLayout.OnRefreshListener 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
-        return inflater?.inflate(R.layout.user_list_fragment, container, false)
+        return inflater?.inflate(R.layout.hamers_fragment, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        user_list.itemAnimator = DefaultItemAnimator()
-        user_list.addItemDecoration(DividerItemDecoration(activity))
-        user_list.adapter = UserListAdapter(dataSet, activity)
+        hamers_recyclerview.adapter = UserListAdapter(dataSet, activity)
 
         exUser = arguments.getBoolean(UserFragmentPagerAdapter.exUser, false)
 
@@ -95,30 +90,27 @@ class UserListFragment : HamersFragment(), SwipeRefreshLayout.OnRefreshListener 
             "quotecount" -> sortByQuoteCount()
             "reviewcount" -> sortByReviewCount()
         }
+        notifyAdapter()
     }
 
     private fun sortByUsername() {
         val nameComperator = Comparator<User> { user1, user2 -> user1.name.compareTo(user2.name, ignoreCase = true) }
         Collections.sort(dataSet, nameComperator)
-        user_list.adapter.notifyDataSetChanged()
     }
 
     private fun sortByQuoteCount() {
         val quoteComperator = Comparator<User> { user1, user2 -> user2.quoteCount - user1.quoteCount }
         Collections.sort(dataSet, quoteComperator)
-        user_list.adapter.notifyDataSetChanged()
     }
 
     private fun sortByReviewCount() {
         val reviewComperator = Comparator<User> { user1, user2 -> user2.reviewCount - user1.reviewCount }
         Collections.sort(dataSet, reviewComperator)
-        user_list.adapter.notifyDataSetChanged()
     }
 
     private fun sortByBatch() {
         val batchComperator = Comparator<User> { user1, user2 -> user1.batch - user2.batch }
         Collections.sort(dataSet, batchComperator)
-        user_list.adapter.notifyDataSetChanged()
     }
 
     private inner class populateList : AsyncTask<String, Void, ArrayList<User>>() {
@@ -154,7 +146,7 @@ class UserListFragment : HamersFragment(), SwipeRefreshLayout.OnRefreshListener 
             if (result != null) {
                 dataSet.clear()
                 dataSet.addAll(result)
-                user_list.adapter.notifyDataSetChanged()
+                notifyAdapter()
             }
             sort()
             setRefreshing(false)

@@ -30,9 +30,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         Button eventDateButton = (Button) getActivity().findViewById(R.id.event_date_button);
-        Button eventEndDateButton = (Button) getActivity().findViewById(R.id.end_date_button);
+        Button eventEndDateButton = (Button) getActivity().findViewById(R.id.event_end_date_button);
         Button beerDateButton = (Button) getActivity().findViewById(R.id.pick_date_button);
-        Button deadlineDateButton = (Button) getActivity().findViewById(R.id.deadline_date_button);
+        Button deadlineDateButton = (Button) getActivity().findViewById(R.id.event_deadline_date_button);
         Button meetingDateButton = (Button) getActivity().findViewById(R.id.meeting_date_button);
 
         String date = String.valueOf(day) + "-" + (month + 1) + "-" + year;

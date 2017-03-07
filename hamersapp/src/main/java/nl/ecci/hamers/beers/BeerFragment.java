@@ -3,6 +3,7 @@ package nl.ecci.hamers.beers;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -81,8 +82,6 @@ public class BeerFragment extends HamersFragment {
 
         setHasOptionsMenu(true);
 
-        beer_list.setItemAnimator(new DefaultItemAnimator());
-
         adapter = new BeerAdapter(dataSet, getActivity());
         beer_list.setAdapter(adapter);
 
@@ -109,12 +108,12 @@ public class BeerFragment extends HamersFragment {
         setRefreshing(true);
         Loader.getData(getContext(), Loader.BEERURL, new GetCallback() {
             @Override
-            public void onSuccess(String response) {
+            public void onSuccess(@NonNull String response) {
                 new populateList().execute(response);
             }
 
             @Override
-            public void onError(VolleyError error) {
+            public void onError(@NonNull VolleyError error) {
                 // Nothing
             }
         }, null);

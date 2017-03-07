@@ -94,9 +94,9 @@ class EventListFragment : HamersFragment() {
         onRefresh()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.news_event_menu, menu)
-        val menuItem = menu!!.findItem(R.id.event_search)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.news_event_menu, menu)
+        val menuItem = menu.findItem(R.id.event_search)
         val searchView = MenuItemCompat.getActionView(menuItem) as SearchView
         searchView.queryHint = getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -134,9 +134,7 @@ class EventListFragment : HamersFragment() {
                     val result = ArrayList<Event>()
                     val now = Date()
 
-                    if (tempList != null) {
-                        tempList!!.filterTo(result) { now.before(it.date) }
-                    }
+                    tempList?.filterTo(result) { now.before(it.date) }
                     Collections.reverse(result)
                     return result
                 } else {
@@ -150,7 +148,7 @@ class EventListFragment : HamersFragment() {
                 dataSet.clear()
                 dataSet.addAll(result)
                 Collections.reverse(dataSet)
-                hamers_recyclerview.adapter.notifyDataSetChanged()
+                notifyAdapter()
             }
             setRefreshing(false)
         }

@@ -21,7 +21,7 @@ public class SingleImageActivity extends HamersActivity {
 
     private PhotoViewAttacher mAttacher;
 
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_image_activity);
 
@@ -35,11 +35,8 @@ public class SingleImageActivity extends HamersActivity {
         Gson gson = gsonBuilder.create();
         Beer beer = gson.fromJson(getIntent().getStringExtra(Beer.BEER), Beer.class);
 
-        // Universal Image Loader
-        ImageLoader imageLoader = ImageLoader.getInstance();
-
         if (imageView != null) {
-            imageLoader.displayImage(beer.getImageURL(), imageView, new ImageLoadingListener() {
+            ImageLoader.getInstance().displayImage(beer.getImageURL(), imageView, new ImageLoadingListener() {
 
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
