@@ -4,7 +4,6 @@ import android.content.DialogInterface
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.*
 import com.android.volley.VolleyError
@@ -38,8 +37,6 @@ class QuoteFragment : HamersFragment(), DialogInterface.OnDismissListener {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        initSwiper(hamers_recyclerview, LinearLayoutManager(activity), hamers_swipe_container)
 
         hamers_recyclerview.addItemDecoration(DividerItemDecoration(activity))
         hamers_recyclerview.adapter = QuoteAdapter(dataSet, context)

@@ -41,8 +41,6 @@ class UserListFragment : HamersFragment(), SwipeRefreshLayout.OnRefreshListener 
         user_list.addItemDecoration(DividerItemDecoration(activity))
         user_list.adapter = UserListAdapter(dataSet, activity)
 
-        initSwiper(user_list, LinearLayoutManager(activity), users_swipe_container)
-
         exUser = arguments.getBoolean(UserFragmentPagerAdapter.exUser, false)
 
         sort()

@@ -37,12 +37,6 @@ public class MeetingFragment extends HamersFragment {
 
         setHasOptionsMenu(false);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        meetingList.setLayoutManager(layoutManager);
-
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.hamers_swipe_container);
-        initSwiper(meetingList, layoutManager, swipeRefreshLayout);
-
         adapter = new MeetingAdapter(dataSet, getActivity());
         meetingList.setAdapter(adapter);
 

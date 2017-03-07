@@ -49,9 +49,6 @@ public class NewsFragment extends HamersFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         news_list.setLayoutManager(layoutManager);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.hamers_swipe_container);
-        initSwiper(news_list, layoutManager, swipeRefreshLayout);
-
         adapter = new NewsAdapter(dataSet);
         news_list.setAdapter(adapter);
 
