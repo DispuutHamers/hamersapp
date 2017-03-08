@@ -6,7 +6,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.view.View
-import kotlinx.android.synthetic.main.hamers_tab_fragment.*
+import kotlinx.android.synthetic.main.fragment_hamers_tab.*
 import nl.ecci.hamers.R
 
 open class HamersTabFragment : Fragment() {

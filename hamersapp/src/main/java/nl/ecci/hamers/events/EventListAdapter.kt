@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import kotlinx.android.synthetic.main.event_row.view.*
+import kotlinx.android.synthetic.main.row_event.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.Utils
@@ -19,7 +19,7 @@ internal class EventListAdapter(private val context: Context, private val dataSe
     private var filteredDataSet: ArrayList<Event> = dataSet
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.event_row, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_event, parent, false)
         val vh = ViewHolder(view)
 
         view.setOnClickListener {

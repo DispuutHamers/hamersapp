@@ -8,7 +8,7 @@ import android.view.View
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.nostra13.universalimageloader.core.assist.FailReason
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener
-import kotlinx.android.synthetic.main.user_detail.*
+import kotlinx.android.synthetic.main.detail_user.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.HamersActivity
@@ -22,7 +22,7 @@ class SingleUserActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.user_detail)
+        setContentView(R.layout.detail_user)
 
         initToolbar()
 

@@ -7,9 +7,11 @@ import android.support.design.widget.Snackbar
 import android.view.View
 import android.widget.Button
 import android.widget.SeekBar
+import android.widget.Toast
 import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.review_new_activity.*
+import kotlinx.android.synthetic.main.activity_new_item.*
+import kotlinx.android.synthetic.main.stub_new_review.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DatePickerFragment
@@ -30,9 +32,12 @@ class NewReviewActivity : NewItemActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.review_new_activity)
+        setContentView(R.layout.activity_new_item)
 
         initToolbar()
+
+        stub.layoutResource = R.layout.stub_new_review
+        stub.inflate()
 
         val date_button = findViewById(R.id.pick_date_button) as Button
         val calendar = Calendar.getInstance()
@@ -110,7 +115,7 @@ class NewReviewActivity : NewItemActivity() {
 
         } else {
             disableLoadingAnimation()
-            Snackbar.make(new_beer_review_parent, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show()
         }
     }
 }

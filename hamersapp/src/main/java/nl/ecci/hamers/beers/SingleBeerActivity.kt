@@ -12,8 +12,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.nostra13.universalimageloader.core.ImageLoader
-import kotlinx.android.synthetic.main.beer_detail.*
-import kotlinx.android.synthetic.main.review_row.view.*
+import kotlinx.android.synthetic.main.detail_beer.*
+import kotlinx.android.synthetic.main.row_review.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.HamersActivity
@@ -34,7 +34,7 @@ class SingleBeerActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.beer_detail)
+        setContentView(R.layout.detail_beer)
 
         initToolbar()
 
@@ -116,7 +116,7 @@ class SingleBeerActivity : HamersActivity() {
     }
 
     private fun insertReview(review: Review) {
-        val view = layoutInflater.inflate(R.layout.review_row, review_insert_point, false)
+        val view = layoutInflater.inflate(R.layout.row_review, review_insert_point, false)
         val divider = layoutInflater.inflate(R.layout.divider, review_insert_point, false)
 
         view.review_title.text = String.format("%s: ", Utils.getUser(prefs, review.userID).name)

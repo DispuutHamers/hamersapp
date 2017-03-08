@@ -3,20 +3,17 @@ package nl.ecci.hamers.beers
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.EditText
-
 import com.android.volley.VolleyError
-import kotlinx.android.synthetic.main.beer_new_activity.*
-
-import org.json.JSONException
-import org.json.JSONObject
-
+import kotlinx.android.synthetic.main.activity_new_item.*
+import kotlinx.android.synthetic.main.stub_new_beer.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.NewItemActivity
 import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.loader.PostCallback
+import org.json.JSONException
+import org.json.JSONObject
 
 class NewBeerActivity : NewItemActivity() {
 
@@ -24,9 +21,12 @@ class NewBeerActivity : NewItemActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.beer_new_activity)
+        setContentView(R.layout.activity_new_item)
 
         initToolbar()
+
+        stub.layoutResource = R.layout.stub_new_beer
+        stub.inflate()
 
         beerID = intent.getIntExtra(Beer.BEER, -1)
         if (beerID != -1) {

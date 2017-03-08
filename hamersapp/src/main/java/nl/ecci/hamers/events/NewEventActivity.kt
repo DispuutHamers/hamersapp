@@ -1,11 +1,11 @@
 package nl.ecci.hamers.events
 
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.Toast
 import com.android.volley.VolleyError
-import kotlinx.android.synthetic.main.event_new_activity.*
+import kotlinx.android.synthetic.main.activity_new_item.*
+import kotlinx.android.synthetic.main.stub_new_event.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DatePickerFragment
@@ -25,17 +25,13 @@ class NewEventActivity : NewItemActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_new_item)
 
-        setContentView(R.layout.event_new_activity)
+        initToolbar()
 
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
-        setSupportActionBar(toolbar)
+        stub.layoutResource = R.layout.stub_new_event
+        stub.inflate()
 
-        val actionBar = supportActionBar
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeButtonEnabled(true)
-        }
 
         val timeFormat = SimpleDateFormat("HH:mm", MainActivity.locale)
         val dateFormat = SimpleDateFormat("dd-mm-yyyy", MainActivity.locale)

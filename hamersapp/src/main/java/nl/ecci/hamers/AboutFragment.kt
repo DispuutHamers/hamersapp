@@ -23,7 +23,7 @@ class AboutFragment : Fragment() {
     private var libraries: HashMap<String, String>? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.about_fragment, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_about, container, false)
 
         setHasOptionsMenu(true)
 

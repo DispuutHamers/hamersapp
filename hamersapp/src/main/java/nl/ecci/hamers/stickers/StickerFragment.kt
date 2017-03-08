@@ -30,7 +30,7 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
     private val dataSet = ArrayList<Sticker>()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.sticker_fragment, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_sticker, container, false)
 
         // Gets the MapView from the XML layout and creates it
         mapView = view.findViewById(R.id.stickers_map) as MapView

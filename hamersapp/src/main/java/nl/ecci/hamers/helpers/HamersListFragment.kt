@@ -7,7 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import kotlinx.android.synthetic.main.hamers_list_fragment.*
+import kotlinx.android.synthetic.main.fragment_hamers_list.*
 
 abstract class HamersListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 

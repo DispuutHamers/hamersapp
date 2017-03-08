@@ -2,7 +2,7 @@ package nl.ecci.hamers.meetings
 
 import android.os.Bundle
 import android.widget.TextView
-import kotlinx.android.synthetic.main.meeting_detail.*
+import kotlinx.android.synthetic.main.detail_meeting.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.HamersActivity
@@ -13,7 +13,7 @@ class SingleMeetingActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.setContentView(R.layout.meeting_detail)
+        this.setContentView(R.layout.detail_meeting)
 
         initToolbar()
 

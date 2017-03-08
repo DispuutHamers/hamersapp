@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.nostra13.universalimageloader.core.ImageLoader
-import kotlinx.android.synthetic.main.user_row.view.*
+import kotlinx.android.synthetic.main.row_user.view.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener
 import nl.ecci.hamers.helpers.Utils.getGravatarURL
@@ -16,7 +16,7 @@ import java.util.*
 internal class UserListAdapter(private val dataSet: ArrayList<User>, private val context: Context) : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.user_row, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_user, parent, false)
         val vh = UserListAdapter.ViewHolder(view)
 
         view.setOnClickListener {

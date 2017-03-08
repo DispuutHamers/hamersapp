@@ -8,7 +8,7 @@ import com.google.gson.GsonBuilder
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.nostra13.universalimageloader.core.assist.FailReason
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener
-import kotlinx.android.synthetic.main.single_image_activity.*
+import kotlinx.android.synthetic.main.activity_single_image.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.beers.Beer
 import uk.co.senab.photoview.PhotoViewAttacher
@@ -19,7 +19,7 @@ class SingleImageActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.single_image_activity)
+        setContentView(R.layout.activity_single_image)
 
         setSupportActionBar(toolbar as Toolbar?)
 

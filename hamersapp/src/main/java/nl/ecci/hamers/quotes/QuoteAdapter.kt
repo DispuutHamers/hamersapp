@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import com.nostra13.universalimageloader.core.ImageLoader
-import kotlinx.android.synthetic.main.quote_row.view.*
+import kotlinx.android.synthetic.main.row_quote.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener
@@ -23,7 +23,7 @@ internal class QuoteAdapter(private val dataSet: ArrayList<Quote>, private val c
     private var filteredDataSet = dataSet
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.quote_row, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_quote, parent, false)
         val vh = ViewHolder(view)
         val imageView = view.findViewById(R.id.quote_image)
 

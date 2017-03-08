@@ -5,13 +5,9 @@ import android.app.TimePickerDialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.text.format.DateFormat
-import android.widget.Button
 import android.widget.TimePicker
-import kotlinx.android.synthetic.main.event_new_activity.*
-
-import java.util.Calendar
-
-import nl.ecci.hamers.R
+import kotlinx.android.synthetic.main.stub_new_event.*
+import java.util.*
 
 class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener {
 

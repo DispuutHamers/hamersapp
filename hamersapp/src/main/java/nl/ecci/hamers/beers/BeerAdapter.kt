@@ -16,7 +16,7 @@ import android.widget.Toast
 import com.google.gson.GsonBuilder
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware
-import kotlinx.android.synthetic.main.beer_row.view.*
+import kotlinx.android.synthetic.main.row_beer.view.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener
 import nl.ecci.hamers.helpers.SingleImageActivity
@@ -28,7 +28,7 @@ internal class BeerAdapter(private val dataSet: ArrayList<Beer>, private val con
     private var filteredDataSet: ArrayList<Beer> = dataSet
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.beer_row, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_beer, parent, false)
         val vh = ViewHolder(view)
 
         view.setOnClickListener {

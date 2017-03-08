@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.view.View
 import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.meetings_new_acitivity.*
+import kotlinx.android.synthetic.main.activity_new_item.*
+import kotlinx.android.synthetic.main.stub_new_meeting.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DatePickerFragment
@@ -22,9 +23,12 @@ class NewMeetingActivity : NewItemActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.meetings_new_acitivity)
+        setContentView(R.layout.activity_new_item)
 
         initToolbar()
+
+        stub.layoutResource = R.layout.stub_new_meeting
+        stub.inflate()
 
         val gson = GsonBuilder().create()
         meeting = gson.fromJson(intent.getStringExtra(Meeting.ID), Meeting::class.java)

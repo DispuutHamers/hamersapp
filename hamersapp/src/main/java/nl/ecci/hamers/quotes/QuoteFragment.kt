@@ -9,8 +9,8 @@ import android.view.*
 import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.hamers_list_fragment.*
-import kotlinx.android.synthetic.main.hamers_list_fragment.view.*
+import kotlinx.android.synthetic.main.fragment_hamers_list.*
+import kotlinx.android.synthetic.main.fragment_hamers_list.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
@@ -32,7 +32,7 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        return inflater?.inflate(R.layout.hamers_list_fragment, container, false)
+        return inflater?.inflate(R.layout.fragment_hamers_list, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

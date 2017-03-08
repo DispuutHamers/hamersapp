@@ -2,7 +2,8 @@ package nl.ecci.hamers.news
 
 import android.os.Bundle
 import com.android.volley.VolleyError
-import kotlinx.android.synthetic.main.news_new_acitivity.*
+import kotlinx.android.synthetic.main.activity_new_item.*
+import kotlinx.android.synthetic.main.stub_new_news.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.NewItemActivity
 import nl.ecci.hamers.loader.Loader
@@ -14,9 +15,12 @@ class NewNewsActivity : NewItemActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.news_new_acitivity)
+        setContentView(R.layout.activity_new_item)
 
         initToolbar()
+
+        stub.layoutResource = R.layout.stub_new_news
+        stub.inflate()
     }
 
     override fun postItem() {

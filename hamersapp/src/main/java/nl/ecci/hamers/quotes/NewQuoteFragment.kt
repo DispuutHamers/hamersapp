@@ -24,7 +24,7 @@ class NewQuoteFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
         val inflater = activity.layoutInflater
-        val view = inflater.inflate(R.layout.quote_new_fragment, null)
+        val view = inflater.inflate(R.layout.fragment_new_quote, null)
         builder.setView(view)
                 .setTitle(R.string.quote)
                 .setPositiveButton(R.string.send_quote

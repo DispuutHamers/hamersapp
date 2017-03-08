@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.meeting_card.view.*
+import kotlinx.android.synthetic.main.row_meeting.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.Utils
@@ -17,7 +17,7 @@ class MeetingAdapter(private val dataSet: ArrayList<Meeting>, private val contex
     private val ownID: Int = Utils.getOwnUser(MainActivity.prefs).id
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.meeting_card, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_meeting, parent, false)
         return ViewHolder(view)
     }
 

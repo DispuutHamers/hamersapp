@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import kotlinx.android.synthetic.main.news_row.view.*
+import kotlinx.android.synthetic.main.row_news.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import java.util.*
@@ -16,7 +16,7 @@ internal class NewsAdapter(private val dataSet: ArrayList<News>) : RecyclerView.
     private var filteredDataSet: ArrayList<News> = dataSet
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.news_row, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_news, parent, false)
 
         return ViewHolder(view)
     }
