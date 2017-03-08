@@ -3,6 +3,7 @@ package nl.ecci.hamers.meetings;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -58,12 +59,12 @@ public class MeetingFragment extends HamersListFragment {
         setRefreshing(true);
         Loader.getData(getContext(), Loader.MEETINGURL, new GetCallback() {
             @Override
-            public void onSuccess(String response) {
+            public void onSuccess(@NonNull String response) {
                 new populateList().execute(response);
             }
 
             @Override
-            public void onError(VolleyError error) {
+            public void onError(@NonNull VolleyError error) {
                 // Nothing
             }
         }, null);

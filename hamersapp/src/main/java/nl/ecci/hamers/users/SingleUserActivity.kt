@@ -4,13 +4,10 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.CollapsingToolbarLayout
 import android.view.View
-import android.widget.ImageView
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.nostra13.universalimageloader.core.assist.FailReason
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener
-import kotlinx.android.synthetic.main.row_detailview.view.*
 import kotlinx.android.synthetic.main.user_detail.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R

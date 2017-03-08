@@ -24,6 +24,7 @@
     <string name="navigation_item_users">Leden</string>
     <string name="navigation_item_meetings">Vergaderingen</string>
     <string name="navigation_item_stickers">Stickers</string>
+    <string name="navigation_item_changes">Changes</string>
     <string name="navigation_item_settings">Instellingen</string>
     <string name="navigation_item_about">Over</string>
 

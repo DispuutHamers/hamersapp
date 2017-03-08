@@ -1,6 +1,7 @@
 package nl.ecci.hamers.news;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.widget.EditText;
 
@@ -48,12 +49,12 @@ public class NewNewsActivity extends NewItemActivity {
 
         Loader.postOrPatchData(this, Loader.NEWSURL, body, -1, new PostCallback() {
             @Override
-            public void onSuccess(JSONObject response) {
+            public void onSuccess(@NonNull JSONObject response) {
                 finish();
             }
 
             @Override
-            public void onError(VolleyError error) {
+            public void onError(@NonNull VolleyError error) {
 
             }
         });

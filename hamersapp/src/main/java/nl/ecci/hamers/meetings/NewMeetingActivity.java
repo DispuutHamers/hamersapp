@@ -1,6 +1,7 @@
 package nl.ecci.hamers.meetings;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -84,24 +85,24 @@ public class NewMeetingActivity extends NewItemActivity {
                 if (meeting != null) {
                     Loader.postOrPatchData(this, Loader.MEETINGURL, body, meeting.getID(), new PostCallback() {
                         @Override
-                        public void onSuccess(JSONObject response) {
+                        public void onSuccess(@NonNull JSONObject response) {
                             finish();
                         }
 
                         @Override
-                        public void onError(VolleyError error) {
+                        public void onError(@NonNull VolleyError error) {
                             disableLoadingAnimation();
                         }
                     });
                 } else {
                     Loader.postOrPatchData(this, Loader.MEETINGURL, body, -1, new PostCallback() {
                         @Override
-                        public void onSuccess(JSONObject response) {
+                        public void onSuccess(@NonNull JSONObject response) {
                             finish();
                         }
 
                         @Override
-                        public void onError(VolleyError error) {
+                        public void onError(@NonNull VolleyError error) {
                             disableLoadingAnimation();
                         }
                     });

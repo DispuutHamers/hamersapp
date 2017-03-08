@@ -2,9 +2,7 @@ package nl.ecci.hamers.events
 
 import com.google.gson.annotations.SerializedName
 import nl.ecci.hamers.helpers.Utils
-
-import java.util.ArrayList
-import java.util.Date
+import java.util.*
 
 class Event(val id: Int,
             val title: String = Utils.unknown,

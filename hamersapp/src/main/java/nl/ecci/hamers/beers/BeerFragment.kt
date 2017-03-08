@@ -111,7 +111,7 @@ class BeerFragment : HamersListFragment() {
     }
 
     private fun sortList() {
-        if (getActivity() != null)
+        if (activity != null)
             if (prefs != null) {
                 val sortPref = prefs.getString("beerSort", "")
                 when (sortPref) {
@@ -150,7 +150,6 @@ class BeerFragment : HamersListFragment() {
                 result = gson.fromJson<ArrayList<Beer>>(params[0], type)
             } else {
                 result = gson.fromJson<ArrayList<Beer>>(prefs.getString(Loader.BEERURL, null), type)
-
             }
             return result
         }
@@ -167,7 +166,6 @@ class BeerFragment : HamersListFragment() {
     }
 
     companion object {
-
         private val nameComparator = Comparator<Beer> { beer1, beer2 -> beer1.name!!.compareTo(beer2.name!!, ignoreCase = true) }
         private val ratingComparator = Comparator<Beer> { beer1, beer2 ->
             var rating1 = beer1.rating

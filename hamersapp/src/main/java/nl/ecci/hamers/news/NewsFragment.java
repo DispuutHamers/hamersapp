@@ -3,6 +3,7 @@ package nl.ecci.hamers.news;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.RecyclerView;
@@ -78,12 +79,12 @@ public class NewsFragment extends HamersListFragment {
         setRefreshing(true);
         Loader.getData(getContext(), Loader.NEWSURL, new GetCallback() {
             @Override
-            public void onSuccess(String response) {
+            public void onSuccess(@NonNull String response) {
                 new populateList().execute(response);
             }
 
             @Override
-            public void onError(VolleyError error) {
+            public void onError(@NonNull VolleyError error) {
                 // Nothing
             }
         }, null);

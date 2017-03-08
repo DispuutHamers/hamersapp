@@ -213,30 +213,22 @@ public class MainActivity extends HamersActivity {
         });
     }
 
+    @Override
     public void initToolbar() {
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        final ActionBar actionBar = getSupportActionBar();
-
+        super.initToolbar();
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
                 this,
                 drawerLayout,
-                toolbar,
+                getToolbar(),
                 R.string.drawer_open,
                 R.string.drawer_close
         );
         drawerLayout.addDrawerListener(mDrawerToggle);
-
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-        }
-
         mDrawerToggle.syncState();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
@@ -361,12 +353,12 @@ public class MainActivity extends HamersActivity {
         } else {
             Loader.getData(this, Loader.WHOAMIURL, new GetCallback() {
                 @Override
-                public void onSuccess(String response) {
+                public void onSuccess(@NonNull String response) {
                     fillHeader();
                 }
 
                 @Override
-                public void onError(VolleyError error) {
+                public void onError(@NonNull VolleyError error) {
                     // Nothing
                 }
             }, null);

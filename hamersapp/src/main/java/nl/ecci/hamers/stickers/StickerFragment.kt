@@ -9,25 +9,19 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.android.volley.VolleyError
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-
-import java.lang.reflect.Type
-import java.util.ArrayList
-
+import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
-
-import nl.ecci.hamers.MainActivity.prefs
+import java.util.*
 
 class StickerFragment : Fragment(), OnMapReadyCallback {
 

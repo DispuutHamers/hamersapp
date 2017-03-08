@@ -3,8 +3,7 @@ package nl.ecci.hamers.beers;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
+import android.support.annotation.NonNull;
 import android.widget.EditText;
 
 import com.android.volley.VolleyError;
@@ -29,20 +28,10 @@ public class NewBeerActivity extends NewItemActivity {
     private EditText beerBrewer;
     private EditText beerCountry;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.beer_new_activity);
-
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        final ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-        }
 
         beerName = (EditText) findViewById(R.id.beer_name);
         beerPicture = (EditText) findViewById(R.id.beer_picture);
@@ -85,7 +74,7 @@ public class NewBeerActivity extends NewItemActivity {
 
         Loader.postOrPatchData(this, Loader.BEERURL, body, beerID, new PostCallback() {
             @Override
-            public void onSuccess(JSONObject response) {
+            public void onSuccess(@NonNull JSONObject response) {
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra(SingleBeerActivity.Companion.getBeerName(), beerName.getText().toString());
                 returnIntent.putExtra(SingleBeerActivity.Companion.getBeerKind(), beerKind.getText().toString());
@@ -97,7 +86,7 @@ public class NewBeerActivity extends NewItemActivity {
             }
 
             @Override
-            public void onError(VolleyError error) {
+            public void onError(@NonNull VolleyError error) {
                 disableLoadingAnimation();
             }
         });

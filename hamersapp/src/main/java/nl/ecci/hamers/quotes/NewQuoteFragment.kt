@@ -5,28 +5,19 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
-
 import com.android.volley.VolleyError
-
-import org.json.JSONException
-import org.json.JSONObject
-
-import java.util.ArrayList
-
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.Utils
+import nl.ecci.hamers.helpers.Utils.usernameToID
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.loader.PostCallback
 import nl.ecci.hamers.users.User
-
-import nl.ecci.hamers.helpers.Utils.usernameToID
+import org.json.JSONException
+import org.json.JSONObject
 
 class NewQuoteFragment : DialogFragment() {
 
@@ -48,7 +39,7 @@ class NewQuoteFragment : DialogFragment() {
                 }
         val spinner = view.findViewById(R.id.quote_user_spinner) as Spinner
         val users = Utils.createActiveMemberList()
-        val names = users.map { it.name }
+        val names = users.map(User::name)
         val adapter = ArrayAdapter(activity, android.R.layout.simple_spinner_dropdown_item, names)
         spinner.adapter = adapter
 

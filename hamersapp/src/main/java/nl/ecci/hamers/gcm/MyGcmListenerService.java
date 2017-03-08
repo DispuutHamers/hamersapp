@@ -15,7 +15,6 @@ import android.support.v4.app.NotificationCompat;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,13 +22,6 @@ import java.util.Set;
 
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
-import nl.ecci.hamers.beers.Beer;
-import nl.ecci.hamers.beers.SingleBeerActivity;
-import nl.ecci.hamers.events.Event;
-import nl.ecci.hamers.events.SingleEventActivity;
-import nl.ecci.hamers.helpers.Utils;
-import nl.ecci.hamers.loader.Loader;
-import nl.ecci.hamers.users.User;
 
 public class MyGcmListenerService extends GcmListenerService {
 

@@ -2,12 +2,10 @@ package nl.ecci.hamers.events
 
 import android.content.ContentUris
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.CalendarContract
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
@@ -18,9 +16,6 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.android.volley.VolleyError
 import kotlinx.android.synthetic.main.event_detail.*
-import kotlinx.android.synthetic.main.row_detailview.view.*
-import kotlinx.android.synthetic.main.row_imageview.view.*
-import kotlinx.android.synthetic.main.row_singleview.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.HamersActivity

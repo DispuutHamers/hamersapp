@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
@@ -14,12 +13,12 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.row_detailview.view.*
 import kotlinx.android.synthetic.main.row_imageview.view.*
 import kotlinx.android.synthetic.main.row_singleview.view.*
-
 import nl.ecci.hamers.R
 
 @SuppressLint("Registered")
 open class HamersActivity : AppCompatActivity() {
 
+    var toolbar: Toolbar? = null
     var prefs: SharedPreferences? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +27,7 @@ open class HamersActivity : AppCompatActivity() {
     }
 
     open fun initToolbar() {
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
         val actionBar = supportActionBar
