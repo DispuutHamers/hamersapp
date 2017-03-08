@@ -142,8 +142,7 @@ class BeerFragment : HamersListFragment() {
             val result: ArrayList<Beer>
             val type = object : TypeToken<ArrayList<Beer>>() {
             }.type
-            val gsonBuilder = GsonBuilder()
-            gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
+            val gsonBuilder = GsonBuilder().setDateFormat(MainActivity.dbDF.toPattern())
             val gson = gsonBuilder.create()
 
             if (params.isNotEmpty()) {
