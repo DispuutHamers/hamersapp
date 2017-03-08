@@ -16,10 +16,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -57,8 +55,6 @@ import nl.ecci.hamers.quotes.QuoteFragment;
 import nl.ecci.hamers.stickers.StickerFragment;
 import nl.ecci.hamers.users.User;
 import nl.ecci.hamers.users.UserFragment;
-
-import static nl.ecci.hamers.loader.Loader.getAllData;
 
 public class MainActivity extends HamersActivity {
     public static final Locale locale = new Locale("nl");
@@ -173,7 +169,7 @@ public class MainActivity extends HamersActivity {
 
         fillHeader();
 
-        getAllData(this);
+        Loader.INSTANCE.getAllData(this);
     }
 
     private void initDrawer() {
@@ -351,7 +347,7 @@ public class MainActivity extends HamersActivity {
                 ImageLoader.getInstance().displayImage(url, userImage);
             }
         } else {
-            Loader.getData(this, Loader.WHOAMIURL, new GetCallback() {
+            Loader.INSTANCE.getData(this, Loader.INSTANCE.getWHOAMIURL(), new GetCallback() {
                 @Override
                 public void onSuccess(@NonNull String response) {
                     fillHeader();

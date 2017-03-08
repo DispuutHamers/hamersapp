@@ -94,7 +94,7 @@ public class RegistrationIntentService extends IntentService {
         } catch (JSONException ignored) {
         }
 
-        Loader.postOrPatchData(getApplicationContext(), Loader.GCMURL, body, -1, null);
+        Loader.INSTANCE.postOrPatchData(getApplicationContext(), Loader.INSTANCE.getGCMURL(), body, -1, null);
     }
 
     /**
