@@ -32,6 +32,8 @@ class NewReviewActivity : NewItemActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.review_new_activity)
 
+        initToolbar()
+
         val date_button = findViewById(R.id.pick_date_button) as Button
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", MainActivity.locale)
