@@ -41,6 +41,7 @@ public final class Loader {
     public static final String SIGNUPURL = "signups";
     public static final String GCMURL = "register";
     public static final String STICKERURL = "stickers";
+    public static final String CHANGEURL = "changes";
     // Data keys
     public static final String APIKEYKEY = "apikey";
 
