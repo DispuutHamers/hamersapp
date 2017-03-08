@@ -7,8 +7,10 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.preference.PreferenceManager
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.Toast
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -39,27 +41,37 @@ object Utils {
         builder.setTitle(context.getString(R.string.apikeydialogtitle))
         builder.setMessage(context.getString(R.string.apikeydialogmessage))
         val apiKey = EditText(context)
+        apiKey.setSingleLine()
         apiKey.hint = context.getString(R.string.apikey_hint)
-        builder.setView(apiKey)
-        builder.setPositiveButton(context.getString(R.string.dialog_positive)) { dialog, whichButton ->
+
+        val container = FrameLayout(context)
+        container.addView(apiKey)
+
+        val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        params.marginStart = context.resources.getDimensionPixelSize(R.dimen.dialog_margin)
+        params.marginEnd = context.resources.getDimensionPixelSize(R.dimen.dialog_margin)
+        apiKey.layoutParams = params
+
+        builder.setView(container)
+
+        builder.setPositiveButton(context.getString(R.string.dialog_positive)) { _, _ ->
             val key = apiKey.text
-            if (key.toString() != "") {
+            if (key.toString().isNotBlank()) {
                 // Store in memory
                 PreferenceManager.getDefaultSharedPreferences(context).edit().putString(Loader.APIKEYKEY, key.toString()).apply()
-                showToast(context, context.resources.getString(R.string.dowloading), Toast.LENGTH_SHORT)
+                showToast(context, context.resources.getString(R.string.downloading), Toast.LENGTH_SHORT)
             } else {
                 showToast(context, context.resources.getString(R.string.store_key_settings), Toast.LENGTH_SHORT)
             }
         }
-        val alertDialog = builder.create()
-        alertDialog.show()
+        builder.show()
     }
 
     /**
      * Checks if the API key is present
      */
     fun hasApiKey(context: Context, prefs: SharedPreferences) {
-        if (prefs.getString("apikey", null) == null) {
+        if (prefs.getString(Loader.APIKEYKEY, null) == null) {
             if (Utils.alertDialog == null) {
                 Utils.showApiKeyDialog(context)
             } else if (!Utils.alertDialog!!.isShowing) {
@@ -70,10 +82,8 @@ object Utils {
 
     fun stringArrayToCharSequenceArray(stringArray: Array<Any>): Array<CharSequence?> {
         val charSequenceArray = arrayOfNulls<CharSequence>(stringArray.size)
-
         for (i in stringArray.indices)
             charSequenceArray[i] = stringArray[i] as String
-
         return charSequenceArray
     }
 
@@ -173,7 +183,7 @@ object Utils {
 
         if (eventList != null) {
             eventList.filter { it.id == id }
-                     .forEach { result = it }
+                    .forEach { result = it }
         }
 
         return result

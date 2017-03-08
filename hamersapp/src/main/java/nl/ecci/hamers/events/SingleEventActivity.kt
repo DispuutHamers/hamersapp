@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.android.volley.VolleyError
 import kotlinx.android.synthetic.main.detail_event.*
@@ -23,6 +24,7 @@ import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.loader.PostCallback
 import nl.ecci.hamers.users.User
+import org.jetbrains.anko.margin
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -171,30 +173,35 @@ class SingleEventActivity : HamersActivity() {
 
     private fun askForReason() {
         val alert = AlertDialog.Builder(this)
-
-        val reasonField = EditText(this)
         alert.setTitle(R.string.attendance_reason_title)
-        reasonField.setHint(R.string.attendance_reason_message)
 
-        alert.setView(reasonField)
+        val input = EditText(this)
+        input.setSingleLine()
+        input.setHint(R.string.attendance_reason_message)
+
+        val container = FrameLayout(this)
+        container.addView(input)
+
+        val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        params.marginStart = resources.getDimensionPixelSize(R.dimen.dialog_margin)
+        params.marginEnd = resources.getDimensionPixelSize(R.dimen.dialog_margin)
+        input.layoutParams = params
+
+        alert.setView(container)
 
         alert.setPositiveButton(android.R.string.yes) { _, _ ->
-            val reason = reasonField.text.toString()
+            val reason = input.text.toString()
             if (reason.length > 5) {
                 postSignup(false, reason)
             } else {
                 Toast.makeText(this@SingleEventActivity, R.string.attendance_reason_size, Toast.LENGTH_SHORT).show()
             }
         }
-
         alert.setNegativeButton(android.R.string.no) { _, _ ->
             // Do nothing.
         }
 
         alert.show()
-        val layoutParams = FrameLayout.LayoutParams(16, FrameLayout.LayoutParams.WRAP_CONTENT)
-        layoutParams.setMargins(16, 16, 16, 16)
-        reasonField.layoutParams = layoutParams
     }
 
 }

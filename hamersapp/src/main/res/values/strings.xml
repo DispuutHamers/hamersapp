@@ -167,7 +167,7 @@
     </array>
 
     <!-- Snackbar -->
-    <string name="dowloading">De gegevens worden gedownload</string>
+    <string name="downloading">De gegevens worden gedownload</string>
     <string name="store_key_settings">Een apikey kan ingevuld worden bij instellingen</string>
     <string name="generic_error">Er is iets misgegaan, probeer het later opnieuw.</string>
     <string name="volley_error">Fout bij ophalen data van server.</string>
