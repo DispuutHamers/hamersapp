@@ -12,7 +12,7 @@ import nl.ecci.hamers.loader.Loader
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
-    override fun onCreatePreferences(bundle: Bundle, s: String) {
+    override fun onCreatePreferences(bundle: Bundle?, s: String?) {
         addPreferencesFromResource(R.xml.preferences)
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         val view = view
