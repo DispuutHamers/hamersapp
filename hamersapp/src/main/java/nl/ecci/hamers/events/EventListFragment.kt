@@ -25,7 +25,6 @@ class EventListFragment : HamersListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true
         setHasOptionsMenu(true)
 
         upcoming = arguments.getBoolean(EventFragmentAdapter.upcoming, false)

@@ -78,7 +78,6 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
                 return false
             }
         })
-
     }
 
     override fun onResume() {

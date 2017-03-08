@@ -32,11 +32,6 @@ class NewReviewActivity : NewItemActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.review_new_activity)
 
-//        review_body = findViewById(R.id.review_body) as EditText
-//        date_button = findViewById(R.id.pick_date_button) as Button
-//        parentLayout = findViewById(R.id.new_beer_review_parent) as LinearLayout
-//        progress = findViewById(R.id.rating) as TextView
-
         val date_button = findViewById(R.id.pick_date_button) as Button
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", MainActivity.locale)
@@ -53,13 +48,9 @@ class NewReviewActivity : NewItemActivity() {
                 review_rating.text = String.format("Cijfer: %s", this@NewReviewActivity.rating)
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar) {
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
 
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-
-            }
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
 
         if (review != null) {

@@ -23,7 +23,6 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true
         setHasOptionsMenu(true)
     }
 
@@ -61,8 +60,8 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
         }, null)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
             R.id.sort_username -> {
                 sortByUsername()
                 return true

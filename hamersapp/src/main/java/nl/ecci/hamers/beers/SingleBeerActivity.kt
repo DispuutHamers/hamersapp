@@ -36,6 +36,8 @@ class SingleBeerActivity : HamersActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.beer_detail)
 
+        initToolbar()
+
         val gsonBuilder = GsonBuilder()
         gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
         gson = gsonBuilder.create()

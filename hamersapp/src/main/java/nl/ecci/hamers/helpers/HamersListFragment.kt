@@ -11,6 +11,11 @@ import kotlinx.android.synthetic.main.hamers_list_fragment.*
 
 abstract class HamersListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         initSwiper()
     }

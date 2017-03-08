@@ -58,8 +58,8 @@ class BeerFragment : HamersListFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.beer_menu, menu)
-        val searchMenuItem = menu!!.findItem(R.id.beer_search)
+        inflater?.inflate(R.menu.beer_menu, menu)
+        val searchMenuItem = menu?.findItem(R.id.beer_search)
         val searchView = MenuItemCompat.getActionView(searchMenuItem) as SearchView
         searchView.queryHint = getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

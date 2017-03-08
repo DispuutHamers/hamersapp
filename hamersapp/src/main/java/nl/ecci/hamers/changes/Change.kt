@@ -15,10 +15,6 @@ class Change(val id: Int,
              @SerializedName("object_changes")
              val objectChanges: String) {
 
-    companion object {
-        val CHANGE = "CHANGE"
-    }
-
     enum class ItemType {
         @SerializedName("Quote") QUOTE,
         @SerializedName("Event") EVENT,
@@ -34,5 +30,9 @@ class Change(val id: Int,
         @SerializedName("create") CREATE,
         @SerializedName("update") UPDATE,
         @SerializedName("destroy") DESTROY,
+    }
+
+    companion object {
+        val CHANGE = "CHANGE"
     }
 }
