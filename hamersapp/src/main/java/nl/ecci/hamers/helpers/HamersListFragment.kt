@@ -30,7 +30,7 @@ abstract class HamersListFragment : Fragment(), SwipeRefreshLayout.OnRefreshList
 
         hamers_recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(view: RecyclerView?, dx: Int, dy: Int) {
-                hamers_swipe_container.isEnabled = lm.findFirstCompletelyVisibleItemPosition() == 0
+                hamers_swipe_container?.isEnabled = lm.findFirstCompletelyVisibleItemPosition() == 0
             }
         })
     }
