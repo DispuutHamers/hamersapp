@@ -91,21 +91,42 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="12dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:paddingBottom="8dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingTop="8dp"
-                        android:text="Aanwezig"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="20sp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:paddingBottom="8dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingTop="8dp"
+                            android:text="Aanwezig"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/event_present_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/textView2"
+                            android:layout_alignBottom="@+id/textView2"
+                            android:layout_alignParentEnd="true"
+                            android:maxLines="1"
+                            android:paddingBottom="8dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingTop="8dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="16sp" />
+                    </RelativeLayout>
 
                     <include layout="@layout/divider" />
 
@@ -114,8 +135,10 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:paddingBottom="8dp"
                         android:paddingLeft="16dp"
-                        android:paddingRight="16dp" />
+                        android:paddingRight="16dp"
+                        android:paddingTop="8dp" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -129,31 +152,56 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="12dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:paddingBottom="8dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingTop="8dp"
-                        android:text="Afwezig"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="20sp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <include layout="@layout/divider" />
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:paddingBottom="8dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingTop="8dp"
+                            android:text="Afwezig"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/event_absent_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/textView3"
+                            android:layout_alignBottom="@+id/textView3"
+                            android:layout_alignParentEnd="true"
+                            android:maxLines="1"
+                            android:paddingBottom="8dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingTop="8dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="16sp" />
+                    </RelativeLayout>
+
+                    <include
+                        android:id="@+id/include"
+                        layout="@layout/divider" />
 
                     <LinearLayout
                         android:id="@+id/absent_insert_point"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:paddingBottom="8dp"
                         android:paddingLeft="16dp"
-                        android:paddingRight="16dp" />
+                        android:paddingRight="16dp"
+                        android:paddingTop="8dp" />
 
                 </LinearLayout>
 

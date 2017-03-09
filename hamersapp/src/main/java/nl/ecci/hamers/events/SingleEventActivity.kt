@@ -152,6 +152,7 @@ class SingleEventActivity : HamersActivity() {
             for (name in present) {
                 present_insert_point.addView(newSingleRow(name, present_insert_point), ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
             }
+            event_present_count.text = present.size.toString()
         } else {
             single_event_layout.removeView(present_layout)
         }
@@ -160,6 +161,7 @@ class SingleEventActivity : HamersActivity() {
             for (name in absent) {
                 absent_insert_point.addView(newSingleRow(name, absent_insert_point), ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
             }
+            event_absent_count.text = absent.size.toString()
         } else {
             single_event_layout.removeView(absent_layout)
         }
