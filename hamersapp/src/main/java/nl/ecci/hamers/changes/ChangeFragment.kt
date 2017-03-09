@@ -34,7 +34,7 @@ class ChangeFragment : HamersListFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        hamers_recyclerview.adapter = ChangeAdapter(dataSet, activity)
+        hamers_recyclerview.adapter = ChangeAdapter(dataSet, activity)
         hamers_fab.visibility = View.GONE
 
         populateList().execute()
@@ -67,7 +67,8 @@ class ChangeFragment : HamersListFragment() {
 
     private inner class populateList : AsyncTask<String, Void, ArrayList<Change>>() {
         override fun doInBackground(vararg params: String): ArrayList<Change> {
-            val result: ArrayList<Change>
+            val result = ArrayList<Change>()
+            val tempList: ArrayList<Change>
             val type = object : TypeToken<ArrayList<Change>>() {
             }.type
             val gsonBuilder = GsonBuilder()
@@ -75,11 +76,17 @@ class ChangeFragment : HamersListFragment() {
             val gson = gsonBuilder.create()
 
             if (params.isNotEmpty()) {
-                result = gson.fromJson<ArrayList<Change>>(params[0], type)
+                tempList = gson.fromJson<ArrayList<Change>>(params[0], type)
             } else {
-                result = gson.fromJson<ArrayList<Change>>(prefs.getString(Loader.BEERURL, null), type)
+                tempList = gson.fromJson<ArrayList<Change>>(prefs.getString(Loader.CHANGEURL, null), type)
 
             }
+
+            // Filter out changes regarding device ID's
+            tempList.filterTo(result) {
+                it.item_type != Change.ItemType.DEVICE
+            }
+
             return result
         }
 

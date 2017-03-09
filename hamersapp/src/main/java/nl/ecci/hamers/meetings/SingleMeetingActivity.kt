@@ -21,7 +21,7 @@ class SingleMeetingActivity : HamersActivity() {
 
         meeting_subject.text = meeting.subject
         meeting_date.text = MainActivity.appDF.format(meeting.date)
-        meeting_user.text = String.format("Genotuleerd door: %s", Utils.getUser(MainActivity.prefs, meeting.userID).name)
+        meeting_user.text = String.format("Genotuleerd door: %s", Utils.getUser(this, meeting.userID).name)
         meeting_agenda.loadMarkdown(meeting.agenda)
         meeting_notes.loadMarkdown(meeting.notes)
     }

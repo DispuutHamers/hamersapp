@@ -5,9 +5,10 @@ import java.util.*
 
 class Change(val id: Int,
              val item_type: ItemType,
-             val item_id: Int,
+             val itemId: Int,
              val event: Event,
-             val whodunnit: Int,
+             @SerializedName("whodunnit")
+             val userId: Int,
              @SerializedName("object")
              val newObject: String,
              @SerializedName("created_at")

@@ -71,6 +71,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        activity.title = resources.getString(R.string.navigation_item_settings)
+    }
+
     companion object {
         private val KEY_PREF_CLEAR_IMAGE_CACHE = "clear_image_cache"
         private val KEY_PREF_CLEAR_STORAGE = "clear_storage"

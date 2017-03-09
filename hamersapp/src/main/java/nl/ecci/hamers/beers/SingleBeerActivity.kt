@@ -38,6 +38,8 @@ class SingleBeerActivity : HamersActivity() {
 
         initToolbar()
 
+
+
         val gsonBuilder = GsonBuilder()
         gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
         gson = gsonBuilder.create()
@@ -119,7 +121,7 @@ class SingleBeerActivity : HamersActivity() {
         val view = layoutInflater.inflate(R.layout.row_review, review_insert_point, false)
         val divider = layoutInflater.inflate(R.layout.divider, review_insert_point, false)
 
-        view.review_title.text = String.format("%s: ", Utils.getUser(prefs, review.userID).name)
+        view.review_title.text = String.format("%s: ", Utils.getUser(this, review.userID).name)
         view.review_body.text = review.description
         view.review_date.text = MainActivity.appDF2.format(review.proefdatum)
         view.review_rating.text = String.format("Cijfer: %s", review.rating)

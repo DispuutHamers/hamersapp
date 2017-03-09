@@ -26,7 +26,7 @@ class SingleUserActivity : HamersActivity() {
 
         initToolbar()
 
-        val user = getUser(MainActivity.prefs, intent.getIntExtra(User.USER_ID, -1))
+        val user = getUser(this, intent.getIntExtra(User.USER_ID, -1))
 
         collapsing_toolbar.title = user.name
 

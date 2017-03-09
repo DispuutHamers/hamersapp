@@ -60,9 +60,9 @@ open class HamersActivity : AppCompatActivity() {
     }
 
     fun fillImageRow(view: View, title: String, description: String, imageId: Int) {
-        view.title_textview.text = title
-        view.subtitle_textview.text = description
-        view.icon.setImageDrawable(ContextCompat.getDrawable(this, imageId))
+        view.row_imageview_title_textview.text = title
+        view.row_imageview_subtitle_textview.text = description
+        view.row_imageview_image.setImageDrawable(ContextCompat.getDrawable(this, imageId))
     }
 
 }

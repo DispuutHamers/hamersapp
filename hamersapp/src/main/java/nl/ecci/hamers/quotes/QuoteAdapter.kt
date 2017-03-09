@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import com.nostra13.universalimageloader.core.ImageLoader
-import kotlinx.android.synthetic.main.row_quote.view.*
+import kotlinx.android.synthetic.main.row_imageview.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener
@@ -23,9 +23,9 @@ internal class QuoteAdapter(private val dataSet: ArrayList<Quote>, private val c
     private var filteredDataSet = dataSet
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_quote, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_imageview, parent, false)
         val vh = ViewHolder(view)
-        val imageView = view.findViewById(R.id.quote_image)
+        val imageView = view.findViewById(R.id.row_imageview_image)
 
         imageView.setOnClickListener {
             val position = vh.adapterPosition
@@ -40,7 +40,8 @@ internal class QuoteAdapter(private val dataSet: ArrayList<Quote>, private val c
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindQuote(filteredDataSet[position])
+        val user = getUser(context, filteredDataSet[position].userID)
+        holder.bindQuote(filteredDataSet[position], user)
     }
 
     override fun getItemCount(): Int {
@@ -57,7 +58,7 @@ internal class QuoteAdapter(private val dataSet: ArrayList<Quote>, private val c
                     results.values = dataSet
                     results.count = dataSet.size
                 } else {
-                    val filterResultsData = dataSet.filter { it.text.toLowerCase().contains(charSequence) || getUser(MainActivity.prefs, it.userID).name.toLowerCase().contains(charSequence) }
+                    val filterResultsData = dataSet.filter { it.text.toLowerCase().contains(charSequence) || getUser(context, it.userID).name.toLowerCase().contains(charSequence) }
                     results.values = filterResultsData
                     results.count = filterResultsData.size
                 }
@@ -72,13 +73,12 @@ internal class QuoteAdapter(private val dataSet: ArrayList<Quote>, private val c
     }
 
     internal class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bindQuote(quote: Quote) {
+        fun bindQuote(quote: Quote, user: User) {
             with(quote) {
-                itemView.quote_body.text = quote.text
-                itemView.quote_date.text = MainActivity.appDF.format(date)
+                itemView.row_imageview_title_textview.text = quote.text
+                itemView.row_imageview_subtitle_textview.text = MainActivity.appDF.format(date)
 
-                val user = getUser(MainActivity.prefs, quote.userID)
-                ImageLoader.getInstance().displayImage(getGravatarURL(user.email), itemView.quote_image, AnimateFirstDisplayListener())
+                ImageLoader.getInstance().displayImage(getGravatarURL(user.email), itemView.row_imageview_image, AnimateFirstDisplayListener())
             }
         }
     }

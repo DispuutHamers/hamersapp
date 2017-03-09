@@ -4,7 +4,7 @@
     android:minHeight="72dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/icon"
+        android:id="@+id/row_imageview_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentStart="true"
@@ -18,24 +18,23 @@
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_toEndOf="@+id/icon"
+        android:layout_toEndOf="@+id/row_imageview_image"
         android:orientation="vertical"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp">
+        android:padding="16dp">
 
         <TextView
-            android:id="@+id/title_textview"
+            android:id="@+id/row_imageview_title_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/subtitle_textview"
+            android:id="@+id/row_imageview_subtitle_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?android:attr/textColorSecondary" />
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="14sp" />
 
     </LinearLayout>
 </RelativeLayout>

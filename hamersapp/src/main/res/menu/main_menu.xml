@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/main_menu_top"
+        android:checkableBehavior="single">
         <item
             android:checked="true"
             android:icon="@drawable/quotes"
@@ -31,7 +33,14 @@
             android:icon="@drawable/briefcase"
             android:title="@string/navigation_item_meetings" />
     </group>
-    <group android:checkableBehavior="single">
+
+    <group
+        android:id="@+id/main_menu_footer"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_item_changes"
+            android:icon="@drawable/settings"
+            android:title="@string/navigation_item_changes" />
         <item
             android:id="@+id/navigation_item_settings"
             android:icon="@drawable/settings"
@@ -41,5 +50,4 @@
             android:icon="@drawable/about"
             android:title="@string/navigation_item_about" />
     </group>
-
 </menu>

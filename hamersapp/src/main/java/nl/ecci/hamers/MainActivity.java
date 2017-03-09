@@ -43,6 +43,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import nl.ecci.hamers.beers.BeerFragment;
+import nl.ecci.hamers.changes.ChangeFragment;
 import nl.ecci.hamers.events.EventFragment;
 import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.HamersActivity;
@@ -294,6 +295,9 @@ public class MainActivity extends HamersActivity {
                 break;
             case R.id.navigation_item_settings:
                 fragmentClass = SettingsFragment.class;
+                break;
+            case R.id.navigation_item_changes:
+                fragmentClass = ChangeFragment.class;
                 break;
             case R.id.navigation_item_about:
                 fragmentClass = AboutFragment.class;

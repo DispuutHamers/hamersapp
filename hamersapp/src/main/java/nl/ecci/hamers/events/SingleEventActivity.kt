@@ -142,9 +142,9 @@ class SingleEventActivity : HamersActivity() {
                 .map { signUps[it] }
                 .forEach {
                     if (it.isAttending) {
-                        present.add(Utils.getUser(prefs, it.userID).name)
+                        present.add(Utils.getUser(this, it.userID).name)
                     } else {
-                        absent.add(Utils.getUser(prefs, it.userID).name)
+                        absent.add(Utils.getUser(this, it.userID).name)
                     }
                 }
 

@@ -139,7 +139,10 @@ object Utils {
         return result
     }
 
-    fun getUser(prefs: SharedPreferences?, id: Int): User {
+    fun getUser(context: Context, id: Int): User {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+
         val userList: ArrayList<User>?
         var result = User(-1, unknown, "example@example.org", 0, 0, User.Member.LID, -1, ArrayList<User.Nickname>(), Date())
         val gsonBuilder = GsonBuilder()
