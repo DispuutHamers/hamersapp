@@ -1,9 +1,16 @@
 # Changelog
 
+## [2.2.0](https://github.com/dexbleeker/hamersapp/tree/2.2.0) (2017-03-09)
+[Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.1.6..2.2.0)
+
+- Everything is Kotlin now!
+- Fix bug with reason dialog
+- More consistent layouts
+
 ## [2.1.6](https://github.com/dexbleeker/hamersapp/tree/2.1.6) (2017-02-27)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.1.5..2.1.6)
 
-- Dialog to ask reason you are not attending a manditory activity
+- Dialog to ask reason you are not attending a mandatory activity
 
 ## [2.1.5](https://github.com/dexbleeker/hamersapp/tree/2.1.5) (2017-02-06)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.1.4..2.1.5)
