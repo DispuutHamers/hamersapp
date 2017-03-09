@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
+import android.support.v7.util.SortedList
 import android.support.v7.widget.SearchView
 import android.view.*
 import com.android.volley.VolleyError
@@ -19,7 +20,7 @@ import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
 import java.util.*
 
-class BeerFragment : HamersListFragment() {
+class BeerFragment : HamersListFragment(){
 
     private val dataSet = ArrayList<Beer>()
 

@@ -65,12 +65,10 @@ internal class BeerAdapter(private val dataSet: ArrayList<Beer>, private val con
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindBeer(filteredDataSet[holder.adapterPosition])
+        holder.bindBeer(filteredDataSet[position])
     }
 
-    override fun getItemCount(): Int {
-        return filteredDataSet.size
-    }
+    override fun getItemCount() = filteredDataSet.size
 
     override fun getFilter(): Filter {
         return object : Filter() {
@@ -110,11 +108,7 @@ internal class BeerAdapter(private val dataSet: ArrayList<Beer>, private val con
                 itemView.brewer_textview.text = brewer
                 itemView.country_textview.text = country
                 itemView.rating_textview.text = rating
-                if (itemView.beer_image.tag == null || itemView.beer_image.tag == imageURL) {
-                    val imageAware = ImageViewAware(itemView.beer_image, false)
-                    ImageLoader.getInstance().displayImage(imageURL, imageAware, AnimateFirstDisplayListener())
-                    itemView.beer_image.tag = imageURL
-                }
+                ImageLoader.getInstance().displayImage(imageURL, ImageViewAware(itemView.beer_image, false), AnimateFirstDisplayListener())
             }
         }
     }
