@@ -17,8 +17,7 @@ class Event(val id: Int,
             val signUps: ArrayList<Event.SignUp> = ArrayList<Event.SignUp>(),
             @SerializedName("created_at")
             val createdAt: Date = Date(),
-            @SerializedName("attendance")
-            val signupMandatory: Boolean = false) {
+            val attendance: Boolean = false) {
     @SerializedName("user_id")
     val userID: Int = 0
 

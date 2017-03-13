@@ -83,7 +83,11 @@ class SingleEventActivity : HamersActivity() {
         }
 
         present_button.setOnClickListener { postSignup(true, null) }
-        absent_button.setOnClickListener { askForReason() }
+        if (event!!.attendance) {
+            absent_button.setOnClickListener { askForReason() }
+        } else {
+            absent_button.setOnClickListener { postSignup(false, null) }
+        }
 
     }
 
@@ -117,7 +121,7 @@ class SingleEventActivity : HamersActivity() {
             body.put("status", status!!.toString())
 
             // Attendance is mandatory, so ask for the reason for absence!
-            if (!status && event!!.signupMandatory && reason != null) {
+            if (!status && event!!.attendance && reason != null) {
                 body.put("reason", reason)
             }
         } catch (ignored: JSONException) {
