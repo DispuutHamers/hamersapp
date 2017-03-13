@@ -34,14 +34,13 @@ class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener 
         val time = builder.toString()
 
         if (activity.supportFragmentManager.findFragmentByTag("time") != null) {
-            event_time_button.text = time
+            event_time_button?.text = time
         }
-
         if (activity.supportFragmentManager.findFragmentByTag("end_time") != null) {
-            event_end_time_button.text = time
+            event_end_time_button?.text = time
         }
         if (activity.supportFragmentManager.findFragmentByTag("deadline_time") != null) {
-            event_deadline_time_button.text = time
+            event_deadline_time_button?.text = time
         }
     }
 }

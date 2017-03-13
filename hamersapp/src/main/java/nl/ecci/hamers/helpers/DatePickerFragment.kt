@@ -27,21 +27,19 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         val date = day.toString() + "-" + (month + 1) + "-" + year
 
         if (activity.supportFragmentManager.findFragmentByTag("date") != null) {
-            event_date_button.text = date
+            event_date_button?.text = date
         }
-
         if (activity.supportFragmentManager.findFragmentByTag("end_date") != null) {
-            event_end_date_button.text = date
+            event_end_date_button?.text = date
         }
-
         if (activity.supportFragmentManager.findFragmentByTag("proefdatum") != null) {
-            pick_date_button.text = date
+            pick_date_button?.text = date
         }
         if (activity.supportFragmentManager.findFragmentByTag("deadline_date") != null) {
-            event_deadline_date_button.text = date
+            event_deadline_date_button?.text = date
         }
         if (activity.supportFragmentManager.findFragmentByTag("vergaderdatum") != null) {
-            meeting_date_button.text = date
+            meeting_date_button?.text = date
         }
     }
 }

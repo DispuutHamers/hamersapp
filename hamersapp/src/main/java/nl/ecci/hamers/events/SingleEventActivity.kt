@@ -88,12 +88,13 @@ class SingleEventActivity : HamersActivity() {
         } else {
             absent_button.setOnClickListener { postSignup(false, null) }
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.edit_menu, menu)
-        if (ownUser?.id != event!!.userID) {
+        if (ownUser?.id == event?.userID) {
+            menu.findItem(R.id.send_reminder).isVisible = true
+        } else {
             menu.removeItem(R.id.edit_item)
         }
         return true

@@ -117,7 +117,7 @@ class EventListFragment : HamersListFragment() {
 
     private inner class populateList : AsyncTask<String, Void, ArrayList<Event>>() {
 
-        override fun doInBackground(vararg params: String): ArrayList<Event> {
+        override fun doInBackground(vararg params: String): ArrayList<Event>? {
             val gsonBuilder = GsonBuilder()
             gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
             val gson = gsonBuilder.create()
