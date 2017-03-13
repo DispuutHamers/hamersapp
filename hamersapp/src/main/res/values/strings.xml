@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Hamers</string>
-
     <!-- General -->
     <string name="send">Verstuur</string>
     <string name="scroll_top">Naar top</string>

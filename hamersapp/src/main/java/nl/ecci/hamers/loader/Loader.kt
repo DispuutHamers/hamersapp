@@ -19,6 +19,7 @@ object Loader {
     val QUOTEURL = "quotes"
     val USERURL = "users"
     val EVENTURL = "events"
+    val REMINDURL = "events/remind"
     val NEWSURL = "news"
     val BEERURL = "beers"
     val REVIEWURL = "reviews"
@@ -31,13 +32,9 @@ object Loader {
     // Data keys
     val APIKEYKEY = "apikey"
 
-    // URL
-    private val baseURL = "https://zondersikkel.nl/api/v2/"
-    // private static final String baseURL = "http://192.168.100.100:3000/api/v2/";
-
     fun getData(context: Context, dataURL: String, callback: GetCallback?, params: Map<String, String>?) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val url = buildURL(dataURL, params, -1)
+        val url = buildURL(context, dataURL, params, -1)
 
         val request = object : StringRequest(Request.Method.GET, url,
                 Response.Listener<String> { response ->
@@ -70,7 +67,7 @@ object Loader {
 
     fun postOrPatchData(context: Context, dataURL: String, body: JSONObject, urlAppendix: Int, callback: PostCallback?) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val url = buildURL(dataURL, null, urlAppendix)
+        val url = buildURL(context, dataURL, null, urlAppendix)
 
         Log.d("PostRequest: ", body.toString())
 
@@ -103,9 +100,9 @@ object Loader {
         Singleton.getInstance(context).addToRequestQueue<JSONObject>(request)
     }
 
-    private fun buildURL(URL: String, params: Map<String, String>?, appendix: Int): String {
+    private fun buildURL(context: Context, URL: String, params: Map<String, String>?, appendix: Int): String {
         val builder = StringBuilder()
-        builder.append(baseURL).append(URL)
+        builder.append(context.getString(R.string.api_url)).append(URL)
 
         if (appendix != -1) {
             builder.append("/").append(appendix)
