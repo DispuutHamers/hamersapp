@@ -48,6 +48,8 @@
     <string name="attendance_reason_title">Afwezigheid</string>
     <string name="attendance_reason_message">De reden van afwezigheid</string>
     <string name="attendance_reason_size">Je reden is kut! (te kort)</string>
+    <string name="reminder_title">Weet je het zeker?</string>
+    <string name="reminder_message">Iedereen die zich nog niet heeft ingeschreven krijgt een mail ter herrinering!</string>
     <string name="menu_upcoming">Aankomend</string>
     <string name="menu_all">Alle</string>
 

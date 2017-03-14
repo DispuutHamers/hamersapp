@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.Toast
 import com.android.volley.VolleyError
 import kotlinx.android.synthetic.main.detail_event.*
@@ -24,7 +23,6 @@ import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.loader.PostCallback
 import nl.ecci.hamers.users.User
-import org.jetbrains.anko.margin
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -111,6 +109,18 @@ class SingleEventActivity : HamersActivity() {
                 startActivity(intent)
                 return true
             }
+            R.id.send_reminder -> {
+                AlertDialog.Builder(this)
+                        .setTitle(R.string.reminder_title)
+                        .setMessage(R.string.reminder_message)
+                        .setPositiveButton(android.R.string.yes) { _, _ ->
+                            postReminder()
+                        }
+                        .setNegativeButton(android.R.string.no) { _, _ ->
+                            // Do nothing.
+                        }
+                        .show()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -137,6 +147,10 @@ class SingleEventActivity : HamersActivity() {
 
             }
         })
+    }
+
+    private fun postReminder() {
+        Loader.postOrPatchData(this, Loader.REMINDURL, JSONObject(), event!!.id, null)
     }
 
     private fun initSignups() {
@@ -180,7 +194,7 @@ class SingleEventActivity : HamersActivity() {
 
     private fun askForReason() {
         val alert = AlertDialog.Builder(this)
-        alert.setTitle(R.string.attendance_reason_title)
+                .setTitle(R.string.attendance_reason_title)
 
         val input = EditText(this)
         input.setSingleLine()
@@ -207,7 +221,6 @@ class SingleEventActivity : HamersActivity() {
         alert.setNegativeButton(android.R.string.no) { _, _ ->
             // Do nothing.
         }
-
         alert.show()
     }
 
