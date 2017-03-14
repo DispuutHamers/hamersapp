@@ -36,12 +36,12 @@ android {
         debug {
             debuggable true
             resValue "string", "app_name", "Hamers debug"
-            resValue "string", "api_url", "https://staging.zondersikkel.nl/api/v2"
+            resValue "string", "api_url", "https://staging.zondersikkel.nl/api/v2/"
         }
         release {
             debuggable false
             resValue "string", "app_name", "Hamers"
-            resValue "string", "api_url", "https://zondersikkel.nl/api/v2"
+            resValue "string", "api_url", "https://zondersikkel.nl/api/v2/"
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             zipAlignEnabled true
