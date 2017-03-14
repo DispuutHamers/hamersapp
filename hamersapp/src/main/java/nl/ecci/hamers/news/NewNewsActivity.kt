@@ -1,8 +1,10 @@
 package nl.ecci.hamers.news
 
 import android.os.Bundle
+import android.widget.DatePicker
 import com.android.volley.VolleyError
 import kotlinx.android.synthetic.main.activity_new_item.*
+import kotlinx.android.synthetic.main.stub_new_meeting.*
 import kotlinx.android.synthetic.main.stub_new_news.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.NewItemActivity
@@ -39,5 +41,9 @@ class NewNewsActivity : NewItemActivity() {
 
             override fun onError(error: VolleyError) {}
         })
+    }
+
+    override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
+
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.view.View
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.SeekBar
 import android.widget.Toast
 import com.android.volley.VolleyError
@@ -116,6 +117,14 @@ class NewReviewActivity : NewItemActivity() {
         } else {
             disableLoadingAnimation()
             Toast.makeText(this, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onDateSet(datePicker: DatePicker?, year: Int, month: Int, day: Int) {
+        val date = day.toString() + "-" + (month + 1) + "-" + year
+
+        if (supportFragmentManager.findFragmentByTag("proefdatum") != null) {
+            pick_date_button?.text = date
         }
     }
 }
