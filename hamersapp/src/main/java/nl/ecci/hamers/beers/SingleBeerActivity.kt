@@ -119,7 +119,7 @@ class SingleBeerActivity : HamersActivity() {
 
     private fun insertReview(review: Review) {
         val view = layoutInflater.inflate(R.layout.row_review, review_insert_point, false)
-        val divider = layoutInflater.inflate(R.layout.divider, review_insert_point, false)
+        val divider = layoutInflater.inflate(R.layout.element_divider, review_insert_point, false)
 
         view.review_title.text = String.format("%s: ", Utils.getUser(this, review.userID).name)
         view.review_body.text = review.description

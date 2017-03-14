@@ -103,6 +103,10 @@
     <string name="new_meeting_pick_date">Vergaderdatum :</string>
     <string name="new_meeting_user">Notulist :</string>
 
+    <!-- Stickers -->
+    <string name="sticker_post_title">Sticker plakken</string>
+    <string name="sticker_post_note">Optionele notitie</string>
+
     <!-- Settings -->
     <string name="general">Algemeen</string>
     <string name="push_title">Push notificaties</string>

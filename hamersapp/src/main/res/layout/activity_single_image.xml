@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+        layout="@layout/element_toolbar" />
 
     <ImageView
         android:id="@+id/beer_image"

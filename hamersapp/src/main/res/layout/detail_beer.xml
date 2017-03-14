@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+        layout="@layout/element_toolbar" />
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -40,7 +40,7 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="25sp" />
 
-                    <include layout="@layout/divider" />
+                    <include layout="@layout/element_divider" />
 
                     <ImageView
                         android:id="@+id/beer_image"
@@ -78,7 +78,7 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="?android:attr/textColorPrimary" />
 
-                    <include layout="@layout/divider" />
+                    <include layout="@layout/element_divider" />
 
                     <LinearLayout
                         android:layout_width="fill_parent"
@@ -91,25 +91,25 @@
                             android:id="@+id/row_kind"
                             layout="@layout/row_detailview" />
 
-                        <include layout="@layout/divider" />
+                        <include layout="@layout/element_divider" />
 
                         <include
                             android:id="@+id/row_alc"
                             layout="@layout/row_detailview" />
 
-                        <include layout="@layout/divider" />
+                        <include layout="@layout/element_divider" />
 
                         <include
                             android:id="@+id/row_brewer"
                             layout="@layout/row_detailview" />
 
-                        <include layout="@layout/divider" />
+                        <include layout="@layout/element_divider" />
 
                         <include
                             android:id="@+id/row_country"
                             layout="@layout/row_detailview" />
 
-                        <include layout="@layout/divider" />
+                        <include layout="@layout/element_divider" />
 
                         <include
                             android:id="@+id/row_rating"
@@ -144,7 +144,7 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="?android:attr/textColorPrimary" />
 
-                    <include layout="@layout/divider" />
+                    <include layout="@layout/element_divider" />
 
                     <LinearLayout
                         android:id="@+id/review_insert_point"

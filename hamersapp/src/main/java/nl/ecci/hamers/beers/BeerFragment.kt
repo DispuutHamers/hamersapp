@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
-import android.support.v7.util.SortedList
 import android.support.v7.widget.SearchView
 import android.view.*
 import com.android.volley.VolleyError

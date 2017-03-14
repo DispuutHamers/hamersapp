@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/element_toolbar" />
 
     <ScrollView
         android:id="@+id/single_event_scrollview"
@@ -45,7 +45,7 @@
                         android:textColor="?android:attr/textColorPrimary"
                         android:textSize="24sp" />
 
-                    <include layout="@layout/divider" />
+                    <include layout="@layout/element_divider" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -56,13 +56,13 @@
                             android:id="@+id/date_row"
                             layout="@layout/row_imageview" />
 
-                        <include layout="@layout/divider" />
+                        <include layout="@layout/element_divider" />
 
                         <include
                             android:id="@+id/location_row"
                             layout="@layout/row_imageview" />
 
-                        <include layout="@layout/divider" />
+                        <include layout="@layout/element_divider" />
 
                     </LinearLayout>
 
@@ -128,7 +128,7 @@
                             android:textSize="16sp" />
                     </RelativeLayout>
 
-                    <include layout="@layout/divider" />
+                    <include layout="@layout/element_divider" />
 
                     <LinearLayout
                         android:id="@+id/present_insert_point"
@@ -191,7 +191,7 @@
 
                     <include
                         android:id="@+id/include"
-                        layout="@layout/divider" />
+                        layout="@layout/element_divider" />
 
                     <LinearLayout
                         android:id="@+id/absent_insert_point"

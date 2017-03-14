@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/element_toolbar" />
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -38,7 +38,7 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="24sp" />
 
-                    <include layout="@layout/divider" />
+                    <include layout="@layout/element_divider" />
 
                     <TextView
                         android:id="@+id/meeting_date"
@@ -51,7 +51,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="?android:attr/textColorSecondary" />
 
-                    <include layout="@layout/divider" />
+                    <include layout="@layout/element_divider" />
 
                     <TextView
                         android:id="@+id/meeting_user"
@@ -64,7 +64,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="?android:attr/textColorSecondary" />
 
-                    <include layout="@layout/divider" />
+                    <include layout="@layout/element_divider" />
 
                     <us.feras.mdv.MarkdownView
                         android:id="@+id/meeting_agenda"
@@ -105,7 +105,7 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="?android:attr/textColorPrimary" />
 
-                    <include layout="@layout/divider" />
+                    <include layout="@layout/element_divider" />
 
                     <us.feras.mdv.MarkdownView
                         android:id="@+id/meeting_notes"
