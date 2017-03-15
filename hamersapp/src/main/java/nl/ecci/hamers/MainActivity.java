@@ -43,6 +43,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import nl.ecci.hamers.beers.BeerFragment;
+import nl.ecci.hamers.changes.ChangeFragment;
 import nl.ecci.hamers.events.EventFragment;
 import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.DataUtils;
@@ -296,9 +297,9 @@ public class MainActivity extends HamersActivity {
             case R.id.navigation_item_settings:
                 fragmentClass = SettingsFragment.class;
                 break;
-//            case R.id.navigation_item_changes:
-//                fragmentClass = ChangeFragment.class;
-//                break;
+            case R.id.navigation_item_changes:
+                fragmentClass = ChangeFragment.class;
+                break;
             case R.id.navigation_item_about:
                 fragmentClass = AboutFragment.class;
                 break;
@@ -335,7 +336,7 @@ public class MainActivity extends HamersActivity {
     }
 
     private void fillHeader() {
-        User user = DataUtils.INSTANCE.getOwnUser(prefs);
+        User user = DataUtils.INSTANCE.getOwnUser(this);
         if (user != null && user.getId() != -1) {
             View headerLayout = navigationView.getHeaderView(0);
             TextView userName = (TextView) headerLayout.findViewById(R.id.header_user_name);

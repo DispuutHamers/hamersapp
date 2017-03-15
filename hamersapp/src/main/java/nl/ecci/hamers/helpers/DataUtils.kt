@@ -14,6 +14,7 @@ import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.beers.Beer
 import nl.ecci.hamers.events.Event
+import nl.ecci.hamers.events.SignUp
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.meetings.Meeting
 import nl.ecci.hamers.users.User
@@ -107,7 +108,6 @@ object DataUtils {
     fun getUser(context: Context, id: Int): User {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-
         val userList: ArrayList<User>?
         var result = User(-1, Utils.unknown, "example@example.org", 0, 0, User.Member.LID, -1, ArrayList<User.Nickname>(), Date())
         val gsonBuilder = GsonBuilder()
@@ -126,7 +126,9 @@ object DataUtils {
         return result
     }
 
-    fun getOwnUser(prefs: SharedPreferences): User {
+    fun getOwnUser(context: Context): User {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
         var user: User?
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
@@ -137,27 +139,47 @@ object DataUtils {
         return user
     }
 
-    fun getEvent(prefs: SharedPreferences?, id: Int): Event {
-        var result = Event(1, Utils.unknown, Utils.unknown, Utils.unknown, Date(), Date(), Date(), ArrayList<Event.SignUp>(), Date(), false)
+    fun getEvent(context: Context, id: Int): Event {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+        var result = Event(1, Utils.unknown, Utils.unknown, Utils.unknown, Date(), Date(), Date(), ArrayList<SignUp>(), Date(), false)
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<Event>>() {
 
         }.type
-        var eventList: ArrayList<Event>? = null
+        val eventList: ArrayList<Event>?
         if (prefs != null) {
             eventList = gson.fromJson<ArrayList<Event>>(prefs.getString(Loader.EVENTURL, null), type)
-        }
-
-        if (eventList != null) {
-            eventList.filter { it.id == id }
-                    .forEach { result = it }
+            eventList?.filter { it.id == id }
+                    ?.forEach { result = it }
         }
 
         return result
     }
 
-    fun getBeer(prefs: SharedPreferences, id: Int): Beer {
+    fun getSignup(context: Context, id: Int): SignUp {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+        var result = SignUp(0, 0, 0, false, Date(), Utils.unknown)
+        val gsonBuilder = GsonBuilder()
+        val gson = gsonBuilder.create()
+        val type = object : TypeToken<ArrayList<Event>>() {
+        }.type
+
+        val signUpList: ArrayList<SignUp>?
+        if (prefs != null) {
+            signUpList = gson.fromJson<ArrayList<SignUp>>(prefs.getString(Loader.SIGNUPURL, null), type)
+            signUpList?.filter { it.id == id }
+                    ?.forEach { result = it }
+        }
+
+        return result
+    }
+
+    fun getBeer(context: Context, id: Int): Beer {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
         var result = Beer(-1, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Date())
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()

@@ -156,6 +156,8 @@ object Loader {
         Loader.getData(context, Loader.BEERURL, null, null)
         Loader.getData(context, Loader.REVIEWURL, null, null)
         Loader.getData(context, Loader.WHOAMIURL, null, null)
+        Loader.getData(context, Loader.STICKERURL, null, null)
         Loader.getData(context, Loader.MEETINGURL, null, null)
+        Loader.getData(context, Loader.CHANGEURL, null, null)
     }
 }

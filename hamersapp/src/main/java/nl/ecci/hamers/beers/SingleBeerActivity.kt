@@ -45,7 +45,7 @@ class SingleBeerActivity : HamersActivity() {
 
         review_create_button.setOnClickListener { updateReview(ownReview) }
 
-        beer = DataUtils.getBeer(prefs!!, intent.getIntExtra(Beer.BEER, -1))
+        beer = DataUtils.getBeer(this, intent.getIntExtra(Beer.BEER, -1))
 
         setValues()
 
@@ -88,7 +88,7 @@ class SingleBeerActivity : HamersActivity() {
         for (review in reviewList) {
             if (review.beerID == beer!!.id) {
                 hasReviews = true
-                if (review.userID == DataUtils.getOwnUser(prefs!!).id) {
+                if (review.userID == DataUtils.getOwnUser(this).id) {
                     review_create_button.setText(R.string.edit_review)
                     ownReview = review
                 }
@@ -128,7 +128,7 @@ class SingleBeerActivity : HamersActivity() {
         // Insert into view
         review_insert_point.addView(view, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         review_insert_point.addView(divider)
-        if (DataUtils.getOwnUser(prefs!!).id == review.userID) {
+        if (DataUtils.getOwnUser(this).id == review.userID) {
             registerForContextMenu(view)
         }
     }

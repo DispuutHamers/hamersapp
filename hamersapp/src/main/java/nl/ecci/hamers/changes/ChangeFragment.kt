@@ -13,6 +13,7 @@ import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener
+import nl.ecci.hamers.helpers.DividerItemDecoration
 import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
@@ -34,7 +35,8 @@ class ChangeFragment : HamersListFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_recyclerview.adapter = ChangeAdapter(dataSet, activity)
+        hamers_list.addItemDecoration(DividerItemDecoration(activity))
+        hamers_list.adapter = ChangeAdapter(activity, dataSet)
         hamers_fab.visibility = View.GONE
 
         populateList().execute()
@@ -43,6 +45,7 @@ class ChangeFragment : HamersListFragment() {
 
     override fun onRefresh() {
         setRefreshing(true)
+        // Load changes
         Loader.getData(context, Loader.CHANGEURL, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
@@ -84,7 +87,7 @@ class ChangeFragment : HamersListFragment() {
 
             // Filter out changes regarding device ID's
             tempList.filterTo(result) {
-                it.item_type != Change.ItemType.DEVICE
+                it.itemType != Change.ItemType.DEVICE
             }
 
             return result

@@ -14,7 +14,7 @@ import java.util.*
 
 class MeetingAdapter(private val dataSet: ArrayList<Meeting>, private val context: Activity) : RecyclerView.Adapter<MeetingAdapter.ViewHolder>() {
 
-    private val ownID: Int = DataUtils.getOwnUser(MainActivity.prefs).id
+    private val ownID: Int = DataUtils.getOwnUser(context).id
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_meeting, parent, false)

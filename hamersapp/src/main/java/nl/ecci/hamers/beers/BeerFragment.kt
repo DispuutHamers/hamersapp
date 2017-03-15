@@ -35,7 +35,7 @@ class BeerFragment : HamersListFragment(){
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_recyclerview.adapter = BeerAdapter(dataSet, activity)
+        hamers_list.adapter = BeerAdapter(dataSet, activity)
         hamers_fab.setOnClickListener { startActivityForResult(Intent(activity, NewBeerActivity::class.java), 1) }
 
         populateList().execute()
@@ -68,7 +68,7 @@ class BeerFragment : HamersListFragment(){
             }
 
             override fun onQueryTextChange(s: String): Boolean {
-                (hamers_recyclerview.adapter as BeerAdapter).filter.filter(s.toLowerCase())
+                (hamers_list.adapter as BeerAdapter).filter.filter(s.toLowerCase())
                 return false
             }
         })
@@ -107,7 +107,7 @@ class BeerFragment : HamersListFragment(){
     }
 
     private fun scrollTop() {
-        hamers_recyclerview.smoothScrollToPosition(0)
+        hamers_list.smoothScrollToPosition(0)
     }
 
     private fun sortList() {

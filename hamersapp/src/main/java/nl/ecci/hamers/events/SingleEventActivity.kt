@@ -38,8 +38,8 @@ class SingleEventActivity : HamersActivity() {
 
         initToolbar()
 
-        event = DataUtils.getEvent(prefs, intent.getIntExtra(Event.EVENT, 1))
-        ownUser = DataUtils.getOwnUser(PreferenceManager.getDefaultSharedPreferences(this))
+        event = DataUtils.getEvent(this, intent.getIntExtra(Event.EVENT, 1))
+        ownUser = DataUtils.getOwnUser(this)
 
         initSignups()
 

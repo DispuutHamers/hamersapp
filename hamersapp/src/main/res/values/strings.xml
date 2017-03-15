@@ -80,6 +80,24 @@
     <string name="news_title">Titel</string>
     <string name="news_body">Vertel dan..</string>
 
+    <!-- Changes -->
+    <string name="change_new_quote">Quote geplaatst</string>
+    <string name="change_update_quote">Quote bijgewerkt</string>
+    <string name="change_destroy_quote">Quote verwijderd</string>
+    <string name="change_new_event">Evenement aangemaakt</string>
+    <string name="change_update_event">Evenement bijgewerkt</string>
+    <string name="change_destroy_event">Evenement verwijderd</string>
+    <string name="change_new_signup_true">Ingeschreven</string>
+    <string name="change_new_signup_false">Ingeschreven</string>
+    <string name="change_update_signup">Inschrijving bijgewerkt</string>
+    <string name="change_destroy_signup">Inschrijving verwijderd</string>
+    <string name="change_new_beer">Biertje toegevoegd</string>
+    <string name="change_update_beer">Biertje bijgewerkt</string>
+    <string name="change_destroy_beer">Biertje verwijderd</string>
+    <string name="change_new_sticker">Sticker geplakt</string>
+    <string name="change_update_sticker">Sticker bijgewerkt</string>
+    <string name="change_destroy_sticker">Sticker verwijderd</string>
+
     <!-- Users -->
     <string name="user_name">Naam</string>
     <string name="user_status">Status</string>

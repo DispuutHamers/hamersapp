@@ -37,7 +37,7 @@ class EventListFragment : HamersListFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_recyclerview.adapter = EventListAdapter(activity, dataSet)
+        hamers_list.adapter = EventListAdapter(activity, dataSet)
 
         hamers_fab.setOnClickListener {
             startActivityForResult(Intent(activity, NewEventActivity::class.java), -1)
@@ -81,7 +81,7 @@ class EventListFragment : HamersListFragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.scroll_top -> {
-                hamers_recyclerview.smoothScrollToPosition(0)
+                hamers_list.smoothScrollToPosition(0)
                 return true
             }
             else -> return false
@@ -104,11 +104,10 @@ class EventListFragment : HamersListFragment() {
             }
 
             override fun onQueryTextChange(s: String): Boolean {
-                (hamers_recyclerview.adapter as EventListAdapter).filter.filter(s.toLowerCase())
+                (hamers_list.adapter as EventListAdapter).filter.filter(s.toLowerCase())
                 return false
             }
         })
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

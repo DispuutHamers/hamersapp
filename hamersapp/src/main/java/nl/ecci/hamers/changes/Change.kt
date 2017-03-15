@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 class Change(val id: Int,
-             val item_type: ItemType,
+             @SerializedName("item_type")
+             val itemType: ItemType,
+             @SerializedName("item_id")
              val itemId: Int,
              val event: Event,
              @SerializedName("whodunnit")
@@ -24,6 +26,7 @@ class Change(val id: Int,
         @SerializedName("Review") REVIEW,
         @SerializedName("News") NEWS,
         @SerializedName("User") USER,
+        @SerializedName("Sticker") STICKER,
         @SerializedName("Device") DEVICE,
     }
 

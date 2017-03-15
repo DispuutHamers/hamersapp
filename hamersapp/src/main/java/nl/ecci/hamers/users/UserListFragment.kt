@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.fragment_hamers_list.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
+import nl.ecci.hamers.helpers.DividerItemDecoration
 import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
@@ -33,7 +34,8 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_recyclerview.adapter = UserListAdapter(dataSet, activity)
+        hamers_list.addItemDecoration(DividerItemDecoration(activity))
+        hamers_list.adapter = UserListAdapter(dataSet, activity)
         hamers_fab.visibility = View.GONE
 
         exUser = arguments.getBoolean(UserFragmentAdapter.exUser, false)
