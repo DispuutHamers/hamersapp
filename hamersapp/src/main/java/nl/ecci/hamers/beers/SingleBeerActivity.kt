@@ -1,7 +1,6 @@
 package nl.ecci.hamers.beers
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -20,11 +19,13 @@ import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.HamersActivity
 import nl.ecci.hamers.helpers.SingleImageActivity
 import nl.ecci.hamers.loader.Loader
+import nl.ecci.hamers.users.User
 import java.util.*
 
 class SingleBeerActivity : HamersActivity() {
 
     private var beer: Beer? = null
+    private var user: User? = null
     private var gson: Gson? = null
     private var ownReview: Review? = null
 
@@ -38,7 +39,6 @@ class SingleBeerActivity : HamersActivity() {
 
         initToolbar()
 
-
         val gsonBuilder = GsonBuilder()
         gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
         gson = gsonBuilder.create()
@@ -46,6 +46,7 @@ class SingleBeerActivity : HamersActivity() {
         review_create_button.setOnClickListener { updateReview(ownReview) }
 
         beer = DataUtils.getBeer(this, intent.getIntExtra(Beer.BEER, -1))
+        user = DataUtils.getOwnUser(this)
 
         setValues()
 
@@ -78,25 +79,33 @@ class SingleBeerActivity : HamersActivity() {
     }
 
     private fun getReviews() {
-        val reviewList: ArrayList<Review>
         val type = object : TypeToken<ArrayList<Review>>() {
         }.type
 
-        var hasReviews = false
-        reviewList = GsonBuilder().create().fromJson<ArrayList<Review>>(prefs!!.getString(Loader.REVIEWURL, null), type)
+        val reviewList = ArrayList<Review>()
+        val tempList = GsonBuilder().create().fromJson<ArrayList<Review>>(prefs?.getString(Loader.REVIEWURL, null), type)
 
-        for (review in reviewList) {
-            if (review.beerID == beer!!.id) {
-                hasReviews = true
-                if (review.userID == DataUtils.getOwnUser(this).id) {
-                    review_create_button.setText(R.string.edit_review)
-                    ownReview = review
-                }
-                insertReview(review)
+        tempList.filterTo(reviewList) {
+            it.beerID == beer?.id
+        }
+
+        val iterator = reviewList.listIterator()
+
+        while(iterator.hasNext()) {
+            val review = iterator.next()
+            if (review.userID == user?.id) {
+                review_create_button.setText(R.string.edit_review)
+                ownReview = review
+            }
+            insertReview(review)
+            if (iterator.hasNext()) {
+                // Insert divider
+                val divider = layoutInflater.inflate(R.layout.element_divider, review_insert_point, false)
+                review_insert_point.addView(divider)
             }
         }
 
-        if (!hasReviews) {
+        if (reviewList.isEmpty()) {
             review_insert_point.removeAllViews()
         }
     }
@@ -118,7 +127,6 @@ class SingleBeerActivity : HamersActivity() {
 
     private fun insertReview(review: Review) {
         val view = layoutInflater.inflate(R.layout.row_review, review_insert_point, false)
-        val divider = layoutInflater.inflate(R.layout.element_divider, review_insert_point, false)
 
         view.review_title.text = String.format("%s: ", DataUtils.getUser(this, review.userID).name)
         view.review_body.text = review.description
@@ -127,7 +135,7 @@ class SingleBeerActivity : HamersActivity() {
 
         // Insert into view
         review_insert_point.addView(view, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
-        review_insert_point.addView(divider)
+
         if (DataUtils.getOwnUser(this).id == review.userID) {
             registerForContextMenu(view)
         }
@@ -135,17 +143,14 @@ class SingleBeerActivity : HamersActivity() {
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
-        menuInflater.inflate(R.menu.review_menu, menu)
+        menuInflater.inflate(R.menu.edit_menu, menu)
     }
 
     override fun onContextItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.review_update -> {
+        // Edit review
+            R.id.edit_item -> {
                 updateReview(ownReview)
-                return true
-            }
-            R.id.review_delete -> {
-                deleteReview()
                 return true
             }
             else -> return super.onContextItemSelected(item)
@@ -160,6 +165,7 @@ class SingleBeerActivity : HamersActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+        // Edit beer
             R.id.edit_item -> {
                 val intent = Intent(this, NewBeerActivity::class.java)
                 if (beer != null) {
@@ -172,21 +178,9 @@ class SingleBeerActivity : HamersActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun deleteReview() {
-        AlertDialog.Builder(this@SingleBeerActivity)
-                .setTitle(getString(R.string.review_delete))
-                .setMessage(getString(R.string.review_delete_message))
-                .setPositiveButton(android.R.string.yes) { _, _ ->
-                    // continue with delete
-                }
-                .setNegativeButton(android.R.string.no) { _, _ ->
-                    // do nothing
-                }
-                .show()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
+            getReviews()
             if (requestCode == reviewRequestCode) {
                 val newBody = data?.getStringExtra(reviewBody)
                 val newRating = data?.getIntExtra(reviewRating, -1)
@@ -194,22 +188,24 @@ class SingleBeerActivity : HamersActivity() {
                 if (ownReview != null) {
                     for (i in 0..review_insert_point.childCount - 1) {
                         val view = review_insert_point.getChildAt(i)
-                        val bodyTextView = view.findViewById(R.id.review_body) as TextView
-                        val ratingTextView = view.findViewById(R.id.review_rating) as TextView
-                        if (bodyTextView.text === ownReview!!.description) {
-                            bodyTextView.text = newBody
-                            ratingTextView.text = String.format("Cijfer: %s", newRating)
+                        if (view.id == R.id.review_row) { // Could be 'divider'
+                            val bodyTextView = view.findViewById(R.id.review_body) as TextView
+                            val ratingTextView = view.findViewById(R.id.review_rating) as TextView
+                            if (bodyTextView.text === ownReview?.description) {
+                                bodyTextView.text = newBody
+                                ratingTextView.text = String.format("Cijfer: %s", newRating)
+                            }
                         }
                     }
                 }
             } else if (requestCode == beerRequestCode) {
-                beer!!.name = data?.getStringExtra(beerName)
-                beer!!.kind = data?.getStringExtra(beerKind)
-                beer!!.percentage = data?.getStringExtra(beerPercentage)
-                beer!!.percentage = data?.getStringExtra(beerPercentage)
-                beer!!.brewer = data?.getStringExtra(beerBrewer)
-                beer!!.country = data?.getStringExtra(beerCountry)
-                beer!!.rating = beer!!.rating!! + " (Nog niet bijgewerkt)"
+                beer?.name = data?.getStringExtra(beerName)
+                beer?.kind = data?.getStringExtra(beerKind)
+                beer?.percentage = data?.getStringExtra(beerPercentage)
+                beer?.percentage = data?.getStringExtra(beerPercentage)
+                beer?.brewer = data?.getStringExtra(beerBrewer)
+                beer?.country = data?.getStringExtra(beerCountry)
+                beer?.rating = beer!!.rating!! + " (Nog niet bijgewerkt)"
 
                 setValues()
             }

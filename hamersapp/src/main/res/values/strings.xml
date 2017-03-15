@@ -6,7 +6,7 @@
 
     <string name="search_title">Zoeken</string>
     <string name="search_hint">Zoek…</string>
-    <string name="edit_item">Wijzig unit</string>
+    <string name="edit_item">Wijzig</string>
 
     <string name="close">Sluiten</string>
 
@@ -81,22 +81,28 @@
     <string name="news_body">Vertel dan..</string>
 
     <!-- Changes -->
-    <string name="change_new_quote">Quote geplaatst</string>
-    <string name="change_update_quote">Quote bijgewerkt</string>
-    <string name="change_destroy_quote">Quote verwijderd</string>
-    <string name="change_new_event">Evenement aangemaakt</string>
-    <string name="change_update_event">Evenement bijgewerkt</string>
-    <string name="change_destroy_event">Evenement verwijderd</string>
-    <string name="change_new_signup_true">Ingeschreven</string>
-    <string name="change_new_signup_false">Ingeschreven</string>
-    <string name="change_update_signup">Inschrijving bijgewerkt</string>
-    <string name="change_destroy_signup">Inschrijving verwijderd</string>
-    <string name="change_new_beer">Biertje toegevoegd</string>
-    <string name="change_update_beer">Biertje bijgewerkt</string>
-    <string name="change_destroy_beer">Biertje verwijderd</string>
-    <string name="change_new_sticker">Sticker geplakt</string>
-    <string name="change_update_sticker">Sticker bijgewerkt</string>
-    <string name="change_destroy_sticker">Sticker verwijderd</string>
+    <string name="change_quote_new">Quote geplaatst</string>
+    <string name="change_quote_update">Quote bijgewerkt</string>
+    <string name="change_quote_destroy">Quote verwijderd</string>
+    <string name="change_event_new">Evenement aangemaakt</string>
+    <string name="change_event_update">Evenement bijgewerkt</string>
+    <string name="change_event_destroy">Evenement verwijderd</string>
+    <string name="change_signup_new_true">Ingeschreven</string>
+    <string name="change_signup_new_false">Ingeschreven</string>
+    <string name="change_signup_update">Inschrijving bijgewerkt</string>
+    <string name="change_signup_destroy">Inschrijving verwijderd</string>
+    <string name="change_beer_new">Biertje toegevoegd</string>
+    <string name="change_beer_update">Biertje bijgewerkt</string>
+    <string name="change_beer_destroy">Biertje verwijderd</string>
+    <string name="change_news_new">Nieuws aangemaakt</string>
+    <string name="change_news_update">Nieuws bijgewerkt</string>
+    <string name="change_news_destroy">Nieuws verwijderd</string>
+    <string name="change_review_new">Review aangemaakt</string>
+    <string name="change_review_update">Review bijgewerkt</string>
+    <string name="change_review_destroy">Review verwijderd</string>
+    <string name="change_sticker_new">Sticker geplakt</string>
+    <string name="change_sticker_update">Sticker bijgewerkt</string>
+    <string name="change_sticker_destroy">Sticker verwijderd</string>
 
     <!-- Users -->
     <string name="user_name">Naam</string>
