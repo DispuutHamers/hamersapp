@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.row_change.view.*
+import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.beers.Beer
 import nl.ecci.hamers.events.Event
@@ -37,6 +38,7 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                 // Set user image
                 ImageLoader.getInstance().displayImage(getGravatarURL(user.email), itemView.user_image, AnimateFirstDisplayListener())
 
+                if (change.itemType != null)
                 when (change.itemType) {
                     Change.ItemType.QUOTE -> bindQuote(change)
                     Change.ItemType.EVENT -> bindEvent(change)
@@ -46,10 +48,13 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                     Change.ItemType.NEWS -> bindNews(change)
                     Change.ItemType.USER -> bindUser(change)
                     Change.ItemType.STICKER -> bindSticker(change)
-                    Change.ItemType.DEVICE -> {
+                    Change.ItemType.NICKNAME -> bindNickname(change)
+                    else -> {
                         // Do nothing
                     }
                 }
+
+                itemView.change_timestamp.text = MainActivity.appDF.format(createdAt)
             }
         }
 
@@ -69,8 +74,7 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                 Change.Event.UPDATE ->  itemView.change.text = context.getString(R.string.change_event_update)
                 Change.Event.DESTROY -> itemView.change.text = context.getString(R.string.change_event_destroy)
             }
-
-            itemView.change_description.text = event.title
+//            itemView.change_timestamp.text = event.title
         }
 
         private fun bindSignUp(change: Change) {
@@ -88,8 +92,7 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                 Change.Event.UPDATE ->  itemView.change.text = context.getString(R.string.change_signup_update)
                 Change.Event.DESTROY -> itemView.change.text = context.getString(R.string.change_signup_destroy)
             }
-
-            itemView.change_description.text = event.title
+//            itemView.change_timestamp.text = event.title
         }
 
         private fun bindBeer(change: Change) {
@@ -101,7 +104,7 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                 Change.Event.DESTROY -> itemView.change.text = context.getString(R.string.change_beer_destroy)
             }
 
-            itemView.change_description.text = beer.name
+//            itemView.change_timestamp.text = beer.name
         }
 
         private fun bindReview(change: Change) {
@@ -126,7 +129,6 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                 Change.Event.UPDATE ->  itemView.change.text = context.getString(R.string.change_user_update)
                 Change.Event.DESTROY -> itemView.change.text = context.getString(R.string.change_user_destroy)
             }
-            itemView.change_description.visibility = View.GONE
         }
 
         private fun bindSticker(change: Change) {
@@ -135,7 +137,14 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                 Change.Event.UPDATE ->  itemView.change.text = context.getString(R.string.change_sticker_update)
                 Change.Event.DESTROY -> itemView.change.text = context.getString(R.string.change_sticker_destroy)
             }
-            itemView.change_description.visibility = View.GONE
+        }
+        
+        private fun bindNickname(change: Change) {
+            when (change.event) {
+                Change.Event.CREATE ->  itemView.change.text = context.getString(R.string.change_nick_new)
+                Change.Event.UPDATE ->  itemView.change.text = context.getString(R.string.change_nick_update)
+                Change.Event.DESTROY -> itemView.change.text = context.getString(R.string.change_nick_destroy)
+            }
         }
     }
 }

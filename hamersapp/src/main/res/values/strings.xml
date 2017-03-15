@@ -106,6 +106,9 @@
     <string name="change_sticker_new">Sticker geplakt</string>
     <string name="change_sticker_update">Sticker bijgewerkt</string>
     <string name="change_sticker_destroy">Sticker verwijderd</string>
+    <string name="change_nick_new">Nickname aangemaakt</string>
+    <string name="change_nick_update">Nickname bijgewerkt</string>
+    <string name="change_nick_destroy">Nickname verwijderd</string>
 
     <!-- Users -->
     <string name="user_name">Naam</string>

@@ -5,7 +5,7 @@ import java.util.*
 
 class Change(val id: Int,
              @SerializedName("item_type")
-             val itemType: ItemType,
+             val itemType: ItemType?,
              @SerializedName("item_id")
              val itemId: Int,
              val event: Event,
@@ -14,7 +14,7 @@ class Change(val id: Int,
              @SerializedName("object")
              val newObject: String,
              @SerializedName("created_at")
-             val createdAt: Date,
+             val createdAt: Date, // Change created, so date of mutation
              @SerializedName("object_changes")
              val objectChanges: String) {
 
@@ -27,6 +27,7 @@ class Change(val id: Int,
         @SerializedName("News") NEWS,
         @SerializedName("User") USER,
         @SerializedName("Sticker") STICKER,
+        @SerializedName("Nickname") NICKNAME,
         @SerializedName("Device") DEVICE,
     }
 
