@@ -50,7 +50,6 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
         mapView = stickers_map as MapView
         mapView?.onCreate(savedInstanceState)
 
-
         locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         val params = hamers_fab.layoutParams as CoordinatorLayout.LayoutParams
@@ -67,7 +66,8 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         map!!.uiSettings.isMyLocationButtonEnabled = false
-        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             map!!.isMyLocationEnabled = true
         }
         addMarkers()
@@ -117,7 +117,8 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
 
     private fun postLocationDialog() {
         val alert = AlertDialog.Builder(activity)
-        alert.setTitle(R.string.sticker_post_title)
+                .setTitle(R.string.sticker_post_title)
+                .setMessage(R.string.sticker_post_message)
 
         val input = EditText(activity)
         input.setSingleLine()
@@ -148,8 +149,8 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
 
         val body = JSONObject()
         try {
-            body.put("lat", null)
-            body.put("lon", null)
+            body.put("lat", lastKnownLocation?.latitude)
+            body.put("lon", lastKnownLocation?.longitude)
         } catch (ignored: JSONException) {
         }
 

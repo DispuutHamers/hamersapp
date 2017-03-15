@@ -10,7 +10,7 @@ import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.row_user.view.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener
-import nl.ecci.hamers.helpers.Utils.getGravatarURL
+import nl.ecci.hamers.helpers.DataUtils.getGravatarURL
 import java.util.*
 
 internal class UserListAdapter(private val dataSet: ArrayList<User>, private val context: Context) : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {

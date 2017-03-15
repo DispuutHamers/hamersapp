@@ -45,6 +45,7 @@ import java.util.Locale;
 import nl.ecci.hamers.beers.BeerFragment;
 import nl.ecci.hamers.events.EventFragment;
 import nl.ecci.hamers.gcm.RegistrationIntentService;
+import nl.ecci.hamers.helpers.DataUtils;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.Utils;
 import nl.ecci.hamers.loader.GetCallback;
@@ -165,7 +166,7 @@ public class MainActivity extends HamersActivity {
             startService(intent);
         }
 
-        Utils.INSTANCE.hasApiKey(this, prefs);
+        DataUtils.INSTANCE.hasApiKey(this, prefs);
 
         fillHeader();
 
@@ -334,7 +335,7 @@ public class MainActivity extends HamersActivity {
     }
 
     private void fillHeader() {
-        User user = Utils.INSTANCE.getOwnUser(prefs);
+        User user = DataUtils.INSTANCE.getOwnUser(prefs);
         if (user != null && user.getId() != -1) {
             View headerLayout = navigationView.getHeaderView(0);
             TextView userName = (TextView) headerLayout.findViewById(R.id.header_user_name);
@@ -346,7 +347,7 @@ public class MainActivity extends HamersActivity {
                 userEmail.setText(user.getEmail());
 
                 // Image
-                String url = Utils.INSTANCE.getGravatarURL(user.getEmail());
+                String url = DataUtils.INSTANCE.getGravatarURL(user.getEmail());
                 ImageLoader.getInstance().displayImage(url, userImage);
             }
         } else {

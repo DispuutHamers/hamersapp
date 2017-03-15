@@ -13,8 +13,8 @@ import kotlinx.android.synthetic.main.row_imageview.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener
-import nl.ecci.hamers.helpers.Utils.getGravatarURL
-import nl.ecci.hamers.helpers.Utils.getUser
+import nl.ecci.hamers.helpers.DataUtils.getGravatarURL
+import nl.ecci.hamers.helpers.DataUtils.getUser
 import nl.ecci.hamers.users.SingleUserActivity
 import nl.ecci.hamers.users.User
 import java.util.*

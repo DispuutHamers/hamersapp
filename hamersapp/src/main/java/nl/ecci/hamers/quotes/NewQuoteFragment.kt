@@ -11,8 +11,8 @@ import android.widget.Spinner
 import com.android.volley.VolleyError
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
-import nl.ecci.hamers.helpers.Utils
-import nl.ecci.hamers.helpers.Utils.usernameToID
+import nl.ecci.hamers.helpers.DataUtils
+import nl.ecci.hamers.helpers.DataUtils.usernameToID
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.loader.PostCallback
 import nl.ecci.hamers.users.User
@@ -38,7 +38,7 @@ class NewQuoteFragment : DialogFragment() {
                     postQuote(quote, userID)
                 }
         val spinner = view.findViewById(R.id.quote_user_spinner) as Spinner
-        val users = Utils.createActiveMemberList()
+        val users = DataUtils.createActiveMemberList()
         val names = users.map(User::name)
         val adapter = ArrayAdapter(activity, android.R.layout.simple_spinner_dropdown_item, names)
         spinner.adapter = adapter

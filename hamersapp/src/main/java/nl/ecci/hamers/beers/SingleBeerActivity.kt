@@ -16,9 +16,9 @@ import kotlinx.android.synthetic.main.detail_beer.*
 import kotlinx.android.synthetic.main.row_review.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
+import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.HamersActivity
 import nl.ecci.hamers.helpers.SingleImageActivity
-import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.Loader
 import java.util.*
 
@@ -39,14 +39,13 @@ class SingleBeerActivity : HamersActivity() {
         initToolbar()
 
 
-
         val gsonBuilder = GsonBuilder()
         gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
         gson = gsonBuilder.create()
 
         review_create_button.setOnClickListener { updateReview(ownReview) }
 
-        beer = Utils.getBeer(prefs!!, intent.getIntExtra(Beer.BEER, -1))
+        beer = DataUtils.getBeer(prefs!!, intent.getIntExtra(Beer.BEER, -1))
 
         setValues()
 
@@ -89,7 +88,7 @@ class SingleBeerActivity : HamersActivity() {
         for (review in reviewList) {
             if (review.beerID == beer!!.id) {
                 hasReviews = true
-                if (review.userID == Utils.getOwnUser(prefs!!).id) {
+                if (review.userID == DataUtils.getOwnUser(prefs!!).id) {
                     review_create_button.setText(R.string.edit_review)
                     ownReview = review
                 }
@@ -121,7 +120,7 @@ class SingleBeerActivity : HamersActivity() {
         val view = layoutInflater.inflate(R.layout.row_review, review_insert_point, false)
         val divider = layoutInflater.inflate(R.layout.element_divider, review_insert_point, false)
 
-        view.review_title.text = String.format("%s: ", Utils.getUser(this, review.userID).name)
+        view.review_title.text = String.format("%s: ", DataUtils.getUser(this, review.userID).name)
         view.review_body.text = review.description
         view.review_date.text = MainActivity.appDF2.format(review.proefdatum)
         view.review_rating.text = String.format("Cijfer: %s", review.rating)
@@ -129,7 +128,7 @@ class SingleBeerActivity : HamersActivity() {
         // Insert into view
         review_insert_point.addView(view, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         review_insert_point.addView(divider)
-        if (Utils.getOwnUser(prefs!!).id == review.userID) {
+        if (DataUtils.getOwnUser(prefs!!).id == review.userID) {
             registerForContextMenu(view)
         }
     }

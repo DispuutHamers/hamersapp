@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.row_meeting.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
-import nl.ecci.hamers.helpers.Utils
+import nl.ecci.hamers.helpers.DataUtils
 import java.util.*
 
 class MeetingAdapter(private val dataSet: ArrayList<Meeting>, private val context: Activity) : RecyclerView.Adapter<MeetingAdapter.ViewHolder>() {
 
-    private val ownID: Int = Utils.getOwnUser(MainActivity.prefs).id
+    private val ownID: Int = DataUtils.getOwnUser(MainActivity.prefs).id
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_meeting, parent, false)

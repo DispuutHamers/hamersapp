@@ -13,18 +13,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.Toast
 import com.android.volley.VolleyError
 import kotlinx.android.synthetic.main.detail_event.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
+import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.HamersActivity
-import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.loader.PostCallback
 import nl.ecci.hamers.users.User
-import org.jetbrains.anko.margin
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -40,8 +38,8 @@ class SingleEventActivity : HamersActivity() {
 
         initToolbar()
 
-        event = Utils.getEvent(prefs, intent.getIntExtra(Event.EVENT, 1))
-        ownUser = Utils.getOwnUser(PreferenceManager.getDefaultSharedPreferences(this))
+        event = DataUtils.getEvent(prefs, intent.getIntExtra(Event.EVENT, 1))
+        ownUser = DataUtils.getOwnUser(PreferenceManager.getDefaultSharedPreferences(this))
 
         initSignups()
 
@@ -146,9 +144,9 @@ class SingleEventActivity : HamersActivity() {
                 .map { signUps[it] }
                 .forEach {
                     if (it.isAttending) {
-                        present.add(Utils.getUser(this, it.userID).name)
+                        present.add(DataUtils.getUser(this, it.userID).name)
                     } else {
-                        absent.add(Utils.getUser(this, it.userID).name)
+                        absent.add(DataUtils.getUser(this, it.userID).name)
                     }
                 }
 

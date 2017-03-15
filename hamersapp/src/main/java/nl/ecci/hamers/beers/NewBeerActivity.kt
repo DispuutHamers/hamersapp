@@ -8,8 +8,8 @@ import kotlinx.android.synthetic.main.activity_new_item.*
 import kotlinx.android.synthetic.main.stub_new_beer.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
+import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.NewItemActivity
-import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.loader.PostCallback
 import org.json.JSONException
@@ -30,7 +30,7 @@ class NewBeerActivity : NewItemActivity() {
 
         beerID = intent.getIntExtra(Beer.BEER, -1)
         if (beerID != -1) {
-            val beer = Utils.getBeer(MainActivity.prefs, beerID)
+            val beer = DataUtils.getBeer(MainActivity.prefs, beerID)
             beer_name.setText(beer.name)
             beer_picture.setText(beer.imageURL)
             beer_soort.setText(beer.kind)

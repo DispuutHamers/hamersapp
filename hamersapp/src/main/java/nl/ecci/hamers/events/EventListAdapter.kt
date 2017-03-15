@@ -11,7 +11,7 @@ import android.widget.Filterable
 import kotlinx.android.synthetic.main.row_event.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
-import nl.ecci.hamers.helpers.Utils
+import nl.ecci.hamers.helpers.DataUtils
 import java.util.*
 
 internal class EventListAdapter(private val context: Context, private val dataSet: ArrayList<Event>) : RecyclerView.Adapter<EventListAdapter.ViewHolder>(), Filterable {
@@ -80,7 +80,7 @@ internal class EventListAdapter(private val context: Context, private val dataSe
             }
 
             val signups = event.signUps
-            val userID = Utils.getOwnUser(MainActivity.prefs).id
+            val userID = DataUtils.getOwnUser(MainActivity.prefs).id
             var aanwezig: Boolean? = null
             signups.indices
                     .map { signups[it] }

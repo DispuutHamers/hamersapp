@@ -6,18 +6,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
-
-import java.util.HashMap
-
 import nl.ecci.hamers.helpers.Utils
 import us.feras.mdv.MarkdownView
+import java.util.*
 
 class AboutFragment : Fragment() {
     private var libraries: HashMap<String, String>? = null
