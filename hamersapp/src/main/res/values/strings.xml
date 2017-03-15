@@ -107,6 +107,7 @@
     <string name="sticker_post_title">Sticker plakken</string>
     <string name="sticker_post_message">Je huidige locatie zal worden bepaald en gebruikt als locatie van de sticker.</string>
     <string name="sticker_post_note">Optionele notitie</string>
+    <string name="sticker_no_permission">Zonder toestemming je locatie op te vragen gaat het niet werken!</string>
 
     <!-- Settings -->
     <string name="general">Algemeen</string>

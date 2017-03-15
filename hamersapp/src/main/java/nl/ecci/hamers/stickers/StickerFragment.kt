@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.Toast
 import com.android.volley.VolleyError
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -26,6 +27,9 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_sticker.*
 import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
+import nl.ecci.hamers.helpers.PermissionUtils
+import nl.ecci.hamers.helpers.PermissionUtils.hasLocationPermission
+import nl.ecci.hamers.helpers.PermissionUtils.requestLocationPermission
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
 import org.json.JSONException
@@ -135,7 +139,13 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
         alert.setView(container)
 
         alert.setPositiveButton(android.R.string.yes) { _, _ ->
-            postSticker()
+            if (hasLocationPermission(activity)) {
+                // Already has permission --> post sticker
+                postSticker()
+            } else {
+                // Does not have permission --> request
+                requestLocationPermission(activity)
+            }
         }
         alert.setNegativeButton(android.R.string.no) { _, _ ->
             // Do nothing.
@@ -149,12 +159,28 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
 
         val body = JSONObject()
         try {
-            body.put("lat", lastKnownLocation?.latitude)
-            body.put("lon", lastKnownLocation?.longitude)
+            body.put("lat", lastKnownLocation?.latitude.toString())
+            body.put("lon", lastKnownLocation?.longitude.toString())
         } catch (ignored: JSONException) {
         }
 
         Loader.postOrPatchData(activity, Loader.STICKERURL, body, -1, null)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            PermissionUtils.PERMISSION_REQUEST_CODE -> {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission granted
+                    postLocationDialog()
+                } else {
+                    // Permission denied
+                    Toast.makeText(activity, getString(R.string.sticker_no_permission), Toast.LENGTH_LONG).show()
+                }
+                return
+            }
+        }
     }
 
     private inner class populateMap : AsyncTask<ArrayList<Sticker>, Void, ArrayList<Sticker>>() {
