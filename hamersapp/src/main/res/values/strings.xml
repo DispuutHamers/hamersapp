@@ -97,6 +97,9 @@
     <string name="change_news_new">Nieuws aangemaakt</string>
     <string name="change_news_update">Nieuws bijgewerkt</string>
     <string name="change_news_destroy">Nieuws verwijderd</string>
+    <string name="change_user_new">Gebruiker verwijderd</string>
+    <string name="change_user_update">Gebruiker bijgewerkt</string>
+    <string name="change_user_destroy">Gebruiker verwijderd</string>
     <string name="change_review_new">Review aangemaakt</string>
     <string name="change_review_update">Review bijgewerkt</string>
     <string name="change_review_destroy">Review verwijderd</string>

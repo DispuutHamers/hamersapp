@@ -38,15 +38,13 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                 ImageLoader.getInstance().displayImage(getGravatarURL(user.email), itemView.user_image, AnimateFirstDisplayListener())
 
                 when (change.itemType) {
-                    Change.ItemType.QUOTE ->  bindQuote(change)
-                    Change.ItemType.EVENT ->  bindEvent(change)
+                    Change.ItemType.QUOTE -> bindQuote(change)
+                    Change.ItemType.EVENT -> bindEvent(change)
                     Change.ItemType.SIGNUP -> bindSignUp(change)
-                    Change.ItemType.BEER ->   bindBeer(change)
+                    Change.ItemType.BEER -> bindBeer(change)
                     Change.ItemType.REVIEW -> bindReview(change)
-                    Change.ItemType.NEWS ->   bindNews(change)
-                    Change.ItemType.USER -> {
-                        // TODO
-                    }
+                    Change.ItemType.NEWS -> bindNews(change)
+                    Change.ItemType.USER -> bindUser(change)
                     Change.ItemType.STICKER -> bindSticker(change)
                     Change.ItemType.DEVICE -> {
                         // Do nothing
@@ -120,6 +118,15 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                 Change.Event.UPDATE ->  itemView.change.text = context.getString(R.string.change_news_update)
                 Change.Event.DESTROY -> itemView.change.text = context.getString(R.string.change_news_destroy)
             }
+        }
+        
+        private fun bindUser(change: Change) {
+            when (change.event) {
+                Change.Event.CREATE ->  itemView.change.text = context.getString(R.string.change_user_new)
+                Change.Event.UPDATE ->  itemView.change.text = context.getString(R.string.change_user_update)
+                Change.Event.DESTROY -> itemView.change.text = context.getString(R.string.change_user_destroy)
+            }
+            itemView.change_description.visibility = View.GONE
         }
 
         private fun bindSticker(change: Change) {
