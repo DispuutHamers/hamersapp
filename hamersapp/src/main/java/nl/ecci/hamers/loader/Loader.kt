@@ -19,7 +19,7 @@ object Loader {
     val QUOTEURL = "quotes"
     val USERURL = "users"
     val EVENTURL = "events"
-    val REMINDURL = "events/remind"
+    val REMINDURL = "remind"
     val NEWSURL = "news"
     val BEERURL = "beers"
     val REVIEWURL = "reviews"

@@ -150,7 +150,8 @@ class SingleEventActivity : HamersActivity() {
     }
 
     private fun postReminder() {
-        Loader.postOrPatchData(this, Loader.REMINDURL, JSONObject(), event!!.id, null)
+        val url = Loader.EVENTURL + "/" + event?.id + "/" + Loader.REMINDURL
+        Loader.postOrPatchData(this, url, JSONObject(), -1, null)
     }
 
     private fun initSignups() {
