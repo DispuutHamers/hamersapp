@@ -1,6 +1,7 @@
 package nl.ecci.hamers.changes
 
 import com.google.gson.annotations.SerializedName
+import org.json.JSONObject
 import java.util.*
 
 class Change(val id: Int,
@@ -12,11 +13,10 @@ class Change(val id: Int,
              @SerializedName("whodunnit")
              val userId: Int,
              @SerializedName("object")
-             val newObject: String,
+             val newObject: JSONObject,
              @SerializedName("created_at")
-             val createdAt: Date, // Change created, so date of mutation
-             @SerializedName("object_changes")
-             val objectChanges: String) {
+             // Change created, so date of mutation
+             val createdAt: Date) {
 
     enum class ItemType {
         @SerializedName("Quote") QUOTE,

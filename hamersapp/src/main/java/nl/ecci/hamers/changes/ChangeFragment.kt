@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.volley.VolleyError
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -55,6 +56,17 @@ class ChangeFragment : HamersListFragment() {
                 // Nothing
             }
         }, null)
+        // Load list of signUps (not loaded anywhere else)
+        Loader.getData(context, Loader.SIGNUPURL, object : GetCallback {
+            override fun onSuccess(response: String) {
+                // Save signUps
+                prefs.edit().putString(Loader.SIGNUPURL, response).apply()
+            }
+
+            override fun onError(error: VolleyError) {
+                // Nothing
+            }
+        }, null)
     }
 
     override fun onResume() {
@@ -72,17 +84,16 @@ class ChangeFragment : HamersListFragment() {
         override fun doInBackground(vararg params: String): ArrayList<Change> {
             val result = ArrayList<Change>()
             val tempList: ArrayList<Change>
-            val type = object : TypeToken<ArrayList<Change>>() {
-            }.type
             val gsonBuilder = GsonBuilder()
             gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
             val gson = gsonBuilder.create()
+            val type = object : TypeToken<ArrayList<Change>>() {
+            }.type
 
             if (params.isNotEmpty()) {
                 tempList = gson.fromJson<ArrayList<Change>>(params[0], type)
             } else {
                 tempList = gson.fromJson<ArrayList<Change>>(prefs.getString(Loader.CHANGEURL, null), type)
-
             }
 
             // Filter out changes regarding device ID's

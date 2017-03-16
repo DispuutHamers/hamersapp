@@ -142,11 +142,10 @@ object DataUtils {
     fun getEvent(context: Context, id: Int): Event {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-        var result = Event(1, Utils.unknown, Utils.unknown, Utils.unknown, Date(), Date(), Date(), ArrayList<SignUp>(), Date(), false)
+        var result = Event(1, Utils.unknown, Utils.unknown, Utils.unknown, 0, Date(), Date(), Date(), ArrayList<SignUp>(), Date(), false)
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<Event>>() {
-
         }.type
         val eventList: ArrayList<Event>?
         if (prefs != null) {
@@ -158,13 +157,13 @@ object DataUtils {
         return result
     }
 
-    fun getSignup(context: Context, id: Int): SignUp {
+    fun getSignUp(context: Context, id: Int): SignUp {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         var result = SignUp(0, 0, 0, false, Date(), Utils.unknown)
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
-        val type = object : TypeToken<ArrayList<Event>>() {
+        val type = object : TypeToken<ArrayList<SignUp>>() {
         }.type
 
         val signUpList: ArrayList<SignUp>?

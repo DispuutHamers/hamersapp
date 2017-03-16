@@ -23,19 +23,10 @@ import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
 
 object Utils {
+
+    private var mToast: Toast? = null
     var alertDialog: AlertDialog? = null
-    val unknown = "Unknown"
-
-    fun md5(message: String): String {
-        return String(Hex.encodeHex(DigestUtils.md5(message)))
-    }
-
-    fun stringArrayToCharSequenceArray(stringArray: Array<Any>): Array<CharSequence?> {
-        val charSequenceArray = arrayOfNulls<CharSequence>(stringArray.size)
-        for (i in stringArray.indices)
-            charSequenceArray[i] = stringArray[i] as String
-        return charSequenceArray
-    }
+    val unknown = "unknown"
 
     /**
      * Get app version
@@ -63,11 +54,20 @@ object Utils {
         }
     }
 
-    private var mToast: Toast? = null
-
     fun showToast(context: Context, text: String, duration: Int) {
         if (mToast != null) mToast!!.cancel()
         mToast = Toast.makeText(context, text, duration)
         mToast!!.show()
+    }
+
+    fun md5(message: String): String {
+        return String(Hex.encodeHex(DigestUtils.md5(message)))
+    }
+
+    fun stringArrayToCharSequenceArray(stringArray: Array<Any>): Array<CharSequence?> {
+        val charSequenceArray = arrayOfNulls<CharSequence>(stringArray.size)
+        for (i in stringArray.indices)
+            charSequenceArray[i] = stringArray[i] as String
+        return charSequenceArray
     }
 }

@@ -87,8 +87,7 @@
     <string name="change_event_new">Evenement aangemaakt</string>
     <string name="change_event_update">Evenement bijgewerkt</string>
     <string name="change_event_destroy">Evenement verwijderd</string>
-    <string name="change_signup_new_true">Ingeschreven</string>
-    <string name="change_signup_new_false">Ingeschreven</string>
+    <string name="change_signup_new">Inschrijving aangemaakt</string>
     <string name="change_signup_update">Inschrijving bijgewerkt</string>
     <string name="change_signup_destroy">Inschrijving verwijderd</string>
     <string name="change_beer_new">Biertje toegevoegd</string>
