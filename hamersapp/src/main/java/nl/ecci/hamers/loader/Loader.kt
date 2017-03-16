@@ -28,7 +28,7 @@ object Loader {
     val SIGNUPURL = "signups"
     val GCMURL = "register"
     val STICKERURL = "stickers"
-    val CHANGEURL = "changes"
+    val CHANGEURL = "changes.xml"
     // Data keys
     val APIKEYKEY = "apikey"
 

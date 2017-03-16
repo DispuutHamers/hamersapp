@@ -39,7 +39,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_item_changes"
-            android:icon="@drawable/settings"
+            android:icon="@drawable/changes"
             android:title="@string/navigation_item_changes" />
         <item
             android:id="@+id/navigation_item_settings"
