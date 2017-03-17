@@ -43,10 +43,6 @@
             </intent-filter>
         </service>
 
-        <service
-            android:name="nl.ecci.hamers.fcm.RegistrationIntentService"
-            android:exported="false" />
-
         <activity android:name="nl.ecci.hamers.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
