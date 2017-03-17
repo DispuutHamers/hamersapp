@@ -38,6 +38,9 @@ class SingleEventActivity : HamersActivity() {
 
         initToolbar()
 
+        val appLinkAction = intent.action
+        val appLinkData = intent.data
+
         event = DataUtils.getEvent(prefs, intent.getIntExtra(Event.EVENT, 1))
         ownUser = DataUtils.getOwnUser(PreferenceManager.getDefaultSharedPreferences(this))
 

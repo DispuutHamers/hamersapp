@@ -213,4 +213,7 @@
     <!-- About -->
     <string name="about_libraries">Bibliotheken</string>
     <string name="you_are_running">Je gebruikt</string>
+
+    <!-- Other -->
+    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://zondersikkel.nl\",\n  }\n}]</string>
 </resources>
