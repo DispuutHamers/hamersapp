@@ -56,10 +56,6 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
-
-            override fun onError(error: VolleyError) {
-                // Nothing
-            }
         }, null)
     }
 

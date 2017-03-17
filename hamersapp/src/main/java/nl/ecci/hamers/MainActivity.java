@@ -1,9 +1,6 @@
 package nl.ecci.hamers;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -44,7 +40,6 @@ import java.util.Locale;
 
 import nl.ecci.hamers.beers.BeerFragment;
 import nl.ecci.hamers.events.EventFragment;
-import nl.ecci.hamers.gcm.RegistrationIntentService;
 import nl.ecci.hamers.helpers.DataUtils;
 import nl.ecci.hamers.helpers.HamersActivity;
 import nl.ecci.hamers.helpers.Utils;
@@ -61,16 +56,12 @@ public class MainActivity extends HamersActivity {
     public static final Locale locale = new Locale("nl");
     public static final SimpleDateFormat dbDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", locale);
     public static final SimpleDateFormat appDF = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", locale);
-    public static final SimpleDateFormat appDF2 = new SimpleDateFormat("EEEE dd MMMM yyyy", locale);
-    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
-    public static final String REGISTRATION_COMPLETE = "registrationComplete";
+    public static final SimpleDateFormat appDTF = new SimpleDateFormat("EEEE dd MMMM yyyy", locale);
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public static SharedPreferences prefs;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private boolean backPressedOnce;
-    // GCM
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     /**
      * Setup of default ImageLoader configuration (Universal Image Loader)
@@ -147,24 +138,7 @@ public class MainActivity extends HamersActivity {
             recreate();
         }
 
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                boolean sentToken = prefs
-                        .getBoolean(SENT_TOKEN_TO_SERVER, false);
-                if (sentToken) {
-                    System.out.println(getString(R.string.gcm_send_message));
-                } else {
-                    System.out.println(getString(R.string.token_error_message));
-                }
-            }
-        };
-
-        if (checkPlayServices()) {
-            // Start IntentService to register this application with GCM.
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
-        }
+        checkPlayServices();
 
         DataUtils.INSTANCE.hasApiKey(this, prefs);
 
@@ -246,8 +220,7 @@ public class MainActivity extends HamersActivity {
                 GoogleApiAvailability.getInstance().getErrorDialog(this, resultCode,
                         PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
-                Utils.INSTANCE.showToast(this, getResources().getString(R.string.gps_missing), Toast.LENGTH_SHORT);
-                finish();
+                GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
             }
             return false;
         }
@@ -257,14 +230,7 @@ public class MainActivity extends HamersActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(REGISTRATION_COMPLETE));
-    }
-
-    @Override
-    protected void onPause() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
-        super.onPause();
+        checkPlayServices();
     }
 
     /**
@@ -336,7 +302,7 @@ public class MainActivity extends HamersActivity {
 
     private void fillHeader() {
         User user = DataUtils.INSTANCE.getOwnUser(prefs);
-        if (user != null && user.getId() != -1) {
+        if (user.getId() != -1) {
             View headerLayout = navigationView.getHeaderView(0);
             TextView userName = (TextView) headerLayout.findViewById(R.id.header_user_name);
             TextView userEmail = (TextView) headerLayout.findViewById(R.id.header_user_email);
@@ -355,11 +321,6 @@ public class MainActivity extends HamersActivity {
                 @Override
                 public void onSuccess(@NonNull String response) {
                     fillHeader();
-                }
-
-                @Override
-                public void onError(@NonNull VolleyError error) {
-                    // Nothing
                 }
             }, null);
         }

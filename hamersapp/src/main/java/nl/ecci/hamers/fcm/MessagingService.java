@@ -1,4 +1,4 @@
-package nl.ecci.hamers.gcm;
+package nl.ecci.hamers.fcm;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,11 +9,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
-import com.google.android.gms.gcm.GcmListenerService;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,9 +24,9 @@ import java.util.Set;
 import nl.ecci.hamers.MainActivity;
 import nl.ecci.hamers.R;
 
-public class MyGcmListenerService extends GcmListenerService {
+public class MessagingService extends FirebaseMessagingService {
 
-    private static final String TAG = "MyGcmListenerService";
+    public static final String TAG = "MessagingService";
     private final String QUOTEDATE = "created_at";
     private JSONObject event;
     private JSONObject beer;
@@ -33,32 +34,44 @@ public class MyGcmListenerService extends GcmListenerService {
 
     /**
      * Called when message is received.
-     *
-     * @param from SenderID of the sender.
-     * @param data Data bundle containing message data as key/value pairs.
-     *             For Set of keys use data.keySet().
      */
     @Override
-    public void onMessageReceived(String from, Bundle data) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        // TODO(developer): Handle FCM messages here.
+        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
+        Log.d(TAG, "From: " + remoteMessage.getFrom());
 
-        String title = null;
-        String message = null;
-
-        JSONObject object = new JSONObject();
-        Set<String> keys = data.keySet();
-        for (String key : keys) {
-            try {
-                object.put(key, data.get(key));
-            } catch (JSONException ignored) {
-            }
+        // Check if message contains a data payload.
+        if (remoteMessage.getData().size() > 0) {
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
         }
 
-        System.out.println(data.toString());
+        // Check if message contains a notification payload.
+        if (remoteMessage.getNotification() != null) {
+            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+        }
+
+
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//
+//        Intent intent = new Intent(this, MainActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+//
+//        String title = null;
+//        String message = null;
+//
+//        JSONObject object = new JSONObject();
+//        Set<String> keys = data.keySet();
+//        for (String key : keys) {
+//            try {
+//                object.put(key, data.get(key));
+//            } catch (JSONException ignored) {
+//            }
+//        }
+//
+//        System.out.println(data.toString());
 
 //        // QUOTE
 //        JSONArray json;

@@ -122,7 +122,7 @@ class SingleBeerActivity : HamersActivity() {
 
         view.review_title.text = String.format("%s: ", DataUtils.getUser(this, review.userID).name)
         view.review_body.text = review.description
-        view.review_date.text = MainActivity.appDF2.format(review.proefdatum)
+        view.review_date.text = MainActivity.appDTF.format(review.proefdatum)
         view.review_rating.text = String.format("Cijfer: %s", review.rating)
 
         // Insert into view

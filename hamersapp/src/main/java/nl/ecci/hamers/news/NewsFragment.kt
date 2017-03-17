@@ -58,10 +58,6 @@ class NewsFragment : HamersListFragment() {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
-
-            override fun onError(error: VolleyError) {
-                // Nothing
-            }
         }, null)
     }
 

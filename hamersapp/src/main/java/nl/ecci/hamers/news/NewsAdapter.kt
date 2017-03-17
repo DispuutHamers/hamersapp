@@ -62,7 +62,7 @@ internal class NewsAdapter(private val dataSet: ArrayList<News>) : RecyclerView.
             with(news) {
                 itemView.newsItem_title.text = news.title
                 itemView.newsItem_body.text = news.body
-                itemView.newsItem_date.text = MainActivity.appDF2.format(date)
+                itemView.newsItem_date.text = MainActivity.appDTF.format(date)
             }
         }
     }

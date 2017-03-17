@@ -71,7 +71,7 @@ internal class EventListAdapter(private val context: Context, private val dataSe
             with(event) {
                 itemView.event_title.text = event.title
                 itemView.event_beschrijving.text = event.description
-                itemView.event_date.text = MainActivity.appDF2.format(event.date)
+                itemView.event_date.text = MainActivity.appDTF.format(event.date)
                 if (event.location.isNullOrEmpty()) {
                     itemView.event_location.visibility = View.GONE
                 } else {

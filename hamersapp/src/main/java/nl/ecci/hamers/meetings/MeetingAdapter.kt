@@ -47,7 +47,7 @@ class MeetingAdapter(private val dataSet: ArrayList<Meeting>, private val contex
         fun bindMeeting(meeting: Meeting) {
             with(meeting) {
                 itemView.meeting_subject.text = meeting.subject
-                itemView.meeting_date.text = MainActivity.appDF2.format(meeting.date)
+                itemView.meeting_date.text = MainActivity.appDTF.format(meeting.date)
             }
         }
     }

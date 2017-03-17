@@ -82,10 +82,6 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
             override fun onSuccess(response: String) {
                 populateMap().execute(dataSet)
             }
-
-            override fun onError(error: VolleyError) {
-                // Nothing
-            }
         }, null)
     }
 
