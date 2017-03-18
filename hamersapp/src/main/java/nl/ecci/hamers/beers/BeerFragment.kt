@@ -147,8 +147,10 @@ class BeerFragment : HamersListFragment(){
 
             if (params.isNotEmpty()) {
                 result = gson.fromJson<ArrayList<Beer>>(params[0], type)
-            } else {
+            } else if (prefs.getString(Loader.BEERURL, null) != null) {
                 result = gson.fromJson<ArrayList<Beer>>(prefs.getString(Loader.BEERURL, null), type)
+            } else {
+                result = ArrayList()
             }
             return result
         }
