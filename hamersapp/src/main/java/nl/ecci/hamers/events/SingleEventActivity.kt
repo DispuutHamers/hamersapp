@@ -22,13 +22,13 @@ import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.HamersActivity
+import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.loader.PostCallback
 import nl.ecci.hamers.users.User
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
-
 
 class SingleEventActivity : HamersActivity() {
 
@@ -48,13 +48,11 @@ class SingleEventActivity : HamersActivity() {
 
         // Intent by clicking an event in EventFragment or by clicking a link elsewhere
         val appLinkData = intent.data
-        val eventID = intent.getIntExtra(Event.EVENT, -1)
+        val eventID = intent.getIntExtra(Event.EVENT, Utils.notFound)
         if (eventID != -1) {
             event = DataUtils.getEvent(prefs, eventID)
         } else if (appLinkData != null) {
-            val path = appLinkData.path
-            val idStr = path.substring(path.lastIndexOf('/') + 1)
-            event = DataUtils.getEvent(prefs, Integer.parseInt(idStr))
+            event = DataUtils.getEvent(prefs, Utils.getIdFromUri(appLinkData))
         }
 
         var eventTitle = event?.title

@@ -8,7 +8,6 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.view.*
 import android.widget.TextView
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.nostra13.universalimageloader.core.ImageLoader
@@ -21,13 +20,13 @@ import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.HamersActivity
 import nl.ecci.hamers.helpers.SingleImageActivity
+import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.Loader
 import java.util.*
 
 class SingleBeerActivity : HamersActivity() {
 
     private var beer: Beer? = null
-    private var gson: Gson? = null
     private var ownReview: Review? = null
 
     // Activity for result
@@ -40,34 +39,27 @@ class SingleBeerActivity : HamersActivity() {
 
         initToolbar()
 
-        stub_detail_item.layoutResource = R.layout.stub_detail_beer
-        stub_detail_item.inflate()
-
-        val gsonBuilder = GsonBuilder()
-        gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
-        gson = gsonBuilder.create()
-
-        review_create_button.setOnClickListener { updateReview(ownReview) }
-
-        beer = DataUtils.getBeer(prefs!!, intent.getIntExtra(Beer.BEER, -1))
-
-        setValues()
-
-        ImageLoader.getInstance().displayImage(beer!!.imageURL, beer_image)
-
-        beer_image.setOnClickListener {
-            val intent = Intent(this@SingleBeerActivity, SingleImageActivity::class.java)
-            val transitionName = getString(R.string.transition_single_image)
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@SingleBeerActivity, beer_image, transitionName)
-            intent.putExtra(Beer.BEER, gson!!.toJson(beer, Beer::class.java))
-            ActivityCompat.startActivity(this@SingleBeerActivity, intent, options.toBundle())
+        // Intent by clicking an event in EventFragment or by clicking a link elsewhere
+        val appLinkData = intent.data
+        val beerID = intent.getIntExtra(Beer.BEER, Utils.notFound)
+        if (beerID != -1) {
+            beer = DataUtils.getBeer(prefs, beerID)
+        } else if (appLinkData != null) {
+            beer = DataUtils.getBeer(prefs, Utils.getIdFromUri(appLinkData))
         }
+
+        initUI()
 
         getReviews()
     }
 
-    private fun setValues() {
-        var beerName = beer!!.name
+    private fun initUI() {
+        stub_detail_item.layoutResource = R.layout.stub_detail_beer
+        stub_detail_item.inflate()
+
+        review_create_button.setOnClickListener { updateReview(ownReview) }
+
+        var beerName = beer?.name
         if (BuildConfig.DEBUG) {
             beerName += " (" + beer!!.id + ")"
         }
@@ -83,6 +75,17 @@ class SingleBeerActivity : HamersActivity() {
         } else {
             fillDetailRow(row_rating, getString(R.string.beer_rating), beer!!.rating)
         }
+
+        ImageLoader.getInstance().displayImage(beer!!.imageURL, beer_image)
+
+        beer_image.setOnClickListener {
+            val intent = Intent(this@SingleBeerActivity, SingleImageActivity::class.java)
+            val transitionName = getString(R.string.transition_single_image)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@SingleBeerActivity, beer_image, transitionName)
+            intent.putExtra(Beer.BEER, gson.toJson(beer, Beer::class.java))
+            ActivityCompat.startActivity(this@SingleBeerActivity, intent, options.toBundle())
+        }
+
     }
 
     private fun getReviews() {
@@ -219,7 +222,7 @@ class SingleBeerActivity : HamersActivity() {
                 beer!!.country = data?.getStringExtra(beerCountry)
                 beer!!.rating = beer!!.rating!! + " (Nog niet bijgewerkt)"
 
-                setValues()
+                initUI()
             }
         }
     }

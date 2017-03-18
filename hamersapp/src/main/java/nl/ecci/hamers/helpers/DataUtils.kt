@@ -20,7 +20,7 @@ import nl.ecci.hamers.users.User
 import java.util.*
 
 object DataUtils {
-    
+
     /**
      * Show the dialog for entering the apikey on startup
      */
@@ -143,12 +143,9 @@ object DataUtils {
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<Event>>() {
-
         }.type
-        var eventList: ArrayList<Event>? = null
-        if (prefs != null) {
-            eventList = gson.fromJson<ArrayList<Event>>(prefs.getString(Loader.EVENTURL, null), type)
-        }
+
+        val eventList = gson.fromJson<ArrayList<Event>>(prefs?.getString(Loader.EVENTURL, null), type)
 
         if (eventList != null) {
             eventList.filter { it.id == id }
@@ -158,14 +155,14 @@ object DataUtils {
         return result
     }
 
-    fun getBeer(prefs: SharedPreferences, id: Int): Beer {
+    fun getBeer(prefs: SharedPreferences?, id: Int): Beer {
         var result = Beer(Utils.notFound, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Date())
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<Beer>>() {
-
         }.type
-        val beerList = gson.fromJson<ArrayList<Beer>>(prefs.getString(Loader.BEERURL, null), type)
+
+        val beerList = gson.fromJson<ArrayList<Beer>>(prefs?.getString(Loader.BEERURL, null), type)
 
         if (beerList != null) {
             beerList.filter { it.id == id }
