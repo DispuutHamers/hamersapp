@@ -162,6 +162,17 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.ecci.hamers.MainActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="zondersikkel.nl"
+                    android:pathPrefix="/meetings" />
+            </intent-filter>
         </activity>
         <activity
             android:name="nl.ecci.hamers.meetings.NewMeetingActivity"

@@ -43,7 +43,6 @@ class NewReviewActivity : NewItemActivity() {
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", MainActivity.locale)
 
-        val gson = GsonBuilder().create()
         beer = DataUtils.getBeer(MainActivity.prefs, intent.getIntExtra(Beer.BEER, 1))
         review = gson.fromJson<Review>(intent.getStringExtra(Review.REVIEW), Review::class.java)
 

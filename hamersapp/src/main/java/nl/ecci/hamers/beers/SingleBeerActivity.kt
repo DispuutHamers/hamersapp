@@ -42,7 +42,7 @@ class SingleBeerActivity : HamersActivity() {
         // Intent by clicking an event in EventFragment or by clicking a link elsewhere
         val appLinkData = intent.data
         val beerID = intent.getIntExtra(Beer.BEER, Utils.notFound)
-        if (beerID != -1) {
+        if (beerID != Utils.notFound) {
             beer = DataUtils.getBeer(prefs, beerID)
         } else if (appLinkData != null) {
             beer = DataUtils.getBeer(prefs, Utils.getIdFromUri(appLinkData))

@@ -172,7 +172,7 @@ object DataUtils {
         return result
     }
 
-    fun getMeeting(prefs: SharedPreferences, id: Int): Meeting {
+    fun getMeeting(prefs: SharedPreferences?, id: Int): Meeting {
         val date = Date()
         var result = Meeting(Utils.notFound, Utils.unknown, Utils.unknown, Utils.unknown, Utils.notFound, date, date, date)
         val gsonBuilder = GsonBuilder()
@@ -180,7 +180,7 @@ object DataUtils {
         val type = object : TypeToken<ArrayList<Meeting>>() {
 
         }.type
-        val meetingList = gson.fromJson<ArrayList<Meeting>>(prefs.getString(Loader.MEETINGURL, null), type)
+        val meetingList = gson.fromJson<ArrayList<Meeting>>(prefs?.getString(Loader.MEETINGURL, null), type)
 
         if (meetingList != null) {
             meetingList

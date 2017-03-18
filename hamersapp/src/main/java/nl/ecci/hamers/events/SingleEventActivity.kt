@@ -49,7 +49,7 @@ class SingleEventActivity : HamersActivity() {
         // Intent by clicking an event in EventFragment or by clicking a link elsewhere
         val appLinkData = intent.data
         val eventID = intent.getIntExtra(Event.EVENT, Utils.notFound)
-        if (eventID != -1) {
+        if (eventID != Utils.notFound) {
             event = DataUtils.getEvent(prefs, eventID)
         } else if (appLinkData != null) {
             event = DataUtils.getEvent(prefs, Utils.getIdFromUri(appLinkData))
