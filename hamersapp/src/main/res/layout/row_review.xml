@@ -2,10 +2,9 @@
     android:id="@+id/review_row"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:background="?attr/selectableItemBackground"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
 
     <TextView
         android:id="@+id/review_title"
@@ -61,8 +60,8 @@
             android:layout_alignParentBottom="true"
             android:ellipsize="marquee"
             android:gravity="start|bottom"
-            android:paddingBottom="2dp"
             android:maxLines="1"
+            android:paddingBottom="2dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="14sp"

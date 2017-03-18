@@ -13,7 +13,7 @@ class User(val id: Int,
            @SerializedName("lid")
            val member: User.Member,
            val batch: Int,
-           val nicknames: ArrayList<User.Nickname>,
+           val nicknames: ArrayList<Nickname>,
            @SerializedName("created_at")
            val createdAt: Date) {
 
@@ -28,9 +28,7 @@ class User(val id: Int,
         NONE
     }
 
-    inner class Nickname(val nickname: String)
-
     companion object {
-        val USER_ID = "USER_ID"
+        val USER = "USER"
     }
 }

@@ -28,7 +28,7 @@ class NewNewsActivity : NewItemActivity() {
     override fun postItem() {
         val body = JSONObject()
         try {
-            body.put("name", news_title.text.toString())
+            body.put("title", news_title.text.toString())
             body.put("body", news_body.text.toString())
             body.put("cat", "l")
         } catch (ignored: JSONException) {

@@ -44,15 +44,15 @@ class SingleEventActivity : HamersActivity() {
         stub_detail_item.layoutResource = R.layout.stub_detail_event
         stub_detail_item.inflate()
 
-        ownUser = DataUtils.getOwnUser(PreferenceManager.getDefaultSharedPreferences(this))
+        ownUser = DataUtils.getOwnUser(this)
 
         // Intent by clicking an event in EventFragment or by clicking a link elsewhere
         val appLinkData = intent.data
         val eventID = intent.getIntExtra(Event.EVENT, Utils.notFound)
-        if (eventID != Utils.notFound) {
-            event = DataUtils.getEvent(prefs, eventID)
-        } else if (appLinkData != null) {
-            event = DataUtils.getEvent(prefs, Utils.getIdFromUri(appLinkData))
+        if (appLinkData != null) {
+            event = DataUtils.getEvent(this, Utils.getIdFromUri(appLinkData))
+        } else {
+            event = DataUtils.getEvent(this, eventID)
         }
 
         var eventTitle = event?.title

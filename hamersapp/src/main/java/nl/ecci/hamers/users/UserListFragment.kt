@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.fragment_hamers_list.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
+import nl.ecci.hamers.helpers.DividerItemDecoration
 import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
@@ -33,7 +34,8 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_recyclerview.adapter = UserListAdapter(dataSet, activity)
+        hamers_list.addItemDecoration(DividerItemDecoration(activity))
+        hamers_list.adapter = UserListAdapter(dataSet, activity)
         hamers_fab.visibility = View.GONE
 
         exUser = arguments.getBoolean(UserFragmentAdapter.exUser, false)
@@ -96,21 +98,25 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
     private fun sortByUsername() {
         val nameComperator = Comparator<User> { user1, user2 -> user1.name.compareTo(user2.name, ignoreCase = true) }
         Collections.sort(dataSet, nameComperator)
+        notifyAdapter()
     }
 
     private fun sortByQuoteCount() {
         val quoteComperator = Comparator<User> { user1, user2 -> user2.quoteCount - user1.quoteCount }
         Collections.sort(dataSet, quoteComperator)
+        notifyAdapter()
     }
 
     private fun sortByReviewCount() {
         val reviewComperator = Comparator<User> { user1, user2 -> user2.reviewCount - user1.reviewCount }
         Collections.sort(dataSet, reviewComperator)
+        notifyAdapter()
     }
 
     private fun sortByBatch() {
         val batchComperator = Comparator<User> { user1, user2 -> user1.batch - user2.batch }
         Collections.sort(dataSet, batchComperator)
+        notifyAdapter()
     }
 
     private inner class populateList : AsyncTask<String, Void, ArrayList<User>>() {

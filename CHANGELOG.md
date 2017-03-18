@@ -4,6 +4,7 @@
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.2.1..2.3.0)
 
 - Push notifications
+- Log (papertrail) in app
 - Open events, beers and meetings from url with the app
 - Even more consistent layouts
 - Bug fixes and performance improvements

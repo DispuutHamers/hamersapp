@@ -29,7 +29,7 @@ class MeetingFragment : HamersListFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_recyclerview.adapter = MeetingAdapter(dataSet, activity)
+        hamers_list.adapter = MeetingAdapter(dataSet, activity)
         hamers_fab.setOnClickListener { startActivityForResult(Intent(activity, NewMeetingActivity::class.java), 1) }
 
         onRefresh()

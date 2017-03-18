@@ -3,7 +3,7 @@ package nl.ecci.hamers.beers
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-internal class Review(val id: Int,
+class Review(val id: Int,
                       @SerializedName("beer_id")
                       val beerID: Int,
                       @SerializedName("user_id")

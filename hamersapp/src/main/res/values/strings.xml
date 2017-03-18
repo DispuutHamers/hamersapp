@@ -6,8 +6,7 @@
 
     <string name="search_title">Zoeken</string>
     <string name="search_hint">Zoek…</string>
-    <string name="edit_item">Wijzig unit</string>
-
+    <string name="edit_item">Wijzig</string>
     <string name="close">Sluiten</string>
 
     <!-- Drawer -->
@@ -22,7 +21,7 @@
     <string name="navigation_item_users">Leden</string>
     <string name="navigation_item_meetings">Vergaderingen</string>
     <string name="navigation_item_stickers">Stickers</string>
-    <string name="navigation_item_changes">Changes</string>
+    <string name="navigation_item_changes">Log</string>
     <string name="navigation_item_settings">Instellingen</string>
     <string name="navigation_item_about">Over</string>
 
@@ -52,6 +51,7 @@
     <string name="reminder_message">Iedereen die zich nog niet heeft ingeschreven krijgt een mail ter herrinering!</string>
     <string name="menu_upcoming">Aankomend</string>
     <string name="menu_all">Alle</string>
+    <string name="event_not_found">Activiteit niet gevonden</string>
 
     <!-- Beers -->
     <string name="new_beer">Nieuw biertje</string>
@@ -81,6 +81,38 @@
     <string name="new_news">Nieuw nieuwsitem</string>
     <string name="news_title">Titel</string>
     <string name="news_body">Vertel dan..</string>
+
+    <!-- Changes -->
+    <string name="change_quote_new">Quote geplaatst</string>
+    <string name="change_quote_update">Quote bijgewerkt</string>
+    <string name="change_quote_destroy">Quote verwijderd</string>
+    <string name="change_event_new">Evenement aangemaakt</string>
+    <string name="change_event_update">Evenement bijgewerkt</string>
+    <string name="change_event_destroy">Evenement verwijderd</string>
+    <string name="change_signup_new">Inschrijving aangemaakt</string>
+    <string name="change_signup_update">Inschrijving bijgewerkt</string>
+    <string name="change_signup_destroy">Inschrijving verwijderd</string>
+    <string name="change_beer_new">Biertje toegevoegd</string>
+    <string name="change_beer_update">Biertje bijgewerkt</string>
+    <string name="change_beer_destroy">Biertje verwijderd</string>
+    <string name="change_news_new">Nieuws aangemaakt</string>
+    <string name="change_news_update">Nieuws bijgewerkt</string>
+    <string name="change_news_destroy">Nieuws verwijderd</string>
+    <string name="change_user_new">Gebruiker verwijderd</string>
+    <string name="change_user_update">Gebruiker bijgewerkt</string>
+    <string name="change_user_destroy">Gebruiker verwijderd</string>
+    <string name="change_nick_new">Nickname aangemaakt</string>
+    <string name="change_nick_update">Nickname bijgewerkt</string>
+    <string name="change_nick_destroy">Nickname verwijderd</string>
+    <string name="change_review_new">Review aangemaakt</string>
+    <string name="change_review_update">Review bijgewerkt</string>
+    <string name="change_review_destroy">Review verwijderd</string>
+    <string name="change_sticker_new">Sticker geplakt</string>
+    <string name="change_sticker_update">Sticker bijgewerkt</string>
+    <string name="change_sticker_destroy">Sticker verwijderd</string>
+    <string name="change_meeting_new">Vergadering aangemaakt</string>
+    <string name="change_meeting_update">Vergadering bijgewerkt</string>
+    <string name="change_meeting_destroy">Vergadering verwijderd</string>
 
     <!-- Users -->
     <string name="user_name">Naam</string>
@@ -182,6 +214,7 @@
     <string name="network_error">Oh noes! De verbinding ging stuk!</string>
     <string name="timeout_error">Timeout bij ophalen data.</string>
     <string name="auth_error">Authenticatie error. Probeer je API key opnieuw in te voeren.</string>
+    <string name="unit_destroyed">Er staat toch verwijderd?!</string>
 
     <!-- Sorting -->
     <string name="sort_quotes">Aantal quotes</string>

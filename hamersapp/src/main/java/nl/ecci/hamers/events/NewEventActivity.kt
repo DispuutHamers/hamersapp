@@ -37,7 +37,7 @@ class NewEventActivity : NewItemActivity(), TimePickerDialog.OnTimeSetListener {
 
         eventID = intent.getIntExtra(Event.EVENT, -1)
         if (eventID != -1) {
-            val event = DataUtils.getEvent(MainActivity.prefs, eventID)
+            val event = DataUtils.getEvent(this, eventID)
             event_title.setText(event.title)
             event_location.setText(event.location)
             event_beschrijving.setText(event.description)
