@@ -7,7 +7,6 @@
     <string name="search_title">Zoeken</string>
     <string name="search_hint">Zoek…</string>
     <string name="edit_item">Wijzig</string>
-
     <string name="close">Sluiten</string>
 
     <!-- Drawer -->
@@ -210,6 +209,7 @@
     <string name="network_error">Oh noes! De verbinding ging stuk!</string>
     <string name="timeout_error">Timeout bij ophalen data.</string>
     <string name="auth_error">Authenticatie error. Probeer je API key opnieuw in te voeren.</string>
+    <string name="unit_destroyed">Er staat toch verwijderd?!</string>
 
     <!-- Sorting -->
     <string name="sort_quotes">Aantal quotes</string>

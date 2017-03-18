@@ -43,10 +43,10 @@ class SingleBeerActivity : HamersActivity() {
         // Intent by clicking an event in EventFragment or by clicking a link elsewhere
         val appLinkData = intent.data
         val beerID = intent.getIntExtra(Beer.BEER, Utils.notFound)
-        if (beerID != Utils.notFound) {
-            beer = DataUtils.getBeer(this, beerID)
-        } else if (appLinkData != null) {
+        if (appLinkData != null) {
             beer = DataUtils.getBeer(this, Utils.getIdFromUri(appLinkData))
+        } else {
+            beer = DataUtils.getBeer(this, beerID)
         }
 
         user = DataUtils.getOwnUser(this)
@@ -64,22 +64,22 @@ class SingleBeerActivity : HamersActivity() {
 
         var beerName = beer?.name
         if (BuildConfig.DEBUG) {
-            beerName += " (" + beer!!.id + ")"
+            beerName += " (" + beer?.id + ")"
         }
         beer_name.text = beerName
 
-        fillDetailRow(row_kind, getString(R.string.beer_soort), beer!!.kind)
-        fillDetailRow(row_alc, getString(R.string.beer_alc), beer!!.percentage)
-        fillDetailRow(row_brewer, getString(R.string.beer_brewer), beer!!.brewer)
-        fillDetailRow(row_country, getString(R.string.beer_country), beer!!.country)
+        fillDetailRow(row_kind, getString(R.string.beer_soort), beer?.kind)
+        fillDetailRow(row_alc, getString(R.string.beer_alc), beer?.percentage)
+        fillDetailRow(row_brewer, getString(R.string.beer_brewer), beer?.brewer)
+        fillDetailRow(row_country, getString(R.string.beer_country), beer?.country)
 
-        if (beer!!.rating == null) {
+        if (beer?.rating == null) {
             fillDetailRow(row_rating, getString(R.string.beer_rating), "Nog niet bekend")
         } else {
-            fillDetailRow(row_rating, getString(R.string.beer_rating), beer!!.rating)
+            fillDetailRow(row_rating, getString(R.string.beer_rating), beer?.rating)
         }
 
-        ImageLoader.getInstance().displayImage(beer!!.imageURL, beer_image)
+        ImageLoader.getInstance().displayImage(beer?.imageURL, beer_image)
 
         beer_image.setOnClickListener {
             val intent = Intent(this@SingleBeerActivity, SingleImageActivity::class.java)
@@ -104,7 +104,7 @@ class SingleBeerActivity : HamersActivity() {
 
         val iterator = reviewList.listIterator()
 
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             val review = iterator.next()
             if (review.userID == user?.id) {
                 review_create_button.setText(R.string.edit_review)
@@ -129,7 +129,7 @@ class SingleBeerActivity : HamersActivity() {
      */
     private fun updateReview(review: Review?) {
         val intent = Intent(this, NewReviewActivity::class.java)
-        intent.putExtra(Beer.BEER, beer!!.id)
+        intent.putExtra(Beer.BEER, beer?.id)
 
         if (review != null) {
             intent.putExtra(Review.REVIEW, gson!!.toJson(review, Review::class.java))
@@ -182,7 +182,7 @@ class SingleBeerActivity : HamersActivity() {
             R.id.edit_item -> {
                 val intent = Intent(this, NewBeerActivity::class.java)
                 if (beer != null) {
-                    intent.putExtra(Beer.BEER, beer!!.id)
+                    intent.putExtra(Beer.BEER, beer?.id)
                 }
                 startActivityForResult(intent, beerRequestCode)
                 return true
@@ -218,7 +218,7 @@ class SingleBeerActivity : HamersActivity() {
                 beer?.percentage = data?.getStringExtra(beerPercentage)
                 beer?.brewer = data?.getStringExtra(beerBrewer)
                 beer?.country = data?.getStringExtra(beerCountry)
-                beer?.rating = beer!!.rating!! + " (Nog niet bijgewerkt)"
+                beer?.rating = beer?.rating!! + " (Nog niet bijgewerkt)"
 
                 initUI()
             }

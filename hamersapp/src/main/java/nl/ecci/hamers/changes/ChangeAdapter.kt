@@ -2,10 +2,12 @@ package nl.ecci.hamers.changes
 
 import android.content.Context
 import android.content.Intent
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.main.*
 import kotlinx.android.synthetic.main.row_change.view.*
@@ -20,6 +22,7 @@ import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.DataUtils.getGravatarURL
 import nl.ecci.hamers.users.SingleUserActivity
 import nl.ecci.hamers.users.User
+import org.jetbrains.anko.contentView
 import java.util.*
 
 internal class ChangeAdapter(private val context: Context, private val dataSet: ArrayList<Change>) : RecyclerView.Adapter<ChangeAdapter.ViewHolder>() {
@@ -41,6 +44,12 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
             val change = dataSet[layoutPosition]
 
             if (change.itemType != null) {
+
+                if (change.event == Change.Event.DESTROY && change.itemType != Change.ItemType.REVIEW) {
+                    Toast.makeText(context, R.string.unit_destroyed, Snackbar.LENGTH_SHORT).show()
+                    return
+                }
+
                 val intent: Intent?
                 when (change.itemType) {
                     Change.ItemType.QUOTE -> {
