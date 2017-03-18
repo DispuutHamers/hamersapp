@@ -120,7 +120,7 @@ class EventListFragment : HamersListFragment() {
         onRefresh()
     }
 
-    private inner class populateList : AsyncTask<String, Void, ArrayList<Event>>() {
+    private inner class populateList : AsyncTask<String, Void, ArrayList<Event>?>() {
 
         override fun doInBackground(vararg params: String): ArrayList<Event>? {
             val gsonBuilder = GsonBuilder()
