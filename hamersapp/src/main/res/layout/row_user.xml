@@ -15,7 +15,7 @@
 
     <LinearLayout
         android:id="@+id/textview_container"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
         android:layout_centerVertical="true"
@@ -33,5 +33,7 @@
             android:gravity="center_vertical"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp" />
+
     </LinearLayout>
-</RelativeLayout> 
+
+</RelativeLayout>

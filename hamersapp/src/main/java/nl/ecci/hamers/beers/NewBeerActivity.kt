@@ -30,7 +30,7 @@ class NewBeerActivity : NewItemActivity() {
 
         beerID = intent.getIntExtra(Beer.BEER, -1)
         if (beerID != -1) {
-            val beer = DataUtils.getBeer(MainActivity.prefs, beerID)
+            val beer = DataUtils.getBeer(this, beerID)
             beer_name.setText(beer.name)
             beer_picture.setText(beer.imageURL)
             beer_soort.setText(beer.kind)

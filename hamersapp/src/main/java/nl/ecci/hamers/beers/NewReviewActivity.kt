@@ -43,7 +43,7 @@ class NewReviewActivity : NewItemActivity() {
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", MainActivity.locale)
 
-        beer = DataUtils.getBeer(MainActivity.prefs, intent.getIntExtra(Beer.BEER, 1))
+        beer = DataUtils.getBeer(this, intent.getIntExtra(Beer.BEER, 1))
         review = gson.fromJson<Review>(intent.getStringExtra(Review.REVIEW), Review::class.java)
 
         review_title.text = beer!!.name

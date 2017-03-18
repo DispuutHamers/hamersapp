@@ -21,7 +21,7 @@ internal class UserListAdapter(private val dataSet: ArrayList<User>, private val
 
         view.setOnClickListener {
             val intent = Intent(context, SingleUserActivity::class.java)
-            intent.putExtra(User.USER_ID, dataSet[vh.adapterPosition].id)
+            intent.putExtra(User.USER, dataSet[vh.adapterPosition].id)
             context.startActivity(intent)
         }
 

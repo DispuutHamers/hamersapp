@@ -3,7 +3,6 @@ package nl.ecci.hamers.beers
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.RecyclerView
@@ -32,32 +31,25 @@ internal class BeerAdapter(private val dataSet: ArrayList<Beer>, private val con
         val vh = ViewHolder(view)
 
         view.setOnClickListener {
-            try {
-                val activity = context as Activity
-                val imageTransitionName = context.getString(R.string.transition_single_image)
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view.beer_image, imageTransitionName)
-                val intent = Intent(context, SingleBeerActivity::class.java)
-                intent.putExtra(Beer.BEER, filteredDataSet[vh.adapterPosition].id)
-                ActivityCompat.startActivity(activity, intent, options.toBundle())
-            } catch (ignored: NullPointerException) {
-            }
+            val activity = context as Activity
+            val imageTransitionName = context.getString(R.string.transition_single_image)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view.beer_image, imageTransitionName)
+            val intent = Intent(context, SingleBeerActivity::class.java)
+            intent.putExtra(Beer.BEER, filteredDataSet[vh.adapterPosition].id)
+            ActivityCompat.startActivity(activity, intent, options.toBundle())
         }
 
         view.beer_image.setOnClickListener {
-            try {
-                val beer = filteredDataSet[vh.adapterPosition]
-                val activity = context as Activity
-                val transitionName = context.getString(R.string.transition_single_image)
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view.beer_image, transitionName)
-                if (beer.imageURL.isNotEmpty()) {
-                    val intent = Intent(context, SingleImageActivity::class.java)
-                    intent.putExtra(Beer.BEER, GsonBuilder().create().toJson(beer, Beer::class.java))
-                    ActivityCompat.startActivity(activity, intent, options.toBundle())
-                } else {
-                    Utils.showToast(context, context.getString(R.string.no_image), Toast.LENGTH_SHORT)
-                }
-            } catch (ignored: NullPointerException) {
-                Snackbar.make(view, context.getString(R.string.generic_error), Snackbar.LENGTH_LONG).show()
+            val beer = filteredDataSet[vh.adapterPosition]
+            val activity = context as Activity
+            val transitionName = context.getString(R.string.transition_single_image)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view.beer_image, transitionName)
+            if (beer.imageURL.isNotEmpty()) {
+                val intent = Intent(context, SingleImageActivity::class.java)
+                intent.putExtra(Beer.BEER, GsonBuilder().create().toJson(beer, Beer::class.java))
+                ActivityCompat.startActivity(activity, intent, options.toBundle())
+            } else {
+                Utils.showToast(context, context.getString(R.string.no_image), Toast.LENGTH_SHORT)
             }
         }
 

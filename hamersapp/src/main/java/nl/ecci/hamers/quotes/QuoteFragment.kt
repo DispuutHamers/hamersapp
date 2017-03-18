@@ -38,8 +38,8 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_recyclerview.addItemDecoration(DividerItemDecoration(activity))
-        hamers_recyclerview.adapter = QuoteAdapter(dataSet, context)
+        hamers_list.addItemDecoration(DividerItemDecoration(activity))
+        hamers_list.adapter = QuoteAdapter(dataSet, context)
 
         // When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment
         hamers_fab.setOnClickListener {
@@ -74,7 +74,7 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
             }
 
             override fun onQueryTextChange(s: String): Boolean {
-                (hamers_recyclerview.adapter as QuoteAdapter).filter.filter(s.toLowerCase())
+                (hamers_list.adapter as QuoteAdapter).filter.filter(s.toLowerCase())
                 return false
             }
         })
@@ -97,7 +97,7 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
     }
 
     private fun scrollTop() {
-        view?.hamers_recyclerview?.smoothScrollToPosition(0)
+        view?.hamers_list?.smoothScrollToPosition(0)
     }
 
     override fun onDismiss(dialogInterface: DialogInterface) {
