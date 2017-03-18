@@ -32,7 +32,7 @@ object Loader {
     val APIKEYKEY = "apikey"
     val GCMURL = "register"
 
-    val urls = hashSetOf(QUOTEURL, USERURL, EVENTURL, NEWSURL, BEERURL, REVIEWURL, WHOAMIURL, MEETINGURL, SIGNUPURL, STICKERURL, CHANGEURL)
+    val urls = hashSetOf(QUOTEURL, USERURL, EVENTURL, SIGNUPURL, NEWSURL, BEERURL, REVIEWURL, WHOAMIURL, MEETINGURL, SIGNUPURL, STICKERURL, CHANGEURL)
 
     fun getData(context: Context, dataURL: String, callback: GetCallback?, params: Map<String, String>?) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)

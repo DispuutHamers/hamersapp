@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.beers.Beer
+import nl.ecci.hamers.beers.Review
 import nl.ecci.hamers.events.Event
 import nl.ecci.hamers.events.SignUp
 import nl.ecci.hamers.loader.Loader
@@ -189,6 +190,25 @@ object DataUtils {
 
         if (beerList != null) {
             beerList.filter { it.id == id }
+                    .forEach { result = it }
+        }
+
+        return result
+    }
+
+    fun getReview(context: Context, id: Int): Review {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+        var result = Review(Utils.notFound, Utils.notFound, Utils.notFound, Utils.unknown, Utils.notFound, Date(), Date())
+        val gsonBuilder = GsonBuilder()
+        val gson = gsonBuilder.create()
+        val type = object : TypeToken<ArrayList<Review>>() {
+        }.type
+
+        val reviewList = gson.fromJson<ArrayList<Review>>(prefs?.getString(Loader.REVIEWURL, null), type)
+
+        if (reviewList != null) {
+            reviewList.filter { it.id == id }
                     .forEach { result = it }
         }
 

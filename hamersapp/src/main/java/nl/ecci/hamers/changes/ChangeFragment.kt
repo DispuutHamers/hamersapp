@@ -55,8 +55,8 @@ class ChangeFragment : HamersListFragment() {
                 // Nothing
             }
         }, null)
-        // Load list of signUps (not loaded anywhere else)
-        Loader.getData(context, Loader.SIGNUPURL, null, null)
+        // Load all data (to prevent clicking on items that do not (yet) exist
+        Loader.getAllData(activity)
     }
 
     override fun onResume() {

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.nostra13.universalimageloader.core.ImageLoader
+import kotlinx.android.synthetic.main.main.*
 import kotlinx.android.synthetic.main.row_change.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
@@ -40,20 +41,33 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
             val change = dataSet[layoutPosition]
 
             if (change.itemType != null) {
-                var intent: Intent? = null
+                val intent: Intent?
                 when (change.itemType) {
+                    Change.ItemType.QUOTE -> {
+                        swapFragment(0)
+                        return
+                    }
                     Change.ItemType.EVENT -> {
                         intent = Intent(context, SingleEventActivity::class.java)
                         intent.putExtra(Event.EVENT, change.itemId)
                     }
                     Change.ItemType.SIGNUP -> {
                         intent = Intent(context, SingleEventActivity::class.java)
-                        val eventId = DataUtils.getSignUp(context, change.itemId).eventID
-                        intent.putExtra(Event.EVENT, eventId)
+                        val event = DataUtils.getSignUp(context, change.itemId)
+                        intent.putExtra(Event.EVENT, event.id)
                     }
                     Change.ItemType.BEER -> {
                         intent = Intent(context, SingleBeerActivity::class.java)
                         intent.putExtra(Beer.BEER, change.itemId)
+                    }
+                    Change.ItemType.REVIEW -> {
+                        intent = Intent(context, SingleBeerActivity::class.java)
+                        val review = DataUtils.getReview(context, change.itemId)
+                        intent.putExtra(Beer.BEER, review.beerID)
+                    }
+                    Change.ItemType.NEWS -> {
+                        swapFragment(3)
+                        return
                     }
                     Change.ItemType.USER -> {
                         intent = Intent(context, SingleUserActivity::class.java)
@@ -167,5 +181,12 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                 Change.Event.DESTROY -> itemView.change.text = context.getString(R.string.change_nick_destroy)
             }
         }
+    }
+
+    private fun swapFragment(i: Int) {
+        val activity = context as MainActivity
+        val menuItem = activity.navigation_view.menu.getItem(i)
+        MainActivity.selectItem(activity, menuItem)
+        menuItem.isChecked = true
     }
 }

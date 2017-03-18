@@ -43,7 +43,7 @@ class NewsFragment : HamersListFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.getItemId()) {
+        when (item!!.itemId) {
             R.id.scroll_top -> {
                 hamers_list!!.smoothScrollToPosition(0)
                 return true
@@ -54,7 +54,7 @@ class NewsFragment : HamersListFragment() {
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(getContext(), Loader.NEWSURL, object : GetCallback {
+        Loader.getData(context, Loader.NEWSURL, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
