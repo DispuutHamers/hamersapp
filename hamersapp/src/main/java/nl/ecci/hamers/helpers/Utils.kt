@@ -25,6 +25,7 @@ import java.util.*
 object Utils {
     var alertDialog: AlertDialog? = null
     val unknown = "Unknown"
+    val notFound = -1
 
     fun md5(message: String): String {
         return String(Hex.encodeHex(DigestUtils.md5(message)))

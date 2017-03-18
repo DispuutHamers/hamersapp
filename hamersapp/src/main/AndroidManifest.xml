@@ -92,9 +92,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.ecci.hamers.MainActivity" />
-            <intent-filter
-                android:autoVerify="true"
-                tools:ignore="UnusedAttribute">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -103,7 +101,7 @@
                 <data
                     android:scheme="https"
                     android:host="zondersikkel.nl"
-                    android:pathPattern="/events/[0-9]+" />
+                    android:pathPrefix="/events" />
             </intent-filter>
         </activity>
         <activity

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.CalendarContract
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -16,6 +17,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.android.volley.VolleyError
 import kotlinx.android.synthetic.main.detail_event.*
+import nl.ecci.hamers.BuildConfig
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DataUtils
@@ -26,6 +28,7 @@ import nl.ecci.hamers.users.User
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
+
 
 class SingleEventActivity : HamersActivity() {
 
@@ -38,16 +41,26 @@ class SingleEventActivity : HamersActivity() {
 
         initToolbar()
 
-        val appLinkAction = intent.action
-        val appLinkData = intent.data
-
-        event = DataUtils.getEvent(prefs, intent.getIntExtra(Event.EVENT, 1))
         ownUser = DataUtils.getOwnUser(PreferenceManager.getDefaultSharedPreferences(this))
 
-        initSignups()
+        // Intent by clicking an event in EventFragment or by clicking a link elsewhere
+        val appLinkData = intent.data
+        val eventID = intent.getIntExtra(Event.EVENT, -1)
+        if (eventID != -1) {
+            event = DataUtils.getEvent(prefs, eventID)
+        } else if (appLinkData != null) {
+            val path = appLinkData.path
+            val idStr = path.substring(path.lastIndexOf('/') + 1)
+            event = DataUtils.getEvent(prefs, Integer.parseInt(idStr))
+        }
 
-        event_title.text = event?.title
-        fillDetailRow(description_row, getString(R.string.description), event!!.description)
+        var eventTitle = event?.title
+        if (BuildConfig.DEBUG) {
+            eventTitle += " (" + event?.id + ")"
+        }
+
+        event_title.text = eventTitle
+        fillDetailRow(description_row, getString(R.string.description), event?.description)
 
         if (Date().after(event?.deadline)) {
             button_layout.visibility = View.GONE
@@ -90,6 +103,7 @@ class SingleEventActivity : HamersActivity() {
             absent_button.setOnClickListener { postSignup(false, null) }
         }
 
+        initSignups()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -140,12 +154,12 @@ class SingleEventActivity : HamersActivity() {
     }
 
     private fun initSignups() {
-        val signUps = event!!.signUps
+        val signUps = event?.signUps
         val present = ArrayList<String>()
         val absent = ArrayList<String>()
-        signUps.indices
-                .map { signUps[it] }
-                .forEach {
+        signUps?.indices
+                ?.map { signUps[it] }
+                ?.forEach {
                     if (it.isAttending) {
                         present.add(DataUtils.getUser(this, it.userID).name)
                     } else {
