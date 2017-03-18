@@ -8,7 +8,7 @@ import android.view.View
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.nostra13.universalimageloader.core.assist.FailReason
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener
-import kotlinx.android.synthetic.main.detail_user.*
+import kotlinx.android.synthetic.main.activity_detail_user.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DataUtils.convertNicknames
 import nl.ecci.hamers.helpers.DataUtils.getGravatarURL
@@ -21,7 +21,7 @@ class SingleUserActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.detail_user)
+        setContentView(R.layout.activity_detail_user)
 
         initToolbar()
 
