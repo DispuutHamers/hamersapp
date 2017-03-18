@@ -13,6 +13,7 @@ import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener
+import nl.ecci.hamers.helpers.DividerItemDecoration
 import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
@@ -34,7 +35,8 @@ class ChangeFragment : HamersListFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_recyclerview.adapter = ChangeAdapter(dataSet, activity)
+        hamers_list.addItemDecoration(DividerItemDecoration(activity))
+        hamers_list.adapter = ChangeAdapter(activity, dataSet)
         hamers_fab.visibility = View.GONE
 
         populateList().execute()
@@ -43,11 +45,14 @@ class ChangeFragment : HamersListFragment() {
 
     override fun onRefresh() {
         setRefreshing(true)
+        // Load changes
         Loader.getData(context, Loader.CHANGEURL, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
         }, null)
+        // Load all data (to prevent clicking on items that do not (yet) exist
+        Loader.getAllData(activity)
     }
 
     override fun onResume() {
@@ -65,22 +70,21 @@ class ChangeFragment : HamersListFragment() {
         override fun doInBackground(vararg params: String): ArrayList<Change> {
             val result = ArrayList<Change>()
             val tempList: ArrayList<Change>
-            val type = object : TypeToken<ArrayList<Change>>() {
-            }.type
             val gsonBuilder = GsonBuilder()
             gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
             val gson = gsonBuilder.create()
+            val type = object : TypeToken<ArrayList<Change>>() {
+            }.type
 
             if (params.isNotEmpty()) {
                 tempList = gson.fromJson<ArrayList<Change>>(params[0], type)
             } else {
                 tempList = gson.fromJson<ArrayList<Change>>(prefs.getString(Loader.CHANGEURL, null), type)
-
             }
 
-            // Filter out changes regarding device ID's
+            // Filter out changes regarding device ID's and destroys of sign ups
             tempList.filterTo(result) {
-                it.item_type != Change.ItemType.DEVICE
+                it.itemType != Change.ItemType.DEVICE && !(it.itemType == Change.ItemType.SIGNUP && it.event == Change.Event.DESTROY)
             }
 
             return result

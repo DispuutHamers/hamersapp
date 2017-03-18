@@ -35,7 +35,7 @@ class NewsFragment : HamersListFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_recyclerview.adapter = NewsAdapter(dataSet)
+        hamers_list.adapter = NewsAdapter(dataSet)
         
         hamers_fab.setOnClickListener { startActivityForResult(Intent(activity, NewNewsActivity::class.java), 1) }
 
@@ -43,9 +43,9 @@ class NewsFragment : HamersListFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.getItemId()) {
+        when (item!!.itemId) {
             R.id.scroll_top -> {
-                hamers_recyclerview!!.smoothScrollToPosition(0)
+                hamers_list!!.smoothScrollToPosition(0)
                 return true
             }
             else -> return false
@@ -54,7 +54,7 @@ class NewsFragment : HamersListFragment() {
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(getContext(), Loader.NEWSURL, object : GetCallback {
+        Loader.getData(context, Loader.NEWSURL, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
@@ -78,7 +78,7 @@ class NewsFragment : HamersListFragment() {
                 }
 
                 override fun onQueryTextChange(s: String): Boolean {
-                    (hamers_recyclerview.adapter as NewsAdapter).filter.filter(s.toLowerCase())
+                    (hamers_list.adapter as NewsAdapter).filter.filter(s.toLowerCase())
                     return false
                 }
             })

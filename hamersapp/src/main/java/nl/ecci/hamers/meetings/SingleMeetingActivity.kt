@@ -26,10 +26,10 @@ class SingleMeetingActivity : HamersActivity() {
         // Intent by clicking an event in EventFragment or by clicking a link elsewhere
         val appLinkData = intent.data
         val meetingID = intent.getIntExtra(Meeting.MEETING, Utils.notFound)
-        if (meetingID != Utils.notFound) {
-            meeting = DataUtils.getMeeting(prefs, meetingID)
+        if (appLinkData != null) {
+            meeting = DataUtils.getMeeting(this, Utils.getIdFromUri(appLinkData))
         } else {
-            meeting = DataUtils.getMeeting(prefs, Utils.getIdFromUri(appLinkData))
+            meeting = DataUtils.getMeeting(this, meetingID)
         }
 
         var meetingSubject = meeting?.subject

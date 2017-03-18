@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.preference.PreferenceManager
@@ -24,20 +23,11 @@ import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
 
 object Utils {
+
+    private var mToast: Toast? = null
     var alertDialog: AlertDialog? = null
     val unknown = "Unknown"
     val notFound = -1
-
-    fun md5(message: String): String {
-        return String(Hex.encodeHex(DigestUtils.md5(message)))
-    }
-
-    fun stringArrayToCharSequenceArray(stringArray: Array<Any>): Array<CharSequence?> {
-        val charSequenceArray = arrayOfNulls<CharSequence>(stringArray.size)
-        for (i in stringArray.indices)
-            charSequenceArray[i] = stringArray[i] as String
-        return charSequenceArray
-    }
 
     /**
      * Get app version
@@ -65,8 +55,6 @@ object Utils {
         }
     }
 
-    private var mToast: Toast? = null
-
     fun showToast(context: Context, text: String, duration: Int) {
         if (mToast != null) mToast!!.cancel()
         mToast = Toast.makeText(context, text, duration)
@@ -76,5 +64,16 @@ object Utils {
     fun getIdFromUri(uri: Uri): Int {
         val path = uri.path
         return Integer.parseInt(path.substring(path.lastIndexOf('/') + 1))
+    }
+
+    fun md5(message: String): String {
+        return String(Hex.encodeHex(DigestUtils.md5(message)))
+    }
+
+    fun stringArrayToCharSequenceArray(stringArray: Array<Any>): Array<CharSequence?> {
+        val charSequenceArray = arrayOfNulls<CharSequence>(stringArray.size)
+        for (i in stringArray.indices)
+            charSequenceArray[i] = stringArray[i] as String
+        return charSequenceArray
     }
 }

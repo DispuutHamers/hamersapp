@@ -80,7 +80,7 @@ internal class EventListAdapter(private val context: Context, private val dataSe
             }
 
             val signups = event.signUps
-            val userID = DataUtils.getOwnUser(MainActivity.prefs).id
+            val userID = DataUtils.getOwnUser(context).id
             var aanwezig: Boolean? = null
             signups.indices
                     .map { signups[it] }

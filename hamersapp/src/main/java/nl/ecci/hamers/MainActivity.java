@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import nl.ecci.hamers.beers.BeerFragment;
+import nl.ecci.hamers.changes.ChangeFragment;
 import nl.ecci.hamers.events.EventFragment;
 import nl.ecci.hamers.helpers.DataUtils;
 import nl.ecci.hamers.helpers.HamersActivity;
@@ -132,7 +133,7 @@ public class MainActivity extends HamersActivity {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (savedInstanceState == null) {
-            selectItem(navigationView.getMenu().getItem(0));
+            selectItem(this, navigationView.getMenu().getItem(0));
             String night_mode = prefs.getString("night_mode", "off");
             AppCompatDelegate.setDefaultNightMode(getNightModeInt(night_mode));
             recreate();
@@ -149,33 +150,11 @@ public class MainActivity extends HamersActivity {
 
     private void initDrawer() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-                Utils.INSTANCE.hideKeyboard(getParent());
-            }
-        });
-
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                selectItem(menuItem);
+                selectItem(MainActivity.this, menuItem);
                 menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
                 Utils.INSTANCE.hideKeyboard(getParent());
@@ -236,7 +215,7 @@ public class MainActivity extends HamersActivity {
     /**
      * Swaps fragments in the main content view
      */
-    private void selectItem(MenuItem menuItem) {
+    public static void selectItem(HamersActivity activity, MenuItem menuItem) {
         Fragment fragment = null;
         Class fragmentClass;
 
@@ -262,9 +241,9 @@ public class MainActivity extends HamersActivity {
             case R.id.navigation_item_settings:
                 fragmentClass = SettingsFragment.class;
                 break;
-//            case R.id.navigation_item_changes:
-//                fragmentClass = ChangeFragment.class;
-//                break;
+            case R.id.navigation_item_changes:
+                fragmentClass = ChangeFragment.class;
+                break;
             case R.id.navigation_item_about:
                 fragmentClass = AboutFragment.class;
                 break;
@@ -277,7 +256,7 @@ public class MainActivity extends HamersActivity {
         } catch (Exception ignored) {
         }
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.replace(R.id.content_frame, fragment).commit();
     }
@@ -301,8 +280,8 @@ public class MainActivity extends HamersActivity {
     }
 
     private void fillHeader() {
-        User user = DataUtils.INSTANCE.getOwnUser(prefs);
-        if (user.getId() != -1) {
+        User user = DataUtils.INSTANCE.getOwnUser(this);
+        if (user.getId() != Utils.INSTANCE.getNotFound()) {
             View headerLayout = navigationView.getHeaderView(0);
             TextView userName = (TextView) headerLayout.findViewById(R.id.header_user_name);
             TextView userEmail = (TextView) headerLayout.findViewById(R.id.header_user_email);

@@ -30,14 +30,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val clearStorage = findPreference(KEY_PREF_CLEAR_STORAGE)
         clearStorage.onPreferenceClickListener = OnPreferenceClickListener {
-            prefs.edit().remove(Loader.QUOTEURL).apply()
-            prefs.edit().remove(Loader.USERURL).apply()
-            prefs.edit().remove(Loader.EVENTURL).apply()
-            prefs.edit().remove(Loader.NEWSURL).apply()
-            prefs.edit().remove(Loader.BEERURL).apply()
-            prefs.edit().remove(Loader.REVIEWURL).apply()
-            prefs.edit().remove(Loader.MEETINGURL).apply()
-            prefs.edit().remove(Loader.WHOAMIURL).apply()
+            for (url in Loader.urls) {
+                prefs.edit().remove(url).apply()
+            }
 
             if (view != null) {
                 Snackbar.make(view, R.string.clear_storage_snackbar, Snackbar.LENGTH_SHORT).show()

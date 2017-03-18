@@ -7,9 +7,10 @@
     android:layout_marginEnd="@dimen/card_margin_right"
     android:layout_marginStart="@dimen/card_margin_left"
     android:layout_marginTop="@dimen/card_margin_top"
-    android:background="?android:attr/selectableItemBackground"
+    android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
+    android:orientation="horizontal"
     card_view:cardCornerRadius="@dimen/card_corner_radius">
 
     <RelativeLayout

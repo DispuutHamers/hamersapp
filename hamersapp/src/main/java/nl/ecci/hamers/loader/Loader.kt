@@ -19,18 +19,20 @@ object Loader {
     val QUOTEURL = "quotes"
     val USERURL = "users"
     val EVENTURL = "events"
-    val REMINDURL = "events/remind"
+    val REMINDURL = "events/remind" // excluded from urls
     val NEWSURL = "news"
     val BEERURL = "beers"
     val REVIEWURL = "reviews"
     val WHOAMIURL = "whoami"
     val MEETINGURL = "meetings"
     val SIGNUPURL = "signups"
-    val GCMURL = "register"
     val STICKERURL = "stickers"
-    val CHANGEURL = "changes"
-    // Data keys
+    val CHANGEURL = "changes?since=2017-03-16T17:00:00.000Z"
+    // Data keys (excluded form urls below)
     val APIKEYKEY = "apikey"
+    val GCMURL = "register"
+
+    val urls = hashSetOf(QUOTEURL, USERURL, EVENTURL, SIGNUPURL, NEWSURL, BEERURL, REVIEWURL, WHOAMIURL, MEETINGURL, SIGNUPURL, STICKERURL, CHANGEURL)
 
     fun getData(context: Context, dataURL: String, callback: GetCallback?, params: Map<String, String>?) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -39,7 +41,7 @@ object Loader {
         val request = object : StringRequest(Request.Method.GET, url,
                 Response.Listener<String> { response ->
                     Log.d("GET-response", response)
-                    if (dataURL != SIGNUPURL && dataURL != EVENTURL) {
+                    if (dataURL != EVENTURL) {
                         prefs.edit().putString(dataURL, response).apply()
                     }
                     callback?.onSuccess(response)
@@ -149,12 +151,8 @@ object Loader {
     }
 
     fun getAllData(context: Context) {
-        Loader.getData(context, Loader.QUOTEURL, null, null)
-        Loader.getData(context, Loader.EVENTURL, null, null)
-        Loader.getData(context, Loader.NEWSURL, null, null)
-        Loader.getData(context, Loader.BEERURL, null, null)
-        Loader.getData(context, Loader.REVIEWURL, null, null)
-        Loader.getData(context, Loader.WHOAMIURL, null, null)
-        Loader.getData(context, Loader.MEETINGURL, null, null)
+        for (url in urls) {
+            Loader.getData(context, url, null, null)
+        }
     }
 }
