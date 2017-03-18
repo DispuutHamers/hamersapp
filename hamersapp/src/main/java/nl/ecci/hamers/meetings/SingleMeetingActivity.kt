@@ -1,7 +1,8 @@
 package nl.ecci.hamers.meetings
 
 import android.os.Bundle
-import kotlinx.android.synthetic.main.detail_meeting.*
+import kotlinx.android.synthetic.main.activity_detail_item.*
+import kotlinx.android.synthetic.main.stub_detail_meeting.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DataUtils
@@ -11,9 +12,12 @@ class SingleMeetingActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.setContentView(R.layout.detail_meeting)
+        setContentView(R.layout.activity_detail_item)
 
         initToolbar()
+
+        stub_detail_item.layoutResource = R.layout.stub_detail_meeting
+        stub_detail_item.inflate()
 
         val meeting = DataUtils.getMeeting(MainActivity.prefs, intent.getIntExtra(Meeting.ID, -1))
 

@@ -15,7 +15,8 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.android.volley.VolleyError
-import kotlinx.android.synthetic.main.detail_event.*
+import kotlinx.android.synthetic.main.activity_detail_item.*
+import kotlinx.android.synthetic.main.stub_detail_event.*
 import nl.ecci.hamers.BuildConfig
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
@@ -36,9 +37,12 @@ class SingleEventActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.detail_event)
+        setContentView(R.layout.activity_detail_item)
 
         initToolbar()
+
+        stub_detail_item.layoutResource = R.layout.stub_detail_event
+        stub_detail_item.inflate()
 
         ownUser = DataUtils.getOwnUser(PreferenceManager.getDefaultSharedPreferences(this))
 

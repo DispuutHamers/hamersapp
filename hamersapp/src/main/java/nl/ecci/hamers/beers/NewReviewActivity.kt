@@ -36,8 +36,8 @@ class NewReviewActivity : NewItemActivity() {
 
         initToolbar()
 
-        stub.layoutResource = R.layout.stub_new_review
-        stub.inflate()
+        stub_new_item.layoutResource = R.layout.stub_new_review
+        stub_new_item.inflate()
 
         val date_button = findViewById(R.id.pick_date_button) as Button
         val calendar = Calendar.getInstance()

@@ -12,7 +12,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.nostra13.universalimageloader.core.ImageLoader
-import kotlinx.android.synthetic.main.detail_beer.*
+import kotlinx.android.synthetic.main.activity_detail_item.*
+import kotlinx.android.synthetic.main.stub_detail_beer.*
 import kotlinx.android.synthetic.main.row_review.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
@@ -34,10 +35,12 @@ class SingleBeerActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.detail_beer)
+        setContentView(R.layout.activity_detail_item)
 
         initToolbar()
 
+        stub_detail_item.layoutResource = R.layout.stub_detail_beer
+        stub_detail_item.inflate()
 
         val gsonBuilder = GsonBuilder()
         gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
