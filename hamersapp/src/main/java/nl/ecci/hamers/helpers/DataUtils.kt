@@ -245,9 +245,10 @@ object DataUtils {
         return result
     }
 
-    fun getMeeting(prefs: SharedPreferences?, id: Int): Meeting {
-        val date = Date()
-        var result = Meeting(Utils.notFound, Utils.unknown, Utils.unknown, Utils.unknown, Utils.notFound, date, date, date)
+    fun getMeeting(context: Context, id: Int): Meeting {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+        var result = Meeting(Utils.notFound, Utils.unknown, Utils.unknown, Utils.unknown, Utils.notFound, Date(), Date(), Date())
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<Meeting>>() {

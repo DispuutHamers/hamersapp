@@ -20,6 +20,8 @@ import nl.ecci.hamers.events.SingleEventActivity
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener
 import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.DataUtils.getGravatarURL
+import nl.ecci.hamers.meetings.Meeting
+import nl.ecci.hamers.meetings.SingleMeetingActivity
 import nl.ecci.hamers.users.SingleUserActivity
 import nl.ecci.hamers.users.User
 import java.util.*
@@ -90,6 +92,11 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                         swapFragment(5)
                         return
                     }
+                    Change.ItemType.MEETING -> {
+                        intent = Intent(context, SingleMeetingActivity::class.java)
+                        val meeting = DataUtils.getMeeting(context, change.itemId)
+                        intent.putExtra(Meeting.MEETING, meeting.id)
+                    }
                     else -> {
                         // Do nothing
                         return
@@ -118,6 +125,7 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                         Change.ItemType.USER -> bindUser(change)
                         Change.ItemType.NICKNAME -> bindNickname(change)
                         Change.ItemType.STICKER -> bindSticker(change)
+                        Change.ItemType.MEETING -> bindMeeting(change)
                         else -> {
                             // Do nothing
                         }
@@ -183,6 +191,14 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
             }
         }
 
+        private fun bindNickname(change: Change) {
+            when (change.event) {
+                Change.Event.CREATE -> itemView.change.text = context.getString(R.string.change_nick_new)
+                Change.Event.UPDATE -> itemView.change.text = context.getString(R.string.change_nick_update)
+                Change.Event.DESTROY -> itemView.change.text = context.getString(R.string.change_nick_destroy)
+            }
+        }
+
         private fun bindSticker(change: Change) {
             when (change.event) {
                 Change.Event.CREATE -> itemView.change.text = context.getString(R.string.change_sticker_new)
@@ -191,11 +207,11 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
             }
         }
 
-        private fun bindNickname(change: Change) {
+        private fun bindMeeting(change: Change) {
             when (change.event) {
-                Change.Event.CREATE -> itemView.change.text = context.getString(R.string.change_nick_new)
-                Change.Event.UPDATE -> itemView.change.text = context.getString(R.string.change_nick_update)
-                Change.Event.DESTROY -> itemView.change.text = context.getString(R.string.change_nick_destroy)
+                Change.Event.CREATE -> itemView.change.text = context.getString(R.string.change_meeting_new)
+                Change.Event.UPDATE -> itemView.change.text = context.getString(R.string.change_meeting_update)
+                Change.Event.DESTROY -> itemView.change.text = context.getString(R.string.change_meeting_destroy)
             }
         }
     }

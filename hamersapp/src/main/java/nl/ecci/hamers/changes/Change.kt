@@ -28,6 +28,7 @@ class Change(val id: Int,
         @SerializedName("User") USER,
         @SerializedName("Sticker") STICKER,
         @SerializedName("Nickname") NICKNAME,
+        @SerializedName("Meeting") MEETING,
         @SerializedName("Device") DEVICE,
     }
 
