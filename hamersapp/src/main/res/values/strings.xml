@@ -105,6 +105,12 @@
     <string name="new_meeting_pick_date">Vergaderdatum :</string>
     <string name="new_meeting_user">Notulist :</string>
 
+    <!-- Stickers -->
+    <string name="sticker_post_title">Sticker plakken</string>
+    <string name="sticker_post_message">Je huidige locatie zal worden bepaald en gebruikt als locatie van de sticker.</string>
+    <string name="sticker_post_note">Optionele notitie</string>
+    <string name="sticker_no_permission">Zonder toestemming je locatie op te vragen gaat het niet werken!</string>
+
     <!-- Settings -->
     <string name="general">Algemeen</string>
     <string name="push_title">Push notificaties</string>
@@ -209,4 +215,7 @@
     <!-- About -->
     <string name="about_libraries">Bibliotheken</string>
     <string name="you_are_running">Je gebruikt</string>
+
+    <!-- Other -->
+    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://zondersikkel.nl\",\n  }\n}]</string>
 </resources>

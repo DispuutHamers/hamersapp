@@ -11,10 +11,7 @@ import kotlinx.android.synthetic.main.activity_new_item.*
 import kotlinx.android.synthetic.main.stub_new_event.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
-import nl.ecci.hamers.helpers.DatePickerFragment
-import nl.ecci.hamers.helpers.NewItemActivity
-import nl.ecci.hamers.helpers.TimePickerFragment
-import nl.ecci.hamers.helpers.Utils
+import nl.ecci.hamers.helpers.*
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.loader.PostCallback
 import org.json.JSONException
@@ -32,16 +29,15 @@ class NewEventActivity : NewItemActivity(), TimePickerDialog.OnTimeSetListener {
 
         initToolbar()
 
-        stub.layoutResource = R.layout.stub_new_event
-        stub.inflate()
-
+        stub_new_item.layoutResource = R.layout.stub_new_event
+        stub_new_item.inflate()
 
         val timeFormat = SimpleDateFormat("HH:mm", MainActivity.locale)
         val dateFormat = SimpleDateFormat("dd-mm-yyyy", MainActivity.locale)
 
         eventID = intent.getIntExtra(Event.EVENT, -1)
         if (eventID != -1) {
-            val event = Utils.getEvent(MainActivity.prefs, eventID)
+            val event = DataUtils.getEvent(MainActivity.prefs, eventID)
             event_title.setText(event.title)
             event_location.setText(event.location)
             event_beschrijving.setText(event.description)

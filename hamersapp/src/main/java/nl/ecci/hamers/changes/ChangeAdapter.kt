@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.row_change.view.*
 import nl.ecci.hamers.R
-import nl.ecci.hamers.helpers.Utils
+import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.users.User
 import java.util.*
 
@@ -19,7 +19,7 @@ internal class ChangeAdapter(private val dataSet: ArrayList<Change>, private val
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val user = Utils.getUser(context, dataSet[position].userId)
+        val user = DataUtils.getUser(context, dataSet[position].userId)
         holder.bindChange(dataSet[position], user)
     }
 

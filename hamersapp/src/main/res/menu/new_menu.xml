@@ -4,6 +4,6 @@
         android:id="@+id/done_button"
         android:icon="@drawable/ic_done"
         android:title="@string/search_title"
-        android:actionLayout="@layout/refresh_action_view"
+        android:actionLayout="@layout/element_refresh"
         app:showAsAction="ifRoom" />
 </menu>

@@ -28,11 +28,10 @@ class NewMeetingActivity : NewItemActivity() {
 
         initToolbar()
 
-        stub.layoutResource = R.layout.stub_new_meeting
-        stub.inflate()
+        stub_new_item.layoutResource = R.layout.stub_new_meeting
+        stub_new_item.inflate()
 
-        val gson = GsonBuilder().create()
-        meeting = gson.fromJson(intent.getStringExtra(Meeting.ID), Meeting::class.java)
+        meeting = gson.fromJson(intent.getStringExtra(Meeting.MEETING), Meeting::class.java)
 
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", MainActivity.locale)

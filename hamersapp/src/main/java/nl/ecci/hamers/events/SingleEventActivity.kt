@@ -15,9 +15,12 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.android.volley.VolleyError
-import kotlinx.android.synthetic.main.detail_event.*
+import kotlinx.android.synthetic.main.activity_detail_item.*
+import kotlinx.android.synthetic.main.stub_detail_event.*
+import nl.ecci.hamers.BuildConfig
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
+import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.HamersActivity
 import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.Loader
@@ -34,17 +37,31 @@ class SingleEventActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.detail_event)
+        setContentView(R.layout.activity_detail_item)
 
         initToolbar()
 
-        event = Utils.getEvent(prefs, intent.getIntExtra(Event.EVENT, 1))
-        ownUser = Utils.getOwnUser(PreferenceManager.getDefaultSharedPreferences(this))
+        stub_detail_item.layoutResource = R.layout.stub_detail_event
+        stub_detail_item.inflate()
 
-        initSignups()
+        ownUser = DataUtils.getOwnUser(PreferenceManager.getDefaultSharedPreferences(this))
 
-        event_title.text = event?.title
-        fillDetailRow(description_row, getString(R.string.description), event!!.description)
+        // Intent by clicking an event in EventFragment or by clicking a link elsewhere
+        val appLinkData = intent.data
+        val eventID = intent.getIntExtra(Event.EVENT, Utils.notFound)
+        if (eventID != Utils.notFound) {
+            event = DataUtils.getEvent(prefs, eventID)
+        } else if (appLinkData != null) {
+            event = DataUtils.getEvent(prefs, Utils.getIdFromUri(appLinkData))
+        }
+
+        var eventTitle = event?.title
+        if (BuildConfig.DEBUG) {
+            eventTitle += " (" + event?.id + ")"
+        }
+
+        event_title.text = eventTitle
+        fillDetailRow(description_row, getString(R.string.description), event?.description)
 
         if (Date().after(event?.deadline)) {
             button_layout.visibility = View.GONE
@@ -80,12 +97,14 @@ class SingleEventActivity : HamersActivity() {
             location_row.visibility = View.GONE
         }
 
-        present_button.setOnClickListener { postSignup(true, null) }
+        present_button.setOnClickListener { postSignUp(true, null) }
         if (event!!.attendance) {
             absent_button.setOnClickListener { askForReason() }
         } else {
-            absent_button.setOnClickListener { postSignup(false, null) }
+            absent_button.setOnClickListener { postSignUp(false, null) }
         }
+
+        initSignUps()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -125,7 +144,7 @@ class SingleEventActivity : HamersActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun postSignup(status: Boolean?, reason: String?) {
+    private fun postSignUp(status: Boolean?, reason: String?) {
         val body = JSONObject()
         try {
             body.put("event_id", event!!.id)
@@ -154,17 +173,17 @@ class SingleEventActivity : HamersActivity() {
         Loader.postOrPatchData(this, url, JSONObject(), -1, null)
     }
 
-    private fun initSignups() {
-        val signUps = event!!.signUps
+    private fun initSignUps() {
+        val signUps = event?.signUps
         val present = ArrayList<String>()
         val absent = ArrayList<String>()
-        signUps.indices
-                .map { signUps[it] }
-                .forEach {
+        signUps?.indices
+                ?.map { signUps[it] }
+                ?.forEach {
                     if (it.isAttending) {
-                        present.add(Utils.getUser(this, it.userID).name)
+                        present.add(DataUtils.getUser(this, it.userID).name)
                     } else {
-                        absent.add(Utils.getUser(this, it.userID).name)
+                        absent.add(DataUtils.getUser(this, it.userID).name)
                     }
                 }
 
@@ -214,7 +233,7 @@ class SingleEventActivity : HamersActivity() {
         alert.setPositiveButton(android.R.string.yes) { _, _ ->
             val reason = input.text.toString()
             if (reason.length > 5) {
-                postSignup(false, reason)
+                postSignUp(false, reason)
             } else {
                 Toast.makeText(this@SingleEventActivity, R.string.attendance_reason_size, Toast.LENGTH_SHORT).show()
             }

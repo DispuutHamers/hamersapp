@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
+import android.support.design.widget.CoordinatorLayout
 
 abstract class HamersListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
@@ -17,13 +18,13 @@ abstract class HamersListFragment : Fragment(), SwipeRefreshLayout.OnRefreshList
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        initSwiper()
-    }
-
-    private fun initSwiper() {
         val lm = LinearLayoutManager(activity)
         hamers_recyclerview.layoutManager = lm
         hamers_recyclerview.itemAnimator = DefaultItemAnimator()
+
+        val params = hamers_fab.layoutParams as CoordinatorLayout.LayoutParams
+        params.anchorId = hamers_swipe_container.id
+        hamers_fab.layoutParams = params
 
         hamers_swipe_container.setColorSchemeResources(android.R.color.holo_red_light)
         hamers_swipe_container.setOnRefreshListener(this)

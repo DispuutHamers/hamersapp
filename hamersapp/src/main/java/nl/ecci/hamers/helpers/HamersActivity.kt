@@ -2,6 +2,7 @@ package nl.ecci.hamers.helpers
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.content.ContextCompat
@@ -10,16 +11,22 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.row_detailview.view.*
 import kotlinx.android.synthetic.main.row_imageview.view.*
 import kotlinx.android.synthetic.main.row_singleview.view.*
+import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
+import nl.ecci.hamers.helpers.PermissionUtils.PERMISSION_REQUEST_CODE
+
 
 @SuppressLint("Registered")
 open class HamersActivity : AppCompatActivity() {
 
     var toolbar: Toolbar? = null
     var prefs: SharedPreferences? = null
+    var gson: Gson = GsonBuilder().setDateFormat(MainActivity.dbDF.toPattern()).create()
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

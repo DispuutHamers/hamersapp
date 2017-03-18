@@ -15,9 +15,9 @@ import kotlinx.android.synthetic.main.activity_new_item.*
 import kotlinx.android.synthetic.main.stub_new_review.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
+import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.DatePickerFragment
 import nl.ecci.hamers.helpers.NewItemActivity
-import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.loader.PostCallback
 import org.json.JSONException
@@ -37,15 +37,14 @@ class NewReviewActivity : NewItemActivity() {
 
         initToolbar()
 
-        stub.layoutResource = R.layout.stub_new_review
-        stub.inflate()
+        stub_new_item.layoutResource = R.layout.stub_new_review
+        stub_new_item.inflate()
 
         val date_button = findViewById(R.id.pick_date_button) as Button
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", MainActivity.locale)
 
-        val gson = GsonBuilder().create()
-        beer = Utils.getBeer(MainActivity.prefs, intent.getIntExtra(Beer.BEER, 1))
+        beer = DataUtils.getBeer(MainActivity.prefs, intent.getIntExtra(Beer.BEER, 1))
         review = gson.fromJson<Review>(intent.getStringExtra(Review.REVIEW), Review::class.java)
 
         review_title.text = beer!!.name

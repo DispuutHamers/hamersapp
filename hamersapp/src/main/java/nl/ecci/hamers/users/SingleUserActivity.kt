@@ -8,13 +8,12 @@ import android.view.View
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.nostra13.universalimageloader.core.assist.FailReason
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener
-import kotlinx.android.synthetic.main.detail_user.*
-import nl.ecci.hamers.MainActivity
+import kotlinx.android.synthetic.main.activity_detail_user.*
 import nl.ecci.hamers.R
+import nl.ecci.hamers.helpers.DataUtils.convertNicknames
+import nl.ecci.hamers.helpers.DataUtils.getGravatarURL
+import nl.ecci.hamers.helpers.DataUtils.getUser
 import nl.ecci.hamers.helpers.HamersActivity
-import nl.ecci.hamers.helpers.Utils.convertNicknames
-import nl.ecci.hamers.helpers.Utils.getGravatarURL
-import nl.ecci.hamers.helpers.Utils.getUser
 import uk.co.senab.photoview.PhotoViewAttacher
 
 class SingleUserActivity : HamersActivity() {
@@ -22,7 +21,7 @@ class SingleUserActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.detail_user)
+        setContentView(R.layout.activity_detail_user)
 
         initToolbar()
 
@@ -74,11 +73,11 @@ class SingleUserActivity : HamersActivity() {
             override fun onLoadingFailed(imageUri: String, view: View, failReason: FailReason) {}
 
             override fun onLoadingComplete(imageUri: String, view: View, loadedImage: Bitmap) {
-                    mAttacher?.update()
+                mAttacher?.update()
             }
 
             override fun onLoadingCancelled(imageUri: String, view: View) {}
         })
     }
-    
+
 }

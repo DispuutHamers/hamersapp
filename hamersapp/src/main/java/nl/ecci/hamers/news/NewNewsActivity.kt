@@ -21,8 +21,8 @@ class NewNewsActivity : NewItemActivity() {
 
         initToolbar()
 
-        stub.layoutResource = R.layout.stub_new_news
-        stub.inflate()
+        stub_new_item.layoutResource = R.layout.stub_new_news
+        stub_new_item.inflate()
     }
 
     override fun postItem() {

@@ -28,7 +28,7 @@ abstract class NewItemActivity : HamersActivity(), DatePickerDialog.OnDateSetLis
 
                 /* Attach a rotating ImageView to the refresh item as an ActionView */
                 val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                val iv = inflater.inflate(R.layout.refresh_action_view, null) as ImageView
+                val iv = inflater.inflate(R.layout.element_refresh, null) as ImageView
 
                 val rotation = AnimationUtils.loadAnimation(this, R.anim.clockwise_refresh)
                 rotation.repeatCount = Animation.INFINITE
