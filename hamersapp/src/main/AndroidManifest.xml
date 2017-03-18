@@ -28,7 +28,9 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-
+        <meta-data
+            android:name="asset_statements"
+            android:resource="@string/asset_statements" />
 
         <service android:name="nl.ecci.hamers.fcm.MessagingService">
             <intent-filter>
@@ -67,6 +69,17 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.ecci.hamers.MainActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="zondersikkel.nl"
+                    android:pathPrefix="/beers" />
+            </intent-filter>
         </activity>
         <activity
             android:name="nl.ecci.hamers.events.SingleEventActivity"
@@ -75,6 +88,17 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.ecci.hamers.MainActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="zondersikkel.nl"
+                    android:pathPrefix="/events" />
+            </intent-filter>
         </activity>
         <activity
             android:name="nl.ecci.hamers.events.NewEventActivity"
@@ -123,6 +147,17 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.ecci.hamers.MainActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="zondersikkel.nl"
+                    android:pathPrefix="/meetings" />
+            </intent-filter>
         </activity>
         <activity
             android:name="nl.ecci.hamers.meetings.NewMeetingActivity"

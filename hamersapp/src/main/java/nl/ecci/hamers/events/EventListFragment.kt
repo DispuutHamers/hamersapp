@@ -42,6 +42,11 @@ class EventListFragment : HamersListFragment() {
             startActivityForResult(Intent(activity, NewEventActivity::class.java), -1)
         }
 
+        // Disable the scrollbar, since this list is very short and the scrollbar behaves weirdly
+        if (upcoming) {
+            hamers_recyclerview.isVerticalScrollBarEnabled = false
+        }
+
         populateList().execute()
         onRefresh()
     }

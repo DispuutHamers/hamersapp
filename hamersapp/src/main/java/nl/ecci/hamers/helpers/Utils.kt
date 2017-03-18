@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.preference.PreferenceManager
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -25,6 +26,7 @@ import java.util.*
 object Utils {
     var alertDialog: AlertDialog? = null
     val unknown = "Unknown"
+    val notFound = -1
 
     fun md5(message: String): String {
         return String(Hex.encodeHex(DigestUtils.md5(message)))
@@ -69,5 +71,10 @@ object Utils {
         if (mToast != null) mToast!!.cancel()
         mToast = Toast.makeText(context, text, duration)
         mToast!!.show()
+    }
+
+    fun getIdFromUri(uri: Uri): Int {
+        val path = uri.path
+        return Integer.parseInt(path.substring(path.lastIndexOf('/') + 1))
     }
 }

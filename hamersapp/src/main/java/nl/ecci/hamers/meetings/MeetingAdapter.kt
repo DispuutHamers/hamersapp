@@ -27,7 +27,7 @@ class MeetingAdapter(private val dataSet: ArrayList<Meeting>, private val contex
         holder.view.setOnClickListener {
             try {
                 val intent = Intent(context, SingleMeetingActivity::class.java)
-                intent.putExtra(Meeting.ID, dataSet[position].id)
+                intent.putExtra(Meeting.MEETING, dataSet[position].id)
                 context.startActivity(intent)
             } catch (ignored: NullPointerException) {
             }
