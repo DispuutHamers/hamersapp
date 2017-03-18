@@ -7,17 +7,19 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.view.*
 import android.widget.TextView
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.nostra13.universalimageloader.core.ImageLoader
-import kotlinx.android.synthetic.main.detail_beer.*
+import kotlinx.android.synthetic.main.activity_detail_item.*
 import kotlinx.android.synthetic.main.row_review.view.*
+import kotlinx.android.synthetic.main.stub_detail_beer.*
+import nl.ecci.hamers.BuildConfig
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.HamersActivity
 import nl.ecci.hamers.helpers.SingleImageActivity
+import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.users.User
 import java.util.*
@@ -26,7 +28,6 @@ class SingleBeerActivity : HamersActivity() {
 
     private var beer: Beer? = null
     private var user: User? = null
-    private var gson: Gson? = null
     private var ownReview: Review? = null
 
     // Activity for result
@@ -35,20 +36,48 @@ class SingleBeerActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.detail_beer)
+        setContentView(R.layout.activity_detail_item)
 
         initToolbar()
 
-        val gsonBuilder = GsonBuilder()
-        gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
-        gson = gsonBuilder.create()
+        // Intent by clicking an event in EventFragment or by clicking a link elsewhere
+        val appLinkData = intent.data
+        val beerID = intent.getIntExtra(Beer.BEER, Utils.notFound)
+        if (beerID != Utils.notFound) {
+            beer = DataUtils.getBeer(this, beerID)
+        } else if (appLinkData != null) {
+            beer = DataUtils.getBeer(this, Utils.getIdFromUri(appLinkData))
+        }
+
+        user = DataUtils.getOwnUser(this)
+
+        initUI()
+
+        getReviews()
+    }
+
+    private fun initUI() {
+        stub_detail_item.layoutResource = R.layout.stub_detail_beer
+        stub_detail_item.inflate()
 
         review_create_button.setOnClickListener { updateReview(ownReview) }
 
-        beer = DataUtils.getBeer(this, intent.getIntExtra(Beer.BEER, -1))
-        user = DataUtils.getOwnUser(this)
+        var beerName = beer?.name
+        if (BuildConfig.DEBUG) {
+            beerName += " (" + beer!!.id + ")"
+        }
+        beer_name.text = beerName
 
-        setValues()
+        fillDetailRow(row_kind, getString(R.string.beer_soort), beer!!.kind)
+        fillDetailRow(row_alc, getString(R.string.beer_alc), beer!!.percentage)
+        fillDetailRow(row_brewer, getString(R.string.beer_brewer), beer!!.brewer)
+        fillDetailRow(row_country, getString(R.string.beer_country), beer!!.country)
+
+        if (beer!!.rating == null) {
+            fillDetailRow(row_rating, getString(R.string.beer_rating), "Nog niet bekend")
+        } else {
+            fillDetailRow(row_rating, getString(R.string.beer_rating), beer!!.rating)
+        }
 
         ImageLoader.getInstance().displayImage(beer!!.imageURL, beer_image)
 
@@ -56,26 +85,10 @@ class SingleBeerActivity : HamersActivity() {
             val intent = Intent(this@SingleBeerActivity, SingleImageActivity::class.java)
             val transitionName = getString(R.string.transition_single_image)
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@SingleBeerActivity, beer_image, transitionName)
-            intent.putExtra(Beer.BEER, gson!!.toJson(beer, Beer::class.java))
+            intent.putExtra(Beer.BEER, gson.toJson(beer, Beer::class.java))
             ActivityCompat.startActivity(this@SingleBeerActivity, intent, options.toBundle())
         }
 
-        getReviews()
-    }
-
-    private fun setValues() {
-        fillDetailRow(row_kind, getString(R.string.beer_soort), beer!!.kind)
-        fillDetailRow(row_alc, getString(R.string.beer_alc), beer!!.percentage)
-        fillDetailRow(row_brewer, getString(R.string.beer_brewer), beer!!.brewer)
-        fillDetailRow(row_country, getString(R.string.beer_country), beer!!.country)
-
-        beer_name.text = beer!!.name
-
-        if (beer!!.rating == null) {
-            fillDetailRow(row_rating, getString(R.string.beer_rating), "Nog niet bekend")
-        } else {
-            fillDetailRow(row_rating, getString(R.string.beer_rating), beer!!.rating)
-        }
     }
 
     private fun getReviews() {
@@ -207,7 +220,7 @@ class SingleBeerActivity : HamersActivity() {
                 beer?.country = data?.getStringExtra(beerCountry)
                 beer?.rating = beer!!.rating!! + " (Nog niet bijgewerkt)"
 
-                setValues()
+                initUI()
             }
         }
     }

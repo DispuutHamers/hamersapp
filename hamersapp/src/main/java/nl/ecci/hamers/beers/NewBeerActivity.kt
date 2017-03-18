@@ -25,8 +25,8 @@ class NewBeerActivity : NewItemActivity() {
 
         initToolbar()
 
-        stub.layoutResource = R.layout.stub_new_beer
-        stub.inflate()
+        stub_new_item.layoutResource = R.layout.stub_new_beer
+        stub_new_item.inflate()
 
         beerID = intent.getIntExtra(Beer.BEER, -1)
         if (beerID != -1) {

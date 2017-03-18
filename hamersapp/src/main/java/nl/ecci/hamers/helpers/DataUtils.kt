@@ -21,6 +21,7 @@ import nl.ecci.hamers.users.User
 import java.util.*
 
 object DataUtils {
+
     /**
      * Show the dialog for entering the apikey on startup
      */
@@ -81,7 +82,7 @@ object DataUtils {
     }
 
     fun usernameToID(prefs: SharedPreferences, name: String): Int {
-        var result = -1
+        var result = Utils.notFound
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<User>>() {
@@ -109,7 +110,7 @@ object DataUtils {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         val userList: ArrayList<User>?
-        var result = User(-1, Utils.unknown, "example@example.org", 0, 0, User.Member.LID, -1, ArrayList<User.Nickname>(), Date())
+        var result = User(Utils.notFound, Utils.unknown, "example@example.org", Utils.notFound, Utils.notFound, User.Member.LID, Utils.notFound, ArrayList<User.Nickname>(), Date())
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<User>>() {
@@ -134,7 +135,7 @@ object DataUtils {
         val gson = gsonBuilder.create()
         user = gson.fromJson(prefs.getString(Loader.WHOAMIURL, null), User::class.java)
         if (user == null) {
-            user = User(-1, Utils.unknown, "example@example.org", 0, 0, User.Member.LID, -1, ArrayList<User.Nickname>(), Date())
+            user = User(Utils.notFound, Utils.unknown, "example@example.org", Utils.notFound, Utils.notFound, User.Member.LID, Utils.notFound, ArrayList<User.Nickname>(), Date())
         }
         return user
     }
@@ -142,17 +143,16 @@ object DataUtils {
     fun getEvent(context: Context, id: Int): Event {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-        var result = Event(1, Utils.unknown, Utils.unknown, Utils.unknown, 0, Date(), Date(), Date(), ArrayList<SignUp>(), Date(), false)
+        var result = Event(Utils.notFound, Utils.unknown, Utils.unknown, Utils.unknown, Utils.notFound, Date(), Date(), Date(), ArrayList<SignUp>(), Date(), false)
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<Event>>() {
         }.type
-        val eventList: ArrayList<Event>?
-        if (prefs != null) {
-            eventList = gson.fromJson<ArrayList<Event>>(prefs.getString(Loader.EVENTURL, null), type)
+
+        val eventList = gson.fromJson<ArrayList<Event>>(prefs?.getString(Loader.EVENTURL, null), type)
+
             eventList?.filter { it.id == id }
                     ?.forEach { result = it }
-        }
 
         return result
     }
@@ -179,13 +179,13 @@ object DataUtils {
     fun getBeer(context: Context, id: Int): Beer {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-        var result = Beer(-1, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Date())
+        var result = Beer(Utils.notFound, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Date())
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<Beer>>() {
-
         }.type
-        val beerList = gson.fromJson<ArrayList<Beer>>(prefs.getString(Loader.BEERURL, null), type)
+
+        val beerList = gson.fromJson<ArrayList<Beer>>(prefs?.getString(Loader.BEERURL, null), type)
 
         if (beerList != null) {
             beerList.filter { it.id == id }
@@ -195,15 +195,15 @@ object DataUtils {
         return result
     }
 
-    fun getMeeting(prefs: SharedPreferences, id: Int): Meeting {
+    fun getMeeting(prefs: SharedPreferences?, id: Int): Meeting {
         val date = Date()
-        var result = Meeting(-1, Utils.unknown, Utils.unknown, Utils.unknown, -1, date, date, date)
+        var result = Meeting(Utils.notFound, Utils.unknown, Utils.unknown, Utils.unknown, Utils.notFound, date, date, date)
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<Meeting>>() {
 
         }.type
-        val meetingList = gson.fromJson<ArrayList<Meeting>>(prefs.getString(Loader.MEETINGURL, null), type)
+        val meetingList = gson.fromJson<ArrayList<Meeting>>(prefs?.getString(Loader.MEETINGURL, null), type)
 
         if (meetingList != null) {
             meetingList

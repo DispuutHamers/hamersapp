@@ -4,8 +4,8 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.preference.PreferenceManager
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -26,7 +26,8 @@ object Utils {
 
     private var mToast: Toast? = null
     var alertDialog: AlertDialog? = null
-    val unknown = "unknown"
+    val unknown = "Unknown"
+    val notFound = -1
 
     /**
      * Get app version
@@ -58,6 +59,11 @@ object Utils {
         if (mToast != null) mToast!!.cancel()
         mToast = Toast.makeText(context, text, duration)
         mToast!!.show()
+    }
+
+    fun getIdFromUri(uri: Uri): Int {
+        val path = uri.path
+        return Integer.parseInt(path.substring(path.lastIndexOf('/') + 1))
     }
 
     fun md5(message: String): String {

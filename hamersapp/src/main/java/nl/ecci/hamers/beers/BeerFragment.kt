@@ -137,20 +137,19 @@ class BeerFragment : HamersListFragment(){
         onRefresh()
     }
 
-    private inner class populateList : AsyncTask<String, Void, ArrayList<Beer>>() {
-        override fun doInBackground(vararg params: String): ArrayList<Beer> {
-            val result: ArrayList<Beer>
+    private inner class populateList : AsyncTask<String, Void, ArrayList<Beer>?>() {
+
+        override fun doInBackground(vararg params: String): ArrayList<Beer>? {
             val type = object : TypeToken<ArrayList<Beer>>() {
             }.type
             val gsonBuilder = GsonBuilder().setDateFormat(MainActivity.dbDF.toPattern())
             val gson = gsonBuilder.create()
 
             if (params.isNotEmpty()) {
-                result = gson.fromJson<ArrayList<Beer>>(params[0], type)
+                return gson.fromJson<ArrayList<Beer>>(params[0], type)
             } else {
-                result = gson.fromJson<ArrayList<Beer>>(prefs.getString(Loader.BEERURL, null), type)
+                return gson.fromJson<ArrayList<Beer>>(prefs.getString(Loader.BEERURL, null), type)
             }
-            return result
         }
 
         override fun onPostExecute(result: ArrayList<Beer>?) {

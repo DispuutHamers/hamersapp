@@ -43,6 +43,11 @@ class EventListFragment : HamersListFragment() {
             startActivityForResult(Intent(activity, NewEventActivity::class.java), -1)
         }
 
+        // Disable the scrollbar, since this list is very short and the scrollbar behaves weirdly
+        if (upcoming) {
+            hamers_list.isVerticalScrollBarEnabled = false
+        }
+
         populateList().execute()
         onRefresh()
     }
@@ -114,9 +119,9 @@ class EventListFragment : HamersListFragment() {
         onRefresh()
     }
 
-    private inner class populateList : AsyncTask<String, Void, ArrayList<Event>>() {
+    private inner class populateList : AsyncTask<String, Void, ArrayList<Event>?>() {
 
-        override fun doInBackground(vararg params: String): ArrayList<Event> {
+        override fun doInBackground(vararg params: String): ArrayList<Event>? {
             val gsonBuilder = GsonBuilder()
             gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
             val gson = gsonBuilder.create()

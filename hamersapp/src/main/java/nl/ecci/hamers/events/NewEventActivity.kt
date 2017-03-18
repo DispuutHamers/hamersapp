@@ -26,9 +26,8 @@ class NewEventActivity : NewItemActivity() {
 
         initToolbar()
 
-        stub.layoutResource = R.layout.stub_new_event
-        stub.inflate()
-
+        stub_new_item.layoutResource = R.layout.stub_new_event
+        stub_new_item.inflate()
 
         val timeFormat = SimpleDateFormat("HH:mm", MainActivity.locale)
         val dateFormat = SimpleDateFormat("dd-mm-yyyy", MainActivity.locale)

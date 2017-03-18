@@ -18,6 +18,6 @@ class Meeting(val id: Int,
               val updatedAt: Date) {
 
     companion object {
-        val ID = "ID"
+        val MEETING = "MEETING"
     }
 }

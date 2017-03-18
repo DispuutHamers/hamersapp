@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.0](https://github.com/dexbleeker/hamersapp/tree/2.3.0) (2017-03-09)
+[Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.2.1..2.3.0)
+
+- Push notifications
+- Open events, beers and meetings from url with the app
+- Even more consistent layouts
+- Bug fixes and performance improvements
+
 ## [2.2.1](https://github.com/dexbleeker/hamersapp/tree/2.2.1) (2017-03-13)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.2.0..2.2.1)
 
