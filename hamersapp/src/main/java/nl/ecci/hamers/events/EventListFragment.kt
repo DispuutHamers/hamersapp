@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.SearchView
 import android.view.*
-import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -62,10 +61,6 @@ class EventListFragment : HamersListFragment() {
                 override fun onSuccess(response: String) {
                     populateList().execute(response)
                 }
-
-                override fun onError(error: VolleyError) {
-                    // Nothing
-                }
             }, params)
         } else {
             params.put("sorted", "date-asc")
@@ -74,10 +69,6 @@ class EventListFragment : HamersListFragment() {
                     // Only save normal event list
                     prefs.edit().putString(Loader.EVENTURL, response).apply()
                     populateList().execute(response)
-                }
-
-                override fun onError(error: VolleyError) {
-                    // Nothing
                 }
             }, params)
         }

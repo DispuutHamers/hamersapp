@@ -3,11 +3,9 @@ package nl.ecci.hamers.news
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.SearchView
 import android.view.*
-import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -36,7 +34,7 @@ class NewsFragment : HamersListFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         hamers_list.adapter = NewsAdapter(dataSet)
-        
+
         hamers_fab.setOnClickListener { startActivityForResult(Intent(activity, NewNewsActivity::class.java), 1) }
 
         onRefresh()
@@ -58,10 +56,6 @@ class NewsFragment : HamersListFragment() {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
-
-            override fun onError(error: VolleyError) {
-                // Nothing
-            }
         }, null)
     }
 
@@ -76,16 +70,16 @@ class NewsFragment : HamersListFragment() {
         val menuItem = menu!!.findItem(R.id.event_search)
         val searchView = MenuItemCompat.getActionView(menuItem) as SearchView
         searchView.queryHint = getString(R.string.search_hint)
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(s: String): Boolean {
-                    return false
-                }
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(s: String): Boolean {
+                return false
+            }
 
-                override fun onQueryTextChange(s: String): Boolean {
-                    (hamers_list.adapter as NewsAdapter).filter.filter(s.toLowerCase())
-                    return false
-                }
-            })
+            override fun onQueryTextChange(s: String): Boolean {
+                (hamers_list.adapter as NewsAdapter).filter.filter(s.toLowerCase())
+                return false
+            }
+        })
     }
 
     private inner class populateList : AsyncTask<String, Void, ArrayList<News>>() {

@@ -48,7 +48,6 @@ object Loader {
                 },
                 Response.ErrorListener { error ->
                     Log.d("GET-error", error.toString())
-                    callback?.onError(error)
                     handleErrorResponse(context, error)
                 }) {
             @Throws(AuthFailureError::class)

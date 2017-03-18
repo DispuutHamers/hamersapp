@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.SearchView
 import android.view.*
-import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -55,10 +54,6 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
         Loader.getData(context, Loader.QUOTEURL, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
-            }
-
-            override fun onError(error: VolleyError) {
-                // Nothing
             }
         }, null)
     }

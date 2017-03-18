@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -40,10 +39,6 @@ class MeetingFragment : HamersListFragment() {
         Loader.getData(getContext(), Loader.MEETINGURL, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
-            }
-
-            override fun onError(error: VolleyError) {
-                // Nothing
             }
         }, null)
     }

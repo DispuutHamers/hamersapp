@@ -82,15 +82,11 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
             override fun onSuccess(response: String) {
                 populateMap().execute(dataSet)
             }
-
-            override fun onError(error: VolleyError) {
-                // Nothing
-            }
         }, null)
     }
 
     private fun addMarkers() {
-        if (map != null && !dataSet.isEmpty()) {
+        if (map != null && dataSet.isNotEmpty()) {
             for (sticker in dataSet) {
                 map!!.addMarker(MarkerOptions().position(LatLng(sticker.lat.toDouble(), sticker.lon.toDouble())))
             }

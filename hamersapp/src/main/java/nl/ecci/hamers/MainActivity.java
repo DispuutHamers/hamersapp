@@ -24,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -315,7 +314,7 @@ public class MainActivity extends HamersActivity {
 
     private void fillHeader() {
         User user = DataUtils.INSTANCE.getOwnUser(this);
-        if (user != null && user.getId() != -1) {
+        if (user.getId() != -1) {
             View headerLayout = navigationView.getHeaderView(0);
             TextView userName = (TextView) headerLayout.findViewById(R.id.header_user_name);
             TextView userEmail = (TextView) headerLayout.findViewById(R.id.header_user_email);
@@ -334,11 +333,6 @@ public class MainActivity extends HamersActivity {
                 @Override
                 public void onSuccess(@NonNull String response) {
                     fillHeader();
-                }
-
-                @Override
-                public void onError(@NonNull VolleyError error) {
-                    // Nothing
                 }
             }, null);
         }

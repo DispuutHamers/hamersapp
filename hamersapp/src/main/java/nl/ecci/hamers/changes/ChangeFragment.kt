@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -49,10 +48,6 @@ class ChangeFragment : HamersListFragment() {
         Loader.getData(context, Loader.CHANGEURL, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
-            }
-
-            override fun onError(error: VolleyError) {
-                // Nothing
             }
         }, null)
         // Load all data (to prevent clicking on items that do not (yet) exist

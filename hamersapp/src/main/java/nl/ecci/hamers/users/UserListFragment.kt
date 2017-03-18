@@ -4,7 +4,6 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.*
-import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -55,10 +54,6 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
         Loader.getData(context, Loader.USERURL, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
-            }
-
-            override fun onError(error: VolleyError) {
-                // Nothing
             }
         }, null)
     }
