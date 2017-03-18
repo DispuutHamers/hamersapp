@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.CalendarContract
 import android.support.v7.app.AlertDialog
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -96,14 +95,14 @@ class SingleEventActivity : HamersActivity() {
             location_row.visibility = View.GONE
         }
 
-        present_button.setOnClickListener { postSignup(true, null) }
+        present_button.setOnClickListener { postSignUp(true, null) }
         if (event!!.attendance) {
             absent_button.setOnClickListener { askForReason() }
         } else {
-            absent_button.setOnClickListener { postSignup(false, null) }
+            absent_button.setOnClickListener { postSignUp(false, null) }
         }
 
-        initSignups()
+        initSignUps()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -129,7 +128,7 @@ class SingleEventActivity : HamersActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun postSignup(status: Boolean?, reason: String?) {
+    private fun postSignUp(status: Boolean?, reason: String?) {
         val body = JSONObject()
         try {
             body.put("event_id", event!!.id)
@@ -153,7 +152,7 @@ class SingleEventActivity : HamersActivity() {
         })
     }
 
-    private fun initSignups() {
+    private fun initSignUps() {
         val signUps = event?.signUps
         val present = ArrayList<String>()
         val absent = ArrayList<String>()
@@ -213,7 +212,7 @@ class SingleEventActivity : HamersActivity() {
         alert.setPositiveButton(android.R.string.yes) { _, _ ->
             val reason = input.text.toString()
             if (reason.length > 5) {
-                postSignup(false, reason)
+                postSignUp(false, reason)
             } else {
                 Toast.makeText(this@SingleEventActivity, R.string.attendance_reason_size, Toast.LENGTH_SHORT).show()
             }
