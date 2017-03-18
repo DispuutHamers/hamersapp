@@ -22,7 +22,6 @@ import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.DataUtils.getGravatarURL
 import nl.ecci.hamers.users.SingleUserActivity
 import nl.ecci.hamers.users.User
-import org.jetbrains.anko.contentView
 import java.util.*
 
 internal class ChangeAdapter(private val context: Context, private val dataSet: ArrayList<Change>) : RecyclerView.Adapter<ChangeAdapter.ViewHolder>() {
@@ -45,7 +44,7 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
 
             if (change.itemType != null) {
 
-                if (change.event == Change.Event.DESTROY && change.itemType != Change.ItemType.REVIEW) {
+                if (change.event == Change.Event.DESTROY) {
                     Toast.makeText(context, R.string.unit_destroyed, Snackbar.LENGTH_SHORT).show()
                     return
                 }
@@ -82,6 +81,15 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                         intent = Intent(context, SingleUserActivity::class.java)
                         intent.putExtra(User.USER, change.itemId)
                     }
+                    Change.ItemType.NICKNAME -> {
+                        intent = Intent(context, SingleUserActivity::class.java)
+                        val user = DataUtils.getUserByNick(context, change.itemId)
+                        intent.putExtra(User.USER, user.id)
+                    }
+                    Change.ItemType.STICKER -> {
+                        swapFragment(5)
+                        return
+                    }
                     else -> {
                         // Do nothing
                         return
@@ -108,8 +116,8 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                         Change.ItemType.REVIEW -> bindReview(change)
                         Change.ItemType.NEWS -> bindNews(change)
                         Change.ItemType.USER -> bindUser(change)
-                        Change.ItemType.STICKER -> bindSticker(change)
                         Change.ItemType.NICKNAME -> bindNickname(change)
+                        Change.ItemType.STICKER -> bindSticker(change)
                         else -> {
                             // Do nothing
                         }
