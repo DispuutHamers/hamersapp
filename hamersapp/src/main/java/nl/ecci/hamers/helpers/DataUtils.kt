@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import nl.ecci.hamers.MainActivity
@@ -20,6 +21,8 @@ import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.meetings.Meeting
 import nl.ecci.hamers.users.Nickname
 import nl.ecci.hamers.users.User
+import org.json.JSONException
+import org.json.JSONObject
 import java.util.*
 
 object DataUtils {
@@ -68,7 +71,21 @@ object DataUtils {
             } else if (!Utils.alertDialog!!.isShowing) {
                 showApiKeyDialog(context)
             }
+        } else {
+            val token = FirebaseInstanceId.getInstance().token.toString()
+            sendRegistrationToServer(context, token)
+            Loader.getAllData(context)
         }
+    }
+
+    fun sendRegistrationToServer(context: Context, token: String) {
+        val body = JSONObject()
+        try {
+            body.put("device", token)
+        } catch (ignored: JSONException) {
+        }
+
+        Loader.postOrPatchData(context, Loader.FCMURL, body, Utils.notFound, null)
     }
 
     fun getGravatarURL(email: String): String {

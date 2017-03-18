@@ -8,15 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Internet + sdcard access (for caching purposes) -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- Push notifications -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
-    <permission
-        android:name="com.example.gcm.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="nl.ecci.hamers.gcm.permission.C2D_MESSAGE" />
 
     <uses-feature android:name="android.hardware.location.gps" />
 
@@ -31,19 +23,6 @@
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
-
-        <service android:name="nl.ecci.hamers.fcm.MessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-        <service
-            android:name="nl.ecci.hamers.fcm.InstanceIDService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
 
         <activity android:name="nl.ecci.hamers.MainActivity">
             <intent-filter>
@@ -184,6 +163,18 @@
             android:value="***REMOVED***" />
 
         <!-- Notifications -->
+        <service android:name="nl.ecci.hamers.fcm.MessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="nl.ecci.hamers.fcm.InstanceIdService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
         <!-- Set custom default icon. -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

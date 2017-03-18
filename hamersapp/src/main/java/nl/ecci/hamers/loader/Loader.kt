@@ -30,13 +30,13 @@ object Loader {
     val CHANGEURL = "changes?since=2017-03-16T17:00:00.000Z"
     // Data keys (excluded form urls below)
     val APIKEYKEY = "apikey"
-    val GCMURL = "register"
+    val FCMURL = "register"
 
     val urls = hashSetOf(QUOTEURL, USERURL, EVENTURL, SIGNUPURL, NEWSURL, BEERURL, REVIEWURL, WHOAMIURL, MEETINGURL, SIGNUPURL, STICKERURL, CHANGEURL)
 
     fun getData(context: Context, dataURL: String, callback: GetCallback?, params: Map<String, String>?) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val url = buildURL(context, dataURL, params, -1)
+        val url = buildURL(context, dataURL, params, Utils.notFound)
 
         val request = object : StringRequest(Request.Method.GET, url,
                 Response.Listener<String> { response ->
@@ -76,7 +76,7 @@ object Loader {
                 Response.Listener<JSONObject> { response ->
                     Log.d("POST-response", response.toString())
 
-                    if (dataURL != GCMURL)
+                    if (dataURL != FCMURL)
                         Utils.showToast(context, context.getString(R.string.posted), Toast.LENGTH_SHORT)
 
                     callback?.onSuccess(response)
@@ -91,7 +91,7 @@ object Loader {
                 val params = HashMap<String, String>()
                 params.put("Authorization", "Token token=" + prefs.getString(APIKEYKEY, "")!!)
                 params.put("Content-Type", "Application/json")
-                if (urlAppendix != -1) {
+                if (urlAppendix != Utils.notFound) {
                     params.put("X-HTTP-Method-Override", "PATCH")
                 }
                 return params
@@ -105,7 +105,7 @@ object Loader {
         val builder = StringBuilder()
         builder.append(context.getString(R.string.api_url)).append(URL)
 
-        if (appendix != -1) {
+        if (appendix != Utils.notFound) {
             builder.append("/").append(appendix)
         }
 
