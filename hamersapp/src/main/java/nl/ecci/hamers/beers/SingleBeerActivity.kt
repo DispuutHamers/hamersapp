@@ -13,8 +13,9 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.activity_detail_item.*
-import kotlinx.android.synthetic.main.stub_detail_beer.*
 import kotlinx.android.synthetic.main.row_review.view.*
+import kotlinx.android.synthetic.main.stub_detail_beer.*
+import nl.ecci.hamers.BuildConfig
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DataUtils
@@ -66,12 +67,16 @@ class SingleBeerActivity : HamersActivity() {
     }
 
     private fun setValues() {
+        var beerName = beer!!.name
+        if (BuildConfig.DEBUG) {
+            beerName += " (" + beer!!.id + ")"
+        }
+        beer_name.text = beerName
+
         fillDetailRow(row_kind, getString(R.string.beer_soort), beer!!.kind)
         fillDetailRow(row_alc, getString(R.string.beer_alc), beer!!.percentage)
         fillDetailRow(row_brewer, getString(R.string.beer_brewer), beer!!.brewer)
         fillDetailRow(row_country, getString(R.string.beer_country), beer!!.country)
-
-        beer_name.text = beer!!.name
 
         if (beer!!.rating == null) {
             fillDetailRow(row_rating, getString(R.string.beer_rating), "Nog niet bekend")
