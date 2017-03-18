@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.volley.VolleyError
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -57,16 +56,7 @@ class ChangeFragment : HamersListFragment() {
             }
         }, null)
         // Load list of signUps (not loaded anywhere else)
-        Loader.getData(context, Loader.SIGNUPURL, object : GetCallback {
-            override fun onSuccess(response: String) {
-                // Save signUps
-                prefs.edit().putString(Loader.SIGNUPURL, response).apply()
-            }
-
-            override fun onError(error: VolleyError) {
-                // Nothing
-            }
-        }, null)
+        Loader.getData(context, Loader.SIGNUPURL, null, null)
     }
 
     override fun onResume() {
@@ -96,9 +86,9 @@ class ChangeFragment : HamersListFragment() {
                 tempList = gson.fromJson<ArrayList<Change>>(prefs.getString(Loader.CHANGEURL, null), type)
             }
 
-            // Filter out changes regarding device ID's
+            // Filter out changes regarding device ID's and destroys of sign ups
             tempList.filterTo(result) {
-                it.itemType != Change.ItemType.DEVICE
+                it.itemType != Change.ItemType.DEVICE && !(it.itemType == Change.ItemType.SIGNUP && it.event == Change.Event.DESTROY)
             }
 
             return result

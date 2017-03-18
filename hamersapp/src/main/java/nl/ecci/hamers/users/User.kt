@@ -31,6 +31,6 @@ class User(val id: Int,
     inner class Nickname(val nickname: String)
 
     companion object {
-        val USER_ID = "USER_ID"
+        val USER = "USER"
     }
 }

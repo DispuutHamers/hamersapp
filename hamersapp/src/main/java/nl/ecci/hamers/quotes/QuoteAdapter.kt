@@ -31,7 +31,7 @@ internal class QuoteAdapter(private val dataSet: ArrayList<Quote>, private val c
             val position = vh.adapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 val intent = Intent(context, SingleUserActivity::class.java)
-                intent.putExtra(User.USER_ID, filteredDataSet[vh.adapterPosition].userID)
+                intent.putExtra(User.USER, filteredDataSet[vh.adapterPosition].userID)
                 context.startActivity(intent)
             }
         }

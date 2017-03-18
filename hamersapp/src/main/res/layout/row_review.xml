@@ -2,8 +2,9 @@
     android:id="@+id/review_row"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:background="?attr/selectableItemBackground"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
 
     <TextView
         android:id="@+id/review_title"

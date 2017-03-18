@@ -1,6 +1,7 @@
 package nl.ecci.hamers.changes
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +11,14 @@ import kotlinx.android.synthetic.main.row_change.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.beers.Beer
+import nl.ecci.hamers.beers.SingleBeerActivity
 import nl.ecci.hamers.events.Event
-import nl.ecci.hamers.events.SignUp
+import nl.ecci.hamers.events.SingleEventActivity
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener
 import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.DataUtils.getGravatarURL
+import nl.ecci.hamers.users.SingleUserActivity
+import nl.ecci.hamers.users.User
 import java.util.*
 
 internal class ChangeAdapter(private val context: Context, private val dataSet: ArrayList<Change>) : RecyclerView.Adapter<ChangeAdapter.ViewHolder>() {
@@ -30,9 +34,43 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
 
     override fun getItemCount() = dataSet.size
 
-    internal inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    internal inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+
+        override fun onClick(v: View?) {
+            val change = dataSet[layoutPosition]
+
+            if (change.itemType != null) {
+                var intent: Intent? = null
+                when (change.itemType) {
+                    Change.ItemType.EVENT -> {
+                        intent = Intent(context, SingleEventActivity::class.java)
+                        intent.putExtra(Event.EVENT, change.itemId)
+                    }
+                    Change.ItemType.SIGNUP -> {
+                        intent = Intent(context, SingleEventActivity::class.java)
+                        val eventId = DataUtils.getSignUp(context, change.itemId).eventID
+                        intent.putExtra(Event.EVENT, eventId)
+                    }
+                    Change.ItemType.BEER -> {
+                        intent = Intent(context, SingleBeerActivity::class.java)
+                        intent.putExtra(Beer.BEER, change.itemId)
+                    }
+                    Change.ItemType.USER -> {
+                        intent = Intent(context, SingleUserActivity::class.java)
+                        intent.putExtra(User.USER, change.itemId)
+                    }
+                    else -> {
+                        // Do nothing
+                        return
+                    }
+                }
+                context.startActivity(intent)
+            }
+        }
+
         fun bindChange(change: Change) {
             val user = DataUtils.getUser(context, change.userId)
+            itemView.setOnClickListener(this)
 
             with(change) {
                 // Set user image

@@ -41,7 +41,7 @@ object Loader {
         val request = object : StringRequest(Request.Method.GET, url,
                 Response.Listener<String> { response ->
                     Log.d("GET-response", response)
-                    if (dataURL != SIGNUPURL && dataURL != EVENTURL) {
+                    if (dataURL != EVENTURL) {
                         prefs.edit().putString(dataURL, response).apply()
                     }
                     callback?.onSuccess(response)

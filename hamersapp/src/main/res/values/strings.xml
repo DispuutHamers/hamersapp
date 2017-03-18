@@ -22,7 +22,7 @@
     <string name="navigation_item_users">Leden</string>
     <string name="navigation_item_meetings">Vergaderingen</string>
     <string name="navigation_item_stickers">Stickers</string>
-    <string name="navigation_item_changes">Changes</string>
+    <string name="navigation_item_changes">Log</string>
     <string name="navigation_item_settings">Instellingen</string>
     <string name="navigation_item_about">Over</string>
 
@@ -50,6 +50,7 @@
     <string name="attendance_reason_size">Je reden is kut! (te kort)</string>
     <string name="menu_upcoming">Aankomend</string>
     <string name="menu_all">Alle</string>
+    <string name="event_not_found">Activiteit niet gevonden</string>
 
     <!-- Beers -->
     <string name="new_beer">Nieuw biertje</string>
