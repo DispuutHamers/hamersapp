@@ -1,17 +1,19 @@
 package nl.ecci.hamers.helpers
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.DatePicker
 import android.widget.ImageView
 import nl.ecci.hamers.R
 
 @SuppressLint("Registered")
-abstract class NewItemActivity : HamersActivity() {
+abstract class NewItemActivity : HamersActivity(), DatePickerDialog.OnDateSetListener {
     var refreshItem: MenuItem? = null
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

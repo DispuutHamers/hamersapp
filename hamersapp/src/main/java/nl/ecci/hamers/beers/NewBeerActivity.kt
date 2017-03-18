@@ -3,6 +3,7 @@ package nl.ecci.hamers.beers
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.DatePicker
 import com.android.volley.VolleyError
 import kotlinx.android.synthetic.main.activity_new_item.*
 import kotlinx.android.synthetic.main.stub_new_beer.*
@@ -76,5 +77,8 @@ class NewBeerActivity : NewItemActivity() {
                 disableLoadingAnimation()
             }
         })
+    }
+
+    override fun onDateSet(datePicker: DatePicker?, year: Int, month: Int, day: Int) {
     }
 }
