@@ -18,6 +18,7 @@ import nl.ecci.hamers.events.Event
 import nl.ecci.hamers.events.SignUp
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.meetings.Meeting
+import nl.ecci.hamers.users.Nickname
 import nl.ecci.hamers.users.User
 import java.util.*
 
@@ -74,7 +75,7 @@ object DataUtils {
         return String.format("http://gravatar.com/avatar/%s/?s=1920", Utils.md5(email))
     }
 
-    fun convertNicknames(nicknames: ArrayList<User.Nickname>): String {
+    fun convertNicknames(nicknames: ArrayList<Nickname>): String {
         val sb = StringBuilder()
         for (nickname in nicknames) {
             sb.append(nickname.nickname).append(" ")
@@ -107,11 +108,14 @@ object DataUtils {
         return result
     }
 
+    /**
+     * Get user by id
+     */
     fun getUser(context: Context, id: Int): User {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         val userList: ArrayList<User>?
-        var result = User(Utils.notFound, Utils.unknown, "example@example.org", Utils.notFound, Utils.notFound, User.Member.LID, Utils.notFound, ArrayList<User.Nickname>(), Date())
+        var result = User(Utils.notFound, Utils.unknown, "example@example.org", Utils.notFound, Utils.notFound, User.Member.LID, Utils.notFound, ArrayList<Nickname>(), Date())
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<User>>() {
@@ -128,6 +132,32 @@ object DataUtils {
         return result
     }
 
+    /**
+     * Get user by nickname
+     */
+    fun getUserByNick(context: Context, id: Int): User {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+        var result = User(Utils.notFound, Utils.unknown, "example@example.org", Utils.notFound, Utils.notFound, User.Member.LID, Utils.notFound, ArrayList<Nickname>(), Date())
+
+        val gsonBuilder = GsonBuilder()
+        val gson = gsonBuilder.create()
+        val type = object : TypeToken<ArrayList<User>>() {
+        }.type
+
+        val userList = gson.fromJson<ArrayList<User>>(prefs?.getString(Loader.USERURL, null), type)
+
+        if (userList != null) {
+            for (user in userList) {
+                user.nicknames
+                        .filter { it.id == id }
+                        .forEach { result = user }
+            }
+        }
+
+        return result
+    }
+
     fun getOwnUser(context: Context): User {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -136,7 +166,7 @@ object DataUtils {
         val gson = gsonBuilder.create()
         user = gson.fromJson(prefs.getString(Loader.WHOAMIURL, null), User::class.java)
         if (user == null) {
-            user = User(Utils.notFound, Utils.unknown, "example@example.org", Utils.notFound, Utils.notFound, User.Member.LID, Utils.notFound, ArrayList<User.Nickname>(), Date())
+            user = User(Utils.notFound, Utils.unknown, "example@example.org", Utils.notFound, Utils.notFound, User.Member.LID, Utils.notFound, ArrayList<Nickname>(), Date())
         }
         return user
     }
@@ -152,8 +182,8 @@ object DataUtils {
 
         val eventList = gson.fromJson<ArrayList<Event>>(prefs?.getString(Loader.EVENTURL, null), type)
 
-            eventList?.filter { it.id == id }
-                    ?.forEach { result = it }
+        eventList?.filter { it.id == id }
+                ?.forEach { result = it }
 
         return result
     }
