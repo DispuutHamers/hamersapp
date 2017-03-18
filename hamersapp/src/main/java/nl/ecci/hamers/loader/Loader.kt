@@ -98,6 +98,15 @@ object Loader {
                 return params
             }
         }
+
+        // Set (temporary) timeout value for reminders
+        if (dataURL.contains(REMINDURL))
+            request.retryPolicy = DefaultRetryPolicy(
+                    45 * 1000, // 45 seconds
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            )
+
         Log.d("PostRequest: ", request.toString())
         Singleton.getInstance(context).addToRequestQueue<JSONObject>(request)
     }
