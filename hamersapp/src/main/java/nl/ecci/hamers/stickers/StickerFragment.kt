@@ -156,7 +156,7 @@ class StickerFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.Connecti
         alert.setView(container)
 
         alert.setPositiveButton(android.R.string.yes) { _, _ ->
-            postSticker()
+            postSticker(input.text.toString())
         }
         alert.setNegativeButton(android.R.string.no) { _, _ ->
             // Do nothing.
@@ -165,7 +165,7 @@ class StickerFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.Connecti
         alert.show()
     }
 
-    private fun postSticker() {
+    private fun postSticker(notes: String) {
         val lastKnownLocation = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
         val body = JSONObject()
@@ -175,6 +175,7 @@ class StickerFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.Connecti
             try {
                 body.put("lat", lat.toString())
                 body.put("lon", lon.toString())
+                body.put("notes", notes)
             } catch (ignored: JSONException) {
             }
         } else {
@@ -223,7 +224,7 @@ class StickerFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.Connecti
         //Place current location marker
         val latLng: LatLng = LatLng(location.latitude, location.longitude)
         val markerOptions: MarkerOptions = MarkerOptions()
-        markerOptions.position(latLng);
+        markerOptions.position(latLng)
         markerOptions.title("Je locatie")
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker())
         mCurrLocationMarker = mMap?.addMarker(markerOptions)

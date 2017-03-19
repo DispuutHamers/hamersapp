@@ -22,6 +22,7 @@ import nl.ecci.hamers.helpers.DataUtils.getGravatarURL
 import nl.ecci.hamers.meetings.Meeting
 import nl.ecci.hamers.news.News
 import nl.ecci.hamers.quotes.Quote
+import nl.ecci.hamers.stickers.Sticker
 
 class MessagingService : FirebaseMessagingService() {
 
@@ -51,7 +52,7 @@ class MessagingService : FirebaseMessagingService() {
                 "Review" -> reviewPush(remoteMessage.data["object"])
                 "News" -> newsPush(remoteMessage.data["object"])
                 "Meeting" -> meetingPush(remoteMessage.data["object"])
-                "Sticker" -> stickerPush()
+                "Sticker" -> stickerPush(remoteMessage.data["object"])
             }
         }
     }
@@ -86,12 +87,13 @@ class MessagingService : FirebaseMessagingService() {
     }
 
     fun meetingPush(meetingString: String?) {
-       val meeting = gson.fromJson(meetingString, Meeting::class.java)
+        val meeting = gson.fromJson(meetingString, Meeting::class.java)
         sendNotification(meeting.subject, applicationContext.getString(R.string.change_news_new), meeting.userID)
     }
 
-    fun stickerPush() {
-        sendNotification(applicationContext.getString(R.string.change_sticker_new), "", -1)
+    fun stickerPush(stickerString: String?) {
+        val sticker = gson.fromJson(stickerString, Sticker::class.java)
+        sendNotification(applicationContext.getString(R.string.change_sticker_new), "", sticker.userID)
     }
 
     /**

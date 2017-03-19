@@ -56,7 +56,7 @@ class NewMeetingActivity : NewItemActivity() {
                 body.put("onderwerp", subject)
                 body.put("agenda", agenda)
                 body.put("notes", notes)
-                body.put("date", MainActivity.parseDate(date))
+                body.put("date", date)
                 if (meeting != null) {
                     Loader.postOrPatchData(this, Loader.MEETINGURL, body, meeting!!.id, object : PostCallback {
                         override fun onSuccess(response: JSONObject) {
