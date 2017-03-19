@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.DatePicker
 import com.android.volley.VolleyError
-import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_new_item.*
 import kotlinx.android.synthetic.main.stub_new_meeting.*
 import nl.ecci.hamers.MainActivity

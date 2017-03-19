@@ -10,7 +10,6 @@ import android.widget.DatePicker
 import android.widget.SeekBar
 import android.widget.Toast
 import com.android.volley.VolleyError
-import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_new_item.*
 import kotlinx.android.synthetic.main.stub_new_review.*
 import nl.ecci.hamers.MainActivity

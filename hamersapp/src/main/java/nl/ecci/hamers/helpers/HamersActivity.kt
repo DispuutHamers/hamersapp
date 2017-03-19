@@ -2,7 +2,6 @@ package nl.ecci.hamers.helpers
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.content.ContextCompat
@@ -18,7 +17,6 @@ import kotlinx.android.synthetic.main.row_imageview.view.*
 import kotlinx.android.synthetic.main.row_singleview.view.*
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
-import nl.ecci.hamers.helpers.PermissionUtils.PERMISSION_REQUEST_CODE
 
 
 @SuppressLint("Registered")

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
-import android.support.v7.widget.LinearLayoutCompat
 import android.support.v7.widget.SearchView
 import android.view.*
 import com.google.gson.GsonBuilder
@@ -16,7 +15,6 @@ import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
-import org.jetbrains.anko.padding
 import java.util.*
 
 class EventListFragment : HamersListFragment() {

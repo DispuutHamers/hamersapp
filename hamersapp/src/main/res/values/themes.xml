@@ -23,4 +23,8 @@
         <item name="android:orientation">vertical</item>
     </style>
 
+    <style name="line_separator">
+        <item name="android:background">@color/line_separator</item>
+    </style>
+
 </resources>

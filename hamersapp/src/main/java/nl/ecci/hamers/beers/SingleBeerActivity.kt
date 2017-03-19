@@ -132,7 +132,7 @@ class SingleBeerActivity : HamersActivity() {
         intent.putExtra(Beer.BEER, beer?.id)
 
         if (review != null) {
-            intent.putExtra(Review.REVIEW, gson!!.toJson(review, Review::class.java))
+            intent.putExtra(Review.REVIEW, gson.toJson(review, Review::class.java))
         }
 
         startActivityForResult(intent, reviewRequestCode)

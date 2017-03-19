@@ -7,7 +7,6 @@ import android.widget.DatePicker
 import com.android.volley.VolleyError
 import kotlinx.android.synthetic.main.activity_new_item.*
 import kotlinx.android.synthetic.main.stub_new_beer.*
-import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.NewItemActivity

@@ -4,10 +4,6 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
-import android.widget.DatePicker
-import kotlinx.android.synthetic.main.stub_new_event.*
-import kotlinx.android.synthetic.main.stub_new_meeting.*
-import kotlinx.android.synthetic.main.stub_new_review.*
 import java.util.*
 
 class DatePickerFragment : DialogFragment() {
