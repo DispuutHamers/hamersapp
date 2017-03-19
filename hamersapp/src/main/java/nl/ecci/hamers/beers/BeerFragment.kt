@@ -39,8 +39,6 @@ class BeerFragment : HamersListFragment(){
         hamers_fab.setOnClickListener { startActivityForResult(Intent(activity, NewBeerActivity::class.java), 1) }
 
         populateList().execute()
-        onRefresh()
-        sortList()
     }
 
     override fun onRefresh() {

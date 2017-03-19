@@ -50,7 +50,6 @@ class EventListFragment : HamersListFragment() {
         }
 
         populateList().execute()
-        onRefresh()
     }
 
     override fun onRefresh() {
@@ -105,10 +104,6 @@ class EventListFragment : HamersListFragment() {
                 return false
             }
         })
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        onRefresh()
     }
 
     private inner class populateList : AsyncTask<String, Void, ArrayList<Event>?>() {

@@ -53,12 +53,12 @@ object Loader {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
                 val headers = HashMap<String, String>()
-                headers.put("Authorization", "Token token=" + prefs.getString(APIKEYKEY, "")!!)
+                headers.put("Authorization", "Token token=" + prefs.getString(APIKEYKEY, ""))
                 return headers
             }
 
-            public override fun getParams(): Map<String, String> {
-                return params!!
+            public override fun getParams(): Map<String, String>? {
+                return params
             }
         }
 

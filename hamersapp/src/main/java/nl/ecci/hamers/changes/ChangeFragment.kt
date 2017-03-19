@@ -41,7 +41,6 @@ class ChangeFragment : HamersListFragment() {
         hamers_fab.visibility = View.GONE
 
         populateList().execute()
-        onRefresh()
     }
 
     override fun onRefresh() {

@@ -156,11 +156,14 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
         val body = JSONObject()
         val lat = lastKnownLocation?.latitude
         val lon = lastKnownLocation?.longitude
-        if (lat != null && lon != null)
-        try {
-            body.put("lat", lat.toString())
-            body.put("lon", lon.toString())
-        } catch (ignored: JSONException) {
+        if (lat != null && lon != null) {
+            try {
+                body.put("lat", lat.toString())
+                body.put("lon", lon.toString())
+            } catch (ignored: JSONException) {
+            }
+        } else {
+            Toast.makeText(activity, R.string.generic_error, Toast.LENGTH_SHORT).show()
         }
 
         Loader.postOrPatchData(activity, Loader.STICKERURL, body, -1, null)

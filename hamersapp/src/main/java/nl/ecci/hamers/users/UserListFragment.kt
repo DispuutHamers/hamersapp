@@ -41,10 +41,7 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
 
         exUser = arguments.getBoolean(UserFragmentAdapter.exUser, false)
 
-        sort()
-
         populateList().execute()
-        onRefresh()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
