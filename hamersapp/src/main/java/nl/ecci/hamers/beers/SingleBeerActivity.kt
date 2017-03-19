@@ -212,12 +212,12 @@ class SingleBeerActivity : HamersActivity() {
                     }
                 }
             } else if (requestCode == beerRequestCode) {
-                beer?.name = data?.getStringExtra(beerName)
-                beer?.kind = data?.getStringExtra(beerKind)
-                beer?.percentage = data?.getStringExtra(beerPercentage)
-                beer?.percentage = data?.getStringExtra(beerPercentage)
-                beer?.brewer = data?.getStringExtra(beerBrewer)
-                beer?.country = data?.getStringExtra(beerCountry)
+                beer?.name = data?.getStringExtra(beerName).toString()
+                beer?.kind = data?.getStringExtra(beerKind).toString()
+                beer?.percentage = data?.getStringExtra(beerPercentage).toString()
+                beer?.percentage = data?.getStringExtra(beerPercentage).toString()
+                beer?.brewer = data?.getStringExtra(beerBrewer).toString()
+                beer?.country = data?.getStringExtra(beerCountry).toString()
                 beer?.rating = beer?.rating!! + " (Nog niet bijgewerkt)"
 
                 initUI()

@@ -41,6 +41,8 @@ class ChangeFragment : HamersListFragment() {
         hamers_fab.visibility = View.GONE
 
         populateList().execute()
+        // Refresh only at create (not on resume!)
+        onRefresh()
     }
 
     override fun onRefresh() {
@@ -57,7 +59,6 @@ class ChangeFragment : HamersListFragment() {
 
     override fun onResume() {
         super.onResume()
-        onRefresh()
         activity.title = resources.getString(R.string.navigation_item_changes)
     }
 

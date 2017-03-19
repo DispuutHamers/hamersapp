@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 class Beer(val id: Int,
-           var name: String?,
+           var name: String,
            @SerializedName("soort")
-           var kind: String?,
+           var kind: String,
            @SerializedName("picture")
            val imageURL: String,
-           var percentage: String?,
-           var brewer: String?,
-           var country: String?,
+           var percentage: String,
+           var brewer: String,
+           var country: String,
            @SerializedName("cijfer")
-           var rating: String?,
+           var rating: String,
            val url: String,
            @SerializedName("created_at")
            val createdAt: Date) {
