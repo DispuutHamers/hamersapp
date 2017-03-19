@@ -5,11 +5,13 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Internet + sdcard access (for caching purposes) -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
+    <!-- Google Maps -->
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
@@ -55,9 +57,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
                     android:host="zondersikkel.nl"
-                    android:pathPrefix="/beers" />
+                    android:pathPrefix="/beers"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -74,9 +76,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
                     android:host="zondersikkel.nl"
-                    android:pathPrefix="/events" />
+                    android:pathPrefix="/events"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -133,9 +135,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
                     android:host="zondersikkel.nl"
-                    android:pathPrefix="/meetings" />
+                    android:pathPrefix="/meetings"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
