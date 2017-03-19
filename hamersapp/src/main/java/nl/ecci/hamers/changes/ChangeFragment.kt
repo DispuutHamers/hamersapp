@@ -16,6 +16,7 @@ import nl.ecci.hamers.helpers.DividerItemDecoration
 import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
+import org.jetbrains.anko.padding
 import java.util.*
 
 class ChangeFragment : HamersListFragment() {
@@ -35,6 +36,7 @@ class ChangeFragment : HamersListFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         hamers_list.addItemDecoration(DividerItemDecoration(activity))
+        hamers_list.padding = 0
         hamers_list.adapter = ChangeAdapter(activity, dataSet)
         hamers_fab.visibility = View.GONE
 

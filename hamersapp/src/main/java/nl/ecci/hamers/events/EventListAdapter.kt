@@ -70,7 +70,10 @@ internal class EventListAdapter(private val context: Context, private val dataSe
         fun bindEvent(event: Event) {
             with(event) {
                 itemView.event_title.text = event.title
-                itemView.event_beschrijving.text = event.description
+                var description = event.description
+                if (description.length > 256)
+                    description = description.substring(0, 256)
+                itemView.event_beschrijving.text = description
                 itemView.event_date.text = MainActivity.appDF2.format(event.date)
                 if (event.location.isNullOrEmpty()) {
                     itemView.event_location.visibility = View.GONE
@@ -79,11 +82,11 @@ internal class EventListAdapter(private val context: Context, private val dataSe
                 }
             }
 
-            val signups = event.signUps
+            val signUps = event.signUps
             val userID = DataUtils.getOwnUser(context).id
             var aanwezig: Boolean? = null
-            signups.indices
-                    .map { signups[it] }
+            signUps.indices
+                    .map { signUps[it] }
                     .filter { it.userID == userID }
                     .forEach { aanwezig = it.isAttending }
 

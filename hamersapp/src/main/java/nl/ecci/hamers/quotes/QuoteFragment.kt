@@ -17,6 +17,7 @@ import nl.ecci.hamers.helpers.DividerItemDecoration
 import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
+import org.jetbrains.anko.padding
 import java.util.*
 
 
@@ -38,6 +39,7 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
         super.onViewCreated(view, savedInstanceState)
 
         hamers_list.addItemDecoration(DividerItemDecoration(activity))
+        hamers_list.padding = 0
         hamers_list.adapter = QuoteAdapter(dataSet, context)
 
         // When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment

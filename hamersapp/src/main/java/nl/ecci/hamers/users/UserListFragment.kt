@@ -14,6 +14,7 @@ import nl.ecci.hamers.helpers.DividerItemDecoration
 import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
+import org.jetbrains.anko.padding
 import java.util.*
 
 class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -34,6 +35,7 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
         super.onViewCreated(view, savedInstanceState)
 
         hamers_list.addItemDecoration(DividerItemDecoration(activity))
+        hamers_list.padding = 0
         hamers_list.adapter = UserListAdapter(dataSet, activity)
         hamers_fab.visibility = View.GONE
 
