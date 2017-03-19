@@ -154,9 +154,12 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
         val lastKnownLocation = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
         val body = JSONObject()
+        val lat = lastKnownLocation?.latitude
+        val lon = lastKnownLocation?.longitude
+        if (lat != null && lon != null)
         try {
-            body.put("lat", lastKnownLocation?.latitude.toString())
-            body.put("lon", lastKnownLocation?.longitude.toString())
+            body.put("lat", lat.toString())
+            body.put("lon", lon.toString())
         } catch (ignored: JSONException) {
         }
 
