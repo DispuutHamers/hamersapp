@@ -63,8 +63,8 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
                     }
                     Change.ItemType.SIGNUP -> {
                         intent = Intent(context, SingleEventActivity::class.java)
-                        val event = DataUtils.getSignUp(context, change.itemId)
-                        intent.putExtra(Event.EVENT, event.id)
+                        val signUp = DataUtils.getSignUp(context, change.itemId)
+                        intent.putExtra(Event.EVENT, signUp.eventID)
                     }
                     Change.ItemType.BEER -> {
                         intent = Intent(context, SingleBeerActivity::class.java)

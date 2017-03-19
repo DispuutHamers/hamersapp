@@ -53,6 +53,11 @@ object DataUtils {
             if (key.toString().isNotBlank()) {
                 // Store in memory
                 PreferenceManager.getDefaultSharedPreferences(context).edit().putString(Loader.APIKEYKEY, key.toString()).apply()
+                // Download the rest
+//                val token = FirebaseInstanceId.getInstance().token.toString()
+//                sendRegistrationToServer(context, token)
+                Loader.getAllData(context)
+                // Notify the user
                 Utils.showToast(context, context.resources.getString(R.string.downloading), Toast.LENGTH_SHORT)
             } else {
                 Utils.showToast(context, context.resources.getString(R.string.store_key_settings), Toast.LENGTH_SHORT)

@@ -1,5 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/send_reminder"
+        android:icon="@drawable/ic_email_alert"
+        android:title="@string/edit_item"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
+
     <item android:id="@+id/edit_item"
         android:icon="@drawable/ic_create"
         android:title="@string/edit_item"

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -17,6 +16,7 @@ import nl.ecci.hamers.helpers.DividerItemDecoration
 import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
+import org.jetbrains.anko.padding
 import java.util.*
 
 class ChangeFragment : HamersListFragment() {
@@ -36,6 +36,7 @@ class ChangeFragment : HamersListFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         hamers_list.addItemDecoration(DividerItemDecoration(activity))
+        hamers_list.padding = 0
         hamers_list.adapter = ChangeAdapter(activity, dataSet)
         hamers_fab.visibility = View.GONE
 

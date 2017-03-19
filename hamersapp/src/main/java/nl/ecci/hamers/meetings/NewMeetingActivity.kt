@@ -2,6 +2,7 @@ package nl.ecci.hamers.meetings
 
 import android.os.Bundle
 import android.view.View
+import android.widget.DatePicker
 import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_new_item.*
@@ -86,6 +87,14 @@ class NewMeetingActivity : NewItemActivity() {
 
     fun showDatePickerDialog(v: View) {
         DatePickerFragment().show(supportFragmentManager, "vergaderdatum")
+    }
+
+    override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
+        val date = day.toString() + "-" + (month + 1) + "-" + year
+
+        if (supportFragmentManager.findFragmentByTag("vergaderdatum") != null) {
+            meeting_date_button?.text = date
+        }
     }
 }
 

@@ -109,7 +109,9 @@ class SingleEventActivity : HamersActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.edit_menu, menu)
-        if (ownUser?.id != event!!.userID) {
+        if (ownUser?.id == event?.userID) {
+            menu.findItem(R.id.send_reminder).isVisible = true
+        } else {
             menu.removeItem(R.id.edit_item)
         }
         return true
@@ -125,6 +127,18 @@ class SingleEventActivity : HamersActivity() {
                 Intent(this, NewEventActivity::class.java).putExtra(Event.EVENT, event?.id)
                 startActivity(intent)
                 return true
+            }
+            R.id.send_reminder -> {
+                AlertDialog.Builder(this)
+                        .setTitle(R.string.reminder_title)
+                        .setMessage(R.string.reminder_message)
+                        .setPositiveButton(android.R.string.yes) { _, _ ->
+                            postReminder()
+                        }
+                        .setNegativeButton(android.R.string.no) { _, _ ->
+                            // Do nothing.
+                        }
+                        .show()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -152,6 +166,11 @@ class SingleEventActivity : HamersActivity() {
 
             }
         })
+    }
+
+    private fun postReminder() {
+        val url = Loader.EVENTURL + "/" + event?.id + "/" + Loader.REMINDURL
+        Loader.postOrPatchData(this, url, JSONObject(), -1, null)
     }
 
     private fun initSignUps() {
@@ -195,7 +214,7 @@ class SingleEventActivity : HamersActivity() {
 
     private fun askForReason() {
         val alert = AlertDialog.Builder(this)
-        alert.setTitle(R.string.attendance_reason_title)
+                .setTitle(R.string.attendance_reason_title)
 
         val input = EditText(this)
         input.setSingleLine()
@@ -222,7 +241,6 @@ class SingleEventActivity : HamersActivity() {
         alert.setNegativeButton(android.R.string.no) { _, _ ->
             // Do nothing.
         }
-
         alert.show()
     }
 

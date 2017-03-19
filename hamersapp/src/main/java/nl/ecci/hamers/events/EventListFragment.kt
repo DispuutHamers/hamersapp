@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
+import android.support.v7.widget.LinearLayoutCompat
 import android.support.v7.widget.SearchView
 import android.view.*
 import com.google.gson.GsonBuilder
@@ -15,6 +16,7 @@ import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
+import org.jetbrains.anko.padding
 import java.util.*
 
 class EventListFragment : HamersListFragment() {
@@ -55,7 +57,7 @@ class EventListFragment : HamersListFragment() {
         setRefreshing(true)
         val params = HashMap<String, String>()
         if (upcoming) {
-            params.put("sorted", "date-desc")
+            params.put("sorted", "asc-desc")
             params.put("future", "true")
             Loader.getData(context, Loader.EVENTURL, object : GetCallback {
                 override fun onSuccess(response: String) {
@@ -63,7 +65,6 @@ class EventListFragment : HamersListFragment() {
                 }
             }, params)
         } else {
-            params.put("sorted", "date-asc")
             Loader.getData(context, Loader.EVENTURL, object : GetCallback {
                 override fun onSuccess(response: String) {
                     // Only save normal event list
@@ -141,7 +142,8 @@ class EventListFragment : HamersListFragment() {
             if (result != null) {
                 dataSet.clear()
                 dataSet.addAll(result)
-                Collections.reverse(dataSet)
+                if (!upcoming)
+                    Collections.reverse(dataSet)
                 notifyAdapter()
             }
             setRefreshing(false)

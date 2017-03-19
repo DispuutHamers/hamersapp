@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.SearchView
 import android.view.*
-import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -18,6 +17,7 @@ import nl.ecci.hamers.helpers.DividerItemDecoration
 import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
+import org.jetbrains.anko.padding
 import java.util.*
 
 
@@ -39,6 +39,7 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
         super.onViewCreated(view, savedInstanceState)
 
         hamers_list.addItemDecoration(DividerItemDecoration(activity))
+        hamers_list.padding = 0
         hamers_list.adapter = QuoteAdapter(dataSet, context)
 
         // When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment

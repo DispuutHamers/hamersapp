@@ -86,7 +86,7 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun addMarkers() {
-        if (map != null && !dataSet.isEmpty()) {
+        if (map != null && dataSet.isNotEmpty()) {
             for (sticker in dataSet) {
                 map!!.addMarker(MarkerOptions().position(LatLng(sticker.lat.toDouble(), sticker.lon.toDouble())))
             }

@@ -1,7 +1,10 @@
 package nl.ecci.hamers.events
 
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.View
+import android.widget.DatePicker
+import android.widget.TimePicker
 import android.widget.Toast
 import com.android.volley.VolleyError
 import kotlinx.android.synthetic.main.activity_new_item.*
@@ -15,7 +18,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 
-class NewEventActivity : NewItemActivity() {
+class NewEventActivity : NewItemActivity(), TimePickerDialog.OnTimeSetListener {
 
     private val fragmentManager = supportFragmentManager
     private var eventID: Int = 0
@@ -80,6 +83,43 @@ class NewEventActivity : NewItemActivity() {
     fun showDeadlineDatePickerDialog(v: View) {
         val picker = DatePickerFragment()
         picker.show(fragmentManager, "deadline_date")
+    }
+
+    override fun onDateSet(datePicker: DatePicker?, year: Int, month: Int, day: Int) {
+        val date = day.toString() + "-" + (month + 1) + "-" + year
+
+        if (supportFragmentManager.findFragmentByTag("date") != null) {
+            event_date_button?.text = date
+        }
+        if (supportFragmentManager.findFragmentByTag("end_date") != null) {
+            event_end_date_button?.text = date
+        }
+        if (supportFragmentManager.findFragmentByTag("deadline_date") != null) {
+            event_deadline_date_button?.text = date
+        }
+    }
+
+    override fun onTimeSet(view: TimePicker, hour: Int, minute: Int) {
+        val builder = StringBuilder()
+        builder.append(hour).append(":")
+
+        if (minute < 10) {
+            builder.append(0).append(minute)
+        } else {
+            builder.append(minute)
+        }
+
+        val time = builder.toString()
+
+        if (supportFragmentManager.findFragmentByTag("time") != null) {
+            event_time_button?.text = time
+        }
+        if (supportFragmentManager.findFragmentByTag("end_time") != null) {
+            event_end_time_button?.text = time
+        }
+        if (supportFragmentManager.findFragmentByTag("deadline_time") != null) {
+            event_deadline_time_button?.text = time
+        }
     }
 
     /**
