@@ -52,8 +52,8 @@ class EventListFragment : HamersListFragment() {
 
     override fun onRefresh() {
         setRefreshing(true)
-        val params = HashMap<String, String>()
         if (upcoming) {
+            val params = HashMap<String, String>()
             params.put("sorted", "asc-desc")
             params.put("future", "true")
             Loader.getData(context, Loader.EVENTURL, object : GetCallback {
@@ -68,7 +68,7 @@ class EventListFragment : HamersListFragment() {
                     prefs.edit().putString(Loader.EVENTURL, response).apply()
                     populateList().execute(response)
                 }
-            }, params)
+            }, null)
         }
     }
 

@@ -42,7 +42,8 @@ object Loader {
         val request = object : StringRequest(Request.Method.GET, url,
                 Response.Listener<String> { response ->
                     Log.d("GET-response", response)
-                    if (dataURL != EVENTURL) {
+                    // Do not save events from upcoming events fragment
+                    if (!(dataURL == EVENTURL && params != null)) {
                         prefs.edit().putString(dataURL, response).apply()
                     }
                     callback?.onSuccess(response)

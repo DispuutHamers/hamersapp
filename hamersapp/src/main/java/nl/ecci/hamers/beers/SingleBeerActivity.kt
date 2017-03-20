@@ -11,7 +11,6 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
-import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.activity_detail_item.*
@@ -96,11 +95,13 @@ class SingleBeerActivity : HamersActivity() {
     }
 
     private fun getReviews() {
+        review_insert_point.removeAllViews()
+
         val type = object : TypeToken<ArrayList<Review>>() {
         }.type
 
         val reviewList = ArrayList<Review>()
-        val tempList = GsonBuilder().create().fromJson<ArrayList<Review>>(prefs?.getString(Loader.REVIEWURL, null), type)
+        val tempList = gson.fromJson<ArrayList<Review>>(prefs?.getString(Loader.REVIEWURL, null), type)
 
         tempList.filterTo(reviewList) {
             it.beerID == beer?.id
@@ -120,10 +121,6 @@ class SingleBeerActivity : HamersActivity() {
                 val divider = layoutInflater.inflate(R.layout.element_divider, review_insert_point, false)
                 review_insert_point.addView(divider)
             }
-        }
-
-        if (reviewList.isEmpty()) {
-            review_insert_point.removeAllViews()
         }
     }
 
@@ -193,7 +190,7 @@ class SingleBeerActivity : HamersActivity() {
             }
             R.id.share_item -> {
                 // Copy link to clipboard
-                val clipboard : ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clipboard: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val clip = ClipData.newPlainText(Beer.BEER, getString(R.string.host) + Loader.BEERURL + "/" + beer?.id)
                 clipboard.primaryClip = clip
                 // Notify user
@@ -207,8 +204,8 @@ class SingleBeerActivity : HamersActivity() {
         if (resultCode == Activity.RESULT_OK) {
             getReviews()
             if (requestCode == reviewRequestCode) {
-                val newBody = data?.getStringExtra(reviewBody)
-                val newRating = data?.getIntExtra(reviewRating, -1)
+                val newBody : String = data?.getStringExtra(reviewBody).toString()
+                val newRating = data?.getIntExtra(reviewRating, -1) as Int
 
                 if (ownReview != null) {
                     for (i in 0..review_insert_point.childCount - 1) {

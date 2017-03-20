@@ -16,17 +16,23 @@ import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.beers.Beer
 import nl.ecci.hamers.beers.Review
+import nl.ecci.hamers.beers.SingleBeerActivity
 import nl.ecci.hamers.events.Event
+import nl.ecci.hamers.events.SingleEventActivity
 import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.DataUtils.getGravatarURL
+import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.meetings.Meeting
+import nl.ecci.hamers.meetings.SingleMeetingActivity
 import nl.ecci.hamers.news.News
 import nl.ecci.hamers.quotes.Quote
 import nl.ecci.hamers.stickers.Sticker
 
+
 class MessagingService : FirebaseMessagingService() {
 
     var intent: Intent? = null
+    var pendingIntent : PendingIntent? = null
     var gson: Gson = GsonBuilder().setDateFormat(MainActivity.dbDF.toPattern()).create()
 
     /**
@@ -34,6 +40,7 @@ class MessagingService : FirebaseMessagingService() {
      */
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         intent = Intent(this, MainActivity::class.java)
+        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
         // Check if message contains a notification payload.
         if (remoteMessage?.notification != null) {
@@ -63,21 +70,44 @@ class MessagingService : FirebaseMessagingService() {
     }
 
     fun eventPush(eventString: String?) {
+        Loader.getData(this, Loader.EVENTURL, null, null)
+
         val event = gson.fromJson(eventString, Event::class.java)
         var title = event.title
         if (event.location.isNotBlank()) {
             title += "(@" + event.location + ")"
         }
+
+        intent = Intent(this, SingleEventActivity::class.java)
+        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent?.putExtra(Event.EVENT, event.id)
+        pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+
         sendNotification(title, applicationContext.getString(R.string.change_event_new), event.userID)
     }
 
     fun beerPush(beerString: String?) {
+        Loader.getData(this, Loader.BEERURL, null, null)
+
         val beer = gson.fromJson(beerString, Beer::class.java)
+
+        intent = Intent(this, SingleBeerActivity::class.java)
+        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent?.putExtra(Beer.BEER, beer.id)
+        pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+
         sendNotification(beer.name, applicationContext.getString(R.string.change_beer_new), -1)
     }
 
     fun reviewPush(reviewString: String?) {
+        Loader.getData(this, Loader.REVIEWURL, null, null)
         val review = gson.fromJson(reviewString, Review::class.java)
+
+        intent = Intent(this, SingleBeerActivity::class.java)
+        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent?.putExtra(Beer.BEER, review.beerID)
+        pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+
         sendNotification(review.description, applicationContext.getString(R.string.change_review_new), review.userID)
     }
 
@@ -87,8 +117,15 @@ class MessagingService : FirebaseMessagingService() {
     }
 
     fun meetingPush(meetingString: String?) {
+        Loader.getData(this, Loader.MEETINGURL, null, null)
         val meeting = gson.fromJson(meetingString, Meeting::class.java)
-        sendNotification(meeting.subject, applicationContext.getString(R.string.change_news_new), meeting.userID)
+
+        intent = Intent(this, SingleMeetingActivity::class.java)
+        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent?.putExtra(Meeting.MEETING, meeting.id)
+        pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+
+        sendNotification(meeting.subject, applicationContext.getString(R.string.change_meeting_new), meeting.userID)
     }
 
     fun stickerPush(stickerString: String?) {
@@ -117,8 +154,9 @@ class MessagingService : FirebaseMessagingService() {
         style.setSummaryText(summary)
         notificationBuilder.setStyle(style)
 
-        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+        if (pendingIntent == null) {
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+        }
         notificationBuilder.setContentIntent(pendingIntent)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
