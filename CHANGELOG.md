@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.3.0](https://github.com/dexbleeker/hamersapp/tree/2.3.0) (2017-03-09)
+## [2.3.0](https://github.com/dexbleeker/hamersapp/tree/2.3.0) (2017-03-20)
 [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.2.1..2.3.0)
 
 - Push notifications

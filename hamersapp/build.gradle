@@ -26,8 +26,8 @@ android {
         applicationId "nl.ecci.Hamers"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 51
-        versionName "2.2.1"
+        versionCode 52
+        versionName "2.3.0"
         multiDexEnabled true
     }
     buildTypes {
