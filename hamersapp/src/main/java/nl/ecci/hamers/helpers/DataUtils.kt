@@ -54,8 +54,8 @@ object DataUtils {
                 // Store in memory
                 PreferenceManager.getDefaultSharedPreferences(context).edit().putString(Loader.APIKEYKEY, key.toString()).apply()
                 // Download the rest
-//                val token = FirebaseInstanceId.getInstance().token.toString()
-//                sendRegistrationToServer(context, token)
+                val token = FirebaseInstanceId.getInstance().token.toString()
+                sendRegistrationToServer(context, token)
                 Loader.getAllData(context)
                 // Notify the user
                 Utils.showToast(context, context.resources.getString(R.string.downloading), Toast.LENGTH_SHORT)
@@ -183,7 +183,7 @@ object DataUtils {
     fun getOwnUser(context: Context): User {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-        val user: User
+        val user: User?
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         user = gson.fromJson(prefs.getString(Loader.WHOAMIURL, null), User::class.java)
@@ -196,7 +196,7 @@ object DataUtils {
     fun getEvent(context: Context, id: Int): Event {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-        var result = Event(Utils.notFound, Utils.unknown, Utils.unknown, Utils.unknown, Utils.notFound, Date(), Date(), Date(), ArrayList<SignUp>(), Date(), false)
+        var result = Event()
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<Event>>() {
@@ -232,7 +232,7 @@ object DataUtils {
     fun getBeer(context: Context, id: Int): Beer {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-        var result = Beer(Utils.notFound, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Utils.unknown, Date())
+        var result = Beer()
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<Beer>>() {
@@ -251,7 +251,7 @@ object DataUtils {
     fun getReview(context: Context, id: Int): Review {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-        var result = Review(Utils.notFound, Utils.notFound, Utils.notFound, Utils.unknown, Utils.notFound, Date(), Date())
+        var result = Review()
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<Review>>() {
@@ -270,7 +270,7 @@ object DataUtils {
     fun getMeeting(context: Context, id: Int): Meeting {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-        var result = Meeting(Utils.notFound, Utils.unknown, Utils.unknown, Utils.unknown, Utils.notFound, Date(), Date(), Date())
+        var result = Meeting()
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<Meeting>>() {

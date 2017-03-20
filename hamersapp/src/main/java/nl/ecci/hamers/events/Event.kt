@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName
 import nl.ecci.hamers.helpers.Utils
 import java.util.*
 
-class Event(val id: Int,
+class Event(val id: Int = Utils.notFound,
             val title: String = Utils.unknown,
             @SerializedName("beschrijving")
             val description: String = Utils.unknown,
             val location: String = Utils.unknown,
             @SerializedName("user_id")
-            val userID: Int = 0,
+            val userID: Int = Utils.notFound,
             val date: Date = Date(),
             @SerializedName("end_time")
             val endDate: Date = Date(),
@@ -24,5 +24,4 @@ class Event(val id: Int,
     companion object {
         @JvmField val EVENT = "EVENT"
     }
-
 }
