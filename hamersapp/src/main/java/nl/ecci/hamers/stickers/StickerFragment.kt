@@ -162,7 +162,12 @@ class StickerFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.Connecti
             // Do nothing.
         }
 
-        alert.show()
+        // Only show dialog if permissions are given
+        if (PermissionUtils.checkLocationPermission(activity)) {
+            alert.show()
+        } else {
+            Toast.makeText(activity, R.string.sticker_no_permission, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun postSticker(notes: String) {
@@ -183,29 +188,6 @@ class StickerFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.Connecti
         }
 
         Loader.postOrPatchData(activity, Loader.STICKERURL, body, Utils.notFound, null)
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        when (requestCode) {
-            PermissionUtils.PERMISSION_REQUEST_CODE -> {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(activity,
-                            Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
-
-                        if (mGoogleApiClient == null) {
-                            buildGoogleApiClient()
-                        }
-                        mMap?.isMyLocationEnabled = true
-                    }
-                } else {
-                    // Permission denied
-                    Toast.makeText(activity, getString(R.string.sticker_no_permission), Toast.LENGTH_LONG).show()
-                }
-                return
-            }
-        }
     }
 
     fun buildGoogleApiClient() {
