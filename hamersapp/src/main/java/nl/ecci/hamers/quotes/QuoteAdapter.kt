@@ -58,7 +58,7 @@ internal class QuoteAdapter(private val dataSet: ArrayList<Quote>, private val c
                     results.values = dataSet
                     results.count = dataSet.size
                 } else {
-                    val filterResultsData = dataSet.filter { it.text.toLowerCase().contains(charSequence) || getUser(context, it.userID).name.toLowerCase().contains(charSequence) }
+                    val filterResultsData = dataSet.filterTo(ArrayList<Quote>()) { it.text.toLowerCase().contains(charSequence) || getUser(context, it.userID).name.toLowerCase().contains(charSequence) }
                     results.values = filterResultsData
                     results.count = filterResultsData.size
                 }

@@ -31,10 +31,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import nl.ecci.hamers.beers.BeerFragment;
@@ -90,22 +87,6 @@ public class MainActivity extends HamersActivity {
 
         // Initialize ImageLoader with configuration
         ImageLoader.getInstance().init(defaultConfiguration);
-    }
-
-    /**
-     * Parse date
-     */
-    public static Date parseDate(String dateString) {
-        Date date = null;
-        try {
-            // Event date
-            if (!dateString.equals("null")) {
-                DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm", MainActivity.locale);
-                date = inputFormat.parse(dateString);
-            }
-        } catch (ParseException ignored) {
-        }
-        return date;
     }
 
     @AppCompatDelegate.NightMode

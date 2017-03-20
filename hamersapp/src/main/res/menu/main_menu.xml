@@ -4,6 +4,7 @@
         android:id="@+id/main_menu_top"
         android:checkableBehavior="single">
         <item
+            android:id="@+id/navigation_item_quotes"
             android:checked="true"
             android:icon="@drawable/quotes"
             android:title="@string/navigation_item_quotes" />

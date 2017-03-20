@@ -17,6 +17,7 @@ import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.DatePickerFragment
 import nl.ecci.hamers.helpers.NewItemActivity
+import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.Loader
 import nl.ecci.hamers.loader.PostCallback
 import org.json.JSONException
@@ -90,7 +91,7 @@ class NewReviewActivity : NewItemActivity() {
                 body.put("beer_id", beer!!.id)
                 body.put("description", review_body)
                 body.put("rating", rating)
-                body.put("proefdatum", MainActivity.parseDate(date))
+                body.put("proefdatum", Utils.parseDate(date))
 
                 var reviewID = -1
                 if (review != null) {

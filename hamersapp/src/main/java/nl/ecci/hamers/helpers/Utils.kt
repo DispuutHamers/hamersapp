@@ -8,8 +8,12 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import nl.ecci.hamers.MainActivity
 import org.apache.commons.codec.binary.Hex
 import org.apache.commons.codec.digest.DigestUtils
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 object Utils {
 
@@ -64,5 +68,22 @@ object Utils {
         for (i in stringArray.indices)
             charSequenceArray[i] = stringArray[i] as String
         return charSequenceArray
+    }
+
+    /**
+     * Parse date
+     */
+    fun parseDate(dateString: String): Date {
+        var date: Date = Date()
+        try {
+            // Event date
+            if (dateString.isNotBlank()) {
+                val inputFormat = SimpleDateFormat("dd-MM-yyyy HH:mm", MainActivity.locale)
+                date = inputFormat.parse(dateString)
+            }
+        } catch (ignored: ParseException) {
+        }
+
+        return date
     }
 }
