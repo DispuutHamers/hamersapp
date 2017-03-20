@@ -88,7 +88,6 @@ class MessagingService : FirebaseMessagingService() {
 
     fun beerPush(beerString: String?) {
         Loader.getData(this, Loader.BEERURL, null, null)
-
         val beer = gson.fromJson(beerString, Beer::class.java)
 
         intent = Intent(this, SingleBeerActivity::class.java)
@@ -130,7 +129,7 @@ class MessagingService : FirebaseMessagingService() {
 
     fun stickerPush(stickerString: String?) {
         val sticker = gson.fromJson(stickerString, Sticker::class.java)
-        sendNotification(applicationContext.getString(R.string.change_sticker_new), "", sticker.userID)
+        sendNotification(applicationContext.getString(R.string.change_sticker_new), sticker.notes, sticker.userID)
     }
 
     /**

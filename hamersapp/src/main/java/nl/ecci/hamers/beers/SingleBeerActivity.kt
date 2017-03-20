@@ -149,26 +149,11 @@ class SingleBeerActivity : HamersActivity() {
 
         // Insert into view
         review_insert_point.addView(view, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
-
-        if (DataUtils.getOwnUser(this).id == review.userID) {
-            registerForContextMenu(view)
-        }
     }
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
         menuInflater.inflate(R.menu.edit_menu, menu)
-    }
-
-    override fun onContextItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-        // Edit review
-            R.id.edit_item -> {
-                updateReview(ownReview)
-                return true
-            }
-            else -> return super.onContextItemSelected(item)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

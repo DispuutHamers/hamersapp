@@ -72,10 +72,7 @@ class StickerFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.Connecti
         }
 
         locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
-        val params = hamers_fab.layoutParams as CoordinatorLayout.LayoutParams
-        params.anchorId = stickers_map.id
-        hamers_fab.layoutParams = params
+        
         hamers_fab.setOnClickListener {
             postLocationDialog()
         }
@@ -119,6 +116,10 @@ class StickerFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.Connecti
         super.onResume()
         onRefresh()
         activity.title = resources.getString(R.string.navigation_item_stickers)
+
+        val params = hamers_fab.layoutParams as CoordinatorLayout.LayoutParams
+        params.anchorId = stickers_map.id
+        hamers_fab.layoutParams = params
     }
 
     override fun onPause() {
@@ -181,13 +182,12 @@ class StickerFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.Connecti
                 body.put("lat", lat.toString())
                 body.put("lon", lon.toString())
                 body.put("notes", notes)
+                Loader.postOrPatchData(activity, Loader.STICKERURL, body, Utils.notFound, null)
             } catch (ignored: JSONException) {
             }
         } else {
             Toast.makeText(activity, R.string.generic_error, Toast.LENGTH_SHORT).show()
         }
-
-        Loader.postOrPatchData(activity, Loader.STICKERURL, body, Utils.notFound, null)
     }
 
     fun buildGoogleApiClient() {

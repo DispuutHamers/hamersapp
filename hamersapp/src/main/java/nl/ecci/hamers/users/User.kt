@@ -7,7 +7,7 @@ import java.util.*
 class User(val id: Int = Utils.notFound,
            val name: String = Utils.unknown,
            val email: String = Utils.unknown,
-           val admin: Int = 0, // Should be bool
+           val admin: Boolean = false,
            @SerializedName("quotes")
            val quoteCount: Int = Utils.notFound,
            @SerializedName("reviews")

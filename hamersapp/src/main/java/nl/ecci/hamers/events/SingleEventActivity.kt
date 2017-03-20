@@ -107,7 +107,7 @@ class SingleEventActivity : HamersActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.edit_menu, menu)
-        if (ownUser?.id == event?.userID || ownUser?.admin == 1) {
+        if (ownUser?.id == event?.userID || ownUser?.admin as Boolean) {
             // Event belongs to user or user is admin
             menu.findItem(R.id.send_reminder).isVisible = true
             menu.findItem(R.id.edit_item).isVisible = true
