@@ -6,21 +6,10 @@ import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.preference.PreferenceManager
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.Toast
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-import nl.ecci.hamers.MainActivity.prefs
-import nl.ecci.hamers.R
-import nl.ecci.hamers.loader.Loader
-import nl.ecci.hamers.users.User
 import org.apache.commons.codec.binary.Hex
 import org.apache.commons.codec.digest.DigestUtils
-import java.util.*
 
 object Utils {
 

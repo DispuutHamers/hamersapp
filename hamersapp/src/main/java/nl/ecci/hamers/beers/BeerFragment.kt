@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.SearchView
 import android.view.*
-import com.android.volley.VolleyError
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -39,8 +38,6 @@ class BeerFragment : HamersListFragment(){
         hamers_fab.setOnClickListener { startActivityForResult(Intent(activity, NewBeerActivity::class.java), 1) }
 
         populateList().execute()
-        onRefresh()
-        sortList()
     }
 
     override fun onRefresh() {

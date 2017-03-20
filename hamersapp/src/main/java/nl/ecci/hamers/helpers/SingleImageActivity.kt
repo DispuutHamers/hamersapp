@@ -2,7 +2,6 @@ package nl.ecci.hamers.helpers
 
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
 import android.view.View
 import com.google.gson.GsonBuilder
 import com.nostra13.universalimageloader.core.ImageLoader
@@ -21,7 +20,7 @@ class SingleImageActivity : HamersActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_single_image)
 
-        setSupportActionBar(toolbar as Toolbar?)
+        setSupportActionBar(toolbar)
 
         val beer = GsonBuilder().create().fromJson(intent.getStringExtra(Beer.BEER), Beer::class.java)
 

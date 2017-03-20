@@ -8,7 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.DatePicker
 import android.widget.ImageView
 import nl.ecci.hamers.R
 

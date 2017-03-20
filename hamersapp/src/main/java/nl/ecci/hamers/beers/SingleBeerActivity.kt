@@ -1,13 +1,16 @@
 package nl.ecci.hamers.beers
 
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.view.*
 import android.widget.TextView
-import com.google.gson.GsonBuilder
+import android.widget.Toast
 import com.google.gson.reflect.TypeToken
 import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.activity_detail_item.*
@@ -92,11 +95,13 @@ class SingleBeerActivity : HamersActivity() {
     }
 
     private fun getReviews() {
+        review_insert_point.removeAllViews()
+
         val type = object : TypeToken<ArrayList<Review>>() {
         }.type
 
         val reviewList = ArrayList<Review>()
-        val tempList = GsonBuilder().create().fromJson<ArrayList<Review>>(prefs?.getString(Loader.REVIEWURL, null), type)
+        val tempList = gson.fromJson<ArrayList<Review>>(prefs?.getString(Loader.REVIEWURL, null), type)
 
         tempList.filterTo(reviewList) {
             it.beerID == beer?.id
@@ -117,10 +122,6 @@ class SingleBeerActivity : HamersActivity() {
                 review_insert_point.addView(divider)
             }
         }
-
-        if (reviewList.isEmpty()) {
-            review_insert_point.removeAllViews()
-        }
     }
 
     /**
@@ -132,7 +133,7 @@ class SingleBeerActivity : HamersActivity() {
         intent.putExtra(Beer.BEER, beer?.id)
 
         if (review != null) {
-            intent.putExtra(Review.REVIEW, gson!!.toJson(review, Review::class.java))
+            intent.putExtra(Review.REVIEW, gson.toJson(review, Review::class.java))
         }
 
         startActivityForResult(intent, reviewRequestCode)
@@ -143,15 +144,11 @@ class SingleBeerActivity : HamersActivity() {
 
         view.review_title.text = String.format("%s: ", DataUtils.getUser(this, review.userID).name)
         view.review_body.text = review.description
-        view.review_date.text = MainActivity.appDF2.format(review.proefdatum)
+        view.review_date.text = MainActivity.appDTF.format(review.proefdatum)
         view.review_rating.text = String.format("Cijfer: %s", review.rating)
 
         // Insert into view
         review_insert_point.addView(view, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
-
-        if (DataUtils.getOwnUser(this).id == review.userID) {
-            registerForContextMenu(view)
-        }
     }
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
@@ -159,20 +156,9 @@ class SingleBeerActivity : HamersActivity() {
         menuInflater.inflate(R.menu.edit_menu, menu)
     }
 
-    override fun onContextItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-        // Edit review
-            R.id.edit_item -> {
-                updateReview(ownReview)
-                return true
-            }
-            else -> return super.onContextItemSelected(item)
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.edit_menu, menu)
+        menuInflater.inflate(R.menu.edit_menu, menu)
+        menu.findItem(R.id.edit_item).isVisible = true
         return true
     }
 
@@ -187,6 +173,14 @@ class SingleBeerActivity : HamersActivity() {
                 startActivityForResult(intent, beerRequestCode)
                 return true
             }
+            R.id.share_item -> {
+                // Copy link to clipboard
+                val clipboard: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText(Beer.BEER, getString(R.string.host) + Loader.BEERURL + "/" + beer?.id)
+                clipboard.primaryClip = clip
+                // Notify user
+                Toast.makeText(this, R.string.url_copied, Toast.LENGTH_SHORT).show()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -195,8 +189,8 @@ class SingleBeerActivity : HamersActivity() {
         if (resultCode == Activity.RESULT_OK) {
             getReviews()
             if (requestCode == reviewRequestCode) {
-                val newBody = data?.getStringExtra(reviewBody)
-                val newRating = data?.getIntExtra(reviewRating, -1)
+                val newBody : String = data?.getStringExtra(reviewBody).toString()
+                val newRating = data?.getIntExtra(reviewRating, -1) as Int
 
                 if (ownReview != null) {
                     for (i in 0..review_insert_point.childCount - 1) {
@@ -212,12 +206,12 @@ class SingleBeerActivity : HamersActivity() {
                     }
                 }
             } else if (requestCode == beerRequestCode) {
-                beer?.name = data?.getStringExtra(beerName)
-                beer?.kind = data?.getStringExtra(beerKind)
-                beer?.percentage = data?.getStringExtra(beerPercentage)
-                beer?.percentage = data?.getStringExtra(beerPercentage)
-                beer?.brewer = data?.getStringExtra(beerBrewer)
-                beer?.country = data?.getStringExtra(beerCountry)
+                beer?.name = data?.getStringExtra(beerName).toString()
+                beer?.kind = data?.getStringExtra(beerKind).toString()
+                beer?.percentage = data?.getStringExtra(beerPercentage).toString()
+                beer?.percentage = data?.getStringExtra(beerPercentage).toString()
+                beer?.brewer = data?.getStringExtra(beerBrewer).toString()
+                beer?.country = data?.getStringExtra(beerCountry).toString()
                 beer?.rating = beer?.rating!! + " (Nog niet bijgewerkt)"
 
                 initUI()

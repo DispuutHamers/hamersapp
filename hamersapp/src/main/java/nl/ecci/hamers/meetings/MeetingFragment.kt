@@ -30,13 +30,11 @@ class MeetingFragment : HamersListFragment() {
 
         hamers_list.adapter = MeetingAdapter(dataSet, activity)
         hamers_fab.setOnClickListener { startActivityForResult(Intent(activity, NewMeetingActivity::class.java), 1) }
-
-        onRefresh()
     }
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(getContext(), Loader.MEETINGURL, object : GetCallback {
+        Loader.getData(context, Loader.MEETINGURL, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }

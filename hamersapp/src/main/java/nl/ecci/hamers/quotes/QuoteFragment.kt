@@ -48,7 +48,6 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
         }
 
         populateList().execute()
-        onRefresh()
     }
 
     override fun onRefresh() {

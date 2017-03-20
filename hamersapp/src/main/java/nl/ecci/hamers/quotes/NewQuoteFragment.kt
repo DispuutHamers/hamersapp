@@ -8,13 +8,12 @@ import android.support.v4.app.DialogFragment
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
-import com.android.volley.VolleyError
 import nl.ecci.hamers.MainActivity
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DataUtils
 import nl.ecci.hamers.helpers.DataUtils.usernameToID
+import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.Loader
-import nl.ecci.hamers.loader.PostCallback
 import nl.ecci.hamers.users.User
 import org.json.JSONException
 import org.json.JSONObject
@@ -28,7 +27,7 @@ class NewQuoteFragment : DialogFragment() {
         builder.setView(view)
                 .setTitle(R.string.quote)
                 .setPositiveButton(R.string.send_quote
-                ) { dialog, id ->
+                ) { _, _ ->
                     val edit = view.findViewById(R.id.quote_input) as EditText
                     val quote = edit.text.toString()
 
@@ -55,21 +54,12 @@ class NewQuoteFragment : DialogFragment() {
     }
 
     private fun postQuote(quote: String, userID: Int) {
-        val body = JSONObject()
         try {
+            val body = JSONObject()
             body.put("text", quote)
             body.put("user_id", userID)
+            Loader.postOrPatchData(context, Loader.QUOTEURL, body, Utils.notFound, null)
         } catch (ignored: JSONException) {
         }
-
-        Loader.postOrPatchData(context, Loader.QUOTEURL, body, -1, object : PostCallback {
-            override fun onSuccess(response: JSONObject) {
-
-            }
-
-            override fun onError(error: VolleyError) {
-
-            }
-        })
     }
 }

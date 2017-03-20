@@ -15,6 +15,7 @@ import java.net.URLEncoder
 import java.util.*
 
 object Loader {
+    val APIURL = "api/v2/"
     // URL Appendices
     val QUOTEURL = "quotes"
     val USERURL = "users"
@@ -30,18 +31,19 @@ object Loader {
     val CHANGEURL = "changes?since=2017-03-16T17:00:00.000Z"
     // Data keys (excluded form urls below)
     val APIKEYKEY = "apikey"
-    val GCMURL = "register"
+    val FCMURL = "register"
 
     val urls = hashSetOf(QUOTEURL, USERURL, EVENTURL, SIGNUPURL, NEWSURL, BEERURL, REVIEWURL, WHOAMIURL, MEETINGURL, SIGNUPURL, STICKERURL, CHANGEURL)
 
     fun getData(context: Context, dataURL: String, callback: GetCallback?, params: Map<String, String>?) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val url = buildURL(context, dataURL, params, -1)
+        val url = buildURL(context, dataURL, params, Utils.notFound)
 
         val request = object : StringRequest(Request.Method.GET, url,
                 Response.Listener<String> { response ->
                     Log.d("GET-response", response)
-                    if (dataURL != EVENTURL) {
+                    // Do not save events from upcoming events fragment
+                    if (!(dataURL == EVENTURL && params != null)) {
                         prefs.edit().putString(dataURL, response).apply()
                     }
                     callback?.onSuccess(response)
@@ -53,12 +55,12 @@ object Loader {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
                 val headers = HashMap<String, String>()
-                headers.put("Authorization", "Token token=" + prefs.getString(APIKEYKEY, "")!!)
+                headers.put("Authorization", "Token token=" + prefs.getString(APIKEYKEY, ""))
                 return headers
             }
 
-            public override fun getParams(): Map<String, String> {
-                return params!!
+            public override fun getParams(): Map<String, String>? {
+                return params
             }
         }
 
@@ -76,7 +78,7 @@ object Loader {
                 Response.Listener<JSONObject> { response ->
                     Log.d("POST-response", response.toString())
 
-                    if (dataURL != GCMURL)
+                    if (dataURL != FCMURL)
                         Utils.showToast(context, context.getString(R.string.posted), Toast.LENGTH_SHORT)
 
                     callback?.onSuccess(response)
@@ -91,7 +93,7 @@ object Loader {
                 val params = HashMap<String, String>()
                 params.put("Authorization", "Token token=" + prefs.getString(APIKEYKEY, "")!!)
                 params.put("Content-Type", "Application/json")
-                if (urlAppendix != -1) {
+                if (urlAppendix != Utils.notFound) {
                     params.put("X-HTTP-Method-Override", "PATCH")
                 }
                 return params
@@ -112,9 +114,9 @@ object Loader {
 
     private fun buildURL(context: Context, URL: String, params: Map<String, String>?, appendix: Int): String {
         val builder = StringBuilder()
-        builder.append(context.getString(R.string.api_url)).append(URL)
+        builder.append(context.getString(R.string.host)).append(APIURL).append(URL)
 
-        if (appendix != -1) {
+        if (appendix != Utils.notFound) {
             builder.append("/").append(appendix)
         }
 
@@ -125,7 +127,7 @@ object Loader {
                 if (value != null) {
                     try {
                         value = URLEncoder.encode((value).toString(), "UTF-8")
-                        if (builder.isNotEmpty())
+                        if (builder.isNotBlank())
                             builder.append("&")
                         builder.append(key).append("=").append(value)
                     } catch (ignored: UnsupportedEncodingException) {

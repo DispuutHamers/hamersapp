@@ -5,8 +5,6 @@ import android.app.TimePickerDialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.text.format.DateFormat
-import android.widget.TimePicker
-import kotlinx.android.synthetic.main.stub_new_event.*
 import nl.ecci.hamers.events.NewEventActivity
 import java.util.*
 

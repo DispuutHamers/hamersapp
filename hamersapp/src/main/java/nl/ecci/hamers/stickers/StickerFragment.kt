@@ -4,23 +4,33 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Location
 import android.location.LocationManager
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
-import com.android.volley.VolleyError
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.location.LocationListener
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -28,20 +38,23 @@ import kotlinx.android.synthetic.main.fragment_sticker.*
 import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.PermissionUtils
-import nl.ecci.hamers.helpers.PermissionUtils.hasLocationPermission
-import nl.ecci.hamers.helpers.PermissionUtils.requestLocationPermission
+import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
-class StickerFragment : Fragment(), OnMapReadyCallback {
+class StickerFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
-    private var mapView: MapView? = null
-    private var map: GoogleMap? = null
     private val dataSet = ArrayList<Sticker>()
+    private var mGoogleApiClient: GoogleApiClient? = null
+    private var mapView: MapView? = null
+    private var mMap: GoogleMap? = null
+    private var mLastLocation: Location? = null
     private var locationManager: LocationManager? = null
+    private var mLocationRequest: LocationRequest? = null
+    private var mCurrLocationMarker: Marker? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_sticker, container, false)
@@ -54,11 +67,12 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
         mapView = stickers_map as MapView
         mapView?.onCreate(savedInstanceState)
 
-        locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PermissionUtils.checkLocationPermission(activity)
+        }
 
-        val params = hamers_fab.layoutParams as CoordinatorLayout.LayoutParams
-        params.anchorId = stickers_map.id
-        hamers_fab.layoutParams = params
+        locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        
         hamers_fab.setOnClickListener {
             postLocationDialog()
         }
@@ -68,11 +82,17 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
-        map!!.uiSettings.isMyLocationButtonEnabled = false
-        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            map!!.isMyLocationEnabled = true
+        mMap = googleMap
+        mMap?.uiSettings?.isMyLocationButtonEnabled = false
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                buildGoogleApiClient()
+                mMap?.isMyLocationEnabled = true
+            }
+        } else {
+            buildGoogleApiClient()
+            mMap?.isMyLocationEnabled = true
         }
         addMarkers()
     }
@@ -86,10 +106,8 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun addMarkers() {
-        if (map != null && dataSet.isNotEmpty()) {
-            for (sticker in dataSet) {
-                map!!.addMarker(MarkerOptions().position(LatLng(sticker.lat.toDouble(), sticker.lon.toDouble())))
-            }
+        for (sticker in dataSet) {
+            mMap?.addMarker(MarkerOptions().position(LatLng(sticker.lat.toDouble(), sticker.lon.toDouble())))
         }
     }
 
@@ -98,6 +116,10 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
         super.onResume()
         onRefresh()
         activity.title = resources.getString(R.string.navigation_item_stickers)
+
+        val params = hamers_fab.layoutParams as CoordinatorLayout.LayoutParams
+        params.anchorId = stickers_map.id
+        hamers_fab.layoutParams = params
     }
 
     override fun onPause() {
@@ -135,48 +157,86 @@ class StickerFragment : Fragment(), OnMapReadyCallback {
         alert.setView(container)
 
         alert.setPositiveButton(android.R.string.yes) { _, _ ->
-            if (hasLocationPermission(activity)) {
-                // Already has permission --> post sticker
-                postSticker()
-            } else {
-                // Does not have permission --> request
-                requestLocationPermission(activity)
-            }
+            postSticker(input.text.toString())
         }
         alert.setNegativeButton(android.R.string.no) { _, _ ->
             // Do nothing.
         }
 
-        alert.show()
+        // Only show dialog if permissions are given
+        if (PermissionUtils.checkLocationPermission(activity)) {
+            alert.show()
+        } else {
+            Toast.makeText(activity, R.string.sticker_no_permission, Toast.LENGTH_LONG).show()
+        }
     }
 
-    private fun postSticker() {
+    private fun postSticker(notes: String) {
         val lastKnownLocation = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
         val body = JSONObject()
-        try {
-            body.put("lat", lastKnownLocation?.latitude.toString())
-            body.put("lon", lastKnownLocation?.longitude.toString())
-        } catch (ignored: JSONException) {
+        val lat = lastKnownLocation?.latitude
+        val lon = lastKnownLocation?.longitude
+        if (lat != null && lon != null) {
+            try {
+                body.put("lat", lat.toString())
+                body.put("lon", lon.toString())
+                body.put("notes", notes)
+                Loader.postOrPatchData(activity, Loader.STICKERURL, body, Utils.notFound, null)
+            } catch (ignored: JSONException) {
+            }
+        } else {
+            Toast.makeText(activity, R.string.generic_error, Toast.LENGTH_SHORT).show()
         }
-
-        Loader.postOrPatchData(activity, Loader.STICKERURL, body, -1, null)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        when (requestCode) {
-            PermissionUtils.PERMISSION_REQUEST_CODE -> {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission granted
-                    postLocationDialog()
-                } else {
-                    // Permission denied
-                    Toast.makeText(activity, getString(R.string.sticker_no_permission), Toast.LENGTH_LONG).show()
-                }
-                return
-            }
+    fun buildGoogleApiClient() {
+        mGoogleApiClient = GoogleApiClient.Builder(context)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build()
+        mGoogleApiClient?.connect()
+    }
+
+    override fun onLocationChanged(location: Location) {
+        mLastLocation = location
+        mCurrLocationMarker?.remove()
+
+        //Place current location marker
+        val latLng: LatLng = LatLng(location.latitude, location.longitude)
+        val markerOptions: MarkerOptions = MarkerOptions()
+        markerOptions.position(latLng)
+        markerOptions.title("Je locatie")
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker())
+        mCurrLocationMarker = mMap?.addMarker(markerOptions)
+
+        //move mMap camera
+        mMap?.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+        mMap?.animateCamera(CameraUpdateFactory.zoomTo(11F))
+
+        //stop location updates
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this)
+    }
+
+    override fun onConnected(bundle: Bundle?) {
+        mLocationRequest = LocationRequest()
+        mLocationRequest?.interval = 1000
+        mLocationRequest?.fastestInterval = 1000
+        mLocationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY;
+        if (ContextCompat.checkSelfPermission(activity,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this)
         }
+    }
+
+    override fun onConnectionSuspended(i: Int) {
+        // Nothing
+    }
+
+    override fun onConnectionFailed(p0: ConnectionResult) {
+        // Nothing
     }
 
     private inner class populateMap : AsyncTask<ArrayList<Sticker>, Void, ArrayList<Sticker>>() {

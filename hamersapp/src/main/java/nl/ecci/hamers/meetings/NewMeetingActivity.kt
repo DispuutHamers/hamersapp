@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.DatePicker
 import com.android.volley.VolleyError
-import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_new_item.*
 import kotlinx.android.synthetic.main.stub_new_meeting.*
 import nl.ecci.hamers.MainActivity
@@ -57,7 +56,7 @@ class NewMeetingActivity : NewItemActivity() {
                 body.put("onderwerp", subject)
                 body.put("agenda", agenda)
                 body.put("notes", notes)
-                body.put("date", MainActivity.parseDate(date))
+                body.put("date", date)
                 if (meeting != null) {
                     Loader.postOrPatchData(this, Loader.MEETINGURL, body, meeting!!.id, object : PostCallback {
                         override fun onSuccess(response: JSONObject) {

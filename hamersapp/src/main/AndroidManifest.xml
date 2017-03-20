@@ -5,19 +5,13 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Internet + sdcard access (for caching purposes) -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- Push notifications -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
-    <permission
-        android:name="com.example.gcm.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="nl.ecci.hamers.gcm.permission.C2D_MESSAGE" />
-
+    <!-- Google Maps -->
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
@@ -31,34 +25,6 @@
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="gcm.play.android.samples.com.gcmquickstart" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="nl.ecci.hamers.gcm.MyGcmListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
-        <service
-            android:name="nl.ecci.hamers.gcm.MyInstanceIDListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-            </intent-filter>
-        </service>
-        <!-- [END instanceId_listener] -->
-        <service
-            android:name="nl.ecci.hamers.gcm.RegistrationIntentService"
-            android:exported="false" />
 
         <activity android:name="nl.ecci.hamers.MainActivity">
             <intent-filter>
@@ -91,9 +57,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
                     android:host="zondersikkel.nl"
-                    android:pathPrefix="/beers" />
+                    android:pathPrefix="/beers"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -110,9 +76,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
                     android:host="zondersikkel.nl"
-                    android:pathPrefix="/events" />
+                    android:pathPrefix="/events"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -169,9 +135,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
                     android:host="zondersikkel.nl"
-                    android:pathPrefix="/meetings" />
+                    android:pathPrefix="/meetings"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -197,5 +163,28 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="***REMOVED***" />
+
+        <!-- Notifications -->
+        <service android:name="nl.ecci.hamers.fcm.MessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="nl.ecci.hamers.fcm.InstanceIdService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- Set custom default icon. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/launcher_icon" />
+        <!-- Set color used with incoming notification messages. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/material_red_dark" />
+
     </application>
 </manifest>

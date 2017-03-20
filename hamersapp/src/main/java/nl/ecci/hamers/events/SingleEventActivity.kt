@@ -1,10 +1,8 @@
 package nl.ecci.hamers.events
 
-import android.content.ContentUris
-import android.content.Intent
+import android.content.*
 import android.net.Uri
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.provider.CalendarContract
 import android.support.v7.app.AlertDialog
 import android.view.Menu
@@ -79,7 +77,7 @@ class SingleEventActivity : HamersActivity() {
             startActivity(intent)
         }
 
-        if (event!!.location.isNotEmpty()) {
+        if (event!!.location.isNotBlank()) {
             fillImageRow(location_row, "Locatie", event!!.location, R.drawable.location)
 
             location_row.isClickable = true
@@ -109,10 +107,10 @@ class SingleEventActivity : HamersActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.edit_menu, menu)
-        if (ownUser?.id == event?.userID) {
+        if (ownUser?.id == event?.userID || ownUser?.admin as Boolean) {
+            // Event belongs to user or user is admin
             menu.findItem(R.id.send_reminder).isVisible = true
-        } else {
-            menu.removeItem(R.id.edit_item)
+            menu.findItem(R.id.edit_item).isVisible = true
         }
         return true
     }
@@ -127,6 +125,14 @@ class SingleEventActivity : HamersActivity() {
                 Intent(this, NewEventActivity::class.java).putExtra(Event.EVENT, event?.id)
                 startActivity(intent)
                 return true
+            }
+            R.id.share_item -> {
+                // Copy link to clipboard
+                val clipboard : ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText(Event.EVENT, getString(R.string.host) + Loader.EVENTURL + "/" + event?.id)
+                clipboard.primaryClip = clip
+                // Notify user
+                Toast.makeText(this, R.string.url_copied, Toast.LENGTH_SHORT).show()
             }
             R.id.send_reminder -> {
                 AlertDialog.Builder(this)

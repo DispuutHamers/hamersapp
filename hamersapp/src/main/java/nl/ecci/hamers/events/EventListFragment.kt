@@ -4,10 +4,8 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
-import android.support.v7.widget.LinearLayoutCompat
 import android.support.v7.widget.SearchView
 import android.view.*
-import android.widget.LinearLayout
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -17,7 +15,6 @@ import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
 import nl.ecci.hamers.loader.Loader
-import org.jetbrains.anko.padding
 import java.util.*
 
 class EventListFragment : HamersListFragment() {
@@ -51,13 +48,12 @@ class EventListFragment : HamersListFragment() {
         }
 
         populateList().execute()
-        onRefresh()
     }
 
     override fun onRefresh() {
         setRefreshing(true)
-        val params = HashMap<String, String>()
         if (upcoming) {
+            val params = HashMap<String, String>()
             params.put("sorted", "asc-desc")
             params.put("future", "true")
             Loader.getData(context, Loader.EVENTURL, object : GetCallback {
@@ -72,7 +68,7 @@ class EventListFragment : HamersListFragment() {
                     prefs.edit().putString(Loader.EVENTURL, response).apply()
                     populateList().execute(response)
                 }
-            }, params)
+            }, null)
         }
     }
 
@@ -106,10 +102,6 @@ class EventListFragment : HamersListFragment() {
                 return false
             }
         })
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        onRefresh()
     }
 
     private inner class populateList : AsyncTask<String, Void, ArrayList<Event>?>() {
