@@ -1,12 +1,16 @@
 package nl.ecci.hamers.beers
 
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.view.*
 import android.widget.TextView
+import android.widget.Toast
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.nostra13.universalimageloader.core.ImageLoader
@@ -171,8 +175,8 @@ class SingleBeerActivity : HamersActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.edit_menu, menu)
+        menuInflater.inflate(R.menu.edit_menu, menu)
+        menu.findItem(R.id.edit_item).isVisible = true
         return true
     }
 
@@ -186,6 +190,14 @@ class SingleBeerActivity : HamersActivity() {
                 }
                 startActivityForResult(intent, beerRequestCode)
                 return true
+            }
+            R.id.share_item -> {
+                // Copy link to clipboard
+                val clipboard : ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText(Beer.BEER, getString(R.string.host) + Loader.BEERURL + "/" + beer?.id)
+                clipboard.primaryClip = clip
+                // Notify user
+                Toast.makeText(this, R.string.url_copied, Toast.LENGTH_SHORT).show()
             }
         }
         return super.onOptionsItemSelected(item)

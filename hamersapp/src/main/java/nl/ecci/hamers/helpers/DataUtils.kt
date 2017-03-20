@@ -137,7 +137,7 @@ object DataUtils {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         val userList: ArrayList<User>?
-        var result = User(Utils.notFound, Utils.unknown, "example@example.org", Utils.notFound, Utils.notFound, User.Member.LID, Utils.notFound, ArrayList<Nickname>(), Date())
+        var result = User()
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<User>>() {
@@ -160,7 +160,7 @@ object DataUtils {
     fun getUserByNick(context: Context, id: Int): User {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-        var result = User(Utils.notFound, Utils.unknown, "example@example.org", Utils.notFound, Utils.notFound, User.Member.LID, Utils.notFound, ArrayList<Nickname>(), Date())
+        var result = User()
 
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
@@ -183,12 +183,12 @@ object DataUtils {
     fun getOwnUser(context: Context): User {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-        var user: User?
+        val user: User
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         user = gson.fromJson(prefs.getString(Loader.WHOAMIURL, null), User::class.java)
         if (user == null) {
-            user = User(Utils.notFound, Utils.unknown, "example@example.org", Utils.notFound, Utils.notFound, User.Member.LID, Utils.notFound, ArrayList<Nickname>(), Date())
+            return User()
         }
         return user
     }

@@ -15,6 +15,7 @@ import java.net.URLEncoder
 import java.util.*
 
 object Loader {
+    val APIURL = "api/v2/"
     // URL Appendices
     val QUOTEURL = "quotes"
     val USERURL = "users"
@@ -112,7 +113,7 @@ object Loader {
 
     private fun buildURL(context: Context, URL: String, params: Map<String, String>?, appendix: Int): String {
         val builder = StringBuilder()
-        builder.append(context.getString(R.string.api_url)).append(URL)
+        builder.append(context.getString(R.string.host)).append(APIURL).append(URL)
 
         if (appendix != Utils.notFound) {
             builder.append("/").append(appendix)

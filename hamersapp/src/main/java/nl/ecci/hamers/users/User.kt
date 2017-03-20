@@ -1,21 +1,23 @@
 package nl.ecci.hamers.users
 
 import com.google.gson.annotations.SerializedName
+import nl.ecci.hamers.helpers.Utils
 import java.util.*
 
-class User(val id: Int,
-           val name: String,
-           val email: String,
+class User(val id: Int = Utils.notFound,
+           val name: String = Utils.unknown,
+           val email: String = Utils.unknown,
+           val admin: Int = 0, // Should be bool
            @SerializedName("quotes")
-           val quoteCount: Int,
+           val quoteCount: Int = Utils.notFound,
            @SerializedName("reviews")
-           val reviewCount: Int,
+           val reviewCount: Int = Utils.notFound,
            @SerializedName("lid")
-           val member: User.Member,
-           val batch: Int,
-           val nicknames: ArrayList<Nickname>,
+           val member: User.Member = User.Member.NONE,
+           val batch: Int = Utils.notFound,
+           val nicknames: ArrayList<Nickname> = ArrayList(),
            @SerializedName("created_at")
-           val createdAt: Date) {
+           val createdAt: Date = Date()) {
 
     enum class Member {
         @SerializedName("lid")
