@@ -77,7 +77,7 @@ class SingleEventActivity : HamersActivity() {
             startActivity(intent)
         }
 
-        if (event!!.location.isNotEmpty()) {
+        if (event!!.location.isNotBlank()) {
             fillImageRow(location_row, "Locatie", event!!.location, R.drawable.location)
 
             location_row.isClickable = true

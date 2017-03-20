@@ -126,7 +126,7 @@ object Loader {
                 if (value != null) {
                     try {
                         value = URLEncoder.encode((value).toString(), "UTF-8")
-                        if (builder.isNotEmpty())
+                        if (builder.isNotBlank())
                             builder.append("&")
                         builder.append(key).append("=").append(value)
                     } catch (ignored: UnsupportedEncodingException) {

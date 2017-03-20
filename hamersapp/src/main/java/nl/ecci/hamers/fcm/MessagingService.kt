@@ -65,7 +65,7 @@ class MessagingService : FirebaseMessagingService() {
     fun eventPush(eventString: String?) {
         val event = gson.fromJson(eventString, Event::class.java)
         var title = event.title
-        if (event.location.isNotEmpty()) {
+        if (event.location.isNotBlank()) {
             title += "(@" + event.location + ")"
         }
         sendNotification(title, applicationContext.getString(R.string.change_event_new), event.userID)

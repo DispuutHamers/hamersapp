@@ -44,7 +44,7 @@ internal class BeerAdapter(private val dataSet: ArrayList<Beer>, private val con
             val activity = context as Activity
             val transitionName = context.getString(R.string.transition_single_image)
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view.beer_image, transitionName)
-            if (beer.imageURL.isNotEmpty()) {
+            if (beer.imageURL.isNotBlank()) {
                 val intent = Intent(context, SingleImageActivity::class.java)
                 intent.putExtra(Beer.BEER, GsonBuilder().create().toJson(beer, Beer::class.java))
                 ActivityCompat.startActivity(activity, intent, options.toBundle())
