@@ -10,7 +10,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
 import nl.ecci.hamers.MainActivity
-import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
@@ -65,7 +64,7 @@ class EventListFragment : HamersListFragment() {
             Loader.getData(context, Loader.EVENTURL, object : GetCallback {
                 override fun onSuccess(response: String) {
                     // Only save normal event list
-                    prefs.edit().putString(Loader.EVENTURL, response).apply()
+                    prefs?.edit()?.putString(Loader.EVENTURL, response)?.apply()
                     populateList().execute(response)
                 }
             }, null)
@@ -116,7 +115,7 @@ class EventListFragment : HamersListFragment() {
             if (params.isNotEmpty()) {
                 return gson.fromJson<ArrayList<Event>>(params[0], type)
             } else {
-                val tempList = gson.fromJson<ArrayList<Event>>(prefs.getString(Loader.EVENTURL, null), type)
+                val tempList = gson.fromJson<ArrayList<Event>>(prefs?.getString(Loader.EVENTURL, null), type)
                 if (upcoming) {
                     // Only 'future' elements
                     val result = ArrayList<Event>()

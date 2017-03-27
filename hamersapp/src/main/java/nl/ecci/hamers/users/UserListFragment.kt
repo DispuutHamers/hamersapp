@@ -8,7 +8,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
 import nl.ecci.hamers.MainActivity
-import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DividerItemDecoration
 import nl.ecci.hamers.helpers.HamersListFragment
@@ -80,7 +79,7 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
     }
 
     private fun sort() {
-        val sortPref = MainActivity.prefs.getString("userSort", "")
+        val sortPref = prefs?.getString("userSort", "")
         when (sortPref) {
             "name" -> sortByUsername()
             "quotecount" -> sortByQuoteCount()
@@ -127,7 +126,7 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
             if (params.isNotEmpty()) {
                 tempList = gson.fromJson<ArrayList<User>>(params[0], type)
             } else {
-                tempList = gson.fromJson<ArrayList<User>>(prefs.getString(Loader.USERURL, null), type)
+                tempList = gson.fromJson<ArrayList<User>>(prefs?.getString(Loader.USERURL, null), type)
             }
 
             if (tempList != null) {

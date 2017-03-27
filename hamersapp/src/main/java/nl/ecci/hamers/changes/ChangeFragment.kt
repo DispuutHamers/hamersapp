@@ -9,7 +9,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
 import nl.ecci.hamers.MainActivity
-import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener
 import nl.ecci.hamers.helpers.DividerItemDecoration
@@ -80,7 +79,7 @@ class ChangeFragment : HamersListFragment() {
             if (params.isNotEmpty()) {
                 tempList = gson.fromJson<ArrayList<Change>>(params[0], type)
             } else {
-                val changes: String? = prefs.getString(Loader.CHANGEURL, null)
+                val changes: String? = prefs?.getString(Loader.CHANGEURL, null)
                 if (changes != null) {
                     tempList = gson.fromJson<ArrayList<Change>>(changes, type)
                 }

@@ -10,7 +10,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
 import nl.ecci.hamers.MainActivity
-import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.AnimateFirstDisplayListener
 import nl.ecci.hamers.helpers.HamersListFragment
@@ -104,16 +103,15 @@ class BeerFragment : HamersListFragment(){
     }
 
     private fun sortList() {
-        if (activity != null)
-            if (prefs != null) {
-                val sortPref = prefs.getString("beerSort", "")
-                when (sortPref) {
-                    "rating" -> sort(ratingComparator)
-                    "datumASC" -> sort(dateASCComparator)
-                    "datumDESC" -> sort(dateDESCComparator)
-                    else -> sort(nameComparator)
-                }
+        if (activity != null) {
+            val sortPref = prefs?.getString("beerSort", "")
+            when (sortPref) {
+                "rating" -> sort(ratingComparator)
+                "datumASC" -> sort(dateASCComparator)
+                "datumDESC" -> sort(dateDESCComparator)
+                else -> sort(nameComparator)
             }
+        }
     }
 
     private fun sort(comparator: Comparator<Beer>) {
@@ -141,7 +139,7 @@ class BeerFragment : HamersListFragment(){
             if (params.isNotEmpty()) {
                 return gson.fromJson<ArrayList<Beer>>(params[0], type)
             } else {
-                return gson.fromJson<ArrayList<Beer>>(prefs.getString(Loader.BEERURL, null), type)
+                return gson.fromJson<ArrayList<Beer>>(prefs?.getString(Loader.BEERURL, null), type)
             }
         }
 
@@ -157,7 +155,7 @@ class BeerFragment : HamersListFragment(){
     }
 
     companion object {
-        private val nameComparator = Comparator<Beer> { beer1, beer2 -> beer1.name!!.compareTo(beer2.name!!, ignoreCase = true) }
+        private val nameComparator = Comparator<Beer> { beer1, beer2 -> beer1.name.compareTo(beer2.name, ignoreCase = true) }
         private val ratingComparator = Comparator<Beer> { beer1, beer2 ->
             var rating1 = beer1.rating
             var rating2 = beer2.rating
@@ -167,7 +165,7 @@ class BeerFragment : HamersListFragment(){
             } else if (rating2 == "nog niet bekend") {
                 rating2 = "-1"
             }
-            rating2!!.compareTo(rating1!!, ignoreCase = true)
+            rating2.compareTo(rating1, ignoreCase = true)
         }
         private val dateASCComparator = Comparator<Beer> { beer1, beer2 -> beer1.createdAt.compareTo(beer2.createdAt) }
         private val dateDESCComparator = Comparator<Beer> { beer1, beer2 -> beer2.createdAt.compareTo(beer1.createdAt) }

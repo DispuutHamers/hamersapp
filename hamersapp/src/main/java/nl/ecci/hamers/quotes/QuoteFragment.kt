@@ -11,7 +11,6 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
 import kotlinx.android.synthetic.main.fragment_hamers_list.view.*
 import nl.ecci.hamers.MainActivity
-import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.DividerItemDecoration
 import nl.ecci.hamers.helpers.HamersListFragment
@@ -111,7 +110,7 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
 
             }.type
 
-            val quotes = prefs.getString(Loader.QUOTEURL, null)
+            val quotes = prefs?.getString(Loader.QUOTEURL, null)
 
             if (params.isNotEmpty()) {
                 result.addAll(gson.fromJson<ArrayList<Quote>>(params[0], type))

@@ -69,8 +69,8 @@ object DataUtils {
     /**
      * Checks if the API key is present
      */
-    fun hasApiKey(context: Context, prefs: SharedPreferences) {
-        if (prefs.getString(Loader.APIKEYKEY, null) == null) {
+    fun hasApiKey(context: Context, prefs: SharedPreferences?) {
+        if (prefs?.getString(Loader.APIKEYKEY, null) == null) {
             if (Utils.alertDialog == null) {
                 showApiKeyDialog(context)
             } else if (!Utils.alertDialog!!.isShowing) {
@@ -119,14 +119,14 @@ object DataUtils {
         return result
     }
 
-    fun createActiveMemberList(): ArrayList<User> {
+    fun createActiveMemberList(prefs: SharedPreferences): ArrayList<User> {
         val result = ArrayList<User>()
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<User>>() {
         }.type
 
-        gson.fromJson<ArrayList<User>>(MainActivity.prefs.getString(Loader.USERURL, null), type)?.filterTo(result) { it.member === User.Member.LID }
+        gson.fromJson<ArrayList<User>>(prefs.getString(Loader.USERURL, null), type)?.filterTo(result) { it.member === User.Member.LID }
         return result
     }
 

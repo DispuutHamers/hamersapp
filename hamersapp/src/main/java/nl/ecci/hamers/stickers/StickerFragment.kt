@@ -35,8 +35,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_sticker.*
-import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
+import nl.ecci.hamers.helpers.HamersFragment
 import nl.ecci.hamers.helpers.PermissionUtils
 import nl.ecci.hamers.helpers.Utils
 import nl.ecci.hamers.loader.GetCallback
@@ -45,7 +45,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
-class StickerFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private val dataSet = ArrayList<Sticker>()
     private var mGoogleApiClient: GoogleApiClient? = null
@@ -247,7 +247,7 @@ class StickerFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.Connecti
 
             }.type
 
-            return gson.fromJson<ArrayList<Sticker>>(prefs.getString(Loader.STICKERURL, null), type)
+            return gson.fromJson<ArrayList<Sticker>>(prefs?.getString(Loader.STICKERURL, null), type)
         }
 
         override fun onPostExecute(result: ArrayList<Sticker>) {

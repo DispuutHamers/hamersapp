@@ -10,12 +10,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
 import android.support.design.widget.CoordinatorLayout
 
-abstract class HamersListFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
-    }
+abstract class HamersListFragment : HamersFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         val lm = LinearLayoutManager(activity)

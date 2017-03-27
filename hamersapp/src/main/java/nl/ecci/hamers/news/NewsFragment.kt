@@ -10,7 +10,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
 import nl.ecci.hamers.MainActivity
-import nl.ecci.hamers.MainActivity.prefs
 import nl.ecci.hamers.R
 import nl.ecci.hamers.helpers.HamersListFragment
 import nl.ecci.hamers.loader.GetCallback
@@ -94,7 +93,7 @@ class NewsFragment : HamersListFragment() {
             if (params.isNotEmpty()) {
                 result = gson.fromJson<ArrayList<News>>(params[0], type)
             } else {
-                result = gson.fromJson<ArrayList<News>>(prefs.getString(Loader.NEWSURL, null), type)
+                result = gson.fromJson<ArrayList<News>>(prefs?.getString(Loader.NEWSURL, null), type)
             }
             return result
         }

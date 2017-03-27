@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v4.app.DialogFragment
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -21,6 +22,7 @@ import org.json.JSONObject
 class NewQuoteFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
         val builder = AlertDialog.Builder(activity)
         val inflater = activity.layoutInflater
         val view = inflater.inflate(R.layout.fragment_new_quote, null)
@@ -32,12 +34,12 @@ class NewQuoteFragment : DialogFragment() {
                     val quote = edit.text.toString()
 
                     val userSpinner = view.findViewById(R.id.quote_user_spinner) as Spinner
-                    val userID = usernameToID(MainActivity.prefs, userSpinner.selectedItem.toString())
+                    val userID = usernameToID(prefs, userSpinner.selectedItem.toString())
 
                     postQuote(quote, userID)
                 }
         val spinner = view.findViewById(R.id.quote_user_spinner) as Spinner
-        val users = DataUtils.createActiveMemberList()
+        val users = DataUtils.createActiveMemberList(prefs)
         val names = users.map(User::name)
         val adapter = ArrayAdapter(activity, android.R.layout.simple_spinner_dropdown_item, names)
         spinner.adapter = adapter
