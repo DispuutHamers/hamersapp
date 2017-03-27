@@ -116,7 +116,7 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
             if (params.isNotEmpty()) {
                 result.addAll(gson.fromJson<ArrayList<Quote>>(params[0], type))
             } else if (quotes != null) {
-                result.addAll(gson.fromJson<ArrayList<Quote>>(prefs.getString(Loader.QUOTEURL, null), type))
+                result.addAll(gson.fromJson<ArrayList<Quote>>(quotes, type))
             }
             return result
         }

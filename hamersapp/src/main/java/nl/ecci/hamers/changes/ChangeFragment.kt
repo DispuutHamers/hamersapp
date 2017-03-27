@@ -70,7 +70,7 @@ class ChangeFragment : HamersListFragment() {
     private inner class populateList : AsyncTask<String, Void, ArrayList<Change>>() {
         override fun doInBackground(vararg params: String): ArrayList<Change> {
             val result = ArrayList<Change>()
-            val tempList: ArrayList<Change>
+            var tempList: ArrayList<Change>? = null
             val gsonBuilder = GsonBuilder()
             gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
             val gson = gsonBuilder.create()
@@ -80,11 +80,14 @@ class ChangeFragment : HamersListFragment() {
             if (params.isNotEmpty()) {
                 tempList = gson.fromJson<ArrayList<Change>>(params[0], type)
             } else {
-                tempList = gson.fromJson<ArrayList<Change>>(prefs.getString(Loader.CHANGEURL, null), type)
+                val changes: String? = prefs.getString(Loader.CHANGEURL, null)
+                if (changes != null) {
+                    tempList = gson.fromJson<ArrayList<Change>>(changes, type)
+                }
             }
 
             // Filter out changes regarding device ID's and destroys of sign ups
-            tempList.filterTo(result) {
+            tempList?.filterTo(result) {
                 it.itemType != Change.ItemType.DEVICE && !(it.itemType == Change.ItemType.SIGNUP && it.event == Change.Event.DESTROY)
             }
 
