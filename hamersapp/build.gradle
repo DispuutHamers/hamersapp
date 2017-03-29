@@ -35,11 +35,13 @@ android {
             debuggable true
             resValue "string", "app_name", "Hamers debug"
             resValue "string", "host", "https://staging.zondersikkel.nl/"
+            resValue "string", "google_maps_key", "***REMOVED***"
         }
         release {
             debuggable false
             resValue "string", "app_name", "Hamers"
             resValue "string", "host", "https://zondersikkel.nl/"
+            resValue "string", "google_maps_key", "***REMOVED***"
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             zipAlignEnabled true
