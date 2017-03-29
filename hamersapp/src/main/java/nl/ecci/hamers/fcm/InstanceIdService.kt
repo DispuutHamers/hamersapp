@@ -3,7 +3,7 @@ package nl.ecci.hamers.fcm
 import android.util.Log
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.iid.FirebaseInstanceIdService
-import nl.ecci.hamers.helpers.DataUtils.sendRegistrationToServer
+import nl.ecci.hamers.utils.DataUtils.sendRegistrationToServer
 
 class InstanceIdService : FirebaseInstanceIdService() {
 

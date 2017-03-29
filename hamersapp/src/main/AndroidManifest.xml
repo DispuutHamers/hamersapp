@@ -26,30 +26,30 @@
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
 
-        <activity android:name="nl.ecci.hamers.MainActivity">
+        <activity android:name="nl.ecci.hamers.ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity" />
+                android:value="nl.ecci.hamers.ui.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".beers.NewReviewActivity"
+            android:name=".ui.activities.NewReviewActivity"
             android:label="@string/new_review"
-            android:parentActivityName="nl.ecci.hamers.beers.SingleBeerActivity">
+            android:parentActivityName="nl.ecci.hamers.ui.activities.SingleBeerActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.beers.SingleBeerActivity" />
+                android:value="nl.ecci.hamers.ui.activities.SingleBeerActivity" />
         </activity>
         <activity
-            android:name="nl.ecci.hamers.beers.SingleBeerActivity"
+            android:name="nl.ecci.hamers.ui.activities.SingleBeerActivity"
             android:label="Details"
-            android:parentActivityName="nl.ecci.hamers.MainActivity">
+            android:parentActivityName="nl.ecci.hamers.ui.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity" />
+                android:value="nl.ecci.hamers.ui.activities.MainActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -63,12 +63,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="nl.ecci.hamers.events.SingleEventActivity"
+            android:name="nl.ecci.hamers.ui.activities.SingleEventActivity"
             android:label="Activiteit"
-            android:parentActivityName="nl.ecci.hamers.MainActivity">
+            android:parentActivityName="nl.ecci.hamers.ui.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity" />
+                android:value="nl.ecci.hamers.ui.activities.MainActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -82,52 +82,52 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="nl.ecci.hamers.events.NewEventActivity"
+            android:name="nl.ecci.hamers.ui.activities.NewEventActivity"
             android:label="@string/new_event"
-            android:parentActivityName="nl.ecci.hamers.MainActivity">
+            android:parentActivityName="nl.ecci.hamers.ui.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity" />
+                android:value="nl.ecci.hamers.ui.activities.MainActivity" />
         </activity>
         <activity
-            android:name="nl.ecci.hamers.news.NewNewsActivity"
+            android:name="nl.ecci.hamers.ui.activities.NewNewsActivity"
             android:label="@string/new_news"
-            android:parentActivityName="nl.ecci.hamers.MainActivity">
+            android:parentActivityName="nl.ecci.hamers.ui.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity" />
+                android:value="nl.ecci.hamers.ui.activities.MainActivity" />
         </activity>
         <activity
-            android:name="nl.ecci.hamers.beers.NewBeerActivity"
+            android:name="nl.ecci.hamers.ui.activities.NewBeerActivity"
             android:label="@string/new_beer"
-            android:parentActivityName="nl.ecci.hamers.MainActivity">
+            android:parentActivityName="nl.ecci.hamers.ui.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity" />
+                android:value="nl.ecci.hamers.ui.activities.MainActivity" />
         </activity>
         <activity
-            android:name="nl.ecci.hamers.helpers.SingleImageActivity"
+            android:name="nl.ecci.hamers.ui.activities.SingleImageActivity"
             android:label="Hamers"
-            android:parentActivityName="nl.ecci.hamers.beers.SingleBeerActivity">
+            android:parentActivityName="nl.ecci.hamers.ui.activities.SingleBeerActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity" />
+                android:value="nl.ecci.hamers.ui.activities.MainActivity" />
         </activity>
         <activity
-            android:name="nl.ecci.hamers.users.SingleUserActivity"
+            android:name="nl.ecci.hamers.ui.activities.SingleUserActivity"
             android:label="Lid"
-            android:parentActivityName="nl.ecci.hamers.MainActivity">
+            android:parentActivityName="nl.ecci.hamers.ui.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity" />
+                android:value="nl.ecci.hamers.ui.activities.MainActivity" />
         </activity>
         <activity
-            android:name="nl.ecci.hamers.meetings.SingleMeetingActivity"
+            android:name="nl.ecci.hamers.ui.activities.SingleMeetingActivity"
             android:label="Vergadering"
-            android:parentActivityName="nl.ecci.hamers.MainActivity">
+            android:parentActivityName="nl.ecci.hamers.ui.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity" />
+                android:value="nl.ecci.hamers.ui.activities.MainActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -141,12 +141,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="nl.ecci.hamers.meetings.NewMeetingActivity"
+            android:name="nl.ecci.hamers.ui.activities.NewMeetingActivity"
             android:label="Nieuwe vergadering"
-            android:parentActivityName="nl.ecci.hamers.MainActivity">
+            android:parentActivityName="nl.ecci.hamers.ui.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nl.ecci.hamers.MainActivity" />
+                android:value="nl.ecci.hamers.ui.activities.MainActivity" />
         </activity>
 
         <meta-data
