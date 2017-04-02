@@ -10,7 +10,7 @@
         layout="@layout/element_toolbar" />
 
     <ImageView
-        android:id="@+id/beer_image"
+        android:id="@+id/image"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical|center_horizontal"

@@ -7,7 +7,7 @@ import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
 import com.android.volley.VolleyError
-import kotlinx.android.synthetic.main.activity_new_item.*
+import kotlinx.android.synthetic.main.activity_general.*
 import kotlinx.android.synthetic.main.stub_new_event.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.data.Loader
@@ -28,12 +28,12 @@ class NewEventActivity : NewItemActivity(), TimePickerDialog.OnTimeSetListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_item)
+        setContentView(R.layout.activity_general)
 
         initToolbar()
 
-        stub_new_item.layoutResource = R.layout.stub_new_event
-        stub_new_item.inflate()
+        stub.layoutResource = R.layout.stub_new_event
+        stub.inflate()
 
         val timeFormat = SimpleDateFormat("HH:mm", MainActivity.Companion.locale)
         val dateFormat = SimpleDateFormat("dd-mm-yyyy", MainActivity.Companion.locale)

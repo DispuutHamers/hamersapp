@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.DatePicker
 import com.android.volley.VolleyError
-import kotlinx.android.synthetic.main.activity_new_item.*
+import kotlinx.android.synthetic.main.activity_general.*
 import kotlinx.android.synthetic.main.stub_new_beer.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.data.Loader
@@ -21,12 +21,12 @@ class NewBeerActivity : NewItemActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_item)
+        setContentView(R.layout.activity_general)
 
         initToolbar()
 
-        stub_new_item.layoutResource = R.layout.stub_new_beer
-        stub_new_item.inflate()
+        stub.layoutResource = R.layout.stub_new_beer
+        stub.inflate()
 
         beerID = intent.getIntExtra(Beer.BEER, -1)
         if (beerID != -1) {

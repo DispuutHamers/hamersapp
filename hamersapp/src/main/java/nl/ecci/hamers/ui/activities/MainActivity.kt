@@ -1,7 +1,5 @@
 package nl.ecci.hamers.ui.activities
 
-import android.content.Context
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -9,24 +7,21 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatDelegate
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator
-import com.nostra13.universalimageloader.core.DisplayImageOptions
-import com.nostra13.universalimageloader.core.ImageLoader
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType
-import com.nostra13.universalimageloader.utils.StorageUtils
-import kotlinx.android.synthetic.main.element_header.*
+import kotlinx.android.synthetic.main.element_header.view.*
+import kotlinx.android.synthetic.main.element_toolbar.*
 import kotlinx.android.synthetic.main.main.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.data.GetCallback
 import nl.ecci.hamers.data.Loader
 import nl.ecci.hamers.ui.fragments.*
 import nl.ecci.hamers.utils.DataUtils
+import nl.ecci.hamers.utils.DataUtils.getGravatarURL
 import nl.ecci.hamers.utils.Utils
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,8 +35,6 @@ class MainActivity : HamersActivity() {
 
         initDrawer()
         initToolbar()
-
-        configureDefaultImageLoader(this)
 
         if (savedInstanceState == null) {
             selectItem(this, navigation_view.menu.getItem(0))
@@ -129,12 +122,15 @@ class MainActivity : HamersActivity() {
     private fun fillHeader() {
         val user = DataUtils.getOwnUser(this)
         if (user.id != Utils.notFound) {
-            header_user_name.text = user.name
-            header_user_email.text = user.email
+
+            val headerView = LayoutInflater.from(this).inflate(R.layout.element_header, navigation_view, false)
+            navigation_view.addHeaderView(headerView)
+
+            headerView.header_user_name.text = user.name
+            headerView.header_user_email.text = user.email
 
             // Image
-            val url = DataUtils.getGravatarURL(user.email)
-            ImageLoader.getInstance().displayImage(url, header_user_image)
+            Glide.with(applicationContext).load(getGravatarURL(user.email)).into(headerView.header_user_image)
         } else {
             Loader.getData(this, Loader.WHOAMIURL, object : GetCallback {
                 override fun onSuccess(response: String) {
@@ -150,34 +146,6 @@ class MainActivity : HamersActivity() {
         val appDF = SimpleDateFormat("EEE dd MMM yyyy HH:mm", locale)
         val appDTF = SimpleDateFormat("EEEE dd MMMM yyyy", locale)
         private val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
-
-        /**
-         * Setup of default ImageLoader configuration (Universal Image Loader)
-         * https://github.com/nostra13/Android-Universal-Image-Loader
-         */
-        private fun configureDefaultImageLoader(context: Context) {
-            val cacheDir = StorageUtils.getCacheDirectory(context)
-            val options = DisplayImageOptions.Builder()
-                    .resetViewBeforeLoading(true)
-                    .cacheInMemory(true)
-                    .cacheOnDisk(true)
-                    .considerExifParams(true)
-                    .bitmapConfig(Bitmap.Config.RGB_565)
-                    .build()
-
-            val defaultConfiguration = ImageLoaderConfiguration.Builder(context)
-                    .denyCacheImageMultipleSizesInMemory()
-                    .diskCacheFileNameGenerator(Md5FileNameGenerator())
-                    .tasksProcessingOrder(QueueProcessingType.LIFO)
-                    .diskCache(UnlimitedDiskCache(cacheDir))
-                    .threadPoolSize(3)
-                    .threadPriority(Thread.NORM_PRIORITY - 2)
-                    .defaultDisplayImageOptions(options)
-                    .build()
-
-            // Initialize ImageLoader with configuration
-            ImageLoader.getInstance().init(defaultConfiguration)
-        }
 
         @AppCompatDelegate.NightMode
         fun getNightModeInt(nightMode: String): Int {

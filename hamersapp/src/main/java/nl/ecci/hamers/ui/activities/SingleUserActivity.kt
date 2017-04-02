@@ -1,13 +1,10 @@
 package nl.ecci.hamers.ui.activities
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import com.nostra13.universalimageloader.core.ImageLoader
-import com.nostra13.universalimageloader.core.assist.FailReason
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_detail_user.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.models.User
@@ -67,17 +64,7 @@ class SingleUserActivity : HamersActivity() {
     private fun loadBackdrop(user: User) {
         mAttacher = PhotoViewAttacher(user_backdrop)
 
-        ImageLoader.getInstance().displayImage(getGravatarURL(user.email), user_backdrop, object : ImageLoadingListener {
-            override fun onLoadingStarted(imageUri: String, view: View) {}
-
-            override fun onLoadingFailed(imageUri: String, view: View, failReason: FailReason) {}
-
-            override fun onLoadingComplete(imageUri: String, view: View, loadedImage: Bitmap) {
-                mAttacher?.update()
-            }
-
-            override fun onLoadingCancelled(imageUri: String, view: View) {}
-        })
+        Glide.with(this).load(getGravatarURL(user.email)).into(user_backdrop)
     }
 
 }

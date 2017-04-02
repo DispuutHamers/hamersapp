@@ -12,15 +12,13 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.google.gson.GsonBuilder
-import com.nostra13.universalimageloader.core.ImageLoader
-import com.nostra13.universalimageloader.core.imageaware.ImageViewAware
 import kotlinx.android.synthetic.main.row_beer.view.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.models.Beer
 import nl.ecci.hamers.ui.activities.SingleBeerActivity
 import nl.ecci.hamers.ui.activities.SingleImageActivity
-import nl.ecci.hamers.utils.AnimateFirstDisplayListener
 import nl.ecci.hamers.utils.Utils
 import java.util.*
 
@@ -35,17 +33,17 @@ internal class BeerAdapter(private val dataSet: ArrayList<Beer>, private val con
         view.setOnClickListener {
             val activity = context as Activity
             val imageTransitionName = context.getString(R.string.transition_single_image)
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view.beer_image, imageTransitionName)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view.image, imageTransitionName)
             val intent = Intent(context, SingleBeerActivity::class.java)
             intent.putExtra(Beer.BEER, filteredDataSet[vh.adapterPosition].id)
             ActivityCompat.startActivity(activity, intent, options.toBundle())
         }
 
-        view.beer_image.setOnClickListener {
+        view.image.setOnClickListener {
             val beer = filteredDataSet[vh.adapterPosition]
             val activity = context as Activity
             val transitionName = context.getString(R.string.transition_single_image)
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view.beer_image, transitionName)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view.image, transitionName)
             if (beer.imageURL.isNotBlank()) {
                 val intent = Intent(context, SingleImageActivity::class.java)
                 intent.putExtra(Beer.BEER, GsonBuilder().create().toJson(beer, Beer::class.java))
@@ -94,7 +92,7 @@ internal class BeerAdapter(private val dataSet: ArrayList<Beer>, private val con
         }
     }
 
-    internal class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    internal inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bindBeer(beer: Beer) {
             with(beer) {
                 itemView.name_textview.text = name
@@ -102,7 +100,7 @@ internal class BeerAdapter(private val dataSet: ArrayList<Beer>, private val con
                 itemView.brewer_textview.text = brewer
                 itemView.country_textview.text = country
                 itemView.rating_textview.text = rating
-                ImageLoader.getInstance().displayImage(imageURL, ImageViewAware(itemView.beer_image, false), AnimateFirstDisplayListener())
+                Glide.with(context).load(imageURL).fitCenter().into(itemView.image)
             }
         }
     }

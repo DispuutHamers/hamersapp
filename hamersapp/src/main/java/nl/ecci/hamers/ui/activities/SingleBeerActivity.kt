@@ -11,9 +11,9 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.google.gson.reflect.TypeToken
-import com.nostra13.universalimageloader.core.ImageLoader
-import kotlinx.android.synthetic.main.activity_detail_item.*
+import kotlinx.android.synthetic.main.activity_general.*
 import kotlinx.android.synthetic.main.row_review.view.*
 import kotlinx.android.synthetic.main.stub_detail_beer.*
 import nl.ecci.hamers.BuildConfig
@@ -38,7 +38,7 @@ class SingleBeerActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_item)
+        setContentView(R.layout.activity_general)
 
         initToolbar()
 
@@ -59,8 +59,8 @@ class SingleBeerActivity : HamersActivity() {
     }
 
     private fun initUI() {
-        stub_detail_item.layoutResource = R.layout.stub_detail_beer
-        stub_detail_item.inflate()
+        stub.layoutResource = R.layout.stub_detail_beer
+        stub.inflate()
 
         review_create_button.setOnClickListener { updateReview(ownReview) }
 
@@ -81,12 +81,12 @@ class SingleBeerActivity : HamersActivity() {
             fillDetailRow(row_rating, getString(R.string.beer_rating), beer?.rating)
         }
 
-        ImageLoader.getInstance().displayImage(beer?.imageURL, beer_image)
+        Glide.with(this).load(beer?.imageURL).fitCenter().into(image)
 
-        beer_image.setOnClickListener {
+        image.setOnClickListener {
             val intent = Intent(this@SingleBeerActivity, SingleImageActivity::class.java)
             val transitionName = getString(R.string.transition_single_image)
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@SingleBeerActivity, beer_image, transitionName)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@SingleBeerActivity, image, transitionName)
             intent.putExtra(Beer.BEER, gson.toJson(beer, Beer::class.java))
             ActivityCompat.startActivity(this@SingleBeerActivity, intent, options.toBundle())
         }
@@ -188,7 +188,7 @@ class SingleBeerActivity : HamersActivity() {
         if (resultCode == Activity.RESULT_OK) {
             getReviews()
             if (requestCode == reviewRequestCode) {
-                val newBody : String = data?.getStringExtra(reviewBody).toString()
+                val newBody: String = data?.getStringExtra(reviewBody).toString()
                 val newRating = data?.getIntExtra(reviewRating, -1) as Int
 
                 if (ownReview != null) {

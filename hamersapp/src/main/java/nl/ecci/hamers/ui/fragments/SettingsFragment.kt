@@ -7,7 +7,6 @@ import android.support.v7.preference.Preference
 import android.support.v7.preference.Preference.OnPreferenceClickListener
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.support.v7.preference.PreferenceManager
-import com.nostra13.universalimageloader.core.ImageLoader
 import nl.ecci.hamers.R
 import nl.ecci.hamers.data.Loader
 import nl.ecci.hamers.ui.activities.MainActivity
@@ -21,9 +20,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val clearImageCache = findPreference(KEY_PREF_CLEAR_IMAGE_CACHE)
         clearImageCache.onPreferenceClickListener = OnPreferenceClickListener {
-            ImageLoader.getInstance().clearMemoryCache()
-            ImageLoader.getInstance().clearDiskCache()
-
             if (view != null) {
                 Snackbar.make(view, R.string.clear_image_cache_snackbar, Snackbar.LENGTH_SHORT).show()
             }

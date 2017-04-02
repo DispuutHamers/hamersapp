@@ -6,12 +6,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.nostra13.universalimageloader.core.ImageLoader
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_user.view.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.models.User
 import nl.ecci.hamers.ui.activities.SingleUserActivity
-import nl.ecci.hamers.utils.AnimateFirstDisplayListener
 import nl.ecci.hamers.utils.DataUtils.getGravatarURL
 import java.util.*
 
@@ -38,11 +37,11 @@ internal class UserListAdapter(private val dataSet: ArrayList<User>, private val
         return dataSet.size
     }
 
-    internal class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    internal inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bindUser(user: User) {
             with(user) {
                 itemView.username.text = user.name
-                ImageLoader.getInstance().displayImage(getGravatarURL(user.email), itemView.user_image, AnimateFirstDisplayListener())
+                Glide.with(context).load(getGravatarURL(user.email)).into(itemView.user_image)
             }
         }
     }

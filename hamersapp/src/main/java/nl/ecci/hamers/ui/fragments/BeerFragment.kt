@@ -16,7 +16,6 @@ import nl.ecci.hamers.models.Beer
 import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.activities.NewBeerActivity
 import nl.ecci.hamers.ui.adapters.BeerAdapter
-import nl.ecci.hamers.utils.AnimateFirstDisplayListener
 import java.util.*
 
 class BeerFragment : HamersListFragment(){
@@ -119,11 +118,6 @@ class BeerFragment : HamersListFragment(){
     private fun sort(comparator: Comparator<Beer>) {
         Collections.sort<Beer>(dataSet, comparator)
         notifyAdapter()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        AnimateFirstDisplayListener.displayedImages.clear()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

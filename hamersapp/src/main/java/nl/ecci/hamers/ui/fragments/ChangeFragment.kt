@@ -14,7 +14,6 @@ import nl.ecci.hamers.data.Loader
 import nl.ecci.hamers.models.Change
 import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.adapters.ChangeAdapter
-import nl.ecci.hamers.utils.AnimateFirstDisplayListener
 import nl.ecci.hamers.utils.DividerItemDecoration
 import org.jetbrains.anko.padding
 import java.util.*
@@ -60,11 +59,6 @@ class ChangeFragment : HamersListFragment() {
     override fun onResume() {
         super.onResume()
         activity.title = resources.getString(R.string.navigation_item_changes)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        AnimateFirstDisplayListener.displayedImages.clear()
     }
 
     private inner class populateList : AsyncTask<String, Void, ArrayList<Change>>() {

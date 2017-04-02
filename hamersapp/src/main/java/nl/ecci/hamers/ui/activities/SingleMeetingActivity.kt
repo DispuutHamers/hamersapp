@@ -1,7 +1,7 @@
 package nl.ecci.hamers.ui.activities
 
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_detail_item.*
+import kotlinx.android.synthetic.main.activity_general.*
 import kotlinx.android.synthetic.main.stub_detail_meeting.*
 import nl.ecci.hamers.BuildConfig
 import nl.ecci.hamers.R
@@ -15,12 +15,12 @@ class SingleMeetingActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_item)
+        setContentView(R.layout.activity_general)
 
         initToolbar()
 
-        stub_detail_item.layoutResource = R.layout.stub_detail_meeting
-        stub_detail_item.inflate()
+        stub.layoutResource = R.layout.stub_detail_meeting
+        stub.inflate()
 
         // Intent by clicking an event in EventFragment or by clicking a link elsewhere
         val appLinkData = intent.data

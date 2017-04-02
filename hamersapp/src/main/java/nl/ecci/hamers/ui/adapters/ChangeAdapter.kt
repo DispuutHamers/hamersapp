@@ -8,13 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.nostra13.universalimageloader.core.ImageLoader
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.main.*
 import kotlinx.android.synthetic.main.row_change.view.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.models.*
 import nl.ecci.hamers.ui.activities.*
-import nl.ecci.hamers.utils.AnimateFirstDisplayListener
 import nl.ecci.hamers.utils.DataUtils
 import nl.ecci.hamers.utils.DataUtils.getGravatarURL
 import java.util.*
@@ -105,7 +104,7 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
 
             with(change) {
                 // Set user image
-                ImageLoader.getInstance().displayImage(getGravatarURL(user.email), itemView.user_image, AnimateFirstDisplayListener())
+                Glide.with(context).load(getGravatarURL(user.email)).into(itemView.user_image)
 
                 if (change.itemType != null)
                     when (change.itemType) {

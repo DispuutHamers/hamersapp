@@ -7,11 +7,11 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.support.v4.app.NotificationCompat
 import android.util.Log
+import com.bumptech.glide.Glide
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.nostra13.universalimageloader.core.ImageLoader
 import nl.ecci.hamers.R
 import nl.ecci.hamers.data.Loader
 import nl.ecci.hamers.models.*
@@ -131,7 +131,7 @@ class MessagingService : FirebaseMessagingService() {
      */
     private fun sendNotification(title: String, summary: String, userId: Int) {
         val user = DataUtils.getUser(applicationContext, userId)
-        val icon = ImageLoader.getInstance().loadImageSync(getGravatarURL(user.email))
+        val icon = Glide.with(this).load(getGravatarURL(user.email)).asBitmap().into(300, 300).get()
 
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this)

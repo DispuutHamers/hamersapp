@@ -6,22 +6,20 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.element_toolbar.*
 import kotlinx.android.synthetic.main.row_detailview.view.*
 import kotlinx.android.synthetic.main.row_imageview.view.*
 import kotlinx.android.synthetic.main.row_singleview.view.*
 import nl.ecci.hamers.R
 
-
 @SuppressLint("Registered")
 open class HamersActivity : AppCompatActivity() {
 
-    var toolbar: Toolbar? = null
     var prefs: SharedPreferences? = null
     var gson: Gson = GsonBuilder().setDateFormat(MainActivity.dbDF.toPattern()).create()
 
@@ -31,15 +29,11 @@ open class HamersActivity : AppCompatActivity() {
     }
 
     open fun initToolbar() {
-        toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
-        val actionBar = supportActionBar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
 
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeButtonEnabled(true)
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

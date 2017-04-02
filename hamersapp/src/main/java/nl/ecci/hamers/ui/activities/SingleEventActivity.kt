@@ -13,7 +13,7 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.android.volley.VolleyError
-import kotlinx.android.synthetic.main.activity_detail_item.*
+import kotlinx.android.synthetic.main.activity_general.*
 import kotlinx.android.synthetic.main.stub_detail_event.*
 import nl.ecci.hamers.BuildConfig
 import nl.ecci.hamers.R
@@ -34,12 +34,12 @@ class SingleEventActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_item)
+        setContentView(R.layout.activity_general)
 
         initToolbar()
 
-        stub_detail_item.layoutResource = R.layout.stub_detail_event
-        stub_detail_item.inflate()
+        stub.layoutResource = R.layout.stub_detail_event
+        stub.inflate()
 
         ownUser = DataUtils.getOwnUser(this)
 
@@ -62,7 +62,7 @@ class SingleEventActivity : HamersActivity() {
 
         if (Date().after(event?.deadline)) {
             button_layout.visibility = View.GONE
-            single_event_scrollview.removeView(button_layout)
+            scrollview.removeView(button_layout)
         }
 
         fillImageRow(date_row, "Datum", MainActivity.appDF.format(event!!.date), R.drawable.ic_event)

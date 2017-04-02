@@ -8,14 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import com.nostra13.universalimageloader.core.ImageLoader
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_imageview.view.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.models.Quote
 import nl.ecci.hamers.models.User
 import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.activities.SingleUserActivity
-import nl.ecci.hamers.utils.AnimateFirstDisplayListener
 import nl.ecci.hamers.utils.DataUtils.getGravatarURL
 import nl.ecci.hamers.utils.DataUtils.getUser
 import java.util.*
@@ -73,13 +72,13 @@ internal class QuoteAdapter(private val dataSet: ArrayList<Quote>, private val c
         }
     }
 
-    internal class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    internal inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindQuote(quote: Quote, user: User) {
             with(quote) {
                 itemView.row_imageview_title_textview.text = quote.text
                 itemView.row_imageview_subtitle_textview.text = MainActivity.appDF.format(date)
 
-                ImageLoader.getInstance().displayImage(getGravatarURL(user.email), itemView.row_imageview_image, AnimateFirstDisplayListener())
+                Glide.with(context).load(getGravatarURL(user.email)).into(itemView.row_imageview_image)
             }
         }
     }
