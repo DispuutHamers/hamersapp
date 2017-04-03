@@ -48,6 +48,7 @@ class SingleBeerActivity : HamersDetailActivity() {
         beerID = intent.getIntExtra(Beer.BEER, Utils.notFound)
         if (appLinkData != null) {
             beer = DataUtils.getBeer(this, Utils.getIdFromUri(appLinkData))
+            beerID = beer!!.id
         } else {
             beer = DataUtils.getBeer(this, beerID)
         }

@@ -49,6 +49,7 @@ class SingleEventActivity : HamersDetailActivity() {
         eventID = intent.getIntExtra(Event.EVENT, Utils.notFound)
         if (appLinkData != null) {
             event = DataUtils.getEvent(this, Utils.getIdFromUri(appLinkData))
+            eventID = event!!.id
         } else {
             event = DataUtils.getEvent(this, eventID)
         }
