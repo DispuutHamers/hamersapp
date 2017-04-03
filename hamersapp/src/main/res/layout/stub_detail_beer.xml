@@ -30,7 +30,7 @@
             <include layout="@layout/element_divider" />
 
             <ImageView
-                android:id="@+id/beer_image"
+                android:id="@+id/image"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
