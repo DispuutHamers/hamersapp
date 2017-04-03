@@ -43,9 +43,6 @@ class SingleBeerActivity : HamersDetailActivity() {
 
         initToolbar()
 
-        // TODO: REMOVE!!
-        prefs?.edit()?.remove(Loader.BEERURL)?.apply()
-
         // Intent by clicking an event in EventFragment or by clicking a link elsewhere
         val appLinkData = intent.data
         beerID = intent.getIntExtra(Beer.BEER, Utils.notFound)

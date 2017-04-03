@@ -18,6 +18,7 @@ import nl.ecci.hamers.ui.activities.NewEventActivity
 import nl.ecci.hamers.ui.adapters.EventFragmentAdapter
 import nl.ecci.hamers.ui.adapters.EventListAdapter
 import java.util.*
+import kotlin.collections.ArrayList
 
 class EventListFragment : HamersListFragment() {
 
@@ -125,6 +126,7 @@ class EventListFragment : HamersListFragment() {
                     val now = Date()
 
                     tempList?.filterTo(result) { now.before(it.date) }
+                    Collections.sort(result) { o1, o2 -> o2.date.compareTo(o1.date) }
                     Collections.reverse(result)
                     return result
                 } else {
