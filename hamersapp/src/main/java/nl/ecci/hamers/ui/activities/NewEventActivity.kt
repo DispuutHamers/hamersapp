@@ -34,8 +34,8 @@ class NewEventActivity : HamersNewItemActivity(), TimePickerDialog.OnTimeSetList
         stub.layoutResource = R.layout.stub_new_event
         stub.inflate()
 
-        val timeFormat = SimpleDateFormat("HH:mm", MainActivity.Companion.locale)
-        val dateFormat = SimpleDateFormat("dd-mm-yyyy", MainActivity.Companion.locale)
+        val timeFormat = SimpleDateFormat("HH:mm", MainActivity.locale)
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", MainActivity.locale)
 
         eventID = intent.getIntExtra(Event.EVENT, -1)
         if (eventID != -1) {
@@ -44,8 +44,8 @@ class NewEventActivity : HamersNewItemActivity(), TimePickerDialog.OnTimeSetList
             event_location.setText(event.location)
             event_beschrijving.setText(event.description)
             event_time_button.text = timeFormat.format(event.date)
-            event_end_time_button.text = timeFormat.format(event.endDate)
             event_date_button.text = dateFormat.format(event.date)
+            event_end_time_button.text = timeFormat.format(event.endDate)
             event_end_date_button.text = dateFormat.format(event.endDate)
             event_deadline_time_button.text = timeFormat.format(event.deadline)
             event_deadline_date_button.text = dateFormat.format(event.deadline)

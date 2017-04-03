@@ -258,6 +258,11 @@ class SingleEventActivity : HamersDetailActivity() {
         alert.show()
     }
 
+    override fun onResume() {
+        super.onResume()
+        onRefresh()
+    }
+
     override fun onRefresh() {
         Loader.getData(this, Loader.EVENTURL, eventID, object : GetCallback {
             override fun onSuccess(response: String) {
