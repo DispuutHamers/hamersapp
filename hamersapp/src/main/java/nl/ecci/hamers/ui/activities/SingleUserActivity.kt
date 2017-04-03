@@ -11,10 +11,8 @@ import nl.ecci.hamers.models.User
 import nl.ecci.hamers.utils.DataUtils.convertNicknames
 import nl.ecci.hamers.utils.DataUtils.getGravatarURL
 import nl.ecci.hamers.utils.DataUtils.getUser
-import uk.co.senab.photoview.PhotoViewAttacher
 
 class SingleUserActivity : HamersActivity() {
-    private var mAttacher: PhotoViewAttacher? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,8 +60,6 @@ class SingleUserActivity : HamersActivity() {
     }
 
     private fun loadBackdrop(user: User) {
-        mAttacher = PhotoViewAttacher(user_backdrop)
-
         Glide.with(this).load(getGravatarURL(user.email)).into(user_backdrop)
     }
 
