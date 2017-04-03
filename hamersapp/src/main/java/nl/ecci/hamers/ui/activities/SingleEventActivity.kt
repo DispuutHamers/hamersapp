@@ -121,8 +121,7 @@ class SingleEventActivity : HamersActivity() {
                 return true
             }
             R.id.edit_item -> {
-                Intent(this, NewEventActivity::class.java).putExtra(Event.EVENT, event?.id)
-                startActivity(intent)
+                startActivity(Intent(this, NewEventActivity::class.java).putExtra(Event.EVENT, event?.id))
                 return true
             }
             R.id.share_item -> {
