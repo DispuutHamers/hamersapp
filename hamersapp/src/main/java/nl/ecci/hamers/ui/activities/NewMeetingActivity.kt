@@ -17,13 +17,12 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NewMeetingActivity : NewItemActivity() {
+class NewMeetingActivity : HamersNewItemActivity() {
 
     private var meeting: Meeting? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_general)
 
         initToolbar()
 

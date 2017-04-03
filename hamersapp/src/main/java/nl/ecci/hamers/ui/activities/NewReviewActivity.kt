@@ -25,7 +25,7 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NewReviewActivity : NewItemActivity() {
+class NewReviewActivity : HamersNewItemActivity() {
 
     private var beer: Beer? = null
     private var review: Review? = null
@@ -33,7 +33,6 @@ class NewReviewActivity : NewItemActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_general)
 
         initToolbar()
 

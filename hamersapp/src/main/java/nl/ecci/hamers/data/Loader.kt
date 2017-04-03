@@ -43,7 +43,7 @@ object Loader {
                 Response.Listener<String> { response ->
                     Log.d("GET-response", response)
                     // Do not save events from upcoming events fragment
-                    if (!(dataURL == EVENTURL && params != null)) {
+                    if (!(dataURL == EVENTURL && params != null) && urlAppendix == Utils.notFound) {
                         prefs.edit().putString(dataURL, response).apply()
                     }
                     callback?.onSuccess(response)

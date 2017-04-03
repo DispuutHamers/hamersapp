@@ -3,17 +3,27 @@ package nl.ecci.hamers.ui.activities
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import kotlinx.android.synthetic.main.activity_general.*
 import nl.ecci.hamers.R
 
 @SuppressLint("Registered")
-abstract class NewItemActivity : HamersActivity(), DatePickerDialog.OnDateSetListener {
+abstract class HamersNewItemActivity : HamersActivity(), DatePickerDialog.OnDateSetListener {
+
     var refreshItem: MenuItem? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_general)
+
+        hamers_swipe_container.isEnabled = false
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.new_menu, menu)
@@ -22,6 +32,10 @@ abstract class NewItemActivity : HamersActivity(), DatePickerDialog.OnDateSetLis
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
             R.id.done_button -> {
                 refreshItem = item
 

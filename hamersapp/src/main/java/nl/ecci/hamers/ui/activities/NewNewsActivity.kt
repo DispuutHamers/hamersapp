@@ -11,11 +11,10 @@ import nl.ecci.hamers.data.PostCallback
 import org.json.JSONException
 import org.json.JSONObject
 
-class NewNewsActivity : NewItemActivity() {
+class NewNewsActivity : HamersNewItemActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_general)
 
         initToolbar()
 

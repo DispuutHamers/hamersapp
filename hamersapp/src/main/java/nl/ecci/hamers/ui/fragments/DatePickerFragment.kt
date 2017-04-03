@@ -4,7 +4,7 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
-import nl.ecci.hamers.ui.activities.NewItemActivity
+import nl.ecci.hamers.ui.activities.HamersNewItemActivity
 import java.util.*
 
 class DatePickerFragment : DialogFragment() {
@@ -17,6 +17,6 @@ class DatePickerFragment : DialogFragment() {
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         // Create a new instance of DatePickerDialog and return it
-        return DatePickerDialog(activity, (activity as NewItemActivity), year, month, day)
+        return DatePickerDialog(activity, (activity as HamersNewItemActivity), year, month, day)
     }
 }

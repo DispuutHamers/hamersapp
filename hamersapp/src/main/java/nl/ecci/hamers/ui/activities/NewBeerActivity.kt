@@ -15,13 +15,12 @@ import nl.ecci.hamers.utils.DataUtils
 import org.json.JSONException
 import org.json.JSONObject
 
-class NewBeerActivity : NewItemActivity() {
+class NewBeerActivity : HamersNewItemActivity() {
 
     private var beerID: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_general)
 
         initToolbar()
 

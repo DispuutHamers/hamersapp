@@ -21,14 +21,13 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 
-class NewEventActivity : NewItemActivity(), TimePickerDialog.OnTimeSetListener {
+class NewEventActivity : HamersNewItemActivity(), TimePickerDialog.OnTimeSetListener {
 
     private val fragmentManager = supportFragmentManager
     private var eventID: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_general)
 
         initToolbar()
 
