@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_general.*
 import kotlinx.android.synthetic.main.stub_detail_event.*
 import nl.ecci.hamers.BuildConfig
 import nl.ecci.hamers.R
+import nl.ecci.hamers.data.GetCallback
 import nl.ecci.hamers.data.Loader
 import nl.ecci.hamers.data.PostCallback
 import nl.ecci.hamers.models.Event
@@ -27,14 +28,14 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
-class SingleEventActivity : HamersActivity() {
+class SingleEventActivity : HamersDetailActivity() {
 
     private var event: Event? = null
     private var ownUser: User? = null
+    private var eventID: Int = Utils.notFound
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_general)
 
         initToolbar()
 
@@ -45,13 +46,17 @@ class SingleEventActivity : HamersActivity() {
 
         // Intent by clicking an event in EventFragment or by clicking a link elsewhere
         val appLinkData = intent.data
-        val eventID = intent.getIntExtra(Event.EVENT, Utils.notFound)
+        eventID = intent.getIntExtra(Event.EVENT, Utils.notFound)
         if (appLinkData != null) {
             event = DataUtils.getEvent(this, Utils.getIdFromUri(appLinkData))
         } else {
             event = DataUtils.getEvent(this, eventID)
         }
 
+        initUI()
+    }
+
+    fun initUI() {
         var eventTitle = event?.title
         if (BuildConfig.DEBUG) {
             eventTitle += " (" + event?.id + ")"
@@ -76,7 +81,7 @@ class SingleEventActivity : HamersActivity() {
             startActivity(intent)
         }
 
-        if (event!!.location.isNotBlank()) {
+        if (event?.location?.isNotBlank() as Boolean) {
             fillImageRow(location_row, "Locatie", event!!.location, R.drawable.location)
 
             location_row.isClickable = true
@@ -192,21 +197,25 @@ class SingleEventActivity : HamersActivity() {
                 }
 
         if (present.size > 0) {
+            present_layout.visibility = View.VISIBLE
+            present_insert_point.removeAllViews()
             for (name in present) {
                 present_insert_point.addView(newSingleRow(name, present_insert_point), ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
             }
             event_present_count.text = present.size.toString()
         } else {
-            single_event_layout.removeView(present_layout)
+            present_layout.visibility = View.GONE
         }
 
         if (absent.size > 0) {
+            absent_layout.visibility = View.VISIBLE
+            absent_insert_point.removeAllViews()
             for (name in absent) {
                 absent_insert_point.addView(newSingleRow(name, absent_insert_point), ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
             }
             event_absent_count.text = absent.size.toString()
         } else {
-            single_event_layout.removeView(absent_layout)
+            absent_layout.visibility = View.GONE
         }
 
         if (present.contains(ownUser?.name)) {
@@ -246,6 +255,16 @@ class SingleEventActivity : HamersActivity() {
             // Do nothing.
         }
         alert.show()
+    }
+
+    override fun onRefresh() {
+        Loader.getData(this, Loader.EVENTURL, eventID, object : GetCallback {
+            override fun onSuccess(response: String) {
+                setRefreshing(false)
+                event = gson.fromJson<Event>(response, Event::class.java)
+                initUI()
+            }
+        }, null)
     }
 
 }

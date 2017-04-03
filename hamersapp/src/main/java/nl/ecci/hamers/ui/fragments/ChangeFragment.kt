@@ -47,7 +47,7 @@ class ChangeFragment : HamersListFragment() {
     override fun onRefresh() {
         setRefreshing(true)
         // Load changes
-        Loader.getData(context, Loader.CHANGEURL, object : GetCallback {
+        Loader.getData(context, Loader.CHANGEURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }

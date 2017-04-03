@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.row_singleview.view.*
 import nl.ecci.hamers.R
 
 @SuppressLint("Registered")
-open class HamersActivity : AppCompatActivity() {
+abstract class HamersActivity : AppCompatActivity() {
 
     var prefs: SharedPreferences? = null
     var gson: Gson = GsonBuilder().setDateFormat(MainActivity.dbDF.toPattern()).create()
@@ -33,7 +33,6 @@ open class HamersActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -62,5 +61,4 @@ open class HamersActivity : AppCompatActivity() {
         view.row_imageview_subtitle_textview.text = description
         view.row_imageview_image.setImageDrawable(ContextCompat.getDrawable(this, imageId))
     }
-
 }

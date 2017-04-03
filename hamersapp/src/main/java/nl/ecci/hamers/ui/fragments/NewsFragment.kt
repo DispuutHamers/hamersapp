@@ -53,7 +53,7 @@ class NewsFragment : HamersListFragment() {
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(context, Loader.NEWSURL, object : GetCallback {
+        Loader.getData(context, Loader.NEWSURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }

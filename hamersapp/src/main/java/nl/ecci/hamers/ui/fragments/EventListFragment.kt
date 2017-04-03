@@ -58,13 +58,13 @@ class EventListFragment : HamersListFragment() {
             val params = HashMap<String, String>()
             params.put("sorted", "asc-desc")
             params.put("future", "true")
-            Loader.getData(context, Loader.EVENTURL, object : GetCallback {
+            Loader.getData(context, Loader.EVENTURL, -1, object : GetCallback {
                 override fun onSuccess(response: String) {
                     populateList().execute(response)
                 }
             }, params)
         } else {
-            Loader.getData(context, Loader.EVENTURL, object : GetCallback {
+            Loader.getData(context, Loader.EVENTURL, -1, object : GetCallback {
                 override fun onSuccess(response: String) {
                     // Only save normal event list
                     prefs?.edit()?.putString(Loader.EVENTURL, response)?.apply()

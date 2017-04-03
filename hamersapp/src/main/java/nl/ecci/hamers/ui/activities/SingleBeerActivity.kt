@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.row_review.view.*
 import kotlinx.android.synthetic.main.stub_detail_beer.*
 import nl.ecci.hamers.BuildConfig
 import nl.ecci.hamers.R
+import nl.ecci.hamers.data.GetCallback
 import nl.ecci.hamers.data.Loader
 import nl.ecci.hamers.models.Beer
 import nl.ecci.hamers.models.Review
@@ -26,9 +27,10 @@ import nl.ecci.hamers.utils.DataUtils
 import nl.ecci.hamers.utils.Utils
 import java.util.*
 
-class SingleBeerActivity : HamersActivity() {
+class SingleBeerActivity : HamersDetailActivity() {
 
     private var beer: Beer? = null
+    private var beerID: Int = Utils.notFound
     private var user: User? = null
     private var ownReview: Review? = null
 
@@ -38,13 +40,15 @@ class SingleBeerActivity : HamersActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_general)
 
         initToolbar()
 
+        // TODO: REMOVE!!
+        prefs?.edit()?.remove(Loader.BEERURL)?.apply()
+
         // Intent by clicking an event in EventFragment or by clicking a link elsewhere
         val appLinkData = intent.data
-        val beerID = intent.getIntExtra(Beer.BEER, Utils.notFound)
+        beerID = intent.getIntExtra(Beer.BEER, Utils.notFound)
         if (appLinkData != null) {
             beer = DataUtils.getBeer(this, Utils.getIdFromUri(appLinkData))
         } else {
@@ -53,15 +57,13 @@ class SingleBeerActivity : HamersActivity() {
 
         user = DataUtils.getOwnUser(this)
 
-        initUI()
-
-        getReviews()
-    }
-
-    private fun initUI() {
         stub.layoutResource = R.layout.stub_detail_beer
         stub.inflate()
 
+        initUI()
+    }
+
+    private fun initUI() {
         review_create_button.setOnClickListener { updateReview(ownReview) }
 
         var beerName = beer?.name
@@ -91,6 +93,17 @@ class SingleBeerActivity : HamersActivity() {
             ActivityCompat.startActivity(this@SingleBeerActivity, intent, options.toBundle())
         }
 
+        getReviews()
+    }
+
+    override fun onRefresh() {
+        Loader.getData(this, Loader.BEERURL, beerID, object : GetCallback {
+            override fun onSuccess(response: String) {
+                setRefreshing(false)
+                beer = gson.fromJson<Beer>(response, Beer::class.java)
+                initUI()
+            }
+        }, null)
     }
 
     private fun getReviews() {

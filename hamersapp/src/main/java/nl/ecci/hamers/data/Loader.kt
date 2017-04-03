@@ -35,9 +35,9 @@ object Loader {
 
     val urls = hashSetOf(QUOTEURL, USERURL, EVENTURL, SIGNUPURL, NEWSURL, BEERURL, REVIEWURL, WHOAMIURL, MEETINGURL, SIGNUPURL, STICKERURL, CHANGEURL)
 
-    fun getData(context: Context, dataURL: String, callback: GetCallback?, params: Map<String, String>?) {
+    fun getData(context: Context, dataURL: String, urlAppendix: Int, callback: GetCallback?, params: Map<String, String>?) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val url = buildURL(context, dataURL, params, Utils.notFound)
+        val url = buildURL(context, dataURL, params, urlAppendix)
 
         val request = object : StringRequest(Method.GET, url,
                 Response.Listener<String> { response ->
@@ -163,7 +163,7 @@ object Loader {
 
     fun getAllData(context: Context) {
         for (url in urls) {
-            Loader.getData(context, url, null, null)
+            Loader.getData(context, url, -1, null, null)
         }
     }
 }

@@ -51,7 +51,7 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(context, Loader.USERURL, object : GetCallback {
+        Loader.getData(context, Loader.USERURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }

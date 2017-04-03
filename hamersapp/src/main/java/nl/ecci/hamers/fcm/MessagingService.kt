@@ -64,7 +64,7 @@ class MessagingService : FirebaseMessagingService() {
     }
 
     fun eventPush(eventString: String?) {
-        Loader.getData(this, Loader.EVENTURL, null, null)
+        Loader.getData(this, Loader.EVENTURL, -1, null, null)
 
         val event = gson.fromJson(eventString, Event::class.java)
         var title = event.title
@@ -81,7 +81,7 @@ class MessagingService : FirebaseMessagingService() {
     }
 
     fun beerPush(beerString: String?) {
-        Loader.getData(this, Loader.BEERURL, null, null)
+        Loader.getData(this, Loader.BEERURL, -1, null, null)
         val beer = gson.fromJson(beerString, Beer::class.java)
 
         intent = Intent(this, SingleBeerActivity::class.java)
@@ -93,7 +93,7 @@ class MessagingService : FirebaseMessagingService() {
     }
 
     fun reviewPush(reviewString: String?) {
-        Loader.getData(this, Loader.REVIEWURL, null, null)
+        Loader.getData(this, Loader.REVIEWURL, -1, null, null)
         val review = gson.fromJson(reviewString, Review::class.java)
 
         intent = Intent(this, SingleBeerActivity::class.java)
@@ -110,7 +110,7 @@ class MessagingService : FirebaseMessagingService() {
     }
 
     fun meetingPush(meetingString: String?) {
-        Loader.getData(this, Loader.MEETINGURL, null, null)
+        Loader.getData(this, Loader.MEETINGURL, -1, null, null)
         val meeting = gson.fromJson(meetingString, Meeting::class.java)
 
         intent = Intent(this, SingleMeetingActivity::class.java)

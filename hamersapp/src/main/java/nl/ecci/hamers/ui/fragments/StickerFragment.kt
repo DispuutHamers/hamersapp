@@ -97,7 +97,7 @@ class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.Co
     }
 
     private fun onRefresh() {
-        Loader.getData(context, Loader.STICKERURL, object : GetCallback {
+        Loader.getData(context, Loader.STICKERURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateMap().execute(dataSet)
             }

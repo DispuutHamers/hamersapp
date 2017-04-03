@@ -35,7 +35,7 @@ class MeetingFragment : HamersListFragment() {
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(context, Loader.MEETINGURL, object : GetCallback {
+        Loader.getData(context, Loader.MEETINGURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }

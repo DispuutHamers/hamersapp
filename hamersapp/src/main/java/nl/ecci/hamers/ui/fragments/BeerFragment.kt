@@ -42,12 +42,12 @@ class BeerFragment : HamersListFragment(){
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(context, Loader.BEERURL, object : GetCallback {
+        Loader.getData(context, Loader.BEERURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
         }, null)
-        Loader.getData(context, Loader.REVIEWURL, null, null)
+        Loader.getData(context, Loader.REVIEWURL, -1, null, null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

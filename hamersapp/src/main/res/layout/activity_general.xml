@@ -6,15 +6,23 @@
 
     <include layout="@layout/element_toolbar" />
 
-    <ScrollView
-        android:id="@+id/scrollview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:scrollbars="none">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/hamers_swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <ViewStub
-            android:id="@+id/stub"
+        <ScrollView
+            android:id="@+id/scrollview"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+            android:layout_height="fill_parent"
+            android:scrollbars="none">
+
+            <ViewStub
+                android:id="@+id/stub"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>

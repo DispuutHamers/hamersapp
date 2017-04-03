@@ -132,7 +132,7 @@ class MainActivity : HamersActivity() {
             // Image
             Glide.with(applicationContext).load(getGravatarURL(user.email)).into(headerView.header_user_image)
         } else {
-            Loader.getData(this, Loader.WHOAMIURL, object : GetCallback {
+            Loader.getData(this, Loader.WHOAMIURL, -1, object : GetCallback {
                 override fun onSuccess(response: String) {
                     fillHeader()
                 }
