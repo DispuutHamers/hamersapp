@@ -118,21 +118,10 @@ class EventListFragment : HamersListFragment() {
 
             if (params.isNotEmpty()) {
                 return gson.fromJson<ArrayList<Event>>(params[0], type)
-            } else {
-                val tempList = gson.fromJson<ArrayList<Event>>(prefs?.getString(Loader.EVENTURL, null), type)
-                if (upcoming) {
-                    // Only 'future' elements
-                    val result = ArrayList<Event>()
-                    val now = Date()
-
-                    tempList?.filterTo(result) { now.before(it.date) }
-                    Collections.sort(result) { o1, o2 -> o2.date.compareTo(o1.date) }
-                    Collections.reverse(result)
-                    return result
-                } else {
-                    return tempList
-                }
+            } else if (!upcoming) {
+                return gson.fromJson<ArrayList<Event>>(prefs?.getString(Loader.EVENTURL, null), type)
             }
+            return null
         }
 
         override fun onPostExecute(result: ArrayList<Event>?) {
@@ -142,8 +131,8 @@ class EventListFragment : HamersListFragment() {
                 if (!upcoming)
                     Collections.reverse(dataSet)
                 notifyAdapter()
+                setRefreshing(false)
             }
-            setRefreshing(false)
         }
     }
 }
