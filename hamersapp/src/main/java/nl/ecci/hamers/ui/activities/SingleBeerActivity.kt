@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.view.*
-import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.gson.reflect.TypeToken
@@ -102,9 +101,15 @@ class SingleBeerActivity : HamersDetailActivity() {
                 initUI()
             }
         }, null)
+        Loader.getData(this, Loader.REVIEWURL, Utils.notFound, object : GetCallback {
+            override fun onSuccess(response: String) {
+                getReviews()
+            }
+        }, null)
     }
 
     private fun getReviews() {
+        review_layout.visibility = View.VISIBLE
         review_insert_point.removeAllViews()
 
         val type = object : TypeToken<ArrayList<Review>>() {
@@ -117,20 +122,23 @@ class SingleBeerActivity : HamersDetailActivity() {
             it.beerID == beer?.id
         }
 
-        val iterator = reviewList.listIterator()
-
-        while (iterator.hasNext()) {
-            val review = iterator.next()
-            if (review.userID == user?.id) {
-                review_create_button.setText(R.string.edit_review)
-                ownReview = review
+        if (reviewList.isNotEmpty()) {
+            val iterator = reviewList.listIterator()
+            while (iterator.hasNext()) {
+                val review = iterator.next()
+                if (review.userID == user?.id) {
+                    review_create_button.setText(R.string.edit_review)
+                    ownReview = review
+                }
+                insertReview(review)
+                if (iterator.hasNext()) {
+                    // Insert divider
+                    val divider = layoutInflater.inflate(R.layout.element_divider, review_insert_point, false)
+                    review_insert_point.addView(divider)
+                }
             }
-            insertReview(review)
-            if (iterator.hasNext()) {
-                // Insert divider
-                val divider = layoutInflater.inflate(R.layout.element_divider, review_insert_point, false)
-                review_insert_point.addView(divider)
-            }
+        } else {
+            review_layout.visibility = View.GONE
         }
     }
 
@@ -197,35 +205,36 @@ class SingleBeerActivity : HamersDetailActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
-            getReviews()
-            if (requestCode == reviewRequestCode) {
-                val newBody: String = data?.getStringExtra(reviewBody).toString()
-                val newRating = data?.getIntExtra(reviewRating, -1) as Int
-
-                if (ownReview != null) {
-                    for (i in 0..review_insert_point.childCount - 1) {
-                        val view = review_insert_point.getChildAt(i)
-                        if (view.id == R.id.review_row) { // Could be 'divider'
-                            val bodyTextView = view.findViewById(R.id.review_body) as TextView
-                            val ratingTextView = view.findViewById(R.id.review_rating) as TextView
-                            if (bodyTextView.text === ownReview?.description) {
-                                bodyTextView.text = newBody
-                                ratingTextView.text = String.format("Cijfer: %s", newRating)
-                            }
-                        }
-                    }
-                }
-            } else if (requestCode == beerRequestCode) {
-                beer?.name = data?.getStringExtra(beerName).toString()
-                beer?.kind = data?.getStringExtra(beerKind).toString()
-                beer?.percentage = data?.getStringExtra(beerPercentage).toString()
-                beer?.percentage = data?.getStringExtra(beerPercentage).toString()
-                beer?.brewer = data?.getStringExtra(beerBrewer).toString()
-                beer?.country = data?.getStringExtra(beerCountry).toString()
-                beer?.rating = beer?.rating + " (Nog niet bijgewerkt)"
-
-                initUI()
-            }
+            onRefresh()
+//            getReviews()
+//            if (requestCode == reviewRequestCode) {
+//                val newBody: String = data?.getStringExtra(reviewBody).toString()
+//                val newRating = data?.getIntExtra(reviewRating, -1) as Int
+//
+//                if (ownReview != null) {
+//                    for (i in 0..review_insert_point.childCount - 1) {
+//                        val view = review_insert_point.getChildAt(i)
+//                        if (view.id == R.id.review_row) { // Could be 'divider'
+//                            val bodyTextView = view.findViewById(R.id.review_body) as TextView
+//                            val ratingTextView = view.findViewById(R.id.review_rating) as TextView
+//                            if (bodyTextView.text === ownReview?.description) {
+//                                bodyTextView.text = newBody
+//                                ratingTextView.text = String.format("Cijfer: %s", newRating)
+//                            }
+//                        }
+//                    }
+//                }
+//            } else if (requestCode == beerRequestCode) {
+//                beer?.name = data?.getStringExtra(beerName).toString()
+//                beer?.kind = data?.getStringExtra(beerKind).toString()
+//                beer?.percentage = data?.getStringExtra(beerPercentage).toString()
+//                beer?.percentage = data?.getStringExtra(beerPercentage).toString()
+//                beer?.brewer = data?.getStringExtra(beerBrewer).toString()
+//                beer?.country = data?.getStringExtra(beerCountry).toString()
+//                beer?.rating = beer?.rating + " (Nog niet bijgewerkt)"
+//
+//                initUI()
+//            }
         }
     }
 

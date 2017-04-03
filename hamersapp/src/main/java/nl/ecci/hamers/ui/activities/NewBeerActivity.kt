@@ -61,13 +61,7 @@ class NewBeerActivity : HamersNewItemActivity() {
 
         Loader.postOrPatchData(this, Loader.BEERURL, body, beerID, object : PostCallback {
             override fun onSuccess(response: JSONObject) {
-                val returnIntent = Intent()
-                returnIntent.putExtra(SingleBeerActivity.beerName, beer_name.text.toString())
-                returnIntent.putExtra(SingleBeerActivity.beerKind, beer_soort.text.toString())
-                returnIntent.putExtra(SingleBeerActivity.beerPercentage, beer_percentage.text.toString())
-                returnIntent.putExtra(SingleBeerActivity.beerBrewer, beer_brewer.text.toString())
-                returnIntent.putExtra(SingleBeerActivity.beerCountry, beer_country.text.toString())
-                setResult(Activity.RESULT_OK, returnIntent)
+                setResult(Activity.RESULT_OK, Intent())
                 finish()
             }
 
