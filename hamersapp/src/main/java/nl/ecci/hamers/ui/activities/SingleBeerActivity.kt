@@ -206,45 +206,11 @@ class SingleBeerActivity : HamersDetailActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             onRefresh()
-//            getReviews()
-//            if (requestCode == reviewRequestCode) {
-//                val newBody: String = data?.getStringExtra(reviewBody).toString()
-//                val newRating = data?.getIntExtra(reviewRating, -1) as Int
-//
-//                if (ownReview != null) {
-//                    for (i in 0..review_insert_point.childCount - 1) {
-//                        val view = review_insert_point.getChildAt(i)
-//                        if (view.id == R.id.review_row) { // Could be 'divider'
-//                            val bodyTextView = view.findViewById(R.id.review_body) as TextView
-//                            val ratingTextView = view.findViewById(R.id.review_rating) as TextView
-//                            if (bodyTextView.text === ownReview?.description) {
-//                                bodyTextView.text = newBody
-//                                ratingTextView.text = String.format("Cijfer: %s", newRating)
-//                            }
-//                        }
-//                    }
-//                }
-//            } else if (requestCode == beerRequestCode) {
-//                beer?.name = data?.getStringExtra(beerName).toString()
-//                beer?.kind = data?.getStringExtra(beerKind).toString()
-//                beer?.percentage = data?.getStringExtra(beerPercentage).toString()
-//                beer?.percentage = data?.getStringExtra(beerPercentage).toString()
-//                beer?.brewer = data?.getStringExtra(beerBrewer).toString()
-//                beer?.country = data?.getStringExtra(beerCountry).toString()
-//                beer?.rating = beer?.rating + " (Nog niet bijgewerkt)"
-//
-//                initUI()
-//            }
         }
     }
 
     companion object {
         val reviewRating = "reviewRating"
         val reviewBody = "reviewBody"
-        val beerName = "beerName"
-        val beerKind = "beerKind"
-        val beerPercentage = "beerPercentage"
-        val beerBrewer = "beerBrewer"
-        val beerCountry = "beerCountry"
     }
 }
