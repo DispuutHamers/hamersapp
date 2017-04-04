@@ -8,6 +8,9 @@
 ## ## [2.3.1](https://github.com/dexbleeker/hamersapp/tree/2.3.1) (2017-04-03)
    [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.3.0..2.3.1)
 
+- Refresh layouts for beers, events and meetings
+- A lot of layout and behaviour improvements
+- New image loading library
 - Bug fixes
 
 ## [2.3.0](https://github.com/dexbleeker/hamersapp/tree/2.3.0) (2017-03-20)
