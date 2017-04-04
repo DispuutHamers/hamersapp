@@ -22,9 +22,17 @@
 -keep public class com.google.gson.** { public private protected *; }
 -keepattributes *Annotation*,Signature
 -keep class com.mypackage.ActivityMonitor.ClassMultiPoints.** { *; }
--keep public class nl.ecci.hamers.users.ActivityMonitor$ClassMultiPoints     { public protected *; }
--keep public class nl.ecci.hamers.users.ActivityMonitor$ClassMultiPoints$ClassPoints { public protected *; }
--keep public class nl.ecci.hamers.users.ActivityMonitor$ClassMultiPoints$ClassPoints$ClassPoint { public protected *; }
+-keep public class nl.ecci.hamers.models.ActivityMonitor$ClassMultiPoints     { public protected *; }
+-keep public class nl.ecci.hamers.models.ActivityMonitor$ClassMultiPoints$ClassPoints { public protected *; }
+-keep public class nl.ecci.hamers.models.ActivityMonitor$ClassMultiPoints$ClassPoints$ClassPoint { public protected *; }
 # To support Enum type of class members
 -keepclassmembers enum * { *; }
 ##---------------End: proguard configuration for Gson ----------
+
+##---------------Begin: proguard configuration for Glide ----------
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+##---------------End: proguard configuration for Glide ----------
