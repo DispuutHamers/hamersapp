@@ -28,7 +28,6 @@ import nl.ecci.hamers.utils.Utils
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
-import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 
 class SingleEventActivity : HamersDetailActivity() {
 
@@ -163,7 +162,7 @@ class SingleEventActivity : HamersDetailActivity() {
 
         Loader.postOrPatchData(this, Loader.SIGNUPURL, body, -1, object : PostCallback {
             override fun onSuccess(response: JSONObject) {
-//                finish()
+                finish()
             }
 
             override fun onError(error: VolleyError) {
@@ -282,5 +281,4 @@ class SingleEventActivity : HamersDetailActivity() {
             }
         }, null)
     }
-
 }
