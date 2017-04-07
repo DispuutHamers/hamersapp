@@ -21,12 +21,14 @@ import nl.ecci.hamers.data.GetCallback
 import nl.ecci.hamers.data.Loader
 import nl.ecci.hamers.data.PostCallback
 import nl.ecci.hamers.models.Event
+import nl.ecci.hamers.models.SignUp
 import nl.ecci.hamers.models.User
 import nl.ecci.hamers.utils.DataUtils
 import nl.ecci.hamers.utils.Utils
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
+import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 
 class SingleEventActivity : HamersDetailActivity() {
 
@@ -100,12 +102,8 @@ class SingleEventActivity : HamersDetailActivity() {
             location_row.visibility = View.GONE
         }
 
-        present_button.setOnClickListener { postSignUp(true, null) }
-        if (event!!.attendance) {
-            absent_button.setOnClickListener { askForReason() }
-        } else {
-            absent_button.setOnClickListener { postSignUp(false, null) }
-        }
+        present_button.setOnClickListener { askForReason(true) }
+        absent_button.setOnClickListener { askForReason(false) }
 
         initSignUps()
     }
@@ -132,7 +130,7 @@ class SingleEventActivity : HamersDetailActivity() {
             }
             R.id.share_item -> {
                 // Copy link to clipboard
-                val clipboard : ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clipboard: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val clip = ClipData.newPlainText(Event.EVENT, getString(R.string.host) + Loader.EVENTURL + "/" + event?.id)
                 clipboard.primaryClip = clip
                 // Notify user
@@ -159,17 +157,13 @@ class SingleEventActivity : HamersDetailActivity() {
         try {
             body.put("event_id", event!!.id)
             body.put("status", status!!.toString())
-
-            // Attendance is mandatory, so ask for the reason for absence!
-            if (!status && event!!.attendance && reason != null) {
-                body.put("reason", reason)
-            }
+            body.put("reason", reason)
         } catch (ignored: JSONException) {
         }
 
         Loader.postOrPatchData(this, Loader.SIGNUPURL, body, -1, object : PostCallback {
             override fun onSuccess(response: JSONObject) {
-                finish()
+//                finish()
             }
 
             override fun onError(error: VolleyError) {
@@ -180,59 +174,71 @@ class SingleEventActivity : HamersDetailActivity() {
 
     private fun postReminder() {
         val url = Loader.EVENTURL + "/" + event?.id + "/" + Loader.REMINDURL
-        Loader.postOrPatchData(this, url, JSONObject(), -1, null)
+        Loader.postOrPatchData(this, url, JSONObject(), Utils.notFound, null)
     }
 
     private fun initSignUps() {
+        present_layout.visibility = View.GONE
+        absent_layout.visibility = View.GONE
+        present_insert_point.removeAllViews()
+        absent_insert_point.removeAllViews()
         val signUps = event?.signUps
-        val present = ArrayList<String>()
-        val absent = ArrayList<String>()
         signUps?.indices
                 ?.map { signUps[it] }
                 ?.forEach {
+                    val user = DataUtils.getUser(this, it.userID)
                     if (it.isAttending) {
-                        present.add(DataUtils.getUser(this, it.userID).name)
+                        addPresentUser(it, user)
                     } else {
-                        absent.add(DataUtils.getUser(this, it.userID).name)
+                        addAbsentUser(it, user)
                     }
                 }
-
-        if (present.size > 0) {
-            present_layout.visibility = View.VISIBLE
-            present_insert_point.removeAllViews()
-            for (name in present) {
-                present_insert_point.addView(newSingleRow(name, present_insert_point), ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
-            }
-            event_present_count.text = present.size.toString()
-        } else {
-            present_layout.visibility = View.GONE
-        }
-
-        if (absent.size > 0) {
-            absent_layout.visibility = View.VISIBLE
-            absent_insert_point.removeAllViews()
-            for (name in absent) {
-                absent_insert_point.addView(newSingleRow(name, absent_insert_point), ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
-            }
-            event_absent_count.text = absent.size.toString()
-        } else {
-            absent_layout.visibility = View.GONE
-        }
-
-        if (present.contains(ownUser?.name)) {
-            present_button.visibility = View.GONE
-        } else if (absent.contains(ownUser?.name)) {
-            absent_button.visibility = View.GONE
-        }
     }
 
-    private fun askForReason() {
+    private fun addPresentUser(signUp: SignUp, user: User) {
+        present_layout.visibility = View.VISIBLE
+        if (user == ownUser) {
+            present_button.visibility = View.GONE
+        }
+
+        val view: View?
+        if (signUp.reason != null && signUp.reason.isNotBlank()) {
+            view = newDetailRow(user.name, signUp.reason, present_insert_point)
+        } else {
+            view = newSingleRow(user.name, present_insert_point)
+        }
+        present_insert_point.addView(view)
+    }
+
+    private fun addAbsentUser(signUp: SignUp, user: User) {
+        absent_layout.visibility = View.VISIBLE
+        if (user == ownUser) {
+            absent_button.visibility = View.GONE
+        }
+
+        val view: View?
+        if (signUp.reason != null && signUp.reason.isNotBlank()) {
+            view = newDetailRow(user.name, signUp.reason, absent_insert_point)
+        } else {
+            view = newSingleRow(user.name, absent_insert_point)
+        }
+        absent_insert_point.addView(view)
+    }
+
+    private fun askForReason(status: Boolean) {
         val alert = AlertDialog.Builder(this)
-                .setTitle(R.string.attendance_reason_title)
+        var title = getString(R.string.attendance_reason_title)
+
+        // Is optional of attendance is false or attendance is true and your status is also true
+        if (!event!!.attendance) {
+            title += " (optioneel)"
+        } else if (status) {
+            title += " (optioneel)"
+        }
+        alert.setTitle(title)
 
         val input = EditText(this)
         input.setSingleLine()
-        input.setHint(R.string.attendance_reason_message)
 
         val container = FrameLayout(this)
         container.addView(input)
@@ -246,10 +252,14 @@ class SingleEventActivity : HamersDetailActivity() {
 
         alert.setPositiveButton(android.R.string.yes) { _, _ ->
             val reason = input.text.toString()
-            if (reason.length > 5) {
-                postSignUp(false, reason)
+            if (event!!.attendance) {
+                if (reason.length > 5) {
+                    postSignUp(status, reason)
+                } else {
+                    Toast.makeText(this@SingleEventActivity, R.string.attendance_reason_size, Toast.LENGTH_SHORT).show()
+                }
             } else {
-                Toast.makeText(this@SingleEventActivity, R.string.attendance_reason_size, Toast.LENGTH_SHORT).show()
+                postSignUp(status, reason)
             }
         }
         alert.setNegativeButton(android.R.string.no) { _, _ ->

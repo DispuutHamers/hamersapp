@@ -46,8 +46,7 @@
     <string name="endDate">End time:</string>
     <string name="deadline">Deadline:</string>
     <string name="description">Beschrijving</string>
-    <string name="attendance_reason_title">Afwezigheid</string>
-    <string name="attendance_reason_message">De reden van afwezigheid</string>
+    <string name="attendance_reason_title">Opmerking / reden</string>
     <string name="attendance_reason_size">Je reden is kut! (te kort)</string>
     <string name="reminder_title">Weet je het zeker?</string>
     <string name="reminder_message">Iedereen die zich nog niet heeft ingeschreven krijgt een mail ter herrinering. \nLet op, dit kan wel tot een minuut duren!</string>

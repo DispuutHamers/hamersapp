@@ -206,7 +206,7 @@ object DataUtils {
     fun getSignUp(context: Context, id: Int): SignUp {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-        var result = SignUp(Utils.notFound, Utils.notFound, Utils.notFound, false, Date(), Utils.unknown)
+        var result = SignUp()
         val gsonBuilder = GsonBuilder()
         val gson = gsonBuilder.create()
         val type = object : TypeToken<ArrayList<SignUp>>() {

@@ -51,6 +51,13 @@ abstract class HamersActivity : AppCompatActivity() {
         return view
     }
 
+    fun newDetailRow(title: String, description: String?, viewGroup: ViewGroup): View {
+        val view = layoutInflater.inflate(R.layout.row_detailview, viewGroup, false)
+        view.row_detail_title.text = title
+        view.row_detail_description.text = description
+        return view
+    }
+
     fun fillDetailRow(view: View, title: String, description: String?) {
         view.row_detail_title.text = title
         view.row_detail_description.text = description
