@@ -1,4 +1,9 @@
 # Changelog
+## [2.4.1](https://github.com/dexbleeker/hamersapp/tree/2.4.1) (2017-04-09)
+   [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.4.0..2.4.1)
+
+- Bug fixes
+
 ## [2.4.0](https://github.com/dexbleeker/hamersapp/tree/2.4.0) (2017-04-07)
    [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.3.2..2.4.0)
 
