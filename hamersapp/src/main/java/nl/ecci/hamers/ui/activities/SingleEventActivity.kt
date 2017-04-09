@@ -251,14 +251,16 @@ class SingleEventActivity : HamersDetailActivity() {
 
         alert.setPositiveButton(android.R.string.yes) { _, _ ->
             val reason = input.text.toString()
-            if (event!!.attendance) {
+            if (!event!!.attendance) {
+                postSignUp(status, reason)
+            } else if (status) {
+                postSignUp(status, reason)
+            } else {
                 if (reason.length > 5) {
                     postSignUp(status, reason)
                 } else {
                     Toast.makeText(this@SingleEventActivity, R.string.attendance_reason_size, Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                postSignUp(status, reason)
             }
         }
         alert.setNegativeButton(android.R.string.no) { _, _ ->
