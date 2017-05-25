@@ -44,7 +44,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
-class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMarkerClickListener {
 
     private val dataSet = ArrayList<Sticker>()
     private var mGoogleApiClient: GoogleApiClient? = null
@@ -94,6 +94,13 @@ class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.Co
             mMap?.isMyLocationEnabled = true
         }
         addMarkers()
+
+        mMap?.setOnMarkerClickListener(this)
+    }
+
+    override fun onMarkerClick(marker: Marker?): Boolean {
+        marker?.showInfoWindow()
+        return false
     }
 
     private fun onRefresh() {
@@ -106,7 +113,9 @@ class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.Co
 
     private fun addMarkers() {
         for (sticker in dataSet) {
-            mMap?.addMarker(MarkerOptions().position(LatLng(sticker.lat.toDouble(), sticker.lon.toDouble())))
+            mMap?.addMarker(MarkerOptions()
+                    .position(LatLng(sticker.lat.toDouble(), sticker.lon.toDouble()))
+                    .title(sticker.notes))
         }
     }
 
