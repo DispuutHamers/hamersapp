@@ -21,13 +21,13 @@ class AboutFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        val markdownView = view.findViewById(R.id.mdv_changelog) as MarkdownView
+        val markdownView = view.findViewById<MarkdownView>(R.id.mdv_changelog) as MarkdownView
         markdownView.loadMarkdownFile("https://raw.githubusercontent.com/dexbleeker/hamersapp/master/CHANGELOG.md")
         markdownView.setBackgroundColor(0)
 
         val versionName = Utils.getAppVersion(context)
 
-        val tv2 = view.findViewById(R.id.about_txt2) as TextView
+        val tv2 = view.findViewById<TextView>(R.id.about_txt2) as TextView
         tv2.text = String.format("%s %s", getString(R.string.app_name), versionName)
 
         return view

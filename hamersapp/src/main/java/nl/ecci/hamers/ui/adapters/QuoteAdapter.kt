@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import com.bumptech.glide.Glide
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.row_imageview.view.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.models.Quote
@@ -25,7 +26,7 @@ internal class QuoteAdapter(private val dataSet: ArrayList<Quote>, private val c
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_imageview, parent, false)
         val vh = ViewHolder(view)
-        val imageView = view.findViewById(R.id.row_imageview_image)
+        val imageView = view.findViewById<CircleImageView>(R.id.row_imageview_image)
 
         imageView.setOnClickListener {
             val position = vh.adapterPosition
@@ -53,7 +54,7 @@ internal class QuoteAdapter(private val dataSet: ArrayList<Quote>, private val c
             override fun performFiltering(charSequence: CharSequence?): FilterResults {
                 val results = FilterResults()
 
-                //If there's nothing to filter on, return the original data for your list
+                // If there's nothing to filter on, return the original data for your list
                 if (charSequence == null || charSequence.isEmpty()) {
                     results.values = dataSet
                     results.count = dataSet.size
