@@ -44,13 +44,18 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
-class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMarkerClickListener {
+class StickerFragment : HamersFragment(),
+        OnMapReadyCallback,
+        GoogleMap.OnMarkerDragListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener,
+        GoogleMap.OnMarkerClickListener {
 
     private val dataSet = ArrayList<Sticker>()
     private var mGoogleApiClient: GoogleApiClient? = null
     private var mapView: MapView? = null
     private var mMap: GoogleMap? = null
-    private var mLastLocation: Location? = null
     private var locationManager: LocationManager? = null
     private var mLocationRequest: LocationRequest? = null
     private var mCurrLocationMarker: Marker? = null
@@ -71,7 +76,7 @@ class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.Co
         }
 
         locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        
+
         hamers_fab.setOnClickListener {
             postLocationDialog()
         }
@@ -96,6 +101,7 @@ class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.Co
         addMarkers()
 
         mMap?.setOnMarkerClickListener(this)
+        mMap?.setOnMarkerDragListener(this)
     }
 
     override fun onMarkerClick(marker: Marker?): Boolean {
@@ -120,7 +126,7 @@ class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.Co
     }
 
     override fun onResume() {
-        mapView!!.onResume()
+        mapView?.onResume()
         super.onResume()
         onRefresh()
         activity.title = resources.getString(R.string.navigation_item_stickers)
@@ -132,17 +138,17 @@ class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.Co
 
     override fun onPause() {
         super.onPause()
-        mapView!!.onPause()
+        mapView?.onPause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mapView!!.onDestroy()
+        mapView?.onDestroy()
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
-        mapView!!.onLowMemory()
+        mapView?.onLowMemory()
     }
 
     private fun postLocationDialog() {
@@ -180,11 +186,9 @@ class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.Co
     }
 
     private fun postSticker(notes: String) {
-        val lastKnownLocation = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-
         val body = JSONObject()
-        val lat = lastKnownLocation?.latitude
-        val lon = lastKnownLocation?.longitude
+        val lat = mCurrLocationMarker?.position?.latitude
+        val lon = mCurrLocationMarker?.position?.longitude
         if (lat != null && lon != null) {
             try {
                 body.put("lat", lat.toString())
@@ -198,7 +202,7 @@ class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.Co
         }
     }
 
-    fun buildGoogleApiClient() {
+    private fun buildGoogleApiClient() {
         mGoogleApiClient = GoogleApiClient.Builder(context)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -208,22 +212,22 @@ class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.Co
     }
 
     override fun onLocationChanged(location: Location) {
-        mLastLocation = location
-        mCurrLocationMarker?.remove()
+        val latLng = LatLng(location.latitude, location.longitude)
 
-        //Place current location marker
-        val latLng: LatLng = LatLng(location.latitude, location.longitude)
-        val markerOptions: MarkerOptions = MarkerOptions()
-        markerOptions.position(latLng)
-        markerOptions.title("Je locatie")
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker())
-        mCurrLocationMarker = mMap?.addMarker(markerOptions)
+        if (mCurrLocationMarker == null) {
+            val markerOptions = MarkerOptions()
+            markerOptions.draggable(true)
+            markerOptions.position(latLng)
+            markerOptions.title("Je locatie")
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker())
+            mCurrLocationMarker = mMap?.addMarker(markerOptions)
+        }
 
-        //move mMap camera
+        // Move mMap camera
         mMap?.moveCamera(CameraUpdateFactory.newLatLng(latLng))
         mMap?.animateCamera(CameraUpdateFactory.zoomTo(11F))
 
-        //stop location updates
+        // Stop location updates
         LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this)
     }
 
@@ -231,7 +235,7 @@ class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.Co
         mLocationRequest = LocationRequest()
         mLocationRequest?.interval = 1000
         mLocationRequest?.fastestInterval = 1000
-        mLocationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY;
+        mLocationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
         if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -245,6 +249,18 @@ class StickerFragment : HamersFragment(), OnMapReadyCallback, GoogleApiClient.Co
 
     override fun onConnectionFailed(p0: ConnectionResult) {
         // Nothing
+    }
+
+    override fun onMarkerDragStart(marker: Marker) {
+        // Nothing
+    }
+
+    override fun onMarkerDrag(p0: Marker) {
+        // Nothing
+    }
+
+    override fun onMarkerDragEnd(marker: Marker) {
+        mCurrLocationMarker?.position = marker.position
     }
 
     private inner class populateMap : AsyncTask<ArrayList<Sticker>, Void, ArrayList<Sticker>>() {
