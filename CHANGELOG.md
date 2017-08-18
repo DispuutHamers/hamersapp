@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.4.3](https://github.com/dexbleeker/hamersapp/tree/2.5.0) (2017-08-18)
+   [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.4.3..2.5.0)
+
+- Allow dragging of sticker-marker
+
 ## [2.4.3](https://github.com/dexbleeker/hamersapp/tree/2.4.3) (2017-06-18)
    [Full Changelog](https://github.com/dexbleeker/hamersapp/compare/2.4.2..2.4.3)
 
