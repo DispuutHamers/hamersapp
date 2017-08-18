@@ -3,7 +3,6 @@ package nl.ecci.hamers.ui.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.view.View
 import android.widget.Button
 import android.widget.DatePicker
@@ -39,7 +38,7 @@ class NewReviewActivity : HamersNewItemActivity() {
         stub.layoutResource = R.layout.stub_new_review
         stub.inflate()
 
-        val date_button = findViewById(R.id.pick_date_button) as Button
+        val date_button = findViewById<Button>(R.id.pick_date_button) as Button
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", MainActivity.locale)
 
@@ -114,7 +113,7 @@ class NewReviewActivity : HamersNewItemActivity() {
 
         } else {
             disableLoadingAnimation()
-            Toast.makeText(this, getString(R.string.missing_fields), Snackbar.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.missing_fields), Toast.LENGTH_LONG).show()
         }
     }
 

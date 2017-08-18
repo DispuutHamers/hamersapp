@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_detail_user.*
 import nl.ecci.hamers.R
@@ -31,8 +32,8 @@ class SingleUserActivity : HamersActivity() {
         fillDetailRow(row_user_reviewcount, getString(R.string.user_reviewcount), user.reviewCount.toString())
         fillDetailRow(row_user_batch, getString(R.string.user_batch), user.batch.toString())
 
-        val nicknameRow = findViewById(R.id.row_user_nickname)
-        val nicknameDivider = findViewById(R.id.user_nickname_divider)
+        val nicknameRow = findViewById<View>(R.id.row_user_nickname)
+        val nicknameDivider = findViewById<View>(R.id.user_nickname_divider)
         if (user.nicknames.size > 0) {
             fillDetailRow(nicknameRow, getString(R.string.user_nickname), convertNicknames(user.nicknames))
         } else if (nicknameRow != null && nicknameDivider != null) {
@@ -46,7 +47,7 @@ class SingleUserActivity : HamersActivity() {
             fillDetailRow(row_user_status, getString(R.string.user_status), getString(R.string.user_member_ex))
         }
 
-        val emailRow = findViewById(R.id.row_user_email)
+        val emailRow = findViewById<LinearLayout>(R.id.row_user_email)
         if (emailRow != null) {
             fillDetailRow(emailRow, getString(R.string.user_email), user.email)
             emailRow.setOnClickListener {
