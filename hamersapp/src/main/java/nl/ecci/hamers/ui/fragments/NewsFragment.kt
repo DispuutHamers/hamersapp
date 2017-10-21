@@ -42,12 +42,12 @@ class NewsFragment : HamersListFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
+        return when (item!!.itemId) {
             R.id.scroll_top -> {
                 hamers_list!!.smoothScrollToPosition(0)
-                return true
+                true
             }
-            else -> return false
+            else -> false
         }
     }
 
@@ -92,10 +92,10 @@ class NewsFragment : HamersListFragment() {
             gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
             val gson = gsonBuilder.create()
 
-            if (params.isNotEmpty()) {
-                result = gson.fromJson<ArrayList<News>>(params[0], type)
+            result = if (params.isNotEmpty()) {
+                gson.fromJson<ArrayList<News>>(params[0], type)
             } else {
-                result = gson.fromJson<ArrayList<News>>(prefs?.getString(Loader.NEWSURL, null), type)
+                gson.fromJson<ArrayList<News>>(prefs?.getString(Loader.NEWSURL, null), type)
             }
             return result
         }

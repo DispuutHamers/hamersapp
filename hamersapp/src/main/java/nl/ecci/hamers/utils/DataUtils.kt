@@ -139,10 +139,7 @@ object DataUtils {
 
         userList = gson.fromJson<ArrayList<User>>(prefs?.getString(Loader.USERURL, null), type)
 
-        if (userList != null) {
-            userList.filter { it.id == id }
-                    .forEach { result = it }
-        }
+        userList?.filter { it.id == id }?.forEach { result = it }
 
         return result
     }
@@ -233,10 +230,7 @@ object DataUtils {
 
         val beerList = gson.fromJson<ArrayList<Beer>>(prefs?.getString(Loader.BEERURL, null), type)
 
-        if (beerList != null) {
-            beerList.filter { it.id == id }
-                    .forEach { result = it }
-        }
+        beerList?.filter { it.id == id }?.forEach { result = it }
 
         return result
     }
@@ -252,10 +246,7 @@ object DataUtils {
 
         val reviewList = gson.fromJson<ArrayList<Review>>(prefs?.getString(Loader.REVIEWURL, null), type)
 
-        if (reviewList != null) {
-            reviewList.filter { it.id == id }
-                    .forEach { result = it }
-        }
+        reviewList?.filter { it.id == id }?.forEach { result = it }
 
         return result
     }
@@ -271,11 +262,7 @@ object DataUtils {
         }.type
         val meetingList = gson.fromJson<ArrayList<Meeting>>(prefs?.getString(Loader.MEETINGURL, null), type)
 
-        if (meetingList != null) {
-            meetingList
-                    .filter { it.id == id }
-                    .forEach { result = it }
-        }
+        meetingList?.filter { it.id == id }?.forEach { result = it }
 
         return result
     }

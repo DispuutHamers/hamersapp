@@ -121,10 +121,10 @@ class MainActivity : HamersActivity() {
 
         @AppCompatDelegate.NightMode
         fun getNightModeInt(nightMode: String): Int {
-            when (nightMode) {
-                "auto" -> return AppCompatDelegate.MODE_NIGHT_AUTO
-                "on" -> return AppCompatDelegate.MODE_NIGHT_YES
-                else -> return AppCompatDelegate.MODE_NIGHT_NO
+            return when (nightMode) {
+                "auto" -> AppCompatDelegate.MODE_NIGHT_AUTO
+                "on" -> AppCompatDelegate.MODE_NIGHT_YES
+                else -> AppCompatDelegate.MODE_NIGHT_NO
             }
         }
 
@@ -134,19 +134,17 @@ class MainActivity : HamersActivity() {
          */
         fun selectItem(activity: HamersActivity, menuItem: MenuItem) {
             var fragment: Fragment? = null
-            val fragmentClass: Class<*>
-
-            when (menuItem.itemId) {
-                R.id.navigation_item_events -> fragmentClass = EventFragment::class.java
-                R.id.navigation_item_beers -> fragmentClass = BeerFragment::class.java
-                R.id.navigation_item_news -> fragmentClass = NewsFragment::class.java
-                R.id.navigation_item_users -> fragmentClass = UserFragment::class.java
-                R.id.navigation_item_meetings -> fragmentClass = MeetingFragment::class.java
-                R.id.navigation_item_stickers -> fragmentClass = StickerFragment::class.java
-                R.id.navigation_item_settings -> fragmentClass = SettingsFragment::class.java
-                R.id.navigation_item_changes -> fragmentClass = ChangeFragment::class.java
-                R.id.navigation_item_about -> fragmentClass = AboutFragment::class.java
-                else -> fragmentClass = QuoteFragment::class.java
+            val fragmentClass: Class<*> = when (menuItem.itemId) {
+                R.id.navigation_item_events -> EventFragment::class.java
+                R.id.navigation_item_beers -> BeerFragment::class.java
+                R.id.navigation_item_news -> NewsFragment::class.java
+                R.id.navigation_item_users -> UserFragment::class.java
+                R.id.navigation_item_meetings -> MeetingFragment::class.java
+                R.id.navigation_item_stickers -> StickerFragment::class.java
+                R.id.navigation_item_settings -> SettingsFragment::class.java
+                R.id.navigation_item_changes -> ChangeFragment::class.java
+                R.id.navigation_item_about -> AboutFragment::class.java
+                else -> QuoteFragment::class.java
             }
 
             try {

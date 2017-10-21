@@ -85,12 +85,12 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.scroll_top -> {
                 scrollTop()
-                return true
+                true
             }
-            else -> return false
+            else -> false
         }
     }
 

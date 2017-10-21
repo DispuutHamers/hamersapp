@@ -125,10 +125,10 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
             gsonBuilder.setDateFormat(MainActivity.dbDF.toPattern())
             val gson = gsonBuilder.create()
 
-            if (params.isNotEmpty()) {
-                tempList = gson.fromJson<ArrayList<User>>(params[0], type)
+            tempList = if (params.isNotEmpty()) {
+                gson.fromJson<ArrayList<User>>(params[0], type)
             } else {
-                tempList = gson.fromJson<ArrayList<User>>(prefs?.getString(Loader.USERURL, null), type)
+                gson.fromJson<ArrayList<User>>(prefs?.getString(Loader.USERURL, null), type)
             }
 
             if (tempList != null) {

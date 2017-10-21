@@ -200,11 +200,10 @@ class SingleEventActivity : HamersDetailActivity() {
             present_button.visibility = View.GONE
         }
 
-        val view: View?
-        if (signUp.reason != null && signUp.reason.isNotBlank()) {
-            view = newDetailRow(user.name, signUp.reason, present_insert_point)
+        val view: View? = if (signUp.reason != null && signUp.reason.isNotBlank()) {
+            newDetailRow(user.name, signUp.reason, present_insert_point)
         } else {
-            view = newSingleRow(user.name, present_insert_point)
+            newSingleRow(user.name, present_insert_point)
         }
         present_insert_point.addView(view)
     }
@@ -215,11 +214,10 @@ class SingleEventActivity : HamersDetailActivity() {
             absent_button.visibility = View.GONE
         }
 
-        val view: View?
-        if (signUp.reason != null && signUp.reason.isNotBlank()) {
-            view = newDetailRow(user.name, signUp.reason, absent_insert_point)
+        val view: View? = if (signUp.reason != null && signUp.reason.isNotBlank()) {
+            newDetailRow(user.name, signUp.reason, absent_insert_point)
         } else {
-            view = newSingleRow(user.name, absent_insert_point)
+            newSingleRow(user.name, absent_insert_point)
         }
         absent_insert_point.addView(view)
     }

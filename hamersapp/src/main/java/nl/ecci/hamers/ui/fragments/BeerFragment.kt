@@ -132,10 +132,10 @@ class BeerFragment : HamersListFragment(){
             val gsonBuilder = GsonBuilder().setDateFormat(MainActivity.dbDF.toPattern())
             val gson = gsonBuilder.create()
 
-            if (params.isNotEmpty()) {
-                return gson.fromJson<ArrayList<Beer>>(params[0], type)
+            return if (params.isNotEmpty()) {
+                gson.fromJson<ArrayList<Beer>>(params[0], type)
             } else {
-                return gson.fromJson<ArrayList<Beer>>(prefs?.getString(Loader.BEERURL, null), type)
+                gson.fromJson<ArrayList<Beer>>(prefs?.getString(Loader.BEERURL, null), type)
             }
         }
 

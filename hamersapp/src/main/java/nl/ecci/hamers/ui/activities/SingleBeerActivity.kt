@@ -34,8 +34,8 @@ class SingleBeerActivity : HamersDetailActivity() {
     private var ownReview: Review? = null
 
     // Activity for result
-    internal var reviewRequestCode = 1
-    internal var beerRequestCode = 2
+    private var reviewRequestCode = 1
+    private var beerRequestCode = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

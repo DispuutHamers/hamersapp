@@ -16,7 +16,7 @@ import nl.ecci.hamers.R
 @SuppressLint("Registered")
 abstract class HamersNewItemActivity : HamersActivity(), DatePickerDialog.OnDateSetListener {
 
-    var refreshItem: MenuItem? = null
+    private var refreshItem: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

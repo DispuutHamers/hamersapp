@@ -39,7 +39,7 @@ internal class ChangeAdapter(private val context: Context, private val dataSet: 
             if (change.itemType != null) {
 
                 if (change.event == Change.Event.DESTROY) {
-                    Toast.makeText(context, R.string.unit_destroyed, Snackbar.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.unit_destroyed, Toast.LENGTH_SHORT).show()
                     return
                 }
 

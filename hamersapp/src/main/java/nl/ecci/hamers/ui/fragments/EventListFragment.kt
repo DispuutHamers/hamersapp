@@ -76,12 +76,12 @@ class EventListFragment : HamersListFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+        return when (item?.itemId) {
             R.id.scroll_top -> {
                 hamers_list.smoothScrollToPosition(0)
-                return true
+                true
             }
-            else -> return false
+            else -> false
         }
     }
 

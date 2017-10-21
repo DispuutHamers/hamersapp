@@ -57,10 +57,10 @@ class MeetingFragment : HamersListFragment() {
             val gsonBuilder = GsonBuilder().setDateFormat(MainActivity.dbDF.toPattern())
             val gson = gsonBuilder.create()
 
-            if (params.isNotEmpty()) {
-                result = gson.fromJson<ArrayList<Meeting>>(params[0], type)
+            result = if (params.isNotEmpty()) {
+                gson.fromJson<ArrayList<Meeting>>(params[0], type)
             } else {
-                result = gson.fromJson<ArrayList<Meeting>>(prefs?.getString(Loader.MEETINGURL, null), type)
+                gson.fromJson<ArrayList<Meeting>>(prefs?.getString(Loader.MEETINGURL, null), type)
             }
             return result
         }

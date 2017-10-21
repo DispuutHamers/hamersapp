@@ -15,7 +15,7 @@ import java.net.URLEncoder
 import java.util.*
 
 object Loader {
-    val APIURL = "api/v2/"
+    private val APIURL = "api/v2/"
     // URL Appendices
     val QUOTEURL = "quotes"
     val USERURL = "users"
@@ -140,24 +140,19 @@ object Loader {
     }
 
     private fun handleErrorResponse(context: Context, error: VolleyError) {
-        if (error is AuthFailureError) {
-            // Wrong API key
-            Utils.showToast(context, context.getString(R.string.auth_error), Toast.LENGTH_SHORT)
-        } else if (error is TimeoutError) {
-            // Timeout
-            Utils.showToast(context, context.getString(R.string.timeout_error), Toast.LENGTH_SHORT)
-        } else if (error is ServerError) {
-            // Server error (500)
-            Utils.showToast(context, context.getString(R.string.server_error), Toast.LENGTH_SHORT)
-        } else if (error is NoConnectionError) {
-            // No network connection
-            Utils.showToast(context, context.getString(R.string.connection_error), Toast.LENGTH_SHORT)
-        } else if (error is NetworkError) {
-            // Network error
-            Utils.showToast(context, context.getString(R.string.network_error), Toast.LENGTH_SHORT)
-        } else {
-            // Other error
-            Utils.showToast(context, context.getString(R.string.volley_error), Toast.LENGTH_SHORT)
+        when (error) {
+            is AuthFailureError -> // Wrong API key
+                Utils.showToast(context, context.getString(R.string.auth_error), Toast.LENGTH_SHORT)
+            is TimeoutError -> // Timeout
+                Utils.showToast(context, context.getString(R.string.timeout_error), Toast.LENGTH_SHORT)
+            is ServerError -> // Server error (500)
+                Utils.showToast(context, context.getString(R.string.server_error), Toast.LENGTH_SHORT)
+            is NoConnectionError -> // No network connection
+                Utils.showToast(context, context.getString(R.string.connection_error), Toast.LENGTH_SHORT)
+            is NetworkError -> // Network error
+                Utils.showToast(context, context.getString(R.string.network_error), Toast.LENGTH_SHORT)
+            else -> // Other error
+                Utils.showToast(context, context.getString(R.string.volley_error), Toast.LENGTH_SHORT)
         }
     }
 

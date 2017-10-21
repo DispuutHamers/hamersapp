@@ -26,7 +26,7 @@ import nl.ecci.hamers.utils.DataUtils.getGravatarURL
 class MessagingService : FirebaseMessagingService() {
 
     var intent: Intent? = null
-    var pendingIntent : PendingIntent? = null
+    private var pendingIntent : PendingIntent? = null
     var gson: Gson = GsonBuilder().setDateFormat(MainActivity.dbDF.toPattern()).create()
 
     /**
@@ -58,12 +58,12 @@ class MessagingService : FirebaseMessagingService() {
         }
     }
 
-    fun quotePush(quoteString: String?) {
+    private fun quotePush(quoteString: String?) {
         val quote = gson.fromJson(quoteString, Quote::class.java)
         sendNotification(quote.text, applicationContext.getString(R.string.change_quote_new), quote.userID)
     }
 
-    fun eventPush(eventString: String?) {
+    private fun eventPush(eventString: String?) {
         Loader.getData(this, Loader.EVENTURL, -1, null, null)
 
         val event = gson.fromJson(eventString, Event::class.java)
@@ -80,7 +80,7 @@ class MessagingService : FirebaseMessagingService() {
         sendNotification(title, applicationContext.getString(R.string.change_event_new), event.userID)
     }
 
-    fun beerPush(beerString: String?) {
+    private fun beerPush(beerString: String?) {
         Loader.getData(this, Loader.BEERURL, -1, null, null)
         val beer = gson.fromJson(beerString, Beer::class.java)
 
@@ -92,7 +92,7 @@ class MessagingService : FirebaseMessagingService() {
         sendNotification(beer.name, applicationContext.getString(R.string.change_beer_new), -1)
     }
 
-    fun reviewPush(reviewString: String?) {
+    private fun reviewPush(reviewString: String?) {
         Loader.getData(this, Loader.REVIEWURL, -1, null, null)
         val review = gson.fromJson(reviewString, Review::class.java)
 
@@ -104,12 +104,12 @@ class MessagingService : FirebaseMessagingService() {
         sendNotification(review.description, applicationContext.getString(R.string.change_review_new), review.userID)
     }
 
-    fun newsPush(newsString: String?) {
+    private fun newsPush(newsString: String?) {
         val news = gson.fromJson(newsString, News::class.java)
         sendNotification(news.title, applicationContext.getString(R.string.change_news_new), -1)
     }
 
-    fun meetingPush(meetingString: String?) {
+    private fun meetingPush(meetingString: String?) {
         Loader.getData(this, Loader.MEETINGURL, -1, null, null)
         val meeting = gson.fromJson(meetingString, Meeting::class.java)
 
@@ -121,7 +121,7 @@ class MessagingService : FirebaseMessagingService() {
         sendNotification(meeting.subject, applicationContext.getString(R.string.change_meeting_new), meeting.userID)
     }
 
-    fun stickerPush(stickerString: String?) {
+    private fun stickerPush(stickerString: String?) {
         val sticker = gson.fromJson(stickerString, Sticker::class.java)
         sendNotification(applicationContext.getString(R.string.change_sticker_new), sticker.notes, sticker.userID)
     }

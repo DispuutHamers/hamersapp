@@ -26,14 +26,11 @@ object Utils {
      * Get app version
      */
     fun getAppVersion(context: Context): String {
-        var versionName: String
-        try {
-            versionName = context.packageManager.getPackageInfo(context.packageName, 0).versionName
+        return try {
+            context.packageManager.getPackageInfo(context.packageName, 0).versionName
         } catch (e: PackageManager.NameNotFoundException) {
-            versionName = ""
+            ""
         }
-
-        return versionName
     }
 
     /**
@@ -74,7 +71,7 @@ object Utils {
      * Parse date
      */
     fun parseDate(dateString: String): Date {
-        var date: Date = Date()
+        var date = Date()
         try {
             // Event date
             if (dateString.isNotBlank()) {
