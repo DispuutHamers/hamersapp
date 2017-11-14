@@ -16,6 +16,7 @@ import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.adapters.ChangeAdapter
 import nl.ecci.hamers.utils.DividerItemDecoration
 import org.jetbrains.anko.padding
+import org.jetbrains.anko.support.v4.act
 import java.util.*
 
 class ChangeFragment : HamersListFragment() {
@@ -27,16 +28,15 @@ class ChangeFragment : HamersListFragment() {
         setHasOptionsMenu(false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_hamers_list, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_hamers_list, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_list.addItemDecoration(DividerItemDecoration(activity))
+        hamers_list.addItemDecoration(DividerItemDecoration(act))
         hamers_list.padding = 0
-        hamers_list.adapter = ChangeAdapter(activity, dataSet)
+        hamers_list.adapter = ChangeAdapter(act, dataSet)
         hamers_fab.visibility = View.GONE
 
         populateList().execute()
@@ -47,18 +47,18 @@ class ChangeFragment : HamersListFragment() {
     override fun onRefresh() {
         setRefreshing(true)
         // Load changes
-        Loader.getData(context, Loader.CHANGEURL, -1, object : GetCallback {
+        Loader.getData(act, Loader.CHANGEURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
         }, null)
         // Load all data (to prevent clicking on items that do not (yet) exist
-        Loader.getAllData(activity)
+        Loader.getAllData(act)
     }
 
     override fun onResume() {
         super.onResume()
-        activity.title = resources.getString(R.string.navigation_item_changes)
+        activity?.title = resources.getString(R.string.navigation_item_changes)
     }
 
     private inner class populateList : AsyncTask<String, Void, ArrayList<Change>>() {

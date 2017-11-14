@@ -40,6 +40,7 @@ import nl.ecci.hamers.data.Loader
 import nl.ecci.hamers.models.Sticker
 import nl.ecci.hamers.utils.PermissionUtils
 import nl.ecci.hamers.utils.Utils
+import org.jetbrains.anko.support.v4.act
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -60,11 +61,10 @@ class StickerFragment : HamersFragment(),
     private var mLocationRequest: LocationRequest? = null
     private var mCurrLocationMarker: Marker? = null
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_sticker, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_sticker, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Gets the MapView from the XML layout and creates it
@@ -75,7 +75,7 @@ class StickerFragment : HamersFragment(),
             PermissionUtils.checkLocationPermission(activity)
         }
 
-        locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         hamers_fab.setOnClickListener {
             postLocationDialog()
@@ -89,8 +89,8 @@ class StickerFragment : HamersFragment(),
         mMap = googleMap
         mMap?.uiSettings?.isMyLocationButtonEnabled = false
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(act, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(act, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 buildGoogleApiClient()
                 mMap?.isMyLocationEnabled = true
             }
@@ -110,7 +110,7 @@ class StickerFragment : HamersFragment(),
     }
 
     private fun onRefresh() {
-        Loader.getData(context, Loader.STICKERURL, -1, object : GetCallback {
+        Loader.getData(act, Loader.STICKERURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateMap().execute(dataSet)
             }
@@ -129,7 +129,7 @@ class StickerFragment : HamersFragment(),
         mapView?.onResume()
         super.onResume()
         onRefresh()
-        activity.title = resources.getString(R.string.navigation_item_stickers)
+        activity?.title = resources.getString(R.string.navigation_item_stickers)
 
         val params = hamers_fab.layoutParams as CoordinatorLayout.LayoutParams
         params.anchorId = stickers_map.id
@@ -194,7 +194,7 @@ class StickerFragment : HamersFragment(),
                 body.put("lat", lat.toString())
                 body.put("lon", lon.toString())
                 body.put("notes", notes)
-                Loader.postOrPatchData(activity, Loader.STICKERURL, body, Utils.notFound, null)
+                Loader.postOrPatchData(act, Loader.STICKERURL, body, Utils.notFound, null)
             } catch (ignored: JSONException) {
             }
         } else {
@@ -203,7 +203,7 @@ class StickerFragment : HamersFragment(),
     }
 
     private fun buildGoogleApiClient() {
-        mGoogleApiClient = GoogleApiClient.Builder(context)
+        mGoogleApiClient = GoogleApiClient.Builder(act)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
@@ -236,7 +236,7 @@ class StickerFragment : HamersFragment(),
         mLocationRequest?.interval = 1000
         mLocationRequest?.fastestInterval = 1000
         mLocationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-        if (ContextCompat.checkSelfPermission(activity,
+        if (ContextCompat.checkSelfPermission(act,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this)

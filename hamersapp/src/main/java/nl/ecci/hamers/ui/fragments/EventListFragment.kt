@@ -17,6 +17,7 @@ import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.activities.NewEventActivity
 import nl.ecci.hamers.ui.adapters.EventFragmentAdapter
 import nl.ecci.hamers.ui.adapters.EventListAdapter
+import org.jetbrains.anko.support.v4.act
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -29,17 +30,16 @@ class EventListFragment : HamersListFragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        upcoming = arguments.getBoolean(EventFragmentAdapter.upcoming, false)
+        upcoming = arguments!!.getBoolean(EventFragmentAdapter.upcoming, false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_hamers_list, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_hamers_list, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_list.adapter = EventListAdapter(activity, dataSet)
+        hamers_list.adapter = EventListAdapter(act, dataSet)
 
         hamers_fab.setOnClickListener {
             startActivityForResult(Intent(activity, NewEventActivity::class.java), -1)
@@ -59,13 +59,13 @@ class EventListFragment : HamersListFragment() {
             val params = HashMap<String, String>()
             params.put("sorted", "asc-desc")
             params.put("future", "true")
-            Loader.getData(context, Loader.EVENTURL, -1, object : GetCallback {
+            Loader.getData(act, Loader.EVENTURL, -1, object : GetCallback {
                 override fun onSuccess(response: String) {
                     populateList().execute(response)
                 }
             }, params)
         } else {
-            Loader.getData(context, Loader.EVENTURL, -1, object : GetCallback {
+            Loader.getData(act, Loader.EVENTURL, -1, object : GetCallback {
                 override fun onSuccess(response: String) {
                     // Only save normal event list
                     prefs?.edit()?.putString(Loader.EVENTURL, response)?.apply()

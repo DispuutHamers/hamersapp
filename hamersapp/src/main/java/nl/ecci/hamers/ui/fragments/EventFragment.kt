@@ -7,20 +7,20 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_hamers_tab.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.ui.adapters.EventFragmentAdapter
+import org.jetbrains.anko.support.v4.act
 
 class EventFragment : HamersTabFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_hamers_tab, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_hamers_tab, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tab_fragment_viewpager.adapter = EventFragmentAdapter(activity, childFragmentManager)
+        tab_fragment_viewpager.adapter = EventFragmentAdapter(act, childFragmentManager)
     }
 
     override fun onResume() {
         super.onResume()
-        activity.title = resources.getString(R.string.navigation_item_events)
+        activity?.title = resources.getString(R.string.navigation_item_events)
     }
 }

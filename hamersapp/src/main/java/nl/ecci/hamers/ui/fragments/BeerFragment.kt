@@ -3,7 +3,6 @@ package nl.ecci.hamers.ui.fragments
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.SearchView
 import android.view.*
 import com.google.gson.GsonBuilder
@@ -16,9 +15,10 @@ import nl.ecci.hamers.models.Beer
 import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.activities.NewBeerActivity
 import nl.ecci.hamers.ui.adapters.BeerAdapter
+import org.jetbrains.anko.support.v4.act
 import java.util.*
 
-class BeerFragment : HamersListFragment(){
+class BeerFragment : HamersListFragment() {
 
     private val dataSet = ArrayList<Beer>()
 
@@ -27,14 +27,13 @@ class BeerFragment : HamersListFragment(){
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_hamers_list, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_hamers_list, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_list.adapter = BeerAdapter(dataSet, activity)
+        hamers_list.adapter = BeerAdapter(dataSet, act)
         hamers_fab.setOnClickListener { startActivityForResult(Intent(activity, NewBeerActivity::class.java), 1) }
 
         populateList().execute()
@@ -42,23 +41,21 @@ class BeerFragment : HamersListFragment(){
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(context, Loader.BEERURL, -1, object : GetCallback {
+        Loader.getData(act, Loader.BEERURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
         }, null)
-        Loader.getData(context, Loader.REVIEWURL, -1, null, null)
+        Loader.getData(act, Loader.REVIEWURL, -1, null, null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.beer_menu, menu)
         val searchMenuItem = menu?.findItem(R.id.beer_search)
-        val searchView = MenuItemCompat.getActionView(searchMenuItem) as SearchView
+        val searchView = searchMenuItem?.actionView as SearchView
         searchView.queryHint = getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(s: String): Boolean {
-                return false
-            }
+            override fun onQueryTextSubmit(s: String): Boolean = false
 
             override fun onQueryTextChange(s: String): Boolean {
                 (hamers_list.adapter as BeerAdapter).filter.filter(s.toLowerCase())
@@ -96,7 +93,7 @@ class BeerFragment : HamersListFragment(){
     override fun onResume() {
         super.onResume()
         onRefresh()
-        activity.title = resources.getString(R.string.navigation_item_beers)
+        activity?.title = resources.getString(R.string.navigation_item_beers)
     }
 
     private fun scrollTop() {

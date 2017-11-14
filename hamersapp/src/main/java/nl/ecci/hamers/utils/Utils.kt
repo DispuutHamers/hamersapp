@@ -17,7 +17,6 @@ import java.util.*
 
 object Utils {
 
-    private var mToast: Toast? = null
     var alertDialog: AlertDialog? = null
     val unknown = "Unknown"
     val notFound = -1
@@ -25,9 +24,9 @@ object Utils {
     /**
      * Get app version
      */
-    fun getAppVersion(context: Context): String {
+    fun getAppVersion(context: Context?): String? {
         return try {
-            context.packageManager.getPackageInfo(context.packageName, 0).versionName
+            context?.packageManager?.getPackageInfo(context.packageName, 0)?.versionName
         } catch (e: PackageManager.NameNotFoundException) {
             ""
         }
@@ -45,10 +44,9 @@ object Utils {
         }
     }
 
-    fun showToast(context: Context, text: String, duration: Int) {
-        if (mToast != null) mToast!!.cancel()
-        mToast = Toast.makeText(context, text, duration)
-        mToast!!.show()
+    fun showToast(context: Context?, text: String, duration: Int) {
+        if (context != null)
+        Toast.makeText(context, text, duration).show()
     }
 
     fun getIdFromUri(uri: Uri): Int {
@@ -56,9 +54,7 @@ object Utils {
         return Integer.parseInt(path.substring(path.lastIndexOf('/') + 1))
     }
 
-    fun md5(message: String): String {
-        return String(Hex.encodeHex(DigestUtils.md5(message)))
-    }
+    fun md5(message: String): String = String(Hex.encodeHex(DigestUtils.md5(message)))
 
     fun stringArrayToCharSequenceArray(stringArray: Array<Any>): Array<CharSequence?> {
         val charSequenceArray = arrayOfNulls<CharSequence>(stringArray.size)

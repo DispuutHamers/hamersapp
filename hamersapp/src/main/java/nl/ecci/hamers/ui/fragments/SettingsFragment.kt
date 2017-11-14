@@ -1,5 +1,6 @@
 package nl.ecci.hamers.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatDelegate
@@ -40,8 +41,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val refreshApp = findPreference(KEY_PREF_REFRESH_APP)
         refreshApp.onPreferenceClickListener = OnPreferenceClickListener {
-            activity.finish()
-            startActivity(activity.intent)
+            activity?.finish()
+            startActivity(activity?.intent)
             true
         }
 
@@ -49,13 +50,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         night_mode.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
             AppCompatDelegate.setDefaultNightMode(MainActivity.getNightModeInt(newValue as String))
             prefs.edit().putString(KEY_PREF_NIGHT_MODE, newValue).apply()
-            activity.recreate()
+            activity?.recreate()
             true
         }
 
         val getAllDataPreference = findPreference(KEY_PREF_GET_ALL_DATA)
         getAllDataPreference.onPreferenceClickListener = OnPreferenceClickListener {
-            Loader.getAllData(context)
+            Loader.getAllData(context as Context)
 
             if (view != null) {
                 Snackbar.make(view, R.string.get_all_data_snackbar, Snackbar.LENGTH_SHORT).show()
@@ -66,7 +67,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onResume() {
         super.onResume()
-        activity.title = resources.getString(R.string.navigation_item_settings)
+        activity?.title = resources.getString(R.string.navigation_item_settings)
     }
 
     companion object {

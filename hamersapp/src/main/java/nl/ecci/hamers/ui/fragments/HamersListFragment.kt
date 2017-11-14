@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_hamers_list.*
 
 abstract class HamersListFragment : HamersFragment(), SwipeRefreshLayout.OnRefreshListener {
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val lm = LinearLayoutManager(activity)
         hamers_list.layoutManager = lm
         hamers_list.itemAnimator = DefaultItemAnimator()

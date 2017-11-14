@@ -16,26 +16,26 @@ import nl.ecci.hamers.models.Meeting
 import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.activities.NewMeetingActivity
 import nl.ecci.hamers.ui.adapters.MeetingAdapter
+import org.jetbrains.anko.support.v4.act
 import java.util.*
 
 class MeetingFragment : HamersListFragment() {
 
     private val dataSet = ArrayList<Meeting>()
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_hamers_list, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_hamers_list, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_list.adapter = MeetingAdapter(dataSet, activity)
+        hamers_list.adapter = MeetingAdapter(dataSet, activity!!)
         hamers_fab.setOnClickListener { startActivityForResult(Intent(activity, NewMeetingActivity::class.java), 1) }
     }
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(context, Loader.MEETINGURL, -1, object : GetCallback {
+        Loader.getData(act, Loader.MEETINGURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
@@ -45,7 +45,7 @@ class MeetingFragment : HamersListFragment() {
     override fun onResume() {
         super.onResume()
         onRefresh()
-        activity.title = resources.getString(R.string.navigation_item_meetings)
+        activity?.title = resources.getString(R.string.navigation_item_meetings)
     }
 
     private inner class populateList : AsyncTask<String, Void, ArrayList<Meeting>>() {

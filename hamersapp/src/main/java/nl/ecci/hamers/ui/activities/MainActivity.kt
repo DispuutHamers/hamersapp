@@ -133,7 +133,6 @@ class MainActivity : HamersActivity() {
          * This method is static to allow for usage in ChangeFragment
          */
         fun selectItem(activity: HamersActivity, menuItem: MenuItem) {
-            var fragment: Fragment? = null
             val fragmentClass: Class<*> = when (menuItem.itemId) {
                 R.id.navigation_item_events -> EventFragment::class.java
                 R.id.navigation_item_beers -> BeerFragment::class.java
@@ -147,11 +146,7 @@ class MainActivity : HamersActivity() {
                 else -> QuoteFragment::class.java
             }
 
-            try {
-                fragment = fragmentClass.newInstance() as Fragment
-            } catch (ignored: Exception) {
-            }
-
+            val fragment = fragmentClass.newInstance() as Fragment
             val transaction = activity.supportFragmentManager.beginTransaction()
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             transaction.replace(R.id.content_frame, fragment).commit()

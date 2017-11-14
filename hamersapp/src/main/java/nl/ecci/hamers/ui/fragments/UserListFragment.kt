@@ -1,5 +1,6 @@
 package nl.ecci.hamers.ui.fragments
 
+import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
@@ -16,6 +17,7 @@ import nl.ecci.hamers.ui.adapters.UserFragmentAdapter
 import nl.ecci.hamers.ui.adapters.UserListAdapter
 import nl.ecci.hamers.utils.DividerItemDecoration
 import org.jetbrains.anko.padding
+import org.jetbrains.anko.support.v4.act
 import java.util.*
 
 class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -28,19 +30,18 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_hamers_list, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_hamers_list, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_list.addItemDecoration(DividerItemDecoration(activity))
+        hamers_list.addItemDecoration(DividerItemDecoration(act))
         hamers_list.padding = 0
-        hamers_list.adapter = UserListAdapter(dataSet, activity)
+        hamers_list.adapter = UserListAdapter(dataSet, activity as Context)
         hamers_fab.visibility = View.GONE
 
-        exUser = arguments.getBoolean(UserFragmentAdapter.exUser, false)
+        exUser = arguments!!.getBoolean(UserFragmentAdapter.exUser, false)
 
         populateList().execute()
     }
@@ -51,7 +52,7 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(context, Loader.USERURL, -1, object : GetCallback {
+        Loader.getData(act, Loader.USERURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }

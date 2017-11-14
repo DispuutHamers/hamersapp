@@ -16,6 +16,7 @@ import nl.ecci.hamers.models.News
 import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.activities.NewNewsActivity
 import nl.ecci.hamers.ui.adapters.NewsAdapter
+import org.jetbrains.anko.support.v4.act
 import java.util.*
 
 class NewsFragment : HamersListFragment() {
@@ -27,11 +28,10 @@ class NewsFragment : HamersListFragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_hamers_list, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_hamers_list, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         hamers_list.adapter = NewsAdapter(dataSet)
@@ -53,7 +53,7 @@ class NewsFragment : HamersListFragment() {
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(context, Loader.NEWSURL, -1, object : GetCallback {
+        Loader.getData(act, Loader.NEWSURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
@@ -63,7 +63,7 @@ class NewsFragment : HamersListFragment() {
     override fun onResume() {
         super.onResume()
         onRefresh()
-        activity.title = resources.getString(R.string.navigation_item_news)
+        activity?.title = resources.getString(R.string.navigation_item_news)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

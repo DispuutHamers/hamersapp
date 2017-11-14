@@ -7,20 +7,20 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_hamers_tab.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.ui.adapters.UserFragmentAdapter
+import org.jetbrains.anko.support.v4.act
 
 class UserFragment : HamersTabFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_hamers_tab, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_hamers_tab, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tab_fragment_viewpager.adapter = UserFragmentAdapter(activity, childFragmentManager)
+        tab_fragment_viewpager.adapter = UserFragmentAdapter(act, childFragmentManager)
     }
 
     override fun onResume() {
         super.onResume()
-        activity.title = resources.getString(R.string.navigation_item_users)
+        activity?.title = resources.getString(R.string.navigation_item_users)
     }
 }

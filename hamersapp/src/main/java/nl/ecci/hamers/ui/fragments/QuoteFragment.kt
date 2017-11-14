@@ -18,6 +18,7 @@ import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.adapters.QuoteAdapter
 import nl.ecci.hamers.utils.DividerItemDecoration
 import org.jetbrains.anko.padding
+import org.jetbrains.anko.support.v4.act
 import java.util.*
 
 
@@ -30,17 +31,17 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
         retainInstance = true
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        return inflater?.inflate(R.layout.fragment_hamers_list, container, false)
+        return inflater.inflate(R.layout.fragment_hamers_list, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_list.addItemDecoration(DividerItemDecoration(activity))
+        hamers_list.addItemDecoration(DividerItemDecoration(act))
         hamers_list.padding = 0
-        hamers_list.adapter = QuoteAdapter(dataSet, context)
+        hamers_list.adapter = QuoteAdapter(dataSet, act)
 
         // When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment
         hamers_fab.setOnClickListener {
@@ -54,7 +55,7 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
         setRefreshing(true)
         val params = HashMap<String, String>()
         params.put("sorted", "date-desc")
-        Loader.getData(context, Loader.QUOTEURL, -1, object : GetCallback {
+        Loader.getData(act, Loader.QUOTEURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
@@ -67,9 +68,7 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
         val searchView = MenuItemCompat.getActionView(menuItem) as SearchView
         searchView.queryHint = getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(s: String): Boolean {
-                return false
-            }
+            override fun onQueryTextSubmit(s: String): Boolean = false
 
             override fun onQueryTextChange(s: String): Boolean {
                 (hamers_list.adapter as QuoteAdapter).filter.filter(s.toLowerCase())
@@ -81,7 +80,7 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
     override fun onResume() {
         super.onResume()
         onRefresh()
-        activity.title = resources.getString(R.string.navigation_item_quotes)
+        activity?.title = resources.getString(R.string.navigation_item_quotes)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
