@@ -4,8 +4,8 @@ before_script:
   - export PATH=$PATH:/opt/android-sdk/tools/bin
   - export PATH=$PATH:/opt/android-sdk/platform-tools
   - chmod +x gradlew
-  - sdkmanager "platforms;android-26"
-  - sdkmanager "build-tools;26.0.2"
+  - sdkmanager "platforms;android-27"
+  - sdkmanager "build-tools;27.0.0"
   - sdkmanager "tools"
   - sdkmanager "platform-tools"
   - sdkmanager "extras;android;m2repository"
