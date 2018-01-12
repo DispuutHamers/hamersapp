@@ -2,7 +2,7 @@ package nl.ecci.hamers.models
 
 import com.google.gson.annotations.SerializedName
 
-class Sticker(val id: Int,
+data class Sticker(val id: Int,
               @SerializedName("user_id")
               val userID: Int,
               val lat: Float,
