@@ -45,8 +45,8 @@ class BeerFragment : HamersListFragment() {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
-        }, null)
-        Loader.getData(act, Loader.REVIEWURL, -1, null, null)
+        })
+        Loader.getData(act, Loader.REVIEWURL, -1, null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

@@ -35,7 +35,7 @@ object Loader {
 
     val urls = hashSetOf(QUOTEURL, USERURL, EVENTURL, SIGNUPURL, NEWSURL, BEERURL, REVIEWURL, WHOAMIURL, MEETINGURL, SIGNUPURL, STICKERURL, CHANGEURL)
 
-    fun getData(context: Context, dataURL: String, urlAppendix: Int, callback: GetCallback?, params: Map<String, String>?) {
+    fun getData(context: Context, dataURL: String, urlAppendix: Int, callback: GetCallback?, params: Map<String, String>? = null) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         val url = buildURL(context, dataURL, params, urlAppendix)
 

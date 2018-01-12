@@ -53,13 +53,11 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
 
     override fun onRefresh() {
         setRefreshing(true)
-        val params = HashMap<String, String>()
-        params.put("sorted", "date-desc")
         Loader.getData(act, Loader.QUOTEURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
-        }, params)
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
