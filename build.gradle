@@ -2,8 +2,8 @@
 
 buildscript {
     ext.support_lib_version = '27.0.2'
-    ext.kotlin_version = '1.2.10'
-    ext.anko_version = '0.10.0'
+    ext.kotlin_version = '1.2.21'
+    ext.anko_version = '0.10.4'
     repositories {
         jcenter()
         maven { url "https://maven.google.com" }
@@ -11,6 +11,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
     }
 }
