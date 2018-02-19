@@ -119,7 +119,9 @@ object DataUtils {
         val type = object : TypeToken<ArrayList<User>>() {
         }.type
 
-        gson.fromJson<ArrayList<User>>(prefs.getString(Loader.USERURL, null), type)?.filterTo(result) { it.member === User.Member.LID }
+        gson.fromJson<ArrayList<User>>(prefs.getString(Loader.USERURL, null), type)?.filterTo(result) {
+            it.member === User.Member.LID || it.id == 11 // Extern account
+        }
         return result
     }
 
