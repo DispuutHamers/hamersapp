@@ -3,7 +3,6 @@ package nl.ecci.hamers.ui.fragments
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.SearchView
 import android.view.*
 import com.google.gson.GsonBuilder
@@ -93,7 +92,7 @@ class EventListFragment : HamersListFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.news_event_menu, menu)
         val menuItem = menu.findItem(R.id.event_search)
-        val searchView = MenuItemCompat.getActionView(menuItem) as SearchView
+        val searchView = menuItem.actionView as SearchView
         searchView.queryHint = getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(s: String): Boolean {
@@ -129,7 +128,7 @@ class EventListFragment : HamersListFragment() {
                 dataSet.clear()
                 dataSet.addAll(result)
                 if (!upcoming)
-                    Collections.reverse(dataSet)
+                    dataSet.reverse()
                 notifyAdapter()
                 setRefreshing(false)
             }

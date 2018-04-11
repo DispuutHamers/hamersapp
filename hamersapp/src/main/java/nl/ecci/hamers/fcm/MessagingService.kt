@@ -39,7 +39,7 @@ class MessagingService : FirebaseMessagingService() {
         // Check if message contains a notification payload.
         if (remoteMessage?.notification != null) {
             // TODO
-            Log.d(TAG, "FCM Notification Body: " + remoteMessage.notification.body!!)
+            Log.d(TAG, "FCM Notification Body: " + remoteMessage.notification!!.body!!)
         }
 
         // Check if message contains a data payload.
@@ -131,10 +131,10 @@ class MessagingService : FirebaseMessagingService() {
      */
     private fun sendNotification(title: String, summary: String, userId: Int) {
         val user = DataUtils.getUser(applicationContext, userId)
-        val icon = Glide.with(this).load(getGravatarURL(user.email)).asBitmap().into(300, 300).get()
+        val icon = Glide.with(this).asBitmap().load(getGravatarURL(user.email)).submit(300, 300).get()
 
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val notificationBuilder = NotificationCompat.Builder(this)
+        val notificationBuilder = NotificationCompat.Builder(this, "")
                 .setSmallIcon(R.drawable.launcher_icon)
                 .setLargeIcon(icon)
                 .setContentTitle(title)
@@ -157,6 +157,6 @@ class MessagingService : FirebaseMessagingService() {
     }
 
     companion object {
-        val TAG = "MessagingService"
+        const val TAG = "MessagingService"
     }
 }

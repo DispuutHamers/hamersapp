@@ -2,10 +2,8 @@ package nl.ecci.hamers.ui.fragments
 
 import android.Manifest
 import android.app.AlertDialog
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationManager
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
@@ -20,6 +18,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -54,12 +53,17 @@ class StickerFragment : HamersFragment(),
         GoogleMap.OnMarkerClickListener {
 
     private val dataSet = ArrayList<Sticker>()
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var mGoogleApiClient: GoogleApiClient? = null
     private var mapView: MapView? = null
     private var mMap: GoogleMap? = null
-    private var locationManager: LocationManager? = null
     private var mLocationRequest: LocationRequest? = null
     private var mCurrLocationMarker: Marker? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!.application)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_sticker, container, false)
@@ -75,7 +79,9 @@ class StickerFragment : HamersFragment(),
             PermissionUtils.checkLocationPermission(activity)
         }
 
-        locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            location?.let { onLocationChanged(location) }
+        }
 
         hamers_fab.setOnClickListener {
             postLocationDialog()
@@ -232,12 +238,11 @@ class StickerFragment : HamersFragment(),
     }
 
     override fun onConnected(bundle: Bundle?) {
-        mLocationRequest = LocationRequest()
-        mLocationRequest?.interval = 1000
-        mLocationRequest?.fastestInterval = 1000
-        mLocationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-        if (ContextCompat.checkSelfPermission(act,
-                Manifest.permission.ACCESS_FINE_LOCATION)
+//        mLocationRequest = LocationRequest()
+//        mLocationRequest?.interval = 1000
+//        mLocationRequest?.fastestInterval = 1000
+//        mLocationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+        if (ContextCompat.checkSelfPermission(act, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this)
         }

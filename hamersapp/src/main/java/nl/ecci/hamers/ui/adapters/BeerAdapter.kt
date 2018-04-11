@@ -100,7 +100,7 @@ internal class BeerAdapter(private val dataSet: ArrayList<Beer>, private val con
                 itemView.brewer_textview.text = brewer
                 itemView.country_textview.text = country
                 itemView.rating_textview.text = rating
-                Glide.with(context).load(imageURL).fitCenter().into(itemView.image)
+                Glide.with(context).load(imageURL).into(itemView.image)
             }
         }
     }

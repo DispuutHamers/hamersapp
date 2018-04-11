@@ -80,7 +80,7 @@ class SingleBeerActivity : HamersDetailActivity() {
             fillDetailRow(row_rating, getString(R.string.beer_rating), beer?.rating)
         }
 
-        Glide.with(this).load(beer?.imageURL).fitCenter().into(image)
+        Glide.with(this).load(beer?.imageURL).into(image)
 
         image.setOnClickListener {
             val intent = Intent(this@SingleBeerActivity, SingleImageActivity::class.java)

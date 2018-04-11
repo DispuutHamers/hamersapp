@@ -18,8 +18,8 @@ import java.util.*
 object Utils {
 
     var alertDialog: AlertDialog? = null
-    val unknown = "Unknown"
-    val notFound = -1
+    const val unknown = "Unknown"
+    const val notFound = -1
 
     /**
      * Get app version

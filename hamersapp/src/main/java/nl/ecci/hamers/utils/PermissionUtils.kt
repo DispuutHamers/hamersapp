@@ -8,7 +8,7 @@ import android.support.v4.content.ContextCompat
 
 
 object PermissionUtils {
-    private val PERMISSION_REQUEST_CODE = 1043
+    private const val PERMISSION_REQUEST_CODE = 1043
 
     fun checkLocationPermission(activity: Activity?): Boolean {
         if (activity == null) {
