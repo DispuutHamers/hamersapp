@@ -32,7 +32,7 @@
             android:layout_below="@id/newsItem_title"
             android:layout_marginBottom="2dp"
             android:ellipsize="marquee"
-            android:maxLines="1"
+            android:singleLine="true"
             android:textColor="?android:attr/textColorTertiary"
             android:textSize="12sp" />
 
