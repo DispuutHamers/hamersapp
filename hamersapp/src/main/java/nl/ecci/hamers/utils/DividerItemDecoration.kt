@@ -4,7 +4,7 @@ import android.R
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 
 class DividerItemDecoration(context: Context) : RecyclerView.ItemDecoration() {
 
@@ -16,7 +16,7 @@ class DividerItemDecoration(context: Context) : RecyclerView.ItemDecoration() {
         styledAttributes.recycle()
     }
 
-    override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State?) {
+    override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         val left = parent.paddingLeft
         val right = parent.width - parent.paddingRight
 
@@ -35,7 +35,6 @@ class DividerItemDecoration(context: Context) : RecyclerView.ItemDecoration() {
     }
 
     companion object {
-
         private val ATTRS = intArrayOf(R.attr.listDivider)
     }
 }

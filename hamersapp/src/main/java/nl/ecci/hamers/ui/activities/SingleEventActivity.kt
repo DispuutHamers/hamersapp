@@ -4,7 +4,7 @@ import android.content.*
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View

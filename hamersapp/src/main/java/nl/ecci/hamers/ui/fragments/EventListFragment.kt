@@ -3,7 +3,7 @@ package nl.ecci.hamers.ui.fragments
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.v7.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import android.view.*
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken

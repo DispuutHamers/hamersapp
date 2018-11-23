@@ -3,7 +3,7 @@ package nl.ecci.hamers.ui.fragments
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.*
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken

@@ -3,8 +3,8 @@ package nl.ecci.hamers.ui.fragments
 import android.content.DialogInterface
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.v4.view.MenuItemCompat
-import android.support.v7.widget.SearchView
+import androidx.core.view.MenuItemCompat
+import androidx.appcompat.widget.SearchView
 import android.view.*
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken

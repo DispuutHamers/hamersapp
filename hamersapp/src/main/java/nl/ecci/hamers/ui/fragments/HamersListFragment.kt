@@ -1,12 +1,12 @@
 package nl.ecci.hamers.ui.fragments
 
 import android.os.Bundle
-import android.support.design.widget.CoordinatorLayout
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
 
 abstract class HamersListFragment : HamersFragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -24,7 +24,7 @@ abstract class HamersListFragment : HamersFragment(), SwipeRefreshLayout.OnRefre
         hamers_swipe_container.setOnRefreshListener(this)
 
         hamers_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(view: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 hamers_swipe_container?.isEnabled = lm.findFirstCompletelyVisibleItemPosition() == 0
             }
         })

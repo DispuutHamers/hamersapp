@@ -2,12 +2,12 @@ package nl.ecci.hamers.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatDelegate
-import android.support.v7.preference.Preference
-import android.support.v7.preference.Preference.OnPreferenceClickListener
-import android.support.v7.preference.PreferenceFragmentCompat
-import android.support.v7.preference.PreferenceManager
+import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.preference.Preference
+import androidx.preference.Preference.OnPreferenceClickListener
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import nl.ecci.hamers.R
 import nl.ecci.hamers.data.Loader
 import nl.ecci.hamers.ui.activities.MainActivity

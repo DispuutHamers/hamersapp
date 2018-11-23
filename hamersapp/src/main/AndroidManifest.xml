@@ -15,7 +15,7 @@
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
-        android:name="android.support.multidex.MultiDexApplication"
+        android:name="androidx.multidex.MultiDexApplication"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@drawable/launcher_icon"

@@ -2,7 +2,7 @@ package nl.ecci.hamers.ui.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.android.synthetic.main.activity_general.*
 import nl.ecci.hamers.R
 

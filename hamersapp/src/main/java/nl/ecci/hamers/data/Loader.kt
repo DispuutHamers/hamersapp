@@ -1,7 +1,7 @@
 package nl.ecci.hamers.data
 
 import android.content.Context
-import android.support.v7.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
 import com.android.volley.*

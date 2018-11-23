@@ -2,12 +2,12 @@ package nl.ecci.hamers.ui.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.row_event.view.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.models.Event
@@ -70,18 +70,16 @@ internal class EventListAdapter(private val context: Context, private val dataSe
     internal inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bindEvent(event: Event) {
-            with(event) {
-                itemView.event_title.text = event.title
-                var description = event.description
-                if (description.length > 256)
-                    description = description.substring(0, 256)
-                itemView.event_beschrijving.text = description
-                itemView.event_date.text = MainActivity.appDTF.format(event.date)
-                if (event.location.isEmpty()) {
-                    itemView.event_location.visibility = View.GONE
-                } else {
-                    itemView.event_location.text = event.location
-                }
+            itemView.event_title.text = event.title
+            var description = event.description
+            if (description.length > 256)
+                description = description.substring(0, 256)
+            itemView.event_beschrijving.text = description
+            itemView.event_date.text = MainActivity.appDTF.format(event.date)
+            if (event.location.isEmpty()) {
+                itemView.event_location.visibility = View.GONE
+            } else {
+                itemView.event_location.text = event.location
             }
 
             val signUps = event.signUps

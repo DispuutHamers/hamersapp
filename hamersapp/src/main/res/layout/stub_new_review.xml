@@ -14,7 +14,7 @@
         android:textSize="22sp"
         android:textStyle="bold" />
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -26,7 +26,7 @@
             android:hint="@string/review_hint"
             android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
             android:padding="20dp" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/review_rating"

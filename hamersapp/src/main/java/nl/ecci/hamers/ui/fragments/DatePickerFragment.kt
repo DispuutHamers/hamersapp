@@ -3,7 +3,7 @@ package nl.ecci.hamers.ui.fragments
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+import androidx.fragment.app.DialogFragment
 import nl.ecci.hamers.ui.activities.HamersNewItemActivity
 import java.util.*
 

@@ -14,7 +14,7 @@
         android:textSize="22sp"
         android:textStyle="bold" />
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -26,9 +26,9 @@
             android:hint="@string/beer_name"
             android:inputType="textCapWords"
             android:padding="16dp" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -40,9 +40,9 @@
             android:hint="@string/beer_picture"
             android:inputType="textMultiLine"
             android:padding="16dp" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -54,9 +54,9 @@
             android:hint="@string/beer_soort"
             android:inputType="textCapWords"
             android:padding="16dp" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -67,9 +67,9 @@
             android:layout_margin="8dp"
             android:hint="@string/beer_percentage"
             android:padding="16dp" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -81,9 +81,9 @@
             android:hint="@string/beer_brewer"
             android:inputType="textCapWords"
             android:padding="16dp" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -95,5 +95,5 @@
             android:hint="@string/beer_country"
             android:inputType="textCapWords"
             android:padding="16dp" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

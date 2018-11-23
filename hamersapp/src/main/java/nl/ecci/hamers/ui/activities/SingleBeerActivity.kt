@@ -6,8 +6,8 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ActivityOptionsCompat
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import android.view.*
 import android.widget.Toast
 import com.bumptech.glide.Glide
