@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.row_detailview.view.*
 import kotlinx.android.synthetic.main.row_imageview.view.*
 import kotlinx.android.synthetic.main.row_singleview.view.*
 import nl.ecci.hamers.R
+import nl.ecci.hamers.utils.Utils.toHtml
 
 @SuppressLint("Registered")
 abstract class HamersActivity : AppCompatActivity() {
@@ -58,9 +59,13 @@ abstract class HamersActivity : AppCompatActivity() {
         return view
     }
 
-    fun fillDetailRow(view: View, title: String, description: String?) {
+    fun fillDetailRow(view: View, title: String, description: String?, html: Boolean = false) {
         view.row_detail_title.text = title
-        view.row_detail_description.text = description
+
+        if (html)
+            view.row_detail_description.text = toHtml(description)
+        else
+            view.row_detail_description.text = description
     }
 
     fun fillImageRow(view: View, title: String, description: String, imageId: Int) {

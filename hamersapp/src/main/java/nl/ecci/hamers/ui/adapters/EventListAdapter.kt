@@ -14,6 +14,7 @@ import nl.ecci.hamers.models.Event
 import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.activities.SingleEventActivity
 import nl.ecci.hamers.utils.DataUtils
+import nl.ecci.hamers.utils.Utils.toHtml
 import java.util.*
 
 internal class EventListAdapter(private val context: Context, private val dataSet: ArrayList<Event>) : RecyclerView.Adapter<EventListAdapter.ViewHolder>(), Filterable {
@@ -74,7 +75,7 @@ internal class EventListAdapter(private val context: Context, private val dataSe
             var description = event.description
             if (description.length > 256)
                 description = description.substring(0, 256)
-            itemView.event_beschrijving.text = description
+            itemView.event_beschrijving.text = toHtml(description)
             itemView.event_date.text = MainActivity.appDTF.format(event.date)
             if (event.location.isEmpty()) {
                 itemView.event_location.visibility = View.GONE

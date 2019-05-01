@@ -65,7 +65,7 @@ class SingleEventActivity : HamersDetailActivity() {
         }
 
         event_title.text = eventTitle
-        fillDetailRow(description_row, getString(R.string.description), event?.description)
+        fillDetailRow(description_row, getString(R.string.description), event?.description, html = true)
 
         if (Date().after(event?.deadline)) {
             button_layout.visibility = View.GONE
@@ -179,9 +179,12 @@ class SingleEventActivity : HamersDetailActivity() {
     private fun initSignUps() {
         present_layout.visibility = View.GONE
         absent_layout.visibility = View.GONE
+
         present_insert_point.removeAllViews()
         absent_insert_point.removeAllViews()
+
         val signUps = event?.signUps
+        // Add users to list
         signUps?.indices
                 ?.map { signUps[it] }
                 ?.forEach {
@@ -192,6 +195,9 @@ class SingleEventActivity : HamersDetailActivity() {
                         addAbsentUser(it, user)
                     }
                 }
+        // Set counters
+        event_present_count.text = signUps?.count { it.isAttending }.toString()
+        event_absent_count.text = signUps?.count { !it.isAttending }.toString()
     }
 
     private fun addPresentUser(signUp: SignUp, user: User) {

@@ -45,9 +45,8 @@ class EventListFragment : HamersListFragment() {
         }
 
         // Disable the scrollbar, since this list is very short and the scrollbar behaves weirdly
-        if (upcoming) {
+        if (upcoming)
             hamers_list.isVerticalScrollBarEnabled = false
-        }
 
         populateList().execute()
     }
@@ -56,8 +55,8 @@ class EventListFragment : HamersListFragment() {
         setRefreshing(true)
         if (upcoming) {
             val params = HashMap<String, String>()
-            params.put("sorted", "asc-desc")
-            params.put("future", "true")
+            params["sorted"] = "asc-desc"
+            params["future"] = "true"
             Loader.getData(act, Loader.EVENTURL, -1, object : GetCallback {
                 override fun onSuccess(response: String) {
                     populateList().execute(response)

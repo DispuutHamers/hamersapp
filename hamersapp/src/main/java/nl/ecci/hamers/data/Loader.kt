@@ -91,10 +91,10 @@ object Loader {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params.put("Authorization", "Token token=" + prefs.getString(APIKEYKEY, "")!!)
-                params.put("Content-Type", "Application/json")
+                params["Authorization"] = "Token token=" + prefs.getString(APIKEYKEY, "")!!
+                params["Content-Type"] = "Application/json"
                 if (urlAppendix != Utils.notFound) {
-                    params.put("X-HTTP-Method-Override", "PATCH")
+                    params["X-HTTP-Method-Override"] = "PATCH"
                 }
                 return params
             }

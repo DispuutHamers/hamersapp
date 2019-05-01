@@ -6,6 +6,9 @@ import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
+import android.text.Html
+import android.text.Spanned
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import nl.ecci.hamers.ui.activities.MainActivity
@@ -78,5 +81,14 @@ object Utils {
         }
 
         return date
+    }
+
+    /**
+     * To HTML
+     */
+    fun toHtml(s: String?) : Spanned {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            return Html.fromHtml(s, Html.FROM_HTML_MODE_COMPACT)
+        return Html.fromHtml(s)
     }
 }

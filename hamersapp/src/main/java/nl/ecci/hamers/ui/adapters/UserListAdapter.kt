@@ -39,10 +39,8 @@ internal class UserListAdapter(private val dataSet: ArrayList<User>, private val
 
     internal inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bindUser(user: User) {
-            with(user) {
-                itemView.username.text = user.name
-                Glide.with(context).load(getGravatarURL(user.email)).into(itemView.user_image)
-            }
+            itemView.username.text = user.name
+            Glide.with(context).load(getGravatarURL(user.email)).into(itemView.user_image)
         }
     }
 }
