@@ -3,9 +3,9 @@ package nl.ecci.hamers.ui.fragments
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import androidx.core.view.MenuItemCompat
-import androidx.appcompat.widget.SearchView
 import android.view.*
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -16,7 +16,6 @@ import nl.ecci.hamers.models.News
 import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.activities.NewNewsActivity
 import nl.ecci.hamers.ui.adapters.NewsAdapter
-import org.jetbrains.anko.support.v4.act
 import java.util.*
 
 class NewsFragment : HamersListFragment() {
@@ -53,7 +52,7 @@ class NewsFragment : HamersListFragment() {
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(act, Loader.NEWSURL, -1, object : GetCallback {
+        Loader.getData(requireContext(), Loader.NEWSURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
@@ -104,7 +103,7 @@ class NewsFragment : HamersListFragment() {
             if (result != null) {
                 dataSet.clear()
                 dataSet.addAll(result)
-                Collections.reverse(dataSet)
+                dataSet.reverse()
                 notifyAdapter()
             }
             setRefreshing(false)

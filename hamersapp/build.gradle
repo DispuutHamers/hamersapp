@@ -38,7 +38,7 @@ android {
         debug {
             debuggable true
             resValue "string", "app_name", "Hamers debug"
-            resValue "string", "host", "https://staging.zondersikkel.nl/"
+            resValue "string", "host", "https://zondersikkel.nl/"
             resValue "string", "google_maps_key", "***REMOVED***"
         }
         release {

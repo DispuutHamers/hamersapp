@@ -3,8 +3,8 @@ package nl.ecci.hamers.ui.fragments
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.*
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -17,7 +17,6 @@ import nl.ecci.hamers.ui.adapters.UserFragmentAdapter
 import nl.ecci.hamers.ui.adapters.UserListAdapter
 import nl.ecci.hamers.utils.DividerItemDecoration
 import org.jetbrains.anko.padding
-import org.jetbrains.anko.support.v4.act
 import java.util.*
 
 class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -36,7 +35,7 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_list.addItemDecoration(DividerItemDecoration(act))
+        hamers_list.addItemDecoration(DividerItemDecoration(requireContext()))
         hamers_list.padding = 0
         hamers_list.adapter = UserListAdapter(dataSet, activity as Context)
         hamers_fab.visibility = View.GONE
@@ -52,7 +51,7 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(act, Loader.USERURL, -1, object : GetCallback {
+        Loader.getData(requireContext(), Loader.USERURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
@@ -82,8 +81,7 @@ class UserListFragment : HamersListFragment(), SwipeRefreshLayout.OnRefreshListe
     }
 
     private fun sort() {
-        val sortPref = prefs?.getString("userSort", "")
-        when (sortPref) {
+        when (prefs?.getString("userSort", "")) {
             "name" -> sortByUsername()
             "quotecount" -> sortByQuoteCount()
             "reviewcount" -> sortByReviewCount()

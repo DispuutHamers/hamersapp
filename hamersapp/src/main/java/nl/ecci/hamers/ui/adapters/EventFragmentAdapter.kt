@@ -31,7 +31,7 @@ internal class EventFragmentAdapter(context: Context, fm: FragmentManager) : Fra
                     eventFragmentAll = EventListFragment()
                     val argAll = Bundle()
                     argAll.putBoolean(upcoming, false)
-                    eventFragmentAll!!.arguments = argAll
+                    eventFragmentAll?.arguments = argAll
                 }
                 return eventFragmentAll
             }
@@ -44,7 +44,7 @@ internal class EventFragmentAdapter(context: Context, fm: FragmentManager) : Fra
     }
 
     companion object {
-        val upcoming = "upcoming"
+        const val upcoming = "upcoming"
     }
 
     override fun getCount(): Int {

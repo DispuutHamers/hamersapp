@@ -16,6 +16,6 @@ data class Review(val id: Int = Utils.notFound,
                   val proefdatum: Date = Date()) {
 
     companion object {
-        val REVIEW = "REVIEW"
+        const val REVIEW = "REVIEW"
     }
 }

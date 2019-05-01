@@ -48,6 +48,6 @@ internal class UserFragmentAdapter(context: Context, fm: FragmentManager) : Frag
     }
 
     companion object {
-        val exUser = "exUser"
+        const val exUser = "exUser"
     }
 }

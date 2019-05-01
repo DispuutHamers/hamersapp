@@ -54,7 +54,7 @@ internal class EventListAdapter(private val context: Context, private val dataSe
                     results.values = dataSet
                     results.count = dataSet.size
                 } else {
-                    val filterResultsData = dataSet.filterTo(ArrayList<Event>()) { it.title.toLowerCase().contains(charSequence) || it.description.toLowerCase().contains(charSequence) }
+                    val filterResultsData = dataSet.filterTo(ArrayList()) { it.title.toLowerCase().contains(charSequence) || it.description.toLowerCase().contains(charSequence) }
                     results.values = filterResultsData
                     results.count = filterResultsData.size
                 }

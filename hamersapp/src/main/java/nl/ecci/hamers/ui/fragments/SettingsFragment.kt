@@ -71,10 +71,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     companion object {
-        private val KEY_PREF_CLEAR_IMAGE_CACHE = "clear_image_cache"
-        private val KEY_PREF_CLEAR_STORAGE = "clear_storage"
-        private val KEY_PREF_REFRESH_APP = "refresh_app"
-        private val KEY_PREF_NIGHT_MODE = "night_mode"
-        private val KEY_PREF_GET_ALL_DATA = "get_all_data"
+        private const val KEY_PREF_CLEAR_IMAGE_CACHE = "clear_image_cache"
+        private const val KEY_PREF_CLEAR_STORAGE = "clear_storage"
+        private const val KEY_PREF_REFRESH_APP = "refresh_app"
+        private const val KEY_PREF_NIGHT_MODE = "night_mode"
+        private const val KEY_PREF_GET_ALL_DATA = "get_all_data"
     }
 }

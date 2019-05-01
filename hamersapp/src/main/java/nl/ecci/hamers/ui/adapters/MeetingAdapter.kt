@@ -47,10 +47,8 @@ class MeetingAdapter(private val dataSet: ArrayList<Meeting>, private val activi
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bindMeeting(meeting: Meeting) {
-            with(meeting) {
-                itemView.meeting_subject.text = meeting.subject
-                itemView.meeting_date.text = MainActivity.appDTF.format(meeting.date)
-            }
+            itemView.meeting_subject.text = meeting.subject
+            itemView.meeting_date.text = MainActivity.appDTF.format(meeting.date)
         }
     }
 }

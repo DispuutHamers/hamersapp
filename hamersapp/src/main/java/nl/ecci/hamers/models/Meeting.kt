@@ -18,6 +18,6 @@ data class Meeting(val id: Int = Utils.notFound,
                    val updatedAt: Date = Date()) {
 
     companion object {
-        val MEETING = "MEETING"
+        const val MEETING = "MEETING"
     }
 }

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_hamers_tab.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.ui.adapters.UserFragmentAdapter
-import org.jetbrains.anko.support.v4.act
 
 class UserFragment : HamersTabFragment() {
 
@@ -16,7 +15,7 @@ class UserFragment : HamersTabFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tab_fragment_viewpager.adapter = UserFragmentAdapter(act, childFragmentManager)
+        tab_fragment_viewpager.adapter = UserFragmentAdapter(requireContext(), childFragmentManager)
     }
 
     override fun onResume() {

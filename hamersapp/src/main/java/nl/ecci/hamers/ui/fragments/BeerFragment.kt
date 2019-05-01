@@ -3,8 +3,8 @@ package nl.ecci.hamers.ui.fragments
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import androidx.appcompat.widget.SearchView
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -15,7 +15,6 @@ import nl.ecci.hamers.models.Beer
 import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.activities.NewBeerActivity
 import nl.ecci.hamers.ui.adapters.BeerAdapter
-import org.jetbrains.anko.support.v4.act
 import java.util.*
 
 class BeerFragment : HamersListFragment() {
@@ -33,7 +32,7 @@ class BeerFragment : HamersListFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_list.adapter = BeerAdapter(dataSet, act)
+        hamers_list.adapter = BeerAdapter(dataSet, requireContext())
         hamers_fab.setOnClickListener { startActivityForResult(Intent(activity, NewBeerActivity::class.java), 1) }
 
         populateList().execute()
@@ -41,12 +40,12 @@ class BeerFragment : HamersListFragment() {
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(act, Loader.BEERURL, -1, object : GetCallback {
+        Loader.getData(requireContext(), Loader.BEERURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
         })
-        Loader.getData(act, Loader.REVIEWURL, -1, null)
+        Loader.getData(requireContext(), Loader.REVIEWURL, -1, null)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -102,8 +101,7 @@ class BeerFragment : HamersListFragment() {
 
     private fun sortList() {
         if (activity != null) {
-            val sortPref = prefs?.getString("beerSort", "")
-            when (sortPref) {
+            when (prefs?.getString("beerSort", "")) {
                 "rating" -> sort(ratingComparator)
                 "datumASC" -> sort(dateASCComparator)
                 "datumDESC" -> sort(dateDESCComparator)

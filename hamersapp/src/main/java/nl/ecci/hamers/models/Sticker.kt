@@ -9,6 +9,6 @@ data class Sticker(val id: Int,
               val lon: Float,
               val notes: String) {
     companion object {
-        val ID = "ID"
+        const val ID = "ID"
     }
 }

@@ -16,12 +16,12 @@ data class Event(val id: Int = Utils.notFound,
                  val endDate: Date = Date(),
                  val deadline: Date = Date(),
                  @SerializedName("signups")
-                 val signUps: ArrayList<SignUp> = ArrayList<SignUp>(),
+                 val signUps: ArrayList<SignUp> = ArrayList(),
                  @SerializedName("created_at")
                  val createdAt: Date = Date(),
                  val attendance: Boolean = false) {
 
     companion object {
-        val EVENT = "EVENT"
+        const val EVENT = "EVENT"
     }
 }

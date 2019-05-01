@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_hamers_tab.*
 import nl.ecci.hamers.R
 import nl.ecci.hamers.ui.adapters.EventFragmentAdapter
-import org.jetbrains.anko.support.v4.act
 
 class EventFragment : HamersTabFragment() {
 
@@ -16,7 +15,7 @@ class EventFragment : HamersTabFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tab_fragment_viewpager.adapter = EventFragmentAdapter(act, childFragmentManager)
+        tab_fragment_viewpager.adapter = EventFragmentAdapter(requireContext(), childFragmentManager)
     }
 
     override fun onResume() {

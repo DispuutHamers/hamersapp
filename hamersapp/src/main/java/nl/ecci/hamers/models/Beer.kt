@@ -20,6 +20,6 @@ data class Beer(val id: Int = Utils.notFound,
                 val createdAt: Date = Date()) {
 
     companion object {
-        val BEER = "BEER"
+        const val BEER = "BEER"
     }
 }

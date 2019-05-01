@@ -3,9 +3,9 @@ package nl.ecci.hamers.ui.fragments
 import android.content.DialogInterface
 import android.os.AsyncTask
 import android.os.Bundle
-import androidx.core.view.MenuItemCompat
-import androidx.appcompat.widget.SearchView
 import android.view.*
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -18,7 +18,6 @@ import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.adapters.QuoteAdapter
 import nl.ecci.hamers.utils.DividerItemDecoration
 import org.jetbrains.anko.padding
-import org.jetbrains.anko.support.v4.act
 import java.util.*
 
 
@@ -39,9 +38,11 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_list.addItemDecoration(DividerItemDecoration(act))
         hamers_list.padding = 0
-        hamers_list.adapter = QuoteAdapter(dataSet, act)
+        context?.let {
+            hamers_list.addItemDecoration(DividerItemDecoration(it))
+            hamers_list.adapter = QuoteAdapter(dataSet, it)
+        }
 
         // When user presses "+" in QuoteListFragment, start new dialog with NewQuoteFragment
         hamers_fab.setOnClickListener {
@@ -53,7 +54,7 @@ class QuoteFragment : HamersListFragment(), DialogInterface.OnDismissListener {
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(act, Loader.QUOTEURL, -1, object : GetCallback {
+        Loader.getData(requireContext(), Loader.QUOTEURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }

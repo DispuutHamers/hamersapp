@@ -2,14 +2,14 @@ package nl.ecci.hamers.ui.activities
 
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatDelegate
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.element_header.view.*
 import kotlinx.android.synthetic.main.element_toolbar.*
@@ -117,7 +117,7 @@ class MainActivity : HamersActivity() {
         val dbDF = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", locale)
         val appDF = SimpleDateFormat("EEE dd MMM yyyy HH:mm", locale)
         val appDTF = SimpleDateFormat("EEEE dd MMMM yyyy", locale)
-        private val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
+        private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
 
         @AppCompatDelegate.NightMode
         fun getNightModeInt(nightMode: String): Int {

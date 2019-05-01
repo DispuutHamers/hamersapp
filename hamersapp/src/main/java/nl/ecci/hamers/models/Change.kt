@@ -53,6 +53,6 @@ data class Change(val id: Int,
     }
 
     companion object {
-        val CHANGE = "CHANGE"
+        const val CHANGE = "CHANGE"
     }
 }

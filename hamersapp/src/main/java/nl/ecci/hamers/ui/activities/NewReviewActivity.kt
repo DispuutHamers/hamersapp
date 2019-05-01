@@ -38,7 +38,7 @@ class NewReviewActivity : HamersNewItemActivity() {
         stub.layoutResource = R.layout.stub_new_review
         stub.inflate()
 
-        val date_button = findViewById<Button>(R.id.pick_date_button) as Button
+        val dateButton = findViewById<Button>(R.id.pick_date_button)
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", MainActivity.locale)
 
@@ -62,9 +62,9 @@ class NewReviewActivity : HamersNewItemActivity() {
             setTitle(R.string.review_update)
             review_body.setText(review!!.description)
             ratingseekbar.progress = review!!.rating - 1
-            date_button.text = dateFormat.format(review!!.proefdatum)
+            dateButton.text = dateFormat.format(review!!.proefdatum)
         } else {
-            date_button.text = dateFormat.format(calendar.time)
+            dateButton.text = dateFormat.format(calendar.time)
         }
     }
 
@@ -80,14 +80,14 @@ class NewReviewActivity : HamersNewItemActivity() {
     }
 
     override fun postItem() {
-        val review_body = this.review_body.text.toString()
+        val reviewBody = this.review_body.text.toString()
         val date = pick_date_button.text.toString()
 
-        if (review_body.length > 2) {
+        if (reviewBody.length > 2) {
             val body = JSONObject()
             try {
                 body.put("beer_id", beer!!.id)
-                body.put("description", review_body)
+                body.put("description", reviewBody)
                 body.put("rating", rating)
                 body.put("proefdatum", Utils.parseDate(date))
 
@@ -98,7 +98,7 @@ class NewReviewActivity : HamersNewItemActivity() {
                 Loader.postOrPatchData(this, Loader.REVIEWURL, body, reviewID, object : PostCallback {
                     override fun onSuccess(response: JSONObject) {
                         val returnIntent = Intent()
-                        returnIntent.putExtra(SingleBeerActivity.reviewBody, review_body)
+                        returnIntent.putExtra(SingleBeerActivity.reviewBody, reviewBody)
                         returnIntent.putExtra(SingleBeerActivity.reviewRating, rating)
                         setResult(Activity.RESULT_OK, returnIntent)
                         finish()

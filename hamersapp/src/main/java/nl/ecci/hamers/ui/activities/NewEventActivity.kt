@@ -152,9 +152,9 @@ class NewEventActivity : HamersNewItemActivity(), TimePickerDialog.OnTimeSetList
                 body.put("title", title)
                 body.put("beschrijving", description)
                 body.put("location", location)
-                body.put("end_time", Utils.parseDate(eventEndDate + " " + eventEndTime))
-                body.put("deadline", Utils.parseDate(deadlineDate + " " + deadlineTime))
-                body.put("date", Utils.parseDate(eventDate + " " + eventTime))
+                body.put("end_time", Utils.parseDate("$eventEndDate $eventEndTime"))
+                body.put("deadline", Utils.parseDate("$deadlineDate $deadlineTime"))
+                body.put("date", Utils.parseDate("$eventDate $eventTime"))
             } catch (ignored: JSONException) {
             }
 

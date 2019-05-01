@@ -1,9 +1,9 @@
 package nl.ecci.hamers.data
 
 import android.content.Context
-import androidx.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
+import androidx.preference.PreferenceManager
 import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
@@ -15,23 +15,23 @@ import java.net.URLEncoder
 import java.util.*
 
 object Loader {
-    private val APIURL = "api/v2/"
+    private const val APIURL = "api/v2/"
     // URL Appendices
-    val QUOTEURL = "quotes"
-    val USERURL = "users"
-    val EVENTURL = "events"
-    val REMINDURL = "remind"
-    val NEWSURL = "news"
-    val BEERURL = "beers"
-    val REVIEWURL = "reviews"
-    val WHOAMIURL = "whoami"
-    val MEETINGURL = "meetings"
-    val SIGNUPURL = "signups"
-    val STICKERURL = "stickers"
-    val CHANGEURL = "changes?since=2017-03-16T17:00:00.000Z"
+    const val QUOTEURL = "quotes"
+    const val USERURL = "users"
+    const val EVENTURL = "events"
+    const val REMINDURL = "remind"
+    const val NEWSURL = "news"
+    const val BEERURL = "beers"
+    const val REVIEWURL = "reviews"
+    const val WHOAMIURL = "whoami"
+    const val MEETINGURL = "meetings"
+    const val SIGNUPURL = "signups"
+    const val STICKERURL = "stickers"
+    const val CHANGEURL = "changes?since=2017-03-16T17:00:00.000Z"
     // Data keys (excluded form urls below)
-    val APIKEYKEY = "apikey"
-    val FCMURL = "register"
+    const val APIKEYKEY = "apikey"
+    const val FCMURL = "register"
 
     val urls = hashSetOf(QUOTEURL, USERURL, EVENTURL, SIGNUPURL, NEWSURL, BEERURL, REVIEWURL, WHOAMIURL, MEETINGURL, SIGNUPURL, STICKERURL, CHANGEURL)
 
@@ -55,7 +55,7 @@ object Loader {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
                 val headers = HashMap<String, String>()
-                headers.put("Authorization", "Token token=" + prefs.getString(APIKEYKEY, ""))
+                headers["Authorization"] = "Token token=" + prefs.getString(APIKEYKEY, "")
                 return headers
             }
 
@@ -158,7 +158,7 @@ object Loader {
 
     fun getAllData(context: Context) {
         for (url in urls) {
-            Loader.getData(context, url, -1, null, null)
+            getData(context, url, -1, null, null)
         }
     }
 }

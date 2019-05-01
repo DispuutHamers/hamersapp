@@ -16,7 +16,6 @@ import nl.ecci.hamers.models.Meeting
 import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.activities.NewMeetingActivity
 import nl.ecci.hamers.ui.adapters.MeetingAdapter
-import org.jetbrains.anko.support.v4.act
 import java.util.*
 
 class MeetingFragment : HamersListFragment() {
@@ -35,7 +34,7 @@ class MeetingFragment : HamersListFragment() {
 
     override fun onRefresh() {
         setRefreshing(true)
-        Loader.getData(act, Loader.MEETINGURL, -1, object : GetCallback {
+        Loader.getData(requireContext(), Loader.MEETINGURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
@@ -66,7 +65,7 @@ class MeetingFragment : HamersListFragment() {
         }
 
         override fun onPostExecute(result: ArrayList<Meeting>) {
-            if (!result.isEmpty()) {
+            if (result.isNotEmpty()) {
                 dataSet.clear()
                 dataSet.addAll(result)
                 notifyAdapter()

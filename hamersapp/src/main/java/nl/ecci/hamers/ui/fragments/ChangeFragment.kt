@@ -16,7 +16,6 @@ import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.adapters.ChangeAdapter
 import nl.ecci.hamers.utils.DividerItemDecoration
 import org.jetbrains.anko.padding
-import org.jetbrains.anko.support.v4.act
 import java.util.*
 
 class ChangeFragment : HamersListFragment() {
@@ -34,9 +33,11 @@ class ChangeFragment : HamersListFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_list.addItemDecoration(DividerItemDecoration(act))
+        context?.let {
+            hamers_list.addItemDecoration(DividerItemDecoration(it))
+            hamers_list.adapter = ChangeAdapter(it, dataSet)
+        }
         hamers_list.padding = 0
-        hamers_list.adapter = ChangeAdapter(act, dataSet)
         hamers_fab.visibility = View.GONE
 
         populateList().execute()
@@ -47,13 +48,13 @@ class ChangeFragment : HamersListFragment() {
     override fun onRefresh() {
         setRefreshing(true)
         // Load changes
-        Loader.getData(act, Loader.CHANGEURL, -1, object : GetCallback {
+        Loader.getData(requireContext(), Loader.CHANGEURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateList().execute(response)
             }
         }, null)
         // Load all data (to prevent clicking on items that do not (yet) exist
-        Loader.getAllData(act)
+        Loader.getAllData(requireContext())
     }
 
     override fun onResume() {

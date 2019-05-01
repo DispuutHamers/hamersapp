@@ -10,7 +10,6 @@ import nl.ecci.hamers.R
 import nl.ecci.hamers.data.Loader
 import nl.ecci.hamers.data.PostCallback
 import nl.ecci.hamers.models.Meeting
-import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.fragments.DatePickerFragment
 import org.json.JSONException
 import org.json.JSONObject
@@ -32,7 +31,7 @@ class NewMeetingActivity : HamersNewItemActivity() {
         meeting = gson.fromJson(intent.getStringExtra(Meeting.MEETING), Meeting::class.java)
 
         val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("dd-MM-yyyy", MainActivity.Companion.locale)
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", MainActivity.locale)
 
         if (meeting != null && meeting_subject != null && meeting_agenda != null) {
             meeting_subject.setText(meeting!!.subject)

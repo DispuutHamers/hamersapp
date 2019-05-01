@@ -210,7 +210,7 @@ class SingleBeerActivity : HamersDetailActivity() {
     }
 
     companion object {
-        val reviewRating = "reviewRating"
-        val reviewBody = "reviewBody"
+        const val reviewRating = "reviewRating"
+        const val reviewBody = "reviewBody"
     }
 }

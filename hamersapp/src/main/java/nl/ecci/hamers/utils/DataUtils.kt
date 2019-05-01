@@ -159,9 +159,7 @@ object DataUtils {
 
         if (userList != null) {
             for (user in userList) {
-                user.nicknames
-                        .filter { it.id == id }
-                        .forEach { result = user }
+                repeat(user.nicknames.filter { it.id == id }.size) { result = user }
             }
         }
 

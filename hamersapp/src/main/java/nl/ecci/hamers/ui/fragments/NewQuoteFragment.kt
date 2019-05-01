@@ -28,15 +28,15 @@ class NewQuoteFragment : DialogFragment() {
         builder.setView(view)
                 .setTitle(R.string.quote)
                 .setPositiveButton(R.string.send_quote) { _, _ ->
-                    val edit = view?.findViewById<EditText>(R.id.quote_input) as EditText
+                    val edit = view?.findViewById(R.id.quote_input) as EditText
                     val quote = edit.text.toString()
 
-                    val userSpinner = view.findViewById<Spinner>(R.id.quote_user_spinner) as Spinner
+                    val userSpinner = view.findViewById(R.id.quote_user_spinner) as Spinner
                     val userID = usernameToID(prefs, userSpinner.selectedItem.toString())
 
                     postQuote(quote, userID)
                 }
-        val spinner = view?.findViewById<Spinner>(R.id.quote_user_spinner) as Spinner
+        val spinner = view?.findViewById(R.id.quote_user_spinner) as Spinner
         val users = DataUtils.createActiveMemberList(prefs)
         val names = users.map(User::name)
         val adapter = ArrayAdapter(activity, android.R.layout.simple_spinner_dropdown_item, names)

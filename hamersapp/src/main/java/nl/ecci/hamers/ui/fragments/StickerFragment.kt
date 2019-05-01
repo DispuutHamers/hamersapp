@@ -7,15 +7,15 @@ import android.location.Location
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -39,7 +39,6 @@ import nl.ecci.hamers.data.Loader
 import nl.ecci.hamers.models.Sticker
 import nl.ecci.hamers.utils.PermissionUtils
 import nl.ecci.hamers.utils.Utils
-import org.jetbrains.anko.support.v4.act
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -95,8 +94,8 @@ class StickerFragment : HamersFragment(),
         mMap = googleMap
         mMap?.uiSettings?.isMyLocationButtonEnabled = false
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(act, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(act, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 buildGoogleApiClient()
                 mMap?.isMyLocationEnabled = true
             }
@@ -116,7 +115,7 @@ class StickerFragment : HamersFragment(),
     }
 
     private fun onRefresh() {
-        Loader.getData(act, Loader.STICKERURL, -1, object : GetCallback {
+        Loader.getData(requireContext(), Loader.STICKERURL, -1, object : GetCallback {
             override fun onSuccess(response: String) {
                 populateMap().execute(dataSet)
             }
@@ -200,7 +199,7 @@ class StickerFragment : HamersFragment(),
                 body.put("lat", lat.toString())
                 body.put("lon", lon.toString())
                 body.put("notes", notes)
-                Loader.postOrPatchData(act, Loader.STICKERURL, body, Utils.notFound, null)
+                Loader.postOrPatchData(requireContext(), Loader.STICKERURL, body, Utils.notFound, null)
             } catch (ignored: JSONException) {
             }
         } else {
@@ -209,7 +208,7 @@ class StickerFragment : HamersFragment(),
     }
 
     private fun buildGoogleApiClient() {
-        mGoogleApiClient = GoogleApiClient.Builder(act)
+        mGoogleApiClient = GoogleApiClient.Builder(requireContext())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
@@ -238,11 +237,7 @@ class StickerFragment : HamersFragment(),
     }
 
     override fun onConnected(bundle: Bundle?) {
-//        mLocationRequest = LocationRequest()
-//        mLocationRequest?.interval = 1000
-//        mLocationRequest?.fastestInterval = 1000
-//        mLocationRequest?.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-        if (ContextCompat.checkSelfPermission(act, Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this)
         }
@@ -280,7 +275,7 @@ class StickerFragment : HamersFragment(),
         }
 
         override fun onPostExecute(result: ArrayList<Sticker>) {
-            if (!result.isEmpty()) {
+            if (result.isNotEmpty()) {
                 dataSet.clear()
                 dataSet.addAll(result)
                 addMarkers()

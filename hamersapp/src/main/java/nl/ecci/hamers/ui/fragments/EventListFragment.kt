@@ -3,8 +3,8 @@ package nl.ecci.hamers.ui.fragments
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import androidx.appcompat.widget.SearchView
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_hamers_list.*
@@ -16,7 +16,6 @@ import nl.ecci.hamers.ui.activities.MainActivity
 import nl.ecci.hamers.ui.activities.NewEventActivity
 import nl.ecci.hamers.ui.adapters.EventFragmentAdapter
 import nl.ecci.hamers.ui.adapters.EventListAdapter
-import org.jetbrains.anko.support.v4.act
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -38,7 +37,7 @@ class EventListFragment : HamersListFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hamers_list.adapter = EventListAdapter(act, dataSet)
+        hamers_list.adapter = EventListAdapter(requireContext(), dataSet)
 
         hamers_fab.setOnClickListener {
             startActivityForResult(Intent(activity, NewEventActivity::class.java), -1)
@@ -57,13 +56,13 @@ class EventListFragment : HamersListFragment() {
             val params = HashMap<String, String>()
             params["sorted"] = "asc-desc"
             params["future"] = "true"
-            Loader.getData(act, Loader.EVENTURL, -1, object : GetCallback {
+            Loader.getData(requireContext(), Loader.EVENTURL, -1, object : GetCallback {
                 override fun onSuccess(response: String) {
                     populateList().execute(response)
                 }
             }, params)
         } else {
-            Loader.getData(act, Loader.EVENTURL, -1, object : GetCallback {
+            Loader.getData(requireContext(), Loader.EVENTURL, -1, object : GetCallback {
                 override fun onSuccess(response: String) {
                     // Only save normal event list
                     prefs?.edit()?.putString(Loader.EVENTURL, response)?.apply()

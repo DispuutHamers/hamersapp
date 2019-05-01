@@ -17,7 +17,6 @@ data class SignUp(val id: Int = Utils.notFound,
                   val reason: String? = Utils.unknown) {
 
     companion object {
-        @JvmField
-        val SIGNUP = "SIGNUP"
+        const val SIGNUP = "SIGNUP"
     }
 }
