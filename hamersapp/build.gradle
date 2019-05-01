@@ -6,8 +6,8 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath 'com.google.gms:google-services:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath 'com.google.gms:google-services:4.2.0'
     }
 }
 apply plugin: 'com.android.application'
@@ -30,8 +30,8 @@ android {
         applicationId "nl.ecci.Hamers"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 61
-        versionName '2.5.2'
+        versionCode 62
+        versionName '2.5.3'
         multiDexEnabled true
     }
     buildTypes {
@@ -70,18 +70,18 @@ dependencies {
         'androidx.recyclerview:recyclerview:1.0.0',
         'androidx.cardview:cardview:1.0.0',
         'com.google.android.material:material:1.1.0-alpha01',
-        'androidx.multidex:multidex:2.0.0',
+        'androidx.multidex:multidex:2.0.1',
         // Firebase Cloud Messaging + Google Maps
         "com.google.firebase:firebase-messaging:$firebaseVersion",
         "com.google.android.gms:play-services-maps:$firebaseVersion",
         "com.google.android.gms:play-services-location:$firebaseVersion",
         // Libraries for data fetching/management
-        'com.android.volley:volley:1.1.0',
+        'com.android.volley:volley:1.1.1',
         'com.google.code.gson:gson:2.8.2',
         // Libraries for image displaying
-        'com.github.bumptech.glide:glide:4.6.1',
-        'com.github.bumptech.glide:volley-integration:4.6.1',
-        'com.github.chrisbanes:PhotoView:2.2.0',
+        'com.github.bumptech.glide:glide:4.9.0',
+        'com.github.bumptech.glide:volley-integration:4.9.0',
+        'com.github.chrisbanes:PhotoView:2.3.0',
         'de.hdodenhof:circleimageview:2.2.0',
         // Other libraries
         'us.feras.mdv:markdownview:1.1.0',

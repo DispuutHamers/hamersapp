@@ -13,7 +13,7 @@ data class User(val id: Int = Utils.notFound,
                 @SerializedName("reviews")
                 val reviewCount: Int = Utils.notFound,
                 @SerializedName("lid")
-                val member: Member = User.Member.NONE,
+                val member: Member = Member.NONE,
                 val batch: Int = Utils.notFound,
                 val nicknames: ArrayList<Nickname> = ArrayList(),
                 @SerializedName("created_at")
@@ -27,6 +27,6 @@ data class User(val id: Int = Utils.notFound,
     }
 
     companion object {
-        val USER = "USER"
+        const val USER = "USER"
     }
 }
