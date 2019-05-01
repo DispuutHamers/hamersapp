@@ -87,7 +87,7 @@ object DataUtils {
     }
 
     fun getGravatarURL(email: String): String {
-        return String.format("http://gravatar.com/avatar/%s/?s=1920", Utils.md5(email))
+        return String.format("https://gravatar.com/avatar/%s/?s=1920", Utils.md5(email))
     }
 
     fun convertNicknames(nicknames: ArrayList<Nickname>): String {
@@ -100,8 +100,7 @@ object DataUtils {
 
     fun usernameToID(prefs: SharedPreferences, name: String): Int {
         var result = Utils.notFound
-        val gsonBuilder = GsonBuilder()
-        val gson = gsonBuilder.create()
+        val gson = GsonBuilder().create()
         val type = object : TypeToken<ArrayList<User>>() {
 
         }.type
@@ -114,8 +113,7 @@ object DataUtils {
 
     fun createActiveMemberList(prefs: SharedPreferences): ArrayList<User> {
         val result = ArrayList<User>()
-        val gsonBuilder = GsonBuilder()
-        val gson = gsonBuilder.create()
+        val gson = GsonBuilder().create()
         val type = object : TypeToken<ArrayList<User>>() {
         }.type
 
@@ -133,8 +131,7 @@ object DataUtils {
 
         val userList: ArrayList<User>?
         var result = User()
-        val gsonBuilder = GsonBuilder()
-        val gson = gsonBuilder.create()
+        val gson = GsonBuilder().create()
         val type = object : TypeToken<ArrayList<User>>() {
 
         }.type
@@ -154,8 +151,7 @@ object DataUtils {
 
         var result = User()
 
-        val gsonBuilder = GsonBuilder()
-        val gson = gsonBuilder.create()
+        val gson = GsonBuilder().create()
         val type = object : TypeToken<ArrayList<User>>() {
         }.type
 
@@ -176,8 +172,7 @@ object DataUtils {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         val user: User?
-        val gsonBuilder = GsonBuilder()
-        val gson = gsonBuilder.create()
+        val gson = GsonBuilder().create()
         user = gson.fromJson(prefs.getString(Loader.WHOAMIURL, null), User::class.java)
         if (user == null) {
             return User()
@@ -189,8 +184,7 @@ object DataUtils {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         var result = Event()
-        val gsonBuilder = GsonBuilder()
-        val gson = gsonBuilder.create()
+        val gson = GsonBuilder().create()
         val type = object : TypeToken<ArrayList<Event>>() {
         }.type
 
@@ -206,8 +200,7 @@ object DataUtils {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         var result = SignUp()
-        val gsonBuilder = GsonBuilder()
-        val gson = gsonBuilder.create()
+        val gson = GsonBuilder().create()
         val type = object : TypeToken<ArrayList<SignUp>>() {
         }.type
 
@@ -225,8 +218,7 @@ object DataUtils {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         var result = Beer()
-        val gsonBuilder = GsonBuilder()
-        val gson = gsonBuilder.create()
+        val gson = GsonBuilder().create()
         val type = object : TypeToken<ArrayList<Beer>>() {
         }.type
 
@@ -241,8 +233,7 @@ object DataUtils {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         var result = Review()
-        val gsonBuilder = GsonBuilder()
-        val gson = gsonBuilder.create()
+        val gson = GsonBuilder().create()
         val type = object : TypeToken<ArrayList<Review>>() {
         }.type
 
@@ -257,8 +248,7 @@ object DataUtils {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         var result = Meeting()
-        val gsonBuilder = GsonBuilder()
-        val gson = gsonBuilder.create()
+        val gson = GsonBuilder().create()
         val type = object : TypeToken<ArrayList<Meeting>>() {
 
         }.type
