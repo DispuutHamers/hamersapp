@@ -5,10 +5,10 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.preference.PreferenceManager
-import androidx.fragment.app.DialogFragment
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
+import androidx.fragment.app.DialogFragment
 import nl.ecci.hamers.R
 import nl.ecci.hamers.data.Loader
 import nl.ecci.hamers.models.User
@@ -39,7 +39,7 @@ class NewQuoteFragment : DialogFragment() {
         val spinner = view?.findViewById(R.id.quote_user_spinner) as Spinner
         val users = DataUtils.createActiveMemberList(prefs)
         val names = users.map(User::name)
-        val adapter = ArrayAdapter(activity, android.R.layout.simple_spinner_dropdown_item, names)
+        val adapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_dropdown_item, names)
         spinner.adapter = adapter
 
         return builder.create()

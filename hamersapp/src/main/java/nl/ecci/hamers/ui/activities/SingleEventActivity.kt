@@ -131,7 +131,7 @@ class SingleEventActivity : HamersDetailActivity() {
                 // Copy link to clipboard
                 val clipboard: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val clip = ClipData.newPlainText(Event.EVENT, getString(R.string.host) + Loader.EVENTURL + "/" + event?.id)
-                clipboard.primaryClip = clip
+                clipboard.setPrimaryClip(clip)
                 // Notify user
                 Toast.makeText(this, R.string.url_copied, Toast.LENGTH_SHORT).show()
             }

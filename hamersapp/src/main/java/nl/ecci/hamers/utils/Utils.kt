@@ -54,7 +54,7 @@ object Utils {
 
     fun getIdFromUri(uri: Uri): Int {
         val path = uri.path
-        return Integer.parseInt(path.substring(path.lastIndexOf('/') + 1))
+        return Integer.parseInt(path!!.substring(path.lastIndexOf('/') + 1))
     }
 
     fun md5(message: String): String = String(Hex.encodeHex(DigestUtils.md5(message)))
