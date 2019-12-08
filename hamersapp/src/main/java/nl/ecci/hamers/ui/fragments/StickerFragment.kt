@@ -165,7 +165,7 @@ class StickerFragment : HamersFragment(),
         input.setSingleLine()
         input.setHint(R.string.sticker_post_note)
 
-        val container = FrameLayout(activity)
+        val container = FrameLayout(activity!!)
         container.addView(input)
 
         val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)

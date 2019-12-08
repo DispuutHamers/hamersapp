@@ -12,7 +12,7 @@ class DividerItemDecoration(context: Context) : RecyclerView.ItemDecoration() {
 
     init {
         val styledAttributes = context.obtainStyledAttributes(ATTRS)
-        mDivider = styledAttributes.getDrawable(0)
+        mDivider = styledAttributes.getDrawable(0)!!
         styledAttributes.recycle()
     }
 
