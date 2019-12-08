@@ -6,10 +6,10 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 import android.view.*
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import com.bumptech.glide.Glide
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_general.*
@@ -195,7 +195,7 @@ class SingleBeerActivity : HamersDetailActivity() {
                 // Copy link to clipboard
                 val clipboard: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val clip = ClipData.newPlainText(Beer.BEER, getString(R.string.host) + Loader.BEERURL + "/" + beer?.id)
-                clipboard.primaryClip = clip
+                clipboard.setPrimaryClip(clip)
                 // Notify user
                 Toast.makeText(this, R.string.url_copied, Toast.LENGTH_SHORT).show()
             }
