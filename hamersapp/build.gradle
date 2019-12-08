@@ -6,8 +6,8 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0'
-        classpath 'com.google.gms:google-services:4.2.0'
+        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.google.gms:google-services:4.3.3'
     }
 }
 apply plugin: 'com.android.application'
@@ -39,13 +39,13 @@ android {
             debuggable true
             resValue "string", "app_name", "Hamers debug"
             resValue "string", "host", "https://zondersikkel.nl/"
-            resValue "string", "google_maps_key", "***REMOVED***"
+            resValue "string", "google_maps_key", GoogleMapsApiKey
         }
         release {
             debuggable false
             resValue "string", "app_name", "Hamers"
             resValue "string", "host", "https://zondersikkel.nl/"
-            resValue "string", "google_maps_key", "***REMOVED***"
+            resValue "string", "google_maps_key", GoogleMapsApiKey
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             zipAlignEnabled true
